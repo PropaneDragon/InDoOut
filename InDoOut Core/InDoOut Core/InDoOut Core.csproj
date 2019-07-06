@@ -12,8 +12,4 @@
     <DocumentationFile>D:\Projects\InDoOut\App\InDoOut Core\InDoOut Core\InDoOut Core.xml</DocumentationFile>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Programs\" />
-  </ItemGroup>
-
 </Project>

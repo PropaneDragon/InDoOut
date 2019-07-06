@@ -1,7 +1,12 @@
-﻿namespace InDoOut_Core.Functions
+﻿using InDoOut_Core.Core;
+
+namespace InDoOut_Core.Functions
 {
-    interface IInput
+    /// <summary>
+    /// Represents an input that is triggered by
+    /// any <see cref="IOutput"/> entity.
+    /// </summary>
+    interface IInput : INamedEntity, ITriggerable<IOutput>
     {
-        void Trigger(IOutput output);
     }
 }
