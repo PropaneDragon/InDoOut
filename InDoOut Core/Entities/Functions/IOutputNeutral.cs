@@ -1,4 +1,4 @@
-﻿namespace InDoOut_Core.Functions
+﻿namespace InDoOut_Core.Entities.Functions
 {
     /// <summary>
     /// Represents a neutral output from a <see cref="IFunction"/>.

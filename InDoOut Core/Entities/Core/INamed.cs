@@ -1,9 +1,9 @@
-﻿namespace InDoOut_Core.Core
+﻿namespace InDoOut_Core.Entities.Core
 {
     /// <summary>
     /// Represents something that can have a name.
     /// </summary>
-    interface INamed
+    public interface INamed
     {
         /// <summary>
         /// Name of the entity.

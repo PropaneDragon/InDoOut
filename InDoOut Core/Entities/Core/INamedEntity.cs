@@ -1,9 +1,9 @@
-﻿namespace InDoOut_Core.Core
+﻿namespace InDoOut_Core.Entities.Core
 {
     /// <summary>
     /// Represents an <see cref="IEntity"/> that can have a name.
     /// </summary>
-    interface INamedEntity : IEntity, INamed
+    public interface INamedEntity : IEntity, INamed
     {
     }
 }

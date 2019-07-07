@@ -1,13 +1,17 @@
-﻿using InDoOut_Core.Core;
+﻿using InDoOut_Core.Entities.Core;
 using System.Collections.Generic;
 
-namespace InDoOut_Core.Functions
+namespace InDoOut_Core.Entities.Functions
 {
     /// <summary>
     /// The current operating state of a <see cref="IFunction"/>
     /// </summary>
-    enum State
+    public enum State
     {
+        /// <summary>
+        /// The entity is in an unknown state and hasn't been initialised properly.
+        /// </summary>
+        Unknown,
         /// <summary>
         /// The entity is being placed from within an editor.
         /// </summary>
@@ -34,7 +38,7 @@ namespace InDoOut_Core.Functions
     /// Represents a function block containing <see cref="IInput"/>s and 
     /// <see cref="IOutput"/>s. This can be triggered with a <see cref="IInput"/>,
     /// </summary>
-    interface IFunction : INamedEntity, ITriggerable<IInput>
+    public interface IFunction : INamedEntity, ITriggerable<IInput>, IConnectable<IOutput>
     {
         /// <summary>
         /// The current state of the function. See <see cref="State"/> for more

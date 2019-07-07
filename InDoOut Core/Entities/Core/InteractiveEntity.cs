@@ -1,0 +1,152 @@
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace InDoOut_Core.Entities.Core
+{
+    /// <summary>
+    /// An entity that can be connected to and triggered by another <see cref="IEntity"/>.
+    /// </summary>
+    /// <typeparam name="ConnectsToType">The <see cref="ITriggerable"/> that this entity can connect to.</typeparam>
+    /// <typeparam name="ConnectsFromType">The <see cref="IEntity"/> that this entity can accept connections from.</typeparam>
+    public abstract class InteractiveEntity<ConnectsToType, ConnectsFromType> : Entity, IConnectable<ConnectsToType>, ITriggerable<ConnectsFromType> where ConnectsToType : class, ITriggerable where ConnectsFromType : class, IEntity
+    {
+        private Task _runner = null;
+        private List<ConnectsToType> _connections = new List<ConnectsToType>();
+
+        /// <summary>
+        /// The current running state of this entity.
+        /// </summary>
+        public bool Running => _runner != null && _runner.Status == TaskStatus.Running;
+
+        /// <summary>
+        /// The connections that this entity has.
+        /// </summary>
+        public List<ConnectsToType> Connections => _connections;
+
+        /// <summary>
+        /// Triggers this entity from another entity.
+        /// </summary>
+        /// <param name="triggeredBy">The entity that triggered this one.</param>
+        public void Trigger(ConnectsFromType triggeredBy)
+        {
+            _runner = Task.Run(() => Process(triggeredBy));
+        }
+
+        /// <summary>
+        /// Checks whether a given <see cref="IEntity"/> can trigger this.
+        /// </summary>
+        /// <param name="entity">The entity to check.</param>
+        /// <returns>Whether the given <see cref="IEntity"/> can trigger this.</returns>
+        public bool CanBeTriggered(IEntity entity)
+        {
+            return CanAcceptConnection(entity) && !Running;
+        }
+
+        /// <summary>
+        /// Checks whether a given <see cref="IEntity"/> can connect to this.
+        /// </summary>
+        /// <param name="entity">The entity to check.</param>
+        /// <returns>Whether the given <see cref="IEntity"/> can trigger this.</returns>
+        public bool CanAcceptConnection(IEntity entity)
+        {
+            var allowableEntity = (ConnectsToType)entity;
+            return allowableEntity != null;
+        }
+
+        /// <summary>
+        /// Adds a connection to the entity.
+        /// </summary>
+        /// <param name="connection">The connection to add.</param>
+        /// <returns>Whether the connection was added.</returns>
+        protected bool AddConnection(ConnectsToType connection)
+        {
+            if (connection != null && !_connections.Contains(connection))
+            {
+                _connections.Add(connection);
+
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Adds numerous connections to the entity.
+        /// </summary>
+        /// <param name="connections">The connections to add.</param>
+        /// <returns>Whether all connections were added.</returns>
+        protected bool AddConnections(params ConnectsToType[] connections)
+        {
+            var connectedAll = true;
+
+            foreach (var connection in connections)
+            {
+                connectedAll = AddConnection(connection) && connectedAll;
+            }
+
+            return connectedAll;
+        }
+
+        /// <summary>
+        /// Removes a connection from the entity.
+        /// </summary>
+        /// <param name="connection">The connection to remove.</param>
+        /// <returns>Whether the connection was found and removed.</returns>
+        protected bool RemoveConnection(ConnectsToType connection)
+        {
+            if (connection != null && _connections.Contains(connection))
+            {
+                _connections.Remove(connection);
+
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Removes numerous connections from the entity.
+        /// </summary>
+        /// <param name="connections">The connectsions to remove.</param>
+        /// <returns>Whether all connections were removed.</returns>
+        protected bool RemoveConnections(params ConnectsToType[] connections)
+        {
+            var removedAll = true;
+
+            foreach (var connection in connections)
+            {
+                removedAll = RemoveConnection(connection) && removedAll;
+            }
+
+            return removedAll;
+        }
+
+        /// <summary>
+        /// Removes all connections from the entity.
+        /// </summary>
+        /// <returns>Whether all connections were removed.</returns>
+        protected bool RemoveAllConnections()
+        {
+            _connections.Clear();
+
+            return true;
+        }
+
+        /// <summary>
+        /// Sets the current connections to the given connections. This removes
+        /// all current connections.
+        /// </summary>
+        /// <param name="connections">The connections to set.</param>
+        /// <returns>Whether the connections were set.</returns>
+        protected bool SetConnection(params ConnectsToType[] connections)
+        {
+            return RemoveAllConnections() && AddConnections(connections);
+        }
+
+        /// <summary>
+        /// Begins processing after being triggered by a connected entity.
+        /// </summary>
+        /// <param name="triggeredBy">The entity that triggered this.</param>
+        protected abstract void Process(ConnectsFromType triggeredBy);
+    }
+}

@@ -4,5 +4,456 @@
         <name>InDoOut Core</name>
     </assembly>
     <members>
+        <member name="T:InDoOut_Core.Entities.Core.Entity">
+            <summary>
+            A base, saveable entity. The root of all other entities.
+            </summary>
+            <seealso cref="T:InDoOut_Core.Entities.Core.IEntity"/>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Core.Entity.Id">
+            <summary>
+            The unique ID of this entity.
+            </summary>
+        </member>
+        <member name="T:InDoOut_Core.Entities.Core.IConnectable">
+            <summary>
+            Represents an object that can be connected to an entity.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Core.IConnectable.CanAcceptConnection(InDoOut_Core.Entities.Core.IEntity)">
+            <summary>
+            Check whether or not a <see cref="T:InDoOut_Core.Entities.Core.IEntity"/> can be connected to this
+            object.
+            </summary>
+            <param name="entity">The entity to check.</param>
+            <returns>Whether or not the given <see cref="T:InDoOut_Core.Entities.Core.IEntity"/> can be connected.</returns>
+        </member>
+        <member name="T:InDoOut_Core.Entities.Core.IConnectable`1">
+            <summary>
+            Represents an object that can be connected to an entity.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Core.IConnectable`1.Connections">
+            <summary>
+            The connections this object has.
+            </summary>
+        </member>
+        <member name="T:InDoOut_Core.Entities.Core.IEntity">
+            <summary>
+            Represents a base entity. All entities are <see cref="T:InDoOut_Core.Entities.Core.IStored"/>, so can
+            be saved.
+            </summary>
+        </member>
+        <member name="T:InDoOut_Core.Entities.Core.INamed">
+            <summary>
+            Represents something that can have a name.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Core.INamed.Name">
+            <summary>
+            Name of the entity.
+            </summary>
+        </member>
+        <member name="T:InDoOut_Core.Entities.Core.INamedEntity">
+            <summary>
+            Represents an <see cref="T:InDoOut_Core.Entities.Core.IEntity"/> that can have a name.
+            </summary>
+        </member>
+        <member name="T:InDoOut_Core.Entities.Core.InteractiveEntity`2">
+            <summary>
+            An entity that can be connected to and triggered by another <see cref="T:InDoOut_Core.Entities.Core.IEntity"/>.
+            </summary>
+            <typeparam name="ConnectsToType">The <see cref="T:InDoOut_Core.Entities.Core.ITriggerable"/> that this entity can connect to.</typeparam>
+            <typeparam name="ConnectsFromType">The <see cref="T:InDoOut_Core.Entities.Core.IEntity"/> that this entity can accept connections from.</typeparam>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Core.InteractiveEntity`2.Running">
+            <summary>
+            The current running state of this entity.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Core.InteractiveEntity`2.Connections">
+            <summary>
+            The connections that this entity has.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Core.InteractiveEntity`2.Trigger(`1)">
+            <summary>
+            Triggers this entity from another entity.
+            </summary>
+            <param name="triggeredBy">The entity that triggered this one.</param>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Core.InteractiveEntity`2.CanBeTriggered(InDoOut_Core.Entities.Core.IEntity)">
+            <summary>
+            Checks whether a given <see cref="T:InDoOut_Core.Entities.Core.IEntity"/> can trigger this.
+            </summary>
+            <param name="entity">The entity to check.</param>
+            <returns>Whether the given <see cref="T:InDoOut_Core.Entities.Core.IEntity"/> can trigger this.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Core.InteractiveEntity`2.CanAcceptConnection(InDoOut_Core.Entities.Core.IEntity)">
+            <summary>
+            Checks whether a given <see cref="T:InDoOut_Core.Entities.Core.IEntity"/> can connect to this.
+            </summary>
+            <param name="entity">The entity to check.</param>
+            <returns>Whether the given <see cref="T:InDoOut_Core.Entities.Core.IEntity"/> can trigger this.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Core.InteractiveEntity`2.AddConnection(`0)">
+            <summary>
+            Adds a connection to the entity.
+            </summary>
+            <param name="connection">The connection to add.</param>
+            <returns>Whether the connection was added.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Core.InteractiveEntity`2.AddConnections(`0[])">
+            <summary>
+            Adds numerous connections to the entity.
+            </summary>
+            <param name="connections">The connections to add.</param>
+            <returns>Whether all connections were added.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Core.InteractiveEntity`2.RemoveConnection(`0)">
+            <summary>
+            Removes a connection from the entity.
+            </summary>
+            <param name="connection">The connection to remove.</param>
+            <returns>Whether the connection was found and removed.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Core.InteractiveEntity`2.RemoveConnections(`0[])">
+            <summary>
+            Removes numerous connections from the entity.
+            </summary>
+            <param name="connections">The connectsions to remove.</param>
+            <returns>Whether all connections were removed.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Core.InteractiveEntity`2.RemoveAllConnections">
+            <summary>
+            Removes all connections from the entity.
+            </summary>
+            <returns>Whether all connections were removed.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Core.InteractiveEntity`2.SetConnection(`0[])">
+            <summary>
+            Sets the current connections to the given connections. This removes
+            all current connections.
+            </summary>
+            <param name="connections">The connections to set.</param>
+            <returns>Whether the connections were set.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Core.InteractiveEntity`2.Process(`1)">
+            <summary>
+            Begins processing after being triggered by a connected entity.
+            </summary>
+            <param name="triggeredBy">The entity that triggered this.</param>
+        </member>
+        <member name="T:InDoOut_Core.Entities.Core.IStored">
+            <summary>
+            Represents stored data. Each entity has a unique <see cref="T:System.Guid"/>
+            to identify it when saving and loading.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Core.IStored.Id">
+            <summary>
+            The unique ID of this entity.
+            </summary>
+        </member>
+        <member name="T:InDoOut_Core.Entities.Core.ITriggerable">
+            <summary>
+            Represents an entity that can be triggered by another entity.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Core.ITriggerable.Running">
+            <summary>
+            The current running state of the object.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Core.ITriggerable.CanBeTriggered(InDoOut_Core.Entities.Core.IEntity)">
+            <summary>
+            Check whether or not the given <see cref="T:InDoOut_Core.Entities.Core.IEntity"/> can trigger this object.
+            </summary>
+            <param name="entity">The entity to check.</param>
+            <returns>Whether this object can be triggered by the given <see cref="T:InDoOut_Core.Entities.Core.IEntity"/>.</returns>
+        </member>
+        <member name="T:InDoOut_Core.Entities.Core.ITriggerable`1">
+            <summary>
+            Represents an entity that can be triggered by another entity.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Core.ITriggerable`1.Trigger(`0)">
+            <summary>
+            Triggers this entity using the given <typeparamref name="TriggerType"/>
+            </summary>
+            <param name="triggeredBy">The entity to trigger this object.</param>
+        </member>
+        <member name="T:InDoOut_Core.Entities.Functions.Function">
+            <summary>
+            A self contained block that can do processing independently of any other function. These have inputs and
+            outputs, where the inputs trigger the function which then trigger an output.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Functions.Function.State">
+            <summary>
+            The current function state. See <see cref="P:InDoOut_Core.Entities.Functions.Function.State"/> for more
+            info on the states.
+            </summary>
+            <seealso cref="P:InDoOut_Core.Entities.Functions.Function.State"/>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Functions.Function.Inputs">
+            <summary>
+            The inputs that belong to this function.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Functions.Function.Outputs">
+            <summary>
+            The outputs that belong to this function.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Functions.Function.Name">
+            <summary>
+            The function name.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Functions.Function.#ctor(System.String)">
+            <summary>
+            Creates a basic function.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Functions.Function.CreateInput(System.String)">
+            <summary>
+            Creates an input for this function.
+            </summary>
+            <param name="name">The name of the input.</param>
+            <returns>The input that was created.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Functions.Function.CreateOutput(System.String)">
+            <summary>
+            Creates an output for this function.
+            </summary>
+            <param name="name">The name of the output.</param>
+            <returns>The output that was created.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Functions.Function.Process(InDoOut_Core.Entities.Functions.IInput)">
+            <summary>
+            Start processing the function code. Sets up all states.
+            </summary>
+            <param name="triggeredBy">The entity that triggered this.</param>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Functions.Function.Started(InDoOut_Core.Entities.Functions.IInput)">
+            <summary>
+            Start the main code, given a <see cref="T:InDoOut_Core.Entities.Functions.IInput"/>. This will return the <see cref="T:InDoOut_Core.Entities.Functions.IOutput"/>
+            that should be triggered at the end of processing.
+            </summary>
+            <param name="triggeredBy">The entity that triggered this.</param>
+            <returns>An <see cref="T:InDoOut_Core.Entities.Functions.IOutput"/> that should be triggered after this code.</returns>
+        </member>
+        <member name="T:InDoOut_Core.Entities.Functions.State">
+            <summary>
+            The current operating state of a <see cref="T:InDoOut_Core.Entities.Functions.IFunction"/>
+            </summary>
+        </member>
+        <member name="F:InDoOut_Core.Entities.Functions.State.Unknown">
+            <summary>
+            The entity is in an unknown state and hasn't been initialised properly.
+            </summary>
+        </member>
+        <member name="F:InDoOut_Core.Entities.Functions.State.Placing">
+            <summary>
+            The entity is being placed from within an editor.
+            </summary>
+        </member>
+        <member name="F:InDoOut_Core.Entities.Functions.State.Disabled">
+            <summary>
+            The entity is currently disabled and will not trigger.
+            </summary>
+        </member>
+        <member name="F:InDoOut_Core.Entities.Functions.State.Waiting">
+            <summary>
+            The entity is currently waiting to be triggered.
+            </summary>
+        </member>
+        <member name="F:InDoOut_Core.Entities.Functions.State.Processing">
+            <summary>
+            The entity has been triggered and is currently processing.
+            </summary>
+        </member>
+        <member name="F:InDoOut_Core.Entities.Functions.State.InError">
+            <summary>
+            The entity has failed in some way and is in an error state.
+            </summary>
+        </member>
+        <member name="T:InDoOut_Core.Entities.Functions.IFunction">
+            <summary>
+            Represents a function block containing <see cref="T:InDoOut_Core.Entities.Functions.IInput"/>s and 
+            <see cref="T:InDoOut_Core.Entities.Functions.IOutput"/>s. This can be triggered with a <see cref="T:InDoOut_Core.Entities.Functions.IInput"/>,
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Functions.IFunction.State">
+            <summary>
+            The current state of the function. See <see cref="P:InDoOut_Core.Entities.Functions.IFunction.State"/> for more
+            details on the states that this function can enter.
+            </summary>
+            <seealso cref="P:InDoOut_Core.Entities.Functions.IFunction.State"/>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Functions.IFunction.Inputs">
+            <summary>
+            All inputs that this function has.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Functions.IFunction.Outputs">
+            <summary>
+            All outputs that this function has.
+            </summary>
+        </member>
+        <member name="T:InDoOut_Core.Entities.Functions.IInput">
+            <summary>
+            Represents an input that is triggered by
+            any <see cref="T:InDoOut_Core.Entities.Functions.IOutput"/> entity.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Functions.IInput.Parent">
+            <summary>
+            The parent of this input.
+            </summary>
+        </member>
+        <member name="T:InDoOut_Core.Entities.Functions.Input">
+            <summary>
+            Inputs are triggered by <see cref="T:InDoOut_Core.Entities.Functions.IOutput"/>s. These intputs are simple connections for
+            <see cref="T:InDoOut_Core.Entities.Functions.IFunction"/>s which can trigger the code within them. The <see cref="T:InDoOut_Core.Entities.Functions.IFunction"/> may
+            perform different actions based on the type of input that was triggered.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Functions.Input.Name">
+            <summary>
+            The name of this input.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Functions.Input.Parent">
+            <summary>
+            The parent this input belongs to.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Functions.Input.#ctor(InDoOut_Core.Entities.Functions.IFunction,System.String)">
+            <summary>
+            Creates a generic input with a parent.
+            </summary>
+            <param name="parent">The <see cref="T:InDoOut_Core.Entities.Functions.IFunction"/> this input belongs to.</param>
+            <param name="name">The name of this input.</param>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Functions.Input.Equals(System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Functions.Input.GetHashCode">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Functions.Input.Process(InDoOut_Core.Entities.Functions.IOutput)">
+            <summary>
+            Begins processing this input. This calls the <see cref="P:InDoOut_Core.Entities.Functions.Input.Parent"/> it is connected to.
+            </summary>
+            <param name="triggeredBy">The <see cref="T:InDoOut_Core.Entities.Functions.IOutput"/> that triggered this input.</param>
+        </member>
+        <member name="T:InDoOut_Core.Entities.Functions.IOutput">
+            <summary>
+            Represents an output that can be connected to any
+            <see cref="T:InDoOut_Core.Entities.Functions.IInput"/> entity and is triggered by a
+            <see cref="T:InDoOut_Core.Entities.Functions.IFunction"/> entity.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Functions.IOutput.Connect(InDoOut_Core.Entities.Functions.IInput)">
+            <summary>
+            Connect this output to an <see cref="T:InDoOut_Core.Entities.Functions.IInput"/>.
+            </summary>
+            <param name="input">The <see cref="T:InDoOut_Core.Entities.Functions.IInput"/> to connect to.</param>
+            <returns>Whether a connection was made.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Functions.IOutput.Disconnect(InDoOut_Core.Entities.Functions.IInput)">
+            <summary>
+            Disconnect this output from an <see cref="T:InDoOut_Core.Entities.Functions.IInput"/>.
+            </summary>
+            <param name="input">The <see cref="T:InDoOut_Core.Entities.Functions.IInput"/> to disconnect from.</param>
+            <returns>Whether the input was disconnected.</returns>
+        </member>
+        <member name="T:InDoOut_Core.Entities.Functions.IOutputNegative">
+            <summary>
+            Represents a negative output from a <see cref="T:InDoOut_Core.Entities.Functions.IFunction"/>. See <see cref="T:InDoOut_Core.Entities.Functions.IOutput"/>
+            for more generalised info.
+            </summary>
+            <seealso cref="T:InDoOut_Core.Entities.Functions.IOutput"/>
+        </member>
+        <member name="T:InDoOut_Core.Entities.Functions.IOutputNeutral">
+            <summary>
+            Represents a neutral output from a <see cref="T:InDoOut_Core.Entities.Functions.IFunction"/>.
+            Neutral outputs are neither positive or negative.
+            See <see cref="T:InDoOut_Core.Entities.Functions.IOutput"/> for more generalised info.
+            </summary>
+            <seealso cref="T:InDoOut_Core.Entities.Functions.IOutput"/>
+        </member>
+        <member name="T:InDoOut_Core.Entities.Functions.IOutputPositive">
+            <summary>
+            Represents a positive output from a <see cref="T:InDoOut_Core.Entities.Functions.IFunction"/>. See <see cref="T:InDoOut_Core.Entities.Functions.IOutput"/>
+            for more generalised info.
+            </summary>
+            <seealso cref="T:InDoOut_Core.Entities.Functions.IOutput"/>
+        </member>
+        <member name="T:InDoOut_Core.Entities.Functions.Output">
+            <summary>
+            Outputs are triggered by <see cref="T:InDoOut_Core.Entities.Functions.IFunction"/>s. These outputs are simple connections for
+            <see cref="T:InDoOut_Core.Entities.Functions.IInput"/>s which then trigger their connected entity.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Functions.Output.Name">
+            <summary>
+            The name of this output.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Functions.Output.#ctor(System.String)">
+            <summary>
+            Creates a basic output with a name.
+            </summary>
+            <param name="name">The name to give the output.</param>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Functions.Output.Connect(InDoOut_Core.Entities.Functions.IInput)">
+            <summary>
+            Connects this output to a given <see cref="T:InDoOut_Core.Entities.Functions.IInput"/>.
+            </summary>
+            <param name="input">The <see cref="T:InDoOut_Core.Entities.Functions.IInput"/> to connect to.</param>
+            <returns>Whether the connection was made.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Functions.Output.Disconnect(InDoOut_Core.Entities.Functions.IInput)">
+            <summary>
+            Disconnects this output from a given <see cref="T:InDoOut_Core.Entities.Functions.IInput"/>.
+            </summary>
+            <param name="input">The <see cref="T:InDoOut_Core.Entities.Functions.IInput"/> to disconnect from.</param>
+            <returns>Whether the connection was disconnected.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Functions.Output.Equals(System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Functions.Output.GetHashCode">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Functions.Output.Process(InDoOut_Core.Entities.Functions.IFunction)">
+            <summary>
+            Begins processing this output. This calls all the <see cref="T:InDoOut_Core.Entities.Functions.IInput"/>s it is connected to.
+            </summary>
+            <param name="triggeredBy">The <see cref="T:InDoOut_Core.Entities.Functions.IFunction"/> that triggered this output.</param>
+        </member>
+        <member name="T:InDoOut_Core.Entities.Programs.IProgram">
+            <summary>
+            Represents a group of self contained functions that have
+            interactivity between each other.
+            </summary>
+        </member>
     </members>
 </doc>
