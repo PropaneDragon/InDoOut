@@ -10,6 +10,8 @@ namespace InDoOut_Core.Entities.Core
     /// <typeparam name="ConnectsFromType">The <see cref="IEntity"/> that this entity can accept connections from.</typeparam>
     public abstract class InteractiveEntity<ConnectsToType, ConnectsFromType> : Entity, IConnectable<ConnectsToType>, ITriggerable<ConnectsFromType> where ConnectsToType : class, ITriggerable where ConnectsFromType : class, IEntity
     {
+        private object _connectionsLock = new object();
+
         private Task _runner = null;
         private List<ConnectsToType> _connections = new List<ConnectsToType>();
 
@@ -21,7 +23,10 @@ namespace InDoOut_Core.Entities.Core
         /// <summary>
         /// The connections that this entity has.
         /// </summary>
-        public List<ConnectsToType> Connections => _connections;
+        public List<ConnectsToType> Connections
+        {
+            get { lock (_connectionsLock) return _connections; }
+        }
 
         /// <summary>
         /// Triggers this entity from another entity.
@@ -49,8 +54,7 @@ namespace InDoOut_Core.Entities.Core
         /// <returns>Whether the given <see cref="IEntity"/> can trigger this.</returns>
         public bool CanAcceptConnection(IEntity entity)
         {
-            var allowableEntity = (ConnectsToType)entity;
-            return allowableEntity != null;
+            return entity != null && typeof(ConnectsFromType).IsAssignableFrom(entity.GetType());
         }
 
         /// <summary>
@@ -60,14 +64,17 @@ namespace InDoOut_Core.Entities.Core
         /// <returns>Whether the connection was added.</returns>
         protected bool AddConnection(ConnectsToType connection)
         {
-            if (connection != null && !_connections.Contains(connection))
+            lock (_connectionsLock)
             {
-                _connections.Add(connection);
+                if (connection != null && !_connections.Contains(connection))
+                {
+                    _connections.Add(connection);
 
-                return true;
+                    return true;
+                }
+
+                return false;
             }
-
-            return false;
         }
 
         /// <summary>
@@ -94,14 +101,17 @@ namespace InDoOut_Core.Entities.Core
         /// <returns>Whether the connection was found and removed.</returns>
         protected bool RemoveConnection(ConnectsToType connection)
         {
-            if (connection != null && _connections.Contains(connection))
+            lock (_connectionsLock)
             {
-                _connections.Remove(connection);
+                if (connection != null && _connections.Contains(connection))
+                {
+                    _connections.Remove(connection);
 
-                return true;
+                    return true;
+                }
+
+                return false;
             }
-
-            return false;
         }
 
         /// <summary>
@@ -127,9 +137,12 @@ namespace InDoOut_Core.Entities.Core
         /// <returns>Whether all connections were removed.</returns>
         protected bool RemoveAllConnections()
         {
-            _connections.Clear();
+            lock (_connectionsLock)
+            {
+                _connections.Clear();
 
-            return true;
+                return true;
+            }
         }
 
         /// <summary>

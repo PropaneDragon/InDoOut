@@ -1,4 +1,5 @@
 ﻿using InDoOut_Core.Entities.Core;
+using System.Linq;
 
 namespace InDoOut_Core.Entities.Functions
 {
@@ -49,7 +50,7 @@ namespace InDoOut_Core.Entities.Functions
         /// <returns></returns>
         public override bool Equals(object obj)
         {
-            return obj is Output output && Name == output.Name;
+            return obj is Output output && Name == output.Name && Connections.Count == output.Connections.Count && Connections.All(connection => output.Connections.Contains(connection));
         }
 
         /// <summary>

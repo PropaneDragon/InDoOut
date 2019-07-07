@@ -8,6 +8,7 @@ namespace InDoOut_Core_Tests
         public IInput LastInput { get; private set; } = null;
         public IOutput OutputToTrigger { get; set; } = null;
         public Action Action { get; private set; } = null;
+        public bool HasRun = false;
 
         private TestFunction()
         {
@@ -23,10 +24,14 @@ namespace InDoOut_Core_Tests
 
         protected override IOutput Started(IInput triggeredBy)
         {
+            LastInput = triggeredBy;
+
             if (Action != null)
             {
                 Action.Invoke();
             }
+
+            HasRun = true;
 
             return OutputToTrigger;
         }

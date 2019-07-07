@@ -10,17 +10,33 @@ namespace InDoOut_Core.Entities.Functions
     /// </summary>
     public abstract class Function : InteractiveEntity<IOutput, IInput>, IFunction
     {
+        private object _stateLock = new object();
+        private object _inputsLock = new object();
+        private object _nameLock = new object();
+
+        private State _state = State.Unknown;
+        private List<IInput> _inputs = new List<IInput>();
+        private string _name = null;
+
         /// <summary>
         /// The current function state. See <see cref="State"/> for more
         /// info on the states.
         /// </summary>
         /// <seealso cref="State"/>
-        public State State { get; private set; } = State.Unknown;
+        public State State
+        {
+            get { lock (_stateLock) return _state; }
+            private set { lock (_stateLock) _state = value; }
+        }
 
         /// <summary>
         /// The inputs that belong to this function.
         /// </summary>
-        public List<IInput> Inputs { get; private set; } = new List<IInput>();
+        public List<IInput> Inputs
+        {
+            get { lock (_inputsLock) return _inputs; }
+            private set { lock (_inputsLock) _inputs = value; }
+        }
 
         /// <summary>
         /// The outputs that belong to this function.
@@ -30,7 +46,11 @@ namespace InDoOut_Core.Entities.Functions
         /// <summary>
         /// The function name.
         /// </summary>
-        public string Name { get; protected set; } = null;
+        public string Name
+        {
+            get { lock (_nameLock) return _name; }
+            protected set { lock (_nameLock) _name = value; }
+        }
 
         /// <summary>
         /// Creates a basic function.

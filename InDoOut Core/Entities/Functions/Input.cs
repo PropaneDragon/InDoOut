@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using InDoOut_Core.Entities.Core;
 
 namespace InDoOut_Core.Entities.Functions
@@ -42,7 +40,7 @@ namespace InDoOut_Core.Entities.Functions
         /// <returns></returns>
         public override bool Equals(object obj)
         {
-            return obj is Input input && Name == input.Name;
+            return obj is Input input && Name == input.Name && Connections.Count == input.Connections.Count && Connections.All(connection => input.Connections.Contains(connection));
         }
 
         /// <summary>
