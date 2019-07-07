@@ -18,7 +18,7 @@ namespace InDoOut_Core.Entities.Core
         /// <summary>
         /// The current running state of this entity.
         /// </summary>
-        public bool Running => _runner != null && _runner.Status == TaskStatus.Running;
+        public bool Running => _runner != null && (_runner.Status == TaskStatus.Running || _runner.Status == TaskStatus.WaitingToRun || _runner.Status == TaskStatus.WaitingForChildrenToComplete);
 
         /// <summary>
         /// The connections that this entity has.
@@ -54,7 +54,7 @@ namespace InDoOut_Core.Entities.Core
         /// <returns>Whether the given <see cref="IEntity"/> can trigger this.</returns>
         public bool CanAcceptConnection(IEntity entity)
         {
-            return entity != null && typeof(ConnectsFromType).IsAssignableFrom(entity.GetType());
+            return entity != null && entity != this && typeof(ConnectsFromType).IsAssignableFrom(entity.GetType());
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace InDoOut_Core.Entities.Core
         {
             lock (_connectionsLock)
             {
-                if (connection != null && !_connections.Contains(connection))
+                if (connection != null && connection != this && !_connections.Contains(connection))
                 {
                     _connections.Add(connection);
 

@@ -3,18 +3,18 @@ using System;
 
 namespace InDoOut_Core_Tests
 {
-    class TestFunction : Function
+    class TestStartFunction : StartFunction
     {
         public IInput LastInput { get; private set; } = null;
         public IOutput OutputToTrigger { get; set; } = null;
         public Action Action { get; private set; } = null;
         public bool HasRun { get; set; }
 
-        public TestFunction()
+        public TestStartFunction()
         {
         }
 
-        public TestFunction(Action action) : this()
+        public TestStartFunction(Action action) : this()
         {
             Action = action;
         }

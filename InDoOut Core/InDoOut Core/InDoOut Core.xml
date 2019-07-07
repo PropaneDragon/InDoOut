@@ -449,11 +449,89 @@
             </summary>
             <param name="triggeredBy">The <see cref="T:InDoOut_Core.Entities.Functions.IFunction"/> that triggered this output.</param>
         </member>
+        <member name="T:InDoOut_Core.Entities.Functions.StartFunction">
+            <summary>
+            A self contained block that can do processing independently of any other function. <see cref="T:InDoOut_Core.Entities.Functions.StartFunction"/>s are
+            slightly different to <see cref="T:InDoOut_Core.Entities.Functions.Function"/>s, where instead of only being able to be triggered by a given <see cref="T:InDoOut_Core.Entities.Functions.IInput"/>,
+            they are triggered automatically at the start of a <see cref="T:InDoOut_Core.Entities.Programs.IProgram"/>.
+            </summary>
+        </member>
         <member name="T:InDoOut_Core.Entities.Programs.IProgram">
             <summary>
-            Represents a group of self contained functions that have
+            Represents a group of self contained <see cref="T:InDoOut_Core.Entities.Functions.IFunction"/>s that have
             interactivity between each other.
             </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Programs.IProgram.Functions">
+            <summary>
+            All <see cref="T:InDoOut_Core.Entities.Functions.IFunction"/>s that are contained within this program.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Programs.IProgram.StartFunctions">
+            <summary>
+            All <see cref="T:InDoOut_Core.Entities.Functions.IStartFunction"/>s that are available to be started when the 
+            program is started.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Programs.IProgram.AddFunction(InDoOut_Core.Entities.Functions.IFunction)">
+            <summary>
+            Add a function to the program.
+            </summary>
+            <param name="function">The function to add to the program.</param>
+            <returns>Whether the function was added.</returns>
+        </member>
+        <member name="T:InDoOut_Core.Entities.Programs.Program">
+            <summary>
+            A collection of <see cref="T:InDoOut_Core.Entities.Functions.IFunction"/> entities linked together and started through the
+            <see cref="P:InDoOut_Core.Entities.Programs.Program.StartFunctions"/>.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Programs.Program.Functions">
+            <summary>
+            All functions within this program.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Programs.Program.StartFunctions">
+            <summary>
+            All <see cref="T:InDoOut_Core.Entities.Functions.IStartFunction"/>s within this program.
+            These are triggered when the program is triggered, and the program will not
+            start without at least one.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Programs.Program.Running">
+            <summary>
+            Whether any of the functions within this program are running.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Programs.Program.Name">
+            <summary>
+            The name of this program.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Programs.Program.Id">
+            <summary>
+            The unique ID for this program.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Programs.Program.AddFunction(InDoOut_Core.Entities.Functions.IFunction)">
+            <summary>
+            Add a function to the program.
+            </summary>
+            <param name="function">The function to add.</param>
+            <returns>Whether the function was added.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Programs.Program.CanBeTriggered(InDoOut_Core.Entities.Core.IEntity)">
+            <summary>
+            Whether this program can be triggered by the given <see cref="T:InDoOut_Core.Entities.Core.IEntity"/>.
+            </summary>
+            <param name="entity">The entity to check.</param>
+            <returns>Whether this program can be triggered by the entity.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Programs.Program.Trigger(InDoOut_Core.Entities.Core.IEntity)">
+            <summary>
+            Trigger this program. This will start all available <see cref="P:InDoOut_Core.Entities.Programs.Program.StartFunctions"/>.
+            </summary>
+            <param name="triggeredBy">The <see cref="T:InDoOut_Core.Entities.Core.IEntity"/> that triggered this.</param>
         </member>
     </members>
 </doc>

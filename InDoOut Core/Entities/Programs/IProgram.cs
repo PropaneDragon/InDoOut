@@ -5,11 +5,27 @@ using System.Collections.Generic;
 namespace InDoOut_Core.Entities.Programs
 {
     /// <summary>
-    /// Represents a group of self contained functions that have
+    /// Represents a group of self contained <see cref="IFunction"/>s that have
     /// interactivity between each other.
     /// </summary>
-    interface IProgram : ITriggerable<IEntity>, INamed, IStored
+    public interface IProgram : ITriggerable<IEntity>, INamed, IStored
     {
+        /// <summary>
+        /// All <see cref="IFunction"/>s that are contained within this program.
+        /// </summary>
         List<IFunction> Functions { get; }
+
+        /// <summary>
+        /// All <see cref="IStartFunction"/>s that are available to be started when the 
+        /// program is started.
+        /// </summary>
+        List<IStartFunction> StartFunctions { get; }
+
+        /// <summary>
+        /// Add a function to the program.
+        /// </summary>
+        /// <param name="function">The function to add to the program.</param>
+        /// <returns>Whether the function was added.</returns>
+        bool AddFunction(IFunction function);
     }
 }
