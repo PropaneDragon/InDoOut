@@ -48,6 +48,12 @@ namespace InDoOut_Core.Entities.Functions
         State State { get; }
 
         /// <summary>
+        /// Stop has been requested on the function, and it should be terminated as soon
+        /// as possible.
+        /// </summary>
+        bool StopRequested { get; }
+
+        /// <summary>
         /// All inputs that this function has.
         /// </summary>
         List<IInput> Inputs { get; }
@@ -56,5 +62,12 @@ namespace InDoOut_Core.Entities.Functions
         /// All outputs that this function has.
         /// </summary>
         List<IOutput> Outputs { get; }
+
+        /// <summary>
+        /// Politely asks for the function to be stopped, and waits for the user code to
+        /// listen to the request. If the user code has no listener, it will continue
+        /// regardless, and there's nothing that can be done about this.
+        /// </summary>
+        void PolitelyStop();
     }
 }

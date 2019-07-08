@@ -1,6 +1,7 @@
 ﻿using InDoOut_Core.Entities.Core;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace InDoOut_Core.Entities.Functions
 {
@@ -14,9 +15,16 @@ namespace InDoOut_Core.Entities.Functions
         private object _inputsLock = new object();
         private object _nameLock = new object();
 
+        private Thread _functionThread = null;
         private State _state = State.Unknown;
         private List<IInput> _inputs = new List<IInput>();
         private string _name = null;
+
+        /// <summary>
+        /// Stop has been requested on the task, and it should be terminated as soon
+        /// as possible.
+        /// </summary>
+        public bool StopRequested { get; private set; } = false;
 
         /// <summary>
         /// The current function state. See <see cref="State"/> for more
@@ -62,6 +70,18 @@ namespace InDoOut_Core.Entities.Functions
         }
 
         /// <summary>
+        /// Makes a request for the entity to stop when it's safe to do so, for example
+        /// on filesystem actions. If there's nothing in place, the underlying code doesn't
+        /// have to listen to this request, and provisions may not be in place to stop it.
+        /// If this is the case, and you're absolutely sure there's nothing that can be done,
+        /// use <see cref="ForceStop"/>.
+        /// </summary>
+        public void PolitelyStop()
+        {
+            StopRequested = true;
+        }
+
+        /// <summary>
         /// Creates an input for this function.
         /// </summary>
         /// <param name="name">The name of the input.</param>
@@ -103,6 +123,10 @@ namespace InDoOut_Core.Entities.Functions
         /// <param name="triggeredBy">The entity that triggered this.</param>
         protected override void Process(IInput triggeredBy)
         {
+            StopRequested = false;
+
+            _functionThread = Thread.CurrentThread;
+
             if (State != State.Disabled)
             {
                 State = State.Processing;
@@ -123,7 +147,7 @@ namespace InDoOut_Core.Entities.Functions
 
                     var trace = ex.StackTrace;
 
-                    //Todo: Log this.
+                    //TODO: Log this.
                 }
             }
         }

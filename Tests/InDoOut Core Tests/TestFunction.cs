@@ -7,7 +7,7 @@ namespace InDoOut_Core_Tests
     {
         public IInput LastInput { get; private set; } = null;
         public IOutput OutputToTrigger { get; set; } = null;
-        public Action Action { get; private set; } = null;
+        public Action Action { get; set; } = null;
         public bool HasRun { get; set; }
 
         public TestFunction()

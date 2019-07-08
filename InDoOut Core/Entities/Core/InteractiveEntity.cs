@@ -34,7 +34,11 @@ namespace InDoOut_Core.Entities.Core
         /// <param name="triggeredBy">The entity that triggered this one.</param>
         public void Trigger(ConnectsFromType triggeredBy)
         {
-            _runner = Task.Run(() => Process(triggeredBy));
+            _runner = Task.Run(() =>
+            {
+                try { Process(triggeredBy); }
+                catch { }
+            });
         }
 
         /// <summary>

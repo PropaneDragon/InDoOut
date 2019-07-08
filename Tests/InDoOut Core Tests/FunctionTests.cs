@@ -183,5 +183,49 @@ namespace InDoOut_Core_Tests
 
             Assert.AreNotEqual(startFunction.HasRun, endFunction.HasRun);
         }
+
+        [TestMethod]
+        public void PolitelyStop()
+        {
+            var stoppedSafely = false;
+            var count = 0;
+            var function = new TestFunction();
+
+            function.Action = () =>
+            {
+                for (count = 0; count < 100; ++count)
+                {
+                    if (function.StopRequested)
+                    {
+                        stoppedSafely = true;
+                        return;
+                    }
+
+                    Thread.Sleep(TimeSpan.FromMilliseconds(10));
+                }
+            };
+
+            Assert.IsFalse(stoppedSafely);
+
+            function.Trigger(null);
+
+            Thread.Sleep(TimeSpan.FromMilliseconds(10));
+
+            Assert.IsTrue(function.Running);
+            Assert.IsFalse(function.HasRun);
+            Assert.IsFalse(stoppedSafely);
+
+            function.PolitelyStop();
+
+            var startTime = DateTime.UtcNow;
+
+            while (!function.HasRun && DateTime.UtcNow < startTime.AddSeconds(1))
+            {
+                Thread.Sleep(TimeSpan.FromMilliseconds(1));
+            }
+
+            Assert.IsTrue(stoppedSafely);
+            Assert.AreNotEqual(100, count);
+        }
     }
 }

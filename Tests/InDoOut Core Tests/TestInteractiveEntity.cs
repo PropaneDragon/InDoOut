@@ -1,4 +1,5 @@
 ﻿using InDoOut_Core.Entities.Core;
+using System;
 
 namespace InDoOut_Core_Tests
 {
@@ -6,6 +7,7 @@ namespace InDoOut_Core_Tests
     {
         public bool Processed { get; set; } = false;
         public IEntity LastTriggeredBy { get; protected set; } = null;
+        public Action Action { get; set; } = null;
 
         public bool AddConnectionPublic(ITriggerable connection) => AddConnection(connection);
         public bool AddConnectionsPublic(params ITriggerable[] connections) => AddConnections(connections);
@@ -15,10 +17,25 @@ namespace InDoOut_Core_Tests
         public bool SetConnectionPublic(params ITriggerable[] connections) => SetConnection(connections);
         public void ProcessPublic(IEntity triggeredBy) => Process(triggeredBy);
 
+        public TestInteractiveEntity()
+        {
+        }
+
+        public TestInteractiveEntity(Action action) : this()
+        {
+            Action = action;
+        }
+
         protected override void Process(IEntity triggeredBy)
         {
-            Processed = true;
             LastTriggeredBy = triggeredBy;
+
+            if (Action != null)
+            {
+                Action.Invoke();
+            }
+
+            Processed = true;
         }
     }
 }
