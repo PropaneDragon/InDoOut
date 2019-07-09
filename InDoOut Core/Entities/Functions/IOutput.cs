@@ -3,6 +3,27 @@
 namespace InDoOut_Core.Entities.Functions
 {
     /// <summary>
+    /// The type of output.
+    /// </summary>
+    public enum OutputType
+    {
+        /// <summary>
+        /// An output from a good result.
+        /// </summary>
+        Positive,
+
+        /// <summary>
+        /// An output from a bad result.
+        /// </summary>
+        Negative,
+
+        /// <summary>
+        /// An output from neither a good nor bad result.
+        /// </summary>
+        Neutral
+    }
+
+    /// <summary>
     /// Represents an output that can be connected to any
     /// <see cref="IInput"/> entity and is triggered by a
     /// <see cref="IFunction"/> entity.

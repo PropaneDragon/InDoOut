@@ -7,6 +7,8 @@ namespace InDoOut_Core_Tests
     {
         public IInput LastInput { get; private set; } = null;
         public IOutput OutputToTrigger { get; set; } = null;
+        public IInput InputToBuild { get; set; } = null;
+        public IOutput OutputToBuild { get; set; } = null;
         public Action Action { get; set; } = null;
         public bool HasRun { get; set; }
 
@@ -20,7 +22,8 @@ namespace InDoOut_Core_Tests
         }
 
         public IInput CreateInputPublic(string name = "Input") => CreateInput(name);
-        public IOutput CreateOutputPublic(string name = "Output") => CreateOutput(name);
+        public IOutput CreateOutputPublic(string name = "Output", OutputType outputType = OutputType.Neutral) => CreateOutput(name, outputType);
+        public IOutput CreateOutputPublic(OutputType outputType, string name = "Output") => CreateOutput(name, outputType);
 
         protected override IOutput Started(IInput triggeredBy)
         {
@@ -34,6 +37,16 @@ namespace InDoOut_Core_Tests
             HasRun = true;
 
             return OutputToTrigger;
+        }
+
+        protected override IInput BuildInput(string name)
+        {
+            return InputToBuild == null ? base.BuildInput(name) : InputToBuild;
+        }
+
+        protected override IOutput BuildOutput(string name, OutputType outputType)
+        {
+            return OutputToBuild == null ? base.BuildOutput(name, outputType) : OutputToBuild;
         }
     }
 }

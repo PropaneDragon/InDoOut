@@ -224,12 +224,13 @@
         </member>
         <member name="M:InDoOut_Core.Entities.Functions.Function.PolitelyStop">
             <summary>
-            Makes a request for the entity to stop when it's safe to do so, for example
+            Makes a request for the function to stop when it's safe to do so, for example
             on filesystem actions. If there's nothing in place, the underlying code doesn't
             have to listen to this request, and provisions may not be in place to stop it.
-            If this is the case, and you're absolutely sure there's nothing that can be done,
-            use <see cref="!:ForceStop"/>.
+            For any code that listens for <see cref="P:InDoOut_Core.Entities.Functions.Function.StopRequested"/> they will stop when
+            this method is called.
             </summary>
+            <seealso cref="P:InDoOut_Core.Entities.Functions.Function.StopRequested"/>
         </member>
         <member name="M:InDoOut_Core.Entities.Functions.Function.CreateInput(System.String)">
             <summary>
@@ -238,12 +239,38 @@
             <param name="name">The name of the input.</param>
             <returns>The input that was created.</returns>
         </member>
-        <member name="M:InDoOut_Core.Entities.Functions.Function.CreateOutput(System.String)">
+        <member name="M:InDoOut_Core.Entities.Functions.Function.CreateOutput(System.String,InDoOut_Core.Entities.Functions.OutputType)">
+            <summary>
+            Creates an output for this function.
+            </summary>
+            <param name="outputType">The type of output to create. Different types return different classes.</param>
+            <param name="name">The name of the output.</param>
+            <returns>The output that was created.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Functions.Function.CreateOutput(InDoOut_Core.Entities.Functions.OutputType,System.String)">
             <summary>
             Creates an output for this function.
             </summary>
             <param name="name">The name of the output.</param>
+            <param name="outputType">The type of output to create. Different types return different classes.</param>
             <returns>The output that was created.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Functions.Function.BuildInput(System.String)">
+            <summary>
+            A builder for creating an <see cref="T:InDoOut_Core.Entities.Functions.IInput"/> entity
+            when requested.
+            </summary>
+            <param name="name">The name of the input.</param>
+            <returns>A new input for a given name.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Functions.Function.BuildOutput(System.String,InDoOut_Core.Entities.Functions.OutputType)">
+            <summary>
+            A builder for creating an <see cref="T:InDoOut_Core.Entities.Functions.IOutput"/> entity
+            when requested.
+            </summary>
+            <param name="name">The name of the output.</param>
+            <param name="outputType">The type of output to create.</param>
+            <returns>A new output for a given name.</returns>
         </member>
         <member name="M:InDoOut_Core.Entities.Functions.Function.Process(InDoOut_Core.Entities.Functions.IInput)">
             <summary>
@@ -266,27 +293,32 @@
         </member>
         <member name="F:InDoOut_Core.Entities.Functions.State.Unknown">
             <summary>
-            The entity is in an unknown state and hasn't been initialised properly.
+            The function is in an unknown state and hasn't been initialised properly.
             </summary>
         </member>
         <member name="F:InDoOut_Core.Entities.Functions.State.Placing">
             <summary>
-            The entity is being placed from within an editor.
+            The function is being placed from within an editor.
             </summary>
         </member>
         <member name="F:InDoOut_Core.Entities.Functions.State.Disabled">
             <summary>
-            The entity is currently disabled and will not trigger.
+            The function is currently disabled and will not trigger.
             </summary>
         </member>
         <member name="F:InDoOut_Core.Entities.Functions.State.Waiting">
             <summary>
-            The entity is currently waiting to be triggered.
+            The function is currently waiting to be triggered.
             </summary>
         </member>
         <member name="F:InDoOut_Core.Entities.Functions.State.Processing">
             <summary>
-            The entity has been triggered and is currently processing.
+            The function has been triggered and is currently processing.
+            </summary>
+        </member>
+        <member name="F:InDoOut_Core.Entities.Functions.State.Stopping">
+            <summary>
+            The function has been requested to stop and is stopping.
             </summary>
         </member>
         <member name="F:InDoOut_Core.Entities.Functions.State.InError">
@@ -383,6 +415,26 @@
             Begins processing this input. This calls the <see cref="P:InDoOut_Core.Entities.Functions.Input.Parent"/> it is connected to.
             </summary>
             <param name="triggeredBy">The <see cref="T:InDoOut_Core.Entities.Functions.IOutput"/> that triggered this input.</param>
+        </member>
+        <member name="T:InDoOut_Core.Entities.Functions.OutputType">
+            <summary>
+            The type of output.
+            </summary>
+        </member>
+        <member name="F:InDoOut_Core.Entities.Functions.OutputType.Positive">
+            <summary>
+            An output from a good result.
+            </summary>
+        </member>
+        <member name="F:InDoOut_Core.Entities.Functions.OutputType.Negative">
+            <summary>
+            An output from a bad result.
+            </summary>
+        </member>
+        <member name="F:InDoOut_Core.Entities.Functions.OutputType.Neutral">
+            <summary>
+            An output from neither a good nor bad result.
+            </summary>
         </member>
         <member name="T:InDoOut_Core.Entities.Functions.IOutput">
             <summary>
@@ -482,6 +534,42 @@
             </summary>
             <param name="triggeredBy">The <see cref="T:InDoOut_Core.Entities.Functions.IFunction"/> that triggered this output.</param>
         </member>
+        <member name="T:InDoOut_Core.Entities.Functions.OutputNegative">
+            <summary>
+            A negative output. These are generally used on bad results.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Functions.OutputNegative.#ctor(System.String)">
+            <summary>
+            Creates a negative output. Negative outputs should be used where the result
+            is bad.
+            </summary>
+            <param name="name">The name of the output.</param>
+        </member>
+        <member name="T:InDoOut_Core.Entities.Functions.OutputNeutral">
+            <summary>
+            A neutral output. These are used on neither good nor bad results.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Functions.OutputNeutral.#ctor(System.String)">
+            <summary>
+            Creates a neutral output. Neutral outputs should be used where the result
+            is neither good nor bad.
+            </summary>
+            <param name="name">The name of the output.</param>
+        </member>
+        <member name="T:InDoOut_Core.Entities.Functions.OutputPositive">
+            <summary>
+            A positive output. These are generally used on good results.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Functions.OutputPositive.#ctor(System.String)">
+            <summary>
+            Creates a positive output. Positive outputs should be used where the result
+            is good.
+            </summary>
+            <param name="name">The name of the output.</param>
+        </member>
         <member name="T:InDoOut_Core.Entities.Functions.StartFunction">
             <summary>
             A self contained block that can do processing independently of any other function. <see cref="T:InDoOut_Core.Entities.Functions.StartFunction"/>s are
@@ -565,6 +653,21 @@
             Trigger this program. This will start all available <see cref="P:InDoOut_Core.Entities.Programs.Program.StartFunctions"/>.
             </summary>
             <param name="triggeredBy">The <see cref="T:InDoOut_Core.Entities.Core.IEntity"/> that triggered this.</param>
+        </member>
+        <member name="T:InDoOut_Core.Threading.Safety.TryGet">
+            <summary>
+            A collection of methods to safely get values.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Core.Threading.Safety.TryGet.ValueOrDefault``1(System.Func{``0},``0)">
+            <summary>
+            Gets a value from a function result unless an exception is thrown, where it returns
+            a default value.
+            </summary>
+            <typeparam name="T">The value type that is returned.</typeparam>
+            <param name="function">The function to process.</param>
+            <param name="defaultValue">The default value to return on failure.</param>
+            <returns></returns>
         </member>
     </members>
 </doc>

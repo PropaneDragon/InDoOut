@@ -5,7 +5,7 @@
     /// for more generalised info.
     /// </summary>
     /// <seealso cref="IOutput"/>
-    interface IOutputPositive : IOutput
+    public interface IOutputPositive : IOutput
     {
     }
 }

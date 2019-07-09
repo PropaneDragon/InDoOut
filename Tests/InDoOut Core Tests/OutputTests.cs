@@ -11,7 +11,7 @@ namespace InDoOut_Core_Tests
         [TestMethod]
         public void SingleConnection()
         {
-            var output = new Output();
+            var output = new OutputNeutral();
             var functionA = new TestFunction(() => { });
 
             var a = functionA.CreateInputPublic();
@@ -36,7 +36,7 @@ namespace InDoOut_Core_Tests
         [TestMethod]
         public void MultiConnection()
         {
-            var output = new Output();
+            var output = new OutputNeutral();
             var functionA = new TestFunction(() => { });
             var functionB = new TestFunction(() => { });
             var functionC = new TestFunction(() => { });
@@ -84,7 +84,7 @@ namespace InDoOut_Core_Tests
         [TestMethod]
         public void MultiConnectionThreading()
         {
-            var output = new Output();
+            var output = new OutputNeutral();
             var functionA = new TestFunction(() => Thread.Sleep(TimeSpan.FromSeconds(1)));
             var functionB = new TestFunction(() => Thread.Sleep(TimeSpan.FromSeconds(1)));
             var functionC = new TestFunction(() => Thread.Sleep(TimeSpan.FromSeconds(1)));
@@ -122,7 +122,7 @@ namespace InDoOut_Core_Tests
         [TestMethod]
         public void Defaults()
         {
-            var output = new Output();
+            var output = new OutputNeutral();
 
             Assert.AreEqual("Output", output.Name);
             Assert.AreEqual(0, output.Connections.Count);
@@ -131,9 +131,9 @@ namespace InDoOut_Core_Tests
         [TestMethod]
         public void Equality()
         {
-            var outputA = new Output();
-            var outputB = new Output();
-            var outputC = new Output("Different name");
+            var outputA = new OutputNeutral();
+            var outputB = new OutputNeutral();
+            var outputC = new OutputNeutral("Different name");
 
             Assert.AreEqual(outputA, outputB);
             Assert.AreNotEqual(outputA, outputC);

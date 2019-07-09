@@ -27,10 +27,23 @@ namespace InDoOut_Core_Tests
             input = function.CreateInputPublic();
             output = function.CreateOutputPublic();
 
-            Assert.AreEqual(1, function.Inputs.Count);
-            Assert.AreEqual(1, function.Outputs.Count);
             Assert.IsNull(input);
             Assert.IsNull(output);
+
+            output = function.CreateOutputPublic(OutputType.Negative);
+            
+            Assert.IsNull(output);
+
+            output = function.CreateOutputPublic(OutputType.Positive);
+
+            Assert.IsNull(output);
+
+            output = function.CreateOutputPublic(OutputType.Neutral);
+
+            Assert.IsNull(output);
+
+            Assert.AreEqual(1, function.Inputs.Count);
+            Assert.AreEqual(1, function.Outputs.Count);
 
             input = function.CreateInputPublic("A");
             output = function.CreateOutputPublic("A");
@@ -226,6 +239,150 @@ namespace InDoOut_Core_Tests
 
             Assert.IsTrue(stoppedSafely);
             Assert.AreNotEqual(100, count);
+        }
+
+        [TestMethod]
+        public void NoTriggerOnStop()
+        {
+            var function = new TestFunction(() => Thread.Sleep(TimeSpan.FromSeconds(1)));
+            var lastFunction = new TestFunction();
+
+            var output = function.CreateOutputPublic();
+            var input = function.CreateInputPublic();
+
+            Assert.IsTrue(output.Connect(input));
+
+            function.OutputToTrigger = output;
+            function.Trigger(null);
+
+            var startTime = DateTime.UtcNow;
+
+            while (!function.Running && DateTime.UtcNow < startTime.Add(TimeSpan.FromSeconds(1)))
+            {
+                Thread.Sleep(TimeSpan.FromMilliseconds(1));
+            }
+
+            Assert.IsTrue(function.Running);
+
+            function.PolitelyStop();
+
+            startTime = DateTime.UtcNow;
+
+            while (function.Running && DateTime.UtcNow < startTime.Add(TimeSpan.FromSeconds(1)))
+            {
+                Thread.Sleep(TimeSpan.FromMilliseconds(1));
+            }
+
+            startTime = DateTime.UtcNow;
+
+            while (!lastFunction.Running && DateTime.UtcNow < startTime.Add(TimeSpan.FromMilliseconds(10)))
+            {
+                Thread.Sleep(TimeSpan.FromMilliseconds(1));
+            }
+
+            Assert.IsFalse(lastFunction.Running);
+            Assert.IsFalse(lastFunction.HasRun);
+            Assert.IsTrue(function.HasRun);
+        }
+
+        [TestMethod]
+        public void DefaultInputOutputTypes()
+        {
+            var function = new TestFunction();
+            var input = function.CreateInputPublic();
+            var neutral = function.CreateOutputPublic("Neutral", OutputType.Neutral);
+            var positive = function.CreateOutputPublic("Positive", OutputType.Positive);
+            var negative = function.CreateOutputPublic("Negative", OutputType.Negative);
+
+            Assert.IsInstanceOfType(input, typeof(Input));
+            Assert.IsInstanceOfType(neutral, typeof(OutputNeutral));
+            Assert.IsInstanceOfType(positive, typeof(OutputPositive));
+            Assert.IsInstanceOfType(negative, typeof(OutputNegative));
+
+            Assert.IsInstanceOfType(input, typeof(IInput));
+            Assert.IsInstanceOfType(neutral, typeof(IOutputNeutral));
+            Assert.IsInstanceOfType(positive, typeof(IOutputPositive));
+            Assert.IsInstanceOfType(negative, typeof(IOutputNegative));
+
+            Assert.IsInstanceOfType(neutral, typeof(IOutput));
+            Assert.IsInstanceOfType(positive, typeof(IOutput));
+            Assert.IsInstanceOfType(negative, typeof(IOutput));
+
+            Assert.IsNotInstanceOfType(neutral, typeof(IInput));
+            Assert.IsNotInstanceOfType(positive, typeof(IInput));
+            Assert.IsNotInstanceOfType(negative, typeof(IInput));
+            Assert.IsNotInstanceOfType(input, typeof(IOutput));
+
+            Assert.IsNotInstanceOfType(neutral, typeof(IOutputNegative));
+            Assert.IsNotInstanceOfType(neutral, typeof(IOutputPositive));
+
+            Assert.IsNotInstanceOfType(positive, typeof(IOutputNegative));
+            Assert.IsNotInstanceOfType(positive, typeof(IOutputNeutral));
+
+            Assert.IsNotInstanceOfType(negative, typeof(IOutputPositive));
+            Assert.IsNotInstanceOfType(negative, typeof(IOutputNeutral));
+
+            var newInput = function.CreateInputPublic("B");
+            var newNeutral = function.CreateOutputPublic("Neutral B", OutputType.Neutral);
+            var newPositive = function.CreateOutputPublic("Positive B", OutputType.Positive);
+            var newNegative = function.CreateOutputPublic("Negative B", OutputType.Negative);
+
+            Assert.AreNotEqual(input, newInput);
+            Assert.AreNotEqual(neutral, newNeutral);
+            Assert.AreNotEqual(positive, newPositive);
+            Assert.AreNotEqual(negative, newNegative);
+        }
+
+        [TestMethod]
+        public void CustomInputOutputTypes()
+        {
+            var function = new TestFunction();
+            var input = function.CreateInputPublic("Basic bitch");
+            var neutral = function.CreateOutputPublic("Neutral", OutputType.Neutral);
+            var positive = function.CreateOutputPublic("Positive", OutputType.Positive);
+            var negative = function.CreateOutputPublic("Negative", OutputType.Negative);
+
+            Assert.IsInstanceOfType(input, typeof(Input));
+            Assert.IsInstanceOfType(neutral, typeof(OutputNeutral));
+            Assert.IsInstanceOfType(positive, typeof(OutputPositive));
+            Assert.IsInstanceOfType(negative, typeof(OutputNegative));
+
+            var newInput = new Input(null, "Actually different");
+            var newNeutral = new OutputNegative("Actually negative");
+            var newPositive = new OutputNeutral("Actually neutral");
+            var newNegative = new OutputPositive("Actually positive");
+
+            function.InputToBuild = newInput;
+            function.OutputToBuild = newNeutral;
+
+            var outInput = function.CreateInputPublic();
+
+            Assert.AreEqual(newInput, outInput);
+            Assert.AreNotEqual(outInput, input);
+
+            var outNeutral = function.CreateOutputPublic();
+
+            Assert.AreEqual(newNeutral, outNeutral);
+
+            outNeutral = function.CreateOutputPublic("Doesn't actually matter anymore");
+
+            Assert.IsNull(outNeutral);
+
+            outNeutral = function.CreateOutputPublic("Just gets ignored now", OutputType.Negative);
+
+            Assert.IsNull(outNeutral);
+            
+            function.OutputToBuild = newPositive;
+
+            var outPositive = function.CreateOutputPublic();
+
+            Assert.AreEqual(newPositive, outPositive);
+
+            function.OutputToBuild = newNegative;
+
+            var outNegative = function.CreateOutputPublic();
+
+            Assert.AreEqual(newNegative, outNegative);
         }
     }
 }

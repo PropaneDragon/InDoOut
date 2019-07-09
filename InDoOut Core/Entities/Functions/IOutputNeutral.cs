@@ -6,7 +6,7 @@
     /// See <see cref="IOutput"/> for more generalised info.
     /// </summary>
     /// <seealso cref="IOutput"/>
-    interface IOutputNeutral : IOutput
+    public interface IOutputNeutral : IOutput
     {
     }
 }

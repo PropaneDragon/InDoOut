@@ -10,7 +10,7 @@ namespace InDoOut_Core_Tests
         public void Input()
         {
             var input = new Input(null);
-            var output = new Output();
+            var output = new OutputNeutral();
             var function = new TestFunction(() => { });
 
             Assert.IsTrue(input.CanAcceptConnection(output));
@@ -23,7 +23,7 @@ namespace InDoOut_Core_Tests
         public void Output()
         {
             var input = new Input(null);
-            var output = new Output();
+            var output = new OutputNeutral();
             var function = new TestFunction(() => { });
 
             Assert.IsTrue(output.CanAcceptConnection(function));
@@ -36,7 +36,7 @@ namespace InDoOut_Core_Tests
         public void Function()
         {
             var input = new Input(null);
-            var output = new Output();
+            var output = new OutputNeutral();
             var function = new TestFunction(() => { });
 
             Assert.IsTrue(function.CanAcceptConnection(input));

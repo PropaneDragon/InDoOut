@@ -9,25 +9,29 @@ namespace InDoOut_Core.Entities.Functions
     public enum State
     {
         /// <summary>
-        /// The entity is in an unknown state and hasn't been initialised properly.
+        /// The function is in an unknown state and hasn't been initialised properly.
         /// </summary>
         Unknown,
         /// <summary>
-        /// The entity is being placed from within an editor.
+        /// The function is being placed from within an editor.
         /// </summary>
         Placing,
         /// <summary>
-        /// The entity is currently disabled and will not trigger.
+        /// The function is currently disabled and will not trigger.
         /// </summary>
         Disabled,
         /// <summary>
-        /// The entity is currently waiting to be triggered.
+        /// The function is currently waiting to be triggered.
         /// </summary>
         Waiting,
         /// <summary>
-        /// The entity has been triggered and is currently processing.
+        /// The function has been triggered and is currently processing.
         /// </summary>
         Processing,
+        /// <summary>
+        /// The function has been requested to stop and is stopping.
+        /// </summary>
+        Stopping,
         /// <summary>
         /// The entity has failed in some way and is in an error state.
         /// </summary>

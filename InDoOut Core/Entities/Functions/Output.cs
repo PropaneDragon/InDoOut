@@ -7,7 +7,7 @@ namespace InDoOut_Core.Entities.Functions
     /// Outputs are triggered by <see cref="IFunction"/>s. These outputs are simple connections for
     /// <see cref="IInput"/>s which then trigger their connected entity.
     /// </summary>
-    public class Output : InteractiveEntity<IInput, IFunction>, IOutput
+    public abstract class Output : InteractiveEntity<IInput, IFunction>, IOutput
     {
         /// <summary>
         /// The name of this output.

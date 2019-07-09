@@ -1,4 +1,5 @@
 ﻿using InDoOut_Core.Entities.Core;
+using InDoOut_Core.Threading.Safety;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -70,15 +71,17 @@ namespace InDoOut_Core.Entities.Functions
         }
 
         /// <summary>
-        /// Makes a request for the entity to stop when it's safe to do so, for example
+        /// Makes a request for the function to stop when it's safe to do so, for example
         /// on filesystem actions. If there's nothing in place, the underlying code doesn't
         /// have to listen to this request, and provisions may not be in place to stop it.
-        /// If this is the case, and you're absolutely sure there's nothing that can be done,
-        /// use <see cref="ForceStop"/>.
+        /// For any code that listens for <see cref="StopRequested"/> they will stop when
+        /// this method is called.
         /// </summary>
+        /// <seealso cref="StopRequested"/>
         public void PolitelyStop()
         {
             StopRequested = true;
+            State = State.Stopping;
         }
 
         /// <summary>
@@ -88,9 +91,8 @@ namespace InDoOut_Core.Entities.Functions
         /// <returns>The input that was created.</returns>
         protected IInput CreateInput(string name = "Input")
         {
-            var input = new Input(this, name);
-
-            if (!Inputs.Contains(input))
+            var input = TryGet.ValueOrDefault(() => BuildInput(name), null);
+            if (input != null && !Inputs.Contains(input))
             {
                 Inputs.Add(input);
 
@@ -103,15 +105,56 @@ namespace InDoOut_Core.Entities.Functions
         /// <summary>
         /// Creates an output for this function.
         /// </summary>
+        /// <param name="outputType">The type of output to create. Different types return different classes.</param>
         /// <param name="name">The name of the output.</param>
         /// <returns>The output that was created.</returns>
-        protected IOutput CreateOutput(string name = "Output")
+        protected IOutput CreateOutput(string name = "Output", OutputType outputType = OutputType.Neutral)
         {
-            var output = new Output(name);
-
-            if(AddConnection(output))
+            var output = TryGet.ValueOrDefault(() => BuildOutput(name, outputType), null);
+            if (output != null && AddConnection(output))
             {
                 return output;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Creates an output for this function.
+        /// </summary>
+        /// <param name="name">The name of the output.</param>
+        /// <param name="outputType">The type of output to create. Different types return different classes.</param>
+        /// <returns>The output that was created.</returns>
+        protected IOutput CreateOutput(OutputType outputType, string name = "Output") => CreateOutput(name, outputType);
+
+        /// <summary>
+        /// A builder for creating an <see cref="IInput"/> entity
+        /// when requested.
+        /// </summary>
+        /// <param name="name">The name of the input.</param>
+        /// <returns>A new input for a given name.</returns>
+        protected virtual IInput BuildInput(string name)
+        {
+            return new Input(this, name);
+        }
+
+        /// <summary>
+        /// A builder for creating an <see cref="IOutput"/> entity
+        /// when requested.
+        /// </summary>
+        /// <param name="name">The name of the output.</param>
+        /// <param name="outputType">The type of output to create.</param>
+        /// <returns>A new output for a given name.</returns>
+        protected virtual IOutput BuildOutput(string name, OutputType outputType)
+        {
+            switch (outputType)
+            {
+                case OutputType.Positive:
+                    return new OutputPositive(name);
+                case OutputType.Negative:
+                    return new OutputNegative(name);
+                case OutputType.Neutral:
+                    return new OutputNeutral(name);
             }
 
             return null;
@@ -134,7 +177,7 @@ namespace InDoOut_Core.Entities.Functions
                 try
                 {
                     var nextOutput = Started(triggeredBy);
-                    if (nextOutput != null && Outputs.Contains(nextOutput) && nextOutput.CanBeTriggered(this))
+                    if (State != State.Stopping && nextOutput != null && Outputs.Contains(nextOutput) && nextOutput.CanBeTriggered(this))
                     {
                         nextOutput.Trigger(this);
                     }

@@ -14,7 +14,7 @@ namespace InDoOut_Core_Tests
         {
             var interactiveEntity = new TestInteractiveEntity();
             var input = new Input(null);
-            var output = new Output();
+            var output = new OutputNeutral();
             var function = new TestFunction(() => { });
             var basicTriggerable = new TestTriggerableInterface();
 
