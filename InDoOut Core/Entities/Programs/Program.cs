@@ -1,8 +1,8 @@
-﻿using System;
+﻿using InDoOut_Core.Entities.Core;
+using InDoOut_Core.Entities.Functions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using InDoOut_Core.Entities.Core;
-using InDoOut_Core.Entities.Functions;
 
 namespace InDoOut_Core.Entities.Programs
 {

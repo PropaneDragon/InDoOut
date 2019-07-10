@@ -13,7 +13,7 @@ namespace InDoOut_Core.Entities.Functions
         /// The name of this output.
         /// </summary>
         public string Name { get; protected set; } = "Output";
-        
+
         /// <summary>
         /// Creates a basic output with a name.
         /// </summary>

@@ -54,7 +54,7 @@ namespace InDoOut_Core_Tests
             Assert.IsTrue(output.Connect(input));
             Assert.IsTrue(program.AddFunction(function));
             Assert.AreEqual(1, program.Functions.Count);
-            
+
             program.Trigger(null);
 
             var startTime = DateTime.UtcNow;

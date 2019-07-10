@@ -31,7 +31,7 @@ namespace InDoOut_Core_Tests
             Assert.IsNull(output);
 
             output = function.CreateOutputPublic(OutputType.Negative);
-            
+
             Assert.IsNull(output);
 
             output = function.CreateOutputPublic(OutputType.Positive);
@@ -371,7 +371,7 @@ namespace InDoOut_Core_Tests
             outNeutral = function.CreateOutputPublic("Just gets ignored now", OutputType.Negative);
 
             Assert.IsNull(outNeutral);
-            
+
             function.OutputToBuild = newPositive;
 
             var outPositive = function.CreateOutputPublic();

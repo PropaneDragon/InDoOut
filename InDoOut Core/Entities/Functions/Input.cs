@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using InDoOut_Core.Entities.Core;
+﻿using InDoOut_Core.Entities.Core;
+using System.Linq;
 
 namespace InDoOut_Core.Entities.Functions
 {

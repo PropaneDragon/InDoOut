@@ -91,13 +91,13 @@ namespace InDoOut_Core_Tests
         {
             var interactiveEntity = new TestInteractiveEntity();
             var otherInteractiveEntity = new TestInteractiveEntity();
-            
+
             Assert.IsFalse(interactiveEntity.Processed);
 
             interactiveEntity.Trigger(otherInteractiveEntity);
 
             var startTime = DateTime.UtcNow;
-            
+
             while (!interactiveEntity.Processed && DateTime.UtcNow < startTime.AddSeconds(1))
             {
                 Thread.Sleep(TimeSpan.FromMilliseconds(1));
