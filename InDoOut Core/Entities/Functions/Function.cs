@@ -16,7 +16,6 @@ namespace InDoOut_Core.Entities.Functions
         private object _inputsLock = new object();
         private object _nameLock = new object();
 
-        private Thread _functionThread = null;
         private State _state = State.Unknown;
         private List<IInput> _inputs = new List<IInput>();
         private string _name = null;
@@ -167,8 +166,6 @@ namespace InDoOut_Core.Entities.Functions
         protected override void Process(IInput triggeredBy)
         {
             StopRequested = false;
-
-            _functionThread = Thread.CurrentThread;
 
             if (State != State.Disabled)
             {
