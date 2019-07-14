@@ -184,13 +184,9 @@ namespace InDoOut_Core.Entities.Functions
 
                     State = State.Waiting;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     State = State.InError;
-
-                    var trace = ex.StackTrace;
-
-                    //TODO: Log this.
                 }
             }
         }
