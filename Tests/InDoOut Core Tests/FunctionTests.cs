@@ -384,5 +384,27 @@ namespace InDoOut_Core_Tests
 
             Assert.AreEqual(newNegative, outNegative);
         }
+
+        [TestMethod]
+        public void ExceptionSafety()
+        {
+            var function = new ExceptionFunction();
+
+            Assert.ThrowsException<Exception>(() => function.Name);
+            Assert.ThrowsException<Exception>(() => function.Description);
+            Assert.ThrowsException<Exception>(() => function.Group);
+            Assert.ThrowsException<Exception>(() => function.Keywords);
+
+            Assert.IsNull(function.SafeName);
+            Assert.IsNull(function.SafeDescription);
+            Assert.IsNull(function.SafeGroup);
+            Assert.IsNull(function.SafeKeywords);
+
+            function.Trigger(null);
+
+            Thread.Sleep(TimeSpan.FromMilliseconds(10));
+
+            Assert.AreEqual(State.InError, function.State);
+        }
     }
 }

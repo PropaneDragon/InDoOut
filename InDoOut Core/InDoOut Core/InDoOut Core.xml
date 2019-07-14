@@ -212,12 +212,49 @@
             The outputs that belong to this function.
             </summary>
         </member>
-        <member name="P:InDoOut_Core.Entities.Functions.Function.Name">
+        <member name="P:InDoOut_Core.Entities.Functions.Function.SafeName">
             <summary>
-            The function name.
+            An exception safe version of <see cref="P:InDoOut_Core.Entities.Functions.Function.Name"/>
             </summary>
         </member>
-        <member name="M:InDoOut_Core.Entities.Functions.Function.#ctor(System.String)">
+        <member name="P:InDoOut_Core.Entities.Functions.Function.SafeDescription">
+            <summary>
+            An exception safe version of <see cref="P:InDoOut_Core.Entities.Functions.Function.Description"/>
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Functions.Function.SafeGroup">
+            <summary>
+            An exception safe version of <see cref="P:InDoOut_Core.Entities.Functions.Function.Group"/>
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Functions.Function.SafeKeywords">
+            <summary>
+            An exception safe version of <see cref="P:InDoOut_Core.Entities.Functions.Function.Keywords"/>
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Functions.Function.Description">
+            <summary>
+            The description of what the function does.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Functions.Function.Name">
+            <summary>
+            The name of the function.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Functions.Function.Group">
+            <summary>
+            The group this function belongs to. This is to allow for easier categorisation
+            of functions.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Functions.Function.Keywords">
+            <summary>
+            Keywords associated with this function. This allows for similar words to match
+            this function when being searched for.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Functions.Function.#ctor">
             <summary>
             Creates a basic function.
             </summary>
@@ -343,6 +380,43 @@
             <summary>
             Stop has been requested on the function, and it should be terminated as soon
             as possible.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Functions.IFunction.SafeName">
+            <summary>
+            A thread safe, exception safe version of <see cref="P:InDoOut_Core.Entities.Core.INamed.Name"/>.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Functions.IFunction.SafeDescription">
+            <summary>
+            A thread safe, exception safe version of <see cref="P:InDoOut_Core.Entities.Functions.IFunction.Description"/>.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Functions.IFunction.SafeGroup">
+            <summary>
+            A thread safe, exception safe version of <see cref="P:InDoOut_Core.Entities.Functions.IFunction.Group"/>.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Functions.IFunction.SafeKeywords">
+            <summary>
+            A thread safe, exception safe version of <see cref="P:InDoOut_Core.Entities.Functions.IFunction.Keywords"/>.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Functions.IFunction.Description">
+            <summary>
+            The description of what the function does. This will be how it is seen by the user.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Functions.IFunction.Group">
+            <summary>
+            What group this function belongs to. This will allow for it to be categorised into
+            similar groups so they can be filtered easily.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Functions.IFunction.Keywords">
+            <summary>
+            Keywords associated with this function. This allows for it to be searched for by similar
+            names.
             </summary>
         </member>
         <member name="P:InDoOut_Core.Entities.Functions.IFunction.Inputs">

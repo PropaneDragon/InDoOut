@@ -58,6 +58,43 @@ namespace InDoOut_Core.Entities.Functions
         bool StopRequested { get; }
 
         /// <summary>
+        /// A thread safe, exception safe version of <see cref="INamed.Name"/>.
+        /// </summary>
+        string SafeName { get; }
+
+        /// <summary>
+        /// A thread safe, exception safe version of <see cref="Description"/>.
+        /// </summary>
+        string SafeDescription { get; }
+
+        /// <summary>
+        /// A thread safe, exception safe version of <see cref="Group"/>.
+        /// </summary>
+        string SafeGroup { get; }
+
+        /// <summary>
+        /// A thread safe, exception safe version of <see cref="Keywords"/>.
+        /// </summary>
+        string[] SafeKeywords { get; }
+
+        /// <summary>
+        /// The description of what the function does. This will be how it is seen by the user.
+        /// </summary>
+        string Description { get; }
+
+        /// <summary>
+        /// What group this function belongs to. This will allow for it to be categorised into
+        /// similar groups so they can be filtered easily.
+        /// </summary>
+        string Group { get; }
+
+        /// <summary>
+        /// Keywords associated with this function. This allows for it to be searched for by similar
+        /// names.
+        /// </summary>
+        string[] Keywords { get; }
+
+        /// <summary>
         /// All inputs that this function has.
         /// </summary>
         List<IInput> Inputs { get; }

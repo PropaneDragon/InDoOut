@@ -2,7 +2,6 @@
 using InDoOut_Core.Threading.Safety;
 using System;
 using System.Collections.Generic;
-using System.Threading;
 
 namespace InDoOut_Core.Entities.Functions
 {
@@ -14,11 +13,9 @@ namespace InDoOut_Core.Entities.Functions
     {
         private object _stateLock = new object();
         private object _inputsLock = new object();
-        private object _nameLock = new object();
 
         private State _state = State.Unknown;
         private List<IInput> _inputs = new List<IInput>();
-        private string _name = null;
 
         /// <summary>
         /// Stop has been requested on the task, and it should be terminated as soon
@@ -52,20 +49,52 @@ namespace InDoOut_Core.Entities.Functions
         public List<IOutput> Outputs => Connections;
 
         /// <summary>
-        /// The function name.
+        /// An exception safe version of <see cref="Name"/>
         /// </summary>
-        public string Name
-        {
-            get { lock (_nameLock) return _name; }
-            protected set { lock (_nameLock) _name = value; }
-        }
+        public string SafeName => TryGet.ValueOrDefault(() => Name);
+
+        /// <summary>
+        /// An exception safe version of <see cref="Description"/>
+        /// </summary>
+        public string SafeDescription => TryGet.ValueOrDefault(() => Description);
+
+        /// <summary>
+        /// An exception safe version of <see cref="Group"/>
+        /// </summary>
+        public string SafeGroup => TryGet.ValueOrDefault(() => Group);
+
+        /// <summary>
+        /// An exception safe version of <see cref="Keywords"/>
+        /// </summary>
+        public string[] SafeKeywords => TryGet.ValueOrDefault(() => Keywords);
+
+        /// <summary>
+        /// The description of what the function does.
+        /// </summary>
+        public abstract string Description { get; }
+
+        /// <summary>
+        /// The name of the function.
+        /// </summary>
+        public abstract string Name { get; }
+
+        /// <summary>
+        /// The group this function belongs to. This is to allow for easier categorisation
+        /// of functions.
+        /// </summary>
+        public abstract string Group { get; }
+
+        /// <summary>
+        /// Keywords associated with this function. This allows for similar words to match
+        /// this function when being searched for.
+        /// </summary>
+        public abstract string[] Keywords { get; }
 
         /// <summary>
         /// Creates a basic function.
         /// </summary>
-        public Function(string name = null)
+        public Function()
         {
-            Name = name;
             State = State.Waiting;
         }
 

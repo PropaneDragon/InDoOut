@@ -10,6 +10,14 @@ namespace InDoOut_Core_Tests
         public Action Action { get; private set; } = null;
         public bool HasRun { get; set; }
 
+        public override string Description => "A test function";
+
+        public override string Name => "Test start";
+
+        public override string Group => "Test";
+
+        public override string[] Keywords => new[] { "" };
+
         public TestStartFunction()
         {
         }
