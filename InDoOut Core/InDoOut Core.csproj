@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
@@ -6,10 +6,17 @@
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>InDoOut Core Key DO NOT UPLOAD.pfx</AssemblyOriginatorKeyFile>
     <DelaySign>false</DelaySign>
+    <AssemblyVersion>0.1</AssemblyVersion>
+    <FileVersion>0.1</FileVersion>
+    <Version>0.1</Version>
+    <Authors>ColonelPanic</Authors>
+    <Description>Core libraries for InDoOut</Description>
+    <Copyright>ColonelPanic 2019 to current year</Copyright>
+    <PackageProjectUrl>http://idoapp.net</PackageProjectUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>D:\Projects\InDoOut\App\InDoOut Core\InDoOut Core\InDoOut Core.xml</DocumentationFile>
+    <DocumentationFile>D:\Projects\InDoOut\App\InDoOut Core\InDoOut Core.xml</DocumentationFile>
   </PropertyGroup>
 
 </Project>
