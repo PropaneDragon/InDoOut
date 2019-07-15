@@ -743,5 +743,209 @@
             <param name="defaultValue">The default value to return on failure.</param>
             <returns></returns>
         </member>
+        <member name="T:InDoOut_Core.Variables.IVariable">
+            <summary>
+            Represents an individual variable. Variables have names and values which store state
+            over multiple functions.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Variables.IVariable.Valid">
+            <summary>
+            Returns whether the variable has a valid name and value
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Variables.IVariable.Value">
+            <summary>
+            The value associated with this variable in string format.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Core.Variables.IVariable.ValueOrDefault(System.String)">
+            <summary>
+            Gets the value of the variable, or <paramref name="defaultValue"/> if null.
+            </summary>
+            <param name="defaultValue">The value to return on null.</param>
+            <returns>The variable value, or default if null.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Variables.IVariable.ValueAs``1(``0)">
+            <summary>
+            Converts the <see cref="P:InDoOut_Core.Variables.IVariable.Value"/> to the specified type <typeparamref name="T"/>. Failing that it will
+            fall back to <paramref name="defaultValue"/>.
+            </summary>
+            <typeparam name="T">The type to convert to.</typeparam>
+            <param name="defaultValue">The default value to output in case of a conversion failure.</param>
+            <returns>The <see cref="P:InDoOut_Core.Variables.IVariable.Value"/> as the requested type <typeparamref name="T"/>.</returns>
+        </member>
+        <member name="T:InDoOut_Core.Variables.IVariableStore">
+            <summary>
+            Represents global storage for <see cref="T:InDoOut_Core.Variables.IVariable"/>s.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Core.Variables.IVariableStore.VariableExists(System.String)">
+            <summary>
+            Returns whether a variable name <paramref name="name"/> exists as a
+            variable in this storage.
+            </summary>
+            <param name="name">The name of the variable to check.</param>
+            <returns>Whether the given variable name exists.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Variables.IVariableStore.SetVariable(System.String,System.String)">
+            <summary>
+            Sets or creates a variable from the given name <paramref name="name"/> and sets it to the
+            value <paramref name="value"/>.
+            </summary>
+            <param name="name">The name of the variable to set.</param>
+            <param name="value">The value to set the variable to.</param>
+            <returns>Whether the variable was set successfully.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Variables.IVariableStore.SetVariable(InDoOut_Core.Variables.IVariable)">
+            <summary>
+            Sets or creates a variable from the given <paramref name="variable"/>.
+            </summary>
+            <param name="variable">The variable to set.</param>
+            <returns>Whether the variable was set successfully.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Variables.IVariableStore.GetVariableValue(System.String,System.String)">
+            <summary>
+            Returns the string value of the variable name <paramref name="name"/>, and returns
+            <paramref name="defaultValue"/> if it doesn't exist.
+            </summary>
+            <param name="name">The name of the variable to get the value for.</param>
+            <param name="defaultValue">The value to return if the variable doesn't exist.</param>
+            <returns>The string value of the variable.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Variables.IVariableStore.GetVariable(System.String)">
+            <summary>
+            Returns an <see cref="T:InDoOut_Core.Variables.IVariable"/> that matches the name given by <paramref name="name"/>.
+            </summary>
+            <param name="name">The name of the variable to find.</param>
+            <returns>The variable found from <paramref name="name"/>, or null if not found.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Variables.IVariableStore.GetVariableValueAs``1(System.String,``0)">
+            <summary>
+            Returns a converted value of type <typeparamref name="T"/> in the variable found from <paramref name="name"/>.
+            If that conversion fails it returns <paramref name="defaultValue"/> instead.
+            </summary>
+            <typeparam name="T">The type to convert to.</typeparam>
+            <param name="name">The name of the variable to find.</param>
+            <param name="defaultValue">The value to return on failure.</param>
+            <returns>The converted value of the variable, or <paramref name="defaultValue"/> on failure.</returns>
+        </member>
+        <member name="T:InDoOut_Core.Variables.Variable">
+            <summary>
+            An individual variable that holds a value <see cref="P:InDoOut_Core.Variables.Variable.Value"/> for a given name <see cref="P:InDoOut_Core.Variables.Variable.Name"/>.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Variables.Variable.Valid">
+            <summary>
+            Whether the variable has a valid name and value.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Variables.Variable.Name">
+            <summary>
+            The name of the variable.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Variables.Variable.Value">
+            <summary>
+            The value associated with the name.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Core.Variables.Variable.#ctor(System.String,System.String)">
+            <summary>
+            Creates a new variable with the given name <paramref name="name"/>.
+            </summary>
+            <param name="name">The name to associate with the variable.</param>
+            <param name="value">The value of the variable.</param>
+        </member>
+        <member name="M:InDoOut_Core.Variables.Variable.ValueOrDefault(System.String)">
+            <summary>
+            Returns <see cref="P:InDoOut_Core.Variables.Variable.Value"/>, or <paramref name="defaultValue"/> if null.
+            </summary>
+            <param name="defaultValue">The value to return if the stored value is null.</param>
+            <returns>The value of the variable, or <paramref name="defaultValue"/> if null.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Variables.Variable.ValueAs``1(``0)">
+            <summary>
+            Converts the <see cref="P:InDoOut_Core.Variables.Variable.Value"/> of the variable to the given type <typeparamref name="T"/>. If this conversion
+            fails, <paramref name="defaultValue"/> is returned instead.
+            </summary>
+            <typeparam name="T">The type to convert to.</typeparam>
+            <param name="defaultValue">The value to return if the conversion fails.</param>
+            <returns>The converted value or <paramref name="defaultValue"/> if conversion fails.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Variables.Variable.Equals(System.Object)">
+            <summary>
+            Checks equality on the variable. Variables are case insensitive.
+            </summary>
+            <param name="obj">The object to compare againt.</param>
+            <returns>Whether the variable is equal to the given object <paramref name="obj"/>.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Variables.Variable.GetHashCode">
+            <summary>
+            <see cref="M:System.Object.GetHashCode"/>.
+            </summary>
+            <returns>The hash code for this variable.</returns>
+        </member>
+        <member name="T:InDoOut_Core.Variables.VariableStore">
+            <summary>
+            Storage for multiple <see cref="T:InDoOut_Core.Variables.IVariable"/>s. Allows for searching through and returning values
+            of variables within.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Variables.VariableStore.Variables">
+            <summary>
+            All variables currently in storage.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Core.Variables.VariableStore.GetVariable(System.String)">
+            <summary>
+            Returns an <see cref="T:InDoOut_Core.Variables.IVariable"/> that matches the name given by <paramref name="name"/>.
+            </summary>
+            <param name="name">The name of the variable to find.</param>
+            <returns>The variable found from <paramref name="name"/>, or null if not found.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Variables.VariableStore.GetVariableValue(System.String,System.String)">
+            <summary>
+            Returns the string value of the variable name <paramref name="name"/>, and returns
+            <paramref name="defaultValue"/> if it doesn't exist.
+            </summary>
+            <param name="name">The name of the variable to get the value for.</param>
+            <param name="defaultValue">The value to return if the variable doesn't exist.</param>
+            <returns>The string value of the variable.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Variables.VariableStore.GetVariableValueAs``1(System.String,``0)">
+            <summary>
+            Returns a converted value of type <typeparamref name="T"/> in the variable found from <paramref name="name"/>.
+            If that conversion fails it returns <paramref name="defaultValue"/> instead.
+            </summary>
+            <typeparam name="T">The type to convert to.</typeparam>
+            <param name="name">The name of the variable to find.</param>
+            <param name="defaultValue">The value to return on failure.</param>
+            <returns>The converted value of the variable, or <paramref name="defaultValue"/> on failure.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Variables.VariableStore.SetVariable(System.String,System.String)">
+            <summary>
+            Sets or creates a variable from the given name <paramref name="name"/> and sets it to the
+            value <paramref name="value"/>.
+            </summary>
+            <param name="name">The name of the variable to set.</param>
+            <param name="value">The value to set the variable to.</param>
+            <returns>Whether the variable was set successfully.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Variables.VariableStore.SetVariable(InDoOut_Core.Variables.IVariable)">
+            <summary>
+            Sets or creates a variable from the given <paramref name="variable"/>.
+            </summary>
+            <param name="variable">The variable to set.</param>
+            <returns>Whether the variable was set successfully.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Variables.VariableStore.VariableExists(System.String)">
+            <summary>
+            Returns whether a variable name <paramref name="name"/> exists as a
+            variable in this storage.
+            </summary>
+            <param name="name">The name of the variable to check.</param>
+            <returns>Whether the given variable name exists.</returns>
+        </member>
     </members>
 </doc>

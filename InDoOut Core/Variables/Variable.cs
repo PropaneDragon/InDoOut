@@ -1,5 +1,5 @@
 ﻿using InDoOut_Core.Threading.Safety;
-using System;
+using System.ComponentModel;
 
 namespace InDoOut_Core.Variables
 {
@@ -50,11 +50,9 @@ namespace InDoOut_Core.Variables
         /// <typeparam name="T">The type to convert to.</typeparam>
         /// <param name="defaultValue">The value to return if the conversion fails.</param>
         /// <returns>The converted value or <paramref name="defaultValue"/> if conversion fails.</returns>
-        public T ValueAs<T>(T defaultValue = default) where T : IConvertible
+        public T ValueAs<T>(T defaultValue = default)
         {
-            var convertedValue = TryGet.ValueOrDefault(() => (T)Convert.ChangeType(Value, typeof(T)));
-
-            return convertedValue != null ? convertedValue : defaultValue;
+            return TryGet.ValueOrDefault(() => (T)TypeDescriptor.GetConverter(typeof(T)).ConvertFromString(Value), defaultValue);
         }
 
         /// <summary>

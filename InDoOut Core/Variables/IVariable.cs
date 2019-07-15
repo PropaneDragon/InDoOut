@@ -33,6 +33,6 @@ namespace InDoOut_Core.Variables
         /// <typeparam name="T">The type to convert to.</typeparam>
         /// <param name="defaultValue">The default value to output in case of a conversion failure.</param>
         /// <returns>The <see cref="Value"/> as the requested type <typeparamref name="T"/>.</returns>
-        T ValueAs<T>(T defaultValue = default) where T : IConvertible;
+        T ValueAs<T>(T defaultValue = default);
     }
 }

@@ -46,7 +46,7 @@ namespace InDoOut_Core.Variables
         /// <param name="name">The name of the variable to find.</param>
         /// <param name="defaultValue">The value to return on failure.</param>
         /// <returns>The converted value of the variable, or <paramref name="defaultValue"/> on failure.</returns>
-        public T GetVariableValueAs<T>(string name, T defaultValue = default) where T : IConvertible
+        public T GetVariableValueAs<T>(string name, T defaultValue = default)
         {
             var foundVariable = GetVariable(name);
             return foundVariable == null ? defaultValue : foundVariable.ValueAs<T>(defaultValue);
