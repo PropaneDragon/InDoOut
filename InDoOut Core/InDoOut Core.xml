@@ -873,6 +873,14 @@
             <param name="defaultValue">The value to return if the conversion fails.</param>
             <returns>The converted value or <paramref name="defaultValue"/> if conversion fails.</returns>
         </member>
+        <member name="M:InDoOut_Core.Variables.Variable.Equals(System.Object,System.Boolean)">
+            <summary>
+            Checks equality on the variable. Variables are case insensitive.
+            </summary>
+            <param name="obj">The object to compare againt.</param>
+            <param name="includeValues">Whether or not to include the value of the variable in the comparison.</param>
+            <returns>Whether the variable is equal to the given object <paramref name="obj"/>.</returns>
+        </member>
         <member name="M:InDoOut_Core.Variables.Variable.Equals(System.Object)">
             <summary>
             Checks equality on the variable. Variables are case insensitive.

@@ -11,7 +11,7 @@ namespace InDoOut_Core.Variables
         /// <summary>
         /// Whether the variable has a valid name and value.
         /// </summary>
-        public bool Valid => !string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Value);
+        public bool Valid => !string.IsNullOrEmpty(Name) && Value != null;
 
         /// <summary>
         /// The name of the variable.
@@ -59,12 +59,24 @@ namespace InDoOut_Core.Variables
         /// Checks equality on the variable. Variables are case insensitive.
         /// </summary>
         /// <param name="obj">The object to compare againt.</param>
+        /// <param name="includeValues">Whether or not to include the value of the variable in the comparison.</param>
+        /// <returns>Whether the variable is equal to the given object <paramref name="obj"/>.</returns>
+        public bool Equals(object obj, bool includeValues)
+        {
+            return Equals(obj) &&
+                   obj is Variable variable &&
+                   (!includeValues || Value == variable.Value);
+        }
+
+        /// <summary>
+        /// Checks equality on the variable. Variables are case insensitive.
+        /// </summary>
+        /// <param name="obj">The object to compare againt.</param>
         /// <returns>Whether the variable is equal to the given object <paramref name="obj"/>.</returns>
         public override bool Equals(object obj)
         {
             return obj is Variable variable &&
-                   Name?.ToLower() == variable.Name?.ToLower() &&
-                   Value == variable.Value;
+                   Name?.ToLower() == variable.Name?.ToLower();
         }
 
         /// <summary>
