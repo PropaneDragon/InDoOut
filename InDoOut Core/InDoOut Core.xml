@@ -668,6 +668,12 @@
             program is started.
             </summary>
         </member>
+        <member name="P:InDoOut_Core.Entities.Programs.IProgram.VariableStore">
+            <summary>
+            The variable store for this program. This is where <see cref="T:InDoOut_Core.Variables.IVariable"/>s are
+            held for functions.
+            </summary>
+        </member>
         <member name="M:InDoOut_Core.Entities.Programs.IProgram.AddFunction(InDoOut_Core.Entities.Functions.IFunction)">
             <summary>
             Add a function to the program.
@@ -707,6 +713,12 @@
             <summary>
             The unique ID for this program.
             </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Programs.Program.VariableStore">
+            <summary>
+            The current variable store for all program variables.
+            </summary>
+            <seealso cref="P:InDoOut_Core.Entities.Programs.Program.VariableStore"/>
         </member>
         <member name="M:InDoOut_Core.Entities.Programs.Program.AddFunction(InDoOut_Core.Entities.Functions.IFunction)">
             <summary>

@@ -187,6 +187,8 @@ namespace InDoOut_Core_Tests
             functionC.OutputToTrigger = outputC;
             functionD.OutputToTrigger = outputD;
 
+            Assert.IsNotNull(program.VariableStore);
+
             Assert.IsTrue(outputA.Connect(inputB));
             Assert.IsTrue(outputB.Connect(inputC));
             Assert.IsTrue(outputC.Connect(inputD));

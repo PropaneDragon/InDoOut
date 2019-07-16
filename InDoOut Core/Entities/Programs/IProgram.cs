@@ -1,5 +1,6 @@
 ﻿using InDoOut_Core.Entities.Core;
 using InDoOut_Core.Entities.Functions;
+using InDoOut_Core.Variables;
 using System.Collections.Generic;
 
 namespace InDoOut_Core.Entities.Programs
@@ -20,6 +21,12 @@ namespace InDoOut_Core.Entities.Programs
         /// program is started.
         /// </summary>
         List<IStartFunction> StartFunctions { get; }
+
+        /// <summary>
+        /// The variable store for this program. This is where <see cref="IVariable"/>s are
+        /// held for functions.
+        /// </summary>
+        IVariableStore VariableStore { get; }
 
         /// <summary>
         /// Add a function to the program.

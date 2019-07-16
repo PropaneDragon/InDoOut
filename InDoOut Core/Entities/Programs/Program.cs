@@ -1,5 +1,6 @@
 ﻿using InDoOut_Core.Entities.Core;
 using InDoOut_Core.Entities.Functions;
+using InDoOut_Core.Variables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,6 +39,12 @@ namespace InDoOut_Core.Entities.Programs
         /// The unique ID for this program.
         /// </summary>
         public Guid Id { get; private set; } = Guid.NewGuid();
+
+        /// <summary>
+        /// The current variable store for all program variables.
+        /// </summary>
+        /// <seealso cref="VariableStore"/>
+        public IVariableStore VariableStore { get; protected set; } = new VariableStore();
 
         /// <summary>
         /// Add a function to the program.
