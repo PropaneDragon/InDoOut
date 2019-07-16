@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace InDoOut_Core.Variables
+﻿namespace InDoOut_Core.Variables
 {
     /// <summary>
     /// Represents global storage for <see cref="IVariable"/>s.
