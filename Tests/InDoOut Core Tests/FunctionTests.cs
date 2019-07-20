@@ -67,6 +67,61 @@ namespace InDoOut_Core_Tests
         }
 
         [TestMethod]
+        public void AddProperties()
+        {
+            var function = new TestFunction(() => Thread.Sleep(TimeSpan.FromMilliseconds(50)));
+
+            Assert.AreEqual(0, function.Properties.Count);
+
+            var property = function.AddPropertyPublic(new Property<double>("name", "description", true, 5432.109));
+
+            Assert.AreEqual(1, function.Properties.Count);
+            Assert.IsNotNull(property);
+            Assert.AreEqual("name", property.Name);
+            Assert.AreEqual("description", property.Description);
+            Assert.IsTrue(property.Required);
+            Assert.AreEqual(5432.109d, property.Value);
+
+            var comparisonProperty = new Property<string>("another name", "another description", false, "some value");
+            var resultProperty = function.AddPropertyPublic(comparisonProperty);
+
+            Assert.AreEqual(2, function.Properties.Count);
+            Assert.AreEqual(comparisonProperty, resultProperty);
+
+            var duplicateProperty = function.AddPropertyPublic(comparisonProperty);
+
+            Assert.AreEqual(2, function.Properties.Count);
+            Assert.AreEqual(comparisonProperty, duplicateProperty);
+        }
+
+        [TestMethod]
+        public void AddResults()
+        {
+            var function = new TestFunction(() => Thread.Sleep(TimeSpan.FromMilliseconds(50)));
+
+            Assert.AreEqual(0, function.Results.Count);
+
+            var result = function.AddResultPublic(new Result("name", "description", "a result"));
+
+            Assert.AreEqual(1, function.Results.Count);
+            Assert.IsNotNull(result);
+            Assert.AreEqual("name", result.Name);
+            Assert.AreEqual("description", result.Description);
+            Assert.AreEqual("a result", result.RawValue);
+
+            var comparisonResult = new Result("another name", "another description", "another result value");
+            var resultResult = function.AddResultPublic(comparisonResult);
+
+            Assert.AreEqual(2, function.Results.Count);
+            Assert.AreEqual(comparisonResult, resultResult);
+
+            var duplicateResult = function.AddResultPublic(comparisonResult);
+
+            Assert.AreEqual(2, function.Results.Count);
+            Assert.AreEqual(comparisonResult, duplicateResult);
+        }
+
+        [TestMethod]
         public void ProcessOutput()
         {
             var startFunction = new TestFunction(() => Thread.Sleep(TimeSpan.FromMilliseconds(1)));
@@ -405,6 +460,28 @@ namespace InDoOut_Core_Tests
             Thread.Sleep(TimeSpan.FromMilliseconds(10));
 
             Assert.AreEqual(State.InError, function.State);
+        }
+
+        [TestMethod]
+        public void ResultsToVariables()
+        {
+            var store = new TestVariableStore();
+            var function = new TestFunction()
+            {
+                VariableStore = store
+            };
+            var result = function.AddResultPublic(new Result("A result", "A description", "variable value!"));
+
+            result.VariableName = "A set variable";
+
+            Assert.AreEqual("variable value!", result.RawValue);
+            Assert.AreNotEqual("variable value!", store.GetVariableValue("A set variable"));
+
+            function.Trigger(null);
+
+            Thread.Sleep(TimeSpan.FromMilliseconds(10));
+
+            Assert.AreEqual("variable value!", store.GetVariableValue("A set variable"));
         }
     }
 }

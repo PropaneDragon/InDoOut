@@ -28,5 +28,20 @@ namespace InDoOut_Core_Tests
             Assert.AreNotEqual("not null", TryGet.ValueOrDefault(() => "actually not null", "not null"));
             Assert.AreEqual("actually not null", TryGet.ValueOrDefault(() => "actually not null", "not null"));
         }
+
+        [TestMethod]
+        public void ExecuteOrFail()
+        {
+            int a = 0;
+
+            Assert.IsTrue(TryGet.ExecuteOrFail(() => a = 1));
+            Assert.AreEqual(1, a);
+            Assert.IsTrue(TryGet.ExecuteOrFail(() => a = -5611));
+            Assert.AreEqual(-5611, a);
+            Assert.IsFalse(TryGet.ExecuteOrFail(() => a = int.Parse("*")));
+            Assert.AreEqual(-5611, a);
+
+            Assert.IsFalse(TryGet.ExecuteOrFail(() => throw new Exception()));
+        }
     }
 }

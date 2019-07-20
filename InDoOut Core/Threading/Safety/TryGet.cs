@@ -28,5 +28,27 @@ namespace InDoOut_Core.Threading.Safety
 
             return defaultValue;
         }
+
+        /// <summary>
+        /// Attempts to execute a given <see cref="Action"/> <paramref name="action"/>. If it succeeds
+        /// without throwing an error it returns true, otherwise false.
+        /// </summary>
+        /// <param name="action">The action to run.</param>
+        /// <returns>Whether the action succeded without exception.</returns>
+        public static bool ExecuteOrFail(Action action)
+        {
+            if (action != null)
+            {
+                try
+                {
+                    action.Invoke();
+
+                    return true;
+                }
+                catch { }
+            }
+
+            return false;
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace InDoOut_Core.Entities.Core
+﻿namespace InDoOut_Core.Basic
 {
     /// <summary>
     /// Represents something that can have a name.

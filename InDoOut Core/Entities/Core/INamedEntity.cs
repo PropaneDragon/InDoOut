@@ -1,4 +1,6 @@
-﻿namespace InDoOut_Core.Entities.Core
+﻿using InDoOut_Core.Basic;
+
+namespace InDoOut_Core.Entities.Core
 {
     /// <summary>
     /// Represents an <see cref="IEntity"/> that can have a name.

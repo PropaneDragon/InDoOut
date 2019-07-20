@@ -1,4 +1,6 @@
-﻿using InDoOut_Core.Entities.Core;
+﻿using InDoOut_Core.Basic;
+using InDoOut_Core.Entities.Core;
+using InDoOut_Core.Variables;
 using System.Collections.Generic;
 
 namespace InDoOut_Core.Entities.Functions
@@ -103,6 +105,22 @@ namespace InDoOut_Core.Entities.Functions
         /// All outputs that this function has.
         /// </summary>
         List<IOutput> Outputs { get; }
+
+        /// <summary>
+        /// All properties that this function accepts.
+        /// </summary>
+        List<IProperty> Properties { get; }
+
+        /// <summary>
+        /// All results that this function gives.
+        /// </summary>
+        List<IResult> Results { get; }
+
+        /// <summary>
+        /// A shared variable store between multiple functions.
+        /// </summary>
+        /// <seealso cref="IVariableStore"/>
+        IVariableStore VariableStore { get; set; }
 
         /// <summary>
         /// Politely asks for the function to be stopped, and waits for the user code to

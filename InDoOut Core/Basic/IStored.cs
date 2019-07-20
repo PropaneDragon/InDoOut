@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace InDoOut_Core.Entities.Core
+namespace InDoOut_Core.Basic
 {
     /// <summary>
     /// Represents stored data. Each entity has a unique <see cref="Guid"/>

@@ -1,0 +1,79 @@
+﻿using InDoOut_Core.Threading.Safety;
+using System.ComponentModel;
+
+namespace InDoOut_Core.Basic
+{
+    /// <summary>
+    /// A basic value with an associated name, along with some conversion utilities.
+    /// </summary>
+    public abstract class NamedValue : INamedValue
+    {
+        private object _rawValueLock = new object();
+        private string _rawValue = "";
+
+        /// <summary>
+        /// Whether it has a valid name and value.
+        /// </summary>
+        public bool Valid => !string.IsNullOrEmpty(Name) && RawValue != null;
+
+        /// <summary>
+        /// The name of the variable.
+        /// </summary>
+        public string Name { get; protected set; } = null;
+
+        /// <summary>
+        /// The value associated with the name.
+        /// </summary>
+        public string RawValue
+        {
+            get { lock (_rawValueLock) { return _rawValue; } }
+            set { lock (_rawValueLock) { _rawValue = value; } }
+        }
+
+        /// <summary>
+        /// Returns <see cref="RawValue"/>, or <paramref name="defaultValue"/> if null.
+        /// </summary>
+        /// <param name="defaultValue">The value to return if the stored value is null.</param>
+        /// <returns>The value, or <paramref name="defaultValue"/> if null.</returns>
+        public string ValueOrDefault(string defaultValue = "") => TryGet.ValueOrDefault(() => RawValue) ?? defaultValue;
+
+        /// <summary>
+        /// Converts the <see cref="RawValue"/> to the given type <typeparamref name="T"/>. If this conversion
+        /// fails, <paramref name="defaultValue"/> is returned instead.
+        /// </summary>
+        /// <typeparam name="T">The type to convert to.</typeparam>
+        /// <param name="defaultValue">The value to return if the conversion fails.</param>
+        /// <returns>The converted value or <paramref name="defaultValue"/> if conversion fails.</returns>
+        public T ValueAs<T>(T defaultValue = default) => TryGet.ValueOrDefault(() => ConvertFromString<T>(RawValue), defaultValue);
+
+        /// <summary>
+        /// Sets the value from the given <typeparamref name="T"/> value.
+        /// </summary>
+        /// <typeparam name="T">The type of the value being given.</typeparam>
+        /// <param name="value">The value to be set.</param>
+        /// <returns>Whether the value was converted and set.</returns>
+        public bool ValueFrom<T>(T value) => TryGet.ExecuteOrFail(() => RawValue = ConvertToString(value));
+
+        /// <summary>
+        /// Converts a value from a string to the type <typeparamref name="T"/>.
+        /// </summary>
+        /// <typeparam name="T">The type to convert to.</typeparam>
+        /// <param name="value">The value to convert to the type <typeparamref name="T"/>.</param>
+        /// <returns>The value of the string as the type <typeparamref name="T"/>.</returns>
+        protected T ConvertFromString<T>(string value)
+        {
+            return (T)TypeDescriptor.GetConverter(typeof(T)).ConvertFromString(value);
+        }
+
+        /// <summary>
+        /// Converts a value of type <typeparamref name="T"/> to a string.
+        /// </summary>
+        /// <typeparam name="T">The type to convert from.</typeparam>
+        /// <param name="value">The value of the type to convert to a string.</param>
+        /// <returns>A string representation of the value given.</returns>
+        protected string ConvertToString<T>(T value)
+        {
+            return TypeDescriptor.GetConverter(typeof(T)).ConvertToString(value);
+        }
+    }
+}

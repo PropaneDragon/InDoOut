@@ -1,4 +1,6 @@
-﻿namespace InDoOut_Core.Entities.Core
+﻿using InDoOut_Core.Basic;
+
+namespace InDoOut_Core.Entities.Core
 {
     /// <summary>
     /// Represents a base entity. All entities are <see cref="IStored"/>, so can

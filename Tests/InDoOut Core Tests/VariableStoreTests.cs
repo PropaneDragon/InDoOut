@@ -26,7 +26,7 @@ namespace InDoOut_Core_Tests
 
             var variable = variableStore.GetVariable("variable a");
             Assert.AreEqual("variable a", variable.Name);
-            Assert.AreEqual("value", variable.Value);
+            Assert.AreEqual("value", variable.RawValue);
 
             Assert.IsTrue(variableStore.SetVariable("variable a", "another value"));
             Assert.AreEqual(1, variableStore.PublicVariables.Count);

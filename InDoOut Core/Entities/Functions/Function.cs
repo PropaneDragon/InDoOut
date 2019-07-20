@@ -1,5 +1,6 @@
 ﻿using InDoOut_Core.Entities.Core;
 using InDoOut_Core.Threading.Safety;
+using InDoOut_Core.Variables;
 using System;
 using System.Collections.Generic;
 
@@ -13,9 +14,13 @@ namespace InDoOut_Core.Entities.Functions
     {
         private object _stateLock = new object();
         private object _inputsLock = new object();
+        private object _propertiesLock = new object();
+        private object _resultsLock = new object();
 
         private State _state = State.Unknown;
         private List<IInput> _inputs = new List<IInput>();
+        private List<IProperty> _properties = new List<IProperty>();
+        private List<IResult> _results = new List<IResult>();
 
         /// <summary>
         /// Stop has been requested on the task, and it should be terminated as soon
@@ -35,12 +40,35 @@ namespace InDoOut_Core.Entities.Functions
         }
 
         /// <summary>
+        /// The current variable store.
+        /// </summary>
+        public IVariableStore VariableStore { get; set; } = null;
+
+        /// <summary>
         /// The inputs that belong to this function.
         /// </summary>
         public List<IInput> Inputs
         {
             get { lock (_inputsLock) return _inputs; }
             private set { lock (_inputsLock) _inputs = value; }
+        }
+
+        /// <summary>
+        /// The properties that this function accepts.
+        /// </summary>
+        public List<IProperty> Properties
+        {
+            get { lock (_propertiesLock) return _properties; }
+            protected set { lock (_propertiesLock) _properties = value; }
+        }
+
+        /// <summary>
+        /// The results that this function gives.
+        /// </summary>
+        public List<IResult> Results
+        {
+            get { lock (_resultsLock) return _results; }
+            protected set { lock (_resultsLock) _results = value; }
         }
 
         /// <summary>
@@ -156,6 +184,40 @@ namespace InDoOut_Core.Entities.Functions
         protected IOutput CreateOutput(OutputType outputType, string name = "Output") => CreateOutput(name, outputType);
 
         /// <summary>
+        /// Adds a property to the function and returns the same property as a result. This allows it to be created and added
+        /// on the same line.
+        /// </summary>
+        /// <typeparam name="T">The type of <see cref="IProperty"/> to add.</typeparam>
+        /// <param name="property">The property to add.</param>
+        /// <returns>The given <paramref name="property"/>.</returns>
+        protected T AddProperty<T>(T property) where T : IProperty
+        {
+            if (property != null && !Properties.Contains(property))
+            {
+                Properties.Add(property);
+            }
+
+            return property;
+        }
+
+        /// <summary>
+        /// Adds a result to the function and returns the same result as a result. This allows it to be created and added
+        /// on the same line.
+        /// </summary>
+        /// <typeparam name="T">The type of <see cref="IResult"/> to add.</typeparam>
+        /// <param name="result">The property to add.</param>
+        /// <returns>The given <paramref name="result"/>.</returns>
+        protected T AddResult<T>(T result) where T : IResult
+        {
+            if (result != null && !Results.Contains(result))
+            {
+                Results.Add(result);
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// A builder for creating an <see cref="IInput"/> entity
         /// when requested.
         /// </summary>
@@ -203,6 +265,15 @@ namespace InDoOut_Core.Entities.Functions
                 try
                 {
                     var nextOutput = Started(triggeredBy);
+
+                    if (VariableStore != null)
+                    {
+                        foreach (var result in Results)
+                        {
+                            result.SetVariable(VariableStore);
+                        }
+                    }
+
                     if (State != State.Stopping && nextOutput != null && Outputs.Contains(nextOutput) && nextOutput.CanBeTriggered(this))
                     {
                         nextOutput.Trigger(this);

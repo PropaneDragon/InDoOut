@@ -9,10 +9,19 @@ namespace InDoOut_Core.Variables
     /// </summary>
     public class VariableStore : IVariableStore
     {
+        private object _variablesLock = new object();
+        private List<IVariable> _variables = new List<IVariable>();
+
         /// <summary>
         /// All variables currently in storage.
         /// </summary>
-        protected List<IVariable> Variables { get; } = new List<IVariable>();
+        protected List<IVariable> Variables
+        {
+            get
+            {
+                lock (_variablesLock) { return _variables; }
+            }
+        }
 
         /// <summary>
         /// Returns an <see cref="IVariable"/> that matches the name given by <paramref name="name"/>.
@@ -21,7 +30,10 @@ namespace InDoOut_Core.Variables
         /// <returns>The variable found from <paramref name="name"/>, or null if not found.</returns>
         public IVariable GetVariable(string name)
         {
-            return Variables.FirstOrDefault(variable => variable.Name.ToLower() == name.ToLower());
+            lock (_variablesLock)
+            {
+                return _variables.FirstOrDefault(variable => variable.Name.ToLower() == name.ToLower());
+            }
         }
 
         /// <summary>
@@ -34,7 +46,7 @@ namespace InDoOut_Core.Variables
         public string GetVariableValue(string name, string defaultValue = null)
         {
             var foundVariable = GetVariable(name);
-            return foundVariable == null ? defaultValue : foundVariable.Value;
+            return foundVariable == null ? defaultValue : foundVariable.RawValue;
         }
 
         /// <summary>
@@ -75,11 +87,14 @@ namespace InDoOut_Core.Variables
                 var foundVariable = GetVariable(variable.Name);
                 if (foundVariable != null)
                 {
-                    foundVariable.Value = variable.Value;
+                    foundVariable.RawValue = variable.RawValue;
                 }
                 else
                 {
-                    Variables.Add(variable);
+                    lock (_variablesLock)
+                    {
+                        _variables.Add(variable);
+                    }
                 }
 
                 return true;
