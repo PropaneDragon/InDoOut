@@ -55,6 +55,8 @@ namespace InDoOut_Core.Entities.Programs
         {
             if (function != null && !Functions.Contains(function))
             {
+                function.VariableStore = VariableStore;
+
                 Functions.Add(function);
 
                 return true;

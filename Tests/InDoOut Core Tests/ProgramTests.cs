@@ -12,13 +12,18 @@ namespace InDoOut_Core_Tests
         public void AddFunctions()
         {
             var program = new Program();
+            var variableStore = program.VariableStore;
 
+            Assert.IsNotNull(variableStore);
             Assert.AreEqual(0, program.Functions.Count);
             Assert.AreEqual(0, program.StartFunctions.Count);
 
             var function = new TestFunction();
 
+            Assert.IsNull(function.VariableStore);
             Assert.IsTrue(program.AddFunction(function));
+            Assert.IsNotNull(function.VariableStore);
+            Assert.AreEqual(variableStore, function.VariableStore);
 
             Assert.AreEqual(1, program.Functions.Count);
             Assert.AreEqual(0, program.StartFunctions.Count);
