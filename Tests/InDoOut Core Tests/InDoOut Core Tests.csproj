@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\InDoOut Core\InDoOut Core.csproj" />
+    <ProjectReference Include="..\..\InDoOut Testing\InDoOut Testing.csproj" />
   </ItemGroup>
 
 </Project>

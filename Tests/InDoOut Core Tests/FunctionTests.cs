@@ -1,4 +1,5 @@
 ﻿using InDoOut_Core.Entities.Functions;
+using InDoOut_Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Threading;
@@ -155,12 +156,12 @@ namespace InDoOut_Core_Tests
         [TestMethod]
         public void ProcessDuration()
         {
-            CheckDuration(TimeSpan.FromSeconds(1));
+            CheckDuration(TimeSpan.FromMilliseconds(3));
             CheckDuration(TimeSpan.FromMilliseconds(50));
             CheckDuration(TimeSpan.FromMilliseconds(5));
             CheckDuration(TimeSpan.FromMilliseconds(16.2));
             CheckDuration(TimeSpan.FromMilliseconds(200));
-            CheckDuration(TimeSpan.FromSeconds(3.1));
+            CheckDuration(TimeSpan.FromMilliseconds(11));
         }
 
         private void CheckDuration(TimeSpan duration)
@@ -171,24 +172,11 @@ namespace InDoOut_Core_Tests
 
             var startTime = DateTime.UtcNow;
 
-            while (!function.Running && function.State != State.Processing && DateTime.UtcNow - startTime < duration.Add(TimeSpan.FromSeconds(1)))
-            {
-                Thread.Sleep(TimeSpan.FromMilliseconds(1));
-            }
-
-            Thread.Sleep(TimeSpan.FromMilliseconds(1));
-
-            Assert.IsTrue(function.Running);
-            Assert.AreEqual(State.Processing, function.State);
-
-            while (function.Running && DateTime.UtcNow - startTime < duration.Add(TimeSpan.FromSeconds(1)))
-            {
-                Thread.Sleep(TimeSpan.FromMilliseconds(1));
-            }
+            Assert.IsTrue(function.WaitForCompletion(duration.Add(TimeSpan.FromSeconds(1)), true));
 
             var totalDuration = DateTime.UtcNow - startTime;
 
-            Assert.IsTrue(totalDuration >= duration.Subtract(TimeSpan.FromMilliseconds(5)) && totalDuration <= duration.Add(TimeSpan.FromMilliseconds(5)));
+            Assert.AreEqual(duration.TotalMilliseconds, totalDuration.TotalMilliseconds, 5);
         }
 
         [TestMethod]
@@ -225,6 +213,68 @@ namespace InDoOut_Core_Tests
             }
 
             Assert.IsTrue(start < middle && middle < end);
+        }
+
+        [TestMethod]
+        public void InputToOutputWithProperties()
+        {
+            var variableStore = new TestVariableStore();
+            var fullFunction = new TestFullFunction();
+
+            fullFunction.VariableStore = variableStore;
+
+            Assert.AreEqual("", fullFunction.IntegerResult.RawValue);
+            Assert.AreEqual("", fullFunction.DoubleResult.RawValue);
+            Assert.AreEqual("", fullFunction.FloatResult.RawValue);
+            Assert.AreEqual("", fullFunction.StringResult.RawValue);
+            Assert.AreEqual(0, variableStore.PublicVariables.Count);
+
+            fullFunction.IntegerProperty.Value = 1234;
+            fullFunction.DoubleProperty.Value = 456.78901d;
+            fullFunction.FloatProperty.Value = 789.01f;
+            fullFunction.StringProperty.Value = null;
+
+            fullFunction.IntegerResult.VariableName = "Int";
+            fullFunction.DoubleResult.VariableName = "Double";
+            fullFunction.FloatResult.VariableName = "Float";
+            fullFunction.StringResult.VariableName = "String";
+
+            Assert.AreEqual("", fullFunction.IntegerResult.RawValue);
+            Assert.AreEqual("", fullFunction.DoubleResult.RawValue);
+            Assert.AreEqual("", fullFunction.FloatResult.RawValue);
+            Assert.AreEqual("", fullFunction.StringResult.RawValue);
+            Assert.AreEqual(0, variableStore.PublicVariables.Count);
+
+            fullFunction.Trigger(null);
+
+            Assert.IsTrue(fullFunction.WaitForCompletion(TimeSpan.FromMilliseconds(10)));
+
+            Assert.AreEqual("", fullFunction.IntegerResult.RawValue);
+            Assert.AreEqual("", fullFunction.DoubleResult.RawValue);
+            Assert.AreEqual("", fullFunction.FloatResult.RawValue);
+            Assert.AreEqual("", fullFunction.StringResult.RawValue);
+
+            Assert.AreEqual(4, variableStore.PublicVariables.Count);
+            Assert.AreEqual("", variableStore.GetVariableValue("Int"));
+            Assert.AreEqual("", variableStore.GetVariableValue("Double"));
+            Assert.AreEqual("", variableStore.GetVariableValue("Float"));
+            Assert.AreEqual("", variableStore.GetVariableValue("String"));
+
+            fullFunction.StringProperty.Value = "A non-null string";
+            fullFunction.Trigger(null);
+
+            Assert.IsTrue(fullFunction.WaitForCompletion(TimeSpan.FromMilliseconds(10)));
+
+            Assert.AreEqual("1234", fullFunction.IntegerResult.RawValue);
+            Assert.AreEqual("456.78901", fullFunction.DoubleResult.RawValue);
+            Assert.AreEqual("789.01", fullFunction.FloatResult.RawValue);
+            Assert.AreEqual("A non-null string", fullFunction.StringResult.RawValue);
+
+            Assert.AreEqual(4, variableStore.PublicVariables.Count);
+            Assert.AreEqual("1234", variableStore.GetVariableValue("Int"));
+            Assert.AreEqual("456.78901", variableStore.GetVariableValue("Double"));
+            Assert.AreEqual("789.01", variableStore.GetVariableValue("Float"));
+            Assert.AreEqual("A non-null string", variableStore.GetVariableValue("String"));
         }
 
         [TestMethod]

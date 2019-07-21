@@ -73,6 +73,11 @@ namespace InDoOut_Core.Basic
         /// <returns>A string representation of the value given.</returns>
         protected string ConvertToString<T>(T value)
         {
+            if (value == null)
+            {
+                return default(T)?.ToString();
+            }
+
             return TypeDescriptor.GetConverter(typeof(T)).ConvertToString(value);
         }
     }

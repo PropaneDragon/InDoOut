@@ -3,7 +3,7 @@ using System;
 
 namespace InDoOut_Core_Tests
 {
-    internal class TestFunction : Function
+    public class TestFunction : Function
     {
         public IInput LastInput { get; private set; } = null;
         public IOutput OutputToTrigger { get; set; } = null;
