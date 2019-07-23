@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>InDoOut Desktop API</name>
+    </assembly>
+    <members>
+        <member name="T:InDoOut_Desktop_API.Plugins.IPlugin">
+            <summary>
+            Represents a plugin that is recognised by the application and loaded in automatically.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Desktop_API.Plugins.IPlugin.Valid">
+            <summary>
+            Whether the plugin is valid and can be loaded.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Desktop_API.Plugins.IPlugin.Name">
+            <summary>
+            The name of the plugin. Visible to the user.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Desktop_API.Plugins.IPlugin.SafeName">
+            <summary>
+            The safe version of <see cref="P:InDoOut_Desktop_API.Plugins.IPlugin.Name"/>. This has exception handling in the case of an invalid name.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Desktop_API.Plugins.IPlugin.Description">
+            <summary>
+            A description of what this plugin contains or does. Visible to the user.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Desktop_API.Plugins.IPlugin.SafeDescription">
+            <summary>
+            The safe version of <see cref="P:InDoOut_Desktop_API.Plugins.IPlugin.Description"/>. This has exception handling in the case of an invalid description.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Desktop_API.Plugins.IPlugin.Author">
+            <summary>
+            The author(s) of this plugin. Visible to the user.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Desktop_API.Plugins.IPlugin.SafeAuthor">
+            <summary>
+            The safe version of <see cref="P:InDoOut_Desktop_API.Plugins.IPlugin.Author"/>. This has exception handling in the case of an invalid author.
+            </summary>
+        </member>
+        <member name="T:InDoOut_Desktop_API.Plugins.Plugin">
+            <summary>
+            Allows the application to reference the class as a plugin, which
+            enables it to load in the custom functions and other extensions 
+            automatically.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Desktop_API.Plugins.Plugin.Valid">
+            <summary>
+            Whether this plugin is valid and can be loaded.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Desktop_API.Plugins.Plugin.SafeName">
+            <summary>
+            The safe version of <see cref="P:InDoOut_Desktop_API.Plugins.Plugin.Name"/>. This has exception handling in the case of an invalid name.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Desktop_API.Plugins.Plugin.SafeDescription">
+            <summary>
+            The safe version of <see cref="P:InDoOut_Desktop_API.Plugins.Plugin.Description"/>. This has exception handling in the case of an invalid description.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Desktop_API.Plugins.Plugin.SafeAuthor">
+            <summary>
+            The safe version of <see cref="P:InDoOut_Desktop_API.Plugins.Plugin.Author"/>. This has exception handling in the case of an invalid author.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Desktop_API.Plugins.Plugin.Name">
+            <summary>
+            The name of the plugin. Visible to the user.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Desktop_API.Plugins.Plugin.Description">
+            <summary>
+            A description of what this plugin contains or does. Visible to the user.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Desktop_API.Plugins.Plugin.Author">
+            <summary>
+            The author(s) of this plugin. Visible to the user.
+            </summary>
+        </member>
+    </members>
+</doc>
