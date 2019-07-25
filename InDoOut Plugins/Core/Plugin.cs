@@ -1,6 +1,6 @@
 ﻿using InDoOut_Core.Threading.Safety;
 
-namespace InDoOut_Desktop_API.Plugins
+namespace InDoOut_Plugins.Core
 {
     /// <summary>
     /// Allows the application to reference the class as a plugin, which

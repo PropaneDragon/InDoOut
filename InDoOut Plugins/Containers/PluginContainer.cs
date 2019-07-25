@@ -1,29 +1,50 @@
-﻿using System;
+﻿using InDoOut_Core.Entities.Functions;
+using InDoOut_Plugins.Core;
+using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using InDoOut_Core.Entities.Functions;
-using InDoOut_Desktop_API.Plugins;
 
-[assembly: InternalsVisibleTo("InDoOut Desktop Tests")]
-namespace InDoOut_Desktop.Plugins
+namespace InDoOut_Plugins.Containers
 {
-    internal class PluginContainer : IPluginContainer
+    /// <summary>
+    /// A container that contains metadata for a standard <see cref="IPlugin"/>.
+    /// </summary>
+    public class PluginContainer : IPluginContainer
     {
+        /// <summary>
+        /// Whether or not the container has a valid plugin.
+        /// </summary>
         public bool Valid => Plugin != null && Plugin.Valid;
 
+        /// <summary>
+        /// The plugin this container houses.
+        /// </summary>
         public IPlugin Plugin { get; private set; } = null;
 
+        /// <summary>
+        /// The functions the plugin makes available.
+        /// </summary>
         public List<IFunction> Functions { get; } = new List<IFunction>();
 
+        /// <summary>
+        /// Creates a standard plugin container with an empty plugin.
+        /// </summary>
         protected PluginContainer()
         {
         }
 
+        /// <summary>
+        /// Creates a plugin container to house the given <paramref name="plugin"/>.
+        /// </summary>
+        /// <param name="plugin">The plugin this container belongs to.</param>
         public PluginContainer(IPlugin plugin) : this()
         {
             Plugin = plugin;
         }
 
+        /// <summary>
+        /// Initialises the metadata for the stored plugin.
+        /// </summary>
+        /// <returns>Whether or not the initialisation was a success.</returns>
         public bool Initialise()
         {
             if (Valid)

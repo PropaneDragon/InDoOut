@@ -1,10 +1,10 @@
 using InDoOut_Core.Entities.Functions;
-using InDoOut_Desktop.Plugins;
 using InDoOut_Desktop_API_Tests;
 using InDoOut_Desktop_API_Tests.External_Plugin_Testing;
+using InDoOut_Plugins.Containers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace InDoOut_Desktop_Tests
+namespace InDoOut_Plugins_Tests
 {
     [TestClass]
     public class PluginContainerTests

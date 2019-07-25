@@ -1,7 +1,8 @@
+using InDoOut_Desktop_API_Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace InDoOut_Desktop_API_Tests
+namespace InDoOut_Plugins_Tests
 {
     [TestClass]
     public class PluginTests

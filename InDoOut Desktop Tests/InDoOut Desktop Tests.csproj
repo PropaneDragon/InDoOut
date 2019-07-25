@@ -14,7 +14,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\InDoOut Desktop API Tests\InDoOut Desktop API Tests.csproj" />
+    <ProjectReference Include="..\InDoOut Desktop API Tests\InDoOut Desktop API Tests.csproj">
+      <Private>true</Private>
+    </ProjectReference>
     <ProjectReference Include="..\InDoOut Desktop\InDoOut Desktop.csproj" />
   </ItemGroup>
 

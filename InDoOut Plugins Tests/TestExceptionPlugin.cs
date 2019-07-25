@@ -1,7 +1,7 @@
-﻿using InDoOut_Desktop_API.Plugins;
+﻿using InDoOut_Plugins.Core;
 using System;
 
-namespace InDoOut_Desktop_API_Tests
+namespace InDoOut_Plugins_Tests
 {
     class TestExceptionPlugin : Plugin
     {

@@ -15,9 +15,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InDoOut Desktop", "InDoOut 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InDoOut Desktop API", "InDoOut Desktop API\InDoOut Desktop API.csproj", "{4DD75B5A-8B9C-48D1-8C24-20DEBD36E40C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InDoOut Desktop API Tests", "InDoOut Desktop API Tests\InDoOut Desktop API Tests.csproj", "{144C492B-E3F9-40FF-BCE4-19BDCC7A50D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InDoOut Desktop API Tests", "InDoOut Desktop API Tests\InDoOut Desktop API Tests.csproj", "{144C492B-E3F9-40FF-BCE4-19BDCC7A50D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InDoOut Desktop Tests", "InDoOut Desktop Tests\InDoOut Desktop Tests.csproj", "{AB730D68-DD2F-42DC-A00B-9C21CCAF3A44}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InDoOut Desktop Tests", "InDoOut Desktop Tests\InDoOut Desktop Tests.csproj", "{AB730D68-DD2F-42DC-A00B-9C21CCAF3A44}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InDoOut Plugins", "InDoOut Plugins\InDoOut Plugins.csproj", "{2DC628DA-5E8D-4273-A8C3-762D0EFF34C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InDoOut Plugins Tests", "InDoOut Plugins Tests\InDoOut Plugins Tests.csproj", "{3E8B44DE-E327-43CA-90D0-78E8713D5050}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +61,14 @@ Global
 		{AB730D68-DD2F-42DC-A00B-9C21CCAF3A44}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB730D68-DD2F-42DC-A00B-9C21CCAF3A44}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB730D68-DD2F-42DC-A00B-9C21CCAF3A44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DC628DA-5E8D-4273-A8C3-762D0EFF34C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DC628DA-5E8D-4273-A8C3-762D0EFF34C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DC628DA-5E8D-4273-A8C3-762D0EFF34C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DC628DA-5E8D-4273-A8C3-762D0EFF34C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E8B44DE-E327-43CA-90D0-78E8713D5050}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E8B44DE-E327-43CA-90D0-78E8713D5050}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E8B44DE-E327-43CA-90D0-78E8713D5050}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E8B44DE-E327-43CA-90D0-78E8713D5050}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

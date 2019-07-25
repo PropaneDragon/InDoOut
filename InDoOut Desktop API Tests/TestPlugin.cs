@@ -1,4 +1,4 @@
-﻿using InDoOut_Desktop_API.Plugins;
+﻿using InDoOut_Plugins.Core;
 
 namespace InDoOut_Desktop_API_Tests
 {

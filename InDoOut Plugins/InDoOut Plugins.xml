@@ -1,0 +1,198 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>InDoOut Plugins</name>
+    </assembly>
+    <members>
+        <member name="T:InDoOut_Plugins.Containers.IPluginContainer">
+            <summary>
+            Represents a container that contains metadata for a standard <see cref="T:InDoOut_Plugins.Core.IPlugin"/>.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Plugins.Containers.IPluginContainer.Valid">
+            <summary>
+            The container contains a valid plugin.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Plugins.Containers.IPluginContainer.Plugin">
+            <summary>
+            The plugin that this container houses.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Plugins.Containers.IPluginContainer.Functions">
+            <summary>
+            The functions that this plugin makes visible.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Plugins.Containers.IPluginContainer.Initialise">
+            <summary>
+            Initialises the plugin container, which populates the metadata.
+            </summary>
+            <returns>Whether or not the container could be initialised.</returns>
+        </member>
+        <member name="T:InDoOut_Plugins.Containers.PluginContainer">
+            <summary>
+            A container that contains metadata for a standard <see cref="T:InDoOut_Plugins.Core.IPlugin"/>.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Plugins.Containers.PluginContainer.Valid">
+            <summary>
+            Whether or not the container has a valid plugin.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Plugins.Containers.PluginContainer.Plugin">
+            <summary>
+            The plugin this container houses.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Plugins.Containers.PluginContainer.Functions">
+            <summary>
+            The functions the plugin makes available.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Plugins.Containers.PluginContainer.#ctor">
+            <summary>
+            Creates a standard plugin container with an empty plugin.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Plugins.Containers.PluginContainer.#ctor(InDoOut_Plugins.Core.IPlugin)">
+            <summary>
+            Creates a plugin container to house the given <paramref name="plugin"/>.
+            </summary>
+            <param name="plugin">The plugin this container belongs to.</param>
+        </member>
+        <member name="M:InDoOut_Plugins.Containers.PluginContainer.Initialise">
+            <summary>
+            Initialises the metadata for the stored plugin.
+            </summary>
+            <returns>Whether or not the initialisation was a success.</returns>
+        </member>
+        <member name="T:InDoOut_Plugins.Core.IPlugin">
+            <summary>
+            Represents a plugin that is recognised by the application and loaded in automatically.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Plugins.Core.IPlugin.Valid">
+            <summary>
+            Whether the plugin is valid and can be loaded.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Plugins.Core.IPlugin.Name">
+            <summary>
+            The name of the plugin. Visible to the user.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Plugins.Core.IPlugin.SafeName">
+            <summary>
+            The safe version of <see cref="P:InDoOut_Plugins.Core.IPlugin.Name"/>. This has exception handling in the case of an invalid name.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Plugins.Core.IPlugin.Description">
+            <summary>
+            A description of what this plugin contains or does. Visible to the user.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Plugins.Core.IPlugin.SafeDescription">
+            <summary>
+            The safe version of <see cref="P:InDoOut_Plugins.Core.IPlugin.Description"/>. This has exception handling in the case of an invalid description.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Plugins.Core.IPlugin.Author">
+            <summary>
+            The author(s) of this plugin. Visible to the user.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Plugins.Core.IPlugin.SafeAuthor">
+            <summary>
+            The safe version of <see cref="P:InDoOut_Plugins.Core.IPlugin.Author"/>. This has exception handling in the case of an invalid author.
+            </summary>
+        </member>
+        <member name="T:InDoOut_Plugins.Core.Plugin">
+            <summary>
+            Allows the application to reference the class as a plugin, which
+            enables it to load in the custom functions and other extensions 
+            automatically.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Plugins.Core.Plugin.Valid">
+            <summary>
+            Whether this plugin is valid and can be loaded.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Plugins.Core.Plugin.SafeName">
+            <summary>
+            The safe version of <see cref="P:InDoOut_Plugins.Core.Plugin.Name"/>. This has exception handling in the case of an invalid name.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Plugins.Core.Plugin.SafeDescription">
+            <summary>
+            The safe version of <see cref="P:InDoOut_Plugins.Core.Plugin.Description"/>. This has exception handling in the case of an invalid description.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Plugins.Core.Plugin.SafeAuthor">
+            <summary>
+            The safe version of <see cref="P:InDoOut_Plugins.Core.Plugin.Author"/>. This has exception handling in the case of an invalid author.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Plugins.Core.Plugin.Name">
+            <summary>
+            The name of the plugin. Visible to the user.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Plugins.Core.Plugin.Description">
+            <summary>
+            A description of what this plugin contains or does. Visible to the user.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Plugins.Core.Plugin.Author">
+            <summary>
+            The author(s) of this plugin. Visible to the user.
+            </summary>
+        </member>
+        <member name="T:InDoOut_Plugins.Loaders.IPluginLoader">
+            <summary>
+            Represents a loader that can load <see cref="T:InDoOut_Plugins.Containers.IPluginContainer"/>s.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Plugins.Loaders.IPluginLoader.LoadPlugin(System.String)">
+            <summary>
+            Loads a plugin from a given assembly path.
+            </summary>
+            <param name="path">The path to the assembly to be loaded.</param>
+            <returns>A <see cref="T:InDoOut_Plugins.Containers.IPluginContainer"/>, if valid. Returns null otherwise.</returns>
+        </member>
+        <member name="M:InDoOut_Plugins.Loaders.IPluginLoader.LoadPlugin(System.Reflection.Assembly)">
+            <summary>
+            Loads a plugin from a given assembly.
+            </summary>
+            <param name="assembly">The assembly to load.</param>
+            <returns>A <see cref="T:InDoOut_Plugins.Containers.IPluginContainer"/>, if valid. Returns null otherwise.</returns>
+        </member>
+        <member name="T:InDoOut_Plugins.Loaders.PluginLoader">
+            <summary>
+            Loads plugins as <see cref="T:InDoOut_Plugins.Containers.IPluginContainer"/>s.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Plugins.Loaders.PluginLoader.LoadPlugin(System.String)">
+            <summary>
+            Loads a plugin from a given assembly path.
+            </summary>
+            <param name="path">The path to the assembly to be loaded.</param>
+            <returns>A <see cref="T:InDoOut_Plugins.Containers.IPluginContainer"/>, if valid. Returns null otherwise.</returns>
+        </member>
+        <member name="M:InDoOut_Plugins.Loaders.PluginLoader.LoadPlugin(System.Reflection.Assembly)">
+            <summary>
+            Loads a plugin from a given assembly.
+            </summary>
+            <param name="assembly">The assembly to load.</param>
+            <returns>A <see cref="T:InDoOut_Plugins.Containers.IPluginContainer"/>, if valid. Returns null otherwise.</returns>
+        </member>
+        <member name="M:InDoOut_Plugins.Loaders.PluginLoader.CreateContainer(InDoOut_Plugins.Core.IPlugin)">
+            <summary>
+            Creates a container for a given plugin.
+            </summary>
+            <param name="plugin">The plugin to containerise.</param>
+            <returns>A plugin container for the plugin, if valid. Otherwise null.</returns>
+        </member>
+    </members>
+</doc>

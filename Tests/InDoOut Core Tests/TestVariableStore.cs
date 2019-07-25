@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace InDoOut_Core_Tests
 {
-    internal class TestVariableStore : VariableStore
+    public class TestVariableStore : VariableStore
     {
         public List<IVariable> PublicVariables => Variables;
     }

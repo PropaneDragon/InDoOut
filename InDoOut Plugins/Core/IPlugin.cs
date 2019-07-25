@@ -1,4 +1,4 @@
-﻿namespace InDoOut_Desktop_API.Plugins
+﻿namespace InDoOut_Plugins.Core
 {
     /// <summary>
     /// Represents a plugin that is recognised by the application and loaded in automatically.

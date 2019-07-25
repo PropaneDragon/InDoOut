@@ -1,12 +1,44 @@
-﻿using InDoOut_Desktop_API.Plugins;
+﻿using InDoOut_Plugins.Containers;
+using InDoOut_Plugins.Core;
 using System;
 using System.Linq;
 using System.Reflection;
 
-namespace InDoOut_Desktop.Plugins
+namespace InDoOut_Plugins.Loaders
 {
-    internal class PluginLoader : IPluginLoader
+    /// <summary>
+    /// Loads plugins as <see cref="IPluginContainer"/>s.
+    /// </summary>
+    public class PluginLoader : IPluginLoader
     {
+        /// <summary>
+        /// Loads a plugin from a given assembly path.
+        /// </summary>
+        /// <param name="path">The path to the assembly to be loaded.</param>
+        /// <returns>A <see cref="IPluginContainer"/>, if valid. Returns null otherwise.</returns>
+        public IPluginContainer LoadPlugin(string path)
+        {
+            if (!string.IsNullOrEmpty(path))
+            {
+                try
+                {
+                    var loadedAssembly = Assembly.LoadFrom(path);
+                    if (loadedAssembly != null)
+                    {
+                        return LoadPlugin(loadedAssembly);
+                    }
+                }
+                catch { }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Loads a plugin from a given assembly.
+        /// </summary>
+        /// <param name="assembly">The assembly to load.</param>
+        /// <returns>A <see cref="IPluginContainer"/>, if valid. Returns null otherwise.</returns>
         public IPluginContainer LoadPlugin(Assembly assembly)
         {
             if (assembly != null)
@@ -21,6 +53,11 @@ namespace InDoOut_Desktop.Plugins
             return null;
         }
 
+        /// <summary>
+        /// Creates a container for a given plugin.
+        /// </summary>
+        /// <param name="plugin">The plugin to containerise.</param>
+        /// <returns>A plugin container for the plugin, if valid. Otherwise null.</returns>
         protected virtual IPluginContainer CreateContainer(IPlugin plugin)
         {
             if (plugin != null)

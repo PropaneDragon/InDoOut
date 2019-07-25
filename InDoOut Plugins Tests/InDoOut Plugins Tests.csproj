@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
-    <RootNamespace>InDoOut_Desktop_API_Tests</RootNamespace>
+    <RootNamespace>InDoOut_Plugins_Tests</RootNamespace>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
@@ -14,9 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\InDoOut Desktop API\InDoOut Desktop API.csproj" />
+    <ProjectReference Include="..\InDoOut Desktop API Tests\InDoOut Desktop API Tests.csproj" />
     <ProjectReference Include="..\InDoOut Plugins\InDoOut Plugins.csproj" />
-    <ProjectReference Include="..\Tests\InDoOut Core Tests\InDoOut Core Tests.csproj" />
   </ItemGroup>
 
 </Project>
