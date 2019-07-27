@@ -1,4 +1,5 @@
 ﻿using InDoOut_Plugins.Containers;
+using System;
 using System.Reflection;
 
 namespace InDoOut_Plugins.Loaders
@@ -8,6 +9,21 @@ namespace InDoOut_Plugins.Loaders
     /// </summary>
     public interface IPluginLoader
     {
+        /// <summary>
+        /// Triggered when a plugin has begun loading.
+        /// </summary>
+        event EventHandler<PluginLoadEventArgs> OnPluginLoading;
+
+        /// <summary>
+        /// Triggered when a plugin has successfully loaded.
+        /// </summary>
+        event EventHandler<PluginLoadEventArgs> OnPluginLoadSuccess;
+
+        /// <summary>
+        /// Triggered when a plugin has failed to load.
+        /// </summary>
+        event EventHandler<PluginLoadEventArgs> OnPluginLoadFail;
+
         /// <summary>
         /// Loads a plugin from a given assembly path.
         /// </summary>

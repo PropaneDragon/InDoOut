@@ -39,6 +39,7 @@ namespace InDoOut_Plugins_Tests
 
             pluginContainer = new PluginContainer(new TestPlugin()
             {
+                PublicName = null,
                 PublicAuthor = "An author",
                 PublicDescription = "A description"
             });

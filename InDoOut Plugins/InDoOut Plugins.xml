@@ -154,6 +154,21 @@
             Represents a loader that can load <see cref="T:InDoOut_Plugins.Containers.IPluginContainer"/>s.
             </summary>
         </member>
+        <member name="E:InDoOut_Plugins.Loaders.IPluginLoader.OnPluginLoading">
+            <summary>
+            Triggered when a plugin has begun loading.
+            </summary>
+        </member>
+        <member name="E:InDoOut_Plugins.Loaders.IPluginLoader.OnPluginLoadSuccess">
+            <summary>
+            Triggered when a plugin has successfully loaded.
+            </summary>
+        </member>
+        <member name="E:InDoOut_Plugins.Loaders.IPluginLoader.OnPluginLoadFail">
+            <summary>
+            Triggered when a plugin has failed to load.
+            </summary>
+        </member>
         <member name="M:InDoOut_Plugins.Loaders.IPluginLoader.LoadPlugin(System.String)">
             <summary>
             Loads a plugin from a given assembly path.
@@ -171,6 +186,21 @@
         <member name="T:InDoOut_Plugins.Loaders.PluginLoader">
             <summary>
             Loads plugins as <see cref="T:InDoOut_Plugins.Containers.IPluginContainer"/>s.
+            </summary>
+        </member>
+        <member name="E:InDoOut_Plugins.Loaders.PluginLoader.OnPluginLoading">
+            <summary>
+            Triggered when a plugin has begun loading.
+            </summary>
+        </member>
+        <member name="E:InDoOut_Plugins.Loaders.PluginLoader.OnPluginLoadSuccess">
+            <summary>
+            Triggered when a plugin has successfully loaded.
+            </summary>
+        </member>
+        <member name="E:InDoOut_Plugins.Loaders.PluginLoader.OnPluginLoadFail">
+            <summary>
+            Triggered when a plugin has failed to load.
             </summary>
         </member>
         <member name="M:InDoOut_Plugins.Loaders.PluginLoader.LoadPlugin(System.String)">
@@ -193,6 +223,35 @@
             </summary>
             <param name="plugin">The plugin to containerise.</param>
             <returns>A plugin container for the plugin, if valid. Otherwise null.</returns>
+        </member>
+        <member name="T:InDoOut_Plugins.Loaders.PluginLoadEventArgs">
+            <summary>
+            Event arguments for a plugin load event.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Plugins.Loaders.PluginLoadEventArgs.Path">
+            <summary>
+            The path to the currently loading plugin.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Plugins.Loaders.PluginLoadEventArgs.PluginLoader">
+            <summary>
+            The plugin loader that is currently loading the plugin.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Plugins.Loaders.PluginLoadEventArgs.#ctor(InDoOut_Plugins.Loaders.IPluginLoader,System.String)">
+            <summary>
+            Creates event args given a <see cref="T:InDoOut_Plugins.Loaders.IPluginLoader"/> and a path to a plugin.
+            </summary>
+            <param name="loader">The loader that is currently loading the plugin.</param>
+            <param name="path">The path to the plugin that is currently loading.</param>
+        </member>
+        <member name="M:InDoOut_Plugins.Loaders.PluginLoadEventArgs.#ctor(InDoOut_Plugins.Loaders.IPluginLoader,System.Reflection.Assembly)">
+            <summary>
+            Creates event args given a <see cref="T:InDoOut_Plugins.Loaders.IPluginLoader"/> and an <see cref="T:System.Reflection.Assembly"/>.
+            </summary>
+            <param name="loader">The loader that is currently loading the plugin.</param>
+            <param name="assembly">The assembly that is currently being loaded.</param>
         </member>
     </members>
 </doc>

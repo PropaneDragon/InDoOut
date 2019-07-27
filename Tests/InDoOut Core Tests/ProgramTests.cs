@@ -29,6 +29,7 @@ namespace InDoOut_Core_Tests
             Assert.AreEqual(0, program.StartFunctions.Count);
 
             Assert.IsFalse(program.AddFunction(function));
+            Assert.IsFalse(program.AddFunction(null));
 
             Assert.AreEqual(1, program.Functions.Count);
             Assert.AreEqual(0, program.StartFunctions.Count);

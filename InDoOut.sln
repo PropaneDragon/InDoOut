@@ -21,7 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InDoOut Desktop Tests", "In
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InDoOut Plugins", "InDoOut Plugins\InDoOut Plugins.csproj", "{2DC628DA-5E8D-4273-A8C3-762D0EFF34C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InDoOut Plugins Tests", "InDoOut Plugins Tests\InDoOut Plugins Tests.csproj", "{3E8B44DE-E327-43CA-90D0-78E8713D5050}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InDoOut Plugins Tests", "InDoOut Plugins Tests\InDoOut Plugins Tests.csproj", "{3E8B44DE-E327-43CA-90D0-78E8713D5050}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{35AA056B-5916-4FAB-9AC3-8980073344A1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -72,6 +74,13 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DBE6316F-BB3F-4F8C-93E2-762F88E38EDA} = {35AA056B-5916-4FAB-9AC3-8980073344A1}
+		{51665670-2EFC-49CF-8B44-25753657999F} = {35AA056B-5916-4FAB-9AC3-8980073344A1}
+		{144C492B-E3F9-40FF-BCE4-19BDCC7A50D2} = {35AA056B-5916-4FAB-9AC3-8980073344A1}
+		{AB730D68-DD2F-42DC-A00B-9C21CCAF3A44} = {35AA056B-5916-4FAB-9AC3-8980073344A1}
+		{3E8B44DE-E327-43CA-90D0-78E8713D5050} = {35AA056B-5916-4FAB-9AC3-8980073344A1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D02E086C-DCEE-44BC-B038-1FB0D2C17BC6}

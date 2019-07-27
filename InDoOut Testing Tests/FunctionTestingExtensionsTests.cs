@@ -34,6 +34,17 @@ namespace InDoOut_Testing_Tests
             waitTime = DateTime.UtcNow - startTime;
 
             Assert.AreEqual(60, waitTime.TotalMilliseconds, 10, $"Total time: {waitTime.TotalMilliseconds}ms");
+
+            function = new TestFunction(() => Thread.Sleep(TimeSpan.FromMilliseconds(10)));
+            function.Trigger(null);
+
+            startTime = DateTime.UtcNow;
+
+            function.WaitForCompletion();
+
+            waitTime = DateTime.UtcNow - startTime;
+
+            Assert.AreEqual(10, waitTime.TotalMilliseconds, 10, $"Total time: {waitTime.TotalMilliseconds}ms");
         }
 
         [TestMethod]

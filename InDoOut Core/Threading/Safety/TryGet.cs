@@ -15,7 +15,7 @@ namespace InDoOut_Core.Threading.Safety
         /// <param name="function">The function to process.</param>
         /// <param name="defaultValue">The default value to return on failure.</param>
         /// <returns></returns>
-        public static T ValueOrDefault<T>(Func<T> function, T defaultValue = default(T))
+        public static T ValueOrDefault<T>(Func<T> function, T defaultValue = default)
         {
             if (function != null)
             {

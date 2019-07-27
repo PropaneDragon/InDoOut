@@ -11,7 +11,7 @@
         </member>
         <member name="M:InDoOut_Testing.FunctionTestingExtensions.WaitForCompletion(InDoOut_Core.Entities.Functions.IFunction,System.Boolean)">
             <summary>
-            Waits indefinitely for <paramref name="function"/> to complete, then continues. This can be used to ensure the running
+            Waits indefinitely (1 day) for <paramref name="function"/> to complete, then continues. This can be used to ensure the running
             of a particular function is complete before testing outputs.
             </summary>
             <param name="function">The function to wait for.</param>

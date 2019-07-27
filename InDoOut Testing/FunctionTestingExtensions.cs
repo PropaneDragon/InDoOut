@@ -10,14 +10,14 @@ namespace InDoOut_Testing
     public static class FunctionTestingExtensions
     {
         /// <summary>
-        /// Waits indefinitely for <paramref name="function"/> to complete, then continues. This can be used to ensure the running
+        /// Waits indefinitely (1 day) for <paramref name="function"/> to complete, then continues. This can be used to ensure the running
         /// of a particular function is complete before testing outputs.
         /// </summary>
         /// <param name="function">The function to wait for.</param>
         /// <param name="waitForStart">Whether to wait for the function to start first.</param>
         public static void WaitForCompletion(this IFunction function, bool waitForStart = false)
         {
-            WaitForCompletion(function, TimeSpan.MaxValue, waitForStart);
+            WaitForCompletion(function, TimeSpan.FromDays(1), waitForStart);
         }
 
         /// <summary>

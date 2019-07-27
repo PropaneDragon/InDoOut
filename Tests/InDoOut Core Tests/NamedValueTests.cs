@@ -25,6 +25,9 @@ namespace InDoOut_Core_Tests
             Assert.AreEqual("Something else", namedValue.RawValue);
             Assert.IsTrue(namedValue.Valid);
 
+            Assert.IsTrue(namedValue.ValueFrom<string>(null));
+            Assert.IsNull(namedValue.RawValue);
+
             Assert.IsTrue(namedValue.ValueFrom(10));
             Assert.AreEqual("10", namedValue.RawValue);
 

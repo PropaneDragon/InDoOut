@@ -12,6 +12,21 @@ namespace InDoOut_Plugins.Loaders
     public class PluginLoader : IPluginLoader
     {
         /// <summary>
+        /// Triggered when a plugin has begun loading.
+        /// </summary>
+        public event EventHandler<PluginLoadEventArgs> OnPluginLoading;
+
+        /// <summary>
+        /// Triggered when a plugin has successfully loaded.
+        /// </summary>
+        public event EventHandler<PluginLoadEventArgs> OnPluginLoadSuccess;
+
+        /// <summary>
+        /// Triggered when a plugin has failed to load.
+        /// </summary>
+        public event EventHandler<PluginLoadEventArgs> OnPluginLoadFail;
+
+        /// <summary>
         /// Loads a plugin from a given assembly path.
         /// </summary>
         /// <param name="path">The path to the assembly to be loaded.</param>
@@ -43,10 +58,18 @@ namespace InDoOut_Plugins.Loaders
         {
             if (assembly != null)
             {
+                OnPluginLoading?.Invoke(this, new PluginLoadEventArgs(this, assembly));
+
                 var plugin = FindPlugin(assembly);
                 if (plugin != null)
                 {
+                    OnPluginLoadSuccess?.Invoke(this, new PluginLoadEventArgs(this, assembly));
+
                     return CreateContainer(plugin);
+                }
+                else
+                {
+                    OnPluginLoadFail?.Invoke(this, new PluginLoadEventArgs(this, assembly));
                 }
             }
 

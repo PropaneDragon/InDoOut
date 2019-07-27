@@ -1137,6 +1137,35 @@
             <typeparam name="InstanceOf">The type to build.</typeparam>
             <returns>The requested type <typeparamref name="InstanceOf"/> as <typeparamref name="T"/>, or null if it has failed.</returns>
         </member>
+        <member name="T:InDoOut_Core.Instancing.ISingleton`1">
+            <summary>
+            Represents a singleton. Singletons have an <see cref="P:InDoOut_Core.Instancing.ISingleton`1.Instance"/> accessor that
+            returns a singular instance of a class. If it doesn't exist, it gets built.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Instancing.ISingleton`1.Instance">
+            <summary>
+            An instance of <typeparamref name="T"/>.
+            </summary>
+        </member>
+        <member name="T:InDoOut_Core.Instancing.Singleton`1">
+            <summary>
+            Creates class singletons of type <typeparamref name="T"/>. Singletons have an <see cref="P:InDoOut_Core.Instancing.Singleton`1.Instance"/> accessor that
+            returns a singular instance of class <typeparamref name="T"/>. If it doesn't exist, it gets built.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:InDoOut_Core.Instancing.Singleton`1.Instance">
+            <summary>
+            An instance of <typeparamref name="T"/>.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Core.Instancing.Singleton`1.CreateInstance">
+            <summary>
+            Creates and returns a brand new instance of type <typeparamref name="T"/>.
+            </summary>
+            <returns>A new instance of type <typeparamref name="T"/>.</returns>
+        </member>
         <member name="T:InDoOut_Core.Threading.Safety.TryGet">
             <summary>
             A collection of methods to safely get values.

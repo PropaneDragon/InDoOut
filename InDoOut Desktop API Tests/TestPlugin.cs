@@ -4,7 +4,7 @@ namespace InDoOut_Desktop_API_Tests
 {
     public class TestPlugin : Plugin
     {
-        public string PublicName { get; set; } = null;
+        public string PublicName { get; set; } = "Default name";
         public string PublicDescription { get; set; } = null;
         public string PublicAuthor { get; set; } = null;
 
