@@ -33,11 +33,11 @@ namespace InDoOut_Desktop_Tests
 
             Assert.AreEqual("Default name", pluginContainer.Plugin.Name);
             Assert.IsTrue(pluginContainer.Valid);
-            Assert.AreEqual(0, pluginContainer.Functions.Count);
+            Assert.AreEqual(0, pluginContainer.FunctionTypes.Count);
 
             Assert.IsTrue(pluginContainer.Initialise());
 
-            Assert.AreEqual(3, pluginContainer.Functions.Count);
+            Assert.AreEqual(3, pluginContainer.FunctionTypes.Count);
         }
 
         [TestMethod]
@@ -58,11 +58,11 @@ namespace InDoOut_Desktop_Tests
 
             Assert.AreEqual("Default name", pluginContainer.Plugin.Name);
             Assert.IsTrue(pluginContainer.Valid);
-            Assert.AreEqual(0, pluginContainer.Functions.Count);
+            Assert.AreEqual(0, pluginContainer.FunctionTypes.Count);
 
             Assert.IsTrue(pluginContainer.Initialise());
 
-            Assert.AreEqual(3, pluginContainer.Functions.Count);
+            Assert.AreEqual(3, pluginContainer.FunctionTypes.Count);
         }
 
         [TestMethod]

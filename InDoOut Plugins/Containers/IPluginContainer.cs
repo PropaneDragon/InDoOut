@@ -1,5 +1,6 @@
 ﻿using InDoOut_Core.Entities.Functions;
 using InDoOut_Plugins.Core;
+using System;
 using System.Collections.Generic;
 
 namespace InDoOut_Plugins.Containers
@@ -22,7 +23,7 @@ namespace InDoOut_Plugins.Containers
         /// <summary>
         /// The functions that this plugin makes visible.
         /// </summary>
-        List<IFunction> Functions { get; }
+        List<Type> FunctionTypes { get; }
 
         /// <summary>
         /// Initialises the plugin container, which populates the metadata.

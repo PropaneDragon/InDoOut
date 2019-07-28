@@ -4,9 +4,25 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InDoOut_Desktop.UI.Windows"
+        xmlns:core="clr-namespace:InDoOut_Desktop.UI.Controls.Core"
+        xmlns:sidebar="clr-namespace:InDoOut_Desktop.UI.Controls.Sidebar"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded" WindowState="Normal" Background="#111" Foreground="White">
+        Title="Test Program > ido" Height="1080" Width="1920" Loaded="Window_Loaded" WindowState="Normal" Background="#111" Foreground="White">
     <Grid>
-
+        <core:TitleBar HorizontalAlignment="Stretch" VerticalAlignment="Top" />
+        <sidebar:Sidebar Width="500" HorizontalAlignment="Left" />
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="6*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Image Source="/Resources/IDO_Main_BackgroundLogo.png" Grid.Row="1" Grid.Column="1" />
+        </Grid>
     </Grid>
 </Window>

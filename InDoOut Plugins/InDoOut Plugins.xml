@@ -19,7 +19,7 @@
             The plugin that this container houses.
             </summary>
         </member>
-        <member name="P:InDoOut_Plugins.Containers.IPluginContainer.Functions">
+        <member name="P:InDoOut_Plugins.Containers.IPluginContainer.FunctionTypes">
             <summary>
             The functions that this plugin makes visible.
             </summary>
@@ -45,7 +45,7 @@
             The plugin this container houses.
             </summary>
         </member>
-        <member name="P:InDoOut_Plugins.Containers.PluginContainer.Functions">
+        <member name="P:InDoOut_Plugins.Containers.PluginContainer.FunctionTypes">
             <summary>
             The functions the plugin makes available.
             </summary>

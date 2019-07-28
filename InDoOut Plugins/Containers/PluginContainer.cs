@@ -23,7 +23,7 @@ namespace InDoOut_Plugins.Containers
         /// <summary>
         /// The functions the plugin makes available.
         /// </summary>
-        public List<IFunction> Functions { get; } = new List<IFunction>();
+        public List<Type> FunctionTypes { get; } = new List<Type>();
 
         /// <summary>
         /// Creates a standard plugin container with an empty plugin.
@@ -69,15 +69,15 @@ namespace InDoOut_Plugins.Containers
         {
             if (type != null)
             {
-                CheckAssignableAndAdd(Functions, type);
+                CheckAssignableAndAdd<IFunction>(FunctionTypes, type);
             }
         }
 
-        private void CheckAssignableAndAdd<T>(List<T> addTo, Type type) where T : class
+        private void CheckAssignableAndAdd<T>(List<Type> addTo, Type type) where T : class
         {
             if (typeof(T).IsAssignableFrom(type))
             {
-                addTo.Add(type as T);
+                addTo.Add(type);
             }
         }
     }

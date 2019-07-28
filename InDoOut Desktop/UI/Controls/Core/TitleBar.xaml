@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="InDoOut_Desktop.UI.Controls.Core.TitleBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:InDoOut_Desktop.UI.Controls.Core"
+             mc:Ignorable="d" d:DesignWidth="1920" Foreground="White" FontFamily="Segoe UI Light" Loaded="UserControl_Loaded" PreviewMouseDoubleClick="UserControl_PreviewMouseDoubleClick" Unloaded="UserControl_Unloaded">
+    <Border Padding="16">
+        <DockPanel>
+            <ContentControl DockPanel.Dock="Right">
+                <StackPanel Orientation="Horizontal">
+                    <Button Template="{DynamicResource Template_Buttons_Control}" x:Name="Button_Minimise" Content="" Click="Button_Minimise_Click"/>
+                    <Button Template="{DynamicResource Template_Buttons_Control}" x:Name="Button_Restore" Content="" Click="Button_Restore_Click"/>
+                    <Button Template="{DynamicResource Template_Buttons_Control}" x:Name="Button_Close" Content="" Click="Button_Close_Click"/>
+                </StackPanel>
+            </ContentControl>
+            <TextBlock x:Name="Text_Title" DockPanel.Dock="Left" FontSize="24" Text="ido" TextAlignment="Center" PreviewMouseLeftButtonDown="Text_Title_PreviewMouseLeftButtonDown" />
+        </DockPanel>
+    </Border>
+</UserControl>

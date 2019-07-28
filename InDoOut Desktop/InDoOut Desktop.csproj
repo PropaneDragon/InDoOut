@@ -8,8 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\IDO_Main_BackgroundLogo.png" />
     <None Remove="Resources\IDO_Splash_Logo.png" />
     <None Remove="SplashWindow.xaml" />
+    <None Remove="Style\MainStyle.xaml" />
+    <None Remove="UI\Controls\Core\TitleBar.xaml" />
+    <None Remove="UI\Controls\Search\SearchBar.xaml" />
+    <None Remove="UI\Controls\Sidebar\ItemList.xaml" />
+    <None Remove="UI\Controls\Sidebar\Sidebar.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,10 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="UI\Controls\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <Resource Include="Resources\IDO_Main_BackgroundLogo.png" />
     <Resource Include="Resources\IDO_Splash_Logo.png" />
   </ItemGroup>
 

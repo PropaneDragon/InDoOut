@@ -4,6 +4,11 @@
              xmlns:local="clr-namespace:InDoOut_Desktop"
              StartupUri="UI/Windows/MainWindow.xaml" ShutdownMode="OnMainWindowClose">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Style/MainStyle.xaml" />
+                <ResourceDictionary Source="Style/TitleBarStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
