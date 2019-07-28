@@ -78,14 +78,14 @@ namespace InDoOut_Desktop.UI.Windows
         {
             if (_taskToRun != null)
             {
-                _taskToRun.OnNameChanged -= TaskToRun_OnNameChanged;
+                _taskToRun.NameChanged -= TaskToRun_OnNameChanged;
             }
 
             _taskToRun = task;
 
             if (_taskToRun != null)
             {
-                _taskToRun.OnNameChanged += TaskToRun_OnNameChanged;
+                _taskToRun.NameChanged += TaskToRun_OnNameChanged;
             }
         }
 

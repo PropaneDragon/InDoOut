@@ -19,11 +19,17 @@ namespace InDoOut_Desktop.Loading
                 var pluginLoader = new PluginLoader();
                 var pluginDirectoryLoader = new PluginDirectoryLoader(pluginLoader, StandardLocations.Instance);
 
-                pluginLoader.OnPluginLoadSuccess += PluginLoader_OnPluginLoadSuccess;
+                pluginLoader.PluginLoadSuccess += PluginLoader_OnPluginLoadSuccess;
 
-                var plugins = await pluginDirectoryLoader.LoadPlugins();
+                var pluginContainers = await pluginDirectoryLoader.LoadPlugins();
 
-                LoadedPlugins.Instance.Plugins = plugins;
+                foreach (var pluginContainer in pluginContainers)
+                {
+                    Name = $"Initialising {pluginContainer?.Plugin?.SafeName ?? "unknown"}...";
+                    await Task.Run(() => pluginContainer.Initialise());
+                }
+
+                LoadedPlugins.Instance.Plugins = pluginContainers;
 
                 Name = "Plugins loaded.";
                 return true;

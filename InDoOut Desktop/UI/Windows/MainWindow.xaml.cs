@@ -1,4 +1,5 @@
 ﻿using InDoOut_Desktop.Loading;
+using InDoOut_Desktop.UI.Threading;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,6 +15,8 @@ namespace InDoOut_Desktop.UI.Windows
         public MainWindow()
         {
             InitializeComponent();
+
+            UIThread.Instance.SetCurrentThreadAsUIThread();
         }
 
         private async Task FinishLoading()

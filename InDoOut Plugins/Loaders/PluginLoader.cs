@@ -14,17 +14,17 @@ namespace InDoOut_Plugins.Loaders
         /// <summary>
         /// Triggered when a plugin has begun loading.
         /// </summary>
-        public event EventHandler<PluginLoadEventArgs> OnPluginLoading;
+        public event EventHandler<PluginLoadEventArgs> PluginLoading;
 
         /// <summary>
         /// Triggered when a plugin has successfully loaded.
         /// </summary>
-        public event EventHandler<PluginLoadEventArgs> OnPluginLoadSuccess;
+        public event EventHandler<PluginLoadEventArgs> PluginLoadSuccess;
 
         /// <summary>
         /// Triggered when a plugin has failed to load.
         /// </summary>
-        public event EventHandler<PluginLoadEventArgs> OnPluginLoadFail;
+        public event EventHandler<PluginLoadEventArgs> PluginLoadFail;
 
         /// <summary>
         /// Loads a plugin from a given assembly path.
@@ -58,18 +58,18 @@ namespace InDoOut_Plugins.Loaders
         {
             if (assembly != null)
             {
-                OnPluginLoading?.Invoke(this, new PluginLoadEventArgs(this, assembly));
+                PluginLoading?.Invoke(this, new PluginLoadEventArgs(this, assembly));
 
                 var plugin = FindPlugin(assembly);
                 if (plugin != null)
                 {
-                    OnPluginLoadSuccess?.Invoke(this, new PluginLoadEventArgs(this, assembly));
+                    PluginLoadSuccess?.Invoke(this, new PluginLoadEventArgs(this, assembly));
 
                     return CreateContainer(plugin);
                 }
                 else
                 {
-                    OnPluginLoadFail?.Invoke(this, new PluginLoadEventArgs(this, assembly));
+                    PluginLoadFail?.Invoke(this, new PluginLoadEventArgs(this, assembly));
                 }
             }
 

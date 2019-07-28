@@ -11,7 +11,7 @@ namespace InDoOut_Desktop.Loading
         private string _name = null;
         private List<ILoadingTask> _childTasks = new List<ILoadingTask>();
 
-        public event EventHandler<LoadingTaskEventArgs> OnNameChanged;
+        public event EventHandler<LoadingTaskEventArgs> NameChanged;
 
         public TaskState State { get; private set; } = TaskState.NotRun;
 
@@ -21,7 +21,7 @@ namespace InDoOut_Desktop.Loading
             set
             {
                 lock (_nameLock) _name = value;
-                OnNameChanged?.Invoke(this, new LoadingTaskEventArgs<LoadingTask>(this));
+                NameChanged?.Invoke(this, new LoadingTaskEventArgs<LoadingTask>(this));
             }
         }
 

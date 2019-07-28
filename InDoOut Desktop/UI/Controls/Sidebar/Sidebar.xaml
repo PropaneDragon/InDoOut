@@ -8,7 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="650" d:DesignWidth="500" Background="Transparent" Loaded="UserControl_Loaded">
     <Grid>
-        <Grid x:Name="Grid_CollapsibleContent" Background="#1262f5">
+        <Grid x:Name="Grid_CollapsibleContent" Background="#3b77e4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition x:Name="ColumnDefinition_Extended" Width="64" />
@@ -19,7 +19,7 @@
                         <RowDefinition Height="70" />
                         <RowDefinition />
                     </Grid.RowDefinitions>
-                    <Border Grid.Row="0" Background="#33FFFFFF" BorderThickness="0,0,0,1">
+                    <Border Grid.Row="0" Background="#33FFFFFF" BorderThickness="0,0,0,0">
                         <Border.BorderBrush>
                             <LinearGradientBrush EndPoint="1,0" StartPoint="0,0" MappingMode="RelativeToBoundingBox" SpreadMethod="Pad">
                                 <GradientStop Color="Transparent"/>
@@ -27,10 +27,10 @@
                                 <GradientStop Color="Transparent" Offset="1"/>
                             </LinearGradientBrush>
                         </Border.BorderBrush>
-                        <search:SearchBar />
+                        <search:SearchBar SearchRequested="SearchBar_SearchRequested" />
                     </Border>
                     <Border Grid.Row="1">
-                        <local:ItemList />
+                        <local:ItemList x:Name="ItemList_Functions" />
                     </Border>
                 </Grid>
             </Border>

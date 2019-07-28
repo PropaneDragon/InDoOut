@@ -125,7 +125,7 @@ namespace InDoOut_Desktop_Tests
                 return true;
             });
 
-            task.OnNameChanged += (sender, e) =>
+            task.NameChanged += (sender, e) =>
             {
                 ++timesChanged;
             };

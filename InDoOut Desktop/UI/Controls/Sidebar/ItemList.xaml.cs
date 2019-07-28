@@ -1,7 +1,12 @@
 ﻿using InDoOut_Core.Entities.Functions;
 using InDoOut_Core.Instancing;
+using InDoOut_Desktop.Plugins;
+using InDoOut_Desktop.UI.Threading;
 using InDoOut_Plugins.Loaders;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Data;
 
@@ -21,34 +26,58 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
         {
             InitializeComponent();
 
-            var loader = new PluginLoader();
-            var container = loader.LoadPlugin(@"D:\Projects\InDoOut\App\InDoOut Desktop\bin\Debug\netcoreapp3.0\InDoOut Desktop API Tests.dll");
-
-            container.Initialise();
-
-            var functions = new List<IFunction>();
-            var builder = new InstanceBuilder<IFunction>();
-
-            foreach (var functionType in container.FunctionTypes)
-            {
-                var function = builder.BuildInstance(functionType);
-                if (function != null)
-                {
-                    functions.Add(function);
-                }
-            }
-
-            SetFunctions(functions);
+            LoadedPlugins.Instance.PluginsChanged += Instance_PluginsChanged;
         }
 
-        private void SetFunctions(List<IFunction> functions)
+        internal void Filter(string search)
         {
-            _functions = functions;
+            if (string.IsNullOrEmpty(search))
+            {
+                SetFunctions(_functions);
+            }
+            else
+            {
+                var lowercaseSearch = search.ToLower();
+                var filteredFunctions = _functions.Where(function => (function?.SafeName?.ToLower().Contains(lowercaseSearch) ?? false) || (function?.SafeKeywords?.Any(keyword => keyword.ToLower().Contains(lowercaseSearch)) ?? false)).ToList();
 
-            List_Items.ItemsSource = _functions;
+                SetFunctions(filteredFunctions, true);
+            }
+        }
+
+        private void SetFunctions(List<IFunction> functions, bool temporary = false)
+        {
+            if (!temporary)
+            {
+                _functions = functions;
+            }
+
+            List_Items.ItemsSource = functions;
 
             var collectionView = CollectionViewSource.GetDefaultView(List_Items.ItemsSource);
+            collectionView.GroupDescriptions.Clear();
             collectionView.GroupDescriptions.Add(new PropertyGroupDescription("SafeGroup"));
+        }
+
+        private async void Instance_PluginsChanged(object sender, EventArgs e)
+        {
+            if (sender is LoadedPlugins loadedPlugins)
+            {
+                var plugins = loadedPlugins.Plugins;
+                var allTypes = await Task.Run(() => plugins.SelectMany(plugin => plugin.FunctionTypes).Distinct());
+                var functionBuilder = new InstanceBuilder<IFunction>();
+                var functions = new List<IFunction>();
+
+                foreach (var type in allTypes)
+                {
+                    var function = await Task.Run(() => functionBuilder.BuildInstance(type));
+                    if (function != null)
+                    {
+                        functions.Add(function);
+                    }
+                }
+
+                UIThread.Instance.TryRunOnUI(() => SetFunctions(functions));              
+            }
         }
     }
 }

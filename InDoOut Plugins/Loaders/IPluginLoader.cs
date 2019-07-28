@@ -12,17 +12,17 @@ namespace InDoOut_Plugins.Loaders
         /// <summary>
         /// Triggered when a plugin has begun loading.
         /// </summary>
-        event EventHandler<PluginLoadEventArgs> OnPluginLoading;
+        event EventHandler<PluginLoadEventArgs> PluginLoading;
 
         /// <summary>
         /// Triggered when a plugin has successfully loaded.
         /// </summary>
-        event EventHandler<PluginLoadEventArgs> OnPluginLoadSuccess;
+        event EventHandler<PluginLoadEventArgs> PluginLoadSuccess;
 
         /// <summary>
         /// Triggered when a plugin has failed to load.
         /// </summary>
-        event EventHandler<PluginLoadEventArgs> OnPluginLoadFail;
+        event EventHandler<PluginLoadEventArgs> PluginLoadFail;
 
         /// <summary>
         /// Loads a plugin from a given assembly path.

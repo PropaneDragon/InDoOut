@@ -8,7 +8,7 @@ namespace InDoOut_Desktop.UI.Controls.Search
     {
         private string _slogan = "Search";
 
-        public event EventHandler<SearchArgs> OnSearchRequested;
+        public event EventHandler<SearchArgs> SearchRequested;
 
         public SearchBar()
         {
@@ -26,7 +26,7 @@ namespace InDoOut_Desktop.UI.Controls.Search
         {
             if (query != null)
             {
-                OnSearchRequested?.Invoke(this, new SearchArgs(query));
+                SearchRequested?.Invoke(this, new SearchArgs(query));
             }
         }
 

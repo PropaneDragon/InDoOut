@@ -154,17 +154,17 @@
             Represents a loader that can load <see cref="T:InDoOut_Plugins.Containers.IPluginContainer"/>s.
             </summary>
         </member>
-        <member name="E:InDoOut_Plugins.Loaders.IPluginLoader.OnPluginLoading">
+        <member name="E:InDoOut_Plugins.Loaders.IPluginLoader.PluginLoading">
             <summary>
             Triggered when a plugin has begun loading.
             </summary>
         </member>
-        <member name="E:InDoOut_Plugins.Loaders.IPluginLoader.OnPluginLoadSuccess">
+        <member name="E:InDoOut_Plugins.Loaders.IPluginLoader.PluginLoadSuccess">
             <summary>
             Triggered when a plugin has successfully loaded.
             </summary>
         </member>
-        <member name="E:InDoOut_Plugins.Loaders.IPluginLoader.OnPluginLoadFail">
+        <member name="E:InDoOut_Plugins.Loaders.IPluginLoader.PluginLoadFail">
             <summary>
             Triggered when a plugin has failed to load.
             </summary>
@@ -188,17 +188,17 @@
             Loads plugins as <see cref="T:InDoOut_Plugins.Containers.IPluginContainer"/>s.
             </summary>
         </member>
-        <member name="E:InDoOut_Plugins.Loaders.PluginLoader.OnPluginLoading">
+        <member name="E:InDoOut_Plugins.Loaders.PluginLoader.PluginLoading">
             <summary>
             Triggered when a plugin has begun loading.
             </summary>
         </member>
-        <member name="E:InDoOut_Plugins.Loaders.PluginLoader.OnPluginLoadSuccess">
+        <member name="E:InDoOut_Plugins.Loaders.PluginLoader.PluginLoadSuccess">
             <summary>
             Triggered when a plugin has successfully loaded.
             </summary>
         </member>
-        <member name="E:InDoOut_Plugins.Loaders.PluginLoader.OnPluginLoadFail">
+        <member name="E:InDoOut_Plugins.Loaders.PluginLoader.PluginLoadFail">
             <summary>
             Triggered when a plugin has failed to load.
             </summary>

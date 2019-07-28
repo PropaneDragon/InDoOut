@@ -13,7 +13,7 @@ namespace InDoOut_Desktop.Loading
 
     internal interface ILoadingTask : INamed
     {
-        event EventHandler<LoadingTaskEventArgs> OnNameChanged;
+        event EventHandler<LoadingTaskEventArgs> NameChanged;
 
         TaskState State { get; }
         bool Add(ILoadingTask task);
