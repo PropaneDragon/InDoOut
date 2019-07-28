@@ -56,7 +56,7 @@ namespace InDoOut_Desktop.UI.Windows
             {
                 var remainingTime = splashWindow.HoldTime - totalTime;
 
-                await Task.Delay(remainingTime);
+                //await Task.Delay(remainingTime);
             }
 
             splashWindow.Close();

@@ -6,11 +6,10 @@
         xmlns:local="clr-namespace:InDoOut_Desktop.UI.Windows"
         xmlns:core="clr-namespace:InDoOut_Desktop.UI.Controls.Core"
         xmlns:sidebar="clr-namespace:InDoOut_Desktop.UI.Controls.Sidebar"
+        xmlns:blockview="clr-namespace:InDoOut_Desktop.UI.Controls.BlockView"
         mc:Ignorable="d"
         Title="Test Program > ido" Height="1080" Width="1920" Loaded="Window_Loaded" WindowState="Normal" Background="#111" Foreground="White">
     <Grid>
-        <core:TitleBar HorizontalAlignment="Stretch" VerticalAlignment="Top" />
-        <sidebar:Sidebar Width="500" HorizontalAlignment="Left" />
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
@@ -24,5 +23,8 @@
             </Grid.RowDefinitions>
             <Image Source="/Resources/IDO_Main_BackgroundLogo.png" Grid.Row="1" Grid.Column="1" />
         </Grid>
+        <blockview:BlockView />
+        <core:TitleBar HorizontalAlignment="Stretch" VerticalAlignment="Top" />
+        <sidebar:Sidebar Width="500" HorizontalAlignment="Left" />
     </Grid>
 </Window>
