@@ -24,20 +24,6 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
             Scroll_Content.ScrollToVerticalOffset((Canvas_Content.ActualHeight / 2d) - (Scroll_Content.ActualHeight / 2d));
         }
 
-        private void Canvas_Content_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-        }
-
-        private void Canvas_Content_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-
-        }
-
-        private void Canvas_Content_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-
-        }
-
         private void Scroll_Content_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             _actionHandler?.MouseLeftDown(e.GetPosition(sender as ScrollViewer));

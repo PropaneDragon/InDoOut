@@ -22,13 +22,25 @@ namespace InDoOut_Desktop.Actions
                 {
                     if (hitResult.VisualHit is ScrollViewer scrollViewer)
                     {
-                        Finish(new ScrollViewDragAction(_scrollViewer, mousePosition));
+                        Finish(new ScrollViewDragAction(scrollViewer, mousePosition));
 
                         return true;
                     }
-                    else
+                    else if (FindParentOrChild<UserControl>(hitResult.VisualHit) is IDraggable draggable)
                     {
+                        if (draggable.CanDrag())
+                        {
+                            Finish(new DraggableDragAction(draggable, mousePosition));
+                            return true;
+                        }
 
+                        return false;
+                    }
+                    else if(hitResult.VisualHit is UIElement element)
+                    {
+                        Finish(new ElementDragAction(element, mousePosition));
+
+                        return true;
                     }
                 }
             }

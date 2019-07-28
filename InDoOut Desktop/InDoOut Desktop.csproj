@@ -13,6 +13,7 @@
     <None Remove="SplashWindow.xaml" />
     <None Remove="Style\MainStyle.xaml" />
     <None Remove="UI\Controls\BlockView\BlockView.xaml" />
+    <None Remove="UI\Controls\CoreEntityRepresentation\UIFunction.xaml" />
     <None Remove="UI\Controls\Core\TitleBar.xaml" />
     <None Remove="UI\Controls\Search\SearchBar.xaml" />
     <None Remove="UI\Controls\Sidebar\ItemList.xaml" />

@@ -3,21 +3,21 @@ using System.Windows.Controls;
 
 namespace InDoOut_Desktop.Actions
 {
-    internal class ScrollViewDragAction : Action
+    internal class ScrollViewDragAction : DragAction
     {
-        private Point _lastMousePosition = new Point();
-        private Point _lastScrollPosition = new Point();
+        private Point _initialScrollPosition = new Point();
 
         public ScrollViewer ScrollViewer { get; set; } = null;
 
         public ScrollViewDragAction(ScrollViewer scrollViewer, Point mousePosition)
         {
+            base.MouseLeftDown(mousePosition);
+
             ScrollViewer = scrollViewer;
 
             if (ScrollViewer != null)
             {
-                _lastMousePosition = mousePosition;
-                _lastScrollPosition = new Point(ScrollViewer.HorizontalOffset, ScrollViewer.VerticalOffset);
+                _initialScrollPosition = new Point(ScrollViewer.HorizontalOffset, ScrollViewer.VerticalOffset);
 
                 ScrollViewer.CaptureMouse();
             }
@@ -25,12 +25,12 @@ namespace InDoOut_Desktop.Actions
 
         public override bool MouseLeftMove(Point mousePosition)
         {
+            base.MouseLeftMove(mousePosition);
+
             if (ScrollViewer != null && ScrollViewer.IsMouseCaptured)
             {
-                var currentMousePosition = mousePosition;
-
-                ScrollViewer.ScrollToHorizontalOffset(_lastScrollPosition.X + (_lastMousePosition.X - currentMousePosition.X));
-                ScrollViewer.ScrollToVerticalOffset(_lastScrollPosition.Y + (_lastMousePosition.Y - currentMousePosition.Y));
+                ScrollViewer.ScrollToHorizontalOffset(_initialScrollPosition.X + MouseDelta.X);
+                ScrollViewer.ScrollToVerticalOffset(_initialScrollPosition.Y + MouseDelta.Y);
 
                 return true;
             }
@@ -42,6 +42,8 @@ namespace InDoOut_Desktop.Actions
 
         public override bool MouseLeftUp(Point mousePosition)
         {
+            base.MouseLeftUp(mousePosition);
+
             if (ScrollViewer != null)
             {
                 ScrollViewer.ReleaseMouseCapture();

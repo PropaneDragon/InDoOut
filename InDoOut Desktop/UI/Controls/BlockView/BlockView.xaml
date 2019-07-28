@@ -4,14 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InDoOut_Desktop.UI.Controls.BlockView"
+             xmlns:entities="clr-namespace:InDoOut_Desktop.UI.Controls.CoreEntityRepresentation"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Loaded="UserControl_Loaded">
     <Grid>
         <ScrollViewer x:Name="Scroll_Content" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" PreviewMouseLeftButtonDown="Scroll_Content_MouseLeftButtonDown" PreviewMouseLeftButtonUp="Scroll_Content_MouseLeftButtonUp" PreviewMouseMove="Scroll_Content_MouseMove">
             <Viewbox x:Name="Viewbox_Content">
-                <Canvas x:Name="Canvas_Content" Width="10000" Height="10000" MouseLeftButtonDown="Canvas_Content_MouseLeftButtonDown" MouseMove="Canvas_Content_MouseMove" MouseLeftButtonUp="Canvas_Content_MouseLeftButtonUp">
-                    <Ellipse Width="50" Height="50" Fill="Red" Canvas.Left="5000" Canvas.Top="5000" />
-                    <Ellipse Width="50" Height="50" Fill="Red" Canvas.Left="5500" Canvas.Top="5500" />
+                <Canvas x:Name="Canvas_Content" Width="10000" Height="10000">
+                    <entities:UIFunction Canvas.Left="4900" Canvas.Top="4900" />
                 </Canvas>
             </Viewbox>
         </ScrollViewer>
