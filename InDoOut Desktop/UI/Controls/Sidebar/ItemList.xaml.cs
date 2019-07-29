@@ -1,8 +1,8 @@
 ﻿using InDoOut_Core.Entities.Functions;
 using InDoOut_Core.Instancing;
 using InDoOut_Desktop.Plugins;
+using InDoOut_Desktop.UI.Interfaces;
 using InDoOut_Desktop.UI.Threading;
-using InDoOut_Plugins.Loaders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,15 +12,12 @@ using System.Windows.Data;
 
 namespace InDoOut_Desktop.UI.Controls.Sidebar
 {
-    public partial class ItemList : UserControl
+    public partial class ItemList : UserControl, IFunctionList
     {
         private List<IFunction> _functions = null;
 
-        public List<IFunction> Plugins
-        {
-            get => _functions;
-            set => SetFunctions(value);
-        }
+        public IFunctionView FunctionView { get; set; } = null;
+        public List<IFunction> Functions { get => _functions; set => SetFunctions(value); }
 
         public ItemList()
         {
@@ -29,7 +26,7 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
             LoadedPlugins.Instance.PluginsChanged += Instance_PluginsChanged;
         }
 
-        internal void Filter(string search)
+        public void Filter(string search)
         {
             if (string.IsNullOrEmpty(search))
             {
@@ -42,6 +39,11 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
 
                 SetFunctions(filteredFunctions, true);
             }
+        }
+
+        public void ClearFilter()
+        {
+            Filter("");
         }
 
         private void SetFunctions(List<IFunction> functions, bool temporary = false)
@@ -77,6 +79,24 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
                 }
 
                 UIThread.Instance.TryRunOnUI(() => SetFunctions(functions));              
+            }
+        }
+
+        private async void List_Items_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (List_Items.SelectedItem is IFunction selectedItem && FunctionView != null)
+            {
+                var functionType = selectedItem.GetType();
+                var functionBuilder = new InstanceBuilder<IFunction>();
+                var function = await Task.Run(() => functionBuilder.BuildInstance(functionType));
+
+                if (function != null)
+                {
+                    if (!FunctionView.Add(function))
+                    {
+                        //Todo: Show some sort of error on failure.
+                    }
+                }
             }
         }
     }

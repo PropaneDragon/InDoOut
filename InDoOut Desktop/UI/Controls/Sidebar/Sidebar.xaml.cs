@@ -10,11 +10,8 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
         private bool _collapsed = false;
         private TimeSpan _animationTime = TimeSpan.FromMilliseconds(500);
 
-        public bool Collapsed
-        {
-            get => _collapsed;
-            set { if (value) Collapse(); else Expand(); }
-        }
+        public bool Collapsed { get => _collapsed; set { if (value) Collapse(); else Expand(); } }
+        public ItemList ItemList => ItemList_Functions;
 
         public Sidebar()
         {

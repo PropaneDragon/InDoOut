@@ -57,26 +57,5 @@ namespace InDoOut_Desktop.Actions
             Abort();
             return false;
         }
-
-        protected T FindParent<T>(DependencyObject child) where T : DependencyObject
-        {
-            if (child != null)
-            {
-                var parent = VisualTreeHelper.GetParent(child);
-
-                if (parent == null)
-                {
-                    return null;
-                }
-                else if (parent is T control)
-                {
-                    return control;
-                }
-
-                return FindParent<T>(parent);
-            }
-
-            return default;
-        }
     }
 }

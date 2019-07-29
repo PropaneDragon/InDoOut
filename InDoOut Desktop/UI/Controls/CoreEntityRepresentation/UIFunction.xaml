@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InDoOut_Desktop.UI.Controls.CoreEntityRepresentation"
              mc:Ignorable="d" 
-             FontFamily="Segoe UI Light" Foreground="White" Width="200" MaxWidth="200">
+             FontFamily="Segoe UI Light" Foreground="White" Width="200" MaxWidth="200" Unloaded="UserControl_Unloaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -13,13 +13,17 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Border Grid.Row="0">
-
+            <StackPanel x:Name="Stack_Inputs" VerticalAlignment="Center" HorizontalAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                <local:UIInput />
+            </StackPanel>
         </Border>
         <Border Grid.Row="1" Background="#373737" Padding="10">
             <TextBlock x:Name="Text_FunctionName" FontSize="18" Text="Function" TextAlignment="Center" />
         </Border>
         <Border Grid.Row="2">
-
+            <StackPanel x:Name="Stack_Outputs" VerticalAlignment="Center" HorizontalAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                <local:UIOutput />
+            </StackPanel>
         </Border>
     </Grid>
 </UserControl>

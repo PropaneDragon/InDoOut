@@ -23,8 +23,8 @@
             </Grid.RowDefinitions>
             <Image Source="/Resources/IDO_Main_BackgroundLogo.png" Grid.Row="1" Grid.Column="1" />
         </Grid>
-        <blockview:BlockView />
-        <core:TitleBar HorizontalAlignment="Stretch" VerticalAlignment="Top" />
-        <sidebar:Sidebar Width="500" HorizontalAlignment="Left" />
+        <blockview:BlockView x:Name="BlockView_Main" />
+        <core:TitleBar x:Name="TitleBar_Main" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
+        <sidebar:Sidebar x:Name="Sidebar_Main" Width="500" HorizontalAlignment="Left" />
     </Grid>
 </Window>

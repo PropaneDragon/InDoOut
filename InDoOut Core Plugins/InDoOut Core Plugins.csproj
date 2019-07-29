@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <RootNamespace>InDoOut_Core_Plugins</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\InDoOut Plugins\InDoOut Plugins.csproj" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy  /Y /F &quot;$(TargetPath)&quot;  &quot;$(SolutionDir)\InDoOut Desktop\$(OutDir)\Plugins\*&quot;" />
+  </Target>
+
+</Project>

@@ -18,7 +18,13 @@ namespace InDoOut_Desktop.UI.Windows
 
         private async Task FinishLoading()
         {
+            var itemList = Sidebar_Main.ItemList;
+            var blockView = BlockView_Main;
 
+            if (itemList != null && blockView != null)
+            {
+                itemList.FunctionView = blockView;
+            }
         }
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
