@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using InDoOut_Desktop.UI.Controls.CoreEntityRepresentation;
+using InDoOut_Desktop.UI.Interfaces;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -6,27 +8,36 @@ namespace InDoOut_Desktop.Actions
 {
     internal class BlockViewRestingAction : Action
     {
-        private ScrollViewer _scrollViewer = null;
+        private FrameworkElement _topLevel = null;
+        private IBlockView _blockView = null;
 
-        public BlockViewRestingAction(ScrollViewer scrollViewer)
+        public BlockViewRestingAction(FrameworkElement topLevel, IBlockView blockView)
         {
-            _scrollViewer = scrollViewer;
+            _topLevel = topLevel;
+            _blockView = blockView;
         }
 
         public override bool MouseLeftDown(Point mousePosition)
         {
-            if (_scrollViewer != null)
+            if (_topLevel != null && _blockView != null)
             {
-                var hitResult = VisualTreeHelper.HitTest(_scrollViewer, mousePosition);
+                var hitResult = VisualTreeHelper.HitTest(_topLevel, mousePosition);
                 if (hitResult != null && hitResult.VisualHit != null)
                 {
-                    if (hitResult.VisualHit is ScrollViewer scrollViewer)
+                    var hitVisual = hitResult.VisualHit;
+                    if (hitVisual is ScrollViewer scrollViewer)
                     {
                         Finish(new ScrollViewDragAction(scrollViewer, mousePosition));
 
                         return true;
                     }
-                    else if (FindParentOrChild<UserControl>(hitResult.VisualHit) is IDraggable draggable)
+                    else if (FindParentOrChild<UIOutput>(hitVisual) is UIOutput output)
+                    {
+                        Finish(new WireDragAction(output, _blockView));
+
+                        return true;
+                    }
+                    else if (FindParentOrChild<UserControl>(hitVisual) is IDraggable draggable)
                     {
                         if (draggable.CanDrag())
                         {
@@ -36,7 +47,7 @@ namespace InDoOut_Desktop.Actions
 
                         return false;
                     }
-                    else if(hitResult.VisualHit is UIElement element)
+                    else if(hitVisual is UIElement element)
                     {
                         Finish(new ElementDragAction(element, mousePosition));
 

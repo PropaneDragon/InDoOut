@@ -1,23 +1,24 @@
 ﻿using InDoOut_Core.Entities.Functions;
+using InDoOut_Desktop.UI.Interfaces;
 using System;
 using System.Windows.Controls;
 
 namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
 {
-    public partial class UIInput : UserControl
+    public partial class UIInput : UserControl, IUIInput
     {
         private IInput _input = null;
 
-        public IInput Input { get => _input; set => SetInput(value); }
+        public IInput AssociatedInput { get => _input; set => SetInput(value); }
 
-        public UIInput()
+        public UIInput() : base()
         {
             InitializeComponent();
         }
 
-        public UIInput(IInput input) : base()
+        public UIInput(IInput input) : this()
         {
-            Input = input;
+            AssociatedInput = input;
         }
 
         private void SetInput(IInput input)

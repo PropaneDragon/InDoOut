@@ -16,7 +16,7 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
     {
         private List<IFunction> _functions = null;
 
-        public IFunctionView FunctionView { get; set; } = null;
+        public IFunctionDisplay FunctionView { get; set; } = null;
         public List<IFunction> Functions { get => _functions; set => SetFunctions(value); }
 
         public ItemList()
@@ -92,7 +92,8 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
 
                 if (function != null)
                 {
-                    if (!FunctionView.Add(function))
+                    var uiFunction = FunctionView.Create(function);
+                    if (uiFunction == null)
                     {
                         //Todo: Show some sort of error on failure.
                     }

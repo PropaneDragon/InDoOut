@@ -1,25 +1,24 @@
 ﻿using InDoOut_Core.Entities.Functions;
-using System;
+using InDoOut_Desktop.UI.Interfaces;
 using System.Windows.Controls;
-using System.Windows.Media;
 using static InDoOut_Desktop.UI.Controls.CoreEntityRepresentation.UIFunctionIO;
 
 namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
 {
-    public partial class UIOutput : UserControl
+    public partial class UIOutput : UserControl, IUIOutput
     {
         private IOutput _output = null;
 
-        public IOutput Output { get => _output; set => SetOutput(value); }
+        public IOutput AssociatedOutput { get => _output; set => SetOutput(value); }
 
-        public UIOutput()
+        public UIOutput() : base()
         {
             InitializeComponent();
         }
 
-        public UIOutput(IOutput output) : base()
+        public UIOutput(IOutput output) : this()
         {
-            Output = output;
+            AssociatedOutput = output;
         }
 
         private void SetOutput(IOutput input)
@@ -49,9 +48,9 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
 
         private IOType GetIOTypeForOutput()
         {
-            if (Output is IOutputNegative) return IOType.Negative;
-            if (Output is IOutputPositive) return IOType.Positive;
-            if (Output is IOutputNeutral) return IOType.Neutral;
+            if (AssociatedOutput is IOutputNegative) return IOType.Negative;
+            if (AssociatedOutput is IOutputPositive) return IOType.Positive;
+            if (AssociatedOutput is IOutputNeutral) return IOType.Neutral;
 
             return IOType.Neutral;
         }

@@ -12,6 +12,7 @@ namespace InDoOut_Core_Plugins.Maths
 
         private IInput _inputCalculate;
         private IOutput _outputCalculated;
+        private IOutput _outputFailed;
 
         public override string Name => "Add";
 
@@ -31,13 +32,17 @@ namespace InDoOut_Core_Plugins.Maths
             _inputCalculate = CreateInput("Calculate");
 
             _outputCalculated = CreateOutput("Calculated");
+            _outputFailed = CreateOutput(OutputType.Negative, "Failed");
         }
 
         protected override IOutput Started(IInput triggeredBy)
         {
-            _additionResult.ValueFrom(_firstNumber.Value + _secondNumber.Value);
+           if ( _additionResult.ValueFrom(_firstNumber.Value + _secondNumber.Value))
+            {
+                return _outputCalculated;
+            }
 
-            return _outputCalculated;
+            return _outputFailed;
         }
     }
 }

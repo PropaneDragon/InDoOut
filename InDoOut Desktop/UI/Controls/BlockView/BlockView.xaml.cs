@@ -6,77 +6,215 @@ using InDoOut_Desktop.UI.Interfaces;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace InDoOut_Desktop.UI.Controls.BlockView
 {
-    public partial class BlockView : UserControl, IFunctionView
+    public partial class BlockView : UserControl, IBlockView
     {
         private ActionHandler _actionHandler = null;
-        private IProgram _program = null;
+        private IProgram _currentProgram = null;
 
-        public IProgram Program { get => _program; set => SetProgram(value); }
+        public IProgram AssociatedProgram { get => _currentProgram; set => ChangeProgram(value); }
+
+        public Size TotalSize => new Size(Canvas_Content.ActualWidth, Canvas_Content.ActualHeight);
+
+        public Size ViewSize => new Size(Scroll_Content.ActualWidth, Scroll_Content.ActualHeight);
+
+        public Point TopLeftViewCoordinate => new Point(Scroll_Content.HorizontalOffset, Scroll_Content.VerticalOffset);
+
+        public Point BottomRightViewCoordinate => new Point(TopLeftViewCoordinate.X + ViewSize.Width, TopLeftViewCoordinate.Y + ViewSize.Height);
+
+        public Point CentreViewCoordinate => new Point(TopLeftViewCoordinate.X + (ViewSize.Width / 2d), TopLeftViewCoordinate.Y + (ViewSize.Height / 2d));
 
         public BlockView()
         {
             InitializeComponent();
-            SetProgram(new Program());
+            ChangeProgram(new Program());
 
-            _actionHandler = new ActionHandler(new BlockViewRestingAction(Scroll_Content));
+            _actionHandler = new ActionHandler(new BlockViewRestingAction(Scroll_Content, this));
         }
 
-        public bool Add(IFunction function)
+        public void Add(FrameworkElement element)
         {
-            if (_program != null)
-            {
-                if (_program.AddFunction(function))
-                {
-                    PlaceFunction(function);
+            Add(element, CentreViewCoordinate);
+        }
 
-                    return true;
+        public void Add(FrameworkElement element, Point position)
+        {
+            if (element != null)
+            {
+                Canvas_Content.Children.Add(element);
+
+                Canvas.SetLeft(element, position.X);
+                Canvas.SetTop(element, position.Y);
+            }
+        }
+
+        public void Remove(FrameworkElement element)
+        {
+            if (element != null && Canvas_Content.Children.Contains(element))
+            {
+                Canvas_Content.Children.Remove(element);
+            }
+        }
+
+        public IUIFunction Create(IFunction function)
+        {
+            return Create(function, CentreViewCoordinate);
+        }
+
+        public IUIFunction Create(IFunction function, Point location)
+        {
+            if (AssociatedProgram != null)
+            {
+                if (AssociatedProgram.AddFunction(function))
+                {
+                    var uiFunction = new UIFunction(function);
+
+                    Add(uiFunction, location);
+
+                    return uiFunction;
                 }
             }
 
-            return false;
+            return null;
         }
 
-        protected void SetProgram(IProgram program)
+        public IUIConnection Create(IUIOutput start, Point end)
+        {
+            if (start != null && start is FrameworkElement element)
+            {
+                var bestSidePoint = GetBestSide(element, end);
+                var uiConnection = new UIConnection()
+                {
+                    Start = bestSidePoint,
+                    End = end,
+                    AssociatedOutput = start
+                };
+
+                Add(uiConnection, new Point(0, 0));
+
+                return uiConnection;
+            }
+
+            return null;
+        }
+
+        public IUIConnection Create(IUIOutput start, IUIInput end)
+        {
+            if (start != null && end != null && end is FrameworkElement element)
+            {
+                var endPosition = GetPosition(element);
+                var uiConnection = Create(start, endPosition);   
+                
+                if (uiConnection != null)
+                {
+                    uiConnection.AssociatedInput = end;
+
+                    return uiConnection;
+                }
+            }
+
+            return null;
+        }
+
+        public IUIConnection FindConnection(IUIOutput output, IUIInput input)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public List<IUIConnection> FindConnections(IUIOutput output)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public List<IUIConnection> FindConnections(IUIInput input)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IUIFunction FindFunction(IFunction function)
+        {
+            var children = Canvas_Content.Children;
+            foreach (var child in children)
+            {
+                if (child != null && child is UIFunction uiFunction && uiFunction.AssociatedFunction == function)
+                {
+                    return uiFunction;
+                }
+            }
+
+            return null;
+        }
+
+        public void Remove(IUIConnection output)
+        {
+            if (output is FrameworkElement element)
+            {
+                Remove(element);
+            }
+        }
+
+        public Point GetMousePosition()
+        {
+            var mousePosition = Mouse.GetPosition(Canvas_Content);
+            return mousePosition;
+        }
+
+        public Point GetPosition(FrameworkElement element)
+        {
+            if (element != null)
+            {
+                var relativePoint = element.TranslatePoint(new Point(0, 0), Canvas_Content);
+                return relativePoint;
+            }
+
+            return new Point(0, 0);
+        }
+
+        public Point GetBestSide(FrameworkElement element, Point point)
+        {
+            if (element != null)
+            {
+                var topLeft = GetPosition(element);
+                var size = new Size(element.ActualWidth, element.ActualHeight);
+                var centre = new Point(topLeft.X + (size.Width / 2d), topLeft.Y + (size.Height / 2d));
+
+                if (point.X < centre.X)
+                {
+                    return new Point(topLeft.X, centre.Y);
+                }
+
+                return new Point(topLeft.X + size.Width, centre.Y);
+            }
+
+            return point;
+        }
+
+        protected void ChangeProgram(IProgram program)
         {
             Clear();
 
-            if (_program != null)
+            if (_currentProgram != null)
             {
                 //Todo: Add teardown from the previous program.
             }
 
-            _program = program;
+            _currentProgram = program;
 
-            if (_program != null)
+            if (_currentProgram != null)
             {
-                PlaceFunctions(_program.Functions);
+                foreach (var function in _currentProgram.Functions)
+                {
+                    var visualFunction = Create(function);
+                }
             }
         }
 
         private void Clear()
         {
             Canvas_Content.Children.Clear();
-        }
-
-        private void PlaceFunctions(List<IFunction> functions)
-        {
-            foreach (var function in functions)
-            {
-                PlaceFunction(function);
-            }
-        }
-
-        private void PlaceFunction(IFunction function)
-        {
-            var uiFunction = new UIFunction(function);
-
-            Canvas_Content.Children.Add(uiFunction);
-
-            Canvas.SetLeft(uiFunction, 5000);
-            Canvas.SetTop(uiFunction, 5000);
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)

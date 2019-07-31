@@ -13,6 +13,7 @@
     <None Remove="SplashWindow.xaml" />
     <None Remove="Style\MainStyle.xaml" />
     <None Remove="UI\Controls\BlockView\BlockView.xaml" />
+    <None Remove="UI\Controls\CoreEntityRepresentation\UIConnection.xaml" />
     <None Remove="UI\Controls\CoreEntityRepresentation\UIFunction.xaml" />
     <None Remove="UI\Controls\CoreEntityRepresentation\UIFunctionIO.xaml" />
     <None Remove="UI\Controls\CoreEntityRepresentation\UIInput.xaml" />

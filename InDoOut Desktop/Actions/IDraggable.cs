@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace InDoOut_Desktop.Actions
+﻿namespace InDoOut_Desktop.Actions
 {
     internal interface IDraggable
     {

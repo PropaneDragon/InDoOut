@@ -1,17 +1,19 @@
 ﻿using InDoOut_Core.Entities.Functions;
 using InDoOut_Desktop.Actions;
+using InDoOut_Desktop.UI.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Threading;
 
 namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
 {
-    public partial class UIFunction : UserControl, IDraggable
+    public partial class UIFunction : UserControl, IDraggable, IUIFunction
     {
         private DispatcherTimer _updateTimer = new DispatcherTimer(DispatcherPriority.Normal);
         private IFunction _function = null;
 
-        public IFunction Function { get => _function; set => SetFunction(value); }
+        public IFunction AssociatedFunction { get => _function; set => SetFunction(value); }
 
         public UIFunction()
         {
@@ -24,7 +26,7 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
 
         public UIFunction(IFunction function) : this()
         {
-            Function = function;
+            AssociatedFunction = function;
         }
 
         public bool CanDrag()
@@ -56,29 +58,78 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
             if (_function != null)
             {
                 UpdateFromFunction();
+                CreateInputs();
+                CreateOutputs();
             }
         }
 
         private void UpdateFromFunction()
         {
-            if (Function != null)
+            if (AssociatedFunction != null)
             {
-                Text_FunctionName.Text = Function.SafeName;
+                Text_FunctionName.Text = AssociatedFunction.SafeName;
 
-                UpdateInputs();
-                UpdateOutputs();
+                /*UpdateInputs();
+                UpdateOutputs();*/
+            }
+        }
+
+        private void CreateOutputs()
+        {
+            if (AssociatedFunction != null)
+            {
+                Stack_Outputs.Children.Clear();
+
+                foreach (var output in AssociatedFunction.Outputs)
+                {
+                    var uiOutput = new UIOutput(output);
+
+                    Stack_Outputs.Children.Add(uiOutput);
+                }
+            }
+        }
+
+        private void CreateInputs()
+        {
+            if (AssociatedFunction != null)
+            {
+                Stack_Inputs.Children.Clear();
+
+                foreach (var input in AssociatedFunction.Inputs)
+                {
+                    var uiInput = new UIInput(input);
+
+                    Stack_Inputs.Children.Add(uiInput);
+                }
             }
         }
 
         private void UpdateOutputs()
         {
-            if (Function != null)
+            if (AssociatedFunction != null)
             {
-                Stack_Outputs.Children.Clear();
+                var expectedOutputs = new List<IOutput>(AssociatedFunction.Outputs);
+                var currentUIOutputs = Stack_Outputs.Children;
 
-                foreach (var output in Function.Outputs)
+                foreach (var output in currentUIOutputs)
                 {
-                    var uiOutput = new UIOutput();
+                    if (output is UIOutput uiOutput)
+                    {
+                        var associatedOutput = uiOutput.AssociatedOutput;
+                        if (expectedOutputs.Contains(associatedOutput))
+                        {
+                            expectedOutputs.Remove(associatedOutput);
+                        }
+                        else
+                        {
+                            Stack_Outputs.Children.Remove(uiOutput);
+                        }
+                    }
+                }
+
+                foreach (var output in expectedOutputs)
+                {
+                    var uiOutput = new UIOutput(output);
 
                     Stack_Outputs.Children.Add(uiOutput);
                 }
@@ -87,13 +138,30 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
 
         private void UpdateInputs()
         {
-            if (Function != null)
+            if (AssociatedFunction != null)
             {
-                Stack_Inputs.Children.Clear();
+                var expectedInputs = new List<IInput>(AssociatedFunction.Inputs);
+                var currentUIInputs = Stack_Inputs.Children;
 
-                foreach (var input in Function.Inputs)
+                foreach (var input in currentUIInputs)
                 {
-                    var uiInput = new UIInput();
+                    if (input is UIInput uiInput)
+                    {
+                        var associatedInput = uiInput.AssociatedInput;
+                        if (expectedInputs.Contains(associatedInput))
+                        {
+                            expectedInputs.Remove(associatedInput);
+                        }
+                        else
+                        {
+                            Stack_Inputs.Children.Remove(uiInput);
+                        }
+                    }
+                }
+
+                foreach (var input in expectedInputs)
+                {
+                    var uiInput = new UIInput(input);
 
                     Stack_Inputs.Children.Add(uiInput);
                 }

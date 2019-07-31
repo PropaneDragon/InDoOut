@@ -48,6 +48,10 @@ namespace InDoOut_Desktop.Actions
                 {
                     return control;
                 }
+                else if (typeof(T).IsAssignableFrom(parent.GetType()))
+                {
+                    return parent as T;
+                }
 
                 return FindParent<T>(parent);
             }
