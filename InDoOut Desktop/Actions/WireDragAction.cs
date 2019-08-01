@@ -40,17 +40,20 @@ namespace InDoOut_Desktop.Actions
         {
             if (_view != null)
             {
-                var offsetPoint = _view.GetMousePosition();
-                offsetPoint.X += 1;
-
-                var elementsUnderMouse = _view.GetElementsAtPoint(mousePosition);
+                var elementsUnderMouse = _view.GetElementsUnderMouse();
                 if (elementsUnderMouse != null && _view.GetFirstElementOfType<IUIInput>(elementsUnderMouse) is IUIInput uiInput && uiInput is FrameworkElement chosenElement && _uiOutput is FrameworkElement uiOutput)
                 {
-                    _uiConnection.AssociatedInput = uiInput;
-                    _uiConnection.End = _view.GetBestSide(chosenElement, _view.GetPosition(uiOutput));
+                    var output = _uiOutput.AssociatedOutput;
+                    var input = uiInput.AssociatedInput;
 
-                    Finish(null);
-                    return true;
+                    if (output != null && input != null && input.CanAcceptConnection(output) && output.Connect(input))
+                    {
+                        _uiConnection.AssociatedInput = uiInput;
+                        _uiConnection.End = _view.GetBestSide(chosenElement, _view.GetPosition(uiOutput));
+
+                        Finish(null);
+                        return true;
+                    }
                 }
             }
 
@@ -62,9 +65,9 @@ namespace InDoOut_Desktop.Actions
         {
             if (_uiConnection != null && _uiOutput != null && _uiOutput is FrameworkElement element)
             {
-                var relativeMousePosition = _view.GetMousePosition();
-                _uiConnection.Start = _view.GetBestSide(element, relativeMousePosition);
-                _uiConnection.End = relativeMousePosition;
+                var viewMousePosition = _view.GetMousePosition();
+                _uiConnection.Start = _view.GetBestSide(element, viewMousePosition);
+                _uiConnection.End = viewMousePosition;
             }
             else
             {

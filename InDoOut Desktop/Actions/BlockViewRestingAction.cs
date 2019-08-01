@@ -16,7 +16,7 @@ namespace InDoOut_Desktop.Actions
         {
             if (_blockView != null)
             {
-                var elementsUnderMouse = _blockView.GetElementsAtPoint(mousePosition);
+                var elementsUnderMouse = _blockView.GetElementsUnderMouse();
                 if (elementsUnderMouse.Count > 0)
                 {
                     if (_blockView.GetFirstElementOfType<IUIOutput>(elementsUnderMouse) is IUIOutput output)

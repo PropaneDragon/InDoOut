@@ -1,10 +1,12 @@
-﻿using InDoOut_Core.Entities.Functions;
+﻿using InDoOut_Core.Entities.Core;
+using InDoOut_Core.Entities.Functions;
 using InDoOut_Core.Entities.Programs;
 using InDoOut_Desktop.Actions;
 using InDoOut_Desktop.UI.Controls.CoreEntityRepresentation;
 using InDoOut_Desktop.UI.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -16,6 +18,7 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
     {
         private ActionHandler _actionHandler = null;
         private IProgram _currentProgram = null;
+        private Dictionary<IEntity, FrameworkElement> _uiAssociations = new Dictionary<IEntity, FrameworkElement>();
 
         public IProgram AssociatedProgram { get => _currentProgram; set => ChangeProgram(value); }
 
@@ -71,6 +74,14 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
             }
         }
 
+        public void AssociateEntityWithUI(IEntity entity, FrameworkElement element)
+        {
+            if (entity != null && element != null)
+            {
+                _uiAssociations.Add(entity, element);
+            }
+        }
+
         public IUIFunction Create(IFunction function)
         {
             return Create(function, CentreViewCoordinate);
@@ -85,6 +96,7 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
                     var uiFunction = new UIFunction(function);
 
                     Add(uiFunction, location);
+                    AssociateEntityWithUI(function, uiFunction);
 
                     return uiFunction;
                 }
@@ -106,6 +118,7 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
                 };
 
                 Add(uiConnection, new Point(0, 0));
+                AssociateEntityWithUI(start.AssociatedOutput, uiConnection);
 
                 return uiConnection;
             }
@@ -124,6 +137,9 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
                 {
                     uiConnection.AssociatedInput = end;
 
+                    AssociateEntityWithUI(start.AssociatedOutput, uiConnection as FrameworkElement);
+                    AssociateEntityWithUI(end.AssociatedInput, uiConnection as FrameworkElement);
+
                     return uiConnection;
                 }
             }
@@ -133,31 +149,22 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
 
         public IUIConnection FindConnection(IUIOutput output, IUIInput input)
         {
-            throw new System.NotImplementedException();
+            return FindCanvasChild<IUIConnection>(uiConnection => uiConnection.AssociatedInput == input && uiConnection.AssociatedOutput == output).FirstOrDefault();
         }
 
         public List<IUIConnection> FindConnections(IUIOutput output)
         {
-            throw new System.NotImplementedException();
+            return FindCanvasChild<IUIConnection>(uiConnection => uiConnection.AssociatedOutput == output);
         }
 
         public List<IUIConnection> FindConnections(IUIInput input)
         {
-            throw new System.NotImplementedException();
+            return FindCanvasChild<IUIConnection>(uiConnection => uiConnection.AssociatedInput == input);
         }
 
         public IUIFunction FindFunction(IFunction function)
         {
-            var children = Canvas_Content.Children;
-            foreach (var child in children)
-            {
-                if (child != null && child is UIFunction uiFunction && uiFunction.AssociatedFunction == function)
-                {
-                    return uiFunction;
-                }
-            }
-
-            return null;
+            return FindCanvasChild<IUIFunction>(uiFunction => uiFunction.AssociatedFunction == function).FirstOrDefault();
         }
 
         public void Remove(IUIConnection output)
@@ -211,9 +218,9 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
 
         public List<FrameworkElement> GetElementsAtPoint(Point point)
         {
-            var hits = new List<FrameworkElement>();
+            var hits = new List<FrameworkElement>() { Canvas_Content, this };
 
-            VisualTreeHelper.HitTest(Scroll_Content, FilterHit, (result) => NewHit(result, hits), new PointHitTestParameters(point));
+            VisualTreeHelper.HitTest(Canvas_Content, FilterHit, (result) => NewHit(result, hits), new PointHitTestParameters(point));
 
             return hits;
         }
@@ -288,6 +295,28 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
         private void Clear()
         {
             Canvas_Content.Children.Clear();
+            _uiAssociations.Clear();
+        }
+
+        private List<T> FindCanvasChild<T>() where T : class
+        {
+            return FindCanvasChild<T>(T => true);
+        }
+
+        private List<T> FindCanvasChild<T>(Func<T, bool> matchFunction) where T : class
+        {
+            var validChildren = new List<T>();
+            var children = Canvas_Content.Children;
+
+            foreach (var child in children)
+            {
+                if (child != null && child is T type && (matchFunction?.Invoke(type) ?? true))
+                {
+                    validChildren.Add(type);
+                }
+            }
+
+            return validChildren;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
