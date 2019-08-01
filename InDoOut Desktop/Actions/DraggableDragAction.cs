@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using InDoOut_Desktop.UI.Interfaces;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace InDoOut_Desktop.Actions
@@ -6,22 +7,21 @@ namespace InDoOut_Desktop.Actions
     internal class DraggableDragAction : DragAction
     {
         private Point _initialControlPosition = new Point();
-        private UIElement _element = null;
         private IDraggable _draggable = null;
+        private IElementDisplay _elementDisplay = null;
 
-        public DraggableDragAction(IDraggable draggable, Point mousePosition)
+        public DraggableDragAction(IElementDisplay elementDisplay, IDraggable draggable, Point mousePosition)
         {
             base.MouseLeftDown(mousePosition);
 
-            if (draggable != null && draggable.CanDrag() && draggable is UIElement element && FindParent<Canvas>(element) != null)
+            if (elementDisplay != null && draggable != null && draggable.CanDrag() && draggable is FrameworkElement element)
             {
+                _elementDisplay = elementDisplay;
+
                 _draggable = draggable;
                 _draggable.DragStarted();
 
-                _element = element;
-                _element.CaptureMouse();
-
-                _initialControlPosition = new Point(Canvas.GetLeft(_element), Canvas.GetTop(_element));
+                _initialControlPosition = _elementDisplay.GetPosition(element);
             }
             else
             {
@@ -33,10 +33,9 @@ namespace InDoOut_Desktop.Actions
         {
             base.MouseLeftMove(mousePosition);
 
-            if (_draggable != null && _element != null && _element.IsMouseCaptured)
+            if (_draggable != null && _elementDisplay != null && _draggable is FrameworkElement element)
             {
-                Canvas.SetLeft(_element, _initialControlPosition.X - MouseDelta.X);
-                Canvas.SetTop(_element, _initialControlPosition.Y - MouseDelta.Y);
+                _elementDisplay.SetPosition(element, new Point(_initialControlPosition.X - MouseDelta.X, _initialControlPosition.Y - MouseDelta.Y));
 
                 _draggable.DragMoved();
 
@@ -51,9 +50,8 @@ namespace InDoOut_Desktop.Actions
         {
             base.MouseLeftUp(mousePosition);
 
-            if (_draggable != null && _element != null)
+            if (_draggable != null)
             {
-                _element.ReleaseMouseCapture();
                 _draggable.DragEnded();
 
                 Finish(null);

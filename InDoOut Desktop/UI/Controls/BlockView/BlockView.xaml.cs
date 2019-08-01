@@ -3,14 +3,16 @@ using InDoOut_Core.Entities.Programs;
 using InDoOut_Desktop.Actions;
 using InDoOut_Desktop.UI.Controls.CoreEntityRepresentation;
 using InDoOut_Desktop.UI.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace InDoOut_Desktop.UI.Controls.BlockView
 {
-    public partial class BlockView : UserControl, IBlockView
+    public partial class BlockView : UserControl, IBlockView, IScrollable
     {
         private ActionHandler _actionHandler = null;
         private IProgram _currentProgram = null;
@@ -27,12 +29,14 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
 
         public Point CentreViewCoordinate => new Point(TopLeftViewCoordinate.X + (ViewSize.Width / 2d), TopLeftViewCoordinate.Y + (ViewSize.Height / 2d));
 
+        public Point Offset { get => new Point(Scroll_Content.HorizontalOffset, Scroll_Content.VerticalOffset); set { Scroll_Content.ScrollToHorizontalOffset(value.X); Scroll_Content.ScrollToVerticalOffset(value.Y); } }
+
         public BlockView()
         {
             InitializeComponent();
             ChangeProgram(new Program());
 
-            _actionHandler = new ActionHandler(new BlockViewRestingAction(Scroll_Content, this));
+            _actionHandler = new ActionHandler(new BlockViewRestingAction(this));
         }
 
         public void Add(FrameworkElement element)
@@ -46,8 +50,7 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
             {
                 Canvas_Content.Children.Add(element);
 
-                Canvas.SetLeft(element, position.X);
-                Canvas.SetTop(element, position.Y);
+                SetPosition(element, position);
             }
         }
 
@@ -56,6 +59,15 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
             if (element != null && Canvas_Content.Children.Contains(element))
             {
                 Canvas_Content.Children.Remove(element);
+            }
+        }
+
+        public void SetPosition(FrameworkElement element, Point position)
+        {
+            if (element != null)
+            {
+                Canvas.SetLeft(element, position.X);
+                Canvas.SetTop(element, position.Y);
             }
         }
 
@@ -192,6 +204,67 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
             return point;
         }
 
+        public List<FrameworkElement> GetElementsUnderMouse()
+        {
+            return GetElementsAtPoint(GetMousePosition());
+        }
+
+        public List<FrameworkElement> GetElementsAtPoint(Point point)
+        {
+            var hits = new List<FrameworkElement>();
+
+            VisualTreeHelper.HitTest(Scroll_Content, FilterHit, (result) => NewHit(result, hits), new PointHitTestParameters(point));
+
+            return hits;
+        }
+
+        private HitTestFilterBehavior FilterHit(DependencyObject potentialHitTestTarget)
+        {
+            return HitTestFilterBehavior.Continue;
+        }
+
+        private HitTestResultBehavior NewHit(HitTestResult result, List<FrameworkElement> hits)
+        {
+            if (result.VisualHit != null && result.VisualHit is FrameworkElement element)
+            {
+                hits.Add(element);
+            }
+
+            return HitTestResultBehavior.Continue;
+        }
+
+        public T GetFirstElementOfType<T>(FrameworkElement element) where T : class
+        {
+            if (element != null)
+            {
+                if (typeof(T).IsAssignableFrom(element.GetType()) && element is T converted)
+                {
+                    return converted;
+                }
+                else
+                {
+                    var parent = VisualTreeHelper.GetParent(element);
+                    return GetFirstElementOfType<T>(parent as FrameworkElement);
+                }
+            }
+
+            return null;
+        }
+
+        public T GetFirstElementOfType<T>(List<FrameworkElement> elements) where T : class
+        {
+            foreach (var element in elements)
+            {
+                var foundElement = GetFirstElementOfType<T>(element);
+                if (foundElement != null)
+                {
+                    return foundElement;
+                }
+            }
+
+            return null;
+        }
+
         protected void ChangeProgram(IProgram program)
         {
             Clear();
@@ -226,16 +299,22 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
         private void Scroll_Content_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             _actionHandler?.MouseLeftDown(e.GetPosition(sender as ScrollViewer));
+
+            e.Handled = false;
         }
 
         private void Scroll_Content_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             _actionHandler?.MouseLeftUp(e.GetPosition(sender as ScrollViewer));
+
+            e.Handled = false;
         }
 
         private void Scroll_Content_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
             _actionHandler?.MouseLeftMove(e.GetPosition(sender as ScrollViewer));
+
+            e.Handled = false;
         }
     }
 }

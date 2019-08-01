@@ -38,9 +38,24 @@ namespace InDoOut_Desktop.Actions
 
         public override bool MouseLeftUp(Point mousePosition)
         {
-            AbortSafely();
+            if (_view != null)
+            {
+                var offsetPoint = _view.GetMousePosition();
+                offsetPoint.X += 1;
 
-            return true;
+                var elementsUnderMouse = _view.GetElementsAtPoint(mousePosition);
+                if (elementsUnderMouse != null && _view.GetFirstElementOfType<IUIInput>(elementsUnderMouse) is IUIInput uiInput && uiInput is FrameworkElement chosenElement && _uiOutput is FrameworkElement uiOutput)
+                {
+                    _uiConnection.AssociatedInput = uiInput;
+                    _uiConnection.End = _view.GetBestSide(chosenElement, _view.GetPosition(uiOutput));
+
+                    Finish(null);
+                    return true;
+                }
+            }
+
+            AbortSafely();
+            return false;
         }
 
         private void UpdateWireForMousePos(Point mousePosition)

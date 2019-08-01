@@ -1,58 +1,53 @@
-﻿using InDoOut_Desktop.UI.Controls.CoreEntityRepresentation;
-using InDoOut_Desktop.UI.Interfaces;
+﻿using InDoOut_Desktop.UI.Interfaces;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
 
 namespace InDoOut_Desktop.Actions
 {
     internal class BlockViewRestingAction : Action
     {
-        private FrameworkElement _topLevel = null;
         private IBlockView _blockView = null;
 
-        public BlockViewRestingAction(FrameworkElement topLevel, IBlockView blockView)
+        public BlockViewRestingAction(IBlockView blockView)
         {
-            _topLevel = topLevel;
             _blockView = blockView;
         }
 
         public override bool MouseLeftDown(Point mousePosition)
         {
-            if (_topLevel != null && _blockView != null)
+            if (_blockView != null)
             {
-                var hitResult = VisualTreeHelper.HitTest(_topLevel, mousePosition);
-                if (hitResult != null && hitResult.VisualHit != null)
+                var elementsUnderMouse = _blockView.GetElementsAtPoint(mousePosition);
+                if (elementsUnderMouse.Count > 0)
                 {
-                    var hitVisual = hitResult.VisualHit;
-                    if (hitVisual is ScrollViewer scrollViewer)
-                    {
-                        Finish(new ScrollViewDragAction(scrollViewer, mousePosition));
-
-                        return true;
-                    }
-                    else if (FindParentOrChild<UIOutput>(hitVisual) is UIOutput output)
+                    if (_blockView.GetFirstElementOfType<IUIOutput>(elementsUnderMouse) is IUIOutput output)
                     {
                         Finish(new WireDragAction(output, _blockView));
 
                         return true;
                     }
-                    else if (FindParentOrChild<UserControl>(hitVisual) is IDraggable draggable)
+                    else if (_blockView.GetFirstElementOfType<IDraggable>(elementsUnderMouse) is IDraggable draggable)
                     {
                         if (draggable.CanDrag())
                         {
-                            Finish(new DraggableDragAction(draggable, mousePosition));
+                            Finish(new DraggableDragAction(_blockView, draggable, mousePosition));
                             return true;
                         }
 
                         return false;
                     }
-                    else if(hitVisual is UIElement element)
+                    else if (_blockView.GetFirstElementOfType<IScrollable>(elementsUnderMouse) is IScrollable scrollable)
+                    {
+                        Finish(new ScrollableDragAction(scrollable, mousePosition));
+
+                        return true;
+                    }
+
+                    /*else if(hitVisual is UIElement element)
                     {
                         Finish(new ElementDragAction(element, mousePosition));
 
                         return true;
-                    }
+                    }*/
                 }
             }
 

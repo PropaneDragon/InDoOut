@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Media;
 
 namespace InDoOut_Desktop.Actions
 {
@@ -23,40 +22,6 @@ namespace InDoOut_Desktop.Actions
         protected void Abort()
         {
             Finish(null);
-        }
-
-        protected T FindParentOrChild<T>(DependencyObject child) where T : DependencyObject
-        {
-            if (child is T dependencyObject)
-            {
-                return child as T;
-            }
-
-            return FindParent<T>(child);
-        }
-
-        protected T FindParent<T>(DependencyObject child) where T : DependencyObject
-        {
-            if (child != null)
-            {
-                var parent = VisualTreeHelper.GetParent(child);
-                if (parent == null)
-                {
-                    return null;
-                }
-                else if (parent is T control)
-                {
-                    return control;
-                }
-                else if (typeof(T).IsAssignableFrom(parent.GetType()))
-                {
-                    return parent as T;
-                }
-
-                return FindParent<T>(parent);
-            }
-
-            return default;
         }
     }
 }

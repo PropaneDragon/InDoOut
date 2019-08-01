@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 
 namespace InDoOut_Desktop.Actions
 {
@@ -11,7 +10,7 @@ namespace InDoOut_Desktop.Actions
 
         public ElementDragAction(UIElement element, Point mousePosition)
         {
-            base.MouseLeftDown(mousePosition);
+            /*base.MouseLeftDown(mousePosition);
 
             if (element != null && FindParent<Canvas>(element) != null)
             {
@@ -23,7 +22,7 @@ namespace InDoOut_Desktop.Actions
             else
             {
                 Abort();
-            }
+            }*/
         }
 
         public override bool MouseLeftMove(Point mousePosition)
