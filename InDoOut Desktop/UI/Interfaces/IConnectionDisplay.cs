@@ -13,5 +13,7 @@ namespace InDoOut_Desktop.UI.Interfaces
 
         List<IUIConnection> FindConnections(IUIOutput output);
         List<IUIConnection> FindConnections(IUIInput input);
+        List<IUIConnection> FindConnections(List<IUIOutput> outputs);
+        List<IUIConnection> FindConnections(List<IUIInput> inputs);
     }
 }

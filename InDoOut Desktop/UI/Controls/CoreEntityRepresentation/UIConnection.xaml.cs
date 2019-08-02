@@ -20,6 +20,18 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
             InitializeComponent();
         }
 
+        public void UpdatePositionFromInputOutput(IElementDisplay display)
+        {
+            if (display != null && AssociatedInput != null && AssociatedOutput != null)
+            {
+                if (AssociatedInput is FrameworkElement inputElement && AssociatedOutput is FrameworkElement outputElement)
+                {
+                    Start = display.GetBestSide(outputElement, inputElement);
+                    End = display.GetBestSide(inputElement, outputElement);
+                }
+            }
+        }
+
         private void SetInput(IUIInput input)
         {
             _input = input;

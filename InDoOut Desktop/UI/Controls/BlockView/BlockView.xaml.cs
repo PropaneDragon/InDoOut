@@ -1,5 +1,4 @@
-﻿using InDoOut_Core.Entities.Core;
-using InDoOut_Core.Entities.Functions;
+﻿using InDoOut_Core.Entities.Functions;
 using InDoOut_Core.Entities.Programs;
 using InDoOut_Desktop.Actions;
 using InDoOut_Desktop.UI.Controls.CoreEntityRepresentation;
@@ -18,7 +17,6 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
     {
         private ActionHandler _actionHandler = null;
         private IProgram _currentProgram = null;
-        private Dictionary<IEntity, FrameworkElement> _uiAssociations = new Dictionary<IEntity, FrameworkElement>();
 
         public IProgram AssociatedProgram { get => _currentProgram; set => ChangeProgram(value); }
 
@@ -74,14 +72,6 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
             }
         }
 
-        public void AssociateEntityWithUI(IEntity entity, FrameworkElement element)
-        {
-            if (entity != null && element != null)
-            {
-                _uiAssociations.Add(entity, element);
-            }
-        }
-
         public IUIFunction Create(IFunction function)
         {
             return Create(function, CentreViewCoordinate);
@@ -96,7 +86,6 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
                     var uiFunction = new UIFunction(function);
 
                     Add(uiFunction, location);
-                    AssociateEntityWithUI(function, uiFunction);
 
                     return uiFunction;
                 }
@@ -118,7 +107,6 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
                 };
 
                 Add(uiConnection, new Point(0, 0));
-                AssociateEntityWithUI(start.AssociatedOutput, uiConnection);
 
                 return uiConnection;
             }
@@ -137,9 +125,6 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
                 {
                     uiConnection.AssociatedInput = end;
 
-                    AssociateEntityWithUI(start.AssociatedOutput, uiConnection as FrameworkElement);
-                    AssociateEntityWithUI(end.AssociatedInput, uiConnection as FrameworkElement);
-
                     return uiConnection;
                 }
             }
@@ -147,25 +132,12 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
             return null;
         }
 
-        public IUIConnection FindConnection(IUIOutput output, IUIInput input)
-        {
-            return FindCanvasChild<IUIConnection>(uiConnection => uiConnection.AssociatedInput == input && uiConnection.AssociatedOutput == output).FirstOrDefault();
-        }
-
-        public List<IUIConnection> FindConnections(IUIOutput output)
-        {
-            return FindCanvasChild<IUIConnection>(uiConnection => uiConnection.AssociatedOutput == output);
-        }
-
-        public List<IUIConnection> FindConnections(IUIInput input)
-        {
-            return FindCanvasChild<IUIConnection>(uiConnection => uiConnection.AssociatedInput == input);
-        }
-
-        public IUIFunction FindFunction(IFunction function)
-        {
-            return FindCanvasChild<IUIFunction>(uiFunction => uiFunction.AssociatedFunction == function).FirstOrDefault();
-        }
+        public IUIConnection FindConnection(IUIOutput output, IUIInput input) => FindCanvasChild<IUIConnection>(uiConnection => uiConnection.AssociatedInput == input && uiConnection.AssociatedOutput == output).FirstOrDefault();
+        public List<IUIConnection> FindConnections(IUIOutput output) => FindConnections(new List<IUIOutput>() { output });
+        public List<IUIConnection> FindConnections(IUIInput input) => FindConnections(new List<IUIInput>() { input });
+        public List<IUIConnection> FindConnections(List<IUIOutput> outputs) => FindCanvasChild<IUIConnection>(uiConnection => outputs.Contains(uiConnection.AssociatedOutput));
+        public List<IUIConnection> FindConnections(List<IUIInput> inputs) => FindCanvasChild<IUIConnection>(uiConnection => inputs.Contains(uiConnection.AssociatedInput));
+        public IUIFunction FindFunction(IFunction function) => FindCanvasChild<IUIFunction>(uiFunction => uiFunction.AssociatedFunction == function).FirstOrDefault();
 
         public void Remove(IUIConnection output)
         {
@@ -209,6 +181,18 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
             }
 
             return point;
+        }
+
+        public Point GetBestSide(FrameworkElement element, FrameworkElement otherElement)
+        {
+            if (element != null && otherElement != null)
+            {
+                var otherElementPosition = GetPosition(otherElement);
+
+                return GetBestSide(element, otherElementPosition);
+            }
+
+            return new Point();
         }
 
         public List<FrameworkElement> GetElementsUnderMouse()
@@ -295,7 +279,6 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
         private void Clear()
         {
             Canvas_Content.Children.Clear();
-            _uiAssociations.Clear();
         }
 
         private List<T> FindCanvasChild<T>() where T : class
@@ -325,21 +308,21 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
             Scroll_Content.ScrollToVerticalOffset((Canvas_Content.ActualHeight / 2d) - (Scroll_Content.ActualHeight / 2d));
         }
 
-        private void Scroll_Content_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void Scroll_Content_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             _actionHandler?.MouseLeftDown(e.GetPosition(sender as ScrollViewer));
 
             e.Handled = false;
         }
 
-        private void Scroll_Content_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void Scroll_Content_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             _actionHandler?.MouseLeftUp(e.GetPosition(sender as ScrollViewer));
 
             e.Handled = false;
         }
 
-        private void Scroll_Content_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        private void Scroll_Content_MouseMove(object sender, MouseEventArgs e)
         {
             _actionHandler?.MouseLeftMove(e.GetPosition(sender as ScrollViewer));
 

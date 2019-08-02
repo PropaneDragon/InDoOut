@@ -13,6 +13,7 @@ namespace InDoOut_Desktop.UI.Interfaces
         Point GetMousePosition();
         Point GetPosition(FrameworkElement element);
         Point GetBestSide(FrameworkElement element, Point point);
+        Point GetBestSide(FrameworkElement element, FrameworkElement otherElement);
 
         List<FrameworkElement> GetElementsUnderMouse();
         List<FrameworkElement> GetElementsAtPoint(Point point);

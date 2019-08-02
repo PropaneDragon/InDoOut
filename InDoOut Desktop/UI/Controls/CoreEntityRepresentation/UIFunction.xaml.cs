@@ -3,6 +3,7 @@ using InDoOut_Desktop.Actions;
 using InDoOut_Desktop.UI.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 
@@ -12,8 +13,13 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
     {
         private DispatcherTimer _updateTimer = new DispatcherTimer(DispatcherPriority.Normal);
         private IFunction _function = null;
+        private List<IUIConnection> _cachedVisualConnections = new List<IUIConnection>();
 
         public IFunction AssociatedFunction { get => _function; set => SetFunction(value); }
+
+        public List<IUIInput> Inputs => FindInputs();
+
+        public List<IUIOutput> Outputs => FindOutputs();
 
         public UIFunction()
         {
@@ -34,16 +40,28 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
             return true;
         }
 
-        public void DragStarted()
+        public void DragStarted(IBlockView view)
         {
+            _cachedVisualConnections.Clear();
+
+            if (view != null)
+            {
+                _cachedVisualConnections.AddRange(view.FindConnections(Inputs));
+                _cachedVisualConnections.AddRange(view.FindConnections(Outputs));
+            }
         }
 
-        public void DragMoved()
+        public void DragMoved(IBlockView view)
         {
+            foreach (var cachedVisualConnection in _cachedVisualConnections)
+            {
+                cachedVisualConnection.UpdatePositionFromInputOutput(view);
+            }
         }
 
-        public void DragEnded()
+        public void DragEnded(IBlockView view)
         {
+            _cachedVisualConnections.Clear();
         }
 
         private void SetFunction(IFunction function)
@@ -104,26 +122,56 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
             }
         }
 
+        private List<IUIInput> FindInputs()
+        {
+            var foundInputs = new List<IUIInput>();
+            var inputStackElements = Stack_Inputs.Children;
+
+            foreach (var element in inputStackElements)
+            {
+                if (element is IUIInput input)
+                {
+                    foundInputs.Add(input);
+                }
+            }
+
+            return foundInputs;
+        }
+
+        private List<IUIOutput> FindOutputs()
+        {
+            var foundOutputs = new List<IUIOutput>();
+            var outputStackElements = Stack_Outputs.Children;
+
+            foreach (var element in outputStackElements)
+            {
+                if (element is IUIOutput output)
+                {
+                    foundOutputs.Add(output);
+                }
+            }
+
+            return foundOutputs;
+        }
+
         private void UpdateOutputs()
         {
             if (AssociatedFunction != null)
             {
                 var expectedOutputs = new List<IOutput>(AssociatedFunction.Outputs);
-                var currentUIOutputs = Stack_Outputs.Children;
+                var currentOutputs = Outputs;
 
-                foreach (var output in currentUIOutputs)
+                foreach (var output in currentOutputs)
                 {
-                    if (output is UIOutput uiOutput)
+                    var associatedOutput = output.AssociatedOutput;
+
+                    if (expectedOutputs.Contains(associatedOutput))
                     {
-                        var associatedOutput = uiOutput.AssociatedOutput;
-                        if (expectedOutputs.Contains(associatedOutput))
-                        {
-                            expectedOutputs.Remove(associatedOutput);
-                        }
-                        else
-                        {
-                            Stack_Outputs.Children.Remove(uiOutput);
-                        }
+                        expectedOutputs.Remove(associatedOutput);
+                    }
+                    else if (output is UIElement element)
+                    {
+                        Stack_Outputs.Children.Remove(element);
                     }
                 }
 
@@ -141,21 +189,19 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
             if (AssociatedFunction != null)
             {
                 var expectedInputs = new List<IInput>(AssociatedFunction.Inputs);
-                var currentUIInputs = Stack_Inputs.Children;
+                var currentInputs = Inputs;
 
-                foreach (var input in currentUIInputs)
+                foreach (var input in currentInputs)
                 {
-                    if (input is UIInput uiInput)
+                    var associatedInput = input.AssociatedInput;
+
+                    if (expectedInputs.Contains(associatedInput))
                     {
-                        var associatedInput = uiInput.AssociatedInput;
-                        if (expectedInputs.Contains(associatedInput))
-                        {
-                            expectedInputs.Remove(associatedInput);
-                        }
-                        else
-                        {
-                            Stack_Inputs.Children.Remove(uiInput);
-                        }
+                        expectedInputs.Remove(associatedInput);
+                    }
+                    else if (input is UIElement element)
+                    {
+                        Stack_Inputs.Children.Remove(element);
                     }
                 }
 

@@ -10,5 +10,7 @@ namespace InDoOut_Desktop.UI.Interfaces
 
         Point Start { get; set; }
         Point End { get; set; }
+
+        void UpdatePositionFromInputOutput(IElementDisplay display);
     }
 }

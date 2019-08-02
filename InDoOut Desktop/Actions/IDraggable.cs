@@ -1,10 +1,12 @@
-﻿namespace InDoOut_Desktop.Actions
+﻿using InDoOut_Desktop.UI.Interfaces;
+
+namespace InDoOut_Desktop.Actions
 {
     internal interface IDraggable
     {
-        void DragStarted();
-        void DragMoved();
-        void DragEnded();
+        void DragStarted(IBlockView view);
+        void DragMoved(IBlockView view);
+        void DragEnded(IBlockView view);
 
         bool CanDrag();
     }

@@ -41,7 +41,7 @@ namespace InDoOut_Desktop.Actions
             if (_view != null)
             {
                 var elementsUnderMouse = _view.GetElementsUnderMouse();
-                if (elementsUnderMouse != null && _view.GetFirstElementOfType<IUIInput>(elementsUnderMouse) is IUIInput uiInput && uiInput is FrameworkElement chosenElement && _uiOutput is FrameworkElement uiOutput)
+                if (elementsUnderMouse != null && _view.GetFirstElementOfType<IUIInput>(elementsUnderMouse) is IUIInput uiInput)
                 {
                     var output = _uiOutput.AssociatedOutput;
                     var input = uiInput.AssociatedInput;
@@ -49,7 +49,7 @@ namespace InDoOut_Desktop.Actions
                     if (output != null && input != null && input.CanAcceptConnection(output) && output.Connect(input))
                     {
                         _uiConnection.AssociatedInput = uiInput;
-                        _uiConnection.End = _view.GetBestSide(chosenElement, _view.GetPosition(uiOutput));
+                        _uiConnection.UpdatePositionFromInputOutput(_view);
 
                         Finish(null);
                         return true;

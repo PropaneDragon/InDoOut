@@ -1,6 +1,5 @@
 ﻿using InDoOut_Desktop.UI.Interfaces;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace InDoOut_Desktop.Actions
 {
@@ -8,20 +7,20 @@ namespace InDoOut_Desktop.Actions
     {
         private Point _initialControlPosition = new Point();
         private IDraggable _draggable = null;
-        private IElementDisplay _elementDisplay = null;
+        private IBlockView _blockView = null;
 
-        public DraggableDragAction(IElementDisplay elementDisplay, IDraggable draggable, Point mousePosition)
+        public DraggableDragAction(IBlockView blockView, IDraggable draggable, Point mousePosition)
         {
             base.MouseLeftDown(mousePosition);
 
-            if (elementDisplay != null && draggable != null && draggable.CanDrag() && draggable is FrameworkElement element)
+            if (blockView != null && draggable != null && draggable.CanDrag() && draggable is FrameworkElement element)
             {
-                _elementDisplay = elementDisplay;
+                _blockView = blockView;
 
                 _draggable = draggable;
-                _draggable.DragStarted();
+                _draggable.DragStarted(_blockView);
 
-                _initialControlPosition = _elementDisplay.GetPosition(element);
+                _initialControlPosition = _blockView.GetPosition(element);
             }
             else
             {
@@ -33,11 +32,11 @@ namespace InDoOut_Desktop.Actions
         {
             base.MouseLeftMove(mousePosition);
 
-            if (_draggable != null && _elementDisplay != null && _draggable is FrameworkElement element)
+            if (_draggable != null && _blockView != null && _draggable is FrameworkElement element)
             {
-                _elementDisplay.SetPosition(element, new Point(_initialControlPosition.X - MouseDelta.X, _initialControlPosition.Y - MouseDelta.Y));
+                _blockView.SetPosition(element, new Point(_initialControlPosition.X - MouseDelta.X, _initialControlPosition.Y - MouseDelta.Y));
 
-                _draggable.DragMoved();
+                _draggable.DragMoved(_blockView);
 
                 return true;
             }
@@ -52,7 +51,7 @@ namespace InDoOut_Desktop.Actions
 
             if (_draggable != null)
             {
-                _draggable.DragEnded();
+                _draggable.DragEnded(_blockView);
 
                 Finish(null);
                 return true;
