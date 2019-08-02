@@ -4,14 +4,14 @@ using System.Threading.Tasks;
 
 namespace InDoOut_Desktop.Loading
 {
-    enum TaskState
+    public enum TaskState
     {
         NotRun,
         Running,
         HasRun
     }
 
-    internal interface ILoadingTask : INamed
+    public interface ILoadingTask : INamed
     {
         event EventHandler<LoadingTaskEventArgs> NameChanged;
 

@@ -12,6 +12,7 @@
     <None Remove="Resources\IDO_Splash_Logo.png" />
     <None Remove="SplashWindow.xaml" />
     <None Remove="Style\MainStyle.xaml" />
+    <None Remove="UI\Controls\Background\BackgroundImage.xaml" />
     <None Remove="UI\Controls\BlockView\BlockView.xaml" />
     <None Remove="UI\Controls\CoreEntityRepresentation\UIConnection.xaml" />
     <None Remove="UI\Controls\CoreEntityRepresentation\UIFunction.xaml" />
@@ -22,6 +23,7 @@
     <None Remove="UI\Controls\Search\SearchBar.xaml" />
     <None Remove="UI\Controls\Sidebar\ItemList.xaml" />
     <None Remove="UI\Controls\Sidebar\Sidebar.xaml" />
+    <None Remove="UI\Controls\Splash\SplashOverlay.xaml" />
   </ItemGroup>
 
   <ItemGroup>

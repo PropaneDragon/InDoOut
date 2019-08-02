@@ -1,6 +1,7 @@
 ﻿using InDoOut_Desktop.Location;
 using InDoOut_Desktop.Plugins;
 using InDoOut_Plugins.Loaders;
+using System;
 using System.Threading.Tasks;
 
 namespace InDoOut_Desktop.Loading
@@ -32,10 +33,16 @@ namespace InDoOut_Desktop.Loading
                 LoadedPlugins.Instance.Plugins = pluginContainers;
 
                 Name = "Plugins loaded.";
+
+                await Task.Delay(TimeSpan.FromSeconds(3));
+
                 return true;
             }
 
             Name = "Plugin load failed.";
+
+            await Task.Delay(TimeSpan.FromSeconds(5));
+
             return false;
         }
 

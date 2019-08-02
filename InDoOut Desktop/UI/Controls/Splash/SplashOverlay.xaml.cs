@@ -1,68 +1,55 @@
 ﻿using InDoOut_Desktop.Loading;
 using InDoOut_Desktop.UI.Interfaces;
 using System;
+using System.Reflection;
 using System.Threading.Tasks;
-using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media.Animation;
 using System.Windows.Threading;
 
-namespace InDoOut_Desktop.UI.Windows
+namespace InDoOut_Desktop.UI.Controls.Splash
 {
-    /// <summary>
-    /// Interaction logic for SplashWindow.xaml
-    /// </summary>
-    public partial class SplashWindow : Window, ISplashScreen
+    public partial class SplashOverlay : UserControl, ISplashScreen
     {
         private bool _textUpdateNeeded = true;
         private ILoadingTask _taskToRun = null;
         private DispatcherTimer _uiUpdateTimer = new DispatcherTimer(DispatcherPriority.Normal);
 
-        internal TimeSpan HoldTime { get; set; } = TimeSpan.FromSeconds(5);
-
-        public SplashWindow()
+        public SplashOverlay()
         {
             InitializeComponent();
 
             _uiUpdateTimer.Interval = TimeSpan.FromMilliseconds(100);
             _uiUpdateTimer.Tick += UIUpdateTimer_Tick;
             _uiUpdateTimer.Start();
-        }
 
-        internal static async Task<bool> ShowForLoadingTaskAsync(Window owner, ILoadingTask task)
-        {
-            var splashWindow = new SplashWindow()
-            {
-                Owner = owner
-            };
-
-            splashWindow.Show();
-
-            var startTime = DateTime.UtcNow;
-            var result = await splashWindow.RunTaskAsync(task);
-            var endTime = DateTime.UtcNow;
-            var totalTime = endTime - startTime;
-
-            if (totalTime < splashWindow.HoldTime)
-            {
-                var remainingTime = splashWindow.HoldTime - totalTime;
-
-                //await Task.Delay(remainingTime);
-            }
-
-            splashWindow.Close();
-
-            return result;
+            UpdateVersion();
         }
 
         public async Task<bool> RunTaskAsync(ILoadingTask task)
         {
+            var ran = false;
+
+            Visibility = System.Windows.Visibility.Visible;
+
             if (task != null)
             {
                 SetTaskToRun(task);
 
-                return await Task.Run(() => task.RunAsync());
+                ran = await Task.Run(() => task.RunAsync());
             }
 
-            return false;
+            HideOverlay();
+
+            return ran;
+        }
+
+        private void HideOverlay()
+        {
+            var fadeAnimation = new DoubleAnimation(0, TimeSpan.FromMilliseconds(500));
+            fadeAnimation.Completed += (sender, e) => Visibility = System.Windows.Visibility.Collapsed;
+
+            BeginAnimation(OpacityProperty, fadeAnimation);
         }
 
         private void SetTaskToRun(ILoadingTask task)
@@ -80,6 +67,15 @@ namespace InDoOut_Desktop.UI.Windows
             }
         }
 
+        private void UpdateVersion()
+        {
+            var version = Assembly.GetEntryAssembly()?.GetName()?.Version;
+            if (version != null)
+            {
+                Text_Version.Text = $"{version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
+            }
+        }
+
         private void TaskToRun_OnNameChanged(object sender, LoadingTaskEventArgs e)
         {
             _textUpdateNeeded = true;
@@ -91,7 +87,7 @@ namespace InDoOut_Desktop.UI.Windows
             {
                 _textUpdateNeeded = false;
 
-                Text_LoadingMessage.Text = _taskToRun?.Name;
+                Text_Loading.Text = _taskToRun?.Name;
             }
         }
     }

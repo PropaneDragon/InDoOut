@@ -7,24 +7,17 @@
         xmlns:core="clr-namespace:InDoOut_Desktop.UI.Controls.Core"
         xmlns:sidebar="clr-namespace:InDoOut_Desktop.UI.Controls.Sidebar"
         xmlns:blockview="clr-namespace:InDoOut_Desktop.UI.Controls.BlockView"
+        xmlns:background="clr-namespace:InDoOut_Desktop.UI.Controls.Background"
+        xmlns:splash="clr-namespace:InDoOut_Desktop.UI.Controls.Splash"
         mc:Ignorable="d"
         Title="Test Program > ido" Height="1080" Width="1920" Loaded="Window_Loaded" WindowState="Normal" Background="#111" Foreground="White">
     <Grid>
         <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="6*"/>
-                <ColumnDefinition Width="1*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="6*"/>
-                <RowDefinition Height="1*"/>
-            </Grid.RowDefinitions>
-            <Image Source="/Resources/IDO_Main_BackgroundLogo.png" Grid.Row="1" Grid.Column="1" />
+            <background:BackgroundImage Opacity="0.01"/>
         </Grid>
         <blockview:BlockView x:Name="BlockView_Main" />
         <core:TitleBar x:Name="TitleBar_Main" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
         <sidebar:Sidebar x:Name="Sidebar_Main" Width="500" HorizontalAlignment="Left" />
+        <splash:SplashOverlay x:Name="Splash_Overlay" Visibility="Collapsed" />
     </Grid>
 </Window>

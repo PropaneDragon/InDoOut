@@ -1,4 +1,5 @@
 ﻿using InDoOut_Desktop.Loading;
+using InDoOut_Desktop.UI.Interfaces;
 using InDoOut_Desktop.UI.Threading;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -9,6 +10,8 @@ namespace InDoOut_Desktop.UI.Windows
 {
     public partial class MainWindow : Window
     {
+        private static readonly bool OLD_SPLASH = false;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -29,14 +32,27 @@ namespace InDoOut_Desktop.UI.Windows
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            if (await SplashWindow.ShowForLoadingTaskAsync(this, new MainWindowLoadingTask()))
+            ISplashScreen splash = null;
+
+            if (OLD_SPLASH)
             {
-                await FinishLoading();
+                splash = new SplashWindow() { Owner = this };
             }
             else
             {
-                Close();
+                splash = Splash_Overlay;
             }
+
+            if (splash != null)
+            {
+                if (await splash.RunTaskAsync(new MainWindowLoadingTask()))
+                {
+                    await FinishLoading();
+                    return;
+                }
+            }
+
+            Close();
         }
     }
 }
