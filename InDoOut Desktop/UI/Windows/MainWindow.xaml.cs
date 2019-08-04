@@ -21,12 +21,12 @@ namespace InDoOut_Desktop.UI.Windows
 
         private async Task FinishLoading()
         {
-            var itemList = Sidebar_Main.ItemList;
+            var sidebar = Sidebar_Main;
             var blockView = BlockView_Main;
 
-            if (itemList != null && blockView != null)
+            if (sidebar != null && blockView != null)
             {
-                itemList.FunctionView = blockView;
+                sidebar.BlockView = blockView;
             }
         }
 

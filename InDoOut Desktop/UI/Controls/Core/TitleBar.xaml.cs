@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shell;
 using System.Windows.Threading;
@@ -24,6 +25,8 @@ namespace InDoOut_Desktop.UI.Controls.Core
             if (window != null)
             {
                 _attachedWindow = window;
+                _attachedWindow.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 50, 50, 50));
+                _attachedWindow.BorderThickness = new Thickness(1);
 
                 var chrome = new WindowChrome()
                 {
@@ -55,8 +58,11 @@ namespace InDoOut_Desktop.UI.Controls.Core
 
             if (_periodicUpdateTimer == null)
             {
-                _periodicUpdateTimer = new DispatcherTimer(DispatcherPriority.Normal);
-                _periodicUpdateTimer.Interval = TimeSpan.FromMilliseconds(100);
+                _periodicUpdateTimer = new DispatcherTimer(DispatcherPriority.Normal)
+                {
+                    Interval = TimeSpan.FromMilliseconds(100)
+                };
+
                 _periodicUpdateTimer.Tick += PeriodicUpdateTimer_Tick;
                 _periodicUpdateTimer.Start();
             }

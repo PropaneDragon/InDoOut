@@ -37,7 +37,7 @@ namespace InDoOut_Core_Plugins.Maths
 
         protected override IOutput Started(IInput triggeredBy)
         {
-           if ( _additionResult.ValueFrom(_firstNumber.Value + _secondNumber.Value))
+           if (_additionResult.ValueFrom(_firstNumber.Value + _secondNumber.Value))
             {
                 return _outputCalculated;
             }

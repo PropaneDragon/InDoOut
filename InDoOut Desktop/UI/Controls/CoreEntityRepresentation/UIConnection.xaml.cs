@@ -1,4 +1,5 @@
 ﻿using InDoOut_Desktop.UI.Interfaces;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -6,11 +7,13 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
 {
     public partial class UIConnection : UserControl, IUIConnection
     {
-        private IUIInput _input = null;
-        private IUIOutput _output = null;
+        private IUIConnectionEnd _end = null;
+        private IUIConnectionStart _start = null;
 
-        public IUIInput AssociatedInput { get => _input; set => SetInput(value); }
-        public IUIOutput AssociatedOutput { get => _output; set => SetOutput(value); }
+        public bool Hidden { get => Visibility != Visibility.Visible; set => SetHidden(value); }
+
+        public IUIConnectionEnd AssociatedEnd { get => _end; set => SetEnd(value); }
+        public IUIConnectionStart AssociatedStart { get => _start; set => SetStart(value); }
 
         public Point Start { get => Figure_Start.StartPoint; set => SetStart(value); }
         public Point End { get => Segment_Curve.Point3; set => SetEnd(value); }
@@ -22,9 +25,9 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
 
         public void UpdatePositionFromInputOutput(IElementDisplay display)
         {
-            if (display != null && AssociatedInput != null && AssociatedOutput != null)
+            if (display != null && AssociatedEnd != null && AssociatedStart != null)
             {
-                if (AssociatedInput is FrameworkElement inputElement && AssociatedOutput is FrameworkElement outputElement)
+                if (AssociatedEnd is FrameworkElement inputElement && AssociatedStart is FrameworkElement outputElement)
                 {
                     Start = display.GetBestSide(outputElement, inputElement);
                     End = display.GetBestSide(inputElement, outputElement);
@@ -32,14 +35,14 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
             }
         }
 
-        private void SetInput(IUIInput input)
+        private void SetEnd(IUIConnectionEnd input)
         {
-            _input = input;
+            _end = input;
         }
 
-        private void SetOutput(IUIOutput output)
+        private void SetStart(IUIConnectionStart output)
         {
-            _output = output;
+            _start = output;
         }
 
         private void SetEnd(Point point)
@@ -54,6 +57,11 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
             Figure_Start.StartPoint = point;
 
             RecalculateBezier();
+        }
+
+        private void SetHidden(bool hidden)
+        {
+            Visibility = hidden ? Visibility.Hidden : Visibility.Visible;
         }
 
         private void RecalculateBezier()

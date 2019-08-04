@@ -5,8 +5,10 @@ namespace InDoOut_Desktop.UI.Interfaces
 {
     public interface IUIConnection
     {
-        IUIOutput AssociatedOutput { get; set; }
-        IUIInput AssociatedInput { get; set; }
+        bool Hidden { get; set; }
+
+        IUIConnectionStart AssociatedStart { get; set; }
+        IUIConnectionEnd AssociatedEnd { get; set; }
 
         Point Start { get; set; }
         Point End { get; set; }

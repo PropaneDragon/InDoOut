@@ -1,22 +1,28 @@
-﻿using System.Windows;
-using InDoOut_Desktop.UI.Interfaces;
+﻿using InDoOut_Desktop.UI.Interfaces;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
 
 namespace InDoOut_Desktop.Actions
 {
-    internal class WireDragAction : Action
+    internal abstract class AbstractWireDragAction : Action
     {
         private IBlockView _view = null;
-        private IUIOutput _uiOutput = null;
+        private IUIConnectionStart _start = null;
         private IUIConnection _uiConnection = null;
 
-        public WireDragAction(IUIOutput output, IBlockView view)
+        private AbstractWireDragAction()
         {
-            if (output != null && view != null)
+        }
+
+        public AbstractWireDragAction(IUIConnectionStart start, IBlockView view) : this()
+        {
+            if (start != null && view != null)
             {
-                _uiOutput = output;
+                _start = start;
                 _view = view;
 
-                _uiConnection = _view.Create(output, _view.GetMousePosition());
+                _uiConnection = _view.Create(start, _view.GetMousePosition());
 
                 if (_uiConnection == null)
                 {
@@ -38,22 +44,18 @@ namespace InDoOut_Desktop.Actions
 
         public override bool MouseLeftUp(Point mousePosition)
         {
-            if (_view != null)
+            if (_view != null && _start != null)
             {
                 var elementsUnderMouse = _view.GetElementsUnderMouse();
-                if (elementsUnderMouse != null && _view.GetFirstElementOfType<IUIInput>(elementsUnderMouse) is IUIInput uiInput)
+                var viableElement = _view.GetFirstElementOfType<IUIConnectionEnd>(elementsUnderMouse);
+
+                if (elementsUnderMouse != null && viableElement != null && elementsUnderMouse.Count > 0 && ViableEnd(viableElement) && FinishConnection(_start, viableElement))
                 {
-                    var output = _uiOutput.AssociatedOutput;
-                    var input = uiInput.AssociatedInput;
+                    _uiConnection.AssociatedEnd = viableElement;
+                    _uiConnection.UpdatePositionFromInputOutput(_view);
 
-                    if (output != null && input != null && input.CanAcceptConnection(output) && output.Connect(input))
-                    {
-                        _uiConnection.AssociatedInput = uiInput;
-                        _uiConnection.UpdatePositionFromInputOutput(_view);
-
-                        Finish(null);
-                        return true;
-                    }
+                    Finish(null);
+                    return true;
                 }
             }
 
@@ -61,9 +63,12 @@ namespace InDoOut_Desktop.Actions
             return false;
         }
 
+        protected abstract bool ViableEnd(IUIConnectionEnd endConnection);
+        protected abstract bool FinishConnection(IUIConnectionStart start, IUIConnectionEnd end);
+
         private void UpdateWireForMousePos(Point mousePosition)
         {
-            if (_uiConnection != null && _uiOutput != null && _uiOutput is FrameworkElement element)
+            if (_uiConnection != null && _start != null && _start is FrameworkElement element)
             {
                 var viewMousePosition = _view.GetMousePosition();
                 _uiConnection.Start = _view.GetBestSide(element, viewMousePosition);
@@ -75,7 +80,7 @@ namespace InDoOut_Desktop.Actions
             }
         }
 
-        private void AbortSafely()
+        protected void AbortSafely()
         {
             if (_uiConnection != null)
             {

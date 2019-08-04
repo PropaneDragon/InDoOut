@@ -19,6 +19,8 @@
     <None Remove="UI\Controls\CoreEntityRepresentation\UIFunctionIO.xaml" />
     <None Remove="UI\Controls\CoreEntityRepresentation\UIInput.xaml" />
     <None Remove="UI\Controls\CoreEntityRepresentation\UIOutput.xaml" />
+    <None Remove="UI\Controls\CoreEntityRepresentation\UIProperty.xaml" />
+    <None Remove="UI\Controls\CoreEntityRepresentation\UIResult.xaml" />
     <None Remove="UI\Controls\Core\TitleBar.xaml" />
     <None Remove="UI\Controls\Search\SearchBar.xaml" />
     <None Remove="UI\Controls\Sidebar\ItemList.xaml" />
@@ -27,6 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\InDoOut Core Plugins\InDoOut Core Plugins.csproj" />
     <ProjectReference Include="..\InDoOut Core\InDoOut Core.csproj" />
     <ProjectReference Include="..\InDoOut Desktop API\InDoOut Desktop API.csproj" />
     <ProjectReference Include="..\InDoOut Plugins\InDoOut Plugins.csproj" />

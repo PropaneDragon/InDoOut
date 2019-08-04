@@ -5,7 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InDoOut_Desktop.UI.Controls.CoreEntityRepresentation"
              mc:Ignorable="d" 
-             FontFamily="Segoe UI Light" FontSize="18" Foreground="White" Width="200" MaxWidth="200" Unloaded="UserControl_Unloaded">
+             FontFamily="Segoe UI Light" FontSize="18" Foreground="White" Width="200" MaxWidth="200" Unloaded="UserControl_Unloaded" MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave" RenderTransformOrigin="0.5,0.5" Initialized="UserControl_Initialized">
+    <UserControl.RenderTransform>
+        <TransformGroup>
+            <ScaleTransform x:Name="Scale_Main" ScaleX="1" ScaleY="1"/>
+        </TransformGroup>
+    </UserControl.RenderTransform>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -13,17 +18,40 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Border Grid.Row="0">
-            <StackPanel x:Name="Stack_Inputs" VerticalAlignment="Center" HorizontalAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Disabled">
-                <local:UIInput />
-            </StackPanel>
-        </Border>
-        <Border Grid.Row="1" Background="#373737" Padding="10">
-            <TextBlock x:Name="Text_FunctionName" Text="Function" TextAlignment="Center" />
+            <Grid>
+                <StackPanel x:Name="Stack_Properties" Visibility="Hidden" VerticalAlignment="Bottom" HorizontalAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                    <local:UIProperty />
+                    <local:UIProperty />
+                </StackPanel>
+                <StackPanel x:Name="Stack_Inputs" VerticalAlignment="Bottom" HorizontalAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                    <local:UIInput />
+                </StackPanel>
+            </Grid>
         </Border>
         <Border Grid.Row="2">
-            <StackPanel x:Name="Stack_Outputs" VerticalAlignment="Center" HorizontalAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Disabled">
-                <local:UIOutput />
-            </StackPanel>
+            <Grid>
+                <StackPanel x:Name="Stack_Results" Visibility="Hidden" VerticalAlignment="Top" HorizontalAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                    <local:UIResult />
+                    <local:UIResult />
+                </StackPanel>
+                <StackPanel x:Name="Stack_Outputs" VerticalAlignment="Top" HorizontalAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                    <local:UIOutput />
+                </StackPanel>
+            </Grid>
         </Border>
+        <Grid Grid.Row="1" >
+            <!--<Rectangle Fill="Black">
+                <Rectangle.Effect>
+                    <DropShadowEffect BlurRadius="20" Direction="0" ShadowDepth="0" />
+                </Rectangle.Effect>
+            </Rectangle>-->
+            <Border Background="#373737" Padding="10">
+                <DockPanel>
+                    <Button x:Name="Button_Run" DockPanel.Dock="Right" Visibility="Hidden" FontFamily="Segoe MDL2 Assets" Content="" FontSize="14" Template="{DynamicResource Template_Buttons_Transparent}" HorizontalAlignment="Right" VerticalAlignment="Stretch" HorizontalContentAlignment="Right" Click="Button_Run_Click"/>
+                    <TextBlock x:Name="Text_Processing" DockPanel.Dock="Left" Visibility="Hidden" FontFamily="Segoe MDL2 Assets" Text="" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                    <TextBlock x:Name="Text_FunctionName" Text="Function" TextAlignment="Center" />
+                </DockPanel>
+            </Border>
+        </Grid>
     </Grid>
 </UserControl>

@@ -2,7 +2,7 @@
 
 namespace InDoOut_Desktop.UI.Interfaces
 {
-    public interface IUIOutput
+    public interface IUIOutput : IUIConnectionStart
     {
         IOutput AssociatedOutput { get; set; }
     }

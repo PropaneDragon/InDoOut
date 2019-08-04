@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InDoOut_Desktop.UI.Interfaces;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
@@ -9,9 +10,10 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
     {
         private bool _collapsed = false;
         private TimeSpan _animationTime = TimeSpan.FromMilliseconds(500);
+        private IBlockView _blockView = null;
 
         public bool Collapsed { get => _collapsed; set { if (value) Collapse(); else Expand(); } }
-        public ItemList ItemList => ItemList_Functions;
+        public IBlockView BlockView { get => _blockView; set => BlockViewChanged(value); }
 
         public Sidebar()
         {
@@ -52,6 +54,12 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
 
             _collapsed = false;
         }
+        private void BlockViewChanged(IBlockView blockView)
+        {
+            _blockView = blockView;
+
+            ItemList_Functions.FunctionView = blockView;
+        }
 
         private void Button_Collapse_Click(object sender, RoutedEventArgs e)
         {
@@ -66,6 +74,19 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
         private void SearchBar_SearchRequested(object sender, Search.SearchArgs e)
         {
             ItemList_Functions.Filter(e.Query);
+        }
+
+        private void Button_SwitchMode_Click(object sender, RoutedEventArgs e)
+        {
+            if (_blockView != null)
+            {
+                _blockView.CurrentViewMode = _blockView.CurrentViewMode == BlockViewMode.IO ? BlockViewMode.Variables : BlockViewMode.IO;
+            }
+        }
+
+        private void Button_RunProgram_Click(object sender, RoutedEventArgs e)
+        {
+            _blockView?.AssociatedProgram?.Trigger(null);
         }
     }
 }

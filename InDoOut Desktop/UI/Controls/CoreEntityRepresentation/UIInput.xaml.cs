@@ -1,6 +1,5 @@
 ﻿using InDoOut_Core.Entities.Functions;
 using InDoOut_Desktop.UI.Interfaces;
-using System;
 using System.Windows.Controls;
 
 namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation

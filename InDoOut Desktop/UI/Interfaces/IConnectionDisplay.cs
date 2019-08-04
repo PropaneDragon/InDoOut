@@ -7,13 +7,13 @@ namespace InDoOut_Desktop.UI.Interfaces
     {
         void Remove(IUIConnection output);
 
-        IUIConnection Create(IUIOutput start, Point end);
-        IUIConnection Create(IUIOutput start, IUIInput end);
-        IUIConnection FindConnection(IUIOutput output, IUIInput input);
+        IUIConnection Create(IUIConnectionStart start, Point end);
+        IUIConnection Create(IUIConnectionStart start, IUIConnectionEnd end);
+        IUIConnection FindConnection(IUIConnectionStart start, IUIConnectionEnd end);
 
-        List<IUIConnection> FindConnections(IUIOutput output);
-        List<IUIConnection> FindConnections(IUIInput input);
-        List<IUIConnection> FindConnections(List<IUIOutput> outputs);
-        List<IUIConnection> FindConnections(List<IUIInput> inputs);
+        List<IUIConnection> FindConnections(IUIConnectionStart start);
+        List<IUIConnection> FindConnections(IUIConnectionEnd end);
+        List<IUIConnection> FindConnections(List<IUIConnectionStart> starts);
+        List<IUIConnection> FindConnections(List<IUIConnectionEnd> ends);
     }
 }

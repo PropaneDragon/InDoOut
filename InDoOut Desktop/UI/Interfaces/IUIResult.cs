@@ -2,8 +2,8 @@
 
 namespace InDoOut_Desktop.UI.Interfaces
 {
-    public interface IUIInput : IUIConnectionEnd
+    public interface IUIResult : IUIConnectionStart
     {
-        IInput AssociatedInput { get; set; }
+        IResult AssociatedResult { get; set; }
     }
 }

@@ -21,7 +21,13 @@ namespace InDoOut_Desktop.Actions
                 {
                     if (_blockView.GetFirstElementOfType<IUIOutput>(elementsUnderMouse) is IUIOutput output)
                     {
-                        Finish(new WireDragAction(output, _blockView));
+                        Finish(new IOWireDragAction(output, _blockView));
+
+                        return true;
+                    }
+                    if (_blockView.GetFirstElementOfType<IUIResult>(elementsUnderMouse) is IUIResult result)
+                    {
+                        Finish(new VariableWireDragAction(result, _blockView, _blockView.AssociatedProgram?.VariableStore));
 
                         return true;
                     }
