@@ -1,5 +1,6 @@
 ﻿using InDoOut_Desktop.UI.Interfaces;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace InDoOut_Desktop.Actions
 {
@@ -19,13 +20,17 @@ namespace InDoOut_Desktop.Actions
                 var elementsUnderMouse = _blockView.GetElementsUnderMouse();
                 if (elementsUnderMouse.Count > 0)
                 {
-                    if (_blockView.GetFirstElementOfType<IUIOutput>(elementsUnderMouse) is IUIOutput output)
+                    if (_blockView.GetFirstElementOfType<TextBox>(elementsUnderMouse) is TextBox)
+                    {
+                        return false;
+                    }
+                    else if (_blockView.GetFirstElementOfType<IUIOutput>(elementsUnderMouse) is IUIOutput output)
                     {
                         Finish(new IOWireDragAction(output, _blockView));
 
                         return true;
                     }
-                    if (_blockView.GetFirstElementOfType<IUIResult>(elementsUnderMouse) is IUIResult result)
+                    else if (_blockView.GetFirstElementOfType<IUIResult>(elementsUnderMouse) is IUIResult result)
                     {
                         Finish(new VariableWireDragAction(result, _blockView, _blockView.AssociatedProgram?.VariableStore));
 

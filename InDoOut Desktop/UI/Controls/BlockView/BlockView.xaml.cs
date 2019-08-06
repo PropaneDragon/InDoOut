@@ -334,17 +334,23 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
 
         private void Scroll_Content_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            e.Handled = _actionHandler?.MouseLeftDown(e.GetPosition(sender as ScrollViewer)) ?? false;
+            _ = _actionHandler?.MouseLeftDown(e.GetPosition(sender as ScrollViewer));
+
+            e.Handled = false;
         }
 
         private void Scroll_Content_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            e.Handled = _actionHandler?.MouseLeftUp(e.GetPosition(sender as ScrollViewer)) ?? false;
+            _ = _actionHandler?.MouseLeftUp(e.GetPosition(sender as ScrollViewer));
+
+            e.Handled = false;
         }
 
         private void Scroll_Content_MouseMove(object sender, MouseEventArgs e)
         {
-            e.Handled = _actionHandler?.MouseLeftMove(e.GetPosition(sender as ScrollViewer)) ?? false;
+            _ = _actionHandler?.MouseLeftMove(e.GetPosition(sender as ScrollViewer));
+
+            e.Handled = false;
         }
     }
 }
