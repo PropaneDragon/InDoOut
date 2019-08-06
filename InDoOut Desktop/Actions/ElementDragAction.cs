@@ -8,7 +8,7 @@ namespace InDoOut_Desktop.Actions
         private Point _initialControlPosition = new Point();
         private UIElement _element = null;
 
-        public ElementDragAction(UIElement _, Point _)
+        public ElementDragAction(UIElement _, Point _1)
         {
             /*base.MouseLeftDown(mousePosition);
 
@@ -27,7 +27,7 @@ namespace InDoOut_Desktop.Actions
 
         public override bool MouseLeftMove(Point mousePosition)
         {
-            base.MouseLeftMove(mousePosition);
+            _ = base.MouseLeftMove(mousePosition);
 
             if (_element != null && _element.IsMouseCaptured)
             {
@@ -43,7 +43,7 @@ namespace InDoOut_Desktop.Actions
 
         public override bool MouseLeftUp(Point mousePosition)
         {
-            base.MouseLeftUp(mousePosition);
+            _ = base.MouseLeftUp(mousePosition);
 
             if (_element != null)
             {
