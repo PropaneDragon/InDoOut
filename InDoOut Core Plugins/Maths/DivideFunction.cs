@@ -1,6 +1,6 @@
 ﻿namespace InDoOut_Core_Plugins.Maths
 {
-    public class Divide : GenericArithmetic
+    public class DivideFunction : AbstractArithmeticFunction
     {
         public override string Description => "Divides the first number by the second.";
 

@@ -1,6 +1,6 @@
 ﻿namespace InDoOut_Core_Plugins.Maths
 {
-    public class Add : GenericArithmetic
+    public class AddFunction : AbstractArithmeticFunction
     {
         public override string Description => "Adds two values together.";
 

@@ -1,6 +1,6 @@
 ﻿namespace InDoOut_Core_Plugins.Maths
 {
-    public class Multiply : GenericArithmetic
+    public class MultiplyFunction : AbstractArithmeticFunction
     {
         public override string Description => "Multiplies the first number with the second.";
 

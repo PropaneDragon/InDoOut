@@ -7,5 +7,22 @@
     /// </summary>
     public abstract class StartFunction : Function, IStartFunction
     {
+        /// <summary>
+        /// The 'started' output that should be triggered when this function is called.
+        /// </summary>
+        protected IOutput OutputStart { get; private set; } = null;
+
+        /// <summary>
+        /// The group this function belongs to.
+        /// </summary>
+        public override string Group => "Start";
+
+        /// <summary>
+        /// Creates a basic start function.
+        /// </summary>
+        public StartFunction()
+        {
+            OutputStart = CreateOutput(OutputType.Neutral, "Program started");
+        }
     }
 }

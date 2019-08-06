@@ -997,6 +997,21 @@
             they are triggered automatically at the start of a <see cref="T:InDoOut_Core.Entities.Programs.IProgram"/>.
             </summary>
         </member>
+        <member name="P:InDoOut_Core.Entities.Functions.StartFunction.OutputStart">
+            <summary>
+            The 'started' output that should be triggered when this function is called.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Functions.StartFunction.Group">
+            <summary>
+            The group this function belongs to.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Functions.StartFunction.#ctor">
+            <summary>
+            Creates a basic start function.
+            </summary>
+        </member>
         <member name="T:InDoOut_Core.Entities.Programs.IProgram">
             <summary>
             Represents a group of self contained <see cref="T:InDoOut_Core.Entities.Functions.IFunction"/>s that have

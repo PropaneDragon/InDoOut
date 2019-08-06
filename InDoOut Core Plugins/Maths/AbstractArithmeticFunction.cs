@@ -2,7 +2,7 @@
 
 namespace InDoOut_Core_Plugins.Maths
 {
-    public abstract class GenericArithmetic : Function
+    public abstract class AbstractArithmeticFunction : Function
     {
         private Property<double> _firstNumber;
         private Property<double> _secondNumber;
@@ -16,7 +16,7 @@ namespace InDoOut_Core_Plugins.Maths
 
         protected string Verb { get; }
 
-        public GenericArithmetic() : base()
+        public AbstractArithmeticFunction() : base()
         {
             _firstNumber = AddProperty(new Property<double>("First number", $"The first number to {Verb}", true, 0));
             _secondNumber = AddProperty(new Property<double>("Second number", $"The second number to {Verb}", true, 0));

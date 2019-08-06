@@ -1,6 +1,6 @@
 ﻿namespace InDoOut_Core_Plugins.Maths
 {
-    public class Subtract : GenericArithmetic
+    public class SubtractFunction : AbstractArithmeticFunction
     {
         public override string Description => "Subtracts two values from each other.";
 

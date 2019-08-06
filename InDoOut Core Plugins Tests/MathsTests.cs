@@ -13,7 +13,7 @@ namespace InDoOut_Core_Plugins_Tests
         public void Add()
         {
             var program = new Program();
-            var function = new Add();
+            var function = new AddFunction();
 
             _ = program.AddFunction(function);
 
@@ -27,7 +27,7 @@ namespace InDoOut_Core_Plugins_Tests
         public void Subtract()
         {
             var program = new Program();
-            var function = new Subtract();
+            var function = new SubtractFunction();
 
             _ = program.AddFunction(function);
 
@@ -41,7 +41,7 @@ namespace InDoOut_Core_Plugins_Tests
         public void Multiply()
         {
             var program = new Program();
-            var function = new Multiply();
+            var function = new MultiplyFunction();
 
             _ = program.AddFunction(function);
 
@@ -55,7 +55,7 @@ namespace InDoOut_Core_Plugins_Tests
         public void Divide()
         {
             var program = new Program();
-            var function = new Divide();
+            var function = new DivideFunction();
 
             _ = program.AddFunction(function);
 
@@ -65,7 +65,7 @@ namespace InDoOut_Core_Plugins_Tests
             TestArithmetic(function, (first, second) => first / second);
         }
 
-        private void TestArithmetic(GenericArithmetic arithmeticFunction, Func<double, double, double> function)
+        private void TestArithmetic(AbstractArithmeticFunction arithmeticFunction, Func<double, double, double> function)
         {
             var result = arithmeticFunction.Results[0];
             var firstNumber = arithmeticFunction.Properties[0];
