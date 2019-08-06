@@ -2,7 +2,7 @@
 
 namespace InDoOut_Core_Plugins.Maths
 {
-    public abstract class AbstractArithmeticFunction : Function
+    public abstract class AbstractPairArithmeticFunction : Function
     {
         private Property<double> _firstNumber;
         private Property<double> _secondNumber;
@@ -14,9 +14,9 @@ namespace InDoOut_Core_Plugins.Maths
 
         public override string Group => "Maths";
 
-        protected string Verb { get; }
+        protected abstract string Verb { get; }
 
-        public AbstractArithmeticFunction() : base()
+        public AbstractPairArithmeticFunction() : base()
         {
             _firstNumber = AddProperty(new Property<double>("First number", $"The first number to {Verb}", true, 0));
             _secondNumber = AddProperty(new Property<double>("Second number", $"The second number to {Verb}", true, 0));
@@ -25,8 +25,8 @@ namespace InDoOut_Core_Plugins.Maths
 
             _ = CreateInput("Calculate");
 
-            _outputCalculated = CreateOutput("Calculated");
-            _outputFailed = CreateOutput(OutputType.Negative, "Failed");
+            _outputCalculated = CreateOutput(OutputType.Positive, "Calculated");
+            _outputFailed = CreateOutput(OutputType.Negative, "Calculation failed");
         }
 
         protected override IOutput Started(IInput triggeredBy)

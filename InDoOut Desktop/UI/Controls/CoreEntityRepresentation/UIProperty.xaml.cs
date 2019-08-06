@@ -63,10 +63,12 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
             var fadeInAnimation = new DoubleAnimation(1, TimeSpan.FromMilliseconds(200));
 
             IO_Overlay.Visibility = Visibility.Visible;
-            TextBox_ValueEdit.Visibility = Visibility.Visible;
-
             IO_Overlay.BeginAnimation(OpacityProperty, fadeInAnimation);
+
+            TextBox_ValueEdit.Visibility = Visibility.Visible;
             TextBox_ValueEdit.BeginAnimation(OpacityProperty, fadeInAnimation);
+
+            _ = TextBox_ValueEdit.Focus();
         }
 
         private void HideEditor()
@@ -99,6 +101,11 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
         }
 
         private void Button_Edit_Click(object sender, RoutedEventArgs e)
+        {
+            ShowEditor();
+        }
+
+        private void IO_Main_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             ShowEditor();
         }

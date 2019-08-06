@@ -65,7 +65,7 @@ namespace InDoOut_Core_Plugins_Tests
             TestArithmetic(function, (first, second) => first / second);
         }
 
-        private void TestArithmetic(AbstractArithmeticFunction arithmeticFunction, Func<double, double, double> function)
+        private void TestArithmetic(AbstractPairArithmeticFunction arithmeticFunction, Func<double, double, double> function)
         {
             var result = arithmeticFunction.Results[0];
             var firstNumber = arithmeticFunction.Properties[0];

@@ -209,10 +209,12 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
 
         private void SetDisplayMode(UIFunctionDisplayMode displayMode)
         {
-            if (displayMode != _displayMode && _displayMode != UIFunctionDisplayMode.None)
+            if (displayMode != _displayMode)
             {
-                var outAnimation = new DoubleAnimation(0, TimeSpan.FromMilliseconds(200)) { EasingFunction = new CircleEase() { EasingMode = EasingMode.EaseIn } };
-                var inAnimation = new DoubleAnimation(1, TimeSpan.FromMilliseconds(200)) { EasingFunction = new CircleEase() { EasingMode = EasingMode.EaseOut } };
+                var animationTime = _displayMode != UIFunctionDisplayMode.None ? TimeSpan.FromMilliseconds(200) : TimeSpan.FromMilliseconds(1);
+
+                var outAnimation = new DoubleAnimation(0, animationTime) { EasingFunction = new CircleEase() { EasingMode = EasingMode.EaseIn } };
+                var inAnimation = new DoubleAnimation(1, animationTime) { EasingFunction = new CircleEase() { EasingMode = EasingMode.EaseOut } };
 
                 var ioElements = new List<UIElement>() { Stack_Inputs, Stack_Outputs };
                 var variableElements = new List<UIElement>() { Stack_Properties, Stack_Results };
