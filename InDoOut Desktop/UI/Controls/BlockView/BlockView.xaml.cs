@@ -37,7 +37,9 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
         public BlockView()
         {
             InitializeComponent();
+
             ChangeProgram(new Program());
+            ChangeViewMode(CurrentViewMode);
 
             _actionHandler = new ActionHandler(new BlockViewRestingAction(this));
         }
@@ -87,7 +89,6 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
                 if (AssociatedProgram.AddFunction(function))
                 {
                     var uiFunction = new UIFunction(function);
-
                     Add(uiFunction, location);
 
                     return uiFunction;

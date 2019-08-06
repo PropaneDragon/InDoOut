@@ -41,13 +41,13 @@ namespace InDoOut_Core.Entities.Functions
         /// The value of this property, as the given type <typeparamref name="T"/>. This is similar to <see cref="NamedValue.RawValue"/>,
         /// but is automatically converted to the type of this property.
         /// </summary>
-        public T Value { get => TryGet.ValueOrDefault(() => ConvertFromString<T>(RawValue)); set => RawValue = TryGet.ValueOrDefault(() => ConvertToString(value)); }
+        public T BasicValue { get => TryGet.ValueOrDefault(() => ConvertFromString<T>(RawValue)); set => RawValue = TryGet.ValueOrDefault(() => ConvertToString(value)); }
 
         /// <summary>
         /// The full computed value of the property as type <typeparamref name="T"/>. If <see cref="AssociatedVariable"/> is set it will use the
-        /// value assigned to the variable, rather than <see cref="Value"/>.
+        /// value assigned to the variable, rather than <see cref="BasicValue"/>.
         /// </summary>
-        public T ComputedValue { get => TryGet.ValueOrDefault(() => ConvertFromString<T>(RawComputedValue)); }
+        public T FullValue { get => TryGet.ValueOrDefault(() => ConvertFromString<T>(RawComputedValue)); }
 
         /// <summary>
         /// Creates a basic property with a name, description and optional requirement and initial value.
@@ -61,7 +61,7 @@ namespace InDoOut_Core.Entities.Functions
             Name = name;
             Description = description;
             Required = required;
-            Value = initialValue;
+            BasicValue = initialValue;
         }
     }
 }

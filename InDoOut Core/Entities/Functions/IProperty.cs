@@ -49,13 +49,13 @@ namespace InDoOut_Core.Entities.Functions
         /// <summary>
         /// The value of this property.
         /// </summary>
-        T Value { get; set; }
+        T BasicValue { get; set; }
 
         /// <summary>
         /// Computes the value based off of whether <see cref="IProperty.AssociatedVariable"/> is set or
         /// not. If it is set, it will use the <see cref="IProperty.AssociatedVariable"/> for the value,
-        /// or otherwise it just uses <see cref="Value"/>.
+        /// or otherwise it just uses <see cref="BasicValue"/>.
         /// </summary>
-        T ComputedValue { get; }
+        T FullValue { get; }
     }
 }

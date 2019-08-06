@@ -5,6 +5,7 @@ namespace InDoOut_Desktop.UI.Interfaces
 {
     public enum UIFunctionDisplayMode
     {
+        None,
         IO,
         Variables
     }

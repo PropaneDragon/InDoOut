@@ -743,16 +743,16 @@
             </summary>
             <typeparam name="T">The type to convert to and from.</typeparam>
         </member>
-        <member name="P:InDoOut_Core.Entities.Functions.IProperty`1.Value">
+        <member name="P:InDoOut_Core.Entities.Functions.IProperty`1.BasicValue">
             <summary>
             The value of this property.
             </summary>
         </member>
-        <member name="P:InDoOut_Core.Entities.Functions.IProperty`1.ComputedValue">
+        <member name="P:InDoOut_Core.Entities.Functions.IProperty`1.FullValue">
             <summary>
             Computes the value based off of whether <see cref="P:InDoOut_Core.Entities.Functions.IProperty.AssociatedVariable"/> is set or
             not. If it is set, it will use the <see cref="P:InDoOut_Core.Entities.Functions.IProperty.AssociatedVariable"/> for the value,
-            or otherwise it just uses <see cref="P:InDoOut_Core.Entities.Functions.IProperty`1.Value"/>.
+            or otherwise it just uses <see cref="P:InDoOut_Core.Entities.Functions.IProperty`1.BasicValue"/>.
             </summary>
         </member>
         <member name="T:InDoOut_Core.Entities.Functions.IResult">
@@ -919,16 +919,16 @@
             The description of what this property does.
             </summary>
         </member>
-        <member name="P:InDoOut_Core.Entities.Functions.Property`1.Value">
+        <member name="P:InDoOut_Core.Entities.Functions.Property`1.BasicValue">
             <summary>
             The value of this property, as the given type <typeparamref name="T"/>. This is similar to <see cref="P:InDoOut_Core.Basic.NamedValue.RawValue"/>,
             but is automatically converted to the type of this property.
             </summary>
         </member>
-        <member name="P:InDoOut_Core.Entities.Functions.Property`1.ComputedValue">
+        <member name="P:InDoOut_Core.Entities.Functions.Property`1.FullValue">
             <summary>
             The full computed value of the property as type <typeparamref name="T"/>. If <see cref="P:InDoOut_Core.Entities.Functions.Property`1.AssociatedVariable"/> is set it will use the
-            value assigned to the variable, rather than <see cref="P:InDoOut_Core.Entities.Functions.Property`1.Value"/>.
+            value assigned to the variable, rather than <see cref="P:InDoOut_Core.Entities.Functions.Property`1.BasicValue"/>.
             </summary>
         </member>
         <member name="M:InDoOut_Core.Entities.Functions.Property`1.#ctor(System.String,System.String,System.Boolean,`0)">

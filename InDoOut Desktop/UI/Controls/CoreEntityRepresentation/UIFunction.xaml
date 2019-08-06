@@ -19,22 +19,22 @@
         </Grid.RowDefinitions>
         <Border Grid.Row="0">
             <Grid>
-                <StackPanel x:Name="Stack_Properties" Visibility="Hidden" VerticalAlignment="Bottom" HorizontalAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                <StackPanel x:Name="Stack_Properties" Visibility="Hidden" VerticalAlignment="Bottom" HorizontalAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Disabled" RenderTransformOrigin="0,1">
                     <local:UIProperty />
                     <local:UIProperty />
                 </StackPanel>
-                <StackPanel x:Name="Stack_Inputs" VerticalAlignment="Bottom" HorizontalAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                <StackPanel x:Name="Stack_Inputs" VerticalAlignment="Bottom" HorizontalAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Disabled" RenderTransformOrigin="0,1">
                     <local:UIInput />
                 </StackPanel>
             </Grid>
         </Border>
         <Border Grid.Row="2">
             <Grid>
-                <StackPanel x:Name="Stack_Results" Visibility="Hidden" VerticalAlignment="Top" HorizontalAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                <StackPanel x:Name="Stack_Results" Visibility="Hidden" VerticalAlignment="Top" HorizontalAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Disabled" RenderTransformOrigin="0,0">
                     <local:UIResult />
                     <local:UIResult />
                 </StackPanel>
-                <StackPanel x:Name="Stack_Outputs" VerticalAlignment="Top" HorizontalAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                <StackPanel x:Name="Stack_Outputs" VerticalAlignment="Top" HorizontalAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Disabled" RenderTransformOrigin="0,0">
                     <local:UIOutput />
                 </StackPanel>
             </Grid>

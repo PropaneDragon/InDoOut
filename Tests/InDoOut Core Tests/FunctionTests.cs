@@ -81,7 +81,7 @@ namespace InDoOut_Core_Tests
             Assert.AreEqual("name", property.Name);
             Assert.AreEqual("description", property.Description);
             Assert.IsTrue(property.Required);
-            Assert.AreEqual(5432.109d, property.Value);
+            Assert.AreEqual(5432.109d, property.BasicValue);
 
             var comparisonProperty = new Property<string>("another name", "another description", false, "some value");
             var resultProperty = function.AddPropertyPublic(comparisonProperty);
@@ -229,10 +229,10 @@ namespace InDoOut_Core_Tests
             Assert.AreEqual("", fullFunction.StringResult.RawValue);
             Assert.AreEqual(0, variableStore.PublicVariables.Count);
 
-            fullFunction.IntegerProperty.Value = 1234;
-            fullFunction.DoubleProperty.Value = 456.78901d;
-            fullFunction.FloatProperty.Value = 789.01f;
-            fullFunction.StringProperty.Value = null;
+            fullFunction.IntegerProperty.BasicValue = 1234;
+            fullFunction.DoubleProperty.BasicValue = 456.78901d;
+            fullFunction.FloatProperty.BasicValue = 789.01f;
+            fullFunction.StringProperty.BasicValue = null;
 
             fullFunction.IntegerResult.VariableName = "Int";
             fullFunction.DoubleResult.VariableName = "Double";
@@ -260,7 +260,7 @@ namespace InDoOut_Core_Tests
             Assert.AreEqual("", variableStore.GetVariableValue("Float"));
             Assert.AreEqual("", variableStore.GetVariableValue("String"));
 
-            fullFunction.StringProperty.Value = "A non-null string";
+            fullFunction.StringProperty.BasicValue = "A non-null string";
             fullFunction.Trigger(null);
 
             Assert.IsTrue(fullFunction.WaitForCompletion(TimeSpan.FromMilliseconds(10)));

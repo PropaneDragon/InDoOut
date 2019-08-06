@@ -50,10 +50,10 @@ namespace InDoOut_Core_Tests
         {
             if (IntegerProperty.Valid && DoubleProperty.Valid && FloatProperty.Valid && StringProperty.Valid)
             {
-                IntegerResult.ValueFrom(IntegerProperty.Value);
-                DoubleResult.ValueFrom(DoubleProperty.Value);
-                FloatResult.ValueFrom(FloatProperty.Value);
-                StringResult.ValueFrom(StringProperty.Value);
+                IntegerResult.ValueFrom(IntegerProperty.BasicValue);
+                DoubleResult.ValueFrom(DoubleProperty.BasicValue);
+                FloatResult.ValueFrom(FloatProperty.BasicValue);
+                StringResult.ValueFrom(StringProperty.BasicValue);
 
                 return Output;
             }

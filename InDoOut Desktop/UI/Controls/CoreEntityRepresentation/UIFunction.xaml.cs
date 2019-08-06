@@ -1,7 +1,6 @@
 ﻿using InDoOut_Core.Entities.Functions;
 using InDoOut_Desktop.Actions;
 using InDoOut_Desktop.UI.Interfaces;
-using InDoOut_Desktop.UI.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +15,7 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
     public partial class UIFunction : UserControl, IDraggable, IUIFunction
     {
         private DispatcherTimer _updateTimer = new DispatcherTimer(DispatcherPriority.Normal);
-        private UIFunctionDisplayMode _displayMode = UIFunctionDisplayMode.IO;
+        private UIFunctionDisplayMode _displayMode = UIFunctionDisplayMode.None;
         private IFunction _function = null;
         private List<IUIConnection> _cachedVisualConnections = new List<IUIConnection>();
 
@@ -210,10 +209,58 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
 
         private void SetDisplayMode(UIFunctionDisplayMode displayMode)
         {
-            Stack_Inputs.Visibility = displayMode == UIFunctionDisplayMode.IO ? Visibility.Visible : Visibility.Hidden;
-            Stack_Outputs.Visibility = displayMode == UIFunctionDisplayMode.IO ? Visibility.Visible : Visibility.Hidden;
-            Stack_Properties.Visibility = displayMode == UIFunctionDisplayMode.Variables ? Visibility.Visible : Visibility.Hidden;
-            Stack_Results.Visibility = displayMode == UIFunctionDisplayMode.Variables ? Visibility.Visible : Visibility.Hidden;
+            if (displayMode != _displayMode && _displayMode != UIFunctionDisplayMode.None)
+            {
+                var outAnimation = new DoubleAnimation(0, TimeSpan.FromMilliseconds(200)) { EasingFunction = new CircleEase() { EasingMode = EasingMode.EaseIn } };
+                var inAnimation = new DoubleAnimation(1, TimeSpan.FromMilliseconds(200)) { EasingFunction = new CircleEase() { EasingMode = EasingMode.EaseOut } };
+
+                var ioElements = new List<UIElement>() { Stack_Inputs, Stack_Outputs };
+                var variableElements = new List<UIElement>() { Stack_Properties, Stack_Results };
+
+                var elementsToHide = displayMode == UIFunctionDisplayMode.IO ? variableElements : ioElements;
+                var elementsToShow = displayMode == UIFunctionDisplayMode.IO ? ioElements : variableElements;
+
+                outAnimation.Completed += (sender, e) =>
+                {
+                    foreach (var elementToHide in elementsToHide)
+                    {
+                        var transformGroup = new TransformGroup();
+                        var scaleTransform = new ScaleTransform(1, 1);
+
+                        transformGroup.Children.Add(scaleTransform);
+
+                        elementToHide.RenderTransform = transformGroup;
+                        elementToHide.Visibility = Visibility.Hidden;
+                    }
+
+                    foreach (var elementToShow in elementsToShow)
+                    {
+                        var transformGroup = new TransformGroup();
+                        var scaleTransform = new ScaleTransform(1, 0);
+
+                        transformGroup.Children.Add(scaleTransform);
+
+                        elementToShow.RenderTransform = transformGroup;
+                        elementToShow.Visibility = Visibility.Visible;
+
+                        scaleTransform.BeginAnimation(ScaleTransform.ScaleYProperty, inAnimation);
+                    }
+                };
+
+                foreach (var elementToHide in elementsToHide)
+                {
+                    var transformGroup = new TransformGroup();
+                    var scaleTransform = new ScaleTransform(1, 1);
+
+                    transformGroup.Children.Add(scaleTransform);
+
+                    elementToHide.RenderTransform = transformGroup;
+
+                    scaleTransform.BeginAnimation(ScaleTransform.ScaleYProperty, outAnimation);
+                }
+            }
+
+            _displayMode = displayMode;
         }
 
         private void UpdateTimer_Tick(object sender, EventArgs e)

@@ -2,6 +2,7 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Animation;
 
 namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
 {
@@ -61,7 +62,27 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
 
         private void SetHidden(bool hidden)
         {
-            Visibility = hidden ? Visibility.Hidden : Visibility.Visible;
+            var storyboard = new Storyboard();
+
+            if (hidden)
+            {
+                var animation = new DoubleAnimation(0, TimeSpan.FromMilliseconds(200));
+                animation.Completed += (sender, e) => Visibility = Visibility.Hidden;
+
+                storyboard.Children.Add(animation);
+            }
+            else
+            {
+                storyboard.BeginTime = TimeSpan.FromMilliseconds(400);
+                storyboard.Children.Add(new DoubleAnimation(1, TimeSpan.FromMilliseconds(200)));
+
+                Visibility = Visibility.Visible;
+            }
+
+            Storyboard.SetTarget(storyboard, this);
+            Storyboard.SetTargetProperty(storyboard, new PropertyPath(OpacityProperty));
+
+            storyboard.Begin();
         }
 
         private void RecalculateBezier()
