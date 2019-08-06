@@ -11,7 +11,7 @@ namespace InDoOut_Desktop.Actions
 
         public DraggableDragAction(IBlockView blockView, IDraggable draggable, Point mousePosition)
         {
-            base.MouseLeftDown(mousePosition);
+            _ = base.MouseLeftDown(mousePosition);
 
             if (blockView != null && draggable != null && draggable.CanDrag() && draggable is FrameworkElement element)
             {
@@ -30,7 +30,7 @@ namespace InDoOut_Desktop.Actions
 
         public override bool MouseLeftMove(Point mousePosition)
         {
-            base.MouseLeftMove(mousePosition);
+            _ = base.MouseLeftMove(mousePosition);
 
             if (_draggable != null && _blockView != null && _draggable is FrameworkElement element)
             {
@@ -47,7 +47,7 @@ namespace InDoOut_Desktop.Actions
 
         public override bool MouseLeftUp(Point mousePosition)
         {
-            base.MouseLeftUp(mousePosition);
+            _ = base.MouseLeftUp(mousePosition);
 
             if (_draggable != null)
             {

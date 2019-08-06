@@ -11,11 +11,11 @@ namespace InDoOut_Desktop.Actions
 
         public ScrollableDragAction(IScrollable scrollable, Point mousePosition)
         {
-            base.MouseLeftDown(mousePosition);
+            _ = base.MouseLeftDown(mousePosition);
 
             Scrollable = scrollable;
 
-            if (Scrollable != null && Scrollable is FrameworkElement element)
+            if (Scrollable != null && Scrollable is FrameworkElement)
             {
                 _initialScrollPosition = Scrollable.Offset;
             }
@@ -27,9 +27,9 @@ namespace InDoOut_Desktop.Actions
 
         public override bool MouseLeftMove(Point mousePosition)
         {
-            base.MouseLeftMove(mousePosition);
+            _ = base.MouseLeftMove(mousePosition);
 
-            if (Scrollable != null && Scrollable is FrameworkElement element)
+            if (Scrollable != null && Scrollable is FrameworkElement)
             {
                 Scrollable.Offset = new Point(_initialScrollPosition.X + MouseDelta.X, _initialScrollPosition.Y + MouseDelta.Y);
 
@@ -43,9 +43,9 @@ namespace InDoOut_Desktop.Actions
 
         public override bool MouseLeftUp(Point mousePosition)
         {
-            base.MouseLeftUp(mousePosition);
+            _ = base.MouseLeftUp(mousePosition);
 
-            if (Scrollable != null && Scrollable is FrameworkElement element)
+            if (Scrollable != null && Scrollable is FrameworkElement)
             {
                 Finish(null);
 

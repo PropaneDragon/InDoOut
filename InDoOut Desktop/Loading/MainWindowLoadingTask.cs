@@ -27,7 +27,7 @@ namespace InDoOut_Desktop.Loading
                 foreach (var pluginContainer in pluginContainers)
                 {
                     Name = $"Initialising {pluginContainer?.Plugin?.SafeName ?? "unknown"}...";
-                    await Task.Run(() => pluginContainer.Initialise());
+                    _ = await Task.Run(() => pluginContainer.Initialise());
                 }
 
                 LoadedPlugins.Instance.Plugins = pluginContainers;

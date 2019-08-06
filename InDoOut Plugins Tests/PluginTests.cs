@@ -32,9 +32,9 @@ namespace InDoOut_Plugins_Tests
         {
             var plugin = new TestExceptionPlugin();
 
-            Assert.ThrowsException<Exception>(() => plugin.Name);
-            Assert.ThrowsException<Exception>(() => plugin.Description);
-            Assert.ThrowsException<Exception>(() => plugin.Author);
+            _ = Assert.ThrowsException<Exception>(() => plugin.Name);
+            _ = Assert.ThrowsException<Exception>(() => plugin.Description);
+            _ = Assert.ThrowsException<Exception>(() => plugin.Author);
 
             Assert.AreEqual("Unknown name", plugin.SafeName);
             Assert.AreEqual("", plugin.SafeDescription);

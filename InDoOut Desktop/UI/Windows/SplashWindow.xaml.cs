@@ -43,7 +43,7 @@ namespace InDoOut_Desktop.UI.Windows
 
             if (totalTime < splashWindow.HoldTime)
             {
-                var remainingTime = splashWindow.HoldTime - totalTime;
+                _ = splashWindow.HoldTime - totalTime;
 
                 //await Task.Delay(remainingTime);
             }

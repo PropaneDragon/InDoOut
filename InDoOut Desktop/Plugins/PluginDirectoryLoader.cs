@@ -73,7 +73,7 @@ namespace InDoOut_Desktop.Plugins
 
                     foreach (var directoryPath in directories)
                     {
-                        FindLibraries(directoryPath, extension);
+                        libraryPaths.AddRange(FindLibraries(directoryPath, extension));
                     }
                 }
             }

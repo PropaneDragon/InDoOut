@@ -38,7 +38,7 @@ namespace InDoOut_Desktop.Actions
 
                     if (!_variableStore.VariableExists(variableName))
                     {
-                        _variableStore.SetVariable(variableName, "");
+                        _ = _variableStore.SetVariable(variableName, "");
                     }
 
                     var variable = _variableStore.GetVariable(variableName);

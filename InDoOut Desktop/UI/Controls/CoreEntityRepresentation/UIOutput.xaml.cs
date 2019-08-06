@@ -1,7 +1,6 @@
 ﻿using InDoOut_Core.Entities.Functions;
 using InDoOut_Desktop.UI.Interfaces;
 using System.Windows.Controls;
-using static InDoOut_Desktop.UI.Controls.CoreEntityRepresentation.UIFunctionIO;
 
 namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
 {
@@ -46,13 +45,12 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
             IO_Main.Type = ioType;
         }
 
-        private IOType GetIOTypeForOutput()
+        private UIFunctionIO.IOType GetIOTypeForOutput()
         {
-            if (AssociatedOutput is IOutputNegative) return IOType.Negative;
-            if (AssociatedOutput is IOutputPositive) return IOType.Positive;
-            if (AssociatedOutput is IOutputNeutral) return IOType.Neutral;
+            if (AssociatedOutput is IOutputNegative) return UIFunctionIO.IOType.Negative;
+            if (AssociatedOutput is IOutputPositive) return UIFunctionIO.IOType.Positive;
 
-            return IOType.Neutral;
+            return UIFunctionIO.IOType.Neutral;
         }
     }
 }

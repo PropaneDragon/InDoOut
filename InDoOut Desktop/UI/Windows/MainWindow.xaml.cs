@@ -32,17 +32,7 @@ namespace InDoOut_Desktop.UI.Windows
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            ISplashScreen splash = null;
-
-            if (OLD_SPLASH)
-            {
-                splash = new SplashWindow() { Owner = this };
-            }
-            else
-            {
-                splash = Splash_Overlay;
-            }
-
+            var splash = OLD_SPLASH ? new SplashWindow() { Owner = this } : (ISplashScreen)Splash_Overlay;
             if (splash != null)
             {
                 if (await splash.RunTaskAsync(new MainWindowLoadingTask()))

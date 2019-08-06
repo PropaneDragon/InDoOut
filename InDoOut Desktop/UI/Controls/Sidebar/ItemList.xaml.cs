@@ -78,7 +78,7 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
                     }
                 }
 
-                UIThread.Instance.TryRunOnUI(() => SetFunctions(functions));              
+                _ = UIThread.Instance.TryRunOnUI(() => SetFunctions(functions));              
             }
         }
 

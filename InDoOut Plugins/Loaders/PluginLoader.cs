@@ -83,12 +83,7 @@ namespace InDoOut_Plugins.Loaders
         /// <returns>A plugin container for the plugin, if valid. Otherwise null.</returns>
         protected virtual IPluginContainer CreateContainer(IPlugin plugin)
         {
-            if (plugin != null)
-            {
-                return new PluginContainer(plugin);
-            }
-
-            return null;
+            return plugin != null ? new PluginContainer(plugin) : null;
         }
 
         private IPlugin FindPlugin(Assembly assembly)

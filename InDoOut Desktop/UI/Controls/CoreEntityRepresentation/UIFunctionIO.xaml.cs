@@ -44,17 +44,14 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
 
         private Color GetColourForIOType(IOType type)
         {
-            switch (type)
+            return type switch
             {
-                case IOType.Negative:
-                    return Color.FromRgb(184, 51, 51);
-                case IOType.Positive:
-                    return Color.FromRgb(61, 184, 51);
-                case IOType.Neutral:
-                    return Color.FromRgb(59, 119, 228);
-            }
+                IOType.Negative => Color.FromRgb(184, 51, 51),
+                IOType.Positive => Color.FromRgb(61, 184, 51),
+                IOType.Neutral => Color.FromRgb(59, 119, 228),
 
-            return Color.FromRgb(59, 119, 228);
-;        }
+                _ => Color.FromRgb(59, 119, 228),
+            };
+        }
     }
 }

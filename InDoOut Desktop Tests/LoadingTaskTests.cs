@@ -78,10 +78,10 @@ namespace InDoOut_Desktop_Tests
         [TestMethod]
         public async Task PropagatedFailures()
         {
-            var childTaskA = new TestLoadingTask("child task A", async (task) => { return true; });
-            var childTaskB = new TestLoadingTask("child task B", async (task) => { return true; });
-            var childTaskC = new TestLoadingTask("child task C", async (task) => { return true; });
-            var childTaskD = new TestLoadingTask("child task D", async (task) => { return false; });
+            var childTaskA = new TestLoadingTask("child task A", async (task) => true);
+            var childTaskB = new TestLoadingTask("child task B", async (task) => true);
+            var childTaskC = new TestLoadingTask("child task C", async (task) => true);
+            var childTaskD = new TestLoadingTask("child task D", async (task) => false);
 
             Assert.IsTrue(childTaskA.Add(childTaskB));
             Assert.IsTrue(childTaskB.Add(childTaskD));
@@ -125,10 +125,7 @@ namespace InDoOut_Desktop_Tests
                 return true;
             });
 
-            task.NameChanged += (sender, e) =>
-            {
-                ++timesChanged;
-            };
+            task.NameChanged += (sender, e) => ++timesChanged;
 
             Assert.IsTrue(await task.RunAsync());
             Assert.AreEqual(3, timesChanged);

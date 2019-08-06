@@ -51,7 +51,7 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
         {
             if (element != null)
             {
-                Canvas_Content.Children.Add(element);
+                _ = Canvas_Content.Children.Add(element);
 
                 SetPosition(element, position);
                 ChangeViewMode(CurrentViewMode);
@@ -175,12 +175,7 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
                 var size = new Size(element.ActualWidth, element.ActualHeight);
                 var centre = new Point(topLeft.X + (size.Width / 2d), topLeft.Y + (size.Height / 2d));
 
-                if (point.X < centre.X)
-                {
-                    return new Point(topLeft.X, centre.Y);
-                }
-
-                return new Point(topLeft.X + size.Width, centre.Y);
+                return point.X < centre.X ? new Point(topLeft.X, centre.Y) : new Point(topLeft.X + size.Width, centre.Y);
             }
 
             return point;
@@ -214,12 +209,9 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
 
         private HitTestFilterBehavior FilterHit(DependencyObject potentialHitTestTarget)
         {
-            if (potentialHitTestTarget is UIElement uiElement && uiElement.Visibility != Visibility.Visible)
-            {
-                return HitTestFilterBehavior.ContinueSkipSelfAndChildren;
-            }
-
-            return HitTestFilterBehavior.Continue;
+            return potentialHitTestTarget is UIElement uiElement && uiElement.Visibility != Visibility.Visible
+                ? HitTestFilterBehavior.ContinueSkipSelfAndChildren
+                : HitTestFilterBehavior.Continue;
         }
 
         private HitTestResultBehavior NewHit(HitTestResult result, List<FrameworkElement> hits)
@@ -342,23 +334,17 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
 
         private void Scroll_Content_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            _actionHandler?.MouseLeftDown(e.GetPosition(sender as ScrollViewer));
-
-            e.Handled = false;
+            e.Handled = _actionHandler?.MouseLeftDown(e.GetPosition(sender as ScrollViewer)) ?? false;
         }
 
         private void Scroll_Content_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            _actionHandler?.MouseLeftUp(e.GetPosition(sender as ScrollViewer));
-
-            e.Handled = false;
+            e.Handled = _actionHandler?.MouseLeftUp(e.GetPosition(sender as ScrollViewer)) ?? false;
         }
 
         private void Scroll_Content_MouseMove(object sender, MouseEventArgs e)
         {
-            _actionHandler?.MouseLeftMove(e.GetPosition(sender as ScrollViewer));
-
-            e.Handled = false;
+            e.Handled = _actionHandler?.MouseLeftMove(e.GetPosition(sender as ScrollViewer)) ?? false;
         }
     }
 }

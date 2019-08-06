@@ -16,12 +16,7 @@ namespace InDoOut_Desktop_Tests
 
         protected override async Task<bool> RunTaskAsync()
         {
-            if (Action != null)
-            {
-                return await Action.Invoke(this);
-            }
-
-            return false;
+            return Action != null ? await Action.Invoke(this) : false;
         }
     }
 }

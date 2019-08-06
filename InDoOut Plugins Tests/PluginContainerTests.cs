@@ -33,7 +33,7 @@ namespace InDoOut_Plugins_Tests
         public void Valid()
         {
             var pluginContainer = new PluginContainer(null);
-            pluginContainer.Initialise();
+            _ = pluginContainer.Initialise();
 
             Assert.IsFalse(pluginContainer.Valid);
             Assert.IsNull(pluginContainer.Plugin);
@@ -45,7 +45,8 @@ namespace InDoOut_Plugins_Tests
                 PublicAuthor = "An author",
                 PublicDescription = "A description"
             });
-            pluginContainer.Initialise();
+
+            _ = pluginContainer.Initialise();
 
             Assert.IsFalse(pluginContainer.Valid);
             Assert.IsNotNull(pluginContainer.Plugin);
@@ -57,7 +58,8 @@ namespace InDoOut_Plugins_Tests
                 PublicDescription = "A description",
                 PublicName = "A name"
             });
-            pluginContainer.Initialise();
+
+            _ = pluginContainer.Initialise();
 
             Assert.IsTrue(pluginContainer.Valid);
             Assert.IsNotNull(pluginContainer.Plugin);

@@ -8,7 +8,7 @@ namespace InDoOut_Desktop.Actions
         private Point _initialControlPosition = new Point();
         private UIElement _element = null;
 
-        public ElementDragAction(UIElement element, Point mousePosition)
+        public ElementDragAction(UIElement _, Point _)
         {
             /*base.MouseLeftDown(mousePosition);
 

@@ -66,7 +66,7 @@ namespace InDoOut_Desktop.Actions
         protected abstract bool ViableEnd(IUIConnectionEnd endConnection);
         protected abstract bool FinishConnection(IUIConnectionStart start, IUIConnectionEnd end);
 
-        private void UpdateWireForMousePos(Point mousePosition)
+        private void UpdateWireForMousePos(Point _)
         {
             if (_uiConnection != null && _start != null && _start is FrameworkElement element)
             {

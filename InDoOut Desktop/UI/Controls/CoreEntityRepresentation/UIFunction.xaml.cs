@@ -124,7 +124,7 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
                     var element = creationFunction(@interface);
                     if (element != null)
                     {
-                        panel.Children.Add(element);
+                        _ = panel.Children.Add(element);
                     }
                 }
             }
@@ -161,7 +161,7 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
 
                     if (expectedOutputs.Contains(associatedOutput))
                     {
-                        expectedOutputs.Remove(associatedOutput);
+                        _ = expectedOutputs.Remove(associatedOutput);
                     }
                     else if (output is UIElement element)
                     {
@@ -173,7 +173,7 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
                 {
                     var uiOutput = new UIOutput(output);
 
-                    Stack_Outputs.Children.Add(uiOutput);
+                    _ = Stack_Outputs.Children.Add(uiOutput);
                 }
             }
         }
@@ -191,7 +191,7 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
 
                     if (expectedInputs.Contains(associatedInput))
                     {
-                        expectedInputs.Remove(associatedInput);
+                        _ = expectedInputs.Remove(associatedInput);
                     }
                     else if (input is UIElement element)
                     {
@@ -203,7 +203,7 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
                 {
                     var uiInput = new UIInput(input);
 
-                    Stack_Inputs.Children.Add(uiInput);
+                    _ = Stack_Inputs.Children.Add(uiInput);
                 }
             }
         }
@@ -240,7 +240,7 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
         private void UserControl_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
             var fadeOutAnimation = new DoubleAnimation(0d, TimeSpan.FromMilliseconds(100));
-            fadeOutAnimation.Completed += (sender, e) => { Button_Run.Visibility = Visibility.Hidden; };
+            fadeOutAnimation.Completed += (sender, e) => Button_Run.Visibility = Visibility.Hidden;
 
             Button_Run.BeginAnimation(OpacityProperty, fadeOutAnimation);
         }

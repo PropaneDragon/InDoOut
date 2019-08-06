@@ -167,12 +167,7 @@ namespace InDoOut_Core.Entities.Functions
         protected IOutput CreateOutput(string name = "Output", OutputType outputType = OutputType.Neutral)
         {
             var output = TryGet.ValueOrDefault(() => BuildOutput(name, outputType), null);
-            if (output != null && AddConnection(output))
-            {
-                return output;
-            }
-
-            return null;
+            return output != null && AddConnection(output) ? output : null;
         }
 
         /// <summary>
@@ -237,17 +232,14 @@ namespace InDoOut_Core.Entities.Functions
         /// <returns>A new output for a given name.</returns>
         protected virtual IOutput BuildOutput(string name, OutputType outputType)
         {
-            switch (outputType)
+            return outputType switch
             {
-                case OutputType.Positive:
-                    return new OutputPositive(name);
-                case OutputType.Negative:
-                    return new OutputNegative(name);
-                case OutputType.Neutral:
-                    return new OutputNeutral(name);
-            }
+                OutputType.Positive => new OutputPositive(name),
+                OutputType.Negative => new OutputNegative(name),
+                OutputType.Neutral => new OutputNeutral(name),
 
-            return null;
+                _ => (IOutput)null,
+            };
         }
 
         /// <summary>
@@ -270,7 +262,7 @@ namespace InDoOut_Core.Entities.Functions
                     {
                         foreach (var result in Results)
                         {
-                            result.SetVariable(VariableStore);
+                            _ = result.SetVariable(VariableStore);
                         }
                     }
 

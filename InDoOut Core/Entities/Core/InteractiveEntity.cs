@@ -107,14 +107,7 @@ namespace InDoOut_Core.Entities.Core
         {
             lock (_connectionsLock)
             {
-                if (connection != null && _connections.Contains(connection))
-                {
-                    _connections.Remove(connection);
-
-                    return true;
-                }
-
-                return false;
+                return connection != null && _connections.Contains(connection) ? _connections.Remove(connection) : false;
             }
         }
 

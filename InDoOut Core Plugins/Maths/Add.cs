@@ -1,5 +1,4 @@
 ﻿using InDoOut_Core.Entities.Functions;
-using System;
 
 namespace InDoOut_Core_Plugins.Maths
 {
@@ -10,7 +9,6 @@ namespace InDoOut_Core_Plugins.Maths
 
         private Result _additionResult = new Result("Result", "The result of the addition", "0");
 
-        private IInput _inputCalculate;
         private IOutput _outputCalculated;
         private IOutput _outputFailed;
 
@@ -24,12 +22,12 @@ namespace InDoOut_Core_Plugins.Maths
 
         public Add() : base()
         {
-            AddProperty(_firstNumber);
-            AddProperty(_secondNumber);
+            _ = AddProperty(_firstNumber);
+            _ = AddProperty(_secondNumber);
 
-            AddResult(_additionResult);
+            _ = AddResult(_additionResult);
 
-            _inputCalculate = CreateInput("Calculate");
+            _ = CreateInput("Calculate");
 
             _outputCalculated = CreateOutput("Calculated");
             _outputFailed = CreateOutput(OutputType.Negative, "Failed");
@@ -37,12 +35,7 @@ namespace InDoOut_Core_Plugins.Maths
 
         protected override IOutput Started(IInput triggeredBy)
         {
-           if (_additionResult.ValueFrom(_firstNumber.Value + _secondNumber.Value))
-            {
-                return _outputCalculated;
-            }
-
-            return _outputFailed;
+            return _additionResult.ValueFrom(_firstNumber.Value + _secondNumber.Value) ? _outputCalculated : _outputFailed;
         }
     }
 }

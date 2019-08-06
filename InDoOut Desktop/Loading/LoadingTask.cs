@@ -41,7 +41,7 @@ namespace InDoOut_Desktop.Loading
         {
             if (task != null && _childTasks.Contains(task))
             {
-                _childTasks.Remove(task);
+                _ = _childTasks.Remove(task);
 
                 return true;
             }

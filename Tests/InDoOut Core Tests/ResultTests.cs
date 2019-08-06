@@ -63,14 +63,14 @@ namespace InDoOut_Core_Tests
             Assert.AreNotEqual(result.RawValue, variable.RawValue);
             Assert.AreNotEqual(result.VariableName, variable.Name);
 
-            result.SetVariable(variable);
+            _ = result.SetVariable(variable);
 
             Assert.AreEqual(result.RawValue, variable.RawValue);
             Assert.AreNotEqual(result.VariableName, variable.Name);
 
             result.RawValue = "something else";
 
-            result.SetVariable(variable);
+            _ = result.SetVariable(variable);
 
             Assert.AreEqual(result.RawValue, variable.RawValue);
             Assert.AreNotEqual(result.VariableName, variable.Name);
