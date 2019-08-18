@@ -1,4 +1,5 @@
 ﻿using InDoOut_Desktop.Location;
+using InDoOut_Executable_Core.Location;
 
 namespace InDoOut_Desktop_Tests
 {

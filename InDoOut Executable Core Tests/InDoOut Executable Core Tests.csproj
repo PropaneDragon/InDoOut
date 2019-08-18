@@ -2,20 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
-    <RootNamespace>InDoOut_Core_Plugins_Tests</RootNamespace>
+    <RootNamespace>InDoOut_Executable_Core_Tests</RootNamespace>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
     <PackageReference Include="MSTest.TestAdapter" Version="1.4.0" />
     <PackageReference Include="MSTest.TestFramework" Version="1.4.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\InDoOut Core Plugins\InDoOut Core Plugins.csproj" />
-    <ProjectReference Include="..\InDoOut Testing\InDoOut Testing.csproj" />
   </ItemGroup>
 
 </Project>

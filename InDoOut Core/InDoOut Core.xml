@@ -64,6 +64,11 @@
             The unique ID of this entity.
             </summary>
         </member>
+        <member name="P:InDoOut_Core.Basic.IStored.Metadata">
+            <summary>
+            Metadata associated with the stored data.
+            </summary>
+        </member>
         <member name="T:InDoOut_Core.Basic.NamedValue">
             <summary>
             A basic value with an associated name, along with some conversion utilities.
@@ -133,6 +138,11 @@
         <member name="P:InDoOut_Core.Entities.Core.Entity.Id">
             <summary>
             The unique ID of this entity.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Core.Entity.Metadata">
+            <summary>
+            Metadata associated with the entity.
             </summary>
         </member>
         <member name="T:InDoOut_Core.Entities.Core.IConnectable">
@@ -1081,6 +1091,11 @@
             </summary>
             <seealso cref="P:InDoOut_Core.Entities.Programs.Program.VariableStore"/>
         </member>
+        <member name="P:InDoOut_Core.Entities.Programs.Program.Metadata">
+            <summary>
+            Metadata associated with the program.
+            </summary>
+        </member>
         <member name="M:InDoOut_Core.Entities.Programs.Program.AddFunction(InDoOut_Core.Entities.Functions.IFunction)">
             <summary>
             Add a function to the program.
@@ -1180,6 +1195,26 @@
             Creates and returns a brand new instance of type <typeparamref name="T"/>.
             </summary>
             <returns>A new instance of type <typeparamref name="T"/>.</returns>
+        </member>
+        <member name="T:InDoOut_Core.Storage.IProgramStorer">
+            <summary>
+            Represents an interface that can store a <see cref="T:InDoOut_Core.Entities.Programs.IProgram"/> to a storage device, and then
+            read the data back off again to create the same <see cref="T:InDoOut_Core.Entities.Programs.IProgram"/>.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Core.Storage.IProgramStorer.Save(InDoOut_Core.Entities.Programs.IProgram)">
+            <summary>
+            Saves the <paramref name="program"/> to storage.
+            </summary>
+            <param name="program">The program to save.</param>
+            <returns>Whether the program saved successfully.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Storage.IProgramStorer.Load(InDoOut_Core.Entities.Programs.IProgram)">
+            <summary>
+            Loads data into a program from storage.
+            </summary>
+            <param name="program">The program to load data into.</param>
+            <returns>The stored program, or null if failed.</returns>
         </member>
         <member name="T:InDoOut_Core.Threading.Safety.TryGet">
             <summary>

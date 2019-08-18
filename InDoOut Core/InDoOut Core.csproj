@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <RootNamespace>InDoOut_Core</RootNamespace>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>InDoOut Core Key DO NOT UPLOAD.pfx</AssemblyOriginatorKeyFile>
     <DelaySign>false</DelaySign>
     <AssemblyVersion>0.1</AssemblyVersion>
@@ -13,6 +13,7 @@
     <Description>Core libraries for InDoOut</Description>
     <Copyright>ColonelPanic 2019 to current year</Copyright>
     <PackageProjectUrl>http://idoapp.net</PackageProjectUrl>
+    <AssemblyName>InDoOut Core</AssemblyName>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

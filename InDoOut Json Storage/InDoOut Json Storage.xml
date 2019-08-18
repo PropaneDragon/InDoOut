@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>InDoOut Json Storage</name>
+    </assembly>
+    <members>
+        <member name="T:InDoOut_Json_Storage.JsonFunction">
+            <summary>
+            Represents a JSON shell for a <see cref="T:InDoOut_Core.Entities.Functions.IFunction"/>
+            </summary>
+        </member>
+        <member name="P:InDoOut_Json_Storage.JsonFunction.Id">
+            <summary>
+            Function Id
+            </summary>
+        </member>
+        <member name="P:InDoOut_Json_Storage.JsonFunction.FunctionClass">
+            <summary>
+            Function associated class
+            </summary>
+        </member>
+        <member name="P:InDoOut_Json_Storage.JsonFunction.Metadata">
+            <summary>
+            Function metadata
+            </summary>
+        </member>
+        <member name="M:InDoOut_Json_Storage.JsonFunction.CreateFromFunction(InDoOut_Core.Entities.Functions.IFunction)">
+            <summary>
+            Creates a <see cref="T:InDoOut_Json_Storage.JsonFunction"/> shell for a given <paramref name="function"/>.
+            </summary>
+            <param name="function">The function to construct a JSON shell for.</param>
+            <returns>A created JSON shell, or null if failed.</returns>
+        </member>
+        <member name="M:InDoOut_Json_Storage.JsonFunction.Set(InDoOut_Core.Entities.Functions.IFunction)">
+            <summary>
+            Sets the data in a given <paramref name="function"/> from the stored data.
+            </summary>
+            <param name="function">The function to set.</param>
+            <returns>Whether the data was set successfully.</returns>
+        </member>
+        <member name="T:InDoOut_Json_Storage.JsonProgram">
+            <summary>
+            Represents a basic JSON shell for an <see cref="T:InDoOut_Core.Entities.Programs.IProgram"/>.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Json_Storage.JsonProgram.Id">
+            <summary>
+            Program Id
+            </summary>
+        </member>
+        <member name="P:InDoOut_Json_Storage.JsonProgram.Functions">
+            <summary>
+            Program functions.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Json_Storage.JsonProgram.Metadata">
+            <summary>
+            Program metadata
+            </summary>
+        </member>
+        <member name="M:InDoOut_Json_Storage.JsonProgram.CreateFromProgram(InDoOut_Core.Entities.Programs.IProgram)">
+            <summary>
+            Creates a <see cref="T:InDoOut_Json_Storage.JsonProgram"/> shell for a given <paramref name="program"/>.
+            </summary>
+            <param name="program">The program to construct a JSON shell for.</param>
+            <returns>A created JSON shell, or null if failed.</returns>
+        </member>
+        <member name="M:InDoOut_Json_Storage.JsonProgram.Set(InDoOut_Core.Entities.Programs.IProgram,InDoOut_Core.Functions.IFunctionBuilder,InDoOut_Plugins.Loaders.ILoadedPlugins)">
+            <summary>
+            Sets the data in a given <paramref name="program"/> from the stored data.
+            </summary>
+            <param name="program">The program to set.</param>
+            <param name="builder">The function builder to generate saved functions.</param>
+            <param name="loadedPlugins">The currently loaded plugins to search through.</param>
+            <returns>Whether the data was set successfully.</returns>
+        </member>
+        <member name="T:InDoOut_Json_Storage.ProgramJsonStorer">
+            <summary>
+            Stores a program in the JSON format.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Json_Storage.ProgramJsonStorer.Path">
+            <summary>
+            The path to save to and load from.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Json_Storage.ProgramJsonStorer.#ctor(System.String,InDoOut_Core.Functions.IFunctionBuilder,InDoOut_Plugins.Loaders.ILoadedPlugins)">
+            <summary>
+            Creates an instance of the JSON storer.
+            </summary>
+            <param name="path">The path to save to and load from.</param>
+            <param name="builder">A function builder that can load functions with the program.</param>
+            <param name="loadedPlugins">Available plugins that can be loaded.</param>
+        </member>
+        <member name="M:InDoOut_Json_Storage.ProgramJsonStorer.Load(InDoOut_Core.Entities.Programs.IProgram)">
+            <summary>
+            Loads a program from the JSON storage file at the given <see cref="P:InDoOut_Json_Storage.ProgramJsonStorer.Path"/>.
+            </summary>
+            <param name="program">The program to load data into.</param>
+            <returns>The loaded program, or null if invalid.</returns>
+        </member>
+        <member name="M:InDoOut_Json_Storage.ProgramJsonStorer.Save(InDoOut_Core.Entities.Programs.IProgram)">
+            <summary>
+            Saves a program to the given <see cref="P:InDoOut_Json_Storage.ProgramJsonStorer.Path"/>.
+            </summary>
+            <param name="program">The program to save.</param>
+            <returns>Whether or not the program could be saved to the path.</returns>
+        </member>
+        <member name="M:InDoOut_Json_Storage.ProgramJsonStorer.Save(InDoOut_Json_Storage.JsonProgram)">
+            <summary>
+            Saves a program to the given <see cref="P:InDoOut_Json_Storage.ProgramJsonStorer.Path"/> from JSON shell data.
+            </summary>
+            <param name="jsonProgram">The program to save.</param>
+            <returns>Whether or not the program could be saved to the path.</returns>
+        </member>
+        <member name="M:InDoOut_Json_Storage.ProgramJsonStorer.Load">
+            <summary>
+            Loads JSON shell data for a program from the given <see cref="P:InDoOut_Json_Storage.ProgramJsonStorer.Path"/>.
+            </summary>
+            <returns>A JSON shell program from the path, or null if failed.</returns>
+        </member>
+    </members>
+</doc>

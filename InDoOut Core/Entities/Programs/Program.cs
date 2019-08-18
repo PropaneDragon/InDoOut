@@ -38,13 +38,18 @@ namespace InDoOut_Core.Entities.Programs
         /// <summary>
         /// The unique ID for this program.
         /// </summary>
-        public Guid Id { get; private set; } = Guid.NewGuid();
+        public Guid Id { get; set; } = Guid.NewGuid();
 
         /// <summary>
         /// The current variable store for all program variables.
         /// </summary>
         /// <seealso cref="VariableStore"/>
         public IVariableStore VariableStore { get; protected set; } = new VariableStore();
+
+        /// <summary>
+        /// Metadata associated with the program.
+        /// </summary>
+        public Dictionary<string, string> Metadata { get; } = new Dictionary<string, string>();
 
         /// <summary>
         /// Add a function to the program.

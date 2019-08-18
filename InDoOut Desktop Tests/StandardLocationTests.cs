@@ -1,4 +1,5 @@
 ﻿using InDoOut_Desktop.Location;
+using InDoOut_Executable_Core.Location;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using System.Reflection;

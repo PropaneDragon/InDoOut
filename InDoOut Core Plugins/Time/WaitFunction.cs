@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace InDoOut_Core_Plugins.Time
 {
-    public class Wait : Function
+    public class WaitFunction : Function
     {
         private IOutput _output;
 
@@ -22,7 +22,7 @@ namespace InDoOut_Core_Plugins.Time
 
         public override string[] Keywords => new[] { "pause", "hang", "stop", "timeout", "time", "timer", "count" };
 
-        public Wait() : base()
+        public WaitFunction() : base()
         {
             _ = CreateInput("Start waiting");
 

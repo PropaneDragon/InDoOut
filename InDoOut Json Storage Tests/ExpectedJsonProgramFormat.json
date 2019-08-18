@@ -1,0 +1,29 @@
+﻿{
+  "id": "12345678-1234-1234-1234-123456789abc",
+  "functions": [
+    {
+      "id": "12345678-1111-1111-1111-123456789abc",
+      "class": "InDoOut_Core_Tests.TestFunction, InDoOut Core Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "metadata": {}
+    },
+    {
+      "id": "12345678-2222-2222-2222-123456789abc",
+      "class": "InDoOut_Core_Tests.TestFunction, InDoOut Core Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "metadata": {}
+    },
+    {
+      "id": "12345678-3333-3333-3333-123456789abc",
+      "class": "InDoOut_Core_Tests.TestFunction, InDoOut Core Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "metadata": {}
+    },
+    {
+      "id": "12345678-4444-4444-4444-123456789abc",
+      "class": "InDoOut_Core_Tests.TestFunction, InDoOut Core Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "metadata": {}
+    }
+  ],
+  "metadata": {
+    "first": "second",
+    "third": "fourth"
+  }
+}

@@ -1,8 +1,8 @@
 ﻿using InDoOut_Core.Instancing;
 
-namespace InDoOut_Desktop.Location
+namespace InDoOut_Executable_Core.Location
 {
-    internal enum Location
+    public enum Location
     {
         PluginsDirectory,
         ApplicationExecutable,
@@ -11,7 +11,7 @@ namespace InDoOut_Desktop.Location
         SaveFile
     }
 
-    internal interface IStandardLocations : ISingleton<IStandardLocations>
+    public interface IStandardLocations : ISingleton<IStandardLocations>
     {
         bool PathEditable(Location location);
         bool PathSet(Location location);

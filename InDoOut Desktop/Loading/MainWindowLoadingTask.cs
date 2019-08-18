@@ -1,5 +1,4 @@
 ﻿using InDoOut_Desktop.Location;
-using InDoOut_Desktop.Plugins;
 using InDoOut_Plugins.Loaders;
 using System;
 using System.Threading.Tasks;

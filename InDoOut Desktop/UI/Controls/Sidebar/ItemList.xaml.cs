@@ -1,8 +1,8 @@
 ﻿using InDoOut_Core.Entities.Functions;
 using InDoOut_Core.Instancing;
-using InDoOut_Desktop.Plugins;
 using InDoOut_Desktop.UI.Interfaces;
 using InDoOut_Desktop.UI.Threading;
+using InDoOut_Plugins.Loaders;
 using System;
 using System.Collections.Generic;
 using System.Linq;

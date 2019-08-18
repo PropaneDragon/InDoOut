@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace InDoOut_Core.Entities.Core
 {
@@ -11,6 +12,11 @@ namespace InDoOut_Core.Entities.Core
         /// <summary>
         /// The unique ID of this entity.
         /// </summary>
-        public Guid Id { get; protected set; } = Guid.NewGuid();
+        public Guid Id { get; set; } = Guid.NewGuid();
+
+        /// <summary>
+        /// Metadata associated with the entity.
+        /// </summary>
+        public Dictionary<string, string> Metadata { get; } = new Dictionary<string, string>();
     }
 }

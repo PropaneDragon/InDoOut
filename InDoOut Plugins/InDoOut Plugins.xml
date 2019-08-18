@@ -149,6 +149,39 @@
             The author(s) of this plugin. Visible to the user.
             </summary>
         </member>
+        <member name="T:InDoOut_Plugins.Loaders.ILoadedPlugins">
+            <summary>
+            Represents a storage area for loaded <see cref="T:InDoOut_Plugins.Containers.IPluginContainer"/>s.
+            </summary>
+        </member>
+        <member name="E:InDoOut_Plugins.Loaders.ILoadedPlugins.PluginsChanged">
+            <summary>
+            Fired when a plugin has changed.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Plugins.Loaders.ILoadedPlugins.Plugins">
+            <summary>
+            All currently loaded plugins.
+            </summary>
+        </member>
+        <member name="T:InDoOut_Plugins.Loaders.IPluginDirectoryLoader">
+            <summary>
+            Represents a loader that is capable of loading plugins from a directory location.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Plugins.Loaders.IPluginDirectoryLoader.LoadPlugins">
+            <summary>
+            Loads all plugins from a standard directory location.
+            </summary>
+            <returns>A list of plugins that have been loaded.</returns>
+        </member>
+        <member name="M:InDoOut_Plugins.Loaders.IPluginDirectoryLoader.LoadPlugins(System.String)">
+            <summary>
+            Loads all plugins from a given directory location.
+            </summary>
+            <param name="directory">The directory to load plugins from.</param>
+            <returns>A list of loaded plugins.</returns>
+        </member>
         <member name="T:InDoOut_Plugins.Loaders.IPluginLoader">
             <summary>
             Represents a loader that can load <see cref="T:InDoOut_Plugins.Containers.IPluginContainer"/>s.
@@ -182,6 +215,69 @@
             </summary>
             <param name="assembly">The assembly to load.</param>
             <returns>A <see cref="T:InDoOut_Plugins.Containers.IPluginContainer"/>, if valid. Returns null otherwise.</returns>
+        </member>
+        <member name="T:InDoOut_Plugins.Loaders.LoadedPlugins">
+            <summary>
+            A list of currently loaded plugins.
+            </summary>
+        </member>
+        <member name="E:InDoOut_Plugins.Loaders.LoadedPlugins.PluginsChanged">
+            <summary>
+            An event that fires when plugins have changed, either by loading or unloading.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Plugins.Loaders.LoadedPlugins.Plugins">
+            <summary>
+            The currently loaded plugins.
+            </summary>
+        </member>
+        <member name="T:InDoOut_Plugins.Loaders.PluginDirectoryLoader">
+            <summary>
+            A plugin loader that can load from a directory location.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Plugins.Loaders.PluginDirectoryLoader.PluginExtension">
+            <summary>
+            The extension to look for plugins.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Plugins.Loaders.PluginDirectoryLoader.PluginLoader">
+            <summary>
+            The current loader for loading in plugins from the directory.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Plugins.Loaders.PluginDirectoryLoader.StandardLocations">
+            <summary>
+            The current standard locations to load in plugins.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Plugins.Loaders.PluginDirectoryLoader.#ctor(InDoOut_Plugins.Loaders.IPluginLoader,InDoOut_Executable_Core.Location.IStandardLocations)">
+            <summary>
+            Initialises a directory plugin loader given an individual plugin loader and standard locations to load plugins from.
+            </summary>
+            <param name="pluginLoader">The loader to handle loading plugins.</param>
+            <param name="standardLocations">The standard locations to load plugins from.</param>
+        </member>
+        <member name="M:InDoOut_Plugins.Loaders.PluginDirectoryLoader.LoadPlugins">
+            <summary>
+            Loads plugins from the given standard locations directory.
+            </summary>
+            <returns>A list of loaded plugins.</returns>
+        </member>
+        <member name="M:InDoOut_Plugins.Loaders.PluginDirectoryLoader.LoadPlugins(System.String)">
+            <summary>
+            Loads plugins from a given directory.
+            </summary>
+            <param name="directory">The directory path to load plugins from.</param>
+            <returns>A list of loaded plugins.</returns>
+        </member>
+        <member name="M:InDoOut_Plugins.Loaders.PluginDirectoryLoader.FindLibraries(System.String,System.String)">
+            <summary>
+            Finds all libraries with a given extension in the specified directory.
+            </summary>
+            <param name="directory">The directory to search in.</param>
+            <param name="extension">The extension to search for.</param>
+            <returns></returns>
         </member>
         <member name="T:InDoOut_Plugins.Loaders.PluginLoader">
             <summary>

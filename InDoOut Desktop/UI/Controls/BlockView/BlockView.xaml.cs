@@ -272,7 +272,14 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
             {
                 foreach (var function in _currentProgram.Functions)
                 {
-                    var visualFunction = Create(function);
+                    if (function.Metadata.ContainsKey("x") && function.Metadata.ContainsKey("y") && int.TryParse(function.Metadata["x"], out int xPosition) && int.TryParse(function.Metadata["y"], out int yPosition))
+                    {
+                        var _ = Create(function, new Point(xPosition, yPosition));
+                    }
+                    else
+                    {
+                        var _ = Create(function);
+                    }
                 }
             }
         }

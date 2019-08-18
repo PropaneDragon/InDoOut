@@ -1,11 +1,9 @@
 ﻿using InDoOut_Desktop.Loading;
 using InDoOut_Desktop.UI.Interfaces;
 using InDoOut_Desktop.UI.Threading;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 
-[assembly: InternalsVisibleTo("InDoOut Desktop Tests")]
 namespace InDoOut_Desktop.UI.Windows
 {
     public partial class MainWindow : Window
