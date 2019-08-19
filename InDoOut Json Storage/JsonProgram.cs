@@ -1,4 +1,5 @@
-﻿using InDoOut_Core.Entities.Programs;
+﻿using InDoOut_Core.Entities.Functions;
+using InDoOut_Core.Entities.Programs;
 using InDoOut_Core.Functions;
 using InDoOut_Plugins.Loaders;
 using Newtonsoft.Json;
@@ -25,6 +26,12 @@ namespace InDoOut_Json_Storage
         /// </summary>
         [JsonProperty("functions")]
         public List<JsonFunction> Functions { get; set; } = new List<JsonFunction>();
+
+        /// <summary>
+        /// Program, function connections
+        /// </summary>
+        [JsonProperty("connections")]
+        public List<JsonConnection> Connections { get; set; } = new List<JsonConnection>();
 
         /// <summary>
         /// Program metadata
@@ -54,6 +61,12 @@ namespace InDoOut_Json_Storage
                     {
                         jsonProgram.Functions.Add(jsonFunction);
                     }
+
+                    var jsonConnections = JsonConnection.CreateFromFunction(function);
+                    if (jsonConnections != null)
+                    {
+                        jsonProgram.Connections.AddRange(jsonConnections);
+                    }
                 }
 
                 return jsonProgram;
@@ -74,6 +87,7 @@ namespace InDoOut_Json_Storage
             if (program != null && builder != null && loadedPlugins != null)
             {
                 var availableFunctionTypes = loadedPlugins.Plugins.SelectMany(pluginContainer => pluginContainer.FunctionTypes);
+                var functionIdMap = new Dictionary<Guid, IFunction>();
 
                 program.Id = Id;
                 program.Metadata.Clear();
@@ -83,22 +97,58 @@ namespace InDoOut_Json_Storage
                     program.Metadata[metadataItem.Key] = metadataItem.Value;
                 }
 
-                var functionAddSuccess = true;
-
                 foreach (var functionItem in Functions)
                 {
                     var foundFunctionType = availableFunctionTypes.FirstOrDefault(functionType => functionType.AssemblyQualifiedName == functionItem.FunctionClass);
                     if (foundFunctionType != null)
                     {
                         var functionInstance = builder.BuildInstance(foundFunctionType);
-                        if (functionInstance != null && functionItem.Set(functionInstance))
+                        if (functionInstance != null && functionItem.Set(functionInstance) && program.AddFunction(functionInstance))
                         {
-                            functionAddSuccess = functionAddSuccess && program.AddFunction(functionInstance);
+                            functionIdMap.Add(functionInstance.Id, functionInstance);
                         }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        return false;
                     }
                 }
 
-                return functionAddSuccess;
+                foreach (var connection in Connections)
+                {
+                    if (functionIdMap.ContainsKey(connection.StartFunctionId) && functionIdMap.ContainsKey(connection.EndFunctionId))
+                    {
+                        var startFunction = functionIdMap[connection.StartFunctionId];
+                        var endFunction = functionIdMap[connection.EndFunctionId];
+                        var outputName = connection.OutputName;
+                        var inputName = connection.InputName;
+
+                        if (!string.IsNullOrEmpty(outputName) && !string.IsNullOrEmpty(inputName))
+                        {
+                            var output = startFunction.Outputs.FirstOrDefault(output => output.Name == outputName);
+                            var input = endFunction.Inputs.FirstOrDefault(input => input.Name == inputName);
+                            
+                            if (output == null || input == null || !output.Connect(input))
+                            {
+                                return false;
+                            }
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
             }
 
             return false;

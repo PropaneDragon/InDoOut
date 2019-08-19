@@ -1,7 +1,6 @@
 ﻿using InDoOut_Core.Entities.Programs;
-using InDoOut_Core.Functions;
 
-namespace InDoOut_Core.Storage
+namespace InDoOut_Executable_Core.Storage
 {
     /// <summary>
     /// Represents an interface that can store a <see cref="IProgram"/> to a storage device, and then

@@ -3,23 +3,61 @@
   "functions": [
     {
       "id": "12345678-1111-1111-1111-123456789abc",
-      "class": "InDoOut_Core_Tests.TestFunction, InDoOut Core Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "class": "InDoOut_Desktop_API_Tests.External_Plugin_Testing.TestImportableFunctionA, InDoOut Desktop API Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
       "metadata": {}
     },
     {
       "id": "12345678-2222-2222-2222-123456789abc",
-      "class": "InDoOut_Core_Tests.TestFunction, InDoOut Core Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "class": "InDoOut_Desktop_API_Tests.External_Plugin_Testing.TestImportableFunctionB, InDoOut Desktop API Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
       "metadata": {}
     },
     {
       "id": "12345678-3333-3333-3333-123456789abc",
-      "class": "InDoOut_Core_Tests.TestFunction, InDoOut Core Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "class": "InDoOut_Desktop_API_Tests.External_Plugin_Testing.TestImportableFunctionB, InDoOut Desktop API Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
       "metadata": {}
     },
     {
       "id": "12345678-4444-4444-4444-123456789abc",
-      "class": "InDoOut_Core_Tests.TestFunction, InDoOut Core Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "class": "InDoOut_Desktop_API_Tests.External_Plugin_Testing.TestImportableFunctionA, InDoOut Desktop API Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
       "metadata": {}
+    }
+  ],
+  "connections": [
+    {
+      "output": "A Output 1",
+      "input": "B Input 1",
+      "startId": "12345678-1111-1111-1111-123456789abc",
+      "endId": "12345678-2222-2222-2222-123456789abc"
+    },
+    {
+      "output": "A Output 1",
+      "input": "B Input 1",
+      "startId": "12345678-1111-1111-1111-123456789abc",
+      "endId": "12345678-3333-3333-3333-123456789abc"
+    },
+    {
+      "output": "B Output 1",
+      "input": "B Input 1",
+      "startId": "12345678-2222-2222-2222-123456789abc",
+      "endId": "12345678-3333-3333-3333-123456789abc"
+    },
+    {
+      "output": "B Output 2",
+      "input": "B Input 1",
+      "startId": "12345678-2222-2222-2222-123456789abc",
+      "endId": "12345678-2222-2222-2222-123456789abc"
+    },
+    {
+      "output": "B Output 1",
+      "input": "B Input 1",
+      "startId": "12345678-3333-3333-3333-123456789abc",
+      "endId": "12345678-2222-2222-2222-123456789abc"
+    },
+    {
+      "output": "B Output 2",
+      "input": "A Input 1",
+      "startId": "12345678-3333-3333-3333-123456789abc",
+      "endId": "12345678-4444-4444-4444-123456789abc"
     }
   ],
   "metadata": {

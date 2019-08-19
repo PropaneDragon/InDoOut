@@ -5,6 +5,7 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <RootNamespace>InDoOut_Console</RootNamespace>
     <StartupObject></StartupObject>
+    <LangVersion>default</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>

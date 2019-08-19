@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\InDoOut Core\InDoOut Core.csproj" />
+    <ProjectReference Include="..\InDoOut Desktop API Tests\InDoOut Desktop API Tests.csproj" />
     <ProjectReference Include="..\InDoOut Json Storage\InDoOut Json Storage.csproj" />
     <ProjectReference Include="..\InDoOut Plugins\InDoOut Plugins.csproj" />
     <ProjectReference Include="..\Tests\InDoOut Core Tests\InDoOut Core Tests.csproj" />

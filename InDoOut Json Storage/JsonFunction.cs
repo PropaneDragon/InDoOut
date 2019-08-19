@@ -66,6 +66,8 @@ namespace InDoOut_Json_Storage
                 {
                     function.Metadata[metadataItem.Key] = metadataItem.Value;
                 }
+
+                return true;
             }
 
             return false;

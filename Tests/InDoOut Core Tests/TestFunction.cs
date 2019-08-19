@@ -51,12 +51,12 @@ namespace InDoOut_Core_Tests
 
         protected override IInput BuildInput(string name)
         {
-            return InputToBuild == null ? base.BuildInput(name) : InputToBuild;
+            return InputToBuild ?? base.BuildInput(name);
         }
 
         protected override IOutput BuildOutput(string name, OutputType outputType)
         {
-            return OutputToBuild == null ? base.BuildOutput(name, outputType) : OutputToBuild;
+            return OutputToBuild ?? base.BuildOutput(name, outputType);
         }
     }
 }

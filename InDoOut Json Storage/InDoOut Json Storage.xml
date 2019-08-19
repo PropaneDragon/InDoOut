@@ -4,6 +4,38 @@
         <name>InDoOut Json Storage</name>
     </assembly>
     <members>
+        <member name="T:InDoOut_Json_Storage.JsonConnection">
+            <summary>
+            Represents a raw JSON connection between two functions.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Json_Storage.JsonConnection.OutputName">
+            <summary>
+            The name of the output that the connection originates from.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Json_Storage.JsonConnection.InputName">
+            <summary>
+            The name of the input that the connection connects to.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Json_Storage.JsonConnection.StartFunctionId">
+            <summary>
+            The ID of the function that the connection is connected from.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Json_Storage.JsonConnection.EndFunctionId">
+            <summary>
+            The ID of the function that the connection is connected to.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Json_Storage.JsonConnection.CreateFromFunction(InDoOut_Core.Entities.Functions.IFunction)">
+            <summary>
+            Creates a <see cref="T:InDoOut_Json_Storage.JsonFunction"/> shell for a given <paramref name="function"/>.
+            </summary>
+            <param name="function">The function to construct a JSON shell for.</param>
+            <returns>A created JSON shell, or null if failed.</returns>
+        </member>
         <member name="T:InDoOut_Json_Storage.JsonFunction">
             <summary>
             Represents a JSON shell for a <see cref="T:InDoOut_Core.Entities.Functions.IFunction"/>
@@ -51,6 +83,11 @@
         <member name="P:InDoOut_Json_Storage.JsonProgram.Functions">
             <summary>
             Program functions.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Json_Storage.JsonProgram.Connections">
+            <summary>
+            Program, function connections
             </summary>
         </member>
         <member name="P:InDoOut_Json_Storage.JsonProgram.Metadata">

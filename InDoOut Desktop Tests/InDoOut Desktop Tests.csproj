@@ -18,6 +18,7 @@
       <Private>true</Private>
     </ProjectReference>
     <ProjectReference Include="..\InDoOut Desktop\InDoOut Desktop.csproj" />
+    <ProjectReference Include="..\InDoOut Executable Core Tests\InDoOut Executable Core Tests.csproj" />
   </ItemGroup>
 
 </Project>

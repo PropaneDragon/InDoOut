@@ -1,10 +1,9 @@
-﻿using InDoOut_Desktop.Location;
-using InDoOut_Executable_Core.Location;
+﻿using InDoOut_Executable_Core.Location;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using System.Reflection;
 
-namespace InDoOut_Desktop_Tests
+namespace InDoOut_Executable_Core_Tests
 {
     [TestClass]
     public class StandardLocationTests

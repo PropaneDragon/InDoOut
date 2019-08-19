@@ -1,6 +1,8 @@
 using InDoOut_Core.Entities.Programs;
 using InDoOut_Core.Functions;
 using InDoOut_Core_Tests;
+using InDoOut_Desktop_API_Tests;
+using InDoOut_Desktop_API_Tests.External_Plugin_Testing;
 using InDoOut_Json_Storage;
 using InDoOut_Plugins.Loaders;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -33,23 +35,68 @@ namespace InDoOut_Json_Storage_Tests
                 {
                     new JsonFunction()
                     {
-                        FunctionClass = "InDoOut_Core_Tests.TestFunction, InDoOut Core Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                        FunctionClass = "InDoOut_Desktop_API_Tests.External_Plugin_Testing.TestImportableFunctionA, InDoOut Desktop API Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
                         Id = new Guid("12345678-1111-1111-1111-123456789abc")
                     },
                     new JsonFunction()
                     {
-                        FunctionClass = "InDoOut_Core_Tests.TestFunction, InDoOut Core Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                        FunctionClass = "InDoOut_Desktop_API_Tests.External_Plugin_Testing.TestImportableFunctionB, InDoOut Desktop API Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
                         Id = new Guid("12345678-2222-2222-2222-123456789abc")
                     },
                     new JsonFunction()
                     {
-                        FunctionClass = "InDoOut_Core_Tests.TestFunction, InDoOut Core Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                        FunctionClass = "InDoOut_Desktop_API_Tests.External_Plugin_Testing.TestImportableFunctionB, InDoOut Desktop API Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
                         Id = new Guid("12345678-3333-3333-3333-123456789abc")
                     },
                     new JsonFunction()
                     {
-                        FunctionClass = "InDoOut_Core_Tests.TestFunction, InDoOut Core Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                        FunctionClass = "InDoOut_Desktop_API_Tests.External_Plugin_Testing.TestImportableFunctionA, InDoOut Desktop API Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
                         Id = new Guid("12345678-4444-4444-4444-123456789abc")
+                    },
+                },
+                Connections = new List<JsonConnection>()
+                {
+                    new JsonConnection()
+                    {
+                        OutputName = "A Output 1",
+                        InputName = "B Input 1",
+                        StartFunctionId = new Guid("12345678-1111-1111-1111-123456789abc"),
+                        EndFunctionId = new Guid("12345678-2222-2222-2222-123456789abc")
+                    },
+                    new JsonConnection()
+                    {
+                        OutputName = "A Output 1",
+                        InputName = "B Input 1",
+                        StartFunctionId = new Guid("12345678-1111-1111-1111-123456789abc"),
+                        EndFunctionId = new Guid("12345678-3333-3333-3333-123456789abc")
+                    },
+                    new JsonConnection()
+                    {
+                        OutputName = "B Output 1",
+                        InputName = "B Input 1",
+                        StartFunctionId = new Guid("12345678-2222-2222-2222-123456789abc"),
+                        EndFunctionId = new Guid("12345678-3333-3333-3333-123456789abc")
+                    },
+                    new JsonConnection()
+                    {
+                        OutputName = "B Output 2",
+                        InputName = "B Input 1",
+                        StartFunctionId = new Guid("12345678-2222-2222-2222-123456789abc"),
+                        EndFunctionId = new Guid("12345678-2222-2222-2222-123456789abc")
+                    },
+                    new JsonConnection()
+                    {
+                        OutputName = "B Output 1",
+                        InputName = "B Input 1",
+                        StartFunctionId = new Guid("12345678-3333-3333-3333-123456789abc"),
+                        EndFunctionId = new Guid("12345678-2222-2222-2222-123456789abc")
+                    },
+                    new JsonConnection()
+                    {
+                        OutputName = "B Output 2",
+                        InputName = "A Input 1",
+                        StartFunctionId = new Guid("12345678-3333-3333-3333-123456789abc"),
+                        EndFunctionId = new Guid("12345678-4444-4444-4444-123456789abc")
                     },
                 },
                 Metadata = new Dictionary<string, string>()
@@ -79,10 +126,19 @@ namespace InDoOut_Json_Storage_Tests
                 Id = new Guid("12345678-1234-1234-1234-123456789abc")
             };
 
-            var firstFunction = new TestFunction() { Id = new Guid("12345678-1111-1111-1111-123456789abc") };
-            var secondFunction = new TestFunction() { Id = new Guid("12345678-2222-2222-2222-123456789abc") };
-            var thirdFunction = new TestFunction() { Id = new Guid("12345678-3333-3333-3333-123456789abc") };
-            var fourthFunction = new TestFunction() { Id = new Guid("12345678-4444-4444-4444-123456789abc") };
+            var firstFunction = new TestImportableFunctionA() { Id = new Guid("12345678-1111-1111-1111-123456789abc") };
+            var secondFunction = new TestImportableFunctionB() { Id = new Guid("12345678-2222-2222-2222-123456789abc") };
+            var thirdFunction = new TestImportableFunctionB() { Id = new Guid("12345678-3333-3333-3333-123456789abc") };
+            var fourthFunction = new TestImportableFunctionA() { Id = new Guid("12345678-4444-4444-4444-123456789abc") };
+
+            Assert.IsTrue(firstFunction.AOutput1.Connect(secondFunction.BInput1));
+            Assert.IsTrue(firstFunction.AOutput1.Connect(thirdFunction.BInput1));
+
+            Assert.IsTrue(secondFunction.BOutput2.Connect(secondFunction.BInput1));
+            Assert.IsTrue(secondFunction.BOutput1.Connect(thirdFunction.BInput1));
+
+            Assert.IsTrue(thirdFunction.BOutput1.Connect(secondFunction.BInput1));
+            Assert.IsTrue(thirdFunction.BOutput2.Connect(fourthFunction.AInput1));
 
             program.Metadata["first"] = "second";
             program.Metadata["third"] = "fourth";

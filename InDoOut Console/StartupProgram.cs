@@ -7,10 +7,12 @@ namespace InDoOut_Console
     {
         static void Main(string[] args)
         {
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Hello World!");
 
             var loadedProgram = new Program();
 
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine(loadedProgram.Id);
             _ = Console.ReadLine();
         }

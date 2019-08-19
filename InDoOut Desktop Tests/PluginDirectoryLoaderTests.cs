@@ -1,4 +1,5 @@
 ﻿using InDoOut_Executable_Core.Location;
+using InDoOut_Executable_Core_Tests;
 using InDoOut_Plugins.Loaders;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
