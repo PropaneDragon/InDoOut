@@ -65,6 +65,14 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
 
         public void DragMoved(IBlockView view)
         {
+            if (AssociatedFunction != null)
+            {
+                var position = view.GetPosition(this);
+
+                AssociatedFunction.Metadata["x"] = position.X.ToString();
+                AssociatedFunction.Metadata["y"] = position.Y.ToString();
+            }
+
             foreach (var cachedVisualConnection in _cachedVisualConnections)
             {
                 cachedVisualConnection.UpdatePositionFromInputOutput(view);

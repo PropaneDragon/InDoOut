@@ -6,7 +6,7 @@ namespace InDoOut_Json_Storage_Tests
 {
     internal class TestProgramJsonStorer : ProgramJsonStorer
     {
-        public TestProgramJsonStorer(string path, IFunctionBuilder builder, ILoadedPlugins loadedPlugins) : base(path, builder, loadedPlugins)
+        public TestProgramJsonStorer(string path, IFunctionBuilder builder, ILoadedPlugins loadedPlugins) : base(builder, loadedPlugins, path)
         {
         }
 

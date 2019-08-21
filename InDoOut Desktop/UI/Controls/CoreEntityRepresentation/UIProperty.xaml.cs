@@ -24,6 +24,13 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
             AssociatedProperty = property;
         }
 
+        public void PositionUpdated(Point position)
+        {
+            if (AssociatedProperty != null)
+            {
+            }
+        }
+
         private void SetProperty(IProperty property)
         {
             if (_property != null)

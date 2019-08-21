@@ -51,6 +51,10 @@
                 <Button x:Name="Button_Collapse" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Segoe MDL2 Assets" FontSize="30" Content="" Template="{DynamicResource Template_Buttons_Transparent}" Click="Button_Collapse_Click" Padding="1,1,1,1" />
                 <Button x:Name="Button_SwitchMode" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Segoe MDL2 Assets" FontSize="30" Content="" Template="{DynamicResource Template_Buttons_Transparent}" Click="Button_SwitchMode_Click" Padding="1,1,1,1" Margin="0,32,0,0" />
                 <Button x:Name="Button_RunProgram" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Segoe MDL2 Assets" FontSize="30" Content="" Template="{DynamicResource Template_Buttons_Transparent}" Click="Button_RunProgram_Click" Padding="1,1,1,1" Margin="0,8,0,0" />
+                <Button x:Name="Button_NewProgram" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Segoe MDL2 Assets" FontSize="30" Content="" Template="{DynamicResource Template_Buttons_Transparent}" Click="Button_NewProgram_Click" Padding="1,1,1,1" Margin="0,32,0,0" />
+                <Button x:Name="Button_SaveProgram" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Segoe MDL2 Assets" FontSize="30" Content="" Template="{DynamicResource Template_Buttons_Transparent}" Click="Button_SaveProgram_Click" Padding="1,1,1,1" Margin="0,8,0,0" />
+                <Button x:Name="Button_SaveProgramAs" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Segoe MDL2 Assets" FontSize="30" Content="" Template="{DynamicResource Template_Buttons_Transparent}" Click="Button_SaveProgramAs_Click" Padding="1,1,1,1" Margin="0,8,0,0" />
+                <Button x:Name="Button_OpenProgram" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Segoe MDL2 Assets" FontSize="30" Content="" Template="{DynamicResource Template_Buttons_Transparent}" Click="Button_OpenProgram_Click" Padding="1,1,1,1" Margin="0,8,0,0" />
             </StackPanel>
         </Grid>
     </Grid>

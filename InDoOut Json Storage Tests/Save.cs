@@ -61,7 +61,7 @@ namespace InDoOut_Json_Storage_Tests
                         OutputName = "A Output 1",
                         InputName = "B Input 1",
                         StartFunctionId = new Guid("12345678-1111-1111-1111-123456789abc"),
-                        EndFunctionId = new Guid("12345678-2222-2222-2222-123456789abc")
+                        EndFunctionId = new Guid("12345678-2222-2222-2222-123456789abc"),
                     },
                     new JsonConnection()
                     {

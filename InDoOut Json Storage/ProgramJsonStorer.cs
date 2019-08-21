@@ -15,9 +15,14 @@ namespace InDoOut_Json_Storage
     public class ProgramJsonStorer : IProgramStorer
     {
         /// <summary>
+        /// The extension of the generated files.
+        /// </summary>
+        public string FileExtension => ".ido";
+
+        /// <summary>
         /// The path to save to and load from.
         /// </summary>
-        public string Path { get; private set; } = null;
+        public string FilePath { get; set; } = null;
 
         IFunctionBuilder FunctionBuilder { get; set; } = null;
 
@@ -29,15 +34,15 @@ namespace InDoOut_Json_Storage
         /// <param name="path">The path to save to and load from.</param>
         /// <param name="builder">A function builder that can load functions with the program.</param>
         /// <param name="loadedPlugins">Available plugins that can be loaded.</param>
-        public ProgramJsonStorer(string path, IFunctionBuilder builder, ILoadedPlugins loadedPlugins)
+        public ProgramJsonStorer(IFunctionBuilder builder, ILoadedPlugins loadedPlugins, string path = null)
         {
-            Path = path;
+            FilePath = path;
             FunctionBuilder = builder;
             LoadedPlugins = loadedPlugins;
         }
 
         /// <summary>
-        /// Loads a program from the JSON storage file at the given <see cref="Path"/>.
+        /// Loads a program from the JSON storage file at the given <see cref="FilePath"/>.
         /// </summary>
         /// <param name="program">The program to load data into.</param>
         /// <returns>The loaded program, or null if invalid.</returns>
@@ -56,7 +61,7 @@ namespace InDoOut_Json_Storage
         }
 
         /// <summary>
-        /// Saves a program to the given <see cref="Path"/>.
+        /// Saves a program to the given <see cref="FilePath"/>.
         /// </summary>
         /// <param name="program">The program to save.</param>
         /// <returns>Whether or not the program could be saved to the path.</returns>
@@ -67,21 +72,21 @@ namespace InDoOut_Json_Storage
         }
 
         /// <summary>
-        /// Saves a program to the given <see cref="Path"/> from JSON shell data.
+        /// Saves a program to the given <see cref="FilePath"/> from JSON shell data.
         /// </summary>
         /// <param name="jsonProgram">The program to save.</param>
         /// <returns>Whether or not the program could be saved to the path.</returns>
         protected bool Save(JsonProgram jsonProgram)
         {
-            if (!string.IsNullOrEmpty(Path) && jsonProgram != null)
+            if (!string.IsNullOrEmpty(FilePath) && jsonProgram != null)
             {
                 try
                 {
                     var jsonText = JsonConvert.SerializeObject(jsonProgram, Formatting.Indented);
 
-                    File.WriteAllText(Path, jsonText);
+                    File.WriteAllText(FilePath, jsonText);
 
-                    return File.Exists(Path);
+                    return File.Exists(FilePath);
                 }
                 catch { }
             }
@@ -90,16 +95,16 @@ namespace InDoOut_Json_Storage
         }
 
         /// <summary>
-        /// Loads JSON shell data for a program from the given <see cref="Path"/>.
+        /// Loads JSON shell data for a program from the given <see cref="FilePath"/>.
         /// </summary>
         /// <returns>A JSON shell program from the path, or null if failed.</returns>
         protected JsonProgram Load()
         {
-            if (!string.IsNullOrEmpty(Path) && File.Exists(Path))
+            if (!string.IsNullOrEmpty(FilePath) && File.Exists(FilePath))
             {
                 try
                 {
-                    var fileText = File.ReadAllText(Path);
+                    var fileText = File.ReadAllText(FilePath);
                     var jsonProgram = JsonConvert.DeserializeObject<JsonProgram>(fileText);
 
                     return jsonProgram;

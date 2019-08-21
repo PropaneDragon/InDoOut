@@ -1,5 +1,6 @@
 ﻿using InDoOut_Core.Entities.Functions;
 using InDoOut_Desktop.UI.Interfaces;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
@@ -18,6 +19,17 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
         public UIOutput(IOutput output) : this()
         {
             AssociatedOutput = output;
+        }
+
+        public void PositionUpdated(Point position)
+        {
+            if (AssociatedOutput != null)
+            {
+                AssociatedOutput.Metadata["x"] = position.X.ToString();
+                AssociatedOutput.Metadata["y"] = position.Y.ToString();
+                AssociatedOutput.Metadata["w"] = ActualWidth.ToString();
+                AssociatedOutput.Metadata["h"] = ActualHeight.ToString();
+            }
         }
 
         private void SetOutput(IOutput input)

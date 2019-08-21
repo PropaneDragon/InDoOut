@@ -132,7 +132,19 @@ namespace InDoOut_Json_Storage
                             var output = startFunction.Outputs.FirstOrDefault(output => output.Name == outputName);
                             var input = endFunction.Inputs.FirstOrDefault(input => input.Name == inputName);
                             
-                            if (output == null || input == null || !output.Connect(input))
+                            if (output != null && input != null && output.Connect(input))
+                            {
+                                foreach (var metadata in connection.OutputMetadata)
+                                {
+                                    output.Metadata[metadata.Key] = metadata.Value;
+                                }
+
+                                foreach (var metadata in connection.InputMetadata)
+                                {
+                                    input.Metadata[metadata.Key] = metadata.Value;
+                                }
+                            }
+                            else
                             {
                                 return false;
                             }

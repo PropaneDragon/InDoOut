@@ -1,4 +1,9 @@
-﻿using InDoOut_Desktop.UI.Interfaces;
+﻿using InDoOut_Core.Functions;
+using InDoOut_Desktop.Programs;
+using InDoOut_Desktop.UI.Interfaces;
+using InDoOut_Executable_Core.Storage;
+using InDoOut_Json_Storage;
+using InDoOut_Plugins.Loaders;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -87,6 +92,32 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
         private void Button_RunProgram_Click(object sender, RoutedEventArgs e)
         {
             _blockView?.AssociatedProgram?.Trigger(null);
+        }
+
+        private void Button_NewProgram_Click(object sender, RoutedEventArgs e)
+        {
+            _ = ProgramHolder.Instance.RemoveProgram(_blockView?.AssociatedProgram);
+            _blockView.AssociatedProgram = ProgramHolder.Instance.NewProgram();
+        }
+
+        private void Button_OpenProgram_Click(object sender, RoutedEventArgs e)
+        {
+            var program = ProgramSaveLoad.Instance.LoadProgramDialog(ProgramHolder.Instance, new ProgramJsonStorer(new FunctionBuilder(), LoadedPlugins.Instance), Window.GetWindow(this));
+            if (program != null)
+            {
+                _ = ProgramHolder.Instance.RemoveProgram(_blockView?.AssociatedProgram);
+                _blockView.AssociatedProgram = program;
+            }
+        }
+
+        private void Button_SaveProgram_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_SaveProgramAs_Click(object sender, RoutedEventArgs e)
+        {
+            _ = ProgramSaveLoad.Instance.SaveProgramDialog(_blockView?.AssociatedProgram, new ProgramJsonStorer(new FunctionBuilder(), LoadedPlugins.Instance), Window.GetWindow(this));
         }
     }
 }

@@ -27,37 +27,49 @@
       "output": "A Output 1",
       "input": "B Input 1",
       "startId": "12345678-1111-1111-1111-123456789abc",
-      "endId": "12345678-2222-2222-2222-123456789abc"
+      "endId": "12345678-2222-2222-2222-123456789abc",
+      "inputMetadata": {},
+      "outputMetadata": {}
     },
     {
       "output": "A Output 1",
       "input": "B Input 1",
       "startId": "12345678-1111-1111-1111-123456789abc",
-      "endId": "12345678-3333-3333-3333-123456789abc"
+      "endId": "12345678-3333-3333-3333-123456789abc",
+      "inputMetadata": {},
+      "outputMetadata": {}
     },
     {
       "output": "B Output 1",
       "input": "B Input 1",
       "startId": "12345678-2222-2222-2222-123456789abc",
-      "endId": "12345678-3333-3333-3333-123456789abc"
+      "endId": "12345678-3333-3333-3333-123456789abc",
+      "inputMetadata": {},
+      "outputMetadata": {}
     },
     {
       "output": "B Output 2",
       "input": "B Input 1",
       "startId": "12345678-2222-2222-2222-123456789abc",
-      "endId": "12345678-2222-2222-2222-123456789abc"
+      "endId": "12345678-2222-2222-2222-123456789abc",
+      "inputMetadata": {},
+      "outputMetadata": {}
     },
     {
       "output": "B Output 1",
       "input": "B Input 1",
       "startId": "12345678-3333-3333-3333-123456789abc",
-      "endId": "12345678-2222-2222-2222-123456789abc"
+      "endId": "12345678-2222-2222-2222-123456789abc",
+      "inputMetadata": {},
+      "outputMetadata": {}
     },
     {
       "output": "B Output 2",
       "input": "A Input 1",
       "startId": "12345678-3333-3333-3333-123456789abc",
-      "endId": "12345678-4444-4444-4444-123456789abc"
+      "endId": "12345678-4444-4444-4444-123456789abc",
+      "inputMetadata": {},
+      "outputMetadata": {}
     }
   ],
   "metadata": {

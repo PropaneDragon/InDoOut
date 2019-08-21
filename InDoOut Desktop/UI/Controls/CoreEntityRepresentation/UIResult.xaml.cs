@@ -1,5 +1,6 @@
 ﻿using InDoOut_Core.Entities.Functions;
 using InDoOut_Desktop.UI.Interfaces;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
@@ -18,6 +19,13 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
         public UIResult(IResult result) : this()
         {
             AssociatedResult = result;
+        }
+
+        public void PositionUpdated(Point position)
+        {
+            if (AssociatedResult != null)
+            {
+            }
         }
 
         private void SetResult(IResult result)

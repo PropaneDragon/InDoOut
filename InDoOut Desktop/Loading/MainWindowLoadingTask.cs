@@ -33,7 +33,7 @@ namespace InDoOut_Desktop.Loading
 
                 Name = "Plugins loaded.";
 
-                await Task.Delay(TimeSpan.FromSeconds(3));
+                await Task.Delay(TimeSpan.FromMilliseconds(500));
 
                 return true;
             }

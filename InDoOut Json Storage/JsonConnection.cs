@@ -35,6 +35,18 @@ namespace InDoOut_Json_Storage
         public Guid EndFunctionId { get; set; } = Guid.Empty;
 
         /// <summary>
+        /// The metadata applied to the input.
+        /// </summary>
+        [JsonProperty("inputMetadata")]
+        public Dictionary<string, string> InputMetadata { get; set; } = new Dictionary<string, string>();
+
+        /// <summary>
+        /// The  metadata applied to the output.
+        /// </summary>
+        [JsonProperty("outputMetadata")]
+        public Dictionary<string, string> OutputMetadata { get; set; } = new Dictionary<string, string>();
+
+        /// <summary>
         /// Creates a <see cref="JsonFunction"/> shell for a given <paramref name="function"/>.
         /// </summary>
         /// <param name="function">The function to construct a JSON shell for.</param>
@@ -91,7 +103,9 @@ namespace InDoOut_Json_Storage
                     StartFunctionId = start.Id,
                     EndFunctionId = end.Id,
                     InputName = input.Name,
-                    OutputName = output.Name
+                    OutputName = output.Name,
+                    InputMetadata = input.Metadata,
+                    OutputMetadata = output.Metadata
                 };
             }
 

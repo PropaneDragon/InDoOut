@@ -1,4 +1,5 @@
-﻿using InDoOut_Core.Entities.Functions;
+﻿using InDoOut_Core.Basic;
+using InDoOut_Core.Entities.Functions;
 using InDoOut_Core.Entities.Programs;
 using InDoOut_Desktop.Actions;
 using InDoOut_Desktop.UI.Controls.CoreEntityRepresentation;
@@ -10,6 +11,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace InDoOut_Desktop.UI.Controls.BlockView
 {
@@ -86,7 +88,7 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
         {
             if (AssociatedProgram != null)
             {
-                if (AssociatedProgram.AddFunction(function))
+                if (AssociatedProgram.Functions.Contains(function) || AssociatedProgram.AddFunction(function))
                 {
                     var uiFunction = new UIFunction(function);
                     Add(uiFunction, location);
@@ -172,11 +174,7 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
         {
             if (element != null)
             {
-                var topLeft = GetPosition(element);
-                var size = new Size(element.ActualWidth, element.ActualHeight);
-                var centre = new Point(topLeft.X + (size.Width / 2d), topLeft.Y + (size.Height / 2d));
-
-                return point.X < centre.X ? new Point(topLeft.X, centre.Y) : new Point(topLeft.X + size.Width, centre.Y);
+                return GetBestSide(new Rect(GetPosition(element), new Size(element.ActualWidth, element.ActualHeight)), point);
             }
 
             return point;
@@ -270,18 +268,81 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
 
             if (_currentProgram != null)
             {
+                var functionToUIFunctionMap = new Dictionary<IFunction, IUIFunction>();
+
                 foreach (var function in _currentProgram.Functions)
                 {
-                    if (function.Metadata.ContainsKey("x") && function.Metadata.ContainsKey("y") && int.TryParse(function.Metadata["x"], out var xPosition) && int.TryParse(function.Metadata["y"], out var yPosition))
+                    if (function.Metadata.ContainsKey("x") && function.Metadata.ContainsKey("y") && double.TryParse(function.Metadata["x"], out var xPosition) && double.TryParse(function.Metadata["y"], out var yPosition))
                     {
-                        var _ = Create(function, new Point(xPosition, yPosition));
+                        var uiFunction = Create(function, new Point(xPosition, yPosition));
+                        if (uiFunction != null)
+                        {
+                            functionToUIFunctionMap.Add(function, uiFunction);
+                        }
                     }
                     else
                     {
-                        var _ = Create(function);
+                        var uiFunction = Create(function);
+                        if (uiFunction != null)
+                        {
+                            functionToUIFunctionMap.Add(function, uiFunction);
+                        }
+                    }
+                }
+
+                foreach (var function in _currentProgram.Functions)
+                {
+                    foreach (var output in function.Outputs)
+                    {
+                        foreach (var input in output.Connections)
+                        {
+                            if (functionToUIFunctionMap.ContainsKey(function) && functionToUIFunctionMap.ContainsKey(input.Parent))
+                            {
+                                var startUiFunction = functionToUIFunctionMap[function];
+                                var endUiFunction = functionToUIFunctionMap[input.Parent];
+
+                                if (startUiFunction != null && endUiFunction != null)
+                                {
+                                    var uiOutput = startUiFunction.Outputs.FirstOrDefault(uiOutput => uiOutput.AssociatedOutput == output);
+                                    var uiInput = endUiFunction.Inputs.FirstOrDefault(uiInput => uiInput.AssociatedInput == input);
+
+                                    if (uiOutput != null && uiInput != null)
+                                    {
+                                        var connection = Create(uiOutput, uiInput);
+
+                                        if (ExtractMetadataValue(output, "x", out var outputX) && ExtractMetadataValue(output, "y", out var outputY) && ExtractMetadataValue(output, "w", out var outputW) && ExtractMetadataValue(output, "h", out var outputH) &&
+                                            ExtractMetadataValue(input, "x", out var inputX) && ExtractMetadataValue(input, "y", out var inputY) && ExtractMetadataValue(input, "w", out var inputW) && ExtractMetadataValue(input, "h", out var inputH))
+                                        {
+                                            var outputArea = new Rect(outputX, outputY, outputW, outputH);
+                                            var inputArea = new Rect(inputX, inputY, inputW, inputH);
+                                            var outputCentre = outputArea.TopLeft + ((outputArea.BottomRight - outputArea.TopLeft) / 2d);
+                                            var inputCentre = inputArea.TopLeft + ((inputArea.BottomRight - inputArea.TopLeft) / 2d);
+
+                                            connection.Start = GetBestSide(outputArea, inputCentre);
+                                            connection.End = GetBestSide(inputArea, outputCentre);
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
+        }
+
+        private bool ExtractMetadataValue(IStored stored, string key, out double value)
+        {
+            value = 0;
+            return !string.IsNullOrEmpty(key) && stored != null && stored.Metadata.ContainsKey(key) && double.TryParse(stored.Metadata[key], out value);
+        }
+
+        private Point GetBestSide(Rect rectangle, Point point)
+        {
+            var topLeft = rectangle.TopLeft;
+            var size = rectangle.Size;
+            var centre = new Point(topLeft.X + (size.Width / 2d), topLeft.Y + (size.Height / 2d));
+
+            return point.X < centre.X ? new Point(topLeft.X, centre.Y) : new Point(topLeft.X + size.Width, centre.Y);
         }
 
         private void ChangeViewMode(BlockViewMode viewMode)

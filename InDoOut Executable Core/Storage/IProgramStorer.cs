@@ -9,6 +9,16 @@ namespace InDoOut_Executable_Core.Storage
     public interface IProgramStorer
     {
         /// <summary>
+        /// The extension of the files that are generated or loaded.
+        /// </summary>
+        string FileExtension { get; }
+
+        /// <summary>
+        /// The path of the file to load or save.
+        /// </summary>
+        string FilePath { get; set; }
+
+        /// <summary>
         /// Saves the <paramref name="program"/> to storage.
         /// </summary>
         /// <param name="program">The program to save.</param>

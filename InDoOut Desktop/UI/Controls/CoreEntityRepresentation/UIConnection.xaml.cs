@@ -32,6 +32,12 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
                 {
                     Start = display.GetBestSide(outputElement, inputElement);
                     End = display.GetBestSide(inputElement, outputElement);
+
+                    if (AssociatedStart != null && AssociatedEnd != null)
+                    {
+                        AssociatedStart.PositionUpdated(display.GetPosition(outputElement));
+                        AssociatedEnd.PositionUpdated(display.GetPosition(inputElement));
+                    }
                 }
             }
         }

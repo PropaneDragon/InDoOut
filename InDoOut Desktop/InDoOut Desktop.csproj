@@ -31,6 +31,7 @@
   <ItemGroup>
     <ProjectReference Include="..\InDoOut Core\InDoOut Core.csproj" />
     <ProjectReference Include="..\InDoOut Desktop API\InDoOut Desktop API.csproj" />
+    <ProjectReference Include="..\InDoOut Json Storage\InDoOut Json Storage.csproj" />
     <ProjectReference Include="..\InDoOut Plugins\InDoOut Plugins.csproj" />
   </ItemGroup>
 

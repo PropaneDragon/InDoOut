@@ -1,6 +1,6 @@
 ﻿using InDoOut_Core.Entities.Programs;
 using InDoOut_Core.Functions;
-using InDoOut_Executable_Core.Location;
+using InDoOut_Desktop_API_Tests.External_Plugin_Testing;
 using InDoOut_Plugins.Loaders;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -84,6 +84,40 @@ namespace InDoOut_Json_Storage_Tests
             Assert.IsTrue(storer.Load(program));
             Assert.AreEqual(new Guid("12345678-1234-1234-1234-123456789abc"), program.Id);
 
+            Assert.AreEqual("second", program.Metadata["first"]);
+            Assert.AreEqual("fourth", program.Metadata["third"]);
+
+            Assert.AreEqual(4, program.Functions.Count);
+
+            var function1 = program.Functions[0] as TestImportableFunctionA;
+            var function2 = program.Functions[1] as TestImportableFunctionB;
+            var function3 = program.Functions[2] as TestImportableFunctionB;
+            var function4 = program.Functions[3] as TestImportableFunctionA;
+
+            Assert.IsTrue(function1 is TestImportableFunctionA);
+            Assert.IsTrue(function2 is TestImportableFunctionB);
+            Assert.IsTrue(function3 is TestImportableFunctionB);
+            Assert.IsTrue(function4 is TestImportableFunctionA);
+
+            Assert.AreEqual(2, function1.AOutput1.Connections.Count);
+            Assert.AreEqual(function2.BInput1, function1.AOutput1.Connections[0]);
+            Assert.AreEqual(function3.BInput1, function1.AOutput1.Connections[1]);
+            Assert.AreEqual(function2, function1.AOutput1.Connections[0].Parent);
+            Assert.AreEqual(function3, function1.AOutput1.Connections[1].Parent);
+
+            Assert.AreEqual(1, function2.BOutput1.Connections.Count);
+            Assert.AreEqual(1, function2.BOutput2.Connections.Count);
+            Assert.AreEqual(function3.BInput1, function2.BOutput1.Connections[0]);
+            Assert.AreEqual(function2.BInput1, function2.BOutput2.Connections[0]);
+            Assert.AreEqual(function3, function2.BOutput1.Connections[0].Parent);
+            Assert.AreEqual(function2, function2.BOutput2.Connections[0].Parent);
+
+            Assert.AreEqual(1, function3.BOutput1.Connections.Count);
+            Assert.AreEqual(1, function3.BOutput2.Connections.Count);
+            Assert.AreEqual(function2.BInput1, function3.BOutput1.Connections[0]);
+            Assert.AreEqual(function4.AInput1, function3.BOutput2.Connections[0]);
+            Assert.AreEqual(function2, function3.BOutput1.Connections[0].Parent);
+            Assert.AreEqual(function4, function3.BOutput2.Connections[0].Parent);
         }
     }
 }
