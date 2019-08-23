@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\InDoOut Core\InDoOut Core.csproj" />
+    <ProjectReference Include="..\InDoOut Json Storage\InDoOut Json Storage.csproj" />
   </ItemGroup>
 
 </Project>

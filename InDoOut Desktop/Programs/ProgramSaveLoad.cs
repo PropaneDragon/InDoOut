@@ -19,7 +19,7 @@ namespace InDoOut_Desktop.Programs
                     CheckPathExists = true,
                     ValidateNames = true,
                     DefaultExt = programStorer.FileExtension,
-                    Filter = $"ido Programs (*{programStorer.FileExtension})|*.{programStorer.FileExtension}",
+                    Filter = $"ido Programs (*{programStorer.FileExtension})|*{programStorer.FileExtension}",
                     Title = "Select a file to load"
                 };
 
@@ -60,7 +60,7 @@ namespace InDoOut_Desktop.Programs
                         CheckPathExists = true,
                         ValidateNames = true,
                         DefaultExt = programStorer.FileExtension,
-                        Filter = $"ido Programs (*{programStorer.FileExtension})|*.{programStorer.FileExtension}",
+                        Filter = $"ido Programs (*{programStorer.FileExtension})|*{programStorer.FileExtension}",
                         Title = "Select a file to save"
                     };
 

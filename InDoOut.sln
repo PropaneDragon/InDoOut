@@ -39,15 +39,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InDoOut Debug Plugins", "In
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InDoOut Core Plugins Tests", "InDoOut Core Plugins Tests\InDoOut Core Plugins Tests.csproj", "{52747E00-7ECA-4959-B79E-1A7B5B732760}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InDoOut Console", "InDoOut Console\InDoOut Console.csproj", "{90DBE372-2216-4869-BBBC-AAD8EDADC859}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InDoOut Console", "InDoOut Console\InDoOut Console.csproj", "{90DBE372-2216-4869-BBBC-AAD8EDADC859}"
+	ProjectSection(ProjectDependencies) = postProject
+		{34094C98-3F86-4D4C-BB02-79122F2292C8} = {34094C98-3F86-4D4C-BB02-79122F2292C8}
+		{C5FE2BC2-B730-4D75-83FB-8349EB69C2D2} = {C5FE2BC2-B730-4D75-83FB-8349EB69C2D2}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InDoOut Json Storage", "InDoOut Json Storage\InDoOut Json Storage.csproj", "{AB91D5B3-10D8-49CA-9BE4-B945708C6BFB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InDoOut Json Storage", "InDoOut Json Storage\InDoOut Json Storage.csproj", "{AB91D5B3-10D8-49CA-9BE4-B945708C6BFB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InDoOut Json Storage Tests", "InDoOut Json Storage Tests\InDoOut Json Storage Tests.csproj", "{4FFEA626-A3F1-4F24-9179-876513ECDE8B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InDoOut Json Storage Tests", "InDoOut Json Storage Tests\InDoOut Json Storage Tests.csproj", "{4FFEA626-A3F1-4F24-9179-876513ECDE8B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InDoOut Executable Core", "InDoOut Executable Core\InDoOut Executable Core.csproj", "{3DA7E198-8490-478D-B099-6B825C151DFF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InDoOut Executable Core", "InDoOut Executable Core\InDoOut Executable Core.csproj", "{3DA7E198-8490-478D-B099-6B825C151DFF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InDoOut Executable Core Tests", "InDoOut Executable Core Tests\InDoOut Executable Core Tests.csproj", "{3B17B400-CCBD-4C21-980A-7FA36FFA7F28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InDoOut Executable Core Tests", "InDoOut Executable Core Tests\InDoOut Executable Core Tests.csproj", "{3B17B400-CCBD-4C21-980A-7FA36FFA7F28}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

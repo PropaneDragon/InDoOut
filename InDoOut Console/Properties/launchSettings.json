@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "InDoOut Console": {
+      "commandName": "Project",
+      "commandLineArgs": "\"C:\\Users\\seanw\\Documents\\wait test.ido\""
+    }
+  }
+}

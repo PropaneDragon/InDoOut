@@ -29,7 +29,7 @@ namespace InDoOut_Core.Entities.Functions
         /// <param name="name">The name of this input.</param>
         public Input(IFunction parent, string name = "Input")
         {
-            SetConnection(parent);
+            _ = SetConnection(parent);
             Name = name;
         }
 

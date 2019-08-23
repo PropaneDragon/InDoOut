@@ -7,7 +7,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\InDoOut Core\InDoOut Core.csproj" />
-    <ProjectReference Include="..\Tests\InDoOut Core Tests\InDoOut Core Tests.csproj" />
   </ItemGroup>
 
 </Project>
