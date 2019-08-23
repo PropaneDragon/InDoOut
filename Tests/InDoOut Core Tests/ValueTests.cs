@@ -7,23 +7,20 @@ namespace InDoOut_Core_Tests
         [TestMethod]
         public void Set()
         {
-            var namedValue = new TestNamedValue("a");
+            var namedValue = new TestValue();
 
-            Assert.AreEqual("a", namedValue.Name);
             Assert.AreEqual("", namedValue.RawValue);
-            Assert.IsTrue(namedValue.Valid);
+            Assert.IsTrue(namedValue.ValidValue);
 
             namedValue.RawValue = null;
 
-            Assert.AreEqual("a", namedValue.Name);
             Assert.IsNull(namedValue.RawValue);
-            Assert.IsFalse(namedValue.Valid);
+            Assert.IsFalse(namedValue.ValidValue);
 
             namedValue.RawValue = "Something else";
 
-            Assert.AreEqual("a", namedValue.Name);
             Assert.AreEqual("Something else", namedValue.RawValue);
-            Assert.IsTrue(namedValue.Valid);
+            Assert.IsTrue(namedValue.ValidValue);
 
             Assert.IsTrue(namedValue.ValueFrom<string>(null));
             Assert.IsNull(namedValue.RawValue);
@@ -53,7 +50,7 @@ namespace InDoOut_Core_Tests
         [TestMethod]
         public void Get()
         {
-            var namedValue = new TestNamedValue("test", null);
+            var namedValue = new TestValue(null);
 
             Assert.IsNull(namedValue.RawValue);
             Assert.AreEqual("", namedValue.ValueOrDefault());
@@ -137,31 +134,24 @@ namespace InDoOut_Core_Tests
         [TestMethod]
         public void Valid()
         {
-            var variable = new TestNamedValue("test", "test");
+            var variable = new TestValue("test");
 
-            Assert.IsTrue(variable.Valid);
+            Assert.IsTrue(variable.ValidValue);
 
             variable.RawValue = "";
-            Assert.IsTrue(variable.Valid);
+            Assert.IsTrue(variable.ValidValue);
 
             variable.RawValue = null;
-            Assert.IsFalse(variable.Valid);
+            Assert.IsFalse(variable.ValidValue);
 
             variable.RawValue = "Something";
-            Assert.IsTrue(variable.Valid);
-
-            variable.PublicName = "";
-            Assert.IsFalse(variable.Valid);
-
-            variable.PublicName = null;
-            Assert.IsFalse(variable.Valid);
+            Assert.IsTrue(variable.ValidValue);
 
             variable.RawValue = null;
-            Assert.IsFalse(variable.Valid);
+            Assert.IsFalse(variable.ValidValue);
 
-            variable.PublicName = "Name";
             variable.RawValue = "Something";
-            Assert.IsTrue(variable.Valid);
+            Assert.IsTrue(variable.ValidValue);
         }
     }
 }

@@ -1,9 +1,9 @@
 ﻿namespace InDoOut_Core.Basic
 {
     /// <summary>
-    /// Represents a basic value with an associated name.
+    /// Represents a basic value as well as conversion utilities.
     /// </summary>
-    public interface INamedValue : INamed
+    public interface IValue
     {
         /// <summary>
         /// Sets the value from the given type <typeparamref name="T"/>
@@ -14,9 +14,9 @@
         bool ValueFrom<T>(T value);
 
         /// <summary>
-        /// Returns whether the variable has a valid name and value
+        /// Returns whether the value currently stored is valid.
         /// </summary>
-        bool Valid { get; }
+        bool ValidValue { get; }
 
         /// <summary>
         /// The value associated with this variable in string format.

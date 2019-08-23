@@ -7,7 +7,7 @@ namespace InDoOut_Core.Entities.Core
     /// A base, saveable entity. The root of all other entities.
     /// </summary>
     /// <seealso cref="IEntity"/>
-    public abstract class Entity : IEntity
+    public abstract class NamedEntity : IEntity
     {
         /// <summary>
         /// The unique ID of this entity.

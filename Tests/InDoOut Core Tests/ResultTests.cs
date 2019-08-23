@@ -29,6 +29,8 @@ namespace InDoOut_Core_Tests
             var result = new Result("name", "description", "nothing");
             var variableStore = new TestVariableStore();
 
+            result.VariableName = null;
+
             Assert.IsFalse(result.SetVariable(variableStore));
             Assert.AreEqual(0, variableStore.PublicVariables.Count);
 

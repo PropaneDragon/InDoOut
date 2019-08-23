@@ -3,6 +3,8 @@ using InDoOut_Core.Threading.Safety;
 using InDoOut_Core.Variables;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 
 namespace InDoOut_Core.Entities.Functions
 {
@@ -190,6 +192,8 @@ namespace InDoOut_Core.Entities.Functions
             if (property != null && !Properties.Contains(property))
             {
                 Properties.Add(property);
+
+                property.Connect(this);
             }
 
             return property;
@@ -258,12 +262,17 @@ namespace InDoOut_Core.Entities.Functions
                 {
                     var nextOutput = Started(triggeredBy);
 
-                    if (VariableStore != null)
+                    foreach (var result in Results)
                     {
-                        foreach (var result in Results)
+                        if (result.CanBeTriggered(this))
                         {
-                            _ = result.SetVariable(VariableStore);
+                            result.Trigger(this);
                         }
+                    }
+
+                    while (Results.Any(result => result.Running))
+                    {
+                        Thread.Sleep(TimeSpan.FromMilliseconds(1));
                     }
 
                     if (State != State.Stopping && nextOutput != null && Outputs.Contains(nextOutput) && nextOutput.CanBeTriggered(this))

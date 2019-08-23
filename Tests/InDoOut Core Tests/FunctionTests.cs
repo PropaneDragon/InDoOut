@@ -186,9 +186,11 @@ namespace InDoOut_Core_Tests
             var middle = new DateTime(2);
             var end = new DateTime(1);
 
-            var startFunction = new TestFunction(() => start = DateTime.UtcNow);
-            var middleFunction = new TestFunction(() => middle = DateTime.UtcNow);
-            var endFunction = new TestFunction(() => end = DateTime.UtcNow);
+            var variableStore = new TestVariableStore();
+
+            var startFunction = new TestFunction(() => start = DateTime.UtcNow) { VariableStore = variableStore };
+            var middleFunction = new TestFunction(() => middle = DateTime.UtcNow) { VariableStore = variableStore };
+            var endFunction = new TestFunction(() => end = DateTime.UtcNow) { VariableStore = variableStore };
 
             Assert.IsTrue(end < middle && middle < start);
 
@@ -197,11 +199,18 @@ namespace InDoOut_Core_Tests
             var c = middleFunction.CreateOutputPublic("C");
             var d = endFunction.CreateInputPublic("D");
 
+            var e = startFunction.AddResultPublic(new Result("result", "Nope", "100"));
+            var f = endFunction.AddPropertyPublic(new Property<int>("property", "Nope", false, 0));
+
+            var variableName = e.VariableName;
+
             startFunction.OutputToTrigger = a;
             middleFunction.OutputToTrigger = c;
 
-            a.Connect(b);
-            c.Connect(d);
+            Assert.IsTrue(a.Connect(b));
+            Assert.IsTrue(c.Connect(d));
+
+            Assert.IsTrue(e.Connect(f));
 
             startFunction.Trigger(null);
 
@@ -213,15 +222,19 @@ namespace InDoOut_Core_Tests
             }
 
             Assert.IsTrue(start < middle && middle < end);
+            Assert.AreEqual(100, f.FullValue);
+            Assert.IsNotNull(variableStore.GetVariable(variableName));
+            Assert.AreEqual("100", variableStore.GetVariableValue(variableName));
         }
 
         [TestMethod]
         public void InputToOutputWithProperties()
         {
             var variableStore = new TestVariableStore();
-            var fullFunction = new TestFullFunction();
-
-            fullFunction.VariableStore = variableStore;
+            var fullFunction = new TestFullFunction
+            {
+                VariableStore = variableStore
+            };
 
             Assert.AreEqual("", fullFunction.IntegerResult.RawValue);
             Assert.AreEqual("", fullFunction.DoubleResult.RawValue);
@@ -247,7 +260,11 @@ namespace InDoOut_Core_Tests
 
             fullFunction.Trigger(null);
 
-            Assert.IsTrue(fullFunction.WaitForCompletion(TimeSpan.FromMilliseconds(10)));
+            Assert.IsTrue(fullFunction.WaitForCompletion(TimeSpan.FromSeconds(1)));
+            Assert.IsTrue(fullFunction.IntegerResult.WaitForCompletion(TimeSpan.FromSeconds(1)));
+            Assert.IsTrue(fullFunction.DoubleResult.WaitForCompletion(TimeSpan.FromSeconds(1)));
+            Assert.IsTrue(fullFunction.FloatResult.WaitForCompletion(TimeSpan.FromSeconds(1)));
+            Assert.IsTrue(fullFunction.StringResult.WaitForCompletion(TimeSpan.FromSeconds(1)));
 
             Assert.AreEqual("", fullFunction.IntegerResult.RawValue);
             Assert.AreEqual("", fullFunction.DoubleResult.RawValue);
@@ -263,7 +280,11 @@ namespace InDoOut_Core_Tests
             fullFunction.StringProperty.BasicValue = "A non-null string";
             fullFunction.Trigger(null);
 
-            Assert.IsTrue(fullFunction.WaitForCompletion(TimeSpan.FromMilliseconds(10)));
+            Assert.IsTrue(fullFunction.WaitForCompletion(TimeSpan.FromSeconds(1)));
+            Assert.IsTrue(fullFunction.IntegerResult.WaitForCompletion(TimeSpan.FromSeconds(1)));
+            Assert.IsTrue(fullFunction.DoubleResult.WaitForCompletion(TimeSpan.FromSeconds(1)));
+            Assert.IsTrue(fullFunction.FloatResult.WaitForCompletion(TimeSpan.FromSeconds(1)));
+            Assert.IsTrue(fullFunction.StringResult.WaitForCompletion(TimeSpan.FromSeconds(1)));
 
             Assert.AreEqual("1234", fullFunction.IntegerResult.RawValue);
             Assert.AreEqual("456.78901", fullFunction.DoubleResult.RawValue);

@@ -5,8 +5,18 @@ namespace InDoOut_Core.Variables
     /// <summary>
     /// An individual variable that holds a value and a name.
     /// </summary>
-    public class Variable : NamedValue, IVariable
+    public class Variable : Value, IVariable
     {
+        /// <summary>
+        /// The variable name.
+        /// </summary>
+        public string Name { get; } = null;
+
+        /// <summary>
+        /// Returns whether the variable is valid or not.
+        /// </summary>
+        public bool Valid => Name != null && ValidValue;
+
         private Variable() { }
 
         /// <summary>

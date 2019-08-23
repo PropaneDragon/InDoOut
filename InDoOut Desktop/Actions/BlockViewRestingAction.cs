@@ -32,7 +32,7 @@ namespace InDoOut_Desktop.Actions
                     }
                     else if (_blockView.GetFirstElementOfType<IUIResult>(elementsUnderMouse) is IUIResult result)
                     {
-                        Finish(new VariableWireDragAction(result, _blockView, _blockView.AssociatedProgram?.VariableStore));
+                        Finish(new VariableWireDragAction(result, _blockView));
 
                         return true;
                     }

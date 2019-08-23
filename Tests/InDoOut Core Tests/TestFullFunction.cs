@@ -48,7 +48,7 @@ namespace InDoOut_Core_Tests
 
         protected override IOutput Started(IInput triggeredBy)
         {
-            if (IntegerProperty.Valid && DoubleProperty.Valid && FloatProperty.Valid && StringProperty.Valid)
+            if (IntegerProperty.ValidValue && DoubleProperty.ValidValue && FloatProperty.ValidValue && StringProperty.ValidValue)
             {
                 IntegerResult.ValueFrom(IntegerProperty.BasicValue);
                 DoubleResult.ValueFrom(DoubleProperty.BasicValue);

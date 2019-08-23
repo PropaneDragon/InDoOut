@@ -8,7 +8,7 @@ namespace InDoOut_Core.Entities.Core
     /// </summary>
     /// <typeparam name="ConnectsToType">The <see cref="ITriggerable"/> that this entity can connect to.</typeparam>
     /// <typeparam name="ConnectsFromType">The <see cref="IEntity"/> that this entity can accept connections from.</typeparam>
-    public abstract class InteractiveEntity<ConnectsToType, ConnectsFromType> : Entity, IConnectable<ConnectsToType>, ITriggerable<ConnectsFromType> where ConnectsToType : class, ITriggerable where ConnectsFromType : class, IEntity
+    public abstract class InteractiveEntity<ConnectsToType, ConnectsFromType> : NamedEntity, IConnectable<ConnectsToType>, ITriggerable<ConnectsFromType> where ConnectsToType : class, ITriggerable where ConnectsFromType : class, IEntity
     {
         private object _connectionsLock = new object();
 

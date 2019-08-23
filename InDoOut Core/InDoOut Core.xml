@@ -14,45 +14,6 @@
             Name of the entity.
             </summary>
         </member>
-        <member name="T:InDoOut_Core.Basic.INamedValue">
-            <summary>
-            Represents a basic value with an associated name.
-            </summary>
-        </member>
-        <member name="M:InDoOut_Core.Basic.INamedValue.ValueFrom``1(``0)">
-            <summary>
-            Sets the value from the given type <typeparamref name="T"/>
-            </summary>
-            <typeparam name="T">The type to set the value from.</typeparam>
-            <param name="value">The type value to set the value to.</param>
-            <returns>Whether the value was converted and set.</returns>
-        </member>
-        <member name="P:InDoOut_Core.Basic.INamedValue.Valid">
-            <summary>
-            Returns whether the variable has a valid name and value
-            </summary>
-        </member>
-        <member name="P:InDoOut_Core.Basic.INamedValue.RawValue">
-            <summary>
-            The value associated with this variable in string format.
-            </summary>
-        </member>
-        <member name="M:InDoOut_Core.Basic.INamedValue.ValueOrDefault(System.String)">
-            <summary>
-            Gets the value, or <paramref name="defaultValue"/> if null.
-            </summary>
-            <param name="defaultValue">The value to return on null.</param>
-            <returns>The value, or default if null.</returns>
-        </member>
-        <member name="M:InDoOut_Core.Basic.INamedValue.ValueAs``1(``0)">
-            <summary>
-            Converts the <see cref="P:InDoOut_Core.Basic.INamedValue.RawValue"/> to the specified type <typeparamref name="T"/>. Failing that it will
-            fall back to <paramref name="defaultValue"/>.
-            </summary>
-            <typeparam name="T">The type to convert to.</typeparam>
-            <param name="defaultValue">The default value to output in case of a conversion failure.</param>
-            <returns>The <see cref="P:InDoOut_Core.Basic.INamedValue.RawValue"/> as the requested type <typeparamref name="T"/>.</returns>
-        </member>
         <member name="T:InDoOut_Core.Basic.IStored">
             <summary>
             Represents stored data. Each entity has a unique <see cref="T:System.Guid"/>
@@ -69,43 +30,77 @@
             Metadata associated with the stored data.
             </summary>
         </member>
-        <member name="T:InDoOut_Core.Basic.NamedValue">
+        <member name="T:InDoOut_Core.Basic.IValue">
             <summary>
-            A basic value with an associated name, along with some conversion utilities.
+            Represents a basic value as well as conversion utilities.
             </summary>
         </member>
-        <member name="P:InDoOut_Core.Basic.NamedValue.Valid">
+        <member name="M:InDoOut_Core.Basic.IValue.ValueFrom``1(``0)">
+            <summary>
+            Sets the value from the given type <typeparamref name="T"/>
+            </summary>
+            <typeparam name="T">The type to set the value from.</typeparam>
+            <param name="value">The type value to set the value to.</param>
+            <returns>Whether the value was converted and set.</returns>
+        </member>
+        <member name="P:InDoOut_Core.Basic.IValue.ValidValue">
+            <summary>
+            Returns whether the value currently stored is valid.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Basic.IValue.RawValue">
+            <summary>
+            The value associated with this variable in string format.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Core.Basic.IValue.ValueOrDefault(System.String)">
+            <summary>
+            Gets the value, or <paramref name="defaultValue"/> if null.
+            </summary>
+            <param name="defaultValue">The value to return on null.</param>
+            <returns>The value, or default if null.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Basic.IValue.ValueAs``1(``0)">
+            <summary>
+            Converts the <see cref="P:InDoOut_Core.Basic.IValue.RawValue"/> to the specified type <typeparamref name="T"/>. Failing that it will
+            fall back to <paramref name="defaultValue"/>.
+            </summary>
+            <typeparam name="T">The type to convert to.</typeparam>
+            <param name="defaultValue">The default value to output in case of a conversion failure.</param>
+            <returns>The <see cref="P:InDoOut_Core.Basic.IValue.RawValue"/> as the requested type <typeparamref name="T"/>.</returns>
+        </member>
+        <member name="T:InDoOut_Core.Basic.Value">
+            <summary>
+            A basic value, along with some conversion utilities.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Basic.Value.ValidValue">
             <summary>
             Whether it has a valid name and value.
             </summary>
         </member>
-        <member name="P:InDoOut_Core.Basic.NamedValue.Name">
-            <summary>
-            The name of the variable.
-            </summary>
-        </member>
-        <member name="P:InDoOut_Core.Basic.NamedValue.RawValue">
+        <member name="P:InDoOut_Core.Basic.Value.RawValue">
             <summary>
             The value associated with the name.
             </summary>
         </member>
-        <member name="M:InDoOut_Core.Basic.NamedValue.ValueOrDefault(System.String)">
+        <member name="M:InDoOut_Core.Basic.Value.ValueOrDefault(System.String)">
             <summary>
-            Returns <see cref="P:InDoOut_Core.Basic.NamedValue.RawValue"/>, or <paramref name="defaultValue"/> if null.
+            Returns <see cref="P:InDoOut_Core.Basic.Value.RawValue"/>, or <paramref name="defaultValue"/> if null.
             </summary>
             <param name="defaultValue">The value to return if the stored value is null.</param>
             <returns>The value, or <paramref name="defaultValue"/> if null.</returns>
         </member>
-        <member name="M:InDoOut_Core.Basic.NamedValue.ValueAs``1(``0)">
+        <member name="M:InDoOut_Core.Basic.Value.ValueAs``1(``0)">
             <summary>
-            Converts the <see cref="P:InDoOut_Core.Basic.NamedValue.RawValue"/> to the given type <typeparamref name="T"/>. If this conversion
+            Converts the <see cref="P:InDoOut_Core.Basic.Value.RawValue"/> to the given type <typeparamref name="T"/>. If this conversion
             fails, <paramref name="defaultValue"/> is returned instead.
             </summary>
             <typeparam name="T">The type to convert to.</typeparam>
             <param name="defaultValue">The value to return if the conversion fails.</param>
             <returns>The converted value or <paramref name="defaultValue"/> if conversion fails.</returns>
         </member>
-        <member name="M:InDoOut_Core.Basic.NamedValue.ValueFrom``1(``0)">
+        <member name="M:InDoOut_Core.Basic.Value.ValueFrom``1(``0)">
             <summary>
             Sets the value from the given <typeparamref name="T"/> value.
             </summary>
@@ -113,7 +108,7 @@
             <param name="value">The value to be set.</param>
             <returns>Whether the value was converted and set.</returns>
         </member>
-        <member name="M:InDoOut_Core.Basic.NamedValue.ConvertFromString``1(System.String)">
+        <member name="M:InDoOut_Core.Basic.Value.ConvertFromString``1(System.String)">
             <summary>
             Converts a value from a string to the type <typeparamref name="T"/>.
             </summary>
@@ -121,7 +116,7 @@
             <param name="value">The value to convert to the type <typeparamref name="T"/>.</param>
             <returns>The value of the string as the type <typeparamref name="T"/>.</returns>
         </member>
-        <member name="M:InDoOut_Core.Basic.NamedValue.ConvertToString``1(``0)">
+        <member name="M:InDoOut_Core.Basic.Value.ConvertToString``1(``0)">
             <summary>
             Converts a value of type <typeparamref name="T"/> to a string.
             </summary>
@@ -129,18 +124,18 @@
             <param name="value">The value of the type to convert to a string.</param>
             <returns>A string representation of the value given.</returns>
         </member>
-        <member name="T:InDoOut_Core.Entities.Core.Entity">
+        <member name="T:InDoOut_Core.Entities.Core.NamedEntity">
             <summary>
             A base, saveable entity. The root of all other entities.
             </summary>
             <seealso cref="T:InDoOut_Core.Entities.Core.IEntity"/>
         </member>
-        <member name="P:InDoOut_Core.Entities.Core.Entity.Id">
+        <member name="P:InDoOut_Core.Entities.Core.NamedEntity.Id">
             <summary>
             The unique ID of this entity.
             </summary>
         </member>
-        <member name="P:InDoOut_Core.Entities.Core.Entity.Metadata">
+        <member name="P:InDoOut_Core.Entities.Core.NamedEntity.Metadata">
             <summary>
             Metadata associated with the entity.
             </summary>
@@ -723,6 +718,13 @@
             Whether or not this property is required for the function to work.
             </summary>
         </member>
+        <member name="M:InDoOut_Core.Entities.Functions.IProperty.Connect(InDoOut_Core.Entities.Functions.IFunction)">
+            <summary>
+            Connects the property to a function.
+            </summary>
+            <param name="function">The function to connect to.</param>
+            <returns>Whether the connection was successful.</returns>
+        </member>
         <member name="P:InDoOut_Core.Entities.Functions.IProperty.Description">
             <summary>
             The description of what this property does.
@@ -737,7 +739,7 @@
             <summary>
             Computes the value based off of whether <see cref="P:InDoOut_Core.Entities.Functions.IProperty.AssociatedVariable"/> is set or
             not. If it is set, it will use the <see cref="P:InDoOut_Core.Entities.Functions.IProperty.AssociatedVariable"/> for the value,
-            or otherwise it just uses <see cref="P:InDoOut_Core.Basic.INamedValue.RawValue"/>.
+            or otherwise it just uses <see cref="P:InDoOut_Core.Basic.IValue.RawValue"/>.
             </summary>
         </member>
         <member name="P:InDoOut_Core.Entities.Functions.IProperty.AssociatedVariable">
@@ -777,6 +779,13 @@
             Whether the result has a value set on it or not.
             </summary>
         </member>
+        <member name="M:InDoOut_Core.Entities.Functions.IResult.Connect(InDoOut_Core.Entities.Functions.IProperty)">
+            <summary>
+            Connects this result to a property.
+            </summary>
+            <param name="property">The property to connect to.</param>
+            <returns>Whether the connection was successful.</returns>
+        </member>
         <member name="P:InDoOut_Core.Entities.Functions.IResult.Description">
             <summary>
             The description of what this result represents.
@@ -791,14 +800,14 @@
         <member name="M:InDoOut_Core.Entities.Functions.IResult.SetVariable(InDoOut_Core.Variables.IVariableStore)">
             <summary>
             Sets a variable with a name of the given <see cref="P:InDoOut_Core.Entities.Functions.IResult.VariableName"/> and value of
-            <see cref="P:InDoOut_Core.Basic.INamedValue.RawValue"/> inside the given <paramref name="variableStore"/>.
+            <see cref="P:InDoOut_Core.Basic.IValue.RawValue"/> inside the given <paramref name="variableStore"/>.
             </summary>
             <param name="variableStore">A variable store to create/update the variable.</param>
             <returns>Whether the variable was set or not.</returns>
         </member>
         <member name="M:InDoOut_Core.Entities.Functions.IResult.SetVariable(InDoOut_Core.Variables.IVariable)">
             <summary>
-            Sets a variable's value directly from the <see cref="P:InDoOut_Core.Basic.INamedValue.RawValue"/> without
+            Sets a variable's value directly from the <see cref="P:InDoOut_Core.Basic.IValue.RawValue"/> without
             accounting for the variable name. It is recommended to use <see cref="M:InDoOut_Core.Entities.Functions.IResult.SetVariable(InDoOut_Core.Variables.IVariableStore)"/>
             instead, as it takes care of creating/updating the correct variable.
             </summary>
@@ -910,13 +919,13 @@
         <member name="P:InDoOut_Core.Entities.Functions.Property`1.AssociatedVariable">
             <summary>
             The variable associated with this property. If set to anything other than null it will use the
-            value of the variable as the <see cref="P:InDoOut_Core.Entities.Functions.Property`1.RawComputedValue"/>, rather than using <see cref="P:InDoOut_Core.Basic.NamedValue.RawValue"/>.
+            value of the variable as the <see cref="P:InDoOut_Core.Entities.Functions.Property`1.RawComputedValue"/>, rather than using <see cref="P:InDoOut_Core.Entities.Functions.Property`1.RawValue"/>.
             </summary>
         </member>
         <member name="P:InDoOut_Core.Entities.Functions.Property`1.RawComputedValue">
             <summary>
             The full computed value of the property. If <see cref="P:InDoOut_Core.Entities.Functions.Property`1.AssociatedVariable"/> is set it will use the
-            value assigned to the variable, rather than <see cref="P:InDoOut_Core.Basic.NamedValue.RawValue"/>.
+            value assigned to the variable, rather than <see cref="P:InDoOut_Core.Entities.Functions.Property`1.RawValue"/>.
             </summary>
         </member>
         <member name="P:InDoOut_Core.Entities.Functions.Property`1.Required">
@@ -931,7 +940,7 @@
         </member>
         <member name="P:InDoOut_Core.Entities.Functions.Property`1.BasicValue">
             <summary>
-            The value of this property, as the given type <typeparamref name="T"/>. This is similar to <see cref="P:InDoOut_Core.Basic.NamedValue.RawValue"/>,
+            The value of this property, as the given type <typeparamref name="T"/>. This is similar to <see cref="P:InDoOut_Core.Entities.Functions.Property`1.RawValue"/>,
             but is automatically converted to the type of this property.
             </summary>
         </member>
@@ -939,6 +948,21 @@
             <summary>
             The full computed value of the property as type <typeparamref name="T"/>. If <see cref="P:InDoOut_Core.Entities.Functions.Property`1.AssociatedVariable"/> is set it will use the
             value assigned to the variable, rather than <see cref="P:InDoOut_Core.Entities.Functions.Property`1.BasicValue"/>.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Functions.Property`1.ValidValue">
+            <summary>
+            Returns whether the current value is valid.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Functions.Property`1.RawValue">
+            <summary>
+            Gets the raw, unprocessed value of this property.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Functions.Property`1.Name">
+            <summary>
+            The property name.
             </summary>
         </member>
         <member name="M:InDoOut_Core.Entities.Functions.Property`1.#ctor(System.String,System.String,System.Boolean,`0)">
@@ -949,6 +973,42 @@
             <param name="description">The description of this property. This is visible to the user.</param>
             <param name="required">Whether or not this property is required for the function to run.</param>
             <param name="initialValue">The initial value of the property.</param>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Functions.Property`1.Connect(InDoOut_Core.Entities.Functions.IFunction)">
+            <summary>
+            Connects the <see cref="T:InDoOut_Core.Entities.Functions.Property`1"/> to a <see cref="T:InDoOut_Core.Entities.Functions.IFunction"/>.
+            </summary>
+            <param name="function">The function to connect to.</param>
+            <returns>Whether the connection was successful.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Functions.Property`1.ValueFrom``1(``0)">
+            <summary>
+            Sets the current value from the type <typeparamref name="T"/>.
+            </summary>
+            <typeparam name="Type">The type to convert from.</typeparam>
+            <param name="value">The value to store.</param>
+            <returns></returns>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Functions.Property`1.ValueOrDefault(System.String)">
+            <summary>
+            Gets the <see cref="P:InDoOut_Core.Entities.Functions.Property`1.RawValue"/>, or <paramref name="defaultValue"/> if null.
+            </summary>
+            <param name="defaultValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Functions.Property`1.ValueAs``1(``0)">
+            <summary>
+            Returns the value as the given <typeparamref name="Type"/>.
+            </summary>
+            <typeparam name="Type">The type to convert to.</typeparam>
+            <param name="defaultValue">On failure, default to this value.</param>
+            <returns>The value as <typeparamref name="Type"/>, or <paramref name="defaultValue"/> if failed.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Functions.Property`1.Process(InDoOut_Core.Entities.Functions.IResult)">
+            <summary>
+            Processes the property fro the <see cref="T:InDoOut_Core.Entities.Functions.IResult"/> that triggered it.
+            </summary>
+            <param name="triggeredBy">The <see cref="T:InDoOut_Core.Entities.Functions.IResult"/> that triggerd this.</param>
         </member>
         <member name="T:InDoOut_Core.Entities.Functions.Result">
             <summary>
@@ -975,6 +1035,21 @@
             completes.
             </summary>
         </member>
+        <member name="P:InDoOut_Core.Entities.Functions.Result.Name">
+            <summary>
+            The name of the result.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Functions.Result.ValidValue">
+            <summary>
+            Whether the value of this result is valid.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Functions.Result.RawValue">
+            <summary>
+            The raw value of this property.
+            </summary>
+        </member>
         <member name="M:InDoOut_Core.Entities.Functions.Result.#ctor(System.String,System.String,System.String)">
             <summary>
             Creates a result with a name, description and optional defaultValue.
@@ -983,22 +1058,58 @@
             <param name="description">The description of this result. This is visible to the user.</param>
             <param name="defaultValue">The default value to set on this result.</param>
         </member>
+        <member name="M:InDoOut_Core.Entities.Functions.Result.Connect(InDoOut_Core.Entities.Functions.IProperty)">
+            <summary>
+            Connects this result to a <see cref="T:InDoOut_Core.Entities.Functions.IProperty"/>.
+            </summary>
+            <param name="property">The property to connect to.</param>
+            <returns>Whether the connection was a success.</returns>
+        </member>
         <member name="M:InDoOut_Core.Entities.Functions.Result.SetVariable(InDoOut_Core.Variables.IVariableStore)">
             <summary>
             Sets a variable with a name of the given <see cref="P:InDoOut_Core.Entities.Functions.Result.VariableName"/> and value of
-            <see cref="P:InDoOut_Core.Basic.NamedValue.RawValue"/> inside the given <paramref name="variableStore"/>.
+            <see cref="P:InDoOut_Core.Entities.Functions.Result.RawValue"/> inside the given <paramref name="variableStore"/>.
             </summary>
             <param name="variableStore">A variable store to create/update the variable.</param>
             <returns>Whether the variable was set or not.</returns>
         </member>
         <member name="M:InDoOut_Core.Entities.Functions.Result.SetVariable(InDoOut_Core.Variables.IVariable)">
             <summary>
-            Sets a variable's value directly from the <see cref="P:InDoOut_Core.Basic.NamedValue.RawValue"/> without
+            Sets a variable's value directly from the <see cref="P:InDoOut_Core.Entities.Functions.Result.RawValue"/> without
             accounting for the variable name. It is recommended to use <see cref="M:InDoOut_Core.Entities.Functions.Result.SetVariable(InDoOut_Core.Variables.IVariableStore)"/>
             instead, as it takes care of creating/updating the correct variable.
             </summary>
             <param name="variable">The variable to set.</param>
             <returns>Whether the variable was set or not.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Functions.Result.ValueFrom``1(``0)">
+            <summary>
+            Sets the value from the given <paramref name="value"/> of type <typeparamref name="T"/>.
+            </summary>
+            <typeparam name="T">The type to convert from.</typeparam>
+            <param name="value">The value to store.</param>
+            <returns>Whether the value has been set.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Functions.Result.ValueOrDefault(System.String)">
+            <summary>
+            Returns the <see cref="P:InDoOut_Core.Entities.Functions.Result.RawValue"/>, or <paramref name="defaultValue"/> if null.
+            </summary>
+            <param name="defaultValue">The default value to return on failure.</param>
+            <returns>The value of this result.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Functions.Result.ValueAs``1(``0)">
+            <summary>
+            Returns the value converted to type <typeparamref name="T"/>.
+            </summary>
+            <typeparam name="T">The type to convert to.</typeparam>
+            <param name="defaultValue">The default value to return if converison is not possible.</param>
+            <returns>The <see cref="P:InDoOut_Core.Entities.Functions.Result.RawValue"/> as type <typeparamref name="T"/>, or <paramref name="defaultValue"/> if conversion was not possible.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Functions.Result.Process(InDoOut_Core.Entities.Functions.IFunction)">
+            <summary>
+            Processes the result from the function that triggered it.
+            </summary>
+            <param name="triggeredBy">The function that triggered this result.</param>
         </member>
         <member name="T:InDoOut_Core.Entities.Functions.StartFunction">
             <summary>
@@ -1225,6 +1336,11 @@
             over multiple functions.
             </summary>
         </member>
+        <member name="P:InDoOut_Core.Variables.IVariable.Valid">
+            <summary>
+            Returns whether the variable is valid.
+            </summary>
+        </member>
         <member name="T:InDoOut_Core.Variables.IVariableStore">
             <summary>
             Represents global storage for <see cref="T:InDoOut_Core.Variables.IVariable"/>s.
@@ -1283,6 +1399,16 @@
         <member name="T:InDoOut_Core.Variables.Variable">
             <summary>
             An individual variable that holds a value and a name.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Variables.Variable.Name">
+            <summary>
+            The variable name.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Variables.Variable.Valid">
+            <summary>
+            Returns whether the variable is valid or not.
             </summary>
         </member>
         <member name="M:InDoOut_Core.Variables.Variable.#ctor(System.String,System.String)">

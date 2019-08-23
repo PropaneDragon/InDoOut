@@ -4,9 +4,9 @@ using System.ComponentModel;
 namespace InDoOut_Core.Basic
 {
     /// <summary>
-    /// A basic value with an associated name, along with some conversion utilities.
+    /// A basic value, along with some conversion utilities.
     /// </summary>
-    public abstract class NamedValue : INamedValue
+    public class Value : IValue
     {
         private object _rawValueLock = new object();
         private string _rawValue = "";
@@ -14,12 +14,7 @@ namespace InDoOut_Core.Basic
         /// <summary>
         /// Whether it has a valid name and value.
         /// </summary>
-        public bool Valid => !string.IsNullOrEmpty(Name) && RawValue != null;
-
-        /// <summary>
-        /// The name of the variable.
-        /// </summary>
-        public string Name { get; protected set; } = null;
+        public bool ValidValue => RawValue != null;
 
         /// <summary>
         /// The value associated with the name.
@@ -60,7 +55,7 @@ namespace InDoOut_Core.Basic
         /// <typeparam name="T">The type to convert to.</typeparam>
         /// <param name="value">The value to convert to the type <typeparamref name="T"/>.</param>
         /// <returns>The value of the string as the type <typeparamref name="T"/>.</returns>
-        protected T ConvertFromString<T>(string value)
+        public T ConvertFromString<T>(string value)
         {
             return (T)TypeDescriptor.GetConverter(typeof(T)).ConvertFromString(value);
         }
@@ -71,7 +66,7 @@ namespace InDoOut_Core.Basic
         /// <typeparam name="T">The type to convert from.</typeparam>
         /// <param name="value">The value of the type to convert to a string.</param>
         /// <returns>A string representation of the value given.</returns>
-        protected string ConvertToString<T>(T value)
+        public string ConvertToString<T>(T value)
         {
             if (value == null)
             {

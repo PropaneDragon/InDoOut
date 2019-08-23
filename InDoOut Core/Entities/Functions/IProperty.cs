@@ -1,4 +1,5 @@
 ﻿using InDoOut_Core.Basic;
+using InDoOut_Core.Entities.Core;
 using InDoOut_Core.Variables;
 
 namespace InDoOut_Core.Entities.Functions
@@ -8,12 +9,19 @@ namespace InDoOut_Core.Entities.Functions
     /// <see cref="IFunction"/>s to alter their behaviour, or provide
     /// required input values.
     /// </summary>
-    public interface IProperty : INamedValue
+    public interface IProperty : INamedEntity, IValue, ITriggerable<IResult>, IConnectable<IFunction>
     {
         /// <summary>
         /// Whether or not this property is required for the function to work.
         /// </summary>
         bool Required { get; }
+
+        /// <summary>
+        /// Connects the property to a function.
+        /// </summary>
+        /// <param name="function">The function to connect to.</param>
+        /// <returns>Whether the connection was successful.</returns>
+        bool Connect(IFunction function);
 
         /// <summary>
         /// The description of what this property does.
@@ -28,7 +36,7 @@ namespace InDoOut_Core.Entities.Functions
         /// <summary>
         /// Computes the value based off of whether <see cref="AssociatedVariable"/> is set or
         /// not. If it is set, it will use the <see cref="AssociatedVariable"/> for the value,
-        /// or otherwise it just uses <see cref="INamedValue.RawValue"/>.
+        /// or otherwise it just uses <see cref="IValue.RawValue"/>.
         /// </summary>
         string RawComputedValue { get; }
 
