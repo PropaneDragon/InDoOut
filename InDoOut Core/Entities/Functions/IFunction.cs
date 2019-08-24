@@ -44,7 +44,7 @@ namespace InDoOut_Core.Entities.Functions
     /// Represents a function block containing <see cref="IInput"/>s and 
     /// <see cref="IOutput"/>s. This can be triggered with a <see cref="IInput"/>,
     /// </summary>
-    public interface IFunction : INamedEntity, ITriggerable<IInput>, IConnectable<IOutput>
+    public interface IFunction : IProcessable, INamedEntity, ITriggerable<IInput>, IConnectable<IOutput>
     {
         /// <summary>
         /// The current state of the function. See <see cref="State"/> for more

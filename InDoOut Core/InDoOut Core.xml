@@ -153,6 +153,11 @@
             <param name="entity">The entity to check.</param>
             <returns>Whether or not the given <see cref="T:InDoOut_Core.Entities.Core.IEntity"/> can be connected.</returns>
         </member>
+        <member name="P:InDoOut_Core.Entities.Core.IConnectable.RawConnections">
+            <summary>
+            The connections this object has.
+            </summary>
+        </member>
         <member name="T:InDoOut_Core.Entities.Core.IConnectable`1">
             <summary>
             Represents an object that can be connected to an entity.
@@ -167,6 +172,11 @@
             <summary>
             Represents a base entity. All entities are <see cref="T:InDoOut_Core.Basic.IStored"/>, so can
             be saved.
+            </summary>
+        </member>
+        <member name="T:InDoOut_Core.Entities.Core.IInputable">
+            <summary>
+            Represents an entity that is an input into a process.
             </summary>
         </member>
         <member name="T:InDoOut_Core.Entities.Core.INamedEntity">
@@ -184,6 +194,11 @@
         <member name="P:InDoOut_Core.Entities.Core.InteractiveEntity`2.Running">
             <summary>
             The current running state of this entity.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Core.InteractiveEntity`2.RawConnections">
+            <summary>
+            The connections that this entity has.
             </summary>
         </member>
         <member name="P:InDoOut_Core.Entities.Core.InteractiveEntity`2.Connections">
@@ -258,6 +273,16 @@
             Begins processing after being triggered by a connected entity.
             </summary>
             <param name="triggeredBy">The entity that triggered this.</param>
+        </member>
+        <member name="T:InDoOut_Core.Entities.Core.IOutputable">
+            <summary>
+            Represents an entity that is a generic output from a process.
+            </summary>
+        </member>
+        <member name="T:InDoOut_Core.Entities.Core.IProcessable">
+            <summary>
+            Represents an entity that is capable of processing something.
+            </summary>
         </member>
         <member name="T:InDoOut_Core.Entities.Core.ITriggerable">
             <summary>
@@ -748,6 +773,11 @@
             the value of the property to that of the variable when the value is requested.
             </summary>
         </member>
+        <member name="P:InDoOut_Core.Entities.Functions.IProperty.Parent">
+            <summary>
+            The parent of this input.
+            </summary>
+        </member>
         <member name="T:InDoOut_Core.Entities.Functions.IProperty`1">
             <summary>
             Represents a specific type of property that has a value automatically
@@ -920,6 +950,11 @@
             <summary>
             The variable associated with this property. If set to anything other than null it will use the
             value of the variable as the <see cref="P:InDoOut_Core.Entities.Functions.Property`1.RawComputedValue"/>, rather than using <see cref="P:InDoOut_Core.Entities.Functions.Property`1.RawValue"/>.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Functions.Property`1.Parent">
+            <summary>
+            The parent this property belongs to.
             </summary>
         </member>
         <member name="P:InDoOut_Core.Entities.Functions.Property`1.RawComputedValue">

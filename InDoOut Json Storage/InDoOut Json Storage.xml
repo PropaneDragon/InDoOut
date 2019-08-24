@@ -9,6 +9,31 @@
             Represents a raw JSON connection between two functions.
             </summary>
         </member>
+        <member name="T:InDoOut_Json_Storage.JsonConnection.ConnectionType">
+            <summary>
+            The type of connection this represents.
+            </summary>
+        </member>
+        <member name="F:InDoOut_Json_Storage.JsonConnection.ConnectionType.Unknown">
+            <summary>
+            An invalid, unknown connection.
+            </summary>
+        </member>
+        <member name="F:InDoOut_Json_Storage.JsonConnection.ConnectionType.InputOutput">
+            <summary>
+            A connection that consists of <see cref="T:InDoOut_Core.Entities.Functions.IInput"/> and <see cref="T:InDoOut_Core.Entities.Functions.IOutput"/>.
+            </summary>
+        </member>
+        <member name="F:InDoOut_Json_Storage.JsonConnection.ConnectionType.PropertyResult">
+            <summary>
+            A connection that consists of <see cref="T:InDoOut_Core.Entities.Functions.IProperty"/> and <see cref="T:InDoOut_Core.Entities.Functions.IResult"/>.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Json_Storage.JsonConnection.TypeOfConnection">
+            <summary>
+            The type of connection this represents.
+            </summary>
+        </member>
         <member name="P:InDoOut_Json_Storage.JsonConnection.OutputName">
             <summary>
             The name of the output that the connection originates from.
@@ -87,7 +112,7 @@
         </member>
         <member name="P:InDoOut_Json_Storage.JsonProgram.Id">
             <summary>
-            Program Id
+            Program Id.
             </summary>
         </member>
         <member name="P:InDoOut_Json_Storage.JsonProgram.Functions">
@@ -97,12 +122,17 @@
         </member>
         <member name="P:InDoOut_Json_Storage.JsonProgram.Connections">
             <summary>
-            Program, function connections
+            Program, function connections.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Json_Storage.JsonProgram.PropertyValues">
+            <summary>
+            Values for function properties.
             </summary>
         </member>
         <member name="P:InDoOut_Json_Storage.JsonProgram.Metadata">
             <summary>
-            Program metadata
+            Program metadata.
             </summary>
         </member>
         <member name="M:InDoOut_Json_Storage.JsonProgram.CreateFromProgram(InDoOut_Core.Entities.Programs.IProgram)">
@@ -120,6 +150,40 @@
             <param name="builder">The function builder to generate saved functions.</param>
             <param name="loadedPlugins">The currently loaded plugins to search through.</param>
             <returns>Whether the data was set successfully.</returns>
+        </member>
+        <member name="T:InDoOut_Json_Storage.JsonPropertyValue">
+            <summary>
+            Represents a JSON shell for an <see cref="T:InDoOut_Core.Entities.Functions.IProperty"/>.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Json_Storage.JsonPropertyValue.Value">
+            <summary>
+            The property value.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Json_Storage.JsonPropertyValue.Name">
+            <summary>
+            The property name.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Json_Storage.JsonPropertyValue.Function">
+            <summary>
+            The associated function ID.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Json_Storage.JsonPropertyValue.CreateFromFunction(InDoOut_Core.Entities.Functions.IFunction)">
+            <summary>
+            Creates a list of <see cref="T:InDoOut_Json_Storage.JsonPropertyValue"/>s for a given <paramref name="function"/>.
+            </summary>
+            <param name="function">The function to generate <see cref="T:InDoOut_Json_Storage.JsonPropertyValue"/>s for.</param>
+            <returns>A list of property values within the given function, or null if a null function has been passed.</returns>
+        </member>
+        <member name="M:InDoOut_Json_Storage.JsonPropertyValue.Set(InDoOut_Core.Entities.Functions.IFunction)">
+            <summary>
+            Sets a property with a name of <see cref="P:InDoOut_Json_Storage.JsonPropertyValue.Name"/> inside a given <paramref name="function"/> to the stored <see cref="P:InDoOut_Json_Storage.JsonPropertyValue.Value"/>.
+            </summary>
+            <param name="function">The function to set.</param>
+            <returns>Whether the property was set.</returns>
         </member>
         <member name="T:InDoOut_Json_Storage.ProgramJsonStorer">
             <summary>

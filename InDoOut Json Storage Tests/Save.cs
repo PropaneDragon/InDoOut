@@ -1,7 +1,5 @@
 using InDoOut_Core.Entities.Programs;
 using InDoOut_Core.Functions;
-using InDoOut_Core_Tests;
-using InDoOut_Desktop_API_Tests;
 using InDoOut_Desktop_API_Tests.External_Plugin_Testing;
 using InDoOut_Json_Storage;
 using InDoOut_Plugins.Loaders;
@@ -58,6 +56,7 @@ namespace InDoOut_Json_Storage_Tests
                 {
                     new JsonConnection()
                     {
+                        TypeOfConnection = JsonConnection.ConnectionType.InputOutput,
                         OutputName = "A Output 1",
                         InputName = "B Input 1",
                         StartFunctionId = new Guid("12345678-1111-1111-1111-123456789abc"),
@@ -65,6 +64,7 @@ namespace InDoOut_Json_Storage_Tests
                     },
                     new JsonConnection()
                     {
+                        TypeOfConnection = JsonConnection.ConnectionType.InputOutput,
                         OutputName = "A Output 1",
                         InputName = "B Input 1",
                         StartFunctionId = new Guid("12345678-1111-1111-1111-123456789abc"),
@@ -72,6 +72,31 @@ namespace InDoOut_Json_Storage_Tests
                     },
                     new JsonConnection()
                     {
+                        TypeOfConnection = JsonConnection.ConnectionType.PropertyResult,
+                        OutputName = "A Result 1",
+                        InputName = "A Property 2",
+                        StartFunctionId = new Guid("12345678-1111-1111-1111-123456789abc"),
+                        EndFunctionId = new Guid("12345678-4444-4444-4444-123456789abc")
+                    },
+                    new JsonConnection()
+                    {
+                        TypeOfConnection = JsonConnection.ConnectionType.PropertyResult,
+                        OutputName = "A Result 1",
+                        InputName = "B Property 1",
+                        StartFunctionId = new Guid("12345678-1111-1111-1111-123456789abc"),
+                        EndFunctionId = new Guid("12345678-2222-2222-2222-123456789abc")
+                    },
+                    new JsonConnection()
+                    {
+                        TypeOfConnection = JsonConnection.ConnectionType.PropertyResult,
+                        OutputName = "A Result 2",
+                        InputName = "B Property 1",
+                        StartFunctionId = new Guid("12345678-1111-1111-1111-123456789abc"),
+                        EndFunctionId = new Guid("12345678-3333-3333-3333-123456789abc")
+                    },
+                    new JsonConnection()
+                    {
+                        TypeOfConnection = JsonConnection.ConnectionType.InputOutput,
                         OutputName = "B Output 1",
                         InputName = "B Input 1",
                         StartFunctionId = new Guid("12345678-2222-2222-2222-123456789abc"),
@@ -79,6 +104,7 @@ namespace InDoOut_Json_Storage_Tests
                     },
                     new JsonConnection()
                     {
+                        TypeOfConnection = JsonConnection.ConnectionType.InputOutput,
                         OutputName = "B Output 2",
                         InputName = "B Input 1",
                         StartFunctionId = new Guid("12345678-2222-2222-2222-123456789abc"),
@@ -86,6 +112,15 @@ namespace InDoOut_Json_Storage_Tests
                     },
                     new JsonConnection()
                     {
+                        TypeOfConnection = JsonConnection.ConnectionType.PropertyResult,
+                        OutputName = "B Result 2",
+                        InputName = "B Property 2",
+                        StartFunctionId = new Guid("12345678-2222-2222-2222-123456789abc"),
+                        EndFunctionId = new Guid("12345678-2222-2222-2222-123456789abc")
+                    },
+                    new JsonConnection()
+                    {
+                        TypeOfConnection = JsonConnection.ConnectionType.InputOutput,
                         OutputName = "B Output 1",
                         InputName = "B Input 1",
                         StartFunctionId = new Guid("12345678-3333-3333-3333-123456789abc"),
@@ -93,10 +128,78 @@ namespace InDoOut_Json_Storage_Tests
                     },
                     new JsonConnection()
                     {
+                        TypeOfConnection = JsonConnection.ConnectionType.InputOutput,
                         OutputName = "B Output 2",
                         InputName = "A Input 1",
                         StartFunctionId = new Guid("12345678-3333-3333-3333-123456789abc"),
                         EndFunctionId = new Guid("12345678-4444-4444-4444-123456789abc")
+                    },
+                    new JsonConnection()
+                    {
+                        TypeOfConnection = JsonConnection.ConnectionType.PropertyResult,
+                        OutputName = "B Result 1",
+                        InputName = "A Property 2",
+                        StartFunctionId = new Guid("12345678-3333-3333-3333-123456789abc"),
+                        EndFunctionId = new Guid("12345678-1111-1111-1111-123456789abc")
+                    },
+                    new JsonConnection()
+                    {
+                        TypeOfConnection = JsonConnection.ConnectionType.PropertyResult,
+                        OutputName = "B Result 2",
+                        InputName = "A Property 2",
+                        StartFunctionId = new Guid("12345678-3333-3333-3333-123456789abc"),
+                        EndFunctionId = new Guid("12345678-1111-1111-1111-123456789abc")
+                    },
+                },
+                PropertyValues = new List<JsonPropertyValue>()
+                {
+                    new JsonPropertyValue()
+                    {
+                        Value = "1",
+                        Name = "A Property 1",
+                        Function = new Guid("12345678-1111-1111-1111-123456789abc"),
+                    },
+                    new JsonPropertyValue()
+                    {
+                        Value = "First Property 2",
+                        Name = "A Property 2",
+                        Function = new Guid("12345678-1111-1111-1111-123456789abc"),
+                    },
+                    new JsonPropertyValue()
+                    {
+                        Value = "Second Property 1",
+                        Name = "B Property 1",
+                        Function = new Guid("12345678-2222-2222-2222-123456789abc"),
+                    },
+                    new JsonPropertyValue()
+                    {
+                        Value = "2",
+                        Name = "B Property 2",
+                        Function = new Guid("12345678-2222-2222-2222-123456789abc"),
+                    },
+                    new JsonPropertyValue()
+                    {
+                        Value = "Third Property 1",
+                        Name = "B Property 1",
+                        Function = new Guid("12345678-3333-3333-3333-123456789abc"),
+                    },
+                    new JsonPropertyValue()
+                    {
+                        Value = "3",
+                        Name = "B Property 2",
+                        Function = new Guid("12345678-3333-3333-3333-123456789abc"),
+                    },
+                    new JsonPropertyValue()
+                    {
+                        Value = "4",
+                        Name = "A Property 1",
+                        Function = new Guid("12345678-4444-4444-4444-123456789abc"),
+                    },
+                    new JsonPropertyValue()
+                    {
+                        Value = "Fourth Property 2",
+                        Name = "A Property 2",
+                        Function = new Guid("12345678-4444-4444-4444-123456789abc"),
                     },
                 },
                 Metadata = new Dictionary<string, string>()
@@ -139,6 +242,27 @@ namespace InDoOut_Json_Storage_Tests
 
             Assert.IsTrue(thirdFunction.BOutput1.Connect(secondFunction.BInput1));
             Assert.IsTrue(thirdFunction.BOutput2.Connect(fourthFunction.AInput1));
+
+            Assert.IsTrue(firstFunction.AResult1.Connect(fourthFunction.AProperty2));
+            Assert.IsTrue(firstFunction.AResult1.Connect(secondFunction.BProperty1));
+            Assert.IsTrue(firstFunction.AResult2.Connect(thirdFunction.BProperty1));
+
+            Assert.IsTrue(secondFunction.BResult2.Connect(secondFunction.BProperty2));
+
+            Assert.IsTrue(thirdFunction.BResult2.Connect(firstFunction.AProperty2));
+            Assert.IsTrue(thirdFunction.BResult1.Connect(firstFunction.AProperty2));
+
+            firstFunction.AProperty1.RawValue = "1";
+            firstFunction.AProperty2.RawValue = "First Property 2";
+
+            secondFunction.BProperty1.RawValue = "Second Property 1";
+            secondFunction.BProperty2.RawValue = "2";
+
+            thirdFunction.BProperty1.RawValue = "Third Property 1";
+            thirdFunction.BProperty2.RawValue = "3";
+
+            fourthFunction.AProperty1.RawValue = "4";
+            fourthFunction.AProperty2.RawValue = "Fourth Property 2";
 
             program.Metadata["first"] = "second";
             program.Metadata["third"] = "fourth";

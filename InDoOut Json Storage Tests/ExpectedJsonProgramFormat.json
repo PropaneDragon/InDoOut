@@ -24,6 +24,7 @@
   ],
   "connections": [
     {
+      "type": 1,
       "output": "A Output 1",
       "input": "B Input 1",
       "startId": "12345678-1111-1111-1111-123456789abc",
@@ -32,6 +33,7 @@
       "outputMetadata": {}
     },
     {
+      "type": 1,
       "output": "A Output 1",
       "input": "B Input 1",
       "startId": "12345678-1111-1111-1111-123456789abc",
@@ -40,6 +42,34 @@
       "outputMetadata": {}
     },
     {
+      "type": 2,
+      "output": "A Result 1",
+      "input": "A Property 2",
+      "startId": "12345678-1111-1111-1111-123456789abc",
+      "endId": "12345678-4444-4444-4444-123456789abc",
+      "inputMetadata": {},
+      "outputMetadata": {}
+    },
+    {
+      "type": 2,
+      "output": "A Result 1",
+      "input": "B Property 1",
+      "startId": "12345678-1111-1111-1111-123456789abc",
+      "endId": "12345678-2222-2222-2222-123456789abc",
+      "inputMetadata": {},
+      "outputMetadata": {}
+    },
+    {
+      "type": 2,
+      "output": "A Result 2",
+      "input": "B Property 1",
+      "startId": "12345678-1111-1111-1111-123456789abc",
+      "endId": "12345678-3333-3333-3333-123456789abc",
+      "inputMetadata": {},
+      "outputMetadata": {}
+    },
+    {
+      "type": 1,
       "output": "B Output 1",
       "input": "B Input 1",
       "startId": "12345678-2222-2222-2222-123456789abc",
@@ -48,6 +78,7 @@
       "outputMetadata": {}
     },
     {
+      "type": 1,
       "output": "B Output 2",
       "input": "B Input 1",
       "startId": "12345678-2222-2222-2222-123456789abc",
@@ -56,6 +87,16 @@
       "outputMetadata": {}
     },
     {
+      "type": 2,
+      "output": "B Result 2",
+      "input": "B Property 2",
+      "startId": "12345678-2222-2222-2222-123456789abc",
+      "endId": "12345678-2222-2222-2222-123456789abc",
+      "inputMetadata": {},
+      "outputMetadata": {}
+    },
+    {
+      "type": 1,
       "output": "B Output 1",
       "input": "B Input 1",
       "startId": "12345678-3333-3333-3333-123456789abc",
@@ -64,12 +105,73 @@
       "outputMetadata": {}
     },
     {
+      "type": 1,
       "output": "B Output 2",
       "input": "A Input 1",
       "startId": "12345678-3333-3333-3333-123456789abc",
       "endId": "12345678-4444-4444-4444-123456789abc",
       "inputMetadata": {},
       "outputMetadata": {}
+    },
+    {
+      "type": 2,
+      "output": "B Result 1",
+      "input": "A Property 2",
+      "startId": "12345678-3333-3333-3333-123456789abc",
+      "endId": "12345678-1111-1111-1111-123456789abc",
+      "inputMetadata": {},
+      "outputMetadata": {}
+    },
+    {
+      "type": 2,
+      "output": "B Result 2",
+      "input": "A Property 2",
+      "startId": "12345678-3333-3333-3333-123456789abc",
+      "endId": "12345678-1111-1111-1111-123456789abc",
+      "inputMetadata": {},
+      "outputMetadata": {}
+    }
+  ],
+  "propertyValues": [
+    {
+      "value": "1",
+      "name": "A Property 1",
+      "function": "12345678-1111-1111-1111-123456789abc"
+    },
+    {
+      "value": "First Property 2",
+      "name": "A Property 2",
+      "function": "12345678-1111-1111-1111-123456789abc"
+    },
+    {
+      "value": "Second Property 1",
+      "name": "B Property 1",
+      "function": "12345678-2222-2222-2222-123456789abc"
+    },
+    {
+      "value": "2",
+      "name": "B Property 2",
+      "function": "12345678-2222-2222-2222-123456789abc"
+    },
+    {
+      "value": "Third Property 1",
+      "name": "B Property 1",
+      "function": "12345678-3333-3333-3333-123456789abc"
+    },
+    {
+      "value": "3",
+      "name": "B Property 2",
+      "function": "12345678-3333-3333-3333-123456789abc"
+    },
+    {
+      "value": "4",
+      "name": "A Property 1",
+      "function": "12345678-4444-4444-4444-123456789abc"
+    },
+    {
+      "value": "Fourth Property 2",
+      "name": "A Property 2",
+      "function": "12345678-4444-4444-4444-123456789abc"
     }
   ],
   "metadata": {

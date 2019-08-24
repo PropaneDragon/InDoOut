@@ -9,7 +9,7 @@ namespace InDoOut_Core.Entities.Functions
     /// completed, and can be used to set <see cref="Variables.IVariable"/> values which can then be
     /// used to set <see cref="IProperty"/> values on other functions.
     /// </summary>
-    public interface IResult : INamedEntity, IValue, ITriggerable<IFunction>, IConnectable<IProperty>
+    public interface IResult : IOutputable, INamedEntity, IValue, ITriggerable<IFunction>, IConnectable<IProperty>
     {
         /// <summary>
         /// Whether the result has a value set on it or not.

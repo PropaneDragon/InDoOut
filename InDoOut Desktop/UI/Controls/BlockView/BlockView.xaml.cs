@@ -326,6 +326,41 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
                             }
                         }
                     }
+
+                    foreach (var result in function.Results)
+                    {
+                        foreach (var property in result.Connections)
+                        {
+                            if (functionToUIFunctionMap.ContainsKey(function) && functionToUIFunctionMap.ContainsKey(property.Parent))
+                            {
+                                var startUiFunction = functionToUIFunctionMap[function];
+                                var endUiFunction = functionToUIFunctionMap[property.Parent];
+
+                                if (startUiFunction != null && endUiFunction != null)
+                                {
+                                    var uiResult = startUiFunction.Results.FirstOrDefault(uiOutput => uiOutput.AssociatedResult == result);
+                                    var uiProperty = endUiFunction.Properties.FirstOrDefault(uiInput => uiInput.AssociatedProperty == property);
+
+                                    if (uiResult != null && uiProperty != null)
+                                    {
+                                        var connection = Create(uiResult, uiProperty);
+
+                                        if (ExtractMetadataValue(result, "x", out var outputX) && ExtractMetadataValue(result, "y", out var outputY) && ExtractMetadataValue(result, "w", out var outputW) && ExtractMetadataValue(result, "h", out var outputH) &&
+                                            ExtractMetadataValue(property, "x", out var inputX) && ExtractMetadataValue(property, "y", out var inputY) && ExtractMetadataValue(property, "w", out var inputW) && ExtractMetadataValue(property, "h", out var inputH))
+                                        {
+                                            var outputArea = new Rect(outputX, outputY, outputW, outputH);
+                                            var inputArea = new Rect(inputX, inputY, inputW, inputH);
+                                            var outputCentre = outputArea.TopLeft + ((outputArea.BottomRight - outputArea.TopLeft) / 2d);
+                                            var inputCentre = inputArea.TopLeft + ((inputArea.BottomRight - inputArea.TopLeft) / 2d);
+
+                                            connection.Start = GetBestSide(outputArea, inputCentre);
+                                            connection.End = GetBestSide(inputArea, outputCentre);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

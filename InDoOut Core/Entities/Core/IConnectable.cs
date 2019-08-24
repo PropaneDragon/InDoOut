@@ -14,6 +14,11 @@ namespace InDoOut_Core.Entities.Core
         /// <param name="entity">The entity to check.</param>
         /// <returns>Whether or not the given <see cref="IEntity"/> can be connected.</returns>
         bool CanAcceptConnection(IEntity entity);
+
+        /// <summary>
+        /// The connections this object has.
+        /// </summary>
+        List<ITriggerable> RawConnections { get; }
     }
 
     /// <summary>

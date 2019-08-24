@@ -28,6 +28,11 @@ namespace InDoOut_Core.Entities.Functions
         public IVariable AssociatedVariable { get; set; } = null;
 
         /// <summary>
+        /// The parent this property belongs to.
+        /// </summary>
+        public IFunction Parent => Connections.FirstOrDefault();
+
+        /// <summary>
         /// The full computed value of the property. If <see cref="AssociatedVariable"/> is set it will use the
         /// value assigned to the variable, rather than <see cref="RawValue"/>.
         /// </summary>

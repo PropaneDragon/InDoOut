@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace InDoOut_Core.Entities.Core
@@ -19,6 +20,11 @@ namespace InDoOut_Core.Entities.Core
         /// The current running state of this entity.
         /// </summary>
         public bool Running => _runner != null && (_runner.Status == TaskStatus.Running || _runner.Status == TaskStatus.WaitingToRun || _runner.Status == TaskStatus.WaitingForChildrenToComplete);
+
+        /// <summary>
+        /// The connections that this entity has.
+        /// </summary>
+        public List<ITriggerable> RawConnections => Connections.Cast<ITriggerable>().ToList();
 
         /// <summary>
         /// The connections that this entity has.

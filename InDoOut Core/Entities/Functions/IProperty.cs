@@ -9,7 +9,7 @@ namespace InDoOut_Core.Entities.Functions
     /// <see cref="IFunction"/>s to alter their behaviour, or provide
     /// required input values.
     /// </summary>
-    public interface IProperty : INamedEntity, IValue, ITriggerable<IResult>, IConnectable<IFunction>
+    public interface IProperty : IInputable, INamedEntity, IValue, ITriggerable<IResult>, IConnectable<IFunction>
     {
         /// <summary>
         /// Whether or not this property is required for the function to work.
@@ -45,6 +45,11 @@ namespace InDoOut_Core.Entities.Functions
         /// the value of the property to that of the variable when the value is requested.
         /// </summary>
         IVariable AssociatedVariable { get; set; }
+
+        /// <summary>
+        /// The parent of this input.
+        /// </summary>
+        IFunction Parent { get; }
     }
 
     /// <summary>

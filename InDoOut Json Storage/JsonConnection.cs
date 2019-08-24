@@ -1,7 +1,9 @@
-﻿using InDoOut_Core.Entities.Functions;
+﻿using InDoOut_Core.Entities.Core;
+using InDoOut_Core.Entities.Functions;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace InDoOut_Json_Storage
 {
@@ -10,6 +12,31 @@ namespace InDoOut_Json_Storage
     /// </summary>
     public class JsonConnection
     {
+        /// <summary>
+        /// The type of connection this represents.
+        /// </summary>
+        public enum ConnectionType
+        {
+            /// <summary>
+            /// An invalid, unknown connection.
+            /// </summary>
+            Unknown = 0,
+            /// <summary>
+            /// A connection that consists of <see cref="IInput"/> and <see cref="IOutput"/>.
+            /// </summary>
+            InputOutput = 1,
+            /// <summary>
+            /// A connection that consists of <see cref="IProperty"/> and <see cref="IResult"/>.
+            /// </summary>
+            PropertyResult = 2
+        }
+
+        /// <summary>
+        /// The type of connection this represents.
+        /// </summary>
+        [JsonProperty("type")]
+        public ConnectionType TypeOfConnection { get; set; } = ConnectionType.Unknown;
+
         /// <summary>
         /// The name of the output that the connection originates from.
         /// </summary>
@@ -56,9 +83,19 @@ namespace InDoOut_Json_Storage
             if (function != null)
             {
                 var allJsonConnections = new List<JsonConnection>();
-                foreach (var connection in function.Connections)
+
+                foreach (var output in function.Outputs)
                 {
-                    var jsonConnections = CreateFromFunction(function, connection);
+                    var jsonConnections = CreateFromFunction(function, output);
+                    if (jsonConnections != null)
+                    {
+                        allJsonConnections.AddRange(jsonConnections);
+                    }
+                }
+
+                foreach (var result in function.Results)
+                {
+                    var jsonConnections = CreateFromFunction(function, result);
                     if (jsonConnections != null)
                     {
                         allJsonConnections.AddRange(jsonConnections);
@@ -71,17 +108,26 @@ namespace InDoOut_Json_Storage
             return null;
         }
 
-        private static List<JsonConnection> CreateFromFunction(IFunction function, IOutput connection)
+        private static List<JsonConnection> CreateFromFunction(IFunction function, IOutputable outputable)
         {
-            if (function != null && connection != null)
+            if (function != null && outputable != null)
             {
                 var jsonConnections = new List<JsonConnection>();
-                var inputs = connection.Connections;
+                var rawInputs = outputable.RawConnections;
 
-                foreach (var input in inputs)
+                foreach (var rawInput in rawInputs)
                 {
-                    var endFunction = input.Parent;
-                    var jsonConnection = CreateFromFunction(function, connection, endFunction, input);
+                    JsonConnection jsonConnection = null;
+
+                    if (rawInput is IInput input && outputable is IOutput output)
+                    {
+                        jsonConnection = CreateFromFunction(function, output, input.Parent, input, ConnectionType.InputOutput);                        
+                    }
+                    else if (rawInput is IProperty property && outputable is IResult result)
+                    {
+                        jsonConnection = CreateFromFunction(function, result, property.Parent, property, ConnectionType.PropertyResult);
+                    }
+
                     if (jsonConnection != null)
                     {
                         jsonConnections.Add(jsonConnection);
@@ -94,22 +140,26 @@ namespace InDoOut_Json_Storage
             return null;
         }
 
-        private static JsonConnection CreateFromFunction(IFunction start, IOutput output, IFunction end, IInput input)
+        private static JsonConnection CreateFromFunction(IFunction start, IOutputable outputable, IFunction end, IInputable inputable, ConnectionType connectionType)
         {
-            if (start != null && output != null && end != null && input != null)
+            if (start != null && outputable != null && end != null && inputable != null)
             {
-                return new JsonConnection()
+                if (outputable is INamedEntity namedOutput && inputable is INamedEntity namedInput)
                 {
-                    StartFunctionId = start.Id,
-                    EndFunctionId = end.Id,
-                    InputName = input.Name,
-                    OutputName = output.Name,
-                    InputMetadata = input.Metadata,
-                    OutputMetadata = output.Metadata
-                };
+                    return new JsonConnection()
+                    {
+                        TypeOfConnection = connectionType,
+                        StartFunctionId = start.Id,
+                        EndFunctionId = end.Id,
+                        InputName = namedInput.Name,
+                        OutputName = namedOutput.Name,
+                        InputMetadata = namedInput.Metadata,
+                        OutputMetadata = namedOutput.Metadata
+                    };
+                }
             }
 
             return null;
-        }
+        } 
     }
 }

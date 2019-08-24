@@ -28,7 +28,7 @@ namespace InDoOut_Core.Entities.Functions
     /// <see cref="IInput"/> entity and is triggered by a
     /// <see cref="IFunction"/> entity.
     /// </summary>
-    public interface IOutput : INamedEntity, ITriggerable<IFunction>, IConnectable<IInput>
+    public interface IOutput : IOutputable, INamedEntity, ITriggerable<IFunction>, IConnectable<IInput>
     {
         /// <summary>
         /// Connect this output to an <see cref="IInput"/>.

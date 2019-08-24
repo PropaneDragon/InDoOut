@@ -25,6 +25,10 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
         {
             if (AssociatedResult != null)
             {
+                AssociatedResult.Metadata["x"] = position.X.ToString();
+                AssociatedResult.Metadata["y"] = position.Y.ToString();
+                AssociatedResult.Metadata["w"] = ActualWidth.ToString();
+                AssociatedResult.Metadata["h"] = ActualHeight.ToString();
             }
         }
 
