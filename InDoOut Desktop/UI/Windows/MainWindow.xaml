@@ -16,6 +16,7 @@
             <background:BackgroundImage Opacity="0.01"/>
         </Grid>
         <blockview:BlockView x:Name="BlockView_Main" />
+        <blockview:Overview x:Name="BlockView_Overview" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="200" Height="150" Margin="20" />
         <core:TitleBar x:Name="TitleBar_Main" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
         <sidebar:Sidebar x:Name="Sidebar_Main" Width="500" HorizontalAlignment="Left" />
         <splash:SplashOverlay x:Name="Splash_Overlay" Visibility="Collapsed" />

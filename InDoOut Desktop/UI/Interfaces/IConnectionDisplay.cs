@@ -5,6 +5,8 @@ namespace InDoOut_Desktop.UI.Interfaces
 {
     public interface IConnectionDisplay
     {
+        List<IUIConnection> UIConnections { get; }
+
         void Remove(IUIConnection output);
 
         IUIConnection Create(IUIConnectionStart start, Point end);

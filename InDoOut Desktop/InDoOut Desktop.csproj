@@ -14,6 +14,7 @@
     <None Remove="Style\MainStyle.xaml" />
     <None Remove="UI\Controls\Background\BackgroundImage.xaml" />
     <None Remove="UI\Controls\BlockView\BlockView.xaml" />
+    <None Remove="UI\Controls\BlockView\Overview.xaml" />
     <None Remove="UI\Controls\CoreEntityRepresentation\UIConnection.xaml" />
     <None Remove="UI\Controls\CoreEntityRepresentation\UIFunction.xaml" />
     <None Remove="UI\Controls\CoreEntityRepresentation\UIFunctionIO.xaml" />

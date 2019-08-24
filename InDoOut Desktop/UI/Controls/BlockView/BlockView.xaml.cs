@@ -36,6 +36,12 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
 
         public Point Offset { get => new Point(Scroll_Content.HorizontalOffset, Scroll_Content.VerticalOffset); set { Scroll_Content.ScrollToHorizontalOffset(value.X); Scroll_Content.ScrollToVerticalOffset(value.Y); } }
 
+        public List<IUIFunction> UIFunctions => FindCanvasChild<IUIFunction>();
+
+        public List<IUIConnection> UIConnections => FindCanvasChild<IUIConnection>();
+
+        public List<FrameworkElement> Elements => FindCanvasChild<FrameworkElement>();
+
         public BlockView()
         {
             InitializeComponent();

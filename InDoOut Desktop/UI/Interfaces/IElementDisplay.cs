@@ -5,6 +5,8 @@ namespace InDoOut_Desktop.UI.Interfaces
 {
     public interface IElementDisplay
     {
+        List<FrameworkElement> Elements { get; }
+
         void Add(FrameworkElement element);
         void Add(FrameworkElement element, Point position);
         void Remove(FrameworkElement element);

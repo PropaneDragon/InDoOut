@@ -21,10 +21,19 @@ namespace InDoOut_Desktop.UI.Windows
         {
             var sidebar = Sidebar_Main;
             var blockView = BlockView_Main;
+            var overview = BlockView_Overview;
 
-            if (sidebar != null && blockView != null)
+            if (blockView != null)
             {
-                sidebar.BlockView = blockView;
+                if (sidebar != null)
+                {
+                    sidebar.BlockView = blockView;
+                }
+
+                if (overview != null)
+                {
+                    overview.AssociatedBlockView = blockView;
+                }
             }
         }
 
