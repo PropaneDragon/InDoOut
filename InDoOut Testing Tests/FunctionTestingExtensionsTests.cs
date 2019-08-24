@@ -63,11 +63,55 @@ namespace InDoOut_Testing_Tests
 
             var startTime = DateTime.UtcNow;
 
-            endFunction.WaitForCompletion(TimeSpan.FromSeconds(1), true);
+            Assert.IsTrue(endFunction.WaitForCompletion(TimeSpan.FromSeconds(1), true));
 
             var waitTime = DateTime.UtcNow - startTime;
 
             Assert.AreEqual(100, waitTime.TotalMilliseconds, 10, $"Total time: {waitTime.TotalMilliseconds}");
+        }
+
+        [TestMethod]
+        public void SetPropertyValue()
+        {
+            var function = new TestFunction();
+            var propertyA = function.AddPropertyPublic(new Property<int>("name a", "", false, 0));
+            var propertyB = function.AddPropertyPublic(new Property<string>("name b", "", false, "default"));
+            var propertyC = function.AddPropertyPublic(new Property<bool>("name c", "", false, false));
+
+            Assert.IsNotNull(propertyA);
+            Assert.IsNotNull(propertyB);
+            Assert.IsNotNull(propertyC);
+
+            Assert.AreEqual("0", propertyA.RawValue);
+            Assert.AreEqual("default", propertyB.RawValue);
+            Assert.AreEqual("False", propertyC.RawValue);
+
+            Assert.IsFalse(function.SetPropertyValue("not valid", "nah"));
+            Assert.IsFalse(function.SetPropertyValue("", "nah"));
+            Assert.IsFalse(function.SetPropertyValue(null, "nah"));
+            Assert.IsFalse(function.SetPropertyValue("name", "nah"));
+
+            Assert.AreEqual("0", propertyA.RawValue);
+            Assert.AreEqual("default", propertyB.RawValue);
+            Assert.AreEqual("False", propertyC.RawValue);
+
+            Assert.IsTrue(function.SetPropertyValue("name a", "85"));
+
+            Assert.AreEqual("85", propertyA.RawValue);
+            Assert.AreEqual("default", propertyB.RawValue);
+            Assert.AreEqual("False", propertyC.RawValue);
+
+            Assert.IsTrue(function.SetPropertyValue("name b", "not default any more"));
+
+            Assert.AreEqual("85", propertyA.RawValue);
+            Assert.AreEqual("not default any more", propertyB.RawValue);
+            Assert.AreEqual("False", propertyC.RawValue);
+
+            Assert.IsTrue(function.SetPropertyValue("name c", "True"));
+
+            Assert.AreEqual("85", propertyA.RawValue);
+            Assert.AreEqual("not default any more", propertyB.RawValue);
+            Assert.AreEqual("True", propertyC.RawValue);
         }
     }
 }

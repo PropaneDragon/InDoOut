@@ -12,7 +12,7 @@
         <member name="M:InDoOut_Testing.TriggerableTestingExtensions.WaitForCompletion(InDoOut_Core.Entities.Core.ITriggerable,System.Boolean)">
             <summary>
             Waits indefinitely (1 day) for <paramref name="triggerable"/> to complete, then continues. This can be used to ensure the running
-            of a particular function is complete before testing outputs.
+            of a particular triggerable is complete before testing outputs.
             </summary>
             <param name="triggerable">The triggerable to wait for.</param>
             <param name="waitForStart">Whether to wait for the function to start first.</param>
@@ -23,9 +23,18 @@
             returns whether it completed in time or not.
             </summary>
             <param name="triggerable">The triggerable to wait for.</param>
-            <param name="timeout">The amount of time to wait for the function to complete.</param>
-            <param name="waitForStart">Whether to wait for the function to start first.</param>
-            <returns>Whether the function completed in time or not.</returns>
+            <param name="timeout">The amount of time to wait for the triggerable to complete.</param>
+            <param name="waitForStart">Whether to wait for the triggerable to start first.</param>
+            <returns>Whether the triggerable completed in time or not.</returns>
+        </member>
+        <member name="M:InDoOut_Testing.TriggerableTestingExtensions.SetPropertyValue(InDoOut_Core.Entities.Functions.IFunction,System.String,System.String)">
+            <summary>
+            Sets the value of a property on the <paramref name="function"/> with the <paramref name="propertyName"/> to <paramref name="propertyValue"/>.
+            </summary>
+            <param name="function">The function to set the property on.</param>
+            <param name="propertyName">The name of the property to set.</param>
+            <param name="propertyValue">The value to set the property to.</param>
+            <returns>Whether the value was successfully set.</returns>
         </member>
     </members>
 </doc>
