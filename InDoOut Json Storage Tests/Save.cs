@@ -1,6 +1,7 @@
 using InDoOut_Core.Entities.Programs;
 using InDoOut_Core.Functions;
 using InDoOut_Desktop_API_Tests.External_Plugin_Testing;
+using InDoOut_Executable_Core.Storage;
 using InDoOut_Json_Storage;
 using InDoOut_Plugins.Loaders;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -211,7 +212,7 @@ namespace InDoOut_Json_Storage_Tests
 
             var storer = new TestProgramJsonStorer(_temporaryPath, new FunctionBuilder(), new LoadedPlugins());
 
-            Assert.IsTrue(storer.SavePublic(jsonProgram));
+            Assert.AreEqual(SaveResult.OK, storer.SavePublic(jsonProgram));
 
             var actualFileData = File.ReadAllText(_temporaryPath);
             var expectedFileData = File.ReadAllText("ExpectedJsonProgramFormat.json");
@@ -274,7 +275,7 @@ namespace InDoOut_Json_Storage_Tests
 
             var storer = new TestProgramJsonStorer(_temporaryPath, new FunctionBuilder(), new LoadedPlugins());
 
-            Assert.IsTrue(storer.Save(program));
+            Assert.AreEqual(SaveResult.OK, storer.Save(program));
 
             var actualFileData = File.ReadAllText(_temporaryPath);
             var expectedFileData = File.ReadAllText("ExpectedJsonProgramFormat.json");

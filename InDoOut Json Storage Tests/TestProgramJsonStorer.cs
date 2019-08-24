@@ -1,4 +1,5 @@
 ﻿using InDoOut_Core.Functions;
+using InDoOut_Executable_Core.Storage;
 using InDoOut_Json_Storage;
 using InDoOut_Plugins.Loaders;
 
@@ -10,7 +11,7 @@ namespace InDoOut_Json_Storage_Tests
         {
         }
 
-        public bool SavePublic(JsonProgram program)
+        public SaveResult SavePublic(JsonProgram program)
         {
             return Save(program);
         }

@@ -1,6 +1,7 @@
 ﻿using InDoOut_Core.Entities.Programs;
 using InDoOut_Core.Functions;
 using InDoOut_Desktop_API_Tests.External_Plugin_Testing;
+using InDoOut_Executable_Core.Storage;
 using InDoOut_Json_Storage;
 using InDoOut_Plugins.Loaders;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -178,7 +179,7 @@ namespace InDoOut_Json_Storage_Tests
             var program = new Program();
 
             Assert.AreNotEqual(new Guid("12345678-1234-1234-1234-123456789abc"), program.Id);
-            Assert.IsTrue(storer.Load(program));
+            Assert.AreEqual(LoadResult.OK, storer.Load(program));
             Assert.AreEqual(new Guid("12345678-1234-1234-1234-123456789abc"), program.Id);
 
             Assert.AreEqual("second", program.Metadata["first"]);
