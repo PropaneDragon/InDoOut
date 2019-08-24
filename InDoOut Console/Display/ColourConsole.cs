@@ -6,14 +6,18 @@ namespace InDoOut_Console.Display
     {
         public static void Write<T>(T value, ConsoleColor colour = ConsoleColor.White) where T : class => WrapColour(() => Console.Write(value), colour);
         public static void Write(ColourBlock block) => Write(block.Value, block.Colour);
-        public static void WriteLine<T>(T value, ConsoleColor colour = ConsoleColor.White) where T : class => WrapColour(() => Console.WriteLine(value), colour);
-        public static void WriteLine(params ColourBlock[] blocks)
+        public static void Write(params ColourBlock[] blocks)
         {
             foreach (var block in blocks)
             {
                 Write(block);
             }
+        }
 
+        public static void WriteLine<T>(T value, ConsoleColor colour = ConsoleColor.White) where T : class => WrapColour(() => Console.WriteLine(value), colour);
+        public static void WriteLine(params ColourBlock[] blocks)
+        {
+            Write(blocks);
             Console.WriteLine();
         }
 

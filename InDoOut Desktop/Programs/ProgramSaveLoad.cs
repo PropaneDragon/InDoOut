@@ -32,12 +32,15 @@ namespace InDoOut_Desktop.Programs
                         if (program != null)
                         {
                             programStorer.FilePath = fileToOpen;
-                            if (programStorer.Load(program))
+
+                            var loadResult = programStorer.Load(program);
+                            if (loadResult == LoadResult.OK)
                             {
                                 return program;
                             }
                             else
                             {
+                                _ = MessageBox.Show(parent, $"The program couldn't be loaded due to an error. ({loadResult})");
                                 _ = programHolder.RemoveProgram(program);
                             }
                         }
@@ -50,6 +53,8 @@ namespace InDoOut_Desktop.Programs
 
         public bool SaveProgramDialog(IProgram program, IProgramStorer programStorer, Window parent = null, string saveLocation = null)
         {
+            var saveResult = SaveResult.Unknown;
+
             if (program != null && programStorer != null)
             {
                 if (saveLocation == null)
@@ -69,20 +74,33 @@ namespace InDoOut_Desktop.Programs
                         var fileToSave = saveDialog.FileName;
                         if (!string.IsNullOrEmpty(fileToSave) && Path.GetExtension(fileToSave) == programStorer.FileExtension)
                         {
-                            return SaveProgram(program, programStorer, fileToSave);
+                            saveResult = SaveProgram(program, programStorer, fileToSave);
                         }
+                        else
+                        {
+                            saveResult = SaveResult.InvalidFileName;
+                        }
+                    }
+                    else
+                    {
+                        saveResult = SaveResult.OK;
                     }
                 }
                 else
                 {
-                    return SaveProgram(program, programStorer, saveLocation);
+                    saveResult = SaveProgram(program, programStorer, saveLocation);
                 }
             }
 
-            return false;
+            if (saveResult != SaveResult.OK)
+            {
+                _ = MessageBox.Show(parent, $"The program couldn't be loaded due to an error. ({saveResult})");
+            }
+
+            return saveResult == SaveResult.OK;
         }
 
-        private bool SaveProgram(IProgram program, IProgramStorer programStorer, string saveLocation)
+        private SaveResult SaveProgram(IProgram program, IProgramStorer programStorer, string saveLocation)
         {
             if (program != null && programStorer != null && !string.IsNullOrEmpty(saveLocation) && Path.GetExtension(saveLocation) == programStorer.FileExtension)
             {
@@ -90,7 +108,7 @@ namespace InDoOut_Desktop.Programs
                 return programStorer.Save(program);
             }
 
-            return false;
+            return SaveResult.InvalidFileName;
         }
     }
 }

@@ -3,6 +3,7 @@ using InDoOut_Core.Functions;
 using InDoOut_Executable_Core.Storage;
 using InDoOut_Plugins.Loaders;
 using Newtonsoft.Json;
+using System;
 using System.IO;
 using System.Runtime.CompilerServices;
 
@@ -46,18 +47,37 @@ namespace InDoOut_Json_Storage
         /// </summary>
         /// <param name="program">The program to load data into.</param>
         /// <returns>The loaded program, or null if invalid.</returns>
-        public bool Load(IProgram program)
+        public LoadResult Load(IProgram program)
         {
             if (program != null)
             {
-                var jsonProgram = Load();
-                if (jsonProgram != null)
+                try
                 {
-                    return jsonProgram.Set(program, FunctionBuilder, LoadedPlugins);
+                    var jsonProgram = Load();
+                    if (jsonProgram != null)
+                    {
+                        return jsonProgram.Set(program, FunctionBuilder, LoadedPlugins) ? LoadResult.OK : LoadResult.MissingData;
+                    }
+                }
+                catch (Exception ex) when (ex is PathTooLongException || ex is DirectoryNotFoundException)
+                {
+                    return LoadResult.InvalidLocation;
+                }
+                catch (IOException)
+                {
+                    return LoadResult.MissingData;
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    return LoadResult.InsufficientPermissions;
+                }
+                catch
+                {
+                    return LoadResult.Unknown;
                 }
             }
 
-            return false;
+            return LoadResult.InvalidFile;
         }
 
         /// <summary>
@@ -65,7 +85,7 @@ namespace InDoOut_Json_Storage
         /// </summary>
         /// <param name="program">The program to save.</param>
         /// <returns>Whether or not the program could be saved to the path.</returns>
-        public bool Save(IProgram program)
+        public SaveResult Save(IProgram program)
         {
             var jsonProgram = JsonProgram.CreateFromProgram(program);
             return Save(jsonProgram);
@@ -76,7 +96,7 @@ namespace InDoOut_Json_Storage
         /// </summary>
         /// <param name="jsonProgram">The program to save.</param>
         /// <returns>Whether or not the program could be saved to the path.</returns>
-        protected bool Save(JsonProgram jsonProgram)
+        protected SaveResult Save(JsonProgram jsonProgram)
         {
             if (!string.IsNullOrEmpty(FilePath) && jsonProgram != null)
             {
@@ -86,12 +106,23 @@ namespace InDoOut_Json_Storage
 
                     File.WriteAllText(FilePath, jsonText);
 
-                    return File.Exists(FilePath);
+                    return File.Exists(FilePath) ? SaveResult.OK : SaveResult.InsufficientPermissions;
                 }
-                catch { }
+                catch (Exception ex) when (ex is PathTooLongException || ex is DirectoryNotFoundException)
+                {
+                    return SaveResult.InvalidLocation;
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    return SaveResult.InsufficientPermissions;
+                }
+                catch
+                {
+                    return SaveResult.Unknown;
+                }
             }
 
-            return false;
+            return SaveResult.InvalidLocation;
         }
 
         /// <summary>
@@ -102,14 +133,10 @@ namespace InDoOut_Json_Storage
         {
             if (!string.IsNullOrEmpty(FilePath) && File.Exists(FilePath))
             {
-                try
-                {
-                    var fileText = File.ReadAllText(FilePath);
-                    var jsonProgram = JsonConvert.DeserializeObject<JsonProgram>(fileText);
+                var fileText = File.ReadAllText(FilePath);
+                var jsonProgram = JsonConvert.DeserializeObject<JsonProgram>(fileText);
 
-                    return jsonProgram;
-                }
-                catch { }
+                return jsonProgram;
             }
 
             return null;

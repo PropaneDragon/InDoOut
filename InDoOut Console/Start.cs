@@ -1,7 +1,9 @@
 ﻿using InDoOut_Console.Display;
+using InDoOut_Console.ProgramView;
 using InDoOut_Core.Entities.Programs;
 using InDoOut_Core.Functions;
 using InDoOut_Executable_Core.Location;
+using InDoOut_Executable_Core.Storage;
 using InDoOut_Json_Storage;
 using InDoOut_Plugins.Loaders;
 using System;
@@ -56,8 +58,9 @@ namespace InDoOut_Console
 
                     var program = new Program();
                     var storage = new ProgramJsonStorer(new FunctionBuilder(), LoadedPlugins.Instance, programToStart);
+                    var loadResult = storage.Load(program);
 
-                    if (storage.Load(program))
+                    if (loadResult == LoadResult.OK)
                     {
                         ColourConsole.WriteInfoLine("Program loaded successfully.", ConsoleColor.Green);
 
@@ -74,39 +77,8 @@ namespace InDoOut_Console
                                 ColourConsole.WriteInfoLine("Program running.", ConsoleColor.Green);
                             }
 
-                            var originalCursorPositionLeft = Console.CursorLeft;
-                            var originalCursorPositionTop = Console.CursorTop;
-                            var currentCursorPositionTop = Console.CursorTop;
-                            var charactersToWrite = 0;
-
-                            while (program.Running)
-                            {
-                                currentCursorPositionTop = Console.CursorTop;
-                                charactersToWrite = Console.BufferWidth * ((currentCursorPositionTop - originalCursorPositionTop) + 1);
-
-                                Console.SetCursorPosition(originalCursorPositionLeft, originalCursorPositionTop);
-                                Console.Write(new string(' ', charactersToWrite));
-                                Console.SetCursorPosition(originalCursorPositionLeft, originalCursorPositionTop);
-
-                                var runningFunctions = program.Functions.Where(function => function.Running);
-
-                                Console.WriteLine();
-                                ColourConsole.WriteInfoLine("Running:");
-
-                                foreach (var runningFunction in runningFunctions)
-                                {
-                                    ColourConsole.WriteLine(new ColourBlock($"{runningFunction.SafeName} ", ConsoleColor.Yellow), new ColourBlock($"[{runningFunction.Id}] ", ConsoleColor.DarkYellow), new ColourBlock($"({runningFunction.State})", ConsoleColor.DarkRed));
-                                }
-
-                                Thread.Sleep(TimeSpan.FromMilliseconds(500));
-                            }
-
-                            currentCursorPositionTop = Console.CursorTop;
-                            charactersToWrite = Console.BufferWidth * ((currentCursorPositionTop - originalCursorPositionTop) + 1);
-
-                            Console.SetCursorPosition(originalCursorPositionLeft, originalCursorPositionTop);
-                            Console.Write(new string(' ', charactersToWrite));
-                            Console.SetCursorPosition(originalCursorPositionLeft, originalCursorPositionTop);
+                            var display = new ProgramDisplay(program);
+                            display.ShowRunStatus();
 
                             ColourConsole.WriteInfoLine("Program complete.", ConsoleColor.Green);
                         }
@@ -117,7 +89,7 @@ namespace InDoOut_Console
                     }
                     else
                     {
-                        ColourConsole.WriteErrorLine("Program could not be loaded due to an error.");
+                        ColourConsole.WriteErrorLine($"Program could not be loaded due to an error. ({loadResult})");
                     }
                 }
                 else

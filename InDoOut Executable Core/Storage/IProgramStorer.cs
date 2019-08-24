@@ -2,6 +2,27 @@
 
 namespace InDoOut_Executable_Core.Storage
 {
+    public enum LoadResult
+    {
+        Unknown = -1,
+        OK = 0,
+        InvalidLocation,
+        InvalidFile,
+        InvalidExtension,
+        InsufficientPermissions,
+        MissingData,
+        WrongVersion
+    }
+
+    public enum SaveResult
+    {
+        Unknown = -1,
+        OK = 0,
+        InvalidLocation,
+        InsufficientPermissions,
+        InvalidFileName
+    }
+
     /// <summary>
     /// Represents an interface that can store a <see cref="IProgram"/> to a storage device, and then
     /// read the data back off again to create the same <see cref="IProgram"/>.
@@ -23,13 +44,13 @@ namespace InDoOut_Executable_Core.Storage
         /// </summary>
         /// <param name="program">The program to save.</param>
         /// <returns>Whether the program saved successfully.</returns>
-        bool Save(IProgram program);
+        SaveResult Save(IProgram program);
 
         /// <summary>
         /// Loads data into a program from storage.
         /// </summary>
         /// <param name="program">The program to load data into.</param>
         /// <returns>The stored program, or null if failed.</returns>
-        bool Load(IProgram program);
+        LoadResult Load(IProgram program);
     }
 }
