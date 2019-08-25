@@ -27,6 +27,70 @@
             <param name="waitForStart">Whether to wait for the triggerable to start first.</param>
             <returns>Whether the triggerable completed in time or not.</returns>
         </member>
+        <member name="M:InDoOut_Testing.TriggerableTestingExtensions.GetInputByName(InDoOut_Core.Entities.Functions.IFunction,System.String)">
+            <summary>
+            Gets an <see cref="T:InDoOut_Core.Entities.Functions.IInput"/> attached to <paramref name="function"/> from the name <paramref name="inputName"/>.
+            </summary>
+            <param name="function">The function to search within.</param>
+            <param name="inputName">The name of the <see cref="T:InDoOut_Core.Entities.Functions.IInput"/> to find.</param>
+            <returns>The found input from the given name. Returns null if nothing has been found.</returns>
+        </member>
+        <member name="M:InDoOut_Testing.TriggerableTestingExtensions.GetOutputByName(InDoOut_Core.Entities.Functions.IFunction,System.String)">
+            <summary>
+            Gets an <see cref="T:InDoOut_Core.Entities.Functions.IOutput"/> attached to <paramref name="function"/> from the name <paramref name="outputName"/>.
+            </summary>
+            <param name="function">The function to search within.</param>
+            <param name="outputName">The name of the <see cref="T:InDoOut_Core.Entities.Functions.IOutput"/> to find.</param>
+            <returns>The found output from the given name. Returns null if nothing has been found.</returns>
+        </member>
+        <member name="M:InDoOut_Testing.TriggerableTestingExtensions.GetPropertyByName(InDoOut_Core.Entities.Functions.IFunction,System.String)">
+            <summary>
+            Gets an <see cref="T:InDoOut_Core.Entities.Functions.IProperty"/> attached to <paramref name="function"/> from the name <paramref name="propertyName"/>.
+            </summary>
+            <param name="function">The function to search within.</param>
+            <param name="propertyName">The name of the <see cref="T:InDoOut_Core.Entities.Functions.IProperty"/> to find.</param>
+            <returns>The found property from the given name. Returns null if nothing has been found.</returns>
+        </member>
+        <member name="M:InDoOut_Testing.TriggerableTestingExtensions.GetResultByName(InDoOut_Core.Entities.Functions.IFunction,System.String)">
+            <summary>
+            Gets an <see cref="T:InDoOut_Core.Entities.Functions.IResult"/> attached to <paramref name="function"/> from the name <paramref name="resultName"/>.
+            </summary>
+            <param name="function">The function to search within.</param>
+            <param name="resultName">The name of the <see cref="T:InDoOut_Core.Entities.Functions.IResult"/> to find.</param>
+            <returns>The found result from the given name. Returns null if nothing has been found.</returns>
+        </member>
+        <member name="M:InDoOut_Testing.TriggerableTestingExtensions.HasInput(InDoOut_Core.Entities.Functions.IFunction,System.String)">
+            <summary>
+            Gets whether a function has an <see cref="T:InDoOut_Core.Entities.Functions.IInput"/> attached to it.
+            </summary>
+            <param name="function">The function to search within.</param>
+            <param name="inputName">The name of the <see cref="T:InDoOut_Core.Entities.Functions.IInput"/> to find.</param>
+            <returns>Whether the function has the requested name.</returns>
+        </member>
+        <member name="M:InDoOut_Testing.TriggerableTestingExtensions.HasOutput(InDoOut_Core.Entities.Functions.IFunction,System.String)">
+            <summary>
+            Gets whether a function has an <see cref="T:InDoOut_Core.Entities.Functions.IOutput"/> attached to it.
+            </summary>
+            <param name="function">The function to search within.</param>
+            <param name="outputName">The name of the <see cref="T:InDoOut_Core.Entities.Functions.IOutput"/> to find.</param>
+            <returns>Whether the function has the requested name.</returns>
+        </member>
+        <member name="M:InDoOut_Testing.TriggerableTestingExtensions.HasProperty(InDoOut_Core.Entities.Functions.IFunction,System.String)">
+            <summary>
+            Gets whether a function has an <see cref="T:InDoOut_Core.Entities.Functions.IProperty"/> attached to it.
+            </summary>
+            <param name="function">The function to search within.</param>
+            <param name="propertyName">The name of the <see cref="T:InDoOut_Core.Entities.Functions.IProperty"/> to find.</param>
+            <returns>Whether the function has the requested name.</returns>
+        </member>
+        <member name="M:InDoOut_Testing.TriggerableTestingExtensions.HasResult(InDoOut_Core.Entities.Functions.IFunction,System.String)">
+            <summary>
+            Gets whether a function has an <see cref="T:InDoOut_Core.Entities.Functions.IResult"/> attached to it.
+            </summary>
+            <param name="function">The function to search within.</param>
+            <param name="resultName">The name of the <see cref="T:InDoOut_Core.Entities.Functions.IResult"/> to find.</param>
+            <returns>Whether the function has the requested name.</returns>
+        </member>
         <member name="M:InDoOut_Testing.TriggerableTestingExtensions.SetPropertyValue(InDoOut_Core.Entities.Functions.IFunction,System.String,System.String)">
             <summary>
             Sets the value of a property on the <paramref name="function"/> with the <paramref name="propertyName"/> to <paramref name="propertyValue"/>.
@@ -35,6 +99,14 @@
             <param name="propertyName">The name of the property to set.</param>
             <param name="propertyValue">The value to set the property to.</param>
             <returns>Whether the value was successfully set.</returns>
+        </member>
+        <member name="M:InDoOut_Testing.TriggerableTestingExtensions.GetResultValue(InDoOut_Core.Entities.Functions.IFunction,System.String)">
+            <summary>
+            Gets the value of a result from the result name.
+            </summary>
+            <param name="function">The function to get the result from.</param>
+            <param name="resultName">The name of the result to return the value of.</param>
+            <returns>The value of the found result. Returns null if no result is found.</returns>
         </member>
     </members>
 </doc>

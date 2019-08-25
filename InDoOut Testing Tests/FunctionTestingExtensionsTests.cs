@@ -113,5 +113,70 @@ namespace InDoOut_Testing_Tests
             Assert.AreEqual("not default any more", propertyB.RawValue);
             Assert.AreEqual("True", propertyC.RawValue);
         }
+
+        [TestMethod]
+        public void GetResultValue()
+        {
+            var function = new TestFunction();
+            var resultA = function.AddResultPublic(new Result("result A", "", "result A value"));
+            var resultB = function.AddResultPublic(new Result("result B", "", "result B value"));
+            var resultC = function.AddResultPublic(new Result("result C", "", "result C value"));
+
+            Assert.IsNotNull(resultA);
+            Assert.IsNotNull(resultB);
+            Assert.IsNotNull(resultC);
+
+            Assert.AreEqual("result A value", function.GetResultValue("result A"));
+            Assert.AreEqual("result B value", function.GetResultValue("result B"));
+            Assert.AreEqual("result C value", function.GetResultValue("result C"));
+
+            resultA.RawValue = "another value A";
+            resultB.RawValue = "another value B";
+            resultC.RawValue = "another value C";
+
+            Assert.AreEqual("another value A", function.GetResultValue("result A"));
+            Assert.AreEqual("another value B", function.GetResultValue("result B"));
+            Assert.AreEqual("another value C", function.GetResultValue("result C"));
+
+            Assert.IsNull(function.GetResultValue("not a result name"));
+        }
+
+        [TestMethod]
+        public void Getters()
+        {
+            var function = new TestFunction();
+            var defaultInput = function.CreateInputPublic();
+            var input = function.CreateInputPublic("input name");
+            var defaultOutput = function.CreateOutputPublic();
+            var output = function.CreateOutputPublic("output name");
+            var property1 = function.AddPropertyPublic(new Property<string>("property name", ""));
+            var property2 = function.AddPropertyPublic(new Property<string>("another property name", ""));
+            var result1 = function.AddResultPublic(new Result("result name", ""));
+            var result2 = function.AddResultPublic(new Result("another result name", ""));
+
+            Assert.AreEqual(defaultInput, function.GetInputByName("Input"));
+            Assert.AreEqual(input, function.GetInputByName("input name"));
+            Assert.IsNull(function.GetInputByName("a name that doesn't exist"));
+            Assert.IsNull(function.GetInputByName(""));
+            Assert.IsNull(function.GetInputByName(null));
+
+            Assert.AreEqual(defaultOutput, function.GetOutputByName("Output"));
+            Assert.AreEqual(output, function.GetOutputByName("output name"));
+            Assert.IsNull(function.GetOutputByName("a name that doesn't exist"));
+            Assert.IsNull(function.GetOutputByName(""));
+            Assert.IsNull(function.GetOutputByName(null));
+
+            Assert.AreEqual(property1, function.GetPropertyByName("property name"));
+            Assert.AreEqual(property2, function.GetPropertyByName("another property name"));
+            Assert.IsNull(function.GetPropertyByName("a name that doesn't exist"));
+            Assert.IsNull(function.GetPropertyByName(""));
+            Assert.IsNull(function.GetPropertyByName(null));
+
+            Assert.AreEqual(result1, function.GetResultByName("result name"));
+            Assert.AreEqual(result2, function.GetResultByName("another result name"));
+            Assert.IsNull(function.GetResultByName("a name that doesn't exist"));
+            Assert.IsNull(function.GetResultByName(""));
+            Assert.IsNull(function.GetResultByName(null));
+        }
     }
 }

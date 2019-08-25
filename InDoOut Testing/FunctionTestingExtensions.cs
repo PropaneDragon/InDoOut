@@ -1,6 +1,8 @@
-﻿using InDoOut_Core.Entities.Core;
+﻿using InDoOut_Core.Basic;
+using InDoOut_Core.Entities.Core;
 using InDoOut_Core.Entities.Functions;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
@@ -19,7 +21,7 @@ namespace InDoOut_Testing
         /// <param name="waitForStart">Whether to wait for the function to start first.</param>
         public static void WaitForCompletion(this ITriggerable triggerable, bool waitForStart = false)
         {
-            WaitForCompletion(triggerable, TimeSpan.FromDays(1), waitForStart);
+            _ = WaitForCompletion(triggerable, TimeSpan.FromDays(1), waitForStart);
         }
 
         /// <summary>
@@ -56,6 +58,70 @@ namespace InDoOut_Testing
         }
 
         /// <summary>
+        /// Gets an <see cref="IInput"/> attached to <paramref name="function"/> from the name <paramref name="inputName"/>.
+        /// </summary>
+        /// <param name="function">The function to search within.</param>
+        /// <param name="inputName">The name of the <see cref="IInput"/> to find.</param>
+        /// <returns>The found input from the given name. Returns null if nothing has been found.</returns>
+        public static IInput GetInputByName(this IFunction function, string inputName) => FindByName(function.Inputs, inputName);
+
+        /// <summary>
+        /// Gets an <see cref="IOutput"/> attached to <paramref name="function"/> from the name <paramref name="outputName"/>.
+        /// </summary>
+        /// <param name="function">The function to search within.</param>
+        /// <param name="outputName">The name of the <see cref="IOutput"/> to find.</param>
+        /// <returns>The found output from the given name. Returns null if nothing has been found.</returns>
+        public static IOutput GetOutputByName(this IFunction function, string outputName) => FindByName(function.Outputs, outputName);
+
+        /// <summary>
+        /// Gets an <see cref="IProperty"/> attached to <paramref name="function"/> from the name <paramref name="propertyName"/>.
+        /// </summary>
+        /// <param name="function">The function to search within.</param>
+        /// <param name="propertyName">The name of the <see cref="IProperty"/> to find.</param>
+        /// <returns>The found property from the given name. Returns null if nothing has been found.</returns>
+        public static IProperty GetPropertyByName(this IFunction function, string propertyName) => FindByName(function.Properties, propertyName);
+
+        /// <summary>
+        /// Gets an <see cref="IResult"/> attached to <paramref name="function"/> from the name <paramref name="resultName"/>.
+        /// </summary>
+        /// <param name="function">The function to search within.</param>
+        /// <param name="resultName">The name of the <see cref="IResult"/> to find.</param>
+        /// <returns>The found result from the given name. Returns null if nothing has been found.</returns>
+        public static IResult GetResultByName(this IFunction function, string resultName) => FindByName(function.Results, resultName);
+
+        /// <summary>
+        /// Gets whether a function has an <see cref="IInput"/> attached to it.
+        /// </summary>
+        /// <param name="function">The function to search within.</param>
+        /// <param name="inputName">The name of the <see cref="IInput"/> to find.</param>
+        /// <returns>Whether the function has the requested name.</returns>
+        public static bool HasInput(this IFunction function, string inputName) => GetInputByName(function, inputName) != null;
+
+        /// <summary>
+        /// Gets whether a function has an <see cref="IOutput"/> attached to it.
+        /// </summary>
+        /// <param name="function">The function to search within.</param>
+        /// <param name="outputName">The name of the <see cref="IOutput"/> to find.</param>
+        /// <returns>Whether the function has the requested name.</returns>
+        public static bool HasOutput(this IFunction function, string outputName) => GetOutputByName(function, outputName) != null;
+
+        /// <summary>
+        /// Gets whether a function has an <see cref="IProperty"/> attached to it.
+        /// </summary>
+        /// <param name="function">The function to search within.</param>
+        /// <param name="propertyName">The name of the <see cref="IProperty"/> to find.</param>
+        /// <returns>Whether the function has the requested name.</returns>
+        public static bool HasProperty(this IFunction function, string propertyName) => GetPropertyByName(function, propertyName) != null;
+
+        /// <summary>
+        /// Gets whether a function has an <see cref="IResult"/> attached to it.
+        /// </summary>
+        /// <param name="function">The function to search within.</param>
+        /// <param name="resultName">The name of the <see cref="IResult"/> to find.</param>
+        /// <returns>Whether the function has the requested name.</returns>
+        public static bool HasResult(this IFunction function, string resultName) => GetResultByName(function, resultName) != null;
+
+        /// <summary>
         /// Sets the value of a property on the <paramref name="function"/> with the <paramref name="propertyName"/> to <paramref name="propertyValue"/>.
         /// </summary>
         /// <param name="function">The function to set the property on.</param>
@@ -64,17 +130,36 @@ namespace InDoOut_Testing
         /// <returns>Whether the value was successfully set.</returns>
         public static bool SetPropertyValue(this IFunction function, string propertyName, string propertyValue)
         {
-            if (function != null && !string.IsNullOrEmpty(propertyName))
+            var foundProperty = function?.GetPropertyByName(propertyName);
+            if (foundProperty != null)
             {
-                var foundProperty = function.Properties.FirstOrDefault(property => property.Name == propertyName);
-                if (foundProperty != null)
-                {
-                    foundProperty.RawValue = propertyValue;
-                    return true;
-                }
+                foundProperty.RawValue = propertyValue;
+                return true;
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Gets the value of a result from the result name.
+        /// </summary>
+        /// <param name="function">The function to get the result from.</param>
+        /// <param name="resultName">The name of the result to return the value of.</param>
+        /// <returns>The value of the found result. Returns null if no result is found.</returns>
+        public static string GetResultValue(this IFunction function, string resultName)
+        {
+            var foundResult = function?.GetResultByName(resultName);
+            if (foundResult != null)
+            {
+                return foundResult.RawValue;
+            }
+
+            return null;
+        }
+
+        private static T FindByName<T>(List<T> names, string name) where T : class, INamed
+        {
+            return names?.FirstOrDefault(named => named.Name == name);
         }
     }
 }
