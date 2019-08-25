@@ -14,7 +14,7 @@ namespace InDoOut_Core_Plugins.Text
 
         public override string Description => "Combines two or more text elements together.";
 
-        public override string Name => "Combine Text";
+        public override string Name => "Combine text";
 
         public override string Group => "Text";
 
