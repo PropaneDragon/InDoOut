@@ -625,6 +625,11 @@
             The parent of this input.
             </summary>
         </member>
+        <member name="T:InDoOut_Core.Entities.Functions.ILoopFunction">
+            <summary>
+            Represents a loop function capabl;e of iterating over indexes.
+            </summary>
+        </member>
         <member name="T:InDoOut_Core.Entities.Functions.Input">
             <summary>
             Inputs are triggered by <see cref="T:InDoOut_Core.Entities.Functions.IOutput"/>s. These intputs are simple connections for
@@ -848,6 +853,42 @@
             <summary>
             Represents a function that is called automatically when the <see cref="T:InDoOut_Core.Entities.Programs.IProgram"/> is started.
             </summary>
+        </member>
+        <member name="T:InDoOut_Core.Entities.Functions.LoopFunction">
+            <summary>
+            A loop function that encapsulates all processing for looping through
+            a series of indexes and populating data for each of them.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Functions.LoopFunction.#ctor">
+            <summary>
+            Creates a basic loop function.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Functions.LoopFunction.Started(InDoOut_Core.Entities.Functions.IInput)">
+            <summary>
+            When the loop function has been triggered.
+            </summary>
+            <param name="triggeredBy">The input that triggered the loop.</param>
+            <returns>The output to trigger on completion.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Functions.LoopFunction.PreprocessItems">
+            <summary>
+            Sets up all items before procesisng the first index.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Functions.LoopFunction.AllItemsComplete">
+            <summary>
+            Tears down all items after processing is complete.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Functions.LoopFunction.PopulateItemDataForIndex(System.Int32)">
+            <summary>
+            Populates item data for a specific index and returns whether there are
+            more indexes to fetch.
+            </summary>
+            <param name="index">The index to process.</param>
+            <returns>Whether there are more indexes to fetch.</returns>
         </member>
         <member name="T:InDoOut_Core.Entities.Functions.Output">
             <summary>
