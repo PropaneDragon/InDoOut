@@ -94,7 +94,7 @@
                             <SolidColorBrush Color="Transparent"/>
                         </Thumb.BorderBrush>
                         <Thumb.Background>
-                            <SolidColorBrush Color="#80FFFFFF"/>
+                            <SolidColorBrush Color="#50FFFFFF"/>
                         </Thumb.Background>
                     </Thumb>
                 </Track.Thumb>
@@ -125,7 +125,7 @@
                             <SolidColorBrush Color="Transparent"/>
                         </Thumb.BorderBrush>
                         <Thumb.Background>
-                            <SolidColorBrush Color="#80FFFFFF"/>
+                            <SolidColorBrush Color="#50FFFFFF"/>
                         </Thumb.Background>
                     </Thumb>
                 </Track.Thumb>
