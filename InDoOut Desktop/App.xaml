@@ -7,6 +7,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Style/MainStyle.xaml" />
+                <ResourceDictionary Source="Style/ScrollBarStyle.xaml" />
                 <ResourceDictionary Source="Style/TitleBarStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

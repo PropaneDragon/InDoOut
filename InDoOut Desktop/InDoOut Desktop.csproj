@@ -12,6 +12,7 @@
     <None Remove="Resources\IDO_Splash_Logo.png" />
     <None Remove="SplashWindow.xaml" />
     <None Remove="Style\MainStyle.xaml" />
+    <None Remove="Style\ScrollBarStyle.xaml" />
     <None Remove="UI\Controls\Background\BackgroundImage.xaml" />
     <None Remove="UI\Controls\BlockView\BlockView.xaml" />
     <None Remove="UI\Controls\BlockView\Overview.xaml" />
