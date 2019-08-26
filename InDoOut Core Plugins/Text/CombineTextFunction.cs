@@ -24,7 +24,7 @@ namespace InDoOut_Core_Plugins.Text
         {
             _ = CreateInput("Combine");
 
-            _output = CreateOutput();
+            _output = CreateOutput("Combined");
             _result = AddResult(new Result("Combined text", "The combined text from the inputs", ""));
 
             for (var count = 1; count <= NUMBER_PROPERTIES_TO_CRETATE; ++count)

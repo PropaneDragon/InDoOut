@@ -19,7 +19,7 @@ namespace InDoOut_Core_Plugins.Text
         public TextLengthFunction()
         {
             _ = CreateInput("Count");
-            _output = CreateOutput();
+            _output = CreateOutput("Counted");
 
             _text = AddProperty(new Property<string>("Text", "The text to count", false, ""));
             _length = AddResult(new Result("Text count", "The number of characters in the text (including spaces).", "0"));

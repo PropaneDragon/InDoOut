@@ -27,7 +27,7 @@ namespace InDoOut_Core_Plugins.Time
             _ = CreateInput("Get current date");
             _timeUtc = CreateInput("Get current UTC date");
 
-            _output = CreateOutput(OutputType.Neutral);
+            _output = CreateOutput("Date retrieved", OutputType.Neutral);
 
             _ = AddResult(_year);
             _ = AddResult(_month);

@@ -23,7 +23,7 @@ namespace InDoOut_Debug_Plugins.Output
 
             _ = CreateInput("Show");
 
-            _output = CreateOutput();
+            _output = CreateOutput("Closed");
         }
 
         protected override IOutput Started(IInput triggeredBy)

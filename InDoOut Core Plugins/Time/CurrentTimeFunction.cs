@@ -26,7 +26,7 @@ namespace InDoOut_Core_Plugins.Time
             _ = CreateInput("Get current time");
             _timeUtc = CreateInput("Get current UTC time");
 
-            _output = CreateOutput(OutputType.Neutral);
+            _output = CreateOutput("Time retreived", OutputType.Neutral);
 
             _ = AddResult(_hour);
             _ = AddResult(_minute);
