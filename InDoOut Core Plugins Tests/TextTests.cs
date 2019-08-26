@@ -5,10 +5,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace InDoOut_Core_Plugins_Tests
 {
     [TestClass]
-    public class CombineTextFunctionTests
+    public class TextTests
     {
         [TestMethod]
-        public void Concatenate()
+        public void CombineText()
         {
             var functionFullTest = new CombineTextFunction();
 

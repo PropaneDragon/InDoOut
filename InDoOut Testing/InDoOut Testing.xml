@@ -108,5 +108,46 @@
             <param name="resultName">The name of the result to return the value of.</param>
             <returns>The value of the found result. Returns null if no result is found.</returns>
         </member>
+        <member name="T:InDoOut_Testing.TestableInput">
+            <summary>
+            A generic input that can track how many times it was activated and the last
+            entity that triggered it.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Testing.TestableInput.Triggered">
+            <summary>
+            Whether this connection was triggered.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Testing.TestableInput.TriggeredCount">
+            <summary>
+            The number of times this connection has been triggered.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Testing.TestableInput.LastTriggeredBy">
+            <summary>
+            The last entity that activated this connection.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Testing.TestableInput.#ctor(InDoOut_Core.Entities.Functions.IFunction,System.String)">
+            <summary>
+            Creates a new testable input
+            </summary>
+            <param name="parent"></param>
+            <param name="name"></param>
+        </member>
+        <member name="M:InDoOut_Testing.TestableInput.Reset(System.Boolean)">
+            <summary>
+            Resets the triggered count and triggered state back to the original
+            values.
+            </summary>
+            <param name="resetCount"></param>
+        </member>
+        <member name="M:InDoOut_Testing.TestableInput.Process(InDoOut_Core.Entities.Functions.IOutput)">
+            <summary>
+            Processes the generic connection and increases the trigger count.
+            </summary>
+            <param name="triggeredBy">The entity that triggered this connection.</param>
+        </member>
     </members>
 </doc>
