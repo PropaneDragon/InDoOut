@@ -5,9 +5,9 @@ namespace InDoOut_Debug_Plugins.Output
 {
     public class ShowValue : Function
     {
-        private Property<string> _value = new Property<string>("Value to show", "The value to display", true, "");
+        private readonly Property<string> _value = new Property<string>("Value to show", "The value to display", true, "");
 
-        private IOutput _output;
+        private readonly IOutput _output;
 
         public override string Name => "Show value";
 

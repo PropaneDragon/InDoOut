@@ -13,7 +13,7 @@ namespace InDoOut_Desktop.UI.Controls.Splash
     {
         private bool _textUpdateNeeded = true;
         private ILoadingTask _taskToRun = null;
-        private DispatcherTimer _uiUpdateTimer = new DispatcherTimer(DispatcherPriority.Normal);
+        private readonly DispatcherTimer _uiUpdateTimer = new DispatcherTimer(DispatcherPriority.Normal);
 
         public SplashOverlay()
         {

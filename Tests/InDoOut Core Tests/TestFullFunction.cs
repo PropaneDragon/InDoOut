@@ -1,5 +1,6 @@
 ﻿using InDoOut_Core.Entities.Functions;
-using System;
+
+#pragma warning disable CS0618 // Type or member is obsolete
 
 namespace InDoOut_Core_Tests
 {
@@ -30,15 +31,15 @@ namespace InDoOut_Core_Tests
 
         public TestFullFunction() : base()
         {
-            AddProperty(IntegerProperty);
-            AddProperty(DoubleProperty);
-            AddProperty(FloatProperty);
-            AddProperty(StringProperty);
+            _ = AddProperty(IntegerProperty);
+            _ = AddProperty(DoubleProperty);
+            _ = AddProperty(FloatProperty);
+            _ = AddProperty(StringProperty);
 
-            AddResult(IntegerResult);
-            AddResult(DoubleResult);
-            AddResult(FloatResult);
-            AddResult(StringResult);
+            _ = AddResult(IntegerResult);
+            _ = AddResult(DoubleResult);
+            _ = AddResult(FloatResult);
+            _ = AddResult(StringResult);
 
             Input = CreateInput();
 
@@ -50,10 +51,10 @@ namespace InDoOut_Core_Tests
         {
             if (IntegerProperty.ValidValue && DoubleProperty.ValidValue && FloatProperty.ValidValue && StringProperty.ValidValue)
             {
-                IntegerResult.ValueFrom(IntegerProperty.BasicValue);
-                DoubleResult.ValueFrom(DoubleProperty.BasicValue);
-                FloatResult.ValueFrom(FloatProperty.BasicValue);
-                StringResult.ValueFrom(StringProperty.BasicValue);
+                _ = IntegerResult.ValueFrom(IntegerProperty.BasicValue);
+                _ = DoubleResult.ValueFrom(DoubleProperty.BasicValue);
+                _ = FloatResult.ValueFrom(FloatProperty.BasicValue);
+                _ = StringResult.ValueFrom(StringProperty.BasicValue);
 
                 return Output;
             }
@@ -62,3 +63,5 @@ namespace InDoOut_Core_Tests
         }
     }
 }
+
+#pragma warning restore CS0618 // Type or member is obsolete

@@ -9,12 +9,12 @@
         private bool _startedBefore = false;
         private int _index = 0;
 
-        private IInput _inputFirstItem = null;
+        private readonly IInput _inputFirstItem = null;
 
-        private IOutput _outputNewItem = null;
-        private IOutput _outputComplete = null;
+        private readonly IOutput _outputNewItem = null;
+        private readonly IOutput _outputComplete = null;
 
-        private IResult _resultCurrentIndex = null;
+        private readonly IResult _resultCurrentIndex = null;
 
         /// <summary>
         /// Creates a basic loop function.

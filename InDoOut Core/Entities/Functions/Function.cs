@@ -14,10 +14,10 @@ namespace InDoOut_Core.Entities.Functions
     /// </summary>
     public abstract class Function : InteractiveEntity<IOutput, IInput>, IFunction
     {
-        private object _stateLock = new object();
-        private object _inputsLock = new object();
-        private object _propertiesLock = new object();
-        private object _resultsLock = new object();
+        private readonly object _stateLock = new object();
+        private readonly object _inputsLock = new object();
+        private readonly object _propertiesLock = new object();
+        private readonly object _resultsLock = new object();
 
         private State _state = State.Unknown;
         private List<IInput> _inputs = new List<IInput>();

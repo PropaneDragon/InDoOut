@@ -6,8 +6,8 @@ namespace InDoOut_Desktop.Actions
     internal class DraggableDragAction : DragAction
     {
         private Point _initialControlPosition = new Point();
-        private IDraggable _draggable = null;
-        private IBlockView _blockView = null;
+        private readonly IDraggable _draggable = null;
+        private readonly IBlockView _blockView = null;
 
         public DraggableDragAction(IBlockView blockView, IDraggable draggable, Point mousePosition)
         {

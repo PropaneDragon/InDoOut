@@ -5,7 +5,7 @@ namespace InDoOut_Core_Plugins.Maths
 {
     public class RoundFunction : AbstractSingularArithmeticFunction
     {
-        private Property<int> _decimalPlaces = new Property<int>("Decimal places", "The number of decimal places to round to.", true, 0);
+        private readonly Property<int> _decimalPlaces = new Property<int>("Decimal places", "The number of decimal places to round to.", true, 0);
 
         public override string Description => "Rounds a given value to the nearest number and decimal place.";
 

@@ -14,7 +14,7 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
     public partial class Overview : UserControl
     {
         private IBlockView _blockView = null;
-        private DispatcherTimer _updateTimer = new DispatcherTimer(DispatcherPriority.Normal);
+        private readonly DispatcherTimer _updateTimer = new DispatcherTimer(DispatcherPriority.Normal);
 
         public IBlockView AssociatedBlockView { get => _blockView; set => ChangeBlockView(value); }
 

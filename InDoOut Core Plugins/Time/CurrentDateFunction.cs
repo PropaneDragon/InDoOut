@@ -5,14 +5,14 @@ namespace InDoOut_Core_Plugins.Time
 {
     public class CurrentDateFunction : Function
     {
-        private IInput _timeUtc;
-        private IOutput _output;
+        private readonly IInput _timeUtc;
+        private readonly IOutput _output;
 
-        private Result _year = new Result("Year", "The current year.");
-        private Result _month = new Result("Month", "The current month.");
-        private Result _day = new Result("Day", "The current day.");
-        private Result _dayOfYear = new Result("Day of year", "The current day of the year.");
-        private Result _dayOfWeek = new Result("Day of week", "The current day of the week.");
+        private readonly Result _year = new Result("Year", "The current year.");
+        private readonly Result _month = new Result("Month", "The current month.");
+        private readonly Result _day = new Result("Day", "The current day.");
+        private readonly Result _dayOfYear = new Result("Day of year", "The current day of the year.");
+        private readonly Result _dayOfWeek = new Result("Day of week", "The current day of the week.");
 
         public override string Description => "Gets the current date.";
 

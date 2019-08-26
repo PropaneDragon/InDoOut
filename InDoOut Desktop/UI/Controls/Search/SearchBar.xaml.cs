@@ -6,7 +6,7 @@ namespace InDoOut_Desktop.UI.Controls.Search
 {
     public partial class SearchBar : UserControl, ISearch
     {
-        private string _slogan = "Search";
+        private readonly string _slogan = "Search";
 
         public event EventHandler<SearchArgs> SearchRequested;
 

@@ -6,7 +6,7 @@ namespace InDoOut_Desktop.Actions
 {
     internal class BlockViewRestingAction : Action
     {
-        private IBlockView _blockView = null;
+        private readonly IBlockView _blockView = null;
 
         public BlockViewRestingAction(IBlockView blockView)
         {

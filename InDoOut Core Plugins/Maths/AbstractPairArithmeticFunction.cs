@@ -4,13 +4,13 @@ namespace InDoOut_Core_Plugins.Maths
 {
     public abstract class AbstractPairArithmeticFunction : Function
     {
-        private Property<double> _firstNumber;
-        private Property<double> _secondNumber;
+        private readonly Property<double> _firstNumber;
+        private readonly Property<double> _secondNumber;
 
-        private Result _result = new Result("Result value", "The result of the calculation", "0");
+        private readonly Result _result = new Result("Result value", "The result of the calculation", "0");
 
-        private IOutput _outputCalculated;
-        private IOutput _outputFailed;
+        private readonly IOutput _outputCalculated;
+        private readonly IOutput _outputFailed;
 
         public override string Group => "Maths";
 

@@ -5,6 +5,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Threading;
 
+#pragma warning disable CS0618 // Type or member is obsolete
+
 namespace InDoOut_Testing_Tests
 {
     [TestClass]
@@ -180,3 +182,5 @@ namespace InDoOut_Testing_Tests
         }
     }
 }
+
+#pragma warning restore CS0618 // Type or member is obsolete

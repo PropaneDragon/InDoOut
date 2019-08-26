@@ -15,11 +15,11 @@ namespace InDoOut_Core.Entities.Functions
     /// </summary>
     public class Result : InteractiveEntity<IProperty, IFunction>, IResult
     {
-        private object _variableNameLock = new object();
+        private readonly object _variableNameLock = new object();
 
         private string _variableName = Guid.NewGuid().ToString();
 
-        private Value _value = new Value();
+        private readonly Value _value = new Value();
 
         /// <summary>
         /// Whether this result contains a valid value, in order to set a corrisponding

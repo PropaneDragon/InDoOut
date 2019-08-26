@@ -8,7 +8,7 @@ namespace InDoOut_Core.Basic
     /// </summary>
     public class Value : IValue
     {
-        private object _rawValueLock = new object();
+        private readonly object _rawValueLock = new object();
         private string _rawValue = "";
 
         /// <summary>

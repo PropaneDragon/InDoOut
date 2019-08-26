@@ -6,10 +6,10 @@ namespace InDoOut_Desktop.Loading
 {
     internal abstract class LoadingTask : ILoadingTask
     {
-        private object _nameLock = new object();
+        private readonly object _nameLock = new object();
 
         private string _name = null;
-        private List<ILoadingTask> _childTasks = new List<ILoadingTask>();
+        private readonly List<ILoadingTask> _childTasks = new List<ILoadingTask>();
 
         public event EventHandler<LoadingTaskEventArgs> NameChanged;
 

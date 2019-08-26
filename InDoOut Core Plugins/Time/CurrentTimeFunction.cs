@@ -5,13 +5,13 @@ namespace InDoOut_Core_Plugins.Time
 {
     public class CurrentTimeFunction : Function
     {
-        private IInput _timeUtc;
-        private IOutput _output;
+        private readonly IInput _timeUtc;
+        private readonly IOutput _output;
 
-        private Result _hour = new Result("Hour", "The current hour.");
-        private Result _minute = new Result("Minute", "The current minute.");
-        private Result _second = new Result("Second", "The current second.");
-        private Result _millisecond = new Result("Millisecond", "The current millisecond.");
+        private readonly Result _hour = new Result("Hour", "The current hour.");
+        private readonly Result _minute = new Result("Minute", "The current minute.");
+        private readonly Result _second = new Result("Second", "The current second.");
+        private readonly Result _millisecond = new Result("Millisecond", "The current millisecond.");
 
         public override string Description => "Gets the current time.";
 

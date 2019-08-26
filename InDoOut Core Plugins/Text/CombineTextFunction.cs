@@ -8,9 +8,9 @@ namespace InDoOut_Core_Plugins.Text
     {
         private static readonly int NUMBER_PROPERTIES_TO_CRETATE = 10;
 
-        private IOutput _output = null;
-        private IResult _result = null;
-        private List<IProperty> _properties = new List<IProperty>();
+        private readonly IOutput _output = null;
+        private readonly IResult _result = null;
+        private readonly List<IProperty> _properties = new List<IProperty>();
 
         public override string Description => "Combines two or more text elements together.";
 
@@ -35,7 +35,7 @@ namespace InDoOut_Core_Plugins.Text
 
         protected override IOutput Started(IInput triggeredBy)
         {
-            _result.RawValue = string.Concat(_properties.Select(property => property.RawValue));
+            _result.RawValue = string.Concat(_properties.Select(property => property.RawComputedValue));
             return _output;
         }
     }

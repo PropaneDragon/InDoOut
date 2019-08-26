@@ -6,7 +6,7 @@ namespace InDoOut_Desktop.Programs
 {
     internal class ProgramHolder : Singleton<ProgramHolder>, IProgramHolder
     {
-        private List<IProgram> _programs = new List<IProgram>();
+        private readonly List<IProgram> _programs = new List<IProgram>();
 
         protected List<IProgram> Programs => _programs;
 

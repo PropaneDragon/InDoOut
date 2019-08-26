@@ -4,8 +4,8 @@ namespace InDoOut_Core_Plugins.Numeric
 {
     public class EqualToFunction : Function
     {
-        private IOutput _equal = null, _different = null;
-        private IProperty<double> _firstNumber = null, _secondNumber = null;
+        private readonly IOutput _equal = null, _different = null;
+        private readonly IProperty<double> _firstNumber = null, _secondNumber = null;
 
         public override string Description => "Checks whether two numbers are the same as each other.";
 

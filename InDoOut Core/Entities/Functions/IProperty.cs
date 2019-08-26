@@ -1,6 +1,7 @@
 ﻿using InDoOut_Core.Basic;
 using InDoOut_Core.Entities.Core;
 using InDoOut_Core.Variables;
+using System;
 
 namespace InDoOut_Core.Entities.Functions
 {
@@ -62,6 +63,7 @@ namespace InDoOut_Core.Entities.Functions
         /// <summary>
         /// The value of this property.
         /// </summary>
+        [Obsolete("RawValue does not contain the full computed value from any Results linked to the Property. Perhaps you meant to use FullValue instead? If this is intended, please ignore.")]
         T BasicValue { get; set; }
 
         /// <summary>

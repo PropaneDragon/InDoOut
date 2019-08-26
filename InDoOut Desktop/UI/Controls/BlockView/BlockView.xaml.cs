@@ -17,7 +17,7 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
 {
     public partial class BlockView : UserControl, IBlockView, IScrollable
     {
-        private ActionHandler _actionHandler = null;
+        private readonly ActionHandler _actionHandler = null;
         private IProgram _currentProgram = null;
         private BlockViewMode _currentViewMode = BlockViewMode.IO;
 

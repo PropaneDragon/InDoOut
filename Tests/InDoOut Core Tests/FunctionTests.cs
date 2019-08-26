@@ -4,6 +4,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Threading;
 
+#pragma warning disable CS0618 // Type or member is obsolete
+
 namespace InDoOut_Core_Tests
 {
     [TestClass]
@@ -133,8 +135,9 @@ namespace InDoOut_Core_Tests
             var inputA = endFunction.CreateInputPublic("A");
             var inputB = endFunction.CreateInputPublic("B");
 
-            outputA.Connect(inputA);
-            outputB.Connect(inputB);
+
+            _ = outputA.Connect(inputA);
+            _ = outputB.Connect(inputB);
 
             Assert.IsNull(endFunction.LastInput);
 
@@ -516,10 +519,11 @@ namespace InDoOut_Core_Tests
         {
             var function = new ExceptionFunction();
 
-            Assert.ThrowsException<Exception>(() => function.Name);
-            Assert.ThrowsException<Exception>(() => function.Description);
-            Assert.ThrowsException<Exception>(() => function.Group);
-            Assert.ThrowsException<Exception>(() => function.Keywords);
+
+            _ = Assert.ThrowsException<Exception>(() => function.Name);
+            _ = Assert.ThrowsException<Exception>(() => function.Description);
+            _ = Assert.ThrowsException<Exception>(() => function.Group);
+            _ = Assert.ThrowsException<Exception>(() => function.Keywords);
 
             Assert.IsNull(function.SafeName);
             Assert.IsNull(function.SafeDescription);
@@ -556,3 +560,5 @@ namespace InDoOut_Core_Tests
         }
     }
 }
+
+#pragma warning restore CS0618 // Type or member is obsolete

@@ -17,7 +17,7 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
         private DispatcherTimer _updateTimer = new DispatcherTimer(DispatcherPriority.Normal);
         private UIFunctionDisplayMode _displayMode = UIFunctionDisplayMode.None;
         private IFunction _function = null;
-        private List<IUIConnection> _cachedVisualConnections = new List<IUIConnection>();
+        private readonly List<IUIConnection> _cachedVisualConnections = new List<IUIConnection>();
 
         public IFunction AssociatedFunction { get => _function; set => SetFunction(value); }
 

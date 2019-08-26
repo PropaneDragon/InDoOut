@@ -14,7 +14,7 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
             Neutral
         }
 
-        private IOType _ioType = IOType.None;
+        private readonly IOType _ioType = IOType.None;
 
         public string Text { get => Text_IOName.Text; set => Text_IOName.Text = value; }
         public IOType Type { get => _ioType; set => SetIOType(value); }

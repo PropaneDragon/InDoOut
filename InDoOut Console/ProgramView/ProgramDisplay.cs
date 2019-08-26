@@ -8,7 +8,7 @@ namespace InDoOut_Console.ProgramView
 {
     internal class ProgramDisplay
     {
-        private IProgram _program = null;
+        private readonly IProgram _program = null;
 
         public ProgramDisplay(IProgram program)
         {

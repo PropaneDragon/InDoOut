@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using InDoOut_Core.Basic;
 using InDoOut_Core.Entities.Core;
@@ -14,7 +13,7 @@ namespace InDoOut_Core.Entities.Functions
     /// </summary>
     public class Property<T> : InteractiveEntity<IFunction, IResult>, IProperty<T>
     {
-        private Value _value = new Value();
+        private readonly Value _value = new Value();
 
         /// <summary>
         /// A safe way of getting the <see cref="Description"/> of a property without exceptions.
@@ -52,6 +51,7 @@ namespace InDoOut_Core.Entities.Functions
         /// The value of this property, as the given type <typeparamref name="T"/>. This is similar to <see cref="RawValue"/>,
         /// but is automatically converted to the type of this property.
         /// </summary>
+        [Obsolete("BasicValue does not contain the full computed value from any Results linked to the Property. Perhaps you meant to use FullValue instead? If this is intended, please ignore.")]
         public T BasicValue { get => TryGet.ValueOrDefault(() => _value.ConvertFromString<T>(RawValue)); set => RawValue = TryGet.ValueOrDefault(() => _value.ConvertToString(value)); }
 
         /// <summary>
@@ -68,6 +68,7 @@ namespace InDoOut_Core.Entities.Functions
         /// <summary>
         /// Gets the raw, unprocessed value of this property.
         /// </summary>
+        [Obsolete("RawValue does not contain the full computed value from any Results linked to the Property. Perhaps you meant to use RawComputedValue instead? If this is intended, please ignore.")]
         public string RawValue { get => _value.RawValue; set => _value.RawValue = value; }
 
         /// <summary>
@@ -87,7 +88,10 @@ namespace InDoOut_Core.Entities.Functions
             Name = name;
             Description = description;
             Required = required;
+
+#pragma warning disable CS0618 // Type or member is obsolete
             BasicValue = initialValue;
+#pragma warning restore CS0618 // Type or member is obsolete
         }
 
         /// <summary>

@@ -6,7 +6,7 @@ namespace InDoOut_Desktop.Actions
     internal class ElementDragAction : DragAction
     {
         private Point _initialControlPosition = new Point();
-        private UIElement _element = null;
+        private readonly UIElement _element = null;
 
         public ElementDragAction(UIElement _, Point _1)
         {

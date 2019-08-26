@@ -6,7 +6,7 @@ namespace InDoOut_Core_Plugins.Time
 {
     public class CurrentDayFunction : Function
     {
-        private Dictionary<DayOfWeek, IOutput> _outputs = new Dictionary<DayOfWeek, IOutput>();
+        private readonly Dictionary<DayOfWeek, IOutput> _outputs = new Dictionary<DayOfWeek, IOutput>();
 
         public override string Description => "Triggers the current day.";
 

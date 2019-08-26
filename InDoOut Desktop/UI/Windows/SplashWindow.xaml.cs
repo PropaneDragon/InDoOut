@@ -14,7 +14,7 @@ namespace InDoOut_Desktop.UI.Windows
     {
         private bool _textUpdateNeeded = true;
         private ILoadingTask _taskToRun = null;
-        private DispatcherTimer _uiUpdateTimer = new DispatcherTimer(DispatcherPriority.Normal);
+        private readonly DispatcherTimer _uiUpdateTimer = new DispatcherTimer(DispatcherPriority.Normal);
 
         internal TimeSpan HoldTime { get; set; } = TimeSpan.FromSeconds(5);
 

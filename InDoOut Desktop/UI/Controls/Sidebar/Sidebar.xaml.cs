@@ -14,7 +14,7 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
     public partial class Sidebar : UserControl
     {
         private bool _collapsed = false;
-        private TimeSpan _animationTime = TimeSpan.FromMilliseconds(500);
+        private readonly TimeSpan _animationTime = TimeSpan.FromMilliseconds(500);
         private IBlockView _blockView = null;
 
         public bool Collapsed { get => _collapsed; set { if (value) Collapse(); else Expand(); } }

@@ -4,8 +4,8 @@ namespace InDoOut_Core_Plugins.Numeric
 {
     public class IsANumberFunction : Function
     {
-        private IOutput _isNumber, _notNumber;
-        private IProperty<string> _value;
+        private readonly IOutput _isNumber, _notNumber;
+        private readonly IProperty<string> _value;
 
         public override string Description => "Checks whether a value is a number or not.";
 
@@ -27,7 +27,7 @@ namespace InDoOut_Core_Plugins.Numeric
 
         protected override IOutput Started(IInput triggeredBy)
         {
-            return !string.IsNullOrEmpty(_value.FullValue) && double.TryParse(_value.FullValue, out var _) ? _isNumber : _notNumber;
+            return !string.IsNullOrEmpty(_value.FullValue) && double.TryParse(_value.FullValue, out var number) && !double.IsNaN(number) ? _isNumber : _notNumber;
         }
     }
 }

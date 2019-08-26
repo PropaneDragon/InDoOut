@@ -7,9 +7,9 @@ namespace InDoOut_Desktop.Actions
 {
     internal abstract class AbstractWireDragAction : Action
     {
-        private IBlockView _view = null;
-        private IUIConnectionStart _start = null;
-        private IUIConnection _uiConnection = null;
+        private readonly IBlockView _view = null;
+        private readonly IUIConnectionStart _start = null;
+        private readonly IUIConnection _uiConnection = null;
 
         private AbstractWireDragAction()
         {

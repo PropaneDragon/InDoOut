@@ -9,8 +9,8 @@ namespace InDoOut_Core.Variables
     /// </summary>
     public class VariableStore : IVariableStore
     {
-        private object _variablesLock = new object();
-        private List<IVariable> _variables = new List<IVariable>();
+        private readonly object _variablesLock = new object();
+        private readonly List<IVariable> _variables = new List<IVariable>();
 
         /// <summary>
         /// All variables currently in storage.

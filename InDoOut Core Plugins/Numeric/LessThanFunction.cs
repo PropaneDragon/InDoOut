@@ -4,8 +4,8 @@ namespace InDoOut_Core_Plugins.Numeric
 {
     public class LessThanFunction : Function
     {
-        private IOutput _less = null, _more = null;
-        private IProperty<double> _firstNumber = null, _secondNumber = null;
+        private readonly IOutput _less = null, _more = null;
+        private readonly IProperty<double> _firstNumber = null, _secondNumber = null;
 
         public override string Description => "Does a less than (<) comparison check between two numbers.";
 
