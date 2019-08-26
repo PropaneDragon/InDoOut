@@ -4,9 +4,9 @@ namespace InDoOut_Core_Plugins.Maths
 {
     public abstract class AbstractSingularArithmeticFunction : Function
     {
-        private readonly Property<double> _number;
+        private readonly IProperty<double> _number;
 
-        private readonly Result _result = new Result("Result value", "The result of the calculation", "0");
+        private readonly IResult _result = new Result("Result value", "The result of the calculation", "0");
 
         private readonly IOutput _outputCalculated;
         private readonly IOutput _outputFailed;
@@ -34,7 +34,7 @@ namespace InDoOut_Core_Plugins.Maths
                 var success = _result.ValueFrom(Calculate(_number.FullValue));
                 if (!success || double.IsNaN(_result.ValueAs<double>()))
                 {
-                    _result.ValueFrom<double>(0);
+                    _ = _result.ValueFrom<double>(0);
                     return _outputFailed;
                 }
 

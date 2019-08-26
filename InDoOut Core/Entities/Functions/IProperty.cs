@@ -1,7 +1,6 @@
 ﻿using InDoOut_Core.Basic;
 using InDoOut_Core.Entities.Core;
 using InDoOut_Core.Variables;
-using System;
 
 namespace InDoOut_Core.Entities.Functions
 {
@@ -62,8 +61,12 @@ namespace InDoOut_Core.Entities.Functions
     {
         /// <summary>
         /// The value of this property.
+        /// <br/>
+        /// <br/>
+        /// <b>WARNING:</b> Consider <see cref="FullValue"/> or <see cref="IProperty.RawComputedValue"/> instead for getting the value of the property,
+        /// as those will include values from any connected <see cref="IResult"/>s whereas this won't, which could cause unintended side effects.
         /// </summary>
-        [Obsolete("RawValue does not contain the full computed value from any Results linked to the Property. Perhaps you meant to use FullValue instead? If this is intended, please ignore.")]
+        /// <seealso cref="FullValue"/>
         T BasicValue { get; set; }
 
         /// <summary>

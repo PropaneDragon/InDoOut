@@ -50,8 +50,11 @@ namespace InDoOut_Core.Entities.Functions
         /// <summary>
         /// The value of this property, as the given type <typeparamref name="T"/>. This is similar to <see cref="RawValue"/>,
         /// but is automatically converted to the type of this property.
+        /// <br/>
+        /// <br/>
+        /// <b>WARNING:</b> Consider <see cref="FullValue"/> or <see cref="RawComputedValue"/> instead for getting the value of the property,
+        /// as those will include values from any connected <see cref="IResult"/>s whereas this won't, which could cause unintended side effects.
         /// </summary>
-        [Obsolete("BasicValue does not contain the full computed value from any Results linked to the Property. Perhaps you meant to use FullValue instead? If this is intended, please ignore.")]
         public T BasicValue { get => TryGet.ValueOrDefault(() => _value.ConvertFromString<T>(RawValue)); set => RawValue = TryGet.ValueOrDefault(() => _value.ConvertToString(value)); }
 
         /// <summary>
@@ -67,8 +70,11 @@ namespace InDoOut_Core.Entities.Functions
 
         /// <summary>
         /// Gets the raw, unprocessed value of this property.
+        /// <br/>
+        /// <br/>
+        /// <b>WARNING:</b> Consider <see cref="FullValue"/> or <see cref="RawComputedValue"/> instead for getting the value of the property,
+        /// as those will include values from any connected <see cref="IResult"/>s whereas this won't, which could cause unintended side effects.
         /// </summary>
-        [Obsolete("RawValue does not contain the full computed value from any Results linked to the Property. Perhaps you meant to use RawComputedValue instead? If this is intended, please ignore.")]
         public string RawValue { get => _value.RawValue; set => _value.RawValue = value; }
 
         /// <summary>
@@ -88,10 +94,7 @@ namespace InDoOut_Core.Entities.Functions
             Name = name;
             Description = description;
             Required = required;
-
-#pragma warning disable CS0618 // Type or member is obsolete
             BasicValue = initialValue;
-#pragma warning restore CS0618 // Type or member is obsolete
         }
 
         /// <summary>

@@ -6,7 +6,7 @@ namespace InDoOut_Core_Plugins.Text
     {
         private string _cachedString = "";
 
-        private readonly IProperty _text = null;
+        private readonly IProperty<string> _text = null;
         private readonly IResult _character = null;
 
         public override string Description => "Loops through some text and returns each character within it.";
@@ -25,7 +25,7 @@ namespace InDoOut_Core_Plugins.Text
 
         protected override void PreprocessItems()
         {
-            _cachedString = _text.RawComputedValue;
+            _cachedString = _text.FullValue;
         }
 
         protected override bool PopulateItemDataForIndex(int index)

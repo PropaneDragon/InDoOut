@@ -50,7 +50,7 @@
         </member>
         <member name="P:InDoOut_Core.Basic.IValue.RawValue">
             <summary>
-            The value associated with this variable in string format.
+            The stored value associated with this value in string format.
             </summary>
         </member>
         <member name="M:InDoOut_Core.Basic.IValue.ValueOrDefault(System.String)">
@@ -793,7 +793,12 @@
         <member name="P:InDoOut_Core.Entities.Functions.IProperty`1.BasicValue">
             <summary>
             The value of this property.
+            <br/>
+            <br/>
+            <b>WARNING:</b> Consider <see cref="P:InDoOut_Core.Entities.Functions.IProperty`1.FullValue"/> or <see cref="P:InDoOut_Core.Entities.Functions.IProperty.RawComputedValue"/> instead for getting the value of the property,
+            as those will include values from any connected <see cref="T:InDoOut_Core.Entities.Functions.IResult"/>s whereas this won't, which could cause unintended side effects.
             </summary>
+            <seealso cref="P:InDoOut_Core.Entities.Functions.IProperty`1.FullValue"/>
         </member>
         <member name="P:InDoOut_Core.Entities.Functions.IProperty`1.FullValue">
             <summary>
@@ -1018,6 +1023,10 @@
             <summary>
             The value of this property, as the given type <typeparamref name="T"/>. This is similar to <see cref="P:InDoOut_Core.Entities.Functions.Property`1.RawValue"/>,
             but is automatically converted to the type of this property.
+            <br/>
+            <br/>
+            <b>WARNING:</b> Consider <see cref="P:InDoOut_Core.Entities.Functions.Property`1.FullValue"/> or <see cref="P:InDoOut_Core.Entities.Functions.Property`1.RawComputedValue"/> instead for getting the value of the property,
+            as those will include values from any connected <see cref="T:InDoOut_Core.Entities.Functions.IResult"/>s whereas this won't, which could cause unintended side effects.
             </summary>
         </member>
         <member name="P:InDoOut_Core.Entities.Functions.Property`1.FullValue">
@@ -1034,6 +1043,10 @@
         <member name="P:InDoOut_Core.Entities.Functions.Property`1.RawValue">
             <summary>
             Gets the raw, unprocessed value of this property.
+            <br/>
+            <br/>
+            <b>WARNING:</b> Consider <see cref="P:InDoOut_Core.Entities.Functions.Property`1.FullValue"/> or <see cref="P:InDoOut_Core.Entities.Functions.Property`1.RawComputedValue"/> instead for getting the value of the property,
+            as those will include values from any connected <see cref="T:InDoOut_Core.Entities.Functions.IResult"/>s whereas this won't, which could cause unintended side effects.
             </summary>
         </member>
         <member name="P:InDoOut_Core.Entities.Functions.Property`1.Name">

@@ -5,7 +5,7 @@ namespace InDoOut_Core_Plugins.Text
     public class TextLengthFunction : Function
     {
         private readonly IOutput _output = null;
-        private readonly IProperty _text = null;
+        private readonly IProperty<string> _text = null;
         private readonly IResult _length = null;
 
         public override string Description => "Outputs the length of the given text (including spaces).";
@@ -27,7 +27,7 @@ namespace InDoOut_Core_Plugins.Text
 
         protected override IOutput Started(IInput triggeredBy)
         {
-            var text = _text.RawComputedValue;
+            var text = _text.FullValue;
             if (text != null)
             {
                 _ = _length.ValueFrom(text.Length);

@@ -19,7 +19,7 @@
         bool ValidValue { get; }
 
         /// <summary>
-        /// The value associated with this variable in string format.
+        /// The stored value associated with this value in string format.
         /// </summary>
         string RawValue { get; set; }
 

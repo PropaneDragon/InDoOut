@@ -1,7 +1,5 @@
 ﻿using InDoOut_Core.Entities.Functions;
 
-#pragma warning disable CS0618 // Type or member is obsolete
-
 namespace InDoOut_Core_Tests
 {
     internal class TestFullFunction : Function
@@ -63,5 +61,3 @@ namespace InDoOut_Core_Tests
         }
     }
 }
-
-#pragma warning restore CS0618 // Type or member is obsolete

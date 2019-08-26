@@ -2,8 +2,6 @@
 using InDoOut_Core.Variables;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-#pragma warning disable CS0618 // Type or member is obsolete
-
 namespace InDoOut_Core_Tests
 {
     [TestClass]
@@ -104,5 +102,3 @@ namespace InDoOut_Core_Tests
         }
     }
 }
-
-#pragma warning restore CS0618 // Type or member is obsolete

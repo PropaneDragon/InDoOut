@@ -4,10 +4,10 @@ namespace InDoOut_Core_Plugins.Maths
 {
     public abstract class AbstractPairArithmeticFunction : Function
     {
-        private readonly Property<double> _firstNumber;
-        private readonly Property<double> _secondNumber;
+        private readonly IProperty<double> _firstNumber;
+        private readonly IProperty<double> _secondNumber;
 
-        private readonly Result _result = new Result("Result value", "The result of the calculation", "0");
+        private readonly IResult _result = new Result("Result value", "The result of the calculation", "0");
 
         private readonly IOutput _outputCalculated;
         private readonly IOutput _outputFailed;
@@ -36,7 +36,7 @@ namespace InDoOut_Core_Plugins.Maths
                 var success = _result.ValueFrom(Calculate(_firstNumber.FullValue, _secondNumber.FullValue));
                 if (!success || double.IsNaN(_result.ValueAs<double>()))
                 {
-                    _result.ValueFrom<double>(0);
+                    _ = _result.ValueFrom<double>(0);
                     return _outputFailed;
                 }
 

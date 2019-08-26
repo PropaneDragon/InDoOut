@@ -10,7 +10,7 @@ namespace InDoOut_Core_Plugins.Text
 
         private readonly IOutput _output = null;
         private readonly IResult _result = null;
-        private readonly List<IProperty> _properties = new List<IProperty>();
+        private readonly List<IProperty<string>> _properties = new List<IProperty<string>>();
 
         public override string Description => "Combines two or more text elements together.";
 
@@ -35,7 +35,7 @@ namespace InDoOut_Core_Plugins.Text
 
         protected override IOutput Started(IInput triggeredBy)
         {
-            _result.RawValue = string.Concat(_properties.Select(property => property.RawComputedValue));
+            _result.RawValue = string.Concat(_properties.Select(property => property.FullValue));
             return _output;
         }
     }
