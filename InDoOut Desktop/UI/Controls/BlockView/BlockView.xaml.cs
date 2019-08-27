@@ -34,7 +34,7 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
 
         public Point CentreViewCoordinate => new Point(TopLeftViewCoordinate.X + (ViewSize.Width / 2d), TopLeftViewCoordinate.Y + (ViewSize.Height / 2d));
 
-        public Point Offset { get => new Point(Scroll_Content.HorizontalOffset, Scroll_Content.VerticalOffset); set { Scroll_Content.ScrollToHorizontalOffset(value.X); Scroll_Content.ScrollToVerticalOffset(value.Y); } }
+        public Point Offset { get => new Point(Scroll_Content.HorizontalOffset, Scroll_Content.VerticalOffset); set => SetViewOffset(value); }
 
         public List<IUIFunction> UIFunctions => FindCanvasChild<IUIFunction>();
 
@@ -50,6 +50,18 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
             ChangeViewMode(CurrentViewMode);
 
             _actionHandler = new ActionHandler(new BlockViewRestingAction(this));
+        }
+
+        private void SetViewOffset(Point offset)
+        {
+            Scroll_Content.ScrollToHorizontalOffset(offset.X);
+            Scroll_Content.ScrollToVerticalOffset(offset.Y);
+
+            if (AssociatedProgram != null)
+            {
+                AssociatedProgram.Metadata["x"] = offset.X.ToString();
+                AssociatedProgram.Metadata["y"] = offset.Y.ToString();
+            }
         }
 
         public void Add(FrameworkElement element)
@@ -275,6 +287,11 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
             if (_currentProgram != null)
             {
                 var functionToUIFunctionMap = new Dictionary<IFunction, IUIFunction>();
+
+                if (_currentProgram.Metadata.ContainsKey("x") && _currentProgram.Metadata.ContainsKey("y") && double.TryParse(_currentProgram.Metadata["x"], out var screenLeft) && double.TryParse(_currentProgram.Metadata["y"], out var screenTop))
+                {
+                    Offset = new Point(screenLeft, screenTop);
+                }
 
                 foreach (var function in _currentProgram.Functions)
                 {
