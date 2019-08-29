@@ -24,6 +24,11 @@ namespace InDoOut_Core.Entities.Programs
         List<IStartFunction> StartFunctions { get; }
 
         /// <summary>
+        /// Values to pass into all <see cref="StartFunctions"/> when the program is started.
+        /// </summary>
+        List<string> PassthroughValues { get; }
+
+        /// <summary>
         /// The variable store for this program. This is where <see cref="IVariable"/>s are
         /// held for functions.
         /// </summary>

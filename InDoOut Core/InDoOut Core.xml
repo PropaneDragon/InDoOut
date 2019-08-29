@@ -859,6 +859,11 @@
             Represents a function that is called automatically when the <see cref="T:InDoOut_Core.Entities.Programs.IProgram"/> is started.
             </summary>
         </member>
+        <member name="P:InDoOut_Core.Entities.Functions.IStartFunction.PassthroughResults">
+            <summary>
+            A list of results that are passed through from another program, or the command line.
+            </summary>
+        </member>
         <member name="T:InDoOut_Core.Entities.Functions.LoopFunction">
             <summary>
             A loop function that encapsulates all processing for looping through
@@ -1207,14 +1212,19 @@
             they are triggered automatically at the start of a <see cref="T:InDoOut_Core.Entities.Programs.IProgram"/>.
             </summary>
         </member>
-        <member name="P:InDoOut_Core.Entities.Functions.StartFunction.OutputStart">
-            <summary>
-            The 'started' output that should be triggered when this function is called.
-            </summary>
-        </member>
         <member name="P:InDoOut_Core.Entities.Functions.StartFunction.Group">
             <summary>
             The group this function belongs to.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Functions.StartFunction.PassthroughResults">
+            <summary>
+            A list of results passed through from another program or the commandline.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Functions.StartFunction.OutputStart">
+            <summary>
+            The 'started' output that should be triggered when this function is called.
             </summary>
         </member>
         <member name="M:InDoOut_Core.Entities.Functions.StartFunction.#ctor">
@@ -1237,6 +1247,11 @@
             <summary>
             All <see cref="T:InDoOut_Core.Entities.Functions.IStartFunction"/>s that are available to be started when the 
             program is started.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Programs.IProgram.PassthroughValues">
+            <summary>
+            Values to pass into all <see cref="P:InDoOut_Core.Entities.Programs.IProgram.StartFunctions"/> when the program is started.
             </summary>
         </member>
         <member name="P:InDoOut_Core.Entities.Programs.IProgram.VariableStore">
@@ -1270,6 +1285,11 @@
             start without at least one.
             </summary>
         </member>
+        <member name="P:InDoOut_Core.Entities.Programs.Program.PassthroughValues">
+            <summary>
+            Values to pass into <see cref="P:InDoOut_Core.Entities.Programs.Program.StartFunctions"/> when the program is started.
+            </summary>
+        </member>
         <member name="P:InDoOut_Core.Entities.Programs.Program.Running">
             <summary>
             Whether any of the functions within this program are running.
@@ -1295,6 +1315,13 @@
             <summary>
             Metadata associated with the program.
             </summary>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Programs.Program.#ctor(System.String[])">
+            <summary>
+            Creates a program with optional passthrough values.
+            </summary>
+            <param name="passthroughValues">Values to pass into the <see cref="T:InDoOut_Core.Entities.Functions.IStartFunction"/>s when triggered.</param>
+            <seealso cref="M:InDoOut_Core.Entities.Programs.Program.Trigger(InDoOut_Core.Entities.Core.IEntity)"/>
         </member>
         <member name="M:InDoOut_Core.Entities.Programs.Program.AddFunction(InDoOut_Core.Entities.Functions.IFunction)">
             <summary>

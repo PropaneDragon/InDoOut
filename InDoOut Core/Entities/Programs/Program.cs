@@ -26,6 +26,11 @@ namespace InDoOut_Core.Entities.Programs
         public List<IStartFunction> StartFunctions => Functions.Where(function => typeof(IStartFunction).IsAssignableFrom(function.GetType())).Cast<IStartFunction>().ToList();
 
         /// <summary>
+        /// Values to pass into <see cref="StartFunctions"/> when the program is started.
+        /// </summary>
+        public List<string> PassthroughValues { get; private set; } = new List<string>();
+
+        /// <summary>
         /// Whether any of the functions within this program are running.
         /// </summary>
         public bool Running => Functions.Any(function => function.Running);
@@ -50,6 +55,16 @@ namespace InDoOut_Core.Entities.Programs
         /// Metadata associated with the program.
         /// </summary>
         public Dictionary<string, string> Metadata { get; } = new Dictionary<string, string>();
+
+        /// <summary>
+        /// Creates a program with optional passthrough values.
+        /// </summary>
+        /// <param name="passthroughValues">Values to pass into the <see cref="IStartFunction"/>s when triggered.</param>
+        /// <seealso cref="Trigger(IEntity)"/>
+        public Program(params string[] passthroughValues)
+        {
+            PassthroughValues = passthroughValues.ToList();
+        }
 
         /// <summary>
         /// Add a function to the program.
@@ -88,6 +103,14 @@ namespace InDoOut_Core.Entities.Programs
         {
             foreach (var startFunction in StartFunctions)
             {
+                for (var index = 0; index < PassthroughValues.Count; ++index)
+                {
+                    if (index < startFunction.PassthroughResults.Count)
+                    {
+                        startFunction.PassthroughResults[index].RawValue = PassthroughValues[index];
+                    }
+                }
+
                 startFunction.Trigger(null);
             }
         }
