@@ -15,12 +15,12 @@ namespace InDoOut_Core.Instancing
         /// <returns>The requested type <paramref name="type"/> as type <typeparamref name="T"/>, or null if it has failed.</returns>
         public T BuildInstance(Type type)
         {
-            if (typeof(T).IsAssignableFrom(type))
+            if (typeof(T).IsAssignableFrom(type) && !type.IsAbstract)
             {
                 try
                 {
                     var constructor = type.GetConstructor(Type.EmptyTypes);
-                    if (constructor != null)
+                    if (constructor != null && !constructor.IsAbstract)
                     {
                         var instance = constructor.Invoke(new object[] { });
                         return instance as T;
