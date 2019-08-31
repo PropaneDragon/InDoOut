@@ -56,6 +56,9 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
             List_Items.ItemsSource = functions;
 
             var collectionView = CollectionViewSource.GetDefaultView(List_Items.ItemsSource);
+            collectionView.SortDescriptions.Clear();
+            collectionView.SortDescriptions.Add(new System.ComponentModel.SortDescription("SafeGroup", System.ComponentModel.ListSortDirection.Ascending));
+            collectionView.SortDescriptions.Add(new System.ComponentModel.SortDescription("SafeName", System.ComponentModel.ListSortDirection.Ascending));
             collectionView.GroupDescriptions.Clear();
             collectionView.GroupDescriptions.Add(new PropertyGroupDescription("SafeGroup"));
         }
