@@ -1,6 +1,6 @@
 ﻿using InDoOut_Plugins.Core;
 
-namespace InDoOut_Core_Plugins
+namespace InDoOut_GPIO_Plugins
 {
     public class PluginInfo : Plugin
     {
