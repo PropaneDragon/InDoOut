@@ -8,7 +8,7 @@ namespace InDoOut_Desktop.UI.Interfaces
         List<FrameworkElement> Elements { get; }
 
         void Add(FrameworkElement element);
-        void Add(FrameworkElement element, Point position);
+        void Add(FrameworkElement element, Point position, int zIndex = 0);
         void Remove(FrameworkElement element);
         void SetPosition(FrameworkElement element, Point position);
 

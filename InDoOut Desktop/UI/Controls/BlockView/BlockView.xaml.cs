@@ -69,11 +69,13 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
             Add(element, CentreViewCoordinate);
         }
 
-        public void Add(FrameworkElement element, Point position)
+        public void Add(FrameworkElement element, Point position, int zIndex = 0)
         {
             if (element != null)
             {
                 _ = Canvas_Content.Children.Add(element);
+
+                Panel.SetZIndex(element, zIndex);
 
                 SetPosition(element, position);
                 ChangeViewMode(CurrentViewMode);
@@ -130,7 +132,7 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
                     AssociatedStart = start
                 };
 
-                Add(uiConnection, new Point(0, 0));
+                Add(uiConnection, new Point(0, 0), -999);
 
                 return uiConnection;
             }
