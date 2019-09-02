@@ -35,7 +35,7 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
             else
             {
                 var lowercaseSearch = search.ToLower();
-                var filteredFunctions = _functions.Where(function => (function?.SafeName?.ToLower().Contains(lowercaseSearch) ?? false) || (function?.SafeKeywords?.Any(keyword => keyword.ToLower().Contains(lowercaseSearch)) ?? false)).ToList();
+                var filteredFunctions = _functions.Where(function => (function?.SafeName?.ToLower().Contains(lowercaseSearch) ?? false) || (function?.SafeKeywords?.Any(keyword => keyword.ToLower().Contains(lowercaseSearch)) ?? false) || (function?.SafeGroup?.ToLower().Contains(lowercaseSearch) ?? false)).ToList();
 
                 SetFunctions(filteredFunctions, true);
             }
