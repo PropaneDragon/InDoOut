@@ -7,6 +7,7 @@ namespace InDoOut_Desktop.Actions
     {
         public event EventHandler<ActionCompleteEventArgs> ActionComplete;
 
+        public virtual bool MouseNoMove(Point mousePosition) { return false; }
         public virtual bool MouseLeftDown(Point mousePosition) { return false; }
         public virtual bool MouseLeftMove(Point mousePosition) { return false; }
         public virtual bool MouseLeftUp(Point mousePosition) { return false; }

@@ -7,6 +7,7 @@ namespace InDoOut_Desktop.Actions
     {
         event EventHandler<ActionCompleteEventArgs> ActionComplete;
 
+        bool MouseNoMove(Point mousePosition);
         bool MouseLeftMove(Point mousePosition);
         bool MouseLeftDown(Point mousePosition);
         bool MouseLeftUp(Point mousePosition);

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using InDoOut_Desktop.UI.Interfaces;
+﻿using InDoOut_Desktop.UI.Interfaces;
 
 namespace InDoOut_Desktop.Actions
 {

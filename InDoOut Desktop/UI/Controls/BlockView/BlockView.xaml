@@ -8,7 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Loaded="UserControl_Loaded">
     <Grid>
-        <ScrollViewer x:Name="Scroll_Content" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" PreviewMouseLeftButtonDown="Scroll_Content_MouseLeftButtonDown" PreviewMouseLeftButtonUp="Scroll_Content_MouseLeftButtonUp" PreviewMouseMove="Scroll_Content_MouseMove">
+        <ScrollViewer x:Name="Scroll_Content" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" PreviewMouseLeftButtonDown="Scroll_Content_MouseLeftButtonDown" PreviewMouseLeftButtonUp="Scroll_Content_MouseLeftButtonUp" PreviewMouseMove="Scroll_Content_MouseMove" PreviewMouseRightButtonDown="Scroll_Content_PreviewMouseRightButtonDown" PreviewMouseRightButtonUp="Scroll_Content_PreviewMouseRightButtonUp">
             <Viewbox x:Name="Viewbox_Content">
                 <Canvas x:Name="Canvas_Content" Width="10000" Height="10000">
                     <entities:UIFunction Canvas.Left="4900" Canvas.Top="4900" />

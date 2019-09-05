@@ -18,6 +18,11 @@ namespace InDoOut_Desktop.Actions
             CurrentAction = defaultAction;
         }
 
+        public bool MouseNoMove(Point mousePosition)
+        {
+            return CurrentAction?.MouseNoMove(mousePosition) ?? false;
+        }
+
         public bool MouseLeftDown(Point mousePosition)
         {
             return CurrentAction?.MouseLeftDown(mousePosition) ?? false;
