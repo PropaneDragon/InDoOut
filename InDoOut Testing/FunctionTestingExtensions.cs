@@ -44,6 +44,11 @@ namespace InDoOut_Testing
                     {
                         Thread.Sleep(TimeSpan.FromMilliseconds(1));
                     }
+
+                    if (DateTime.UtcNow >= endTime)
+                    {
+                        return false;
+                    }
                 }
 
                 while (triggerable.Running && DateTime.UtcNow < endTime)
@@ -51,7 +56,7 @@ namespace InDoOut_Testing
                     Thread.Sleep(TimeSpan.FromMilliseconds(1));
                 }
 
-                return !triggerable.Running;
+                return DateTime.UtcNow >= endTime ? false : !triggerable.Running;
             }
 
             return false;
