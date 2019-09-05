@@ -821,10 +821,17 @@
         </member>
         <member name="M:InDoOut_Core.Entities.Functions.IResult.Connect(InDoOut_Core.Entities.Functions.IProperty)">
             <summary>
-            Connects this result to a property.
+            Connects this result to an <see cref="T:InDoOut_Core.Entities.Functions.IProperty"/>.
             </summary>
             <param name="property">The property to connect to.</param>
             <returns>Whether the connection was successful.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Functions.IResult.Disconnect(InDoOut_Core.Entities.Functions.IProperty)">
+            <summary>
+            Disconnect this result from an <see cref="T:InDoOut_Core.Entities.Functions.IProperty"/>.
+            </summary>
+            <param name="input">The <see cref="T:InDoOut_Core.Entities.Functions.IProperty"/> to disconnect from.</param>
+            <returns>Whether the property was disconnected.</returns>
         </member>
         <member name="P:InDoOut_Core.Entities.Functions.IResult.Description">
             <summary>
@@ -1158,6 +1165,13 @@
             </summary>
             <param name="property">The property to connect to.</param>
             <returns>Whether the connection was a success.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Functions.Result.Disconnect(InDoOut_Core.Entities.Functions.IProperty)">
+            <summary>
+            Disconnects this result from a <see cref="T:InDoOut_Core.Entities.Functions.IProperty"/>.
+            </summary>
+            <param name="property">The property to disconnect from.</param>
+            <returns>Whether the disconnection was a success.</returns>
         </member>
         <member name="M:InDoOut_Core.Entities.Functions.Result.SetVariable(InDoOut_Core.Variables.IVariableStore)">
             <summary>

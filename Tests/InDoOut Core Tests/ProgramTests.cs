@@ -1,4 +1,5 @@
 using InDoOut_Core.Entities.Programs;
+using InDoOut_Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Threading;
@@ -49,8 +50,8 @@ namespace InDoOut_Core_Tests
         public void StartFunction()
         {
             var program = new Program();
-            var function = new TestFunction();
-            var startFunction = new TestStartFunction();
+            var function = new TestFunction(() => Thread.Sleep(TimeSpan.FromMilliseconds(10)));
+            var startFunction = new TestStartFunction(() => Thread.Sleep(TimeSpan.FromMilliseconds(10)));
 
             var output = startFunction.CreateOutputPublic();
             var input = function.CreateInputPublic();
@@ -63,13 +64,7 @@ namespace InDoOut_Core_Tests
 
             program.Trigger(null);
 
-            var startTime = DateTime.UtcNow;
-
-            while (program.Running && DateTime.UtcNow < startTime.Add(TimeSpan.FromSeconds(1)))
-            {
-                Thread.Sleep(TimeSpan.FromMilliseconds(1));
-            }
-
+            Assert.IsFalse(function.WaitForCompletion(TimeSpan.FromMilliseconds(100), true));
             Assert.IsFalse(startFunction.HasRun);
             Assert.IsFalse(function.HasRun);
 
@@ -79,13 +74,8 @@ namespace InDoOut_Core_Tests
 
             program.Trigger(null);
 
-            startTime = DateTime.UtcNow;
-
-            while (program.Running && DateTime.UtcNow < startTime.Add(TimeSpan.FromSeconds(1)))
-            {
-                Thread.Sleep(TimeSpan.FromMilliseconds(1));
-            }
-
+            Assert.IsTrue(startFunction.WaitForCompletion(TimeSpan.FromMilliseconds(100), true));
+            Assert.IsTrue(function.WaitForCompletion(TimeSpan.FromMilliseconds(100), true));
             Assert.IsTrue(startFunction.HasRun);
             Assert.IsTrue(function.HasRun);
         }
@@ -172,11 +162,11 @@ namespace InDoOut_Core_Tests
         public void EndToEnd()
         {
             var program = new Program();
-            var startFunctionA = new TestStartFunction();
-            var functionB = new TestFunction();
-            var functionC = new TestFunction();
-            var functionD = new TestFunction();
-            var functionE = new TestFunction();
+            var startFunctionA = new TestStartFunction(() => Thread.Sleep(TimeSpan.FromMilliseconds(5)));
+            var functionB = new TestFunction(() => Thread.Sleep(TimeSpan.FromMilliseconds(5)));
+            var functionC = new TestFunction(() => Thread.Sleep(TimeSpan.FromMilliseconds(5)));
+            var functionD = new TestFunction(() => Thread.Sleep(TimeSpan.FromMilliseconds(5)));
+            var functionE = new TestFunction(() => Thread.Sleep(TimeSpan.FromMilliseconds(5)));
 
             var outputA = startFunctionA.CreateOutputPublic();
             var outputB = functionB.CreateOutputPublic();
@@ -213,6 +203,8 @@ namespace InDoOut_Core_Tests
             Assert.IsFalse(functionE.HasRun);
 
             program.Trigger(null);
+
+            Thread.Sleep(TimeSpan.FromMilliseconds(10));
 
             var startTime = DateTime.UtcNow;
 

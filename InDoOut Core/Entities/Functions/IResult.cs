@@ -17,11 +17,18 @@ namespace InDoOut_Core.Entities.Functions
         bool IsSet { get; }
 
         /// <summary>
-        /// Connects this result to a property.
+        /// Connects this result to an <see cref="IProperty"/>.
         /// </summary>
         /// <param name="property">The property to connect to.</param>
         /// <returns>Whether the connection was successful.</returns>
         bool Connect(IProperty property);
+
+        /// <summary>
+        /// Disconnect this result from an <see cref="IProperty"/>.
+        /// </summary>
+        /// <param name="input">The <see cref="IProperty"/> to disconnect from.</param>
+        /// <returns>Whether the property was disconnected.</returns>
+        bool Disconnect(IProperty input);
 
         /// <summary>
         /// The description of what this result represents.

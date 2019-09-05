@@ -1,4 +1,5 @@
 ﻿using InDoOut_Core.Entities.Functions;
+using InDoOut_Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Threading;
@@ -31,6 +32,33 @@ namespace InDoOut_Core_Tests
 
             Assert.IsTrue(functionA.HasRun);
             Assert.AreEqual(a, functionA.LastInput);
+        }
+
+        [TestMethod]
+        public void Disconnection()
+        {
+            var output = new OutputNeutral();
+            var functionA = new TestFunction(() => Thread.Sleep(TimeSpan.FromMilliseconds(10)));
+
+            var a = functionA.CreateInputPublic();
+
+            Assert.IsFalse(functionA.HasRun);
+            Assert.IsNull(functionA.LastInput);
+            Assert.IsTrue(output.Connect(a));
+            Assert.AreEqual(1, output.Connections.Count);
+
+            output.Trigger(null);
+
+            Assert.IsTrue(functionA.WaitForCompletion(TimeSpan.FromMilliseconds(500), true));
+            Assert.IsTrue(functionA.HasRun);
+            Assert.AreEqual(a, functionA.LastInput);
+
+            Assert.IsTrue(output.Disconnect(a));
+            Assert.AreEqual(0, output.Connections.Count);
+
+            output.Trigger(null);
+
+            Assert.IsFalse(functionA.WaitForCompletion(TimeSpan.FromMilliseconds(500), true));
         }
 
         [TestMethod]

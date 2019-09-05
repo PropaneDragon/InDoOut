@@ -81,6 +81,16 @@ namespace InDoOut_Core.Entities.Functions
         }
 
         /// <summary>
+        /// Disconnects this result from a <see cref="IProperty"/>.
+        /// </summary>
+        /// <param name="property">The property to disconnect from.</param>
+        /// <returns>Whether the disconnection was a success.</returns>
+        public bool Disconnect(IProperty property)
+        {
+            return RemoveConnection(property);
+        }
+
+        /// <summary>
         /// Sets a variable with a name of the given <see cref="VariableName"/> and value of
         /// <see cref="RawValue"/> inside the given <paramref name="variableStore"/>.
         /// </summary>
