@@ -1,6 +1,5 @@
 ﻿using InDoOut_Core.Entities.Functions;
-using InDoOut_Core.Threading.Safety;
-using Newtonsoft.Json.Linq;
+using Q42.HueApi;
 using System;
 
 namespace InDoOut_Philips_Hue_Plugins
@@ -31,38 +30,24 @@ namespace InDoOut_Philips_Hue_Plugins
         }
 
         protected override IOutput Started(IInput triggeredBy)
-        {
-            dynamic user = new JObject();
-            user.devicetype = "InDoOut#ConnectToBridgeFunction";
-
-            if (!string.IsNullOrEmpty(_bridgeIp.FullValue))
+        {            
+            try
             {
-                dynamic result = TryGet.ValueOrDefault(() => JsonFromUrl.Instance.JsonArrayFromUrl(new Uri($"https://{_bridgeIp.FullValue}/api"), JsonFromUrl.Method.POST, user.ToString()).Result, null);
-                if (result != null)
+                var client = new LocalHueClient(_bridgeIp.FullValue);
+                if (_userId.ValueFrom(client.RegisterAsync("InDoOut", "Remote").Result))
                 {
-                    var error = TryGet.ValueOrDefault(() => result[0].error, null);
-                    var success = TryGet.ValueOrDefault(() => result[0].success, null);
-
-                    if (error != null)
-                    {
-                        var errorType = TryGet.ValueOrDefault(() => error.type, 0);
-                        if (errorType == 101 || errorType == "101")
-                        {
-                            return _pressSyncButton;
-                        }
-                    }
-                    else if (success != null)
-                    {
-                        var userId = TryGet.ValueOrDefault(() => success.username, null);
-                        if (!string.IsNullOrEmpty(userId.Value))
-                        {
-                            _userId.RawValue = userId;
-
-                            return _connected;
-                        }
-                    }
+                    return _connected;
                 }
             }
+            catch (AggregateException ex)
+            {
+                return _pressSyncButton;
+            }
+            catch (LinkButtonNotPressedException)
+            {
+                return _pressSyncButton;
+            }
+            catch { }
 
             return _failed;
         }

@@ -1,13 +1,15 @@
 ﻿using InDoOut_Core.Entities.Functions;
-using InDoOut_Core.Threading.Safety;
-using Newtonsoft.Json.Linq;
+using Q42.HueApi;
+using Q42.HueApi.Models.Bridge;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace InDoOut_Philips_Hue_Plugins
 {
     public class ForEachHueBridgeFunction : LoopFunction
     {
-        private JArray _bridges = null;
+        private IEnumerable<LocatedBridge> _bridges;
         private readonly IResult _bridgeId, _bridgeIp;
 
         public override string Description => "Loops through all Hue bridges on the current network";
@@ -26,21 +28,17 @@ namespace InDoOut_Philips_Hue_Plugins
 
         protected override void PreprocessItems()
         {
-            _bridges = JsonFromUrl.Instance.JsonArrayFromUrl(new Uri("https://discovery.meethue.com/"), JsonFromUrl.Method.GET).Result;
+            var bridgeLocator = new HttpBridgeLocator();
+            _bridges = bridgeLocator.LocateBridgesAsync(TimeSpan.FromSeconds(5)).Result;
         }
 
         protected override bool PopulateItemDataForIndex(int index)
         {
-            if (index < (_bridges?.Count ?? 0))
+            if (index < (_bridges?.Count() ?? 0))
             {
-                dynamic bridge = TryGet.ValueOrDefault(() => _bridges[index], null);
-                if (bridge != null)
-                {
-                    _bridgeId.RawValue = TryGet.ValueOrDefault(() => bridge.id);
-                    _bridgeIp.RawValue = TryGet.ValueOrDefault(() => bridge.internalipaddress);
+                var bridge = _bridges.ElementAt(index);
 
-                    return !string.IsNullOrEmpty(_bridgeId.RawValue) && !string.IsNullOrEmpty(_bridgeIp.RawValue);
-                }
+                return _bridgeId.ValueFrom(bridge?.BridgeId ?? "") && _bridgeIp.ValueFrom(bridge?.IpAddress ?? "");
             }
 
             return false;
