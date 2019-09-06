@@ -9,7 +9,7 @@ namespace InDoOut_Desktop.UI.Interfaces
         Variables
     }
 
-    public interface IBlockView : IProgramDisplay, IConnectionDisplay, IElementDisplay
+    public interface IBlockView : IProgramDisplay, IElementDisplay
     {
         BlockViewMode CurrentViewMode { get; set; }
 

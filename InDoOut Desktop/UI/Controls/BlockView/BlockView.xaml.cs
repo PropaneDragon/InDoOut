@@ -2,6 +2,7 @@
 using InDoOut_Core.Entities.Functions;
 using InDoOut_Core.Entities.Programs;
 using InDoOut_Desktop.Actions;
+using InDoOut_Desktop.Loading.BlockView;
 using InDoOut_Desktop.UI.Controls.CoreEntityRepresentation;
 using InDoOut_Desktop.UI.Interfaces;
 using System;
@@ -11,12 +12,12 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Threading;
 
 namespace InDoOut_Desktop.UI.Controls.BlockView
 {
     public partial class BlockView : UserControl, IBlockView, IScrollable
     {
+        private readonly BlockViewProgramLoader _programLoader = null;
         private readonly ActionHandler _actionHandler = null;
         private IProgram _currentProgram = null;
         private BlockViewMode _currentViewMode = BlockViewMode.IO;
@@ -46,10 +47,11 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
         {
             InitializeComponent();
 
+            _actionHandler = new ActionHandler(new BlockViewRestingAction(this));
+            _programLoader = new BlockViewProgramLoader(this);
+
             ChangeProgram(new Program());
             ChangeViewMode(CurrentViewMode);
-
-            _actionHandler = new ActionHandler(new BlockViewRestingAction(this));
         }
 
         private void SetViewOffset(Point offset)
@@ -190,6 +192,15 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
             return new Point(0, 0);
         }
 
+        public Point GetBestSide(Rect rectangle, Point point)
+        {
+            var topLeft = rectangle.TopLeft;
+            var size = rectangle.Size;
+            var centre = new Point(topLeft.X + (size.Width / 2d), topLeft.Y + (size.Height / 2d));
+
+            return point.X < centre.X ? new Point(topLeft.X, centre.Y) : new Point(topLeft.X + size.Width, centre.Y);
+        }
+
         public Point GetBestSide(FrameworkElement element, Point point)
         {
             if (element != null)
@@ -281,128 +292,15 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
 
             if (_currentProgram != null)
             {
-                //Todo: Add teardown from the previous program.
+                _programLoader?.UnloadProgram(_currentProgram);
             }
 
             _currentProgram = program;
 
             if (_currentProgram != null)
             {
-                var functionToUIFunctionMap = new Dictionary<IFunction, IUIFunction>();
-
-                if (_currentProgram.Metadata.ContainsKey("x") && _currentProgram.Metadata.ContainsKey("y") && double.TryParse(_currentProgram.Metadata["x"], out var screenLeft) && double.TryParse(_currentProgram.Metadata["y"], out var screenTop))
-                {
-                    Offset = new Point(screenLeft, screenTop);
-                }
-
-                foreach (var function in _currentProgram.Functions)
-                {
-                    if (function.Metadata.ContainsKey("x") && function.Metadata.ContainsKey("y") && double.TryParse(function.Metadata["x"], out var xPosition) && double.TryParse(function.Metadata["y"], out var yPosition))
-                    {
-                        var uiFunction = Create(function, new Point(xPosition, yPosition));
-                        if (uiFunction != null)
-                        {
-                            functionToUIFunctionMap.Add(function, uiFunction);
-                        }
-                    }
-                    else
-                    {
-                        var uiFunction = Create(function);
-                        if (uiFunction != null)
-                        {
-                            functionToUIFunctionMap.Add(function, uiFunction);
-                        }
-                    }
-                }
-
-                foreach (var function in _currentProgram.Functions)
-                {
-                    foreach (var output in function.Outputs)
-                    {
-                        foreach (var input in output.Connections)
-                        {
-                            if (functionToUIFunctionMap.ContainsKey(function) && functionToUIFunctionMap.ContainsKey(input.Parent))
-                            {
-                                var startUiFunction = functionToUIFunctionMap[function];
-                                var endUiFunction = functionToUIFunctionMap[input.Parent];
-
-                                if (startUiFunction != null && endUiFunction != null)
-                                {
-                                    var uiOutput = startUiFunction.Outputs.FirstOrDefault(uiOutput => uiOutput.AssociatedOutput == output);
-                                    var uiInput = endUiFunction.Inputs.FirstOrDefault(uiInput => uiInput.AssociatedInput == input);
-
-                                    if (uiOutput != null && uiInput != null)
-                                    {
-                                        var connection = Create(uiOutput, uiInput);
-
-                                        if (ExtractMetadataValue(output, "x", out var outputX) && ExtractMetadataValue(output, "y", out var outputY) && ExtractMetadataValue(output, "w", out var outputW) && ExtractMetadataValue(output, "h", out var outputH) &&
-                                            ExtractMetadataValue(input, "x", out var inputX) && ExtractMetadataValue(input, "y", out var inputY) && ExtractMetadataValue(input, "w", out var inputW) && ExtractMetadataValue(input, "h", out var inputH))
-                                        {
-                                            var outputArea = new Rect(outputX, outputY, outputW, outputH);
-                                            var inputArea = new Rect(inputX, inputY, inputW, inputH);
-                                            var outputCentre = outputArea.TopLeft + ((outputArea.BottomRight - outputArea.TopLeft) / 2d);
-                                            var inputCentre = inputArea.TopLeft + ((inputArea.BottomRight - inputArea.TopLeft) / 2d);
-
-                                            connection.Start = GetBestSide(outputArea, inputCentre);
-                                            connection.End = GetBestSide(inputArea, outputCentre);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    foreach (var result in function.Results)
-                    {
-                        foreach (var property in result.Connections)
-                        {
-                            if (functionToUIFunctionMap.ContainsKey(function) && functionToUIFunctionMap.ContainsKey(property.Parent))
-                            {
-                                var startUiFunction = functionToUIFunctionMap[function];
-                                var endUiFunction = functionToUIFunctionMap[property.Parent];
-
-                                if (startUiFunction != null && endUiFunction != null)
-                                {
-                                    var uiResult = startUiFunction.Results.FirstOrDefault(uiOutput => uiOutput.AssociatedResult == result);
-                                    var uiProperty = endUiFunction.Properties.FirstOrDefault(uiInput => uiInput.AssociatedProperty == property);
-
-                                    if (uiResult != null && uiProperty != null)
-                                    {
-                                        var connection = Create(uiResult, uiProperty);
-
-                                        if (ExtractMetadataValue(result, "x", out var outputX) && ExtractMetadataValue(result, "y", out var outputY) && ExtractMetadataValue(result, "w", out var outputW) && ExtractMetadataValue(result, "h", out var outputH) &&
-                                            ExtractMetadataValue(property, "x", out var inputX) && ExtractMetadataValue(property, "y", out var inputY) && ExtractMetadataValue(property, "w", out var inputW) && ExtractMetadataValue(property, "h", out var inputH))
-                                        {
-                                            var outputArea = new Rect(outputX, outputY, outputW, outputH);
-                                            var inputArea = new Rect(inputX, inputY, inputW, inputH);
-                                            var outputCentre = outputArea.TopLeft + ((outputArea.BottomRight - outputArea.TopLeft) / 2d);
-                                            var inputCentre = inputArea.TopLeft + ((inputArea.BottomRight - inputArea.TopLeft) / 2d);
-
-                                            connection.Start = GetBestSide(outputArea, inputCentre);
-                                            connection.End = GetBestSide(inputArea, outputCentre);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+                _programLoader?.DisplayProgram(_currentProgram);
             }
-        }
-
-        private bool ExtractMetadataValue(IStored stored, string key, out double value)
-        {
-            value = 0;
-            return !string.IsNullOrEmpty(key) && stored != null && stored.Metadata.ContainsKey(key) && double.TryParse(stored.Metadata[key], out value);
-        }
-
-        private Point GetBestSide(Rect rectangle, Point point)
-        {
-            var topLeft = rectangle.TopLeft;
-            var size = rectangle.Size;
-            var centre = new Point(topLeft.X + (size.Width / 2d), topLeft.Y + (size.Height / 2d));
-
-            return point.X < centre.X ? new Point(topLeft.X, centre.Y) : new Point(topLeft.X + size.Width, centre.Y);
         }
 
         private void ChangeViewMode(BlockViewMode viewMode)
