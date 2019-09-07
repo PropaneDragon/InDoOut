@@ -1,5 +1,4 @@
-﻿using InDoOut_Core.Entities.Functions;
-using System;
+﻿using System;
 
 namespace InDoOut_Core_Plugins.Maths
 {

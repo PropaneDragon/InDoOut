@@ -7,7 +7,6 @@ using InDoOut_Executable_Core.Storage;
 using InDoOut_Json_Storage;
 using InDoOut_Plugins.Loaders;
 using System;
-using System.Linq;
 using System.Threading;
 
 namespace InDoOut_Console

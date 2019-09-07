@@ -1,5 +1,4 @@
 ﻿using InDoOut_Plugins.Core;
-using System;
 
 namespace InDoOut_Core_Plugins
 {

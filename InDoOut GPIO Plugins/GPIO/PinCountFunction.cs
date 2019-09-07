@@ -1,5 +1,4 @@
 ﻿using InDoOut_Core.Entities.Functions;
-using InDoOut_Core.Threading.Safety;
 
 #if (!_WINDOWS)
 using System.Device.Gpio;

@@ -1,5 +1,4 @@
-﻿using InDoOut_Core.Entities.Core;
-using System.Windows;
+﻿using System.Windows;
 
 namespace InDoOut_Desktop.UI.Interfaces
 {

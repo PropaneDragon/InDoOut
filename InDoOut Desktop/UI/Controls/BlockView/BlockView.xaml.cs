@@ -1,5 +1,4 @@
-﻿using InDoOut_Core.Basic;
-using InDoOut_Core.Entities.Functions;
+﻿using InDoOut_Core.Entities.Functions;
 using InDoOut_Core.Entities.Programs;
 using InDoOut_Desktop.Actions;
 using InDoOut_Desktop.Loading.BlockView;
