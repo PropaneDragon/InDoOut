@@ -291,14 +291,14 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
 
             if (_currentProgram != null)
             {
-                _programLoader?.UnloadProgram(_currentProgram);
+                _ = _programLoader?.UnloadProgram(_currentProgram);
             }
 
             _currentProgram = program;
 
             if (_currentProgram != null)
             {
-                _programLoader?.DisplayProgram(_currentProgram);
+                _ = _programLoader?.DisplayProgram(_currentProgram);
             }
         }
 

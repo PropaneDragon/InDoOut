@@ -193,7 +193,7 @@ namespace InDoOut_Core.Entities.Functions
             {
                 Properties.Add(property);
 
-                property.Connect(this);
+                _ = property.Connect(this);
             }
 
             return property;

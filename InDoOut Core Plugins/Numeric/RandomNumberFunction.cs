@@ -5,12 +5,12 @@ namespace InDoOut_Core_Plugins.Numeric
 {
     public class RandomNumberFunction : Function
     {
-        private IOutput _output = null;
-        private IProperty<int> _propertyMinimum = null;
-        private IProperty<int> _propertyMaximum = null;
-        private IResult _resultNumber = null;
+        private readonly IOutput _output = null;
+        private readonly IProperty<int> _propertyMinimum = null;
+        private readonly IProperty<int> _propertyMaximum = null;
+        private readonly IResult _resultNumber = null;
 
-        private Random _random = new Random();
+        private readonly Random _random = new Random();
 
         public override string Description => "Generates a random number from a minimum and maximum value.";
 

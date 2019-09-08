@@ -4,9 +4,9 @@ namespace InDoOut_Core_Plugins.Variables
 {
     public class SetValueFunction : Function
     {
-        IOutput _output = null;
-        IProperty<string> _valueToSet = null;
-        IResult _valueSet = null;
+        readonly IOutput _output = null;
+        readonly IProperty<string> _valueToSet = null;
+        readonly IResult _valueSet = null;
 
         public override string Description => "Sets a value output from an input value.";
 

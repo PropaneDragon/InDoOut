@@ -38,7 +38,7 @@ namespace InDoOut_Desktop.Programs
         {
             if (program != null && ProgramExists(program))
             {
-                _programs.RemoveAll(storedProgram => storedProgram == program);
+                _ = _programs.RemoveAll(storedProgram => storedProgram == program);
 
                 return true;
             }

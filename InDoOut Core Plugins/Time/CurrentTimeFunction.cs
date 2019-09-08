@@ -39,10 +39,10 @@ namespace InDoOut_Core_Plugins.Time
             var usingUtc = triggeredBy == _timeUtc;
             var currentDate = usingUtc ? DateTime.UtcNow : DateTime.Now;
 
-            _hour.ValueFrom(currentDate.Hour);
-            _minute.ValueFrom(currentDate.Minute);
-            _second.ValueFrom(currentDate.Second);
-            _millisecond.ValueFrom(currentDate.Millisecond);
+            _ = _hour.ValueFrom(currentDate.Hour);
+            _ = _minute.ValueFrom(currentDate.Minute);
+            _ = _second.ValueFrom(currentDate.Second);
+            _ = _millisecond.ValueFrom(currentDate.Millisecond);
 
             return _output;
         }

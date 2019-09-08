@@ -41,11 +41,11 @@ namespace InDoOut_Core_Plugins.Time
             var usingUtc = triggeredBy == _timeUtc;
             var currentDate = usingUtc ? DateTime.UtcNow : DateTime.Now;
 
-            _year.ValueFrom(currentDate.Year);
-            _month.ValueFrom(currentDate.Month);
-            _day.ValueFrom(currentDate.Day);
-            _dayOfYear.ValueFrom(currentDate.DayOfYear);
-            _dayOfWeek.ValueFrom((int)currentDate.DayOfWeek);
+            _ = _year.ValueFrom(currentDate.Year);
+            _ = _month.ValueFrom(currentDate.Month);
+            _ = _day.ValueFrom(currentDate.Day);
+            _ = _dayOfYear.ValueFrom(currentDate.DayOfYear);
+            _ = _dayOfWeek.ValueFrom((int)currentDate.DayOfWeek);
 
             return _output;
         }

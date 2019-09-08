@@ -87,7 +87,7 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
                             StrokeThickness = 1
                         };
 
-                        Canvas_Layout.Children.Add(viewRectangle);
+                        _ = Canvas_Layout.Children.Add(viewRectangle);
 
                         Canvas.SetLeft(viewRectangle, adjustedFunctionRect.X);
                         Canvas.SetTop(viewRectangle, adjustedFunctionRect.Y);

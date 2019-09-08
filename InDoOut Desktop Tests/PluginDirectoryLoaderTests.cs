@@ -20,7 +20,7 @@ namespace InDoOut_Desktop_Tests
             var pluginDirectoryLoader = new PluginDirectoryLoader(pluginLoader, standardLocations);
             var currentDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 
-            standardLocations.SetPathTo(Location.PluginsDirectory, currentDirectory);
+            _ = standardLocations.SetPathTo(Location.PluginsDirectory, currentDirectory);
 
             var pluginsTask = pluginDirectoryLoader.LoadPlugins();
             var waitTask = Task.Delay(TimeSpan.FromSeconds(5));

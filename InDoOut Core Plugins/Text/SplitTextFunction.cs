@@ -35,13 +35,13 @@ namespace InDoOut_Core_Plugins.Text
 
             if (_splitPosition.FullValue <= textToSplit.Length && _splitPosition.FullValue > 0)
             {
-                _splitLeft.ValueFrom(textToSplit.Substring(0, _splitPosition.FullValue));
-                _splitRight.ValueFrom(textToSplit.Substring(_splitPosition.FullValue));
+                _ = _splitLeft.ValueFrom(textToSplit.Substring(0, _splitPosition.FullValue));
+                _ = _splitRight.ValueFrom(textToSplit.Substring(_splitPosition.FullValue));
             }
             else
             {
-                _splitRight.ValueFrom(_splitPosition.FullValue <= 0 ? _text.FullValue : "");
-                _splitLeft.ValueFrom(_splitPosition.FullValue <= 0 ? "" : _text.FullValue);
+                _ = _splitRight.ValueFrom(_splitPosition.FullValue <= 0 ? _text.FullValue : "");
+                _ = _splitLeft.ValueFrom(_splitPosition.FullValue <= 0 ? "" : _text.FullValue);
             }
 
             return _output;

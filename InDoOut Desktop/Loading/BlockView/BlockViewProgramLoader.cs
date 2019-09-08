@@ -118,12 +118,7 @@ namespace InDoOut_Desktop.Loading.BlockView
 
         public bool UnloadProgram(IProgram program)
         {
-            if (program != null)
-            {
-                return true;
-            }
-
-            return false;
+            return program != null;
         }
 
         private bool ExtractLocation(IStored stored, out Point location)

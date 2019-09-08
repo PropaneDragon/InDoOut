@@ -166,7 +166,7 @@ namespace InDoOut_Core_Tests
             Assert.AreEqual(outputA, outputB);
             Assert.AreNotEqual(outputA, outputC);
 
-            outputA.Connect(new Input(null));
+            _ = outputA.Connect(new Input(null));
 
             Assert.AreNotEqual(outputA, outputB);
             Assert.AreNotEqual(outputA, outputC);
