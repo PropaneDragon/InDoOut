@@ -1,7 +1,7 @@
 ﻿using InDoOut_Desktop.UI.Interfaces;
 using System.Collections.Generic;
 
-namespace InDoOut_Desktop.Display.Selection
+namespace InDoOut_Desktop.Actions.Selecting
 {
     internal class SelectionManager : ISelectionManager
     {

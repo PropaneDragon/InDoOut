@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 
-namespace InDoOut_Desktop.Actions
+namespace InDoOut_Desktop.Actions.Dragging
 {
     internal class DraggableDragAction : DragAction
     {

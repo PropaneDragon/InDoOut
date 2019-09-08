@@ -1,4 +1,6 @@
-﻿using InDoOut_Desktop.Display.Selection;
+﻿using InDoOut_Desktop.Actions.Copying;
+using InDoOut_Desktop.Actions.Dragging;
+using InDoOut_Desktop.Actions.Selecting;
 using InDoOut_Desktop.UI.Interfaces;
 using System.Linq;
 using System.Windows;
@@ -23,21 +25,16 @@ namespace InDoOut_Desktop.Actions
                 var elementsUnderMouse = _blockView.GetElementsUnderMouse();
                 if (elementsUnderMouse.Count > 0)
                 {
-                    if (_blockView.GetFirstElementOfType<ISelectable>(elementsUnderMouse) is ISelectable selectable)
+                    if (_blockView.GetFirstElementOfType<ISelectable>(elementsUnderMouse) is ISelectable selectable && selectable.CanSelect(_blockView))
                     {
-                        if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
-                        {
-                            _ = _blockView.SelectionManager.Add(selectable);
-                        }
-                        else
-                        {
-                            _ = _blockView.SelectionManager.Set(selectable);
-                        }
+                        _ = Keyboard.Modifiers.HasFlag(ModifierKeys.Control) ? _blockView.SelectionManager.Add(selectable) : _blockView.SelectionManager.Set(selectable);
                     }
                     else
                     {
                         _blockView.SelectionManager.Clear();
                     }
+
+                    return true;
                 }
             }
 
@@ -69,16 +66,13 @@ namespace InDoOut_Desktop.Actions
 
                         return true;
                     }
-                    else if (_blockView.GetFirstElementOfType<IDraggable>(elementsUnderMouse) != null && elementsSelected.All(element => element is IDraggable))
+                    else if (_blockView.GetFirstElementOfType<IDraggable>(elementsUnderMouse) != null && elementsSelected.All(element => element is IDraggable draggable && draggable.CanDrag(_blockView)))
                     {
                         var draggables = elementsSelected.Cast<IDraggable>();
-                        if (draggables.All(draggable => draggable.CanDrag(_blockView)))
-                        {
-                            Finish(new DraggableDragAction(_blockView, draggables, mousePosition));
-                            return true;
-                        }
 
-                        return false;
+                        Finish(new DraggableDragAction(_blockView, draggables, mousePosition));
+
+                        return true;
                     }
                     else if (_blockView.GetFirstElementOfType<IScrollable>(elementsUnderMouse) is IScrollable scrollable)
                     {
@@ -107,6 +101,30 @@ namespace InDoOut_Desktop.Actions
                     if (_blockView.GetFirstElementOfType<IUIConnection>(elementsUnderMouse) is IUIConnection connection)
                     {
                         Finish(new ConnectionMenuAction(connection, _blockView, mousePosition));
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        public override bool KeyUp(Key key)
+        {
+            if (_blockView != null)
+            {
+                var elementsSelected = _blockView.SelectionManager.Selection;
+
+                if (key == Key.D && Keyboard.Modifiers.HasFlag(ModifierKeys.Control) && elementsSelected.All(element => element is ICopyable copyable && copyable.CanCopy(_blockView)))
+                {
+                    var copyables = elementsSelected.Cast<ICopyable>();
+
+                    foreach (var copyable in copyables)
+                    {
+                        var copy = copyable.CreateCopy(_blockView);
+                        if (copy != null)
+                        {
+                            return copyable.CopyTo(copy);
+                        }
                     }
                 }
             }

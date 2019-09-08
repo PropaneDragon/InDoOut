@@ -1,7 +1,6 @@
-﻿using InDoOut_Core.Instancing;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace InDoOut_Desktop.Display.Selection
+namespace InDoOut_Desktop.Actions.Selecting
 {
     public interface ISelectionManager
     {

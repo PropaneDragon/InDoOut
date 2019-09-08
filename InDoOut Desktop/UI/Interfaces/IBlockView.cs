@@ -1,4 +1,4 @@
-﻿using InDoOut_Desktop.Display.Selection;
+﻿using InDoOut_Desktop.Actions.Selecting;
 using System.Windows;
 
 namespace InDoOut_Desktop.UI.Interfaces

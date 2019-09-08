@@ -1,7 +1,7 @@
 ﻿using InDoOut_Desktop.UI.Interfaces;
 using System.Windows;
 
-namespace InDoOut_Desktop.Actions
+namespace InDoOut_Desktop.Actions.Dragging
 {
     internal class ScrollableDragAction : DragAction
     {

@@ -1,7 +1,7 @@
 ﻿using InDoOut_Core.Entities.Functions;
 using InDoOut_Core.Entities.Programs;
 using InDoOut_Desktop.Actions;
-using InDoOut_Desktop.Display.Selection;
+using InDoOut_Desktop.Actions.Selecting;
 using InDoOut_Desktop.Loading.BlockView;
 using InDoOut_Desktop.UI.Controls.CoreEntityRepresentation;
 using InDoOut_Desktop.UI.Interfaces;
@@ -404,6 +404,20 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
         private void Scroll_Content_PreviewMouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             _ = _actionHandler?.MouseRightUp(e.GetPosition(sender as ScrollViewer));
+
+            e.Handled = false;
+        }
+
+        private void Scroll_Content_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            _ = _actionHandler?.KeyDown(e.Key);
+
+            e.Handled = false;
+        }
+
+        private void Scroll_Content_PreviewKeyUp(object sender, KeyEventArgs e)
+        {
+            _ = _actionHandler?.KeyUp(e.Key);
 
             e.Handled = false;
         }

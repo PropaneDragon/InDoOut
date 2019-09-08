@@ -42,4 +42,8 @@
     <Resource Include="Resources\IDO_Splash_Logo.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Display\" />
+  </ItemGroup>
+
 </Project>

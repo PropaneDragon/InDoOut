@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace InDoOut_Desktop.Actions
+namespace InDoOut_Desktop.Actions.Dragging
 {
     internal abstract class DragAction : Action
     {

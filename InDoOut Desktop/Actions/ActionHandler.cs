@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Input;
 
 namespace InDoOut_Desktop.Actions
 {
@@ -18,40 +19,15 @@ namespace InDoOut_Desktop.Actions
             CurrentAction = defaultAction;
         }
 
-        public bool MouseNoMove(Point mousePosition)
-        {
-            return CurrentAction?.MouseNoMove(mousePosition) ?? false;
-        }
-
-        public bool MouseLeftDown(Point mousePosition)
-        {
-            return CurrentAction?.MouseLeftDown(mousePosition) ?? false;
-        }
-
-        public bool MouseLeftMove(Point mousePosition)
-        {
-            return CurrentAction?.MouseLeftMove(mousePosition) ?? false;
-        }
-
-        public bool MouseLeftUp(Point mousePosition)
-        {
-            return CurrentAction?.MouseLeftUp(mousePosition) ?? false;
-        }
-
-        public bool MouseRightDown(Point mousePosition)
-        {
-            return CurrentAction?.MouseRightDown(mousePosition) ?? false;
-        }
-
-        public bool MouseRightMove(Point mousePosition)
-        {
-            return CurrentAction?.MouseRightMove(mousePosition) ?? false;
-        }
-
-        public bool MouseRightUp(Point mousePosition)
-        {
-            return CurrentAction?.MouseRightUp(mousePosition) ?? false;
-        }
+        public bool MouseNoMove(Point mousePosition) => CurrentAction?.MouseNoMove(mousePosition) ?? false;
+        public bool MouseLeftDown(Point mousePosition) => CurrentAction?.MouseLeftDown(mousePosition) ?? false;
+        public bool MouseLeftMove(Point mousePosition) => CurrentAction?.MouseLeftMove(mousePosition) ?? false;
+        public bool MouseLeftUp(Point mousePosition) => CurrentAction?.MouseLeftUp(mousePosition) ?? false;
+        public bool MouseRightDown(Point mousePosition) => CurrentAction?.MouseRightDown(mousePosition) ?? false;
+        public bool MouseRightMove(Point mousePosition) => CurrentAction?.MouseRightMove(mousePosition) ?? false;
+        public bool MouseRightUp(Point mousePosition) => CurrentAction?.MouseRightUp(mousePosition) ?? false;
+        public bool KeyDown(Key key) => CurrentAction?.KeyDown(key) ?? false;
+        public bool KeyUp(Key key) => CurrentAction?.KeyUp(key) ?? false;
 
         private void SetAction(IAction action)
         {

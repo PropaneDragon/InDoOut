@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Input;
 
 namespace InDoOut_Desktop.Actions
 {
@@ -14,5 +15,7 @@ namespace InDoOut_Desktop.Actions
         bool MouseRightMove(Point mousePosition);
         bool MouseRightDown(Point mousePosition);
         bool MouseRightUp(Point mousePosition);
+        bool KeyDown(Key key);
+        bool KeyUp(Key key);
     }
 }

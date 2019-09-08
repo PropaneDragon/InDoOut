@@ -1,5 +1,6 @@
 ﻿using InDoOut_Core.Entities.Functions;
-using InDoOut_Desktop.Actions;
+using InDoOut_Core.Functions;
+using InDoOut_Desktop.Actions.Copying;
 using InDoOut_Desktop.UI.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ using System.Windows.Threading;
 
 namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
 {
-    public partial class UIFunction : UserControl, IDraggable, IUIFunction
+    public partial class UIFunction : UserControl, IUIFunction
     {
         private DispatcherTimer _updateTimer = new DispatcherTimer(DispatcherPriority.Normal);
         private UIFunctionDisplayMode _displayMode = UIFunctionDisplayMode.None;
@@ -47,6 +48,39 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
 
         public bool CanSelect(IBlockView view) => true;
         public bool CanDrag(IBlockView view) => true;
+        public bool CanCopy(IBlockView blockView) => true;
+        public bool CanDelete(IBlockView blockView) => true;
+
+        public void Deleted(IBlockView blockView)
+        {
+            _function?.PolitelyStop();
+        }
+
+        public bool CopyTo(ICopyable other)
+        {
+            if (other != null)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public ICopyable CreateCopy(IBlockView blockView)
+        {
+            if (blockView != null && _function != null)
+            {
+                var functionBuilder = new FunctionBuilder();
+                var functionInstance = functionBuilder.BuildInstance(_function.GetType());
+
+                if (functionInstance != null)
+                {
+                    return blockView.Create(functionInstance);
+                }
+            }
+
+            return null;
+        }
 
         public void SelectionStarted(IBlockView view)
         {
@@ -96,7 +130,7 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
         {
             if (_function != null)
             {
-                //Todo: Teardown from old function
+                _function?.PolitelyStop();
             }
 
             _function = function;

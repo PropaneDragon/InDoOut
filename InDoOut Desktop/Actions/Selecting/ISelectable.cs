@@ -1,6 +1,6 @@
 ﻿using InDoOut_Desktop.UI.Interfaces;
 
-namespace InDoOut_Desktop.Display.Selection
+namespace InDoOut_Desktop.Actions.Selecting
 {
     public interface ISelectable
     {
