@@ -1,6 +1,9 @@
-﻿using InDoOut_Desktop.UI.Interfaces;
+﻿using InDoOut_Desktop.Display.Selection;
+using InDoOut_Desktop.UI.Interfaces;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace InDoOut_Desktop.Actions
 {
@@ -20,6 +23,36 @@ namespace InDoOut_Desktop.Actions
                 var elementsUnderMouse = _blockView.GetElementsUnderMouse();
                 if (elementsUnderMouse.Count > 0)
                 {
+                    if (_blockView.GetFirstElementOfType<ISelectable>(elementsUnderMouse) is ISelectable selectable)
+                    {
+                        if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
+                        {
+                            _ = _blockView.SelectionManager.Add(selectable);
+                        }
+                        else
+                        {
+                            _ = _blockView.SelectionManager.Set(selectable);
+                        }
+                    }
+                    else
+                    {
+                        _blockView.SelectionManager.Clear();
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        public override bool MouseLeftMove(Point mousePosition)
+        {
+            if (_blockView != null)
+            {
+                var elementsUnderMouse = _blockView.GetElementsUnderMouse();
+                var elementsSelected = _blockView.SelectionManager.Selection;
+
+                if (elementsUnderMouse.Count > 0)
+                {
                     if (_blockView.GetFirstElementOfType<TextBox>(elementsUnderMouse) is TextBox)
                     {
                         return false;
@@ -36,11 +69,12 @@ namespace InDoOut_Desktop.Actions
 
                         return true;
                     }
-                    else if (_blockView.GetFirstElementOfType<IDraggable>(elementsUnderMouse) is IDraggable draggable)
+                    else if (_blockView.GetFirstElementOfType<IDraggable>(elementsUnderMouse) != null && elementsSelected.All(element => element is IDraggable))
                     {
-                        if (draggable.CanDrag())
+                        var draggables = elementsSelected.Cast<IDraggable>();
+                        if (draggables.All(draggable => draggable.CanDrag(_blockView)))
                         {
-                            Finish(new DraggableDragAction(_blockView, draggable, mousePosition));
+                            Finish(new DraggableDragAction(_blockView, draggables, mousePosition));
                             return true;
                         }
 
@@ -52,13 +86,28 @@ namespace InDoOut_Desktop.Actions
 
                         return true;
                     }
+                }
+            }
 
-                    /*else if(hitVisual is UIElement element)
+            return false;
+        }
+
+        public override bool MouseLeftUp(Point mousePosition)
+        {
+            return base.MouseLeftUp(mousePosition);
+        }
+
+        public override bool MouseRightUp(Point mousePosition)
+        {
+            if (_blockView != null)
+            {
+                var elementsUnderMouse = _blockView.GetElementsUnderMouse();
+                if (elementsUnderMouse.Count > 0)
+                {
+                    if (_blockView.GetFirstElementOfType<IUIConnection>(elementsUnderMouse) is IUIConnection connection)
                     {
-                        Finish(new ElementDragAction(element, mousePosition));
-
-                        return true;
-                    }*/
+                        Finish(new ConnectionMenuAction(connection, _blockView, mousePosition));
+                    }
                 }
             }
 

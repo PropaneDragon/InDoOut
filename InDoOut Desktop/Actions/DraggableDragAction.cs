@@ -1,26 +1,30 @@
 ﻿using InDoOut_Desktop.UI.Interfaces;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 
 namespace InDoOut_Desktop.Actions
 {
     internal class DraggableDragAction : DragAction
     {
-        private Point _initialControlPosition = new Point();
-        private readonly IDraggable _draggable = null;
+        private readonly Dictionary<IDraggable, Point> _initialPositions = new Dictionary<IDraggable, Point>();
         private readonly IBlockView _blockView = null;
 
-        public DraggableDragAction(IBlockView blockView, IDraggable draggable, Point mousePosition)
+        public DraggableDragAction(IBlockView blockView, IEnumerable<IDraggable> draggables, Point mousePosition)
         {
             _ = base.MouseLeftDown(mousePosition);
 
-            if (blockView != null && draggable != null && draggable.CanDrag() && draggable is FrameworkElement element)
+            if (blockView != null && draggables != null && draggables.All(draggable => draggable.CanDrag(blockView)) && draggables.All(draggable => draggable is FrameworkElement))
             {
                 _blockView = blockView;
+                _initialPositions.Clear();
 
-                _draggable = draggable;
-                _draggable.DragStarted(_blockView);
+                foreach (var draggable in draggables)
+                {
+                    _initialPositions[draggable] = _blockView.GetPosition(draggable as FrameworkElement);
 
-                _initialControlPosition = _blockView.GetPosition(element);
+                    draggable.DragStarted(_blockView);
+                }
             }
             else
             {
@@ -32,11 +36,14 @@ namespace InDoOut_Desktop.Actions
         {
             _ = base.MouseLeftMove(mousePosition);
 
-            if (_draggable != null && _blockView != null && _draggable is FrameworkElement element)
+            if (_blockView != null && _initialPositions.Keys.All(draggable => draggable is FrameworkElement))
             {
-                _blockView.SetPosition(element, new Point(_initialControlPosition.X - MouseDelta.X, _initialControlPosition.Y - MouseDelta.Y));
+                foreach (var elementPosition in _initialPositions)
+                {
+                    _blockView.SetPosition(elementPosition.Key as FrameworkElement, new Point(elementPosition.Value.X - MouseDelta.X, elementPosition.Value.Y - MouseDelta.Y));
 
-                _draggable.DragMoved(_blockView);
+                    elementPosition.Key.DragMoved(_blockView);
+                }
 
                 return true;
             }
@@ -49,16 +56,13 @@ namespace InDoOut_Desktop.Actions
         {
             _ = base.MouseLeftUp(mousePosition);
 
-            if (_draggable != null)
+            foreach (var draggable in _initialPositions)
             {
-                _draggable.DragEnded(_blockView);
-
-                Finish(null);
-                return true;
+                draggable.Key.DragEnded(_blockView);
             }
 
-            Abort();
-            return false;
+            Finish(null);
+            return true;
         }
     }
 }

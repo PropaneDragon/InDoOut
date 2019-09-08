@@ -1,6 +1,7 @@
 ﻿using InDoOut_Core.Entities.Functions;
 using InDoOut_Core.Entities.Programs;
 using InDoOut_Desktop.Actions;
+using InDoOut_Desktop.Display.Selection;
 using InDoOut_Desktop.Loading.BlockView;
 using InDoOut_Desktop.UI.Controls.CoreEntityRepresentation;
 using InDoOut_Desktop.UI.Interfaces;
@@ -16,6 +17,7 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
 {
     public partial class BlockView : UserControl, IBlockView, IScrollable
     {
+        private readonly SelectionManager _selectionManager = null;
         private readonly BlockViewProgramLoader _programLoader = null;
         private readonly ActionHandler _actionHandler = null;
         private IProgram _currentProgram = null;
@@ -23,6 +25,7 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
 
         public IProgram AssociatedProgram { get => _currentProgram; set => ChangeProgram(value); }
         public BlockViewMode CurrentViewMode { get => _currentViewMode; set => ChangeViewMode(value); }
+        public ISelectionManager SelectionManager => _selectionManager;
 
         public Size TotalSize => new Size(Canvas_Content.ActualWidth, Canvas_Content.ActualHeight);
 
@@ -46,6 +49,7 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
         {
             InitializeComponent();
 
+            _selectionManager = new SelectionManager(this);
             _actionHandler = new ActionHandler(new BlockViewRestingAction(this));
             _programLoader = new BlockViewProgramLoader(this);
 

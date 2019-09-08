@@ -2,12 +2,12 @@
 
 namespace InDoOut_Desktop.Actions
 {
-    internal interface IDraggable
+    public interface IDraggable
     {
         void DragStarted(IBlockView view);
         void DragMoved(IBlockView view);
         void DragEnded(IBlockView view);
 
-        bool CanDrag();
+        bool CanDrag(IBlockView view);
     }
 }

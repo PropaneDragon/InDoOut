@@ -45,9 +45,17 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
             AssociatedFunction = function;
         }
 
-        public bool CanDrag()
+        public bool CanSelect(IBlockView view) => true;
+        public bool CanDrag(IBlockView view) => true;
+
+        public void SelectionStarted(IBlockView view)
         {
-            return true;
+            Rectangle_Selected.Visibility = Visibility.Visible;
+        }
+
+        public void SelectionEnded(IBlockView view)
+        {
+            Rectangle_Selected.Visibility = Visibility.Hidden;
         }
 
         public void DragStarted(IBlockView view)
@@ -109,9 +117,6 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
             {
                 Text_FunctionName.Text = AssociatedFunction.SafeName;
                 Text_Processing.Visibility = AssociatedFunction.Running ? Visibility.Visible : Visibility.Hidden;
-
-                /*UpdateInputs();
-                UpdateOutputs();*/
             }
         }
 
@@ -153,66 +158,6 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
             }
 
             return foundElements;
-        }
-
-        private void UpdateOutputs()
-        {
-            if (AssociatedFunction != null)
-            {
-                var expectedOutputs = new List<IOutput>(AssociatedFunction.Outputs);
-                var currentOutputs = Outputs;
-
-                foreach (var output in currentOutputs)
-                {
-                    var associatedOutput = output.AssociatedOutput;
-
-                    if (expectedOutputs.Contains(associatedOutput))
-                    {
-                        _ = expectedOutputs.Remove(associatedOutput);
-                    }
-                    else if (output is UIElement element)
-                    {
-                        Stack_Outputs.Children.Remove(element);
-                    }
-                }
-
-                foreach (var output in expectedOutputs)
-                {
-                    var uiOutput = new UIOutput(output);
-
-                    _ = Stack_Outputs.Children.Add(uiOutput);
-                }
-            }
-        }
-
-        private void UpdateInputs()
-        {
-            if (AssociatedFunction != null)
-            {
-                var expectedInputs = new List<IInput>(AssociatedFunction.Inputs);
-                var currentInputs = Inputs;
-
-                foreach (var input in currentInputs)
-                {
-                    var associatedInput = input.AssociatedInput;
-
-                    if (expectedInputs.Contains(associatedInput))
-                    {
-                        _ = expectedInputs.Remove(associatedInput);
-                    }
-                    else if (input is UIElement element)
-                    {
-                        Stack_Inputs.Children.Remove(element);
-                    }
-                }
-
-                foreach (var input in expectedInputs)
-                {
-                    var uiInput = new UIInput(input);
-
-                    _ = Stack_Inputs.Children.Add(uiInput);
-                }
-            }
         }
 
         private void SetDisplayMode(UIFunctionDisplayMode displayMode)

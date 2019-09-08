@@ -1,4 +1,6 @@
 ﻿using InDoOut_Core.Entities.Functions;
+using InDoOut_Desktop.Actions;
+using InDoOut_Desktop.Display.Selection;
 using System.Collections.Generic;
 
 namespace InDoOut_Desktop.UI.Interfaces
@@ -10,7 +12,7 @@ namespace InDoOut_Desktop.UI.Interfaces
         Variables
     }
 
-    public interface IUIFunction
+    public interface IUIFunction : IDraggable, ISelectable
     {
         UIFunctionDisplayMode DisplayMode { get; set; }
         IFunction AssociatedFunction { get; set; }

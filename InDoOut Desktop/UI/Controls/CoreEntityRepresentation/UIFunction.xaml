@@ -45,6 +45,7 @@
                     <DropShadowEffect BlurRadius="20" Direction="0" ShadowDepth="0" />
                 </Rectangle.Effect>
             </Rectangle>-->
+            <Rectangle x:Name="Rectangle_Selected" Visibility="Hidden" Margin="-2" Stroke="#4CFFFFFF" StrokeThickness="1" StrokeDashArray="4 4" SnapsToDevicePixels="True"/>
             <Border Background="#373737" Padding="10">
                 <DockPanel>
                     <Button x:Name="Button_Run" DockPanel.Dock="Right" Visibility="Hidden" FontFamily="Segoe MDL2 Assets" Content="" FontSize="14" Template="{DynamicResource Template_Buttons_Transparent}" HorizontalAlignment="Right" VerticalAlignment="Stretch" HorizontalContentAlignment="Right" Click="Button_Run_Click"/>
