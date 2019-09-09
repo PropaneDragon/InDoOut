@@ -67,9 +67,9 @@ namespace InDoOut_Desktop.Actions
 
                         return true;
                     }
-                    else if (_blockView.GetFirstElementOfType<IDraggable>(elementsUnderMouse) != null && elementsSelected.All(element => element is IDraggable draggable && draggable.CanDrag(_blockView)))
+                    else if (_blockView.GetFirstElementOfType<IDraggable>(elementsUnderMouse) != null && elementsSelected.Any(element => element is IDraggable draggable && draggable.CanDrag(_blockView)))
                     {
-                        var draggables = elementsSelected.Cast<IDraggable>();
+                        var draggables = elementsSelected.Where(element => element is IDraggable draggable && draggable.CanDrag(_blockView)).Cast<IDraggable>();
 
                         Finish(new DraggableDragAction(_blockView, draggables, mousePosition));
 
