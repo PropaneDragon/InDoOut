@@ -40,5 +40,12 @@ namespace InDoOut_Core.Entities.Programs
         /// <param name="function">The function to add to the program.</param>
         /// <returns>Whether the function was added.</returns>
         bool AddFunction(IFunction function);
+
+        /// <summary>
+        /// Removes a function from the program.
+        /// </summary>
+        /// <param name="function">The function to remove from the program.</param>
+        /// <returns>Whether the function was found and removed.</returns>
+        bool RemoveFunction(IFunction function);
     }
 }

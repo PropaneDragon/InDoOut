@@ -1,4 +1,5 @@
 ﻿using InDoOut_Desktop.Actions.Copying;
+using InDoOut_Desktop.Actions.Deleting;
 using InDoOut_Desktop.Actions.Dragging;
 using InDoOut_Desktop.Actions.Selecting;
 using InDoOut_Desktop.UI.Interfaces;
@@ -125,6 +126,15 @@ namespace InDoOut_Desktop.Actions
                         {
                             return copyable.CopyTo(copy);
                         }
+                    }
+                }
+                else if (key == Key.Delete && elementsSelected.All(element => element is IDeletable deletable && deletable.CanDelete(_blockView)))
+                {
+                    var deletables = elementsSelected.Cast<IDeletable>();
+
+                    foreach (var deletable in deletables)
+                    {
+                        deletable.Deleted(_blockView);
                     }
                 }
             }

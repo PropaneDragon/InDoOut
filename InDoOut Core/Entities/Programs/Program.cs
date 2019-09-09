@@ -86,6 +86,23 @@ namespace InDoOut_Core.Entities.Programs
         }
 
         /// <summary>
+        /// Removes a function from the program.
+        /// </summary>
+        /// <param name="function">The function to remove.</param>
+        /// <returns>Whether the function was found and removed.</returns>
+        public bool RemoveFunction(IFunction function)
+        {
+            if (function != null && Functions.Contains(function))
+            {
+                _ = Functions.Remove(function);
+
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Whether this program can be triggered by the given <see cref="IEntity"/>.
         /// </summary>
         /// <param name="entity">The entity to check.</param>

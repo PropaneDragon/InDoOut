@@ -47,6 +47,59 @@ namespace InDoOut_Core_Tests
         }
 
         [TestMethod]
+        public void RemoveFunctions()
+        {
+            var program = new Program();
+
+            Assert.AreEqual(0, program.Functions.Count);
+            Assert.AreEqual(0, program.StartFunctions.Count);
+
+            var function = new TestFunction();
+
+            Assert.IsTrue(program.AddFunction(function));
+            Assert.AreEqual(1, program.Functions.Count);
+            Assert.AreEqual(0, program.StartFunctions.Count);
+
+            var function2 = new TestFunction();
+
+            Assert.IsTrue(program.AddFunction(function2));
+            Assert.AreEqual(2, program.Functions.Count);
+            Assert.AreEqual(0, program.StartFunctions.Count);
+
+            var startFunction = new TestStartFunction();
+
+            Assert.IsTrue(program.AddFunction(startFunction));
+            Assert.AreEqual(3, program.Functions.Count);
+            Assert.AreEqual(1, program.StartFunctions.Count);
+
+            Assert.IsFalse(program.RemoveFunction(null));
+            Assert.IsFalse(program.RemoveFunction(new TestFunction()));
+            Assert.IsFalse(program.RemoveFunction(new TestStartFunction()));
+            Assert.AreEqual(3, program.Functions.Count);
+            Assert.AreEqual(1, program.StartFunctions.Count);
+
+            Assert.IsTrue(program.RemoveFunction(function2));
+            Assert.AreEqual(2, program.Functions.Count);
+            Assert.AreEqual(1, program.StartFunctions.Count);
+
+            Assert.IsTrue(program.RemoveFunction(startFunction));
+            Assert.AreEqual(1, program.Functions.Count);
+            Assert.AreEqual(0, program.StartFunctions.Count);
+
+            Assert.IsTrue(program.AddFunction(function2));
+            Assert.AreEqual(2, program.Functions.Count);
+            Assert.AreEqual(0, program.StartFunctions.Count);
+
+            Assert.IsTrue(program.RemoveFunction(function));
+            Assert.AreEqual(1, program.Functions.Count);
+            Assert.AreEqual(0, program.StartFunctions.Count);
+
+            Assert.IsTrue(program.RemoveFunction(function2));
+            Assert.AreEqual(0, program.Functions.Count);
+            Assert.AreEqual(0, program.StartFunctions.Count);
+        }
+
+        [TestMethod]
         public void StartFunction()
         {
             var program = new Program();

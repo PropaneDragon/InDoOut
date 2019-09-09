@@ -1,8 +1,10 @@
-﻿using System.Windows;
+﻿using InDoOut_Desktop.Actions.Deleting;
+using InDoOut_Desktop.Actions.Selecting;
+using System.Windows;
 
 namespace InDoOut_Desktop.UI.Interfaces
 {
-    public interface IUIConnection
+    public interface IUIConnection : ISelectable, IDeletable
     {
         bool Hidden { get; set; }
 

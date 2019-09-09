@@ -7,7 +7,7 @@ namespace InDoOut_Desktop.UI.Interfaces
     {
         List<IUIConnection> UIConnections { get; }
 
-        void Remove(IUIConnection output);
+        void Remove(IUIConnection connection);
 
         IUIConnection Create(IUIConnectionStart start, Point end);
         IUIConnection Create(IUIConnectionStart start, IUIConnectionEnd end);

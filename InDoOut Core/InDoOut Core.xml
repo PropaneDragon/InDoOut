@@ -1281,6 +1281,13 @@
             <param name="function">The function to add to the program.</param>
             <returns>Whether the function was added.</returns>
         </member>
+        <member name="M:InDoOut_Core.Entities.Programs.IProgram.RemoveFunction(InDoOut_Core.Entities.Functions.IFunction)">
+            <summary>
+            Removes a function from the program.
+            </summary>
+            <param name="function">The function to remove from the program.</param>
+            <returns>Whether the function was found and removed.</returns>
+        </member>
         <member name="T:InDoOut_Core.Entities.Programs.Program">
             <summary>
             A collection of <see cref="T:InDoOut_Core.Entities.Functions.IFunction"/> entities linked together and started through the
@@ -1343,6 +1350,13 @@
             </summary>
             <param name="function">The function to add.</param>
             <returns>Whether the function was added.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Programs.Program.RemoveFunction(InDoOut_Core.Entities.Functions.IFunction)">
+            <summary>
+            Removes a function from the program.
+            </summary>
+            <param name="function">The function to remove.</param>
+            <returns>Whether the function was found and removed.</returns>
         </member>
         <member name="M:InDoOut_Core.Entities.Programs.Program.CanBeTriggered(InDoOut_Core.Entities.Core.IEntity)">
             <summary>

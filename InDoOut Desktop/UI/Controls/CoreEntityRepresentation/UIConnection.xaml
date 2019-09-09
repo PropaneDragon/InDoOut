@@ -6,7 +6,8 @@
              xmlns:local="clr-namespace:InDoOut_Desktop.UI.Controls.CoreEntityRepresentation"
              mc:Ignorable="d">
     <Grid>
-        <Path Stroke="#fff" StrokeThickness="3">
+        <Path x:Name="Stroke_Highlight" Visibility="Hidden" Stroke="#990097FF" StrokeThickness="7" SnapsToDevicePixels="True" Data="{Binding Data, ElementName=Path_Wire}"/>
+        <Path Stroke="#fff" StrokeThickness="3" x:Name="Path_Wire">
             <Path.Data>
                 <PathGeometry>
                     <PathGeometry.Figures>

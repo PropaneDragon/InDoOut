@@ -24,6 +24,40 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
             InitializeComponent();
         }
 
+        public bool CanDelete(IBlockView blockView) => true;
+        public bool CanSelect(IBlockView view) => true;
+
+        public void Deleted(IBlockView blockView)
+        {
+            if (AssociatedEnd != null && AssociatedStart != null)
+            {
+                //Todo: Abstract this out to remove specialisations
+                if (AssociatedStart is IUIOutput output && AssociatedEnd is IUIInput input)
+                {
+                    _ = output.AssociatedOutput?.Disconnect(input.AssociatedInput) ?? false;
+                }
+                else if (AssociatedStart is IUIResult result && AssociatedEnd is IUIProperty property)
+                {
+                    _ = result.AssociatedResult?.Disconnect(property.AssociatedProperty) ?? false;
+                }
+            }
+
+            if (blockView != null)
+            {
+                blockView.Remove(this as IUIConnection);
+            }
+        }
+
+        public void SelectionStarted(IBlockView view)
+        {
+            Stroke_Highlight.Visibility = Visibility.Visible;
+        }
+
+        public void SelectionEnded(IBlockView view)
+        {
+            Stroke_Highlight.Visibility = Visibility.Hidden;
+        }
+
         public void UpdatePositionFromInputOutput(IElementDisplay display)
         {
             if (display != null && AssociatedEnd != null && AssociatedStart != null)

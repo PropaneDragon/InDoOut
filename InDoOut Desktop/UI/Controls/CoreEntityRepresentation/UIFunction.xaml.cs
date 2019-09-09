@@ -53,7 +53,17 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
 
         public void Deleted(IBlockView blockView)
         {
-            _function?.PolitelyStop();
+            if (blockView != null && (blockView.AssociatedProgram?.RemoveFunction(AssociatedFunction) ?? false))
+            {
+                _function?.PolitelyStop();
+
+                if (!RemoveAllConnections(blockView))
+                {
+                    //Todo: Display/log an error if connections can't be removed.
+                }
+
+                blockView.Remove(this);
+            }
         }
 
         public bool CopyTo(ICopyable other)
@@ -250,6 +260,47 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
             }
 
             _displayMode = displayMode;
+        }
+
+        private bool RemoveAllConnections(IBlockView blockView)
+        {
+            var allDeleted = true;
+
+            allDeleted = RemoveEndConnections(Inputs, blockView) && allDeleted;
+            allDeleted = RemoveEndConnections(Properties, blockView) && allDeleted;
+            allDeleted = RemoveStartConnections(Outputs, blockView) && allDeleted;
+            allDeleted = RemoveStartConnections(Results, blockView) && allDeleted;
+
+            return allDeleted;
+        }
+
+        private bool RemoveStartConnections<StartType>(List<StartType> start, IBlockView blockView) where StartType : IUIConnectionStart
+        {
+            return RemoveConnections(blockView.FindConnections(start.Cast<IUIConnectionStart>().ToList()), blockView);
+        }
+
+        private bool RemoveEndConnections<EndType>(List<EndType> end, IBlockView blockView) where EndType : IUIConnectionEnd
+        {
+            return RemoveConnections(blockView.FindConnections(end.Cast<IUIConnectionEnd>().ToList()), blockView);
+        }
+
+        private bool RemoveConnections(List<IUIConnection> connections, IBlockView blockView)
+        {
+            var allDeleted = true;
+
+            foreach (var connection in connections)
+            {
+                if (connection.CanDelete(blockView))
+                {
+                    connection.Deleted(blockView);
+                }
+                else
+                {
+                    allDeleted = false;
+                }
+            }
+
+            return allDeleted;
         }
 
         private void UpdateTimer_Tick(object sender, EventArgs e)
