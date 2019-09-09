@@ -30,7 +30,7 @@ namespace InDoOut_Desktop.Actions
                     {
                         _ = Keyboard.Modifiers.HasFlag(ModifierKeys.Control) ? _blockView.SelectionManager.Add(selectable) : _blockView.SelectionManager.Set(selectable);
                     }
-                    else
+                    else if (!Keyboard.Modifiers.HasFlag(ModifierKeys.Control))
                     {
                         _blockView.SelectionManager.Clear();
                     }
