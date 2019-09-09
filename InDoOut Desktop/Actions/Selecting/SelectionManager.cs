@@ -23,26 +23,36 @@ namespace InDoOut_Desktop.Actions.Selecting
             }
         }
 
-        public bool Add(ISelectable selectable)
+        public bool Add(ISelectable selectable, bool toggleIfAlreadyInserted = false)
         {
-            if (selectable != null && !Contains(selectable))
+            if (selectable != null)
             {
-                _selection.Add(selectable);
+                if (!Contains(selectable))
+                {
+                    _selection.Add(selectable);
 
-                selectable.SelectionStarted(_associatedBlockView);
+                    selectable.SelectionStarted(_associatedBlockView);
 
-                return true;
+                    return true;
+                }
+                else if (toggleIfAlreadyInserted)
+                {
+                    return Remove(selectable);
+                }
             }
 
             return false;
         }
 
-        public bool Set(ISelectable selectable)
+        public bool Set(ISelectable selectable, bool toggleIfAlreadyInserted = false)
         {
             if (selectable != null)
             {
+                var stayCleared = Contains(selectable) && toggleIfAlreadyInserted;
+
                 Clear();
-                return Add(selectable);
+
+                return !stayCleared ? Add(selectable) : true;
             }
 
             return false;

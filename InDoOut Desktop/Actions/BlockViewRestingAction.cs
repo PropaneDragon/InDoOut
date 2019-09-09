@@ -28,7 +28,7 @@ namespace InDoOut_Desktop.Actions
                 {
                     if (_blockView.GetFirstElementOfType<ISelectable>(elementsUnderMouse) is ISelectable selectable && selectable.CanSelect(_blockView))
                     {
-                        _ = Keyboard.Modifiers.HasFlag(ModifierKeys.Control) ? _blockView.SelectionManager.Add(selectable) : _blockView.SelectionManager.Set(selectable);
+                        _ = Keyboard.Modifiers.HasFlag(ModifierKeys.Control) ? _blockView.SelectionManager.Add(selectable, true) : _blockView.SelectionManager.Set(selectable, true);
                     }
                     else if (!Keyboard.Modifiers.HasFlag(ModifierKeys.Control))
                     {

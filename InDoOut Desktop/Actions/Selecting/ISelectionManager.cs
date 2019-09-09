@@ -8,8 +8,8 @@ namespace InDoOut_Desktop.Actions.Selecting
 
         void Clear();
 
-        bool Add(ISelectable selectable);
-        bool Set(ISelectable selectable);
+        bool Add(ISelectable selectable, bool toggleIfAlreadyInserted = false);
+        bool Set(ISelectable selectable, bool toggleIfAlreadyInserted = false);
         bool Remove(ISelectable selectable);
         bool Contains(ISelectable selectable);
     }
