@@ -22,7 +22,7 @@ namespace InDoOut_Philips_Hue_Plugins
 
         public LightOnFunction()
         {
-            _ = CreateInput("Light on");
+            _ = CreateInput("Turn light on");
 
             _lightChanged = CreateOutput("Light turned on", OutputType.Positive);
             _error = CreateOutput("Light error", OutputType.Negative);

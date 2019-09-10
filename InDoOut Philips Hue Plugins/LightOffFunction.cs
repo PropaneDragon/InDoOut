@@ -22,7 +22,7 @@ namespace InDoOut_Philips_Hue_Plugins
 
         public LightOffFunction()
         {
-            _ = CreateInput("Light off");
+            _ = CreateInput("Turn light off");
 
             _lightChanged = CreateOutput("Light turned off", OutputType.Positive);
             _error = CreateOutput("Light error", OutputType.Negative);
