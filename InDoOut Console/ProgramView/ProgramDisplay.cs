@@ -24,7 +24,7 @@ namespace InDoOut_Console.ProgramView
                 var currentCursorPositionTop = Console.CursorTop;
                 var charactersToWrite = 0;
 
-                while (_program.Running)
+                while (IsProgramRunning())
                 {
                     currentCursorPositionTop = Console.CursorTop;
                     charactersToWrite = Console.BufferWidth * ((currentCursorPositionTop - originalCursorPositionTop) + 1);
@@ -62,6 +62,28 @@ namespace InDoOut_Console.ProgramView
                 Console.Write(new string(' ', charactersToWrite));
                 Console.SetCursorPosition(originalCursorPositionLeft, originalCursorPositionTop);
             }
+        }
+
+        private bool IsProgramRunning()
+        {
+            if (_program != null)
+            {
+                var maxRetry = 3;
+
+                for (var retryCount = 0; retryCount < maxRetry; ++retryCount)
+                {
+                    if (_program.Running)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        Thread.Sleep(TimeSpan.FromMilliseconds(10));
+                    }
+                }
+            }
+
+            return false;
         }
     }
 }
