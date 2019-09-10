@@ -257,9 +257,9 @@ namespace InDoOut_Core_Tests
 
             program.Trigger(null);
 
-            Thread.Sleep(TimeSpan.FromMilliseconds(10));
-
             var startTime = DateTime.UtcNow;
+
+            Thread.Sleep(TimeSpan.FromMilliseconds(10));
 
             while (program.Running && DateTime.UtcNow < startTime.Add(TimeSpan.FromSeconds(1)))
             {
