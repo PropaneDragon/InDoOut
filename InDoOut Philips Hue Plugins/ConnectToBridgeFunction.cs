@@ -1,11 +1,15 @@
 ﻿using InDoOut_Core.Entities.Functions;
 using Q42.HueApi;
 using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace InDoOut_Philips_Hue_Plugins
 {
     public class ConnectToBridgeFunction : Function
     {
+        private static readonly string FILENAME_BRIDGE_USER_IDS = "bridge_ids.txt";
+
         private readonly IOutput _connected, _failed, _pressSyncButton;
         private readonly IProperty<string> _bridgeIp;
         private readonly IResult _userId;
@@ -33,13 +37,46 @@ namespace InDoOut_Philips_Hue_Plugins
         {            
             try
             {
-                var client = new LocalHueClient(_bridgeIp.FullValue);
-                if (_userId.ValueFrom(client.RegisterAsync("InDoOut", "Remote").Result))
+                if (!string.IsNullOrWhiteSpace(_bridgeIp.FullValue))
                 {
-                    return _connected;
+                    var idLookup = $"ClientId#{_bridgeIp.FullValue}#: ";
+                    var client = new LocalHueClient(_bridgeIp.FullValue);
+
+                    if (File.Exists(FILENAME_BRIDGE_USER_IDS))
+                    {
+                        var lines = File.ReadAllLines(FILENAME_BRIDGE_USER_IDS);
+
+                        foreach (var line in lines)
+                        {
+                            if (line.Contains(idLookup))
+                            {
+                                var potentialClientId = line.Replace(idLookup, "");
+                                if (!string.IsNullOrWhiteSpace(potentialClientId))
+                                {
+                                    client.Initialize(potentialClientId);
+
+                                    if (client.IsInitialized && _userId.ValueFrom(potentialClientId))
+                                    {
+                                        return _connected;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    var clientId = client.RegisterAsync("InDoOut", "Function").Result;
+                    if (!string.IsNullOrWhiteSpace(clientId))
+                    {
+                        File.AppendAllLines(FILENAME_BRIDGE_USER_IDS, new List<string>() { $"{idLookup}{clientId}" });
+
+                        if (_userId.ValueFrom(clientId))
+                        {
+                            return _connected;
+                        }
+                    }
                 }
             }
-            catch (AggregateException)
+            catch (AggregateException ex)
             {
                 return _pressSyncButton;
             }
