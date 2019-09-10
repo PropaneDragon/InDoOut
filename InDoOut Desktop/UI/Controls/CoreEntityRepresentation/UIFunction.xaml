@@ -50,7 +50,7 @@
                 <DockPanel>
                     <Button x:Name="Button_Run" DockPanel.Dock="Right" Visibility="Hidden" FontFamily="Segoe MDL2 Assets" Content="" FontSize="14" Template="{DynamicResource Template_Buttons_Transparent}" HorizontalAlignment="Right" VerticalAlignment="Stretch" HorizontalContentAlignment="Right" Click="Button_Run_Click"/>
                     <TextBlock x:Name="Text_Processing" DockPanel.Dock="Left" Visibility="Hidden" FontFamily="Segoe MDL2 Assets" Text="" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center" />
-                    <TextBlock x:Name="Text_FunctionName" Text="Function" TextAlignment="Center" />
+                    <TextBlock x:Name="Text_FunctionName" Text="Function" TextAlignment="Center" TextTrimming="CharacterEllipsis" TextWrapping="WrapWithOverflow" />
                 </DockPanel>
             </Border>
         </Grid>
