@@ -1451,6 +1451,58 @@
             </summary>
             <returns>A new instance of type <typeparamref name="T"/>.</returns>
         </member>
+        <member name="T:InDoOut_Core.Reporting.FailureReport">
+            <summary>
+            A failure report containing details about a failure that
+            has occurred.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Reporting.FailureReport.Id">
+            <summary>
+            The ID of the failure.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Reporting.FailureReport.Summary">
+            <summary>
+            A summary of the failure.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Reporting.FailureReport.DetailedReport">
+            <summary>
+            Detailed information (if available) aobut the failure that
+            has occurred.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Core.Reporting.FailureReport.#ctor(System.Int32,System.String,System.String)">
+            <summary>
+            Constructs a basic failure report.
+            </summary>
+            <param name="id">The ID of the failure.</param>
+            <param name="summary">A summary of the failure that has occurred.</param>
+            <param name="detailedReport">An optional detailed report giving more information about the failure.</param>
+        </member>
+        <member name="T:InDoOut_Core.Reporting.IFailureReport">
+            <summary>
+            Represents a failure report that contains details on a failure
+            that has occurred.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Reporting.IFailureReport.Id">
+            <summary>
+            The ID of the failure.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Reporting.IFailureReport.Summary">
+            <summary>
+            A summary of the failure.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Reporting.IFailureReport.DetailedReport">
+            <summary>
+            Detailed information (if available) about the failure that has
+            occurred.
+            </summary>
+        </member>
         <member name="T:InDoOut_Core.Threading.Safety.TryGet">
             <summary>
             A collection of methods to safely get values.

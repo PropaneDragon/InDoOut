@@ -1,8 +1,11 @@
 ﻿using InDoOut_Core.Entities.Programs;
 using InDoOut_Core.Instancing;
+using InDoOut_Core.Reporting;
 using InDoOut_Executable_Core.Storage;
 using Microsoft.Win32;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows;
 
 namespace InDoOut_Desktop.Programs
@@ -33,14 +36,16 @@ namespace InDoOut_Desktop.Programs
                         {
                             programStorer.FilePath = fileToOpen;
 
-                            var loadResult = programStorer.Load(program);
-                            if (loadResult == LoadResult.OK)
+                            var failureReports = programStorer.Load(program);
+                            if (failureReports.Count == 0)
                             {
                                 return program;
                             }
                             else
                             {
-                                _ = MessageBox.Show(parent, $"The program couldn't be loaded due to an error. ({loadResult})");
+                                var resultStrings = failureReports.Select(report => report.Summary);
+
+                                _ = MessageBox.Show(parent, $"The program couldn't be loaded due to the following errors:\n\n{string.Join('\n', resultStrings)}");
                                 _ = programHolder.RemoveProgram(program);
                             }
                         }
@@ -53,7 +58,7 @@ namespace InDoOut_Desktop.Programs
 
         public bool SaveProgramDialog(IProgram program, IProgramStorer programStorer, Window parent = null, string saveLocation = null)
         {
-            var saveResult = SaveResult.Unknown;
+            var failureReports = new List<IFailureReport>();
 
             if (program != null && programStorer != null)
             {
@@ -74,33 +79,31 @@ namespace InDoOut_Desktop.Programs
                         var fileToSave = saveDialog.FileName;
                         if (!string.IsNullOrEmpty(fileToSave) && Path.GetExtension(fileToSave) == programStorer.FileExtension)
                         {
-                            saveResult = SaveProgram(program, programStorer, fileToSave);
+                            failureReports.AddRange(SaveProgram(program, programStorer, fileToSave));
                         }
                         else
                         {
-                            saveResult = SaveResult.InvalidFileName;
+                            failureReports.Add(new FailureReport((int)SaveResult.InvalidFileName, $"The given filename to be saved ({fileToSave}) is invalid."));
                         }
-                    }
-                    else
-                    {
-                        saveResult = SaveResult.OK;
                     }
                 }
                 else
                 {
-                    saveResult = SaveProgram(program, programStorer, saveLocation);
+                    failureReports = SaveProgram(program, programStorer, saveLocation);
                 }
             }
 
-            if (saveResult != SaveResult.OK)
+            if (failureReports.Count > 0)
             {
-                _ = MessageBox.Show(parent, $"The program couldn't be loaded due to an error. ({saveResult})");
+                var resultStrings = failureReports.Select(report => report.Summary);
+
+                _ = MessageBox.Show(parent, $"The program couldn't be loaded due to the following errors:\n\n{string.Join('\n', resultStrings)}");
             }
 
-            return saveResult == SaveResult.OK;
+            return failureReports.Count == 0;
         }
 
-        private SaveResult SaveProgram(IProgram program, IProgramStorer programStorer, string saveLocation)
+        private List<IFailureReport> SaveProgram(IProgram program, IProgramStorer programStorer, string saveLocation)
         {
             if (program != null && programStorer != null && !string.IsNullOrEmpty(saveLocation) && Path.GetExtension(saveLocation) == programStorer.FileExtension)
             {
@@ -108,7 +111,7 @@ namespace InDoOut_Desktop.Programs
                 return programStorer.Save(program);
             }
 
-            return SaveResult.InvalidFileName;
+            return new List<IFailureReport>() { new FailureReport((int)SaveResult.InvalidFileName, $"The given location ({saveLocation}), program ({program?.Id.ToString() ?? "null program"} or storer ({(programStorer != null ? "is valid" : "null")}) was invalid") };
         }
     }
 }

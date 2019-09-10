@@ -1,9 +1,11 @@
 ﻿using InDoOut_Core.Entities.Programs;
 using InDoOut_Core.Functions;
+using InDoOut_Core.Reporting;
 using InDoOut_Executable_Core.Storage;
 using InDoOut_Plugins.Loaders;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
 
@@ -47,8 +49,10 @@ namespace InDoOut_Json_Storage
         /// </summary>
         /// <param name="program">The program to load data into.</param>
         /// <returns>The loaded program, or null if invalid.</returns>
-        public LoadResult Load(IProgram program)
+        public List<IFailureReport> Load(IProgram program)
         {
+            var failures = new List<IFailureReport>();
+
             if (program != null)
             {
                 try
@@ -56,28 +60,36 @@ namespace InDoOut_Json_Storage
                     var jsonProgram = Load();
                     if (jsonProgram != null)
                     {
-                        return jsonProgram.Set(program, FunctionBuilder, LoadedPlugins) ? LoadResult.OK : LoadResult.MissingData;
+                        failures.AddRange(jsonProgram.Set(program, FunctionBuilder, LoadedPlugins));
+                    }
+                    else
+                    {
+                        failures.Add(new FailureReport((int)LoadResult.InvalidFile, $"The program could not be loaded from the given path ({FilePath})."));
                     }
                 }
                 catch (Exception ex) when (ex is PathTooLongException || ex is DirectoryNotFoundException)
                 {
-                    return LoadResult.InvalidLocation;
+                    failures.Add(new FailureReport((int)LoadResult.InvalidLocation, $"The location given is invalid ({FilePath})."));
                 }
                 catch (IOException)
                 {
-                    return LoadResult.MissingData;
+                    failures.Add(new FailureReport((int)LoadResult.InvalidFile, $"The given file doesn't appear to be valid ({FilePath})."));
                 }
                 catch (UnauthorizedAccessException)
                 {
-                    return LoadResult.InsufficientPermissions;
+                    failures.Add(new FailureReport((int)LoadResult.InsufficientPermissions, $"You don't have access to the file path given ({FilePath})."));
                 }
                 catch
                 {
-                    return LoadResult.Unknown;
+                    failures.Add(new FailureReport((int)LoadResult.Unknown, $"There was an unknown error while trying to deserialise the program to be loaded."));
                 }
             }
+            else
+            {
+                failures.Add(new FailureReport((int)LoadResult.InvalidLocation, $"Invalid file location given ({FilePath})."));
+            }
 
-            return LoadResult.InvalidFile;
+            return failures;
         }
 
         /// <summary>
@@ -85,7 +97,7 @@ namespace InDoOut_Json_Storage
         /// </summary>
         /// <param name="program">The program to save.</param>
         /// <returns>Whether or not the program could be saved to the path.</returns>
-        public SaveResult Save(IProgram program)
+        public List<IFailureReport> Save(IProgram program)
         {
             var jsonProgram = JsonProgram.CreateFromProgram(program);
             return Save(jsonProgram);
@@ -96,8 +108,10 @@ namespace InDoOut_Json_Storage
         /// </summary>
         /// <param name="jsonProgram">The program to save.</param>
         /// <returns>Whether or not the program could be saved to the path.</returns>
-        protected SaveResult Save(JsonProgram jsonProgram)
+        protected List<IFailureReport> Save(JsonProgram jsonProgram)
         {
+            var failures = new List<IFailureReport>();
+
             if (!string.IsNullOrEmpty(FilePath) && jsonProgram != null)
             {
                 try
@@ -106,23 +120,30 @@ namespace InDoOut_Json_Storage
 
                     File.WriteAllText(FilePath, jsonText);
 
-                    return File.Exists(FilePath) ? SaveResult.OK : SaveResult.InsufficientPermissions;
+                    if (!File.Exists(FilePath))
+                    {
+                        failures.Add(new FailureReport((int)SaveResult.InsufficientPermissions, $"The file could not be saved to the given path ({FilePath})"));
+                    }
                 }
                 catch (Exception ex) when (ex is PathTooLongException || ex is DirectoryNotFoundException)
                 {
-                    return SaveResult.InvalidLocation;
+                    failures.Add(new FailureReport((int)SaveResult.InvalidLocation, $"The location given is invalid ({FilePath})"));
                 }
                 catch (UnauthorizedAccessException)
                 {
-                    return SaveResult.InsufficientPermissions;
+                    failures.Add(new FailureReport((int)SaveResult.InsufficientPermissions, $"You don't have access to the file path given ({FilePath})"));
                 }
                 catch
                 {
-                    return SaveResult.Unknown;
+                    failures.Add(new FailureReport((int)SaveResult.Unknown, $"There was an unknown error while trying to serialise the program to be saved."));
                 }
             }
+            else
+            {
+                failures.Add(new FailureReport((int)SaveResult.InvalidLocation, $"Invalid file location given ({FilePath})"));
+            }
 
-            return SaveResult.InvalidLocation;
+            return failures;
         }
 
         /// <summary>

@@ -7,6 +7,7 @@ using InDoOut_Executable_Core.Storage;
 using InDoOut_Json_Storage;
 using InDoOut_Plugins.Loaders;
 using System;
+using System.Linq;
 using System.Threading;
 
 namespace InDoOut_Console
@@ -57,9 +58,9 @@ namespace InDoOut_Console
 
                     var program = new Program();
                     var storage = new ProgramJsonStorer(new FunctionBuilder(), LoadedPlugins.Instance, programToStart);
-                    var loadResult = storage.Load(program);
+                    var failureReports = storage.Load(program);
 
-                    if (loadResult == LoadResult.OK)
+                    if (failureReports.Count == 0)
                     {
                         ColourConsole.WriteInfoLine("Program loaded successfully.", ConsoleColor.Green);
 
@@ -88,7 +89,17 @@ namespace InDoOut_Console
                     }
                     else
                     {
-                        ColourConsole.WriteErrorLine($"Program could not be loaded due to an error. ({loadResult})");
+                        ColourConsole.WriteErrorLine($"Program could not be loaded due to the following errors:");
+
+                        var resultStrings = failureReports.Select(report => report.Summary);
+                        var alternate = false;
+
+                        foreach (var resultString in resultStrings)
+                        {
+                            ColourConsole.WriteErrorLine(resultString, alternate ? ConsoleColor.Gray : ConsoleColor.DarkGray);
+
+                            //alternate = !alternate;
+                        }
                     }
                 }
                 else

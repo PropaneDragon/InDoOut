@@ -110,6 +110,46 @@
             Represents a basic JSON shell for an <see cref="T:InDoOut_Core.Entities.Programs.IProgram"/>.
             </summary>
         </member>
+        <member name="T:InDoOut_Json_Storage.JsonProgram.FailureIds">
+            <summary>
+            A list of failure ids that could occur.
+            </summary>
+        </member>
+        <member name="F:InDoOut_Json_Storage.JsonProgram.FailureIds.FailedToCreateFunction">
+            <summary>
+            A function could not be created.
+            </summary>
+        </member>
+        <member name="F:InDoOut_Json_Storage.JsonProgram.FailureIds.FunctionNotFound">
+            <summary>
+            A function was not found.
+            </summary>
+        </member>
+        <member name="F:InDoOut_Json_Storage.JsonProgram.FailureIds.InvalidFunction">
+            <summary>
+            A function was found, but invalid.
+            </summary>
+        </member>
+        <member name="F:InDoOut_Json_Storage.JsonProgram.FailureIds.InvalidProperty">
+            <summary>
+            A property was not valid.
+            </summary>
+        </member>
+        <member name="F:InDoOut_Json_Storage.JsonProgram.FailureIds.InvalidConnection">
+            <summary>
+            A connection was not valid.
+            </summary>
+        </member>
+        <member name="F:InDoOut_Json_Storage.JsonProgram.FailureIds.UknownConnectionType">
+            <summary>
+            The connection type given was unknown.
+            </summary>
+        </member>
+        <member name="F:InDoOut_Json_Storage.JsonProgram.FailureIds.ConnectionFailed">
+            <summary>
+            A connection could not be made.
+            </summary>
+        </member>
         <member name="P:InDoOut_Json_Storage.JsonProgram.Id">
             <summary>
             Program Id.

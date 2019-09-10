@@ -3,6 +3,7 @@ using InDoOut_Core.Entities.Core;
 using InDoOut_Core.Entities.Functions;
 using InDoOut_Core.Entities.Programs;
 using InDoOut_Core.Functions;
+using InDoOut_Core.Reporting;
 using InDoOut_Plugins.Loaders;
 using Newtonsoft.Json;
 using System;
@@ -17,6 +18,47 @@ namespace InDoOut_Json_Storage
     [JsonObject("program")]
     public class JsonProgram
     {
+        /// <summary>
+        /// A list of failure ids that could occur.
+        /// </summary>
+        public enum FailureIds
+        {
+            /// <summary>
+            /// A function could not be created.
+            /// </summary>
+            FailedToCreateFunction,
+
+            /// <summary>
+            /// A function was not found.
+            /// </summary>
+            FunctionNotFound,
+
+            /// <summary>
+            /// A function was found, but invalid.
+            /// </summary>
+            InvalidFunction,
+            
+            /// <summary>
+            /// A property was not valid.
+            /// </summary>
+            InvalidProperty,
+
+            /// <summary>
+            /// A connection was not valid.
+            /// </summary>
+            InvalidConnection,
+
+            /// <summary>
+            /// The connection type given was unknown.
+            /// </summary>
+            UknownConnectionType,
+
+            /// <summary>
+            /// A connection could not be made.
+            /// </summary>
+            ConnectionFailed
+        }
+
         /// <summary>
         /// Program Id.
         /// </summary>
@@ -96,8 +138,10 @@ namespace InDoOut_Json_Storage
         /// <param name="builder">The function builder to generate saved functions.</param>
         /// <param name="loadedPlugins">The currently loaded plugins to search through.</param>
         /// <returns>Whether the data was set successfully.</returns>
-        public bool Set(IProgram program, IFunctionBuilder builder, ILoadedPlugins loadedPlugins)
+        public List<IFailureReport> Set(IProgram program, IFunctionBuilder builder, ILoadedPlugins loadedPlugins)
         {
+            var failures = new List<IFailureReport>();
+
             if (program != null && builder != null && loadedPlugins != null)
             {
                 var functionIdMap = new Dictionary<Guid, IFunction>();
@@ -119,34 +163,28 @@ namespace InDoOut_Json_Storage
                     }
                     else
                     {
-                        return false;
+                        failures.Add(new FailureReport((int)FailureIds.FailedToCreateFunction, $"A function with the class \"{functionItem?.FunctionClass ?? "null function item"}\" couldn't be created. This could be due to a required plugin being unavailable."));
                     }
                 }
 
                 foreach (var connection in Connections)
                 {
-                    if (!LinkConnection(connection, functionIdMap))
-                    {
-                        return false;
-                    }
+                    failures.AddRange(LinkConnection(connection, functionIdMap));
                 }
 
                 foreach (var propertyValue in PropertyValues)
                 {
-                    if (!LinkPropertyValue(propertyValue, functionIdMap))
-                    {
-                        return false;
-                    }
+                    failures.AddRange(LinkPropertyValue(propertyValue, functionIdMap));
                 }
-
-                return true;
             }
 
-            return false;
+            return failures;
         }
 
-        private bool LinkPropertyValue(JsonPropertyValue propertyValue, Dictionary<Guid, IFunction> functionIdMap)
+        private List<IFailureReport> LinkPropertyValue(JsonPropertyValue propertyValue, Dictionary<Guid, IFunction> functionIdMap)
         {
+            var failures = new List<IFailureReport>();
+
             if (functionIdMap.ContainsKey(propertyValue.Function))
             {
                 var foundFunction = functionIdMap[propertyValue.Function];
@@ -156,17 +194,29 @@ namespace InDoOut_Json_Storage
                     if (foundProperty != null)
                     {
                         foundProperty.RawValue = propertyValue.Value;
-
-                        return true;
+                    }
+                    else
+                    {
+                        failures.Add(new FailureReport((int)FailureIds.InvalidProperty, $"Failed to link a property \"{propertyValue?.Name ?? "null property"}\" to a function, as the function ID of \"{propertyValue?.Function.ToString() ?? "null property"}\" doesn't contain a property with that name."));
                     }
                 }
+                else
+                {
+                    failures.Add(new FailureReport((int)FailureIds.InvalidFunction, $"Failed to link a property \"{propertyValue?.Name ?? "null property"}\" to a function, as the function ID of \"{propertyValue?.Function.ToString() ?? "null property"}\" doesn't contain a valid function."));
+                }
+            }
+            else
+            {
+                failures.Add(new FailureReport((int)FailureIds.FunctionNotFound, $"Failed to link a property \"{propertyValue?.Name ?? "null property"}\" to a function, as the function ID of \"{propertyValue?.Function.ToString() ?? "null property"}\" could not be found."));
             }
 
-            return false;
+            return failures;
         }
 
-        private bool LinkConnection(JsonConnection connection, Dictionary<Guid, IFunction> functionIdMap)
+        private List<IFailureReport> LinkConnection(JsonConnection connection, Dictionary<Guid, IFunction> functionIdMap)
         {
+            var failures = new List<IFailureReport>();
+
             if (functionIdMap.ContainsKey(connection.StartFunctionId) && functionIdMap.ContainsKey(connection.EndFunctionId))
             {
                 var startFunction = functionIdMap[connection.StartFunctionId];
@@ -180,18 +230,33 @@ namespace InDoOut_Json_Storage
                     switch (connectionType)
                     {
                         case JsonConnection.ConnectionType.InputOutput:
-                            return LinkInputOutput(connection, startFunction, endFunction, outputName, inputName);
+                            failures.AddRange(LinkInputOutput(connection, startFunction, endFunction, outputName, inputName));
+                            break;
                         case JsonConnection.ConnectionType.PropertyResult:
-                            return LinkPropertyResult(connection, startFunction, endFunction, outputName, inputName);
+                            failures.AddRange(LinkPropertyResult(connection, startFunction, endFunction, outputName, inputName));
+                            break;
+                        default:
+                            failures.Add(new FailureReport((int)FailureIds.UknownConnectionType, $"Couldn't create a connection, as the connection type \"{connectionType.ToString()}\" is unknown to the linker."));
+                            break;
                     }
                 }
+                else
+                {
+                    failures.Add(new FailureReport((int)FailureIds.InvalidConnection, $"Couldn't create a connection as either the output name ({outputName ?? "null name"}), input name ({inputName ?? "null name"}) or the connection type \"{connectionType.ToString()}\" is unknown."));
+                }
+            }
+            else
+            {
+                failures.Add(new FailureReport((int)FailureIds.FunctionNotFound, $"Failed to link a connection between \"{connection?.InputName ?? "null connection"}\" and \"{connection?.OutputName ?? "null connection"}\" to their respective functions as either function ID \"{connection?.StartFunctionId.ToString() ?? "null connection"}\" or \"{connection?.EndFunctionId.ToString() ?? "null connection"}\" doesn't exist."));
             }
 
-            return false;
+            return failures;
         }
 
-        private bool LinkInputOutput(JsonConnection connection, IFunction startFunction, IFunction endFunction, string outputName, string inputName)
+        private List<IFailureReport> LinkInputOutput(JsonConnection connection, IFunction startFunction, IFunction endFunction, string outputName, string inputName)
         {
+            var failures = new List<IFailureReport>();
+
             if (startFunction != null && endFunction != null)
             {
                 var output = startFunction.Outputs.FirstOrDefault(output => output.Name == outputName);
@@ -200,16 +265,24 @@ namespace InDoOut_Json_Storage
                 if (output != null && input != null && output.Connect(input))
                 {
                     SyncMetadata(connection, input, output);
-
-                    return true;
+                }
+                else
+                {
+                    failures.Add(new FailureReport((int)FailureIds.ConnectionFailed, $"A connection could not be made between input \"{input?.Name ?? "null input"}\" on function \"{endFunction?.SafeName ?? "unknown function"}\" ({endFunction?.Id.ToString() ?? "unknown function"}) and output \"{output?.Name ?? "null output"}\" on function \"{startFunction?.SafeName ?? "unknown function"}\" ({startFunction?.Id.ToString() ?? "unknown function"})."));
                 }
             }
+            else
+            {
+                failures.Add(new FailureReport((int)FailureIds.FunctionNotFound, $"An output could not be linked to an input because one or both of the functions given were null (start function: \"{startFunction?.SafeName ?? "null"}\", end function: \"{endFunction?.SafeName ?? "null"}\")."));
+            }
 
-            return false;
+            return failures;
         }
 
-        private bool LinkPropertyResult(JsonConnection connection, IFunction startFunction, IFunction endFunction, string outputName, string inputName)
+        private List<IFailureReport> LinkPropertyResult(JsonConnection connection, IFunction startFunction, IFunction endFunction, string outputName, string inputName)
         {
+            var failures = new List<IFailureReport>();
+
             if (startFunction != null && endFunction != null)
             {
                 var result = startFunction.Results.FirstOrDefault(output => output.Name == outputName);
@@ -218,12 +291,18 @@ namespace InDoOut_Json_Storage
                 if (result != null && property != null && result.Connect(property))
                 {
                     SyncMetadata(connection, property, result);
-
-                    return true;
+                }
+                else
+                {
+                    failures.Add(new FailureReport((int)FailureIds.ConnectionFailed, $"A connection could not be made between result \"{result?.Name ?? "null result"}\" on function \"{startFunction?.SafeName ?? "unknown function"}\" ({startFunction?.Id.ToString() ?? "unknown function"}) and property \"{property?.Name ?? "null property"}\" on function \"{endFunction?.SafeName ?? "unknown function"}\" ({endFunction?.Id.ToString() ?? "unknown function"})."));
                 }
             }
+            else
+            {
+                failures.Add(new FailureReport((int)FailureIds.FunctionNotFound, $"A result could not be linked to an property because one or both of the functions given were null (start function: \"{startFunction?.SafeName ?? "null"}\", end function: \"{endFunction?.SafeName ?? "null"}\")."));
+            }
 
-            return false;
+            return failures;
         }
 
         private void SyncMetadata(JsonConnection connection, IInputable inputable, IOutputable outputable)

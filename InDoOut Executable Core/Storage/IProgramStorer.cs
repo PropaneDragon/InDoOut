@@ -1,4 +1,6 @@
 ﻿using InDoOut_Core.Entities.Programs;
+using InDoOut_Core.Reporting;
+using System.Collections.Generic;
 
 namespace InDoOut_Executable_Core.Storage
 {
@@ -43,14 +45,14 @@ namespace InDoOut_Executable_Core.Storage
         /// Saves the <paramref name="program"/> to storage.
         /// </summary>
         /// <param name="program">The program to save.</param>
-        /// <returns>Whether the program saved successfully.</returns>
-        SaveResult Save(IProgram program);
+        /// <returns>Failure reports if saving has failed, or an empty list if succeeded.</returns>
+        List<IFailureReport> Save(IProgram program);
 
         /// <summary>
         /// Loads data into a program from storage.
         /// </summary>
         /// <param name="program">The program to load data into.</param>
-        /// <returns>The stored program, or null if failed.</returns>
-        LoadResult Load(IProgram program);
+        /// <returns>Failure reports if loading has failed, or an empty list if succeeded.</returns>
+        List<IFailureReport> Load(IProgram program);
     }
 }
