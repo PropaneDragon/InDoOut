@@ -19,7 +19,7 @@ namespace InDoOut_Core.Entities.Core
         /// <summary>
         /// The current running state of this entity.
         /// </summary>
-        public bool Running => _runner != null && (_runner.Status == TaskStatus.Running || _runner.Status == TaskStatus.WaitingToRun || _runner.Status == TaskStatus.WaitingForChildrenToComplete);
+        public bool Running => _runner != null && (_runner.Status == TaskStatus.Running || _runner.Status == TaskStatus.WaitingToRun || _runner.Status == TaskStatus.WaitingForChildrenToComplete || _runner.Status == TaskStatus.WaitingForActivation);
 
         /// <summary>
         /// The connections that this entity has.
