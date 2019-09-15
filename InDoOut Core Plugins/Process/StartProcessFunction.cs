@@ -7,7 +7,7 @@ namespace InDoOut_Core_Plugins.Process
     public class StartProcessFunction : Function
     {
         private readonly IOutput _outputExecuted, _outputFailed;
-        private readonly IProperty<string> _propertyLocation, _propertyArguments;
+        private readonly IProperty<string> _propertyLocation, _propertyArguments, _startInFolder;
         private readonly IResult _returnCode;
 
         public override string Description => "Starts a process on the device.";
@@ -26,6 +26,7 @@ namespace InDoOut_Core_Plugins.Process
             _outputFailed = CreateOutput("Failed", OutputType.Negative);
             _propertyLocation = AddProperty(new Property<string>("Process location", "The location of the process to execute.", true, ""));
             _propertyArguments = AddProperty(new Property<string>("Process arguments", "Arguments to pass to the executable.", false, ""));
+            _startInFolder = AddProperty(new Property<string>("Working directory", "Starts the process from the given location.", false, ""));
             _returnCode = AddResult(new Result("Return code", "The value returned from the process after execution.", "0"));
         }
 
@@ -39,7 +40,9 @@ namespace InDoOut_Core_Plugins.Process
                     {
                         StartInfo = new ProcessStartInfo(_propertyLocation.FullValue, _propertyArguments.FullValue)
                         {
-                            CreateNoWindow = false
+                            CreateNoWindow = false,
+                            UseShellExecute = false,
+                            WorkingDirectory = _startInFolder.FullValue ?? ""
                         }
                     };
 
