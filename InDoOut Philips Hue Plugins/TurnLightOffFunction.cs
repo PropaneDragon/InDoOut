@@ -10,11 +10,11 @@ namespace InDoOut_Philips_Hue_Plugins
     {
         private readonly IOutput _lightChanged, _error;
         private readonly IProperty<string> _lightId;
-        private readonly IProperty<int> _fadeSpeedMs;
+        private readonly IProperty<double> _fadeSpeedMs;
 
         public override string Description => "Turns a light off, given a light ID.";
 
-        public override string Name => "Light off";
+        public override string Name => "Turn light off";
 
         public override string Group => "Philips Hue";
 
@@ -28,15 +28,15 @@ namespace InDoOut_Philips_Hue_Plugins
             _error = CreateOutput("Light error", OutputType.Negative);
 
             _lightId = AddProperty(new Property<string>("Light ID", "The ID for the light to control.", true));
-            _fadeSpeedMs = AddProperty(new Property<int>("Fade speed (ms)", "The speed to fade the light out, in milliseconds.", false, 1000));
+            _fadeSpeedMs = AddProperty(new Property<double>("Fade speed (ms)", "The speed to fade the light out, in milliseconds.", false, 1000));
         }
 
         protected override IOutput Started(IInput triggeredBy)
         {
-            var client = TryGet.ValueOrDefault(() => new LocalHueClient(BridgeIPProperty.FullValue, UserIdProperty.FullValue), null);
+            var client = HueHelpers.GetClient(this);
             if (client != null)
             {
-                var light = TryGet.ValueOrDefault(() => client.GetLightAsync(_lightId.FullValue).Result, null);
+                var light = HueHelpers.GetLight(client, _lightId);
                 if (light != null)
                 {
                     var command = new LightCommand()

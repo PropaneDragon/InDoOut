@@ -1,6 +1,4 @@
 ﻿using InDoOut_Core.Entities.Functions;
-using InDoOut_Core.Threading.Safety;
-using Q42.HueApi;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,7 +6,7 @@ namespace InDoOut_Philips_Hue_Plugins
 {
     public class ForEachLightFunction : AbstractForEachApiFunction
     {
-        private readonly IProperty<string> _groupId;
+        private readonly IProperty<string> _groupId, _name;
         private readonly IResult _lightId;
 
         private IEnumerable<string> _cachedLightIds;
@@ -24,6 +22,8 @@ namespace InDoOut_Philips_Hue_Plugins
         public ForEachLightFunction() : base()
         {
             _groupId = AddProperty(new Property<string>("Group ID", "Enter a group ID if you want to find lights within a specific group.", false, null));
+            _name = AddProperty(new Property<string>("Name", "Leave blank for all lights. Searches for lights that contain the given name.", false, null));
+
             _lightId = AddResult(new Result("Light ID", "The ID of this light on the bridge."));
         }
 
@@ -31,21 +31,11 @@ namespace InDoOut_Philips_Hue_Plugins
         {
             _cachedLightIds = null;
 
-            var client = TryGet.ValueOrDefault(() => new LocalHueClient(BridgeIPProperty.FullValue, UserIdProperty.FullValue), null);
+            var client = HueHelpers.GetClient(this);
             if (client != null)
             {
-                if (string.IsNullOrEmpty(_groupId.FullValue))
-                {
-                    _cachedLightIds = client.GetLightsAsync().Result.Select(light => light.Id);
-                }
-                else
-                {
-                    var group = TryGet.ValueOrDefault(() => client.GetGroupAsync(_groupId.FullValue).Result, null);
-                    if (group != null)
-                    {
-                        _cachedLightIds = group.Lights;
-                    }
-                }
+                var group = HueHelpers.GetGroup(client, _groupId);
+                _cachedLightIds = HueHelpers.GetLights(client, group, _name, true).Select(light => light.Id);
             }
         }
 

@@ -29,7 +29,9 @@ namespace InDoOut_Philips_Hue_Plugins
             _connected = CreateOutput("Connected", OutputType.Positive);
             _failed = CreateOutput("Connection failed", OutputType.Negative);
             _pressSyncButton = CreateOutput("Press sync button");
+
             _bridgeIp = AddProperty(new Property<string>("Bridge IP", "The IP address of the bridge to connect to.", true));
+
             _userId = AddResult(new Result("User ID", "The user ID returned from the connection."));
         }
 

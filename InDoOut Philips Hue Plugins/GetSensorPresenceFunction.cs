@@ -1,25 +1,24 @@
 ﻿using InDoOut_Core.Entities.Functions;
-using InDoOut_Core.Threading.Safety;
-using Q42.HueApi;
+using System.Linq;
 
 namespace InDoOut_Philips_Hue_Plugins
 {
-    public class MotionSensorPresenceFunction : AbstractApiFunction
+    public class GetSensorPresenceFunction : AbstractApiFunction
     {
         private readonly IOutput _present, _notPresent, _invalidSensor;
         private readonly IProperty<string> _sensorId;
 
         public override string Description => "Checks whether someone is present on the selected sensor.";
 
-        public override string Name => "Motion sensor presence";
+        public override string Name => "Get sensor presence";
 
         public override string Group => "Philips Hue";
 
         public override string[] Keywords => new[] { "presence", "sensor", "motion", "activated", "triggered" };
 
-        public MotionSensorPresenceFunction()
+        public GetSensorPresenceFunction()
         {
-            _ = CreateInput("Check presence");
+            _ = CreateInput("Check for presence");
 
             _present = CreateOutput("Someone present", OutputType.Positive);
             _notPresent = CreateOutput("No one present", OutputType.Negative);
@@ -30,13 +29,16 @@ namespace InDoOut_Philips_Hue_Plugins
 
         protected override IOutput Started(IInput triggeredBy)
         {
-            var client = TryGet.ValueOrDefault(() => new LocalHueClient(BridgeIPProperty.FullValue, UserIdProperty.FullValue), null);
+            var client = HueHelpers.GetClient(this);
             if (client != null)
             {
-                var sensor = TryGet.ValueOrDefault(() => client.GetSensorAsync(_sensorId.FullValue).Result, null);
-                if (sensor != null && sensor.State.Presence != null)
+                var sensor = HueHelpers.GetSensor(client, _sensorId);
+                var combinedSensors = HueHelpers.GetCombinedSensors(client, sensor);
+                var motionSensor = HueHelpers.GetMotionSensors(combinedSensors)?.FirstOrDefault();
+
+                if (motionSensor != null && motionSensor.State?.Presence != null)
                 {
-                    return (sensor.State.Presence ?? false) ? _present : _notPresent;
+                    return (motionSensor.State.Presence ?? false) ? _present : _notPresent;
                 }
             }
 
