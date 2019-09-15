@@ -179,7 +179,7 @@ namespace InDoOut_Json_Storage_Tests
             var program = new Program();
 
             Assert.AreNotEqual(new Guid("12345678-1234-1234-1234-123456789abc"), program.Id);
-            Assert.AreEqual(LoadResult.OK, storer.Load(program));
+            Assert.AreEqual(0, storer.Load(program).Count);
             Assert.AreEqual(new Guid("12345678-1234-1234-1234-123456789abc"), program.Id);
 
             Assert.AreEqual("second", program.Metadata["first"]);

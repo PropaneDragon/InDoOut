@@ -436,13 +436,14 @@
             <param name="outputType">The type of output to create. Different types return different classes.</param>
             <returns>The output that was created.</returns>
         </member>
-        <member name="M:InDoOut_Core.Entities.Functions.Function.AddProperty``1(``0)">
+        <member name="M:InDoOut_Core.Entities.Functions.Function.AddProperty``1(``0,System.Boolean)">
             <summary>
             Adds a property to the function and returns the same property as a result. This allows it to be created and added
             on the same line.
             </summary>
             <typeparam name="T">The type of <see cref="T:InDoOut_Core.Entities.Functions.IProperty"/> to add.</typeparam>
             <param name="property">The property to add.</param>
+            <param name="mirrorAsResult">Whether to mirror this property as a result automatically. This will copy the property value into the result value when activated.</param>
             <returns>The given <paramref name="property"/>.</returns>
         </member>
         <member name="M:InDoOut_Core.Entities.Functions.Function.AddResult``1(``0)">
@@ -1457,6 +1458,12 @@
             has occurred.
             </summary>
         </member>
+        <member name="P:InDoOut_Core.Reporting.FailureReport.Critical">
+            <summary>
+            Whether this failure is a critical failure and could cause issues if
+            continued. If false, this is a recoverable state and can be continued.
+            </summary>
+        </member>
         <member name="P:InDoOut_Core.Reporting.FailureReport.Id">
             <summary>
             The ID of the failure.
@@ -1473,18 +1480,33 @@
             has occurred.
             </summary>
         </member>
-        <member name="M:InDoOut_Core.Reporting.FailureReport.#ctor(System.Int32,System.String,System.String)">
+        <member name="M:InDoOut_Core.Reporting.FailureReport.#ctor(System.Int32,System.String,System.String,System.Boolean)">
             <summary>
             Constructs a basic failure report.
             </summary>
             <param name="id">The ID of the failure.</param>
             <param name="summary">A summary of the failure that has occurred.</param>
             <param name="detailedReport">An optional detailed report giving more information about the failure.</param>
+            <param name="critical">Whether or not this failure is critical, and continuing after this could cause problems.</param>
+        </member>
+        <member name="M:InDoOut_Core.Reporting.FailureReport.#ctor(System.Int32,System.String,System.Boolean)">
+            <summary>
+            Constructs a basic failure report.
+            </summary>
+            <param name="id">The ID of the failure.</param>
+            <param name="summary">A summary of the failure that has occurred.</param>
+            <param name="critical">Whether or not this failure is critical, and continuing after this could cause problems.</param>
         </member>
         <member name="T:InDoOut_Core.Reporting.IFailureReport">
             <summary>
             Represents a failure report that contains details on a failure
             that has occurred.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Reporting.IFailureReport.Critical">
+            <summary>
+            Whether this failure is a critical failure and could cause issues if
+            continued. If false, this is a recoverable state and can be continued.
             </summary>
         </member>
         <member name="P:InDoOut_Core.Reporting.IFailureReport.Id">

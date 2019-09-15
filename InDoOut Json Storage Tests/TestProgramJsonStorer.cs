@@ -1,7 +1,9 @@
 ﻿using InDoOut_Core.Functions;
+using InDoOut_Core.Reporting;
 using InDoOut_Executable_Core.Storage;
 using InDoOut_Json_Storage;
 using InDoOut_Plugins.Loaders;
+using System.Collections.Generic;
 
 namespace InDoOut_Json_Storage_Tests
 {
@@ -11,7 +13,7 @@ namespace InDoOut_Json_Storage_Tests
         {
         }
 
-        public SaveResult SavePublic(JsonProgram program)
+        public List<IFailureReport> SavePublic(JsonProgram program)
         {
             return Save(program);
         }

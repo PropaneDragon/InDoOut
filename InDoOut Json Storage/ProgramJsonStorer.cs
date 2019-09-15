@@ -64,29 +64,29 @@ namespace InDoOut_Json_Storage
                     }
                     else
                     {
-                        failures.Add(new FailureReport((int)LoadResult.InvalidFile, $"The program could not be loaded from the given path ({FilePath})."));
+                        failures.Add(new FailureReport((int)LoadResult.InvalidFile, $"The program could not be loaded from the given path ({FilePath}).", true));
                     }
                 }
                 catch (Exception ex) when (ex is PathTooLongException || ex is DirectoryNotFoundException)
                 {
-                    failures.Add(new FailureReport((int)LoadResult.InvalidLocation, $"The location given is invalid ({FilePath})."));
+                    failures.Add(new FailureReport((int)LoadResult.InvalidLocation, $"The location given is invalid ({FilePath}).", true));
                 }
                 catch (IOException)
                 {
-                    failures.Add(new FailureReport((int)LoadResult.InvalidFile, $"The given file doesn't appear to be valid ({FilePath})."));
+                    failures.Add(new FailureReport((int)LoadResult.InvalidFile, $"The given file doesn't appear to be valid ({FilePath}).", true));
                 }
                 catch (UnauthorizedAccessException)
                 {
-                    failures.Add(new FailureReport((int)LoadResult.InsufficientPermissions, $"You don't have access to the file path given ({FilePath})."));
+                    failures.Add(new FailureReport((int)LoadResult.InsufficientPermissions, $"You don't have access to the file path given ({FilePath}).", true));
                 }
                 catch
                 {
-                    failures.Add(new FailureReport((int)LoadResult.Unknown, $"There was an unknown error while trying to deserialise the program to be loaded."));
+                    failures.Add(new FailureReport((int)LoadResult.Unknown, $"There was an unknown error while trying to deserialise the program to be loaded.", true));
                 }
             }
             else
             {
-                failures.Add(new FailureReport((int)LoadResult.InvalidLocation, $"Invalid file location given ({FilePath})."));
+                failures.Add(new FailureReport((int)LoadResult.InvalidLocation, $"Invalid file location given ({FilePath}).", true));
             }
 
             return failures;
@@ -122,25 +122,25 @@ namespace InDoOut_Json_Storage
 
                     if (!File.Exists(FilePath))
                     {
-                        failures.Add(new FailureReport((int)SaveResult.InsufficientPermissions, $"The file could not be saved to the given path ({FilePath})"));
+                        failures.Add(new FailureReport((int)SaveResult.InsufficientPermissions, $"The file could not be saved to the given path ({FilePath})", true));
                     }
                 }
                 catch (Exception ex) when (ex is PathTooLongException || ex is DirectoryNotFoundException)
                 {
-                    failures.Add(new FailureReport((int)SaveResult.InvalidLocation, $"The location given is invalid ({FilePath})"));
+                    failures.Add(new FailureReport((int)SaveResult.InvalidLocation, $"The location given is invalid ({FilePath})", true));
                 }
                 catch (UnauthorizedAccessException)
                 {
-                    failures.Add(new FailureReport((int)SaveResult.InsufficientPermissions, $"You don't have access to the file path given ({FilePath})"));
+                    failures.Add(new FailureReport((int)SaveResult.InsufficientPermissions, $"You don't have access to the file path given ({FilePath})", true));
                 }
                 catch
                 {
-                    failures.Add(new FailureReport((int)SaveResult.Unknown, $"There was an unknown error while trying to serialise the program to be saved."));
+                    failures.Add(new FailureReport((int)SaveResult.Unknown, $"There was an unknown error while trying to serialise the program to be saved.", true));
                 }
             }
             else
             {
-                failures.Add(new FailureReport((int)SaveResult.InvalidLocation, $"Invalid file location given ({FilePath})"));
+                failures.Add(new FailureReport((int)SaveResult.InvalidLocation, $"Invalid file location given ({FilePath})", true));
             }
 
             return failures;

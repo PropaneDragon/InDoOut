@@ -24,6 +24,11 @@ namespace InDoOut_Json_Storage
         public enum FailureIds
         {
             /// <summary>
+            /// Resources required are not available
+            /// </summary>
+            InvalidResources,
+
+            /// <summary>
             /// A function could not be created.
             /// </summary>
             FailedToCreateFunction,
@@ -51,7 +56,7 @@ namespace InDoOut_Json_Storage
             /// <summary>
             /// The connection type given was unknown.
             /// </summary>
-            UknownConnectionType,
+            UnknownConnectionType,
 
             /// <summary>
             /// A connection could not be made.
@@ -177,6 +182,10 @@ namespace InDoOut_Json_Storage
                     failures.AddRange(LinkPropertyValue(propertyValue, functionIdMap));
                 }
             }
+            else
+            {
+                failures.Add(new FailureReport((int)FailureIds.InvalidResources, $"Resources given are invalid. (Program: {program?.Name ?? "null program"}, builder: {builder?.GetHashCode().ToString() ?? "unknown builder"}, loaded plugins: {loadedPlugins?.Plugins?.Count.ToString() ?? "unknown plugins"}.", true));
+            }
 
             return failures;
         }
@@ -236,7 +245,7 @@ namespace InDoOut_Json_Storage
                             failures.AddRange(LinkPropertyResult(connection, startFunction, endFunction, outputName, inputName));
                             break;
                         default:
-                            failures.Add(new FailureReport((int)FailureIds.UknownConnectionType, $"Couldn't create a connection, as the connection type \"{connectionType.ToString()}\" is unknown to the linker."));
+                            failures.Add(new FailureReport((int)FailureIds.UnknownConnectionType, $"Couldn't create a connection, as the connection type \"{connectionType.ToString()}\" is unknown to the linker."));
                             break;
                     }
                 }
@@ -268,7 +277,7 @@ namespace InDoOut_Json_Storage
                 }
                 else
                 {
-                    failures.Add(new FailureReport((int)FailureIds.ConnectionFailed, $"A connection could not be made between input \"{input?.Name ?? "null input"}\" on function \"{endFunction?.SafeName ?? "unknown function"}\" ({endFunction?.Id.ToString() ?? "unknown function"}) and output \"{output?.Name ?? "null output"}\" on function \"{startFunction?.SafeName ?? "unknown function"}\" ({startFunction?.Id.ToString() ?? "unknown function"})."));
+                    failures.Add(new FailureReport((int)FailureIds.ConnectionFailed, $"A connection could not be made between input \"{input?.Name ?? $"unknown\" (should be \"{inputName}\")"} on function \"{endFunction?.SafeName ?? "unknown function"}\" ({endFunction?.Id.ToString() ?? "unknown function"}) and output \"{output?.Name ?? $"unknown\" (should be \"{outputName}\")"} on function \"{startFunction?.SafeName ?? "unknown function"}\" ({startFunction?.Id.ToString() ?? "unknown function"})."));
                 }
             }
             else

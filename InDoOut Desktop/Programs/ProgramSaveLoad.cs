@@ -44,6 +44,7 @@ namespace InDoOut_Desktop.Programs
                             else
                             {
                                 var resultStrings = failureReports.Select(report => report.Summary);
+                                var canContinue = !failureReports.Any(report => report.Critical);
 
                                 _ = MessageBox.Show(parent, $"The program couldn't be loaded due to the following errors:\n\n{string.Join('\n', resultStrings)}");
                                 _ = programHolder.RemoveProgram(program);

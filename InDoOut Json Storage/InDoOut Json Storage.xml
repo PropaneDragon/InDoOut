@@ -115,6 +115,11 @@
             A list of failure ids that could occur.
             </summary>
         </member>
+        <member name="F:InDoOut_Json_Storage.JsonProgram.FailureIds.InvalidResources">
+            <summary>
+            Resources required are not available
+            </summary>
+        </member>
         <member name="F:InDoOut_Json_Storage.JsonProgram.FailureIds.FailedToCreateFunction">
             <summary>
             A function could not be created.
@@ -140,7 +145,7 @@
             A connection was not valid.
             </summary>
         </member>
-        <member name="F:InDoOut_Json_Storage.JsonProgram.FailureIds.UknownConnectionType">
+        <member name="F:InDoOut_Json_Storage.JsonProgram.FailureIds.UnknownConnectionType">
             <summary>
             The connection type given was unknown.
             </summary>

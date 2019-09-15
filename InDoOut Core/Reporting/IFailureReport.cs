@@ -7,6 +7,12 @@
     public interface IFailureReport
     {
         /// <summary>
+        /// Whether this failure is a critical failure and could cause issues if
+        /// continued. If false, this is a recoverable state and can be continued.
+        /// </summary>
+        public bool Critical { get; }
+
+        /// <summary>
         /// The ID of the failure.
         /// </summary>
         public int Id { get; }

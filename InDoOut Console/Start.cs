@@ -3,7 +3,6 @@ using InDoOut_Console.ProgramView;
 using InDoOut_Core.Entities.Programs;
 using InDoOut_Core.Functions;
 using InDoOut_Executable_Core.Location;
-using InDoOut_Executable_Core.Storage;
 using InDoOut_Json_Storage;
 using InDoOut_Plugins.Loaders;
 using System;
@@ -60,8 +59,35 @@ namespace InDoOut_Console
                     var storage = new ProgramJsonStorer(new FunctionBuilder(), LoadedPlugins.Instance, programToStart);
                     var failureReports = storage.Load(program);
 
-                    if (failureReports.Count == 0)
+                    if (failureReports.Count > 0)
                     {
+                        ColourConsole.WriteErrorLine($"The following errors have occurred during load:");
+
+                        foreach (var report in failureReports)
+                        {
+                            if (report.Critical)
+                            {
+                                ColourConsole.WriteErrorLine(report.Summary, ConsoleColor.Red);
+                            }
+                            else
+                            {
+                                ColourConsole.WriteWarningLine(report.Summary, ConsoleColor.DarkYellow);
+                            }
+                        }
+                    }
+
+                    if (!failureReports.Any(report => report.Critical))
+                    {
+                        if (failureReports.Count > 0)
+                        {
+                            Console.WriteLine();
+                            ColourConsole.WriteWarningLine("No critical errors, however program might be missing important information due to load errors documented above.", ConsoleColor.Red);
+                            ColourConsole.WriteWarning("Press any key to start regardless... ", ConsoleColor.Red);
+                            _ = Console.ReadKey();
+                            Console.WriteLine();
+                            Console.WriteLine();
+                        }
+
                         ColourConsole.WriteInfoLine("Program loaded successfully.", ConsoleColor.Green);
 
                         if (program.StartFunctions.Count > 0)
@@ -89,17 +115,8 @@ namespace InDoOut_Console
                     }
                     else
                     {
-                        ColourConsole.WriteErrorLine($"Program could not be loaded due to the following errors:");
-
-                        var resultStrings = failureReports.Select(report => report.Summary);
-                        var alternate = false;
-
-                        foreach (var resultString in resultStrings)
-                        {
-                            ColourConsole.WriteErrorLine(resultString, alternate ? ConsoleColor.Gray : ConsoleColor.DarkGray);
-
-                            //alternate = !alternate;
-                        }
+                        Console.WriteLine();
+                        ColourConsole.WriteErrorLine("Load aborted due to critical errors documented above. Please fix and retry.", ConsoleColor.Red);
                     }
                 }
                 else
@@ -113,9 +130,9 @@ namespace InDoOut_Console
             }
 
             Console.WriteLine();
-            ColourConsole.WriteInfo("Press any key to close. ");
+            ColourConsole.WriteInfo("Press any key to close... ");
 
-            _ = Console.ReadLine();
+            _ = Console.ReadKey();
         }
     }
 }

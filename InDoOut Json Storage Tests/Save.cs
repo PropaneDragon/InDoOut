@@ -212,7 +212,7 @@ namespace InDoOut_Json_Storage_Tests
 
             var storer = new TestProgramJsonStorer(_temporaryPath, new FunctionBuilder(), new LoadedPlugins());
 
-            Assert.AreEqual(SaveResult.OK, storer.SavePublic(jsonProgram));
+            Assert.AreEqual(0, storer.SavePublic(jsonProgram).Count);
 
             var actualFileData = File.ReadAllText(_temporaryPath);
             var expectedFileData = File.ReadAllText("ExpectedJsonProgramFormat.json");
@@ -275,7 +275,7 @@ namespace InDoOut_Json_Storage_Tests
 
             var storer = new TestProgramJsonStorer(_temporaryPath, new FunctionBuilder(), new LoadedPlugins());
 
-            Assert.AreEqual(SaveResult.OK, storer.Save(program));
+            Assert.AreEqual(0, storer.Save(program).Count);
 
             var actualFileData = File.ReadAllText(_temporaryPath);
             var expectedFileData = File.ReadAllText("ExpectedJsonProgramFormat.json");

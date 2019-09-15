@@ -2,7 +2,7 @@
   "profiles": {
     "InDoOut Console": {
       "commandName": "Project",
-      "commandLineArgs": "\"C:\\Users\\seanw\\Documents\\wait test.ido\""
+      "commandLineArgs": "\"C:\\Users\\seanw\\Documents\\text combination test.ido\" \"C:\\Users\\seanw\\Documents\\top of stairs sensor.ido\""
     }
   }
 }

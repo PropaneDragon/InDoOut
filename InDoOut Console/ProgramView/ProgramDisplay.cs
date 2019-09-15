@@ -45,7 +45,7 @@ namespace InDoOut_Console.ProgramView
 
                         foreach (var property in runningFunction.Properties)
                         {
-                            ColourConsole.Write(new ColourBlock($"{property.Name}: ", ConsoleColor.Cyan), new ColourBlock($"{property.RawValue}     ", ConsoleColor.White));
+                            ColourConsole.Write(new ColourBlock($"{property.Name}: ", ConsoleColor.Cyan), new ColourBlock($"{property.RawComputedValue}     ", ConsoleColor.White));
                         }
 
                         Console.WriteLine();
