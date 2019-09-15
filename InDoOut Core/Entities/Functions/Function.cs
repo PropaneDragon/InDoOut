@@ -23,6 +23,7 @@ namespace InDoOut_Core.Entities.Functions
         private List<IInput> _inputs = new List<IInput>();
         private List<IProperty> _properties = new List<IProperty>();
         private List<IResult> _results = new List<IResult>();
+        private Dictionary<IProperty, IResult> _mirroredResults = new Dictionary<IProperty, IResult>();
 
         /// <summary>
         /// Stop has been requested on the task, and it should be terminated as soon
@@ -186,14 +187,20 @@ namespace InDoOut_Core.Entities.Functions
         /// </summary>
         /// <typeparam name="T">The type of <see cref="IProperty"/> to add.</typeparam>
         /// <param name="property">The property to add.</param>
+        /// <param name="mirrorAsResult">Whether to mirror this property as a result automatically. This will copy the property value into the result value when activated.</param>
         /// <returns>The given <paramref name="property"/>.</returns>
-        protected T AddProperty<T>(T property) where T : IProperty
+        protected T AddProperty<T>(T property, bool mirrorAsResult = true) where T : IProperty
         {
             if (property != null && !Properties.Contains(property))
             {
                 Properties.Add(property);
 
                 _ = property.Connect(this);
+
+                if (mirrorAsResult)
+                {
+                    _mirroredResults[property] = AddResult(new Result($"{property.Name} *", $"Passthrough: {property.Description}", property.RawComputedValue));
+                }
             }
 
             return property;
@@ -260,6 +267,14 @@ namespace InDoOut_Core.Entities.Functions
 
                 try
                 {
+                    foreach (var mirroredResult in _mirroredResults)
+                    {
+                        if (mirroredResult.Value != null && mirroredResult.Key != null)
+                        {
+                            mirroredResult.Value.RawValue = mirroredResult.Key.RawComputedValue;
+                        }
+                    }
+
                     var nextOutput = Started(triggeredBy);
 
                     foreach (var result in Results)

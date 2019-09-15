@@ -272,7 +272,7 @@ namespace InDoOut_Core_Tests
             Assert.AreEqual("", fullFunction.FloatResult.RawValue);
             Assert.AreEqual("", fullFunction.StringResult.RawValue);
 
-            Assert.AreEqual(4, variableStore.PublicVariables.Count);
+            Assert.AreEqual(7, variableStore.PublicVariables.Count);
             Assert.AreEqual("", variableStore.GetVariableValue("Int"));
             Assert.AreEqual("", variableStore.GetVariableValue("Double"));
             Assert.AreEqual("", variableStore.GetVariableValue("Float"));
@@ -292,7 +292,7 @@ namespace InDoOut_Core_Tests
             Assert.AreEqual("789.01", fullFunction.FloatResult.RawValue);
             Assert.AreEqual("A non-null string", fullFunction.StringResult.RawValue);
 
-            Assert.AreEqual(4, variableStore.PublicVariables.Count);
+            Assert.AreEqual(8, variableStore.PublicVariables.Count);
             Assert.AreEqual("1234", variableStore.GetVariableValue("Int"));
             Assert.AreEqual("456.78901", variableStore.GetVariableValue("Double"));
             Assert.AreEqual("789.01", variableStore.GetVariableValue("Float"));

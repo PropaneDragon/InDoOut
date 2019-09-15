@@ -18,7 +18,7 @@ namespace InDoOut_Core_Plugins_Tests
             _ = program.AddFunction(function);
 
             Assert.AreEqual(2, function.Properties.Count);
-            Assert.AreEqual(1, function.Results.Count);
+            Assert.AreEqual(1 + function.Properties.Count, function.Results.Count);
 
             TestArithmetic(function, (first, second) => first + second);
         }
@@ -32,7 +32,7 @@ namespace InDoOut_Core_Plugins_Tests
             _ = program.AddFunction(function);
 
             Assert.AreEqual(2, function.Properties.Count);
-            Assert.AreEqual(1, function.Results.Count);
+            Assert.AreEqual(1 + function.Properties.Count, function.Results.Count);
 
             TestArithmetic(function, (first, second) => first - second);
         }
@@ -46,7 +46,7 @@ namespace InDoOut_Core_Plugins_Tests
             _ = program.AddFunction(function);
 
             Assert.AreEqual(2, function.Properties.Count);
-            Assert.AreEqual(1, function.Results.Count);
+            Assert.AreEqual(1 + function.Properties.Count, function.Results.Count);
 
             TestArithmetic(function, (first, second) => first * second);
         }
@@ -60,14 +60,14 @@ namespace InDoOut_Core_Plugins_Tests
             _ = program.AddFunction(function);
 
             Assert.AreEqual(2, function.Properties.Count);
-            Assert.AreEqual(1, function.Results.Count);
+            Assert.AreEqual(1 + function.Properties.Count, function.Results.Count);
 
             TestArithmetic(function, (first, second) => first / second);
         }
 
         private void TestArithmetic(AbstractPairArithmeticFunction arithmeticFunction, Func<double, double, double> function)
         {
-            var result = arithmeticFunction.Results[0];
+            var result = arithmeticFunction.Results[2];
             var firstNumber = arithmeticFunction.Properties[0];
             var secondNumber = arithmeticFunction.Properties[1];
 
