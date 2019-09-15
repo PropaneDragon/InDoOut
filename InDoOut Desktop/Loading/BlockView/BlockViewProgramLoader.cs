@@ -2,19 +2,29 @@
 using InDoOut_Core.Entities.Functions;
 using InDoOut_Core.Entities.Programs;
 using InDoOut_Desktop.UI.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace InDoOut_Desktop.Loading.BlockView
 {
     internal class BlockViewProgramLoader
     {
         private readonly IBlockView _associatedBlockView = null;
+        private DispatcherTimer _wireRedrawTimer = null;
 
         public BlockViewProgramLoader(IBlockView blockView)
         {
             _associatedBlockView = blockView;
+            _wireRedrawTimer = new DispatcherTimer(DispatcherPriority.Normal)
+            {
+                Interval = TimeSpan.FromSeconds(1),
+                IsEnabled = false
+            };
+
+            _wireRedrawTimer.Tick += WireRedrawTimer_Tick;
         }
 
         public bool DisplayProgram(IProgram program)
@@ -38,6 +48,8 @@ namespace InDoOut_Desktop.Loading.BlockView
                 }
 
                 DisplayConnections(program, functionToUIFunctionMap);
+
+                _wireRedrawTimer?.Start();
             }
 
             return false;
@@ -153,6 +165,19 @@ namespace InDoOut_Desktop.Loading.BlockView
         {
             value = 0;
             return !string.IsNullOrEmpty(key) && stored != null && stored.Metadata.ContainsKey(key) && double.TryParse(stored.Metadata[key], out value);
+        }
+
+        private void WireRedrawTimer_Tick(object sender, EventArgs e)
+        {
+            _wireRedrawTimer?.Stop();
+
+            if (_associatedBlockView != null)
+            {
+                foreach (var uiConnection in _associatedBlockView.UIConnections)
+                {
+                    uiConnection?.UpdatePositionFromInputOutput(_associatedBlockView);
+                }
+            }
         }
     }
 }
