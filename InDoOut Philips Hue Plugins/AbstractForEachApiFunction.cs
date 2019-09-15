@@ -2,10 +2,10 @@
 
 namespace InDoOut_Philips_Hue_Plugins
 {
-    public abstract class AbstractForEachApiFunction : LoopFunction
+    public abstract class AbstractForEachApiFunction : LoopFunction, IApiFunction
     {
-        protected IProperty<string> BridgeIPProperty { get; private set; } = null;
-        protected IProperty<string> UserIdProperty { get; private set; } = null;
+        public IProperty<string> BridgeIPProperty { get; private set; } = null;
+        public IProperty<string> UserIdProperty { get; private set; } = null;
 
         public AbstractForEachApiFunction()
         {
