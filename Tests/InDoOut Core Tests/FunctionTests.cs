@@ -123,6 +123,42 @@ namespace InDoOut_Core_Tests
         }
 
         [TestMethod]
+        public void PropertiesMirroredAsResults()
+        {
+            var function = new TestFunction(() => Thread.Sleep(TimeSpan.FromMilliseconds(10)));
+
+            Assert.AreEqual(0, function.Properties.Count);
+            Assert.AreEqual(0, function.Results.Count);
+
+            Assert.IsNotNull(function.AddPropertyPublic(new Property<string>("Test property", "Test description")));
+
+            Assert.AreEqual(1, function.Properties.Count);
+            Assert.AreEqual(1, function.Results.Count);
+
+            Assert.AreEqual("Test property *", function.Results[0].Name);
+            Assert.AreEqual("Passthrough: Test description", function.Results[0].Description);
+
+            Assert.IsNotNull(function.AddPropertyPublic(new Property<string>("Test property 2", "Test description 2"), false));
+
+            Assert.AreEqual(2, function.Properties.Count);
+            Assert.AreEqual(1, function.Results.Count);
+
+            Assert.AreEqual("Test property *", function.Results[0].Name);
+            Assert.AreEqual("Passthrough: Test description", function.Results[0].Description);
+
+            Assert.IsNotNull(function.AddPropertyPublic(new Property<string>("Test property 3", "Test description 3"), true));
+
+            Assert.AreEqual(3, function.Properties.Count);
+            Assert.AreEqual(2, function.Results.Count);
+
+            Assert.AreEqual("Test property *", function.Results[0].Name);
+            Assert.AreEqual("Passthrough: Test description", function.Results[0].Description);
+
+            Assert.AreEqual("Test property 3 *", function.Results[1].Name);
+            Assert.AreEqual("Passthrough: Test description 3", function.Results[1].Description);
+        }
+
+        [TestMethod]
         public void ProcessOutput()
         {
             var startFunction = new TestFunction(() => Thread.Sleep(TimeSpan.FromMilliseconds(1)));
