@@ -131,5 +131,14 @@ namespace InDoOut_Core.Entities.Programs
                 startFunction.Trigger(null);
             }
         }
+
+        /// <summary>
+        /// Sets the program name to the given value.
+        /// </summary>
+        /// <param name="name">The program name to set.</param>
+        public void SetName(string name)
+        {
+            Name = name;
+        }
     }
 }

@@ -33,14 +33,14 @@ namespace InDoOut_Desktop.Loading.BlockView
             {
                 var functionToUIFunctionMap = new Dictionary<IFunction, IUIFunction>();
 
-                if (ExtractLocation(program, out var location) && _associatedBlockView is IScrollable scrollable)
+                if (ExtractLocationFromMetadata(program, out var location) && _associatedBlockView is IScrollable scrollable)
                 {
                     scrollable.Offset = location;
                 }
 
                 foreach (var function in program.Functions)
                 {
-                    var uiFunction = ExtractLocation(function, out var functionLocation) ? _associatedBlockView.Create(function, functionLocation) : _associatedBlockView.Create(function);
+                    var uiFunction = ExtractLocationFromMetadata(function, out var functionLocation) ? _associatedBlockView.Create(function, functionLocation) : _associatedBlockView.Create(function);
                     if (uiFunction != null)
                     {
                         functionToUIFunctionMap.Add(function, uiFunction);
@@ -133,7 +133,7 @@ namespace InDoOut_Desktop.Loading.BlockView
             return program != null;
         }
 
-        private bool ExtractLocation(IStored stored, out Point location)
+        private bool ExtractLocationFromMetadata(IStored stored, out Point location)
         {
             location = new Point();
 
@@ -151,7 +151,7 @@ namespace InDoOut_Desktop.Loading.BlockView
         {
             area = new Rect();
 
-            if (stored != null && ExtractLocation(stored, out var location) && ExtractMetadataValue(stored, "w", out var width) && ExtractMetadataValue(stored, "h", out var height))
+            if (stored != null && ExtractLocationFromMetadata(stored, out var location) && ExtractMetadataValue(stored, "w", out var width) && ExtractMetadataValue(stored, "h", out var height))
             {
                 area = new Rect(location, new Size(width, height));
 

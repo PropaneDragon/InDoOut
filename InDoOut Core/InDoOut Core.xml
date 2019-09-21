@@ -1275,6 +1275,12 @@
             held for functions.
             </summary>
         </member>
+        <member name="M:InDoOut_Core.Entities.Programs.IProgram.SetName(System.String)">
+            <summary>
+            Sets the program name.
+            </summary>
+            <param name="name">The name to set.</param>
+        </member>
         <member name="M:InDoOut_Core.Entities.Programs.IProgram.AddFunction(InDoOut_Core.Entities.Functions.IFunction)">
             <summary>
             Add a function to the program.
@@ -1371,6 +1377,12 @@
             Trigger this program. This will start all available <see cref="P:InDoOut_Core.Entities.Programs.Program.StartFunctions"/>.
             </summary>
             <param name="triggeredBy">The <see cref="T:InDoOut_Core.Entities.Core.IEntity"/> that triggered this.</param>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Programs.Program.SetName(System.String)">
+            <summary>
+            Sets the program name to the given value.
+            </summary>
+            <param name="name">The program name to set.</param>
         </member>
         <member name="T:InDoOut_Core.Functions.FunctionBuilder">
             <summary>

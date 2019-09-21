@@ -35,6 +35,12 @@ namespace InDoOut_Core.Entities.Programs
         IVariableStore VariableStore { get; }
 
         /// <summary>
+        /// Sets the program name.
+        /// </summary>
+        /// <param name="name">The name to set.</param>
+        void SetName(string name);
+
+        /// <summary>
         /// Add a function to the program.
         /// </summary>
         /// <param name="function">The function to add to the program.</param>

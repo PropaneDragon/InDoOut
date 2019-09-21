@@ -111,7 +111,7 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
 
         private void Button_SaveProgram_Click(object sender, RoutedEventArgs e)
         {
-
+            _ = ProgramSaveLoad.Instance.TrySaveProgramFromMetadata(_blockView?.AssociatedProgram, new ProgramJsonStorer(new FunctionBuilder(), LoadedPlugins.Instance), Window.GetWindow(this));
         }
 
         private void Button_SaveProgramAs_Click(object sender, RoutedEventArgs e)

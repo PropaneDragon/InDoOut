@@ -12,6 +12,8 @@ namespace InDoOut_Desktop.Programs
 {
     internal class ProgramSaveLoad : Singleton<ProgramSaveLoad>
     {
+        private static readonly string PROGRAM_METADATA_LAST_LOADED_FROM = "lastLoadedFrom";
+
         public IProgram LoadProgramDialog(IProgramHolder programHolder, IProgramStorer programStorer, Window parent = null)
         {
             if (programHolder != null && programStorer != null)
@@ -28,91 +30,140 @@ namespace InDoOut_Desktop.Programs
 
                 if (openDialog.ShowDialog(parent) ?? false)
                 {
-                    var fileToOpen = openDialog.FileName;
-                    if (!string.IsNullOrEmpty(fileToOpen) && Path.GetExtension(fileToOpen) == programStorer.FileExtension)
-                    {
-                        var program = programHolder.NewProgram();
-                        if (program != null)
-                        {
-                            programStorer.FilePath = fileToOpen;
-
-                            var failureReports = programStorer.Load(program);
-                            if (failureReports.Count == 0)
-                            {
-                                return program;
-                            }
-                            else
-                            {
-                                var resultStrings = failureReports.Select(report => report.Summary);
-                                var canContinue = !failureReports.Any(report => report.Critical);
-
-                                _ = MessageBox.Show(parent, $"The program couldn't be loaded due to the following errors:\n\n{string.Join('\n', resultStrings)}");
-                                _ = programHolder.RemoveProgram(program);
-                            }
-                        }
-                    }
+                    return LoadProgram(openDialog.FileName, programHolder, programStorer, parent);
                 }
             }
 
             return null;
         }
 
-        public bool SaveProgramDialog(IProgram program, IProgramStorer programStorer, Window parent = null, string saveLocation = null)
+        public IProgram LoadProgram(string filePath, IProgramHolder programHolder, IProgramStorer programStorer, Window parent = null)
         {
             var failureReports = new List<IFailureReport>();
 
-            if (program != null && programStorer != null)
-            {
-                if (saveLocation == null)
-                {
-                    var saveDialog = new SaveFileDialog()
-                    {
-                        CheckFileExists = false,
-                        CheckPathExists = true,
-                        ValidateNames = true,
-                        DefaultExt = programStorer.FileExtension,
-                        Filter = $"ido Programs (*{programStorer.FileExtension})|*{programStorer.FileExtension}",
-                        Title = "Select a file to save"
-                    };
+            IProgram program = null;
 
-                    if (saveDialog.ShowDialog(parent) ?? false)
+            if (!string.IsNullOrEmpty(filePath) && programHolder != null && programStorer != null)
+            {
+                if (Path.GetExtension(filePath) == programStorer.FileExtension)
+                {
+                    program = programHolder.NewProgram();
+                    if (program != null)
                     {
-                        var fileToSave = saveDialog.FileName;
-                        if (!string.IsNullOrEmpty(fileToSave) && Path.GetExtension(fileToSave) == programStorer.FileExtension)
-                        {
-                            failureReports.AddRange(SaveProgram(program, programStorer, fileToSave));
-                        }
-                        else
-                        {
-                            failureReports.Add(new FailureReport((int)SaveResult.InvalidFileName, $"The given filename to be saved ({fileToSave}) is invalid."));
-                        }
+                        programStorer.FilePath = filePath;
+
+                        failureReports.AddRange(programStorer.Load(program));
+
+                        program.Metadata[PROGRAM_METADATA_LAST_LOADED_FROM] = filePath;
+                        program.SetName(Path.GetFileNameWithoutExtension(filePath));
+                    }
+                    else
+                    {
+                        failureReports.Add(new FailureReport((int)LoadResult.MissingData, "A program could not be created to attach to due to an unknown issue.", true));
                     }
                 }
                 else
                 {
-                    failureReports = SaveProgram(program, programStorer, saveLocation);
+                    failureReports.Add(new FailureReport((int)LoadResult.InvalidExtension, "The file extension given is invalid. Please provide a valid file.", true));
                 }
+            }
+            else
+            {
+                failureReports.Add(new FailureReport((int)SaveResult.InvalidFileName, $"The given location ({filePath}), holder ({(programStorer != null ? "is valid" : "null")}) or storer ({(programStorer != null ? "is valid" : "null")}) was invalid"));
+            }
+
+            if (failureReports.Count > 0)
+            {
+                var resultStrings = failureReports.Select(report => report.Summary);
+                var canContinue = !failureReports.Any(report => report.Critical);
+
+                _ = MessageBox.Show(parent, $"The following errors occurred trying to load the program:\n\n{string.Join("\n- ", resultStrings)}");
+
+                if (canContinue)
+                {
+                    var result = MessageBox.Show(parent, "As there are no critical errors, do you wish to load anyway?\n\nPlease note that there may be missing elements or other features if you choose to load.", "Load anyway?", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        return program;
+                    }
+                }
+            }
+            else
+            {
+                return program;
+            }
+
+            if (program != null)
+            {
+                _ = programHolder.RemoveProgram(program);
+            }
+
+            return null;
+        }
+
+        public bool SaveProgramDialog(IProgram program, IProgramStorer programStorer, Window parent = null)
+        {
+            if (program != null && programStorer != null)
+            {
+                var saveDialog = new SaveFileDialog()
+                {
+                    CheckFileExists = false,
+                    CheckPathExists = true,
+                    ValidateNames = true,
+                    DefaultExt = programStorer.FileExtension,
+                    Filter = $"ido Programs (*{programStorer.FileExtension})|*{programStorer.FileExtension}",
+                    Title = "Select a file to save"
+                };
+
+                if (saveDialog.ShowDialog(parent) ?? false)
+                {
+                    return SaveProgram(saveDialog.FileName, program, programStorer, parent);
+                }
+            }
+
+            return false;
+        }
+
+        public bool TrySaveProgramFromMetadata(IProgram program, IProgramStorer programStorer, Window parent = null)
+        {
+            return program != null && program.Metadata.ContainsKey(PROGRAM_METADATA_LAST_LOADED_FROM)
+                ? SaveProgram(program.Metadata[PROGRAM_METADATA_LAST_LOADED_FROM], program, programStorer, parent)
+                : SaveProgramDialog(program, programStorer, parent);
+        }
+
+        public bool SaveProgram(string filePath, IProgram program, IProgramStorer programStorer, Window parent = null)
+        {
+            var failureReports = new List<IFailureReport>();
+
+            if (!string.IsNullOrEmpty(filePath) && programStorer != null)
+            {
+                if (Path.GetExtension(filePath) == programStorer.FileExtension)
+                {
+                    programStorer.FilePath = filePath;
+                    failureReports.AddRange(programStorer.Save(program));
+                }
+                else
+                {
+                    failureReports.Add(new FailureReport((int)SaveResult.InvalidFileName, $"The given filename to be saved ({filePath}) is invalid."));
+                }
+            }
+            else
+            {
+                failureReports.Add(new FailureReport((int)SaveResult.InvalidFileName, $"The given location ({filePath}), program ({program?.Id.ToString() ?? "null program"} or storer ({(programStorer != null ? "is valid" : "null")}) was invalid"));
             }
 
             if (failureReports.Count > 0)
             {
                 var resultStrings = failureReports.Select(report => report.Summary);
 
-                _ = MessageBox.Show(parent, $"The program couldn't be loaded due to the following errors:\n\n{string.Join('\n', resultStrings)}");
+                _ = MessageBox.Show(parent, $"The program couldn't be loaded due to the following errors:\n\n{string.Join("\n- ", resultStrings)}");
+            }
+            else
+            {
+                program?.SetName(Path.GetFileNameWithoutExtension(filePath));
             }
 
             return failureReports.Count == 0;
-        }
-
-        private List<IFailureReport> SaveProgram(IProgram program, IProgramStorer programStorer, string saveLocation)
-        {
-            if (program != null && programStorer != null && !string.IsNullOrEmpty(saveLocation) && Path.GetExtension(saveLocation) == programStorer.FileExtension)
-            {
-                programStorer.FilePath = saveLocation;
-                return programStorer.Save(program);
-            }
-
-            return new List<IFailureReport>() { new FailureReport((int)SaveResult.InvalidFileName, $"The given location ({saveLocation}), program ({program?.Id.ToString() ?? "null program"} or storer ({(programStorer != null ? "is valid" : "null")}) was invalid") };
         }
     }
 }
