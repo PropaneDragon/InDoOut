@@ -20,7 +20,7 @@ namespace InDoOut_Core_Plugins.Variables
         {
             _ = CreateInput("Set");
             _output = CreateOutput("Value is set");
-            _valueToSet = AddProperty(new Property<string>("Value to set", "The value to set."));
+            _valueToSet = AddProperty(new Property<string>("Value to set", "The value to set."), false);
             _valueSet = AddResult(new Result("Value out", "The value that has been set."));
         }
 
