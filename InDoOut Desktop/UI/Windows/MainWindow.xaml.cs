@@ -1,8 +1,10 @@
 ﻿using InDoOut_Desktop.Loading;
 using InDoOut_Desktop.UI.Interfaces;
 using InDoOut_Desktop.UI.Threading;
+using System;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace InDoOut_Desktop.UI.Windows
 {
@@ -10,11 +12,17 @@ namespace InDoOut_Desktop.UI.Windows
     {
         private static readonly bool OLD_SPLASH = false;
 
+        private DispatcherTimer _titleTimer = new DispatcherTimer(DispatcherPriority.Background);
+
         public MainWindow()
         {
             InitializeComponent();
 
             UIThread.Instance.SetCurrentThreadAsUIThread();
+
+            _titleTimer.Interval = TimeSpan.FromMilliseconds(300);
+            _titleTimer.Start();
+            _titleTimer.Tick += UpdateTimer_Tick;
         }
 
         private async Task FinishLoading()
@@ -50,6 +58,19 @@ namespace InDoOut_Desktop.UI.Windows
             }
 
             Close();
+        }
+
+        private void UpdateTimer_Tick(object sender, EventArgs e)
+        {
+            var programName = "No program";
+            var program = BlockView_Main?.AssociatedProgram;
+
+            if (program != null)
+            {
+                programName = string.IsNullOrEmpty(program.Name) ? "Untitled" : program.Name;
+            }
+
+            Title = $"{programName} > ido";
         }
     }
 }
