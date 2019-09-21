@@ -16,12 +16,15 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
         private readonly IOType _ioType = IOType.None;
 
         public string Text { get => Text_IOName.Text; set => Text_IOName.Text = value; }
+        public string Value { get => Text_IOValue.Text; set => UpdateValue(value); }
         public IOType Type { get => _ioType; set => SetIOType(value); }
 
         public UIFunctionIO(IOType type)
         {
             InitializeComponent();
 
+            Text = "";
+            Value = null;
             Type = type;
         }
 
@@ -51,6 +54,12 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
 
                 _ => Color.FromRgb(59, 119, 228),
             };
+        }
+
+        private void UpdateValue(string value)
+        {
+            Text_IOValue.Visibility = value == null ? System.Windows.Visibility.Collapsed : System.Windows.Visibility.Visible;
+            Text_IOValue.Text = value;
         }
     }
 }

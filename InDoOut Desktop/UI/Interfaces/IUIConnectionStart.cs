@@ -2,7 +2,7 @@
 
 namespace InDoOut_Desktop.UI.Interfaces
 {
-    public interface IUIConnectionStart
+    public interface IUIConnectionStart : IUIConnectionPoint
     {
         void PositionUpdated(Point position);
     }

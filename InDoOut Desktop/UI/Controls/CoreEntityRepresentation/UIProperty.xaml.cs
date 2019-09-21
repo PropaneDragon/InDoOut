@@ -1,22 +1,29 @@
 ﻿using InDoOut_Core.Entities.Functions;
 using InDoOut_Desktop.UI.Interfaces;
 using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
+using System.Windows.Threading;
 
 namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
 {
     public partial class UIProperty : UserControl, IUIProperty
     {
         private IProperty _property = null;
+        private DispatcherTimer _valueUpdateTimer = new DispatcherTimer(DispatcherPriority.Background);
 
         public IProperty AssociatedProperty { get => _property; set => SetProperty(value); }
 
         public UIProperty() : base()
         {
             InitializeComponent();
+
+            _valueUpdateTimer.Interval = TimeSpan.FromMilliseconds(100);
+            _valueUpdateTimer.Start();
+            _valueUpdateTimer.Tick += UpdateTimer_Tick;
         }
 
         public UIProperty(IProperty property) : this()
@@ -48,6 +55,7 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
             {
                 //Warning: Potential bug? INamed has no safe version.
                 IO_Main.Text = _property.Name;
+                IO_Main.Value = "";
             }
         }
 
@@ -158,6 +166,19 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
                     HideEditor();
                 }
             }
+        }
+
+        private async void UpdateTimer_Tick(object sender, EventArgs e)
+        {
+            var propertyValue = await Task.Run(() => AssociatedProperty?.RawComputedValue ?? "");
+            IO_Main.Value = propertyValue;
+        }
+
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            _valueUpdateTimer.Stop();
+            _valueUpdateTimer.Tick -= UpdateTimer_Tick;
+            _valueUpdateTimer = null;
         }
     }
 }

@@ -6,9 +6,12 @@
              xmlns:local="clr-namespace:InDoOut_Desktop.UI.Controls.CoreEntityRepresentation"
              mc:Ignorable="d" 
              Width="180" MaxWidth="180" Foreground="White" Background="#3b77e4" FontFamily="Segoe UI Light" FontSize="14">
-    <Border Padding="10">
+    <Border Padding="6">
         <Grid>
-            <TextBlock x:Name="Text_IOName" Text="I/O" TextAlignment="Center" />
+            <StackPanel>
+                <TextBlock x:Name="Text_IOName" Text="I/O" TextAlignment="Center" />
+                <TextBlock x:Name="Text_IOValue" Text="Value" TextAlignment="Center" FontSize="10" />
+            </StackPanel>
         </Grid>
     </Border>
 </UserControl>
