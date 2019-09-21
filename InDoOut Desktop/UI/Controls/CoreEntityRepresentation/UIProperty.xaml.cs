@@ -13,7 +13,7 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
     public partial class UIProperty : UserControl, IUIProperty
     {
         private IProperty _property = null;
-        private DispatcherTimer _valueUpdateTimer = new DispatcherTimer(DispatcherPriority.Background);
+        private DispatcherTimer _valueUpdateTimer = new DispatcherTimer(DispatcherPriority.Normal);
 
         public IProperty AssociatedProperty { get => _property; set => SetProperty(value); }
 

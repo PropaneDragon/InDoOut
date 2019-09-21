@@ -11,7 +11,7 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
     public partial class UIResult : UserControl, IUIResult
     {
         private IResult _result = null;
-        private DispatcherTimer _valueUpdateTimer = new DispatcherTimer(DispatcherPriority.Background);
+        private DispatcherTimer _valueUpdateTimer = new DispatcherTimer(DispatcherPriority.Normal);
 
         public IResult AssociatedResult { get => _result; set => SetResult(value); }
 
