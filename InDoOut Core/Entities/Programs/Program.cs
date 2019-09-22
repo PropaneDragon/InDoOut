@@ -39,7 +39,7 @@ namespace InDoOut_Core.Entities.Programs
         /// <summary>
         /// Whether any of the functions within this program are still stopping.
         /// </summary>
-        public bool Stopping => Functions.Any(function => function.State == State.Stopping);
+        public bool Stopping => Functions.Any(function => function.State == State.Stopping && function.Running);
 
         /// <summary>
         /// The name of this program.

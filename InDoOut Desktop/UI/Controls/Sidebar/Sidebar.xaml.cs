@@ -7,14 +7,17 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
+using System.Windows.Threading;
 
 namespace InDoOut_Desktop.UI.Controls.Sidebar
 {
     public partial class Sidebar : UserControl
     {
-        private bool _collapsed = false;
         private readonly TimeSpan _animationTime = TimeSpan.FromMilliseconds(500);
+
+        private bool _collapsed = false;
         private IBlockView _blockView = null;
+        private DispatcherTimer _updateTimer = new DispatcherTimer(DispatcherPriority.Normal);
 
         public bool Collapsed { get => _collapsed; set { if (value) Collapse(); else Expand(); } }
         public IBlockView BlockView { get => _blockView; set => BlockViewChanged(value); }
@@ -22,6 +25,10 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
         public Sidebar()
         {
             InitializeComponent();
+
+            _updateTimer.Interval = TimeSpan.FromMilliseconds(500);
+            _updateTimer.Start();
+            _updateTimer.Tick += UpdateTimer_Tick;
         }
 
         public void Collapse()
@@ -72,9 +79,18 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
         {
             if (_blockView != null)
             {
-                Button_RunProgram.Visibility = _blockView?.AssociatedProgram?.Running ?? true ? Visibility.Hidden : Visibility.Visible;
-                Button_StopProgram.Visibility = _blockView?.AssociatedProgram?.Running ?? false ? Visibility.Visible : Visibility.Hidden;
+                var programRunning = _blockView?.AssociatedProgram?.Running ?? false;
+                var programStopping = _blockView?.AssociatedProgram?.Stopping ?? false;
+
+                Button_RunProgram.Visibility = !programStopping && !programRunning ? Visibility.Visible : Visibility.Hidden;
+                Button_StopProgram.Visibility = !programStopping && programRunning ? Visibility.Visible : Visibility.Hidden;
+                Button_ProgramStopping.Visibility = programStopping ? Visibility.Visible : Visibility.Hidden;
             }
+        }
+
+        private void UpdateTimer_Tick(object sender, EventArgs e)
+        {
+            UpdatePlayStopButtons();
         }
 
         private void Button_Collapse_Click(object sender, RoutedEventArgs e)
@@ -102,7 +118,10 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
 
         private void Button_RunProgram_Click(object sender, RoutedEventArgs e)
         {
-            _blockView?.AssociatedProgram?.Trigger(null);
+            if ((!_blockView?.AssociatedProgram?.Running ?? false) && (!_blockView.AssociatedProgram?.Stopping ?? false))
+            {
+                _blockView?.AssociatedProgram?.Trigger(null);
+            }
 
             UpdatePlayStopButtons();
         }

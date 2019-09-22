@@ -139,8 +139,11 @@ namespace InDoOut_Core.Entities.Functions
         /// <seealso cref="StopRequested"/>
         public void PolitelyStop()
         {
-            StopRequested = true;
-            State = State.Stopping;
+            if (Running)
+            {
+                StopRequested = true;
+                State = State.Stopping;
+            }
         }
 
         /// <summary>
