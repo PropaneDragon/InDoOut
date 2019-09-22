@@ -13,16 +13,21 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
     /// </summary>
     public partial class Overview : UserControl
     {
-        private IBlockView _blockView = null;
-        private readonly DispatcherTimer _updateTimer = new DispatcherTimer(DispatcherPriority.Normal);
+        private readonly DispatcherTimer _updateTimer = new DispatcherTimer(DispatcherPriority.Render);
 
+        private IBlockView _blockView = null;
+
+        public Size TotalSize => _blockView?.TotalSize ?? new Size();
+        public Size ViewSize => _blockView?.ViewSize ?? new Size();
+        public Vector ActualSizeToOverviewRatio => new Vector(ActualWidth / TotalSize.Width, ActualHeight / TotalSize.Height);
+        public Vector OverviewToActualSizeRatio => new Vector(TotalSize.Width / ActualWidth, TotalSize.Height / ActualHeight);
         public IBlockView AssociatedBlockView { get => _blockView; set => ChangeBlockView(value); }
 
         public Overview()
         {
             InitializeComponent();
 
-            _updateTimer.Interval = TimeSpan.FromMilliseconds(10);
+            _updateTimer.Interval = TimeSpan.FromMilliseconds(333);
             _updateTimer.Tick += UpdateTimer_Tick;
             _updateTimer.Start();
 
@@ -48,17 +53,9 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
         {
             if (_blockView != null)
             {
-                var totalWindowSize = _blockView.TotalSize;
-                var totalViewSize = _blockView.ViewSize;
                 var topLeftViewCoordinate = _blockView.TopLeftViewCoordinate;
-                var windowRect = new Rect(totalWindowSize);
-                var viewportRect = new Rect(topLeftViewCoordinate, totalViewSize);
-
-                var widthRatio = ActualWidth / totalWindowSize.Width;
-                var heightRatio = ActualHeight / totalWindowSize.Height;
-                var ratioVector = new Vector(widthRatio, heightRatio);
-
-                var adjustedWindowSize = AdjustByRatio(windowRect, ratioVector);
+                var viewportRect = new Rect(topLeftViewCoordinate, ViewSize);
+                var ratioVector = ActualSizeToOverviewRatio;
                 var adjustedViewportSize = AdjustByRatio(viewportRect, ratioVector);
 
                 Rectangle_Viewport.Width = adjustedViewportSize.Width;
@@ -114,6 +111,18 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
         private void UpdateTimer_Tick(object sender, EventArgs e)
         {
             UpdatePositions();
+        }
+
+        private void UserControl_PreviewMouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (AssociatedBlockView != null && AssociatedBlockView is IScrollable scrollable)
+            {
+                var clickedPosition = e.GetPosition(this);
+                var ratioClickedPosition = AdjustByRatio(clickedPosition, OverviewToActualSizeRatio);
+                var centrePoint = new Point(ratioClickedPosition.X - (ViewSize.Width / 2d), ratioClickedPosition.Y - (ViewSize.Height / 2d));
+
+                scrollable.Offset = centrePoint;
+            }
         }
     }
 }
