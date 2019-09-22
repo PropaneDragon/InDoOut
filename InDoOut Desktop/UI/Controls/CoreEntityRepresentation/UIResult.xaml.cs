@@ -66,6 +66,9 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
             _valueUpdateTimer.Interval = TimeSpan.FromMilliseconds(333);
             _valueUpdateTimer.Start();
             _valueUpdateTimer.Tick += UpdateTimer_Tick;
+
+            IO_Main.Value = "updating...";
+            IO_Main.Value = "";
         }
 
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)

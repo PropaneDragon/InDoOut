@@ -59,7 +59,7 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
         {
             if (AssociatedProperty != null)
             {
-                TextBox_ValueEdit.Text = AssociatedProperty.RawValue ?? "";
+                TextBox_ValueEdit.Text = AssociatedProperty?.RawValue ?? "";
             }
         }
 
@@ -167,7 +167,7 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
         private async void UpdateTimer_Tick(object sender, EventArgs e)
         {
             var propertyValue = await Task.Run(() => AssociatedProperty?.RawComputedValue ?? "");
-            IO_Main.Value = propertyValue;
+            IO_Main.Value = propertyValue ?? "";
         }
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -177,6 +177,9 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
             _valueUpdateTimer.Interval = TimeSpan.FromMilliseconds(333);
             _valueUpdateTimer.Start();
             _valueUpdateTimer.Tick += UpdateTimer_Tick;
+
+            IO_Main.Value = "updating...";
+            IO_Main.Value = "";
         }
 
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
