@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InDoOut_Desktop.UI.Controls.CoreEntityRepresentation"
-             mc:Ignorable="d" FontFamily="Segoe UI Light" FontSize="14" MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave" Unloaded="UserControl_Unloaded">
+             mc:Ignorable="d" FontFamily="Segoe UI Light" FontSize="14" MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave" Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded">
     <Grid>
         <local:UIFunctionIO x:Name="IO_Main" Text="Property" Type="Neutral" VerticalAlignment="Center" HorizontalAlignment="Center" MouseLeftButtonUp="IO_Main_MouseDoubleClick" />
         <Button x:Name="Button_Edit" DockPanel.Dock="Right" Visibility="Hidden" FontFamily="Segoe MDL2 Assets" Content="" FontSize="14" Margin="10" Template="{DynamicResource Template_Buttons_Transparent}" HorizontalAlignment="Right" VerticalAlignment="Stretch" HorizontalContentAlignment="Right" Click="Button_Edit_Click"/>

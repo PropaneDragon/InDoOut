@@ -58,8 +58,11 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
 
         private void UpdateValue(string value)
         {
-            Text_IOValue.Visibility = value == null ? System.Windows.Visibility.Collapsed : System.Windows.Visibility.Visible;
-            Text_IOValue.Text = value;
+            if (value != Value)
+            {
+                Text_IOValue.Visibility = value == null ? System.Windows.Visibility.Collapsed : System.Windows.Visibility.Visible;
+                Text_IOValue.Text = value;
+            }
         }
     }
 }

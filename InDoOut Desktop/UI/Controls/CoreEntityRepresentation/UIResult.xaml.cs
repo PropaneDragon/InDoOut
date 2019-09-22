@@ -18,10 +18,6 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
         public UIResult() : base()
         {
             InitializeComponent();
-
-            _valueUpdateTimer.Interval = TimeSpan.FromMilliseconds(100);
-            _valueUpdateTimer.Start();
-            _valueUpdateTimer.Tick += UpdateTimer_Tick;
         }
 
         public UIResult(IResult result) : this()
@@ -61,6 +57,15 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
         {
             var propertyValue = await Task.Run(() => AssociatedResult?.RawValue ?? "");
             IO_Main.Value = propertyValue;
+        }
+
+        private async void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            await Task.Delay(TimeSpan.FromMilliseconds(new Random().Next(0, 333)));
+
+            _valueUpdateTimer.Interval = TimeSpan.FromMilliseconds(333);
+            _valueUpdateTimer.Start();
+            _valueUpdateTimer.Tick += UpdateTimer_Tick;
         }
 
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
