@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" PreviewMouseDoubleClick="UserControl_PreviewMouseDoubleClick">
     <Grid>
-        <Border SnapsToDevicePixels="True" BorderBrush="#f000" BorderThickness="1" CornerRadius="0" Background="#4C000000">
+        <Border SnapsToDevicePixels="True" BorderThickness="1" CornerRadius="0" Background="#E5161616">
             <Grid>
                 <Canvas x:Name="Canvas_Layout">
 
