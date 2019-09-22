@@ -8,6 +8,8 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
 {
     public partial class UIConnection : UserControl, IUIConnection
     {
+        private bool _startIsLeft = true;
+        private bool _endIsLeft = true;
         private IUIConnectionEnd _end = null;
         private IUIConnectionStart _start = null;
 
@@ -67,11 +69,16 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
                     Start = display.GetBestSide(outputElement, inputElement);
                     End = display.GetBestSide(inputElement, outputElement);
 
+                    _startIsLeft = Start.X <= display.GetPosition(outputElement).X;
+                    _endIsLeft = End.X <= display.GetPosition(inputElement).X;
+
                     if (AssociatedStart != null && AssociatedEnd != null)
                     {
                         AssociatedStart.PositionUpdated(display.GetPosition(outputElement));
                         AssociatedEnd.PositionUpdated(display.GetPosition(inputElement));
                     }
+
+                    RecalculateBezier();
                 }
             }
         }
@@ -90,12 +97,16 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
         {
             Segment_Curve.Point3 = point;
 
+            _endIsLeft = point.X > Start.X;
+
             RecalculateBezier();
         }
 
         private void SetStart(Point point)
         {
             Figure_Start.StartPoint = point;
+
+            _startIsLeft = point.X > End.X;
 
             RecalculateBezier();
         }
@@ -130,9 +141,18 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
             var start = Start;
             var end = End;
             var difference = new Point(end.X - start.X, end.Y - start.Y);
+            var differenceStart = new Point(difference.X, difference.Y);
+            var differenceEnd = new Point(difference.X, difference.Y);
+            var padLimit = 150;
 
-            Segment_Curve.Point1 = new Point(end.X - (difference.X / 2d), start.Y);
-            Segment_Curve.Point2 = new Point(end.X - (difference.X / 2d), end.Y);
+            if (difference.X <= padLimit && difference.X >= -padLimit)
+            {
+                differenceStart.X = _startIsLeft ? -padLimit : padLimit;
+                differenceEnd.X = _endIsLeft ? padLimit : -padLimit;
+            }
+
+            Segment_Curve.Point1 = new Point(start.X + (differenceStart.X / 2d), start.Y);
+            Segment_Curve.Point2 = new Point(end.X - (differenceEnd.X / 2d), end.Y);
         }
     }
 }
