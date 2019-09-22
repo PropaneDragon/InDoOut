@@ -20,7 +20,7 @@ namespace InDoOut_Desktop.Loading.BlockView
             _associatedBlockView = blockView;
             _wireRedrawTimer = new DispatcherTimer(DispatcherPriority.Normal)
             {
-                Interval = TimeSpan.FromSeconds(1),
+                Interval = TimeSpan.FromSeconds(2),
                 IsEnabled = false
             };
 
@@ -173,6 +173,12 @@ namespace InDoOut_Desktop.Loading.BlockView
 
             if (_associatedBlockView != null)
             {
+                if (_associatedBlockView is FrameworkElement frameworkElement)
+                {
+                    frameworkElement.Measure(new Size(frameworkElement.ActualWidth, frameworkElement.ActualHeight));
+                    frameworkElement.Arrange(new Rect(0, 0, frameworkElement.DesiredSize.Width, frameworkElement.DesiredSize.Height));
+                }
+
                 foreach (var uiConnection in _associatedBlockView.UIConnections)
                 {
                     uiConnection?.UpdatePositionFromInputOutput(_associatedBlockView);
