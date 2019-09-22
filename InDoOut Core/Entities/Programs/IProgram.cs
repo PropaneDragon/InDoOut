@@ -13,6 +13,11 @@ namespace InDoOut_Core.Entities.Programs
     public interface IProgram : ITriggerable<IEntity>, INamed, IStored
     {
         /// <summary>
+        /// Whether any functions in the program are still stopping.
+        /// </summary>
+        bool Stopping { get; }
+
+        /// <summary>
         /// All <see cref="IFunction"/>s that are contained within this program.
         /// </summary>
         List<IFunction> Functions { get; }
@@ -33,6 +38,12 @@ namespace InDoOut_Core.Entities.Programs
         /// held for functions.
         /// </summary>
         IVariableStore VariableStore { get; }
+
+        /// <summary>
+        /// Sends a request to all functions in the program to stop running. This is controlled by
+        /// <see cref="IFunction.PolitelyStop"/>, so functions may take time to fully stop running.
+        /// </summary>
+        void Stop();
 
         /// <summary>
         /// Sets the program name.

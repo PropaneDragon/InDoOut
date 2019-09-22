@@ -1253,6 +1253,11 @@
             interactivity between each other.
             </summary>
         </member>
+        <member name="P:InDoOut_Core.Entities.Programs.IProgram.Stopping">
+            <summary>
+            Whether any functions in the program are still stopping.
+            </summary>
+        </member>
         <member name="P:InDoOut_Core.Entities.Programs.IProgram.Functions">
             <summary>
             All <see cref="T:InDoOut_Core.Entities.Functions.IFunction"/>s that are contained within this program.
@@ -1273,6 +1278,12 @@
             <summary>
             The variable store for this program. This is where <see cref="T:InDoOut_Core.Variables.IVariable"/>s are
             held for functions.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Programs.IProgram.Stop">
+            <summary>
+            Sends a request to all functions in the program to stop running. This is controlled by
+            <see cref="M:InDoOut_Core.Entities.Functions.IFunction.PolitelyStop"/>, so functions may take time to fully stop running.
             </summary>
         </member>
         <member name="M:InDoOut_Core.Entities.Programs.IProgram.SetName(System.String)">
@@ -1321,6 +1332,11 @@
         <member name="P:InDoOut_Core.Entities.Programs.Program.Running">
             <summary>
             Whether any of the functions within this program are running.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Programs.Program.Stopping">
+            <summary>
+            Whether any of the functions within this program are still stopping.
             </summary>
         </member>
         <member name="P:InDoOut_Core.Entities.Programs.Program.Name">
@@ -1377,6 +1393,13 @@
             Trigger this program. This will start all available <see cref="P:InDoOut_Core.Entities.Programs.Program.StartFunctions"/>.
             </summary>
             <param name="triggeredBy">The <see cref="T:InDoOut_Core.Entities.Core.IEntity"/> that triggered this.</param>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Programs.Program.Stop">
+            <summary>
+            Attempts to stop program execution by sending the <see cref="M:InDoOut_Core.Entities.Functions.IFunction.PolitelyStop"/> call
+            to every function in the program. It's up to the function to stop cleanly, so it might take some
+            time to fully stop. See <see cref="P:InDoOut_Core.Entities.Programs.Program.Stopping"/> to see the state of this procedure.
+            </summary>
         </member>
         <member name="M:InDoOut_Core.Entities.Programs.Program.SetName(System.String)">
             <summary>

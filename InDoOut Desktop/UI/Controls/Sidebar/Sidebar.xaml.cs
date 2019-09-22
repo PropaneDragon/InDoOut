@@ -58,11 +58,23 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
 
             _collapsed = false;
         }
+
         private void BlockViewChanged(IBlockView blockView)
         {
             _blockView = blockView;
 
             ItemList_Functions.FunctionView = blockView;
+
+            UpdatePlayStopButtons();
+        }
+
+        private void UpdatePlayStopButtons()
+        {
+            if (_blockView != null)
+            {
+                Button_RunProgram.Visibility = _blockView?.AssociatedProgram?.Running ?? true ? Visibility.Hidden : Visibility.Visible;
+                Button_StopProgram.Visibility = _blockView?.AssociatedProgram?.Running ?? false ? Visibility.Visible : Visibility.Hidden;
+            }
         }
 
         private void Button_Collapse_Click(object sender, RoutedEventArgs e)
@@ -91,6 +103,15 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
         private void Button_RunProgram_Click(object sender, RoutedEventArgs e)
         {
             _blockView?.AssociatedProgram?.Trigger(null);
+
+            UpdatePlayStopButtons();
+        }
+
+        private void Button_StopProgram_Click(object sender, RoutedEventArgs e)
+        {
+            _blockView?.AssociatedProgram?.Stop();
+
+            UpdatePlayStopButtons();
         }
 
         private void Button_NewProgram_Click(object sender, RoutedEventArgs e)

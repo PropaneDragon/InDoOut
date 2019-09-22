@@ -1,5 +1,6 @@
 ﻿using InDoOut_Core.Entities.Core;
 using InDoOut_Core.Entities.Functions;
+using InDoOut_Core.Threading.Safety;
 using InDoOut_Core.Variables;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,11 @@ namespace InDoOut_Core.Entities.Programs
         /// Whether any of the functions within this program are running.
         /// </summary>
         public bool Running => Functions.Any(function => function.Running);
+
+        /// <summary>
+        /// Whether any of the functions within this program are still stopping.
+        /// </summary>
+        public bool Stopping => Functions.Any(function => function.State == State.Stopping);
 
         /// <summary>
         /// The name of this program.
@@ -129,6 +135,19 @@ namespace InDoOut_Core.Entities.Programs
                 }
 
                 startFunction.Trigger(null);
+            }
+        }
+
+        /// <summary>
+        /// Attempts to stop program execution by sending the <see cref="IFunction.PolitelyStop"/> call
+        /// to every function in the program. It's up to the function to stop cleanly, so it might take some
+        /// time to fully stop. See <see cref="Stopping"/> to see the state of this procedure.
+        /// </summary>
+        public void Stop()
+        {
+            foreach (var function in Functions)
+            {
+                 _ = TryGet.ExecuteOrFail(() => function?.PolitelyStop());
             }
         }
 
