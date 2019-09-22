@@ -94,7 +94,7 @@ namespace InDoOut_Desktop.Actions
                     {
                         _ = Keyboard.Modifiers.HasFlag(ModifierKeys.Control) ? _blockView.SelectionManager.Add(selectable, true) : _blockView.SelectionManager.Set(selectable, false);
                     }
-                    else
+                    else if (!Keyboard.Modifiers.HasFlag(ModifierKeys.Control))
                     {
                         _blockView.SelectionManager.Clear();
                     }
@@ -142,7 +142,7 @@ namespace InDoOut_Desktop.Actions
                         }
                     }
                 }
-                else if (key == Key.Delete && elementsSelected.All(element => element is IDeletable deletable && deletable.CanDelete(_blockView)))
+                else if (key == Key.Delete && !(Keyboard.FocusedElement is TextBox) && elementsSelected.All(element => element is IDeletable deletable && deletable.CanDelete(_blockView)))
                 {
                     var deletables = elementsSelected.Cast<IDeletable>();
 
