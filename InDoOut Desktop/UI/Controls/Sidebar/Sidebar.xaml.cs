@@ -99,9 +99,9 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
             _blockView.AssociatedProgram = ProgramHolder.Instance.NewProgram();
         }
 
-        private void Button_OpenProgram_Click(object sender, RoutedEventArgs e)
+        private async void Button_OpenProgram_Click(object sender, RoutedEventArgs e)
         {
-            var program = ProgramSaveLoad.Instance.LoadProgramDialog(ProgramHolder.Instance, new ProgramJsonStorer(new FunctionBuilder(), LoadedPlugins.Instance), Window.GetWindow(this));
+            var program = await ProgramSaveLoad.Instance.LoadProgramDialogAsync(ProgramHolder.Instance, new ProgramJsonStorer(new FunctionBuilder(), LoadedPlugins.Instance), Window.GetWindow(this));
             if (program != null)
             {
                 _ = ProgramHolder.Instance.RemoveProgram(_blockView?.AssociatedProgram);
@@ -109,14 +109,14 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
             }
         }
 
-        private void Button_SaveProgram_Click(object sender, RoutedEventArgs e)
+        private async void Button_SaveProgram_Click(object sender, RoutedEventArgs e)
         {
-            _ = ProgramSaveLoad.Instance.TrySaveProgramFromMetadata(_blockView?.AssociatedProgram, new ProgramJsonStorer(new FunctionBuilder(), LoadedPlugins.Instance), Window.GetWindow(this));
+            _ = await ProgramSaveLoad.Instance.TrySaveProgramFromMetadataAsync(_blockView?.AssociatedProgram, new ProgramJsonStorer(new FunctionBuilder(), LoadedPlugins.Instance), Window.GetWindow(this));
         }
 
-        private void Button_SaveProgramAs_Click(object sender, RoutedEventArgs e)
+        private async void Button_SaveProgramAs_Click(object sender, RoutedEventArgs e)
         {
-            _ = ProgramSaveLoad.Instance.SaveProgramDialog(_blockView?.AssociatedProgram, new ProgramJsonStorer(new FunctionBuilder(), LoadedPlugins.Instance), Window.GetWindow(this));
+            _ = await ProgramSaveLoad.Instance.SaveProgramDialogAsync(_blockView?.AssociatedProgram, new ProgramJsonStorer(new FunctionBuilder(), LoadedPlugins.Instance), Window.GetWindow(this));
         }
     }
 }

@@ -6,6 +6,7 @@ using Microsoft.Win32;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace InDoOut_Desktop.Programs
@@ -14,7 +15,7 @@ namespace InDoOut_Desktop.Programs
     {
         private static readonly string PROGRAM_METADATA_LAST_LOADED_FROM = "lastLoadedFrom";
 
-        public IProgram LoadProgramDialog(IProgramHolder programHolder, IProgramStorer programStorer, Window parent = null)
+        public async Task<IProgram> LoadProgramDialogAsync(IProgramHolder programHolder, IProgramStorer programStorer, Window parent = null)
         {
             if (programHolder != null && programStorer != null)
             {
@@ -30,14 +31,14 @@ namespace InDoOut_Desktop.Programs
 
                 if (openDialog.ShowDialog(parent) ?? false)
                 {
-                    return LoadProgram(openDialog.FileName, programHolder, programStorer, parent);
+                    return await LoadProgramAsync(openDialog.FileName, programHolder, programStorer, parent);
                 }
             }
 
             return null;
         }
 
-        public IProgram LoadProgram(string filePath, IProgramHolder programHolder, IProgramStorer programStorer, Window parent = null)
+        public async Task<IProgram> LoadProgramAsync(string filePath, IProgramHolder programHolder, IProgramStorer programStorer, Window parent = null)
         {
             var failureReports = new List<IFailureReport>();
 
@@ -52,7 +53,7 @@ namespace InDoOut_Desktop.Programs
                     {
                         programStorer.FilePath = filePath;
 
-                        failureReports.AddRange(programStorer.Load(program));
+                        failureReports.AddRange(await Task.Run(() => programStorer.Load(program)));
 
                         program.Metadata[PROGRAM_METADATA_LAST_LOADED_FROM] = filePath;
                         program.SetName(Path.GetFileNameWithoutExtension(filePath));
@@ -101,7 +102,7 @@ namespace InDoOut_Desktop.Programs
             return null;
         }
 
-        public bool SaveProgramDialog(IProgram program, IProgramStorer programStorer, Window parent = null)
+        public async Task<bool> SaveProgramDialogAsync(IProgram program, IProgramStorer programStorer, Window parent = null)
         {
             if (program != null && programStorer != null)
             {
@@ -117,21 +118,21 @@ namespace InDoOut_Desktop.Programs
 
                 if (saveDialog.ShowDialog(parent) ?? false)
                 {
-                    return SaveProgram(saveDialog.FileName, program, programStorer, parent);
+                    return await SaveProgramAsync(saveDialog.FileName, program, programStorer, parent);
                 }
             }
 
             return false;
         }
 
-        public bool TrySaveProgramFromMetadata(IProgram program, IProgramStorer programStorer, Window parent = null)
+        public async Task<bool> TrySaveProgramFromMetadataAsync(IProgram program, IProgramStorer programStorer, Window parent = null)
         {
             return program != null && program.Metadata.ContainsKey(PROGRAM_METADATA_LAST_LOADED_FROM)
-                ? SaveProgram(program.Metadata[PROGRAM_METADATA_LAST_LOADED_FROM], program, programStorer, parent)
-                : SaveProgramDialog(program, programStorer, parent);
+                ? await SaveProgramAsync(program.Metadata[PROGRAM_METADATA_LAST_LOADED_FROM], program, programStorer, parent)
+                : await SaveProgramDialogAsync(program, programStorer, parent);
         }
 
-        public bool SaveProgram(string filePath, IProgram program, IProgramStorer programStorer, Window parent = null)
+        public async Task<bool> SaveProgramAsync(string filePath, IProgram program, IProgramStorer programStorer, Window parent = null)
         {
             var failureReports = new List<IFailureReport>();
 
@@ -140,7 +141,7 @@ namespace InDoOut_Desktop.Programs
                 if (Path.GetExtension(filePath) == programStorer.FileExtension)
                 {
                     programStorer.FilePath = filePath;
-                    failureReports.AddRange(programStorer.Save(program));
+                    failureReports.AddRange(await Task.Run(() => programStorer.Save(program)));
                 }
                 else
                 {
