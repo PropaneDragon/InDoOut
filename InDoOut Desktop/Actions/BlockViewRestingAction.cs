@@ -14,6 +14,8 @@ namespace InDoOut_Desktop.Actions
     {
         private readonly IBlockView _blockView = null;
 
+        private bool _hasDragged = false;
+
         public BlockViewRestingAction(IBlockView blockView)
         {
             _blockView = blockView;
@@ -21,36 +23,30 @@ namespace InDoOut_Desktop.Actions
 
         public override bool MouseLeftDown(Point mousePosition)
         {
-            if (_blockView != null)
-            {
-                var elementsUnderMouse = _blockView.GetElementsUnderMouse();
-                if (elementsUnderMouse.Count > 0)
-                {
-                    if (_blockView.GetFirstElementOfType<ISelectable>(elementsUnderMouse) is ISelectable selectable && selectable.CanSelect(_blockView))
-                    {
-                        _ = Keyboard.Modifiers.HasFlag(ModifierKeys.Control) ? _blockView.SelectionManager.Add(selectable, true) : _blockView.SelectionManager.Set(selectable, true);
-                    }
-                    else if (!Keyboard.Modifiers.HasFlag(ModifierKeys.Control))
-                    {
-                        _blockView.SelectionManager.Clear();
-                    }
-
-                    return true;
-                }
-            }
+            _hasDragged = false;
 
             return false;
         }
 
         public override bool MouseLeftMove(Point mousePosition)
         {
+            _hasDragged = true;
+
             if (_blockView != null)
             {
                 var elementsUnderMouse = _blockView.GetElementsUnderMouse();
-                var elementsSelected = _blockView.SelectionManager.Selection;
+                var selectionManager = _blockView.SelectionManager;
+                var elementsSelected = selectionManager.Selection;
+
+                if (elementsUnderMouse.Count > 0 && _blockView.GetFirstElementOfType<ISelectable>(elementsUnderMouse) is ISelectable selectable && selectable.CanSelect(_blockView) && !selectionManager.Contains(selectable))
+                {
+                    _ = selectionManager.Set(selectable);
+                }
+
+                elementsSelected = selectionManager.Selection;
 
                 if (elementsUnderMouse.Count > 0)
-                {
+                { 
                     if (_blockView.GetFirstElementOfType<TextBox>(elementsUnderMouse) is TextBox)
                     {
                         return false;
@@ -89,7 +85,25 @@ namespace InDoOut_Desktop.Actions
 
         public override bool MouseLeftUp(Point mousePosition)
         {
-            return base.MouseLeftUp(mousePosition);
+            if (_blockView != null)
+            {
+                var elementsUnderMouse = _blockView.GetElementsUnderMouse();
+                if (elementsUnderMouse.Count > 0)
+                {
+                    if (_blockView.GetFirstElementOfType<ISelectable>(elementsUnderMouse) is ISelectable selectable && selectable.CanSelect(_blockView))
+                    {
+                        _ = Keyboard.Modifiers.HasFlag(ModifierKeys.Control) ? _blockView.SelectionManager.Add(selectable, true) : _blockView.SelectionManager.Set(selectable, false);
+                    }
+                    else
+                    {
+                        _blockView.SelectionManager.Clear();
+                    }
+
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public override bool MouseRightUp(Point mousePosition)
