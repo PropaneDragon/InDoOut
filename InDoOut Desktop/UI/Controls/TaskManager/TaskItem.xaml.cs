@@ -24,6 +24,7 @@ namespace InDoOut_Desktop.UI.Controls.TaskManager
             TaskView = taskView;
 
             UpdateSnapshot();
+            UpdateProgramName();
         }
 
         public void UpdateSnapshot()
@@ -49,11 +50,22 @@ namespace InDoOut_Desktop.UI.Controls.TaskManager
                 Image_ScaleTransform.BeginAnimation(ScaleTransform.ScaleXProperty, contractAnimation);
                 Image_ScaleTransform.BeginAnimation(ScaleTransform.ScaleYProperty, contractAnimation);
             }
+
+            UpdateProgramName();
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             UpdateSnapshot();
+            UpdateProgramName();
+        }
+
+        private void UpdateProgramName()
+        {
+            if (BlockView != null)
+            {
+                Text_ProgramName.Text = BlockView?.AssociatedProgram?.Name ?? "Untitled";
+            }
         }
 
         private void UserControl_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
