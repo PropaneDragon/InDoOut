@@ -14,7 +14,7 @@ namespace InDoOut_Philips_Hue_Plugins
         public static HueClient GetClient(string bridgeIp, string userId) => !string.IsNullOrEmpty(bridgeIp) && !string.IsNullOrEmpty(userId) ? TryGet.ValueOrDefault(() => new LocalHueClient(bridgeIp, userId), null) : null;
 
         public static Group GetGroup(HueClient client, IProperty<string> id) => GetGroup(client, id.FullValue);
-        public static Group GetGroup(HueClient client, string id) => client != null ? TryGet.ValueOrDefault(() => client.GetGroupAsync(id).Result, null) : null;
+        public static Group GetGroup(HueClient client, string id) => client != null && !string.IsNullOrEmpty(id) ? TryGet.ValueOrDefault(() => client.GetGroupAsync(id).Result, null) : null;
 
         public static Light GetLight(HueClient client, IProperty<string> id) => GetLight(client, id.FullValue);
         public static Light GetLight(HueClient client, string id) => client != null ? TryGet.ValueOrDefault(() => client.GetLightAsync(id).Result, null) : null;
@@ -49,7 +49,7 @@ namespace InDoOut_Philips_Hue_Plugins
                 {
                     if (group != null)
                     {
-                        validLights = validLights.Where(light => group.Lights.Contains(light.Id));
+                        validLights = validLights.Where(light => group?.Lights != null && group.Lights.Contains(light.Id));
                     }
 
                     if (!string.IsNullOrEmpty(name))
