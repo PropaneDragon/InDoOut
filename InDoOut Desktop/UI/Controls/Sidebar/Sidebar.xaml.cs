@@ -21,6 +21,7 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
 
         public bool Collapsed { get => _collapsed; set { if (value) Collapse(); else Expand(); } }
         public IBlockView BlockView { get => _blockView; set => BlockViewChanged(value); }
+        public ITaskView TaskView { get; set; } = null;
 
         public Sidebar()
         {
@@ -157,6 +158,15 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
         private async void Button_SaveProgramAs_Click(object sender, RoutedEventArgs e)
         {
             _ = await ProgramSaveLoad.Instance.SaveProgramDialogAsync(_blockView?.AssociatedProgram, new ProgramJsonStorer(new FunctionBuilder(), LoadedPlugins.Instance), Window.GetWindow(this));
+        }
+
+        private void Button_TaskViewer_Click(object sender, RoutedEventArgs e)
+        {
+            /*var taskViewer = new Windows.TaskManager(ProgramHolder.Instance);
+            taskViewer.Show();*/
+
+            TaskView?.ShowTasks();
+            Collapse();
         }
     }
 }

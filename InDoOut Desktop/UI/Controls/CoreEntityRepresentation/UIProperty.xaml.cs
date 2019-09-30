@@ -13,7 +13,7 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
     public partial class UIProperty : UserControl, IUIProperty
     {
         private IProperty _property = null;
-        private DispatcherTimer _valueUpdateTimer = new DispatcherTimer(DispatcherPriority.Normal);
+        private DispatcherTimer _valueUpdateTimer = null;
 
         public IProperty AssociatedProperty { get => _property; set => SetProperty(value); }
 
@@ -174,6 +174,7 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
         {
             await Task.Delay(TimeSpan.FromMilliseconds(new Random().Next(0, 333)));
 
+            _valueUpdateTimer = new DispatcherTimer(DispatcherPriority.Normal);
             _valueUpdateTimer.Interval = TimeSpan.FromMilliseconds(333);
             _valueUpdateTimer.Start();
             _valueUpdateTimer.Tick += UpdateTimer_Tick;

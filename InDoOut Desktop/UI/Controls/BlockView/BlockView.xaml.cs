@@ -3,6 +3,7 @@ using InDoOut_Core.Entities.Programs;
 using InDoOut_Desktop.Actions;
 using InDoOut_Desktop.Actions.Selecting;
 using InDoOut_Desktop.Loading.BlockView;
+using InDoOut_Desktop.Programs;
 using InDoOut_Desktop.UI.Controls.CoreEntityRepresentation;
 using InDoOut_Desktop.UI.Interfaces;
 using System;
@@ -45,15 +46,21 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
 
         public List<FrameworkElement> Elements => FindCanvasChild<FrameworkElement>();
 
-        public BlockView()
+        public BlockView() : this(ProgramHolder.Instance.NewProgram())
+        {
+        }
+
+        public BlockView(IProgram program)
         {
             InitializeComponent();
+
+            BlockView_Overview.AssociatedBlockView = this;
 
             _selectionManager = new SelectionManager(this);
             _actionHandler = new ActionHandler(new BlockViewRestingAction(this));
             _programLoader = new BlockViewProgramLoader(this);
 
-            ChangeProgram(new Program());
+            ChangeProgram(program);
             ChangeViewMode(CurrentViewMode);
         }
 
@@ -358,8 +365,6 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            Scroll_Content.ScrollToHorizontalOffset((Canvas_Content.ActualWidth / 2d) - (Scroll_Content.ActualWidth / 2d));
-            Scroll_Content.ScrollToVerticalOffset((Canvas_Content.ActualHeight / 2d) - (Scroll_Content.ActualHeight / 2d));
         }
 
         private void Scroll_Content_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -420,6 +425,12 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
             _ = _actionHandler?.KeyUp(e.Key);
 
             e.Handled = false;
+        }
+
+        private void UserControl_Initialized(object sender, EventArgs e)
+        {
+            Scroll_Content.ScrollToHorizontalOffset((Canvas_Content.ActualWidth / 2d) - (Scroll_Content.ActualWidth / 2d));
+            Scroll_Content.ScrollToVerticalOffset((Canvas_Content.ActualHeight / 2d) - (Scroll_Content.ActualHeight / 2d));
         }
     }
 }

@@ -6,15 +6,13 @@ namespace InDoOut_Desktop.Programs
 {
     internal class ProgramHolder : Singleton<ProgramHolder>, IProgramHolder
     {
-        private readonly List<IProgram> _programs = new List<IProgram>();
-
-        protected List<IProgram> Programs => _programs;
+        public List<IProgram> Programs { get; } = new List<IProgram>();
 
         public bool AddProgram(IProgram program)
         {
             if (program != null && !ProgramExists(program))
             {
-                _programs.Add(program);
+                Programs.Add(program);
 
                 return true;
             }
@@ -31,14 +29,14 @@ namespace InDoOut_Desktop.Programs
 
         public bool ProgramExists(IProgram program)
         {
-            return program != null && _programs.Contains(program);
+            return program != null && Programs.Contains(program);
         }
 
         public bool RemoveProgram(IProgram program)
         {
             if (program != null && ProgramExists(program))
             {
-                _ = _programs.RemoveAll(storedProgram => storedProgram == program);
+                _ = Programs.RemoveAll(storedProgram => storedProgram == program);
 
                 return true;
             }

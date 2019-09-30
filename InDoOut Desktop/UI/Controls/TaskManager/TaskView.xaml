@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="InDoOut_Desktop.UI.Controls.TaskManager.TaskView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:InDoOut_Desktop.UI.Controls.TaskManager"
+             mc:Ignorable="d" 
+             d:DesignHeight="850" d:DesignWidth="1920">
+    <Border>
+        <Grid>
+            <ScrollViewer x:Name="Scroll_Tasks" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled">
+                <WrapPanel x:Name="Stack_Tasks" Margin="100,100,100,0" HorizontalAlignment="Center" />
+            </ScrollViewer>
+            <Grid>
+                <Border x:Name="Border_CurrentHost" RenderTransformOrigin="0.5,0.5">
+                    <Border.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform x:Name="Border_ScaleTransform" ScaleX="1" ScaleY="1"/>
+                        </TransformGroup>
+                    </Border.RenderTransform>
+                </Border>
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>

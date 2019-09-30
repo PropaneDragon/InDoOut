@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InDoOut_Desktop.UI.Controls.CoreEntityRepresentation"
              mc:Ignorable="d" 
-             FontFamily="Segoe UI Light" FontSize="18" Foreground="White" Width="200" MaxWidth="200" Unloaded="UserControl_Unloaded" MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave" RenderTransformOrigin="0.5,0.5" Initialized="UserControl_Initialized">
+             FontFamily="Segoe UI Light" FontSize="18" Foreground="White" Width="200" MaxWidth="200" Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded" MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave" RenderTransformOrigin="0.5,0.5" Initialized="UserControl_Initialized">
     <UserControl.RenderTransform>
         <TransformGroup>
             <ScaleTransform x:Name="Scale_Main" ScaleX="1" ScaleY="1"/>

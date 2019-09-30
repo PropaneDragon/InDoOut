@@ -28,20 +28,17 @@ namespace InDoOut_Desktop.UI.Windows
         private async Task FinishLoading()
         {
             var sidebar = Sidebar_Main;
-            var blockView = BlockView_Main;
-            var overview = BlockView_Overview;
+            var taskView = TaskView_Main;
 
-            if (blockView != null)
+            if (taskView != null)
             {
-                if (sidebar != null)
-                {
-                    sidebar.BlockView = blockView;
-                }
+                taskView.Sidebar = sidebar;
+                taskView.CreateNewTask();
+            }
 
-                if (overview != null)
-                {
-                    overview.AssociatedBlockView = blockView;
-                }
+            if (sidebar != null)
+            {
+                sidebar.TaskView = taskView;
             }
         }
 
@@ -63,7 +60,7 @@ namespace InDoOut_Desktop.UI.Windows
         private void UpdateTimer_Tick(object sender, EventArgs e)
         {
             var programName = "No program";
-            var program = BlockView_Main?.AssociatedProgram;
+            var program = TaskView_Main?.CurrentBlockView?.AssociatedProgram;
 
             if (program != null)
             {

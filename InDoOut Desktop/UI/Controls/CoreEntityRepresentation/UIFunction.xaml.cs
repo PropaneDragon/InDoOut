@@ -15,7 +15,7 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
 {
     public partial class UIFunction : UserControl, IUIFunction
     {
-        private DispatcherTimer _updateTimer = new DispatcherTimer(DispatcherPriority.Normal);
+        private DispatcherTimer _updateTimer = null;
         private UIFunctionDisplayMode _displayMode = UIFunctionDisplayMode.None;
         private IFunction _function = null;
         private readonly List<IUIConnection> _cachedVisualConnections = new List<IUIConnection>();
@@ -35,10 +35,6 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
         public UIFunction()
         {
             InitializeComponent();
-
-            _updateTimer.Interval = TimeSpan.FromMilliseconds(100);
-            _updateTimer.Tick += UpdateTimer_Tick;
-            _updateTimer.Start();
         }
 
         public UIFunction(IFunction function) : this()
@@ -306,6 +302,15 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
         private void UpdateTimer_Tick(object sender, EventArgs e)
         {
             UpdateFromFunction();
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            _updateTimer = new DispatcherTimer(DispatcherPriority.Normal);
+
+            _updateTimer.Interval = TimeSpan.FromMilliseconds(100);
+            _updateTimer.Tick += UpdateTimer_Tick;
+            _updateTimer.Start();
         }
 
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)

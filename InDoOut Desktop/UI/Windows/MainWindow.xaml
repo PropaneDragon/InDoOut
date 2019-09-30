@@ -7,6 +7,7 @@
         xmlns:core="clr-namespace:InDoOut_Desktop.UI.Controls.Core"
         xmlns:sidebar="clr-namespace:InDoOut_Desktop.UI.Controls.Sidebar"
         xmlns:blockview="clr-namespace:InDoOut_Desktop.UI.Controls.BlockView"
+        xmlns:taskManager="clr-namespace:InDoOut_Desktop.UI.Controls.TaskManager"
         xmlns:background="clr-namespace:InDoOut_Desktop.UI.Controls.Background"
         xmlns:splash="clr-namespace:InDoOut_Desktop.UI.Controls.Splash"
         mc:Ignorable="d"
@@ -15,8 +16,8 @@
         <Grid>
             <background:BackgroundImage Opacity="0.01"/>
         </Grid>
-        <blockview:BlockView x:Name="BlockView_Main" />
-        <blockview:Overview x:Name="BlockView_Overview" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="200" Height="150" Margin="20" />
+        <taskManager:TaskView x:Name="TaskView_Main" />
+        <!--<blockview:BlockView x:Name="BlockView_Main" />-->
         <core:TitleBar x:Name="TitleBar_Main" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
         <sidebar:Sidebar x:Name="Sidebar_Main" Width="500" HorizontalAlignment="Left" />
         <splash:SplashOverlay x:Name="Splash_Overlay" Visibility="Collapsed" />
