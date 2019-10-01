@@ -20,6 +20,9 @@
                 <Border Background="#3b77e4" Padding="10">
                     <StackPanel VerticalAlignment="Center">
                         <TextBlock x:Name="Text_ProgramName" FontFamily="Segoe UI Light" Text="Program name" TextAlignment="Center" FontSize="18" TextWrapping="WrapWithOverflow" TextTrimming="CharacterEllipsis" />
+                        <DockPanel>
+                            
+                        </DockPanel>
                     </StackPanel>
                 </Border>
             </Grid>
