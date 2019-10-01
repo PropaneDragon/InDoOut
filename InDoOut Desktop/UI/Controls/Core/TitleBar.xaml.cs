@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -146,15 +147,28 @@ namespace InDoOut_Desktop.UI.Controls.Core
             }
         }
 
-        private void UserControl_PreviewMouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void UserControl_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             ToggleWindowState();
         }
 
-        private void Text_Title_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void Text_Title_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (_attachedWindow != null)
+        }
+
+        private void Text_Title_PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed && _attachedWindow != null)
             {
+                if (_attachedWindow.WindowState == WindowState.Maximized)
+                {
+                    var mousePosition = _attachedWindow.PointToScreen(e.GetPosition(_attachedWindow));
+
+                    _attachedWindow.Top = mousePosition.Y - (Text_Title.ActualHeight / 2d);
+                    _attachedWindow.WindowState = WindowState.Normal;
+                    _attachedWindow.Left = mousePosition.X - (_attachedWindow.ActualWidth / 2d);
+                }
+
                 try
                 {
                     _attachedWindow.DragMove();
