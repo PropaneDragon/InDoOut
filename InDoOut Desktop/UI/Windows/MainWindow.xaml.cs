@@ -33,7 +33,7 @@ namespace InDoOut_Desktop.UI.Windows
             if (taskView != null)
             {
                 taskView.Sidebar = sidebar;
-                taskView.CreateNewTask();
+                taskView.CreateNewTask(true);
             }
 
             if (sidebar != null)
