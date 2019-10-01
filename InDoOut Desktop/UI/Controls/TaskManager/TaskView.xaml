@@ -8,10 +8,15 @@
              d:DesignHeight="850" d:DesignWidth="1920">
     <Border>
         <Grid>
-            <ScrollViewer x:Name="Scroll_Tasks" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled">
-                <WrapPanel x:Name="Stack_Tasks" Margin="100,100,100,0" HorizontalAlignment="Center" />
-            </ScrollViewer>
-            <Grid>
+            <Grid x:Name="Grid_Tasks">
+                <ScrollViewer x:Name="Scroll_Tasks" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel Margin="100,100,100,0">
+                        <Button x:Name="Button_NewTask" FontFamily="Segoe MDL2 Assets" FontSize="50" Content="" ToolTip="New task" Template="{DynamicResource Template_Buttons_Transparent}" VerticalAlignment="Stretch" HorizontalAlignment="Center" Click="Button_NewTask_Click" Padding="10" />
+                        <WrapPanel x:Name="Wrap_Tasks" HorizontalAlignment="Center" />
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+            <Grid x:Name="Grid_CurrentHost">
                 <Border x:Name="Border_CurrentHost" RenderTransformOrigin="0.5,0.5">
                     <Border.RenderTransform>
                         <TransformGroup>

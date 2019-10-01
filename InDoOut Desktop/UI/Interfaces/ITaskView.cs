@@ -4,8 +4,8 @@
     {
         IBlockView CurrentBlockView { get; }
 
-        void CreateNewTask();
-        void CreateNewTask(InDoOut_Core.Entities.Programs.IProgram program);
+        void CreateNewTask(bool bringToFront = false);
+        void CreateNewTask(InDoOut_Core.Entities.Programs.IProgram program, bool bringToFront = false);
         void ShowTasks();
         void BringToFront(ITaskItem taskItem);
         void BringToFront(IBlockView blockView);

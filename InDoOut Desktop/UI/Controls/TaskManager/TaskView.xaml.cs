@@ -22,27 +22,35 @@ namespace InDoOut_Desktop.UI.Controls.TaskManager
             InitializeComponent();
         }
 
-        public void CreateNewTask()
+        public void CreateNewTask(bool bringToFront = false)
         {
-            CreateNewTask(ProgramHolder.Instance.NewProgram());
+            CreateNewTask(ProgramHolder.Instance.NewProgram(), bringToFront);
         }
 
-        public void CreateNewTask(IProgram program)
+        public void CreateNewTask(IProgram program, bool bringToFront = false)
         {
             if (program != null)
             {
                 var blockView = new BlockView.BlockView(program);
                 var taskItem = new TaskItem(blockView, this);
+                var fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(600)) { EasingFunction = new CircleEase() { EasingMode = EasingMode.EaseInOut } };
 
-                _ = Stack_Tasks.Children.Add(taskItem);
+                _ = Wrap_Tasks.Children.Add(taskItem);
 
-                BringToFront(taskItem);
+                if (bringToFront)
+                {
+                    BringToFront(taskItem);
+                }
+                else
+                {
+                    taskItem.BeginAnimation(OpacityProperty, fadeInAnimation);
+                }
             }
         }
 
         public void ShowTasks()
         {
-            foreach (var child in Stack_Tasks.Children)
+            foreach (var child in Wrap_Tasks.Children)
             {
                 if (child is TaskItem taskItem && taskItem.BlockView == CurrentBlockView)
                 {
@@ -50,23 +58,19 @@ namespace InDoOut_Desktop.UI.Controls.TaskManager
                 }
             }
 
-            var fadeInAnimation = new DoubleAnimation(1, TimeSpan.FromMilliseconds(500)) { EasingFunction = new CircleEase() { EasingMode = EasingMode.EaseInOut } };
-            var fadeOutAnimation = new DoubleAnimation(0, TimeSpan.FromMilliseconds(500)) { EasingFunction = new CircleEase() { EasingMode = EasingMode.EaseInOut } };
-            var contractAnimation = new DoubleAnimation(0.1, TimeSpan.FromMilliseconds(500)) { EasingFunction = new CircleEase() { EasingMode = EasingMode.EaseInOut } };
+            var fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(500)) { EasingFunction = new CircleEase() { EasingMode = EasingMode.EaseInOut } };
+            var fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromMilliseconds(500)) { EasingFunction = new CircleEase() { EasingMode = EasingMode.EaseInOut } };
+            var contractAnimation = new DoubleAnimation(1, 0.1, TimeSpan.FromMilliseconds(500)) { EasingFunction = new CircleEase() { EasingMode = EasingMode.EaseInOut } };
 
-            fadeOutAnimation.Completed += (sender, e) =>
-            {
-                Border_CurrentHost.Visibility = Visibility.Hidden;
-            };
+            fadeOutAnimation.Completed += (sender, e) => Grid_CurrentHost.Visibility = Visibility.Hidden;
 
-            Border_CurrentHost.BeginAnimation(OpacityProperty, fadeOutAnimation);
+            Grid_CurrentHost.BeginAnimation(OpacityProperty, fadeOutAnimation);
 
             Border_ScaleTransform.BeginAnimation(ScaleTransform.ScaleXProperty, contractAnimation);
             Border_ScaleTransform.BeginAnimation(ScaleTransform.ScaleYProperty, contractAnimation);
 
-            Scroll_Tasks.Visibility = Visibility.Visible;
-            Scroll_Tasks.Opacity = 0;
-            Scroll_Tasks.BeginAnimation(OpacityProperty, fadeInAnimation);
+            Grid_Tasks.Visibility = Visibility.Visible;
+            Grid_Tasks.BeginAnimation(OpacityProperty, fadeInAnimation);
         }
 
         public void BringToFront(ITaskItem taskItem)
@@ -81,34 +85,27 @@ namespace InDoOut_Desktop.UI.Controls.TaskManager
         {
             if (blockView != null && blockView is UIElement uiElement)
             {
-                Border_CurrentHost.Visibility = Visibility.Visible;
+                Grid_CurrentHost.Visibility = Visibility.Visible;
+
                 Border_CurrentHost.Child = uiElement;
-                Border_CurrentHost.Opacity = 0;
 
                 if (_blockView != null)
                 {
-                    var fadeInAnimation = new DoubleAnimation(1, TimeSpan.FromMilliseconds(500)) { EasingFunction = new CircleEase() { EasingMode = EasingMode.EaseInOut } };
-                    var fadeOutAnimation = new DoubleAnimation(0, TimeSpan.FromMilliseconds(500)) { EasingFunction = new CircleEase() { EasingMode = EasingMode.EaseInOut } };
-                    var expandAnimation = new DoubleAnimation(1, TimeSpan.FromMilliseconds(500)) { EasingFunction = new CircleEase() { EasingMode = EasingMode.EaseInOut } };
+                    var fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(500)) { EasingFunction = new CircleEase() { EasingMode = EasingMode.EaseInOut } };
+                    var fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromMilliseconds(500)) { EasingFunction = new CircleEase() { EasingMode = EasingMode.EaseInOut } };
+                    var expandAnimation = new DoubleAnimation(0.1, 1, TimeSpan.FromMilliseconds(500)) { EasingFunction = new CircleEase() { EasingMode = EasingMode.EaseInOut } };
 
-                    fadeOutAnimation.Completed += (sender, e) =>
-                    {
-                        Scroll_Tasks.Visibility = Visibility.Hidden;
-                        Scroll_Tasks.Opacity = 1;
-
-                        Border_CurrentHost.Visibility = Visibility.Visible;
-                        Border_CurrentHost.Opacity = 1;
-                    };
+                    fadeOutAnimation.Completed += (sender, e) => Grid_Tasks.Visibility = Visibility.Hidden;
 
                     Border_ScaleTransform.BeginAnimation(ScaleTransform.ScaleXProperty, expandAnimation);
                     Border_ScaleTransform.BeginAnimation(ScaleTransform.ScaleYProperty, expandAnimation);
-                    Border_CurrentHost.BeginAnimation(OpacityProperty, fadeInAnimation);
-                    Scroll_Tasks.BeginAnimation(OpacityProperty, fadeOutAnimation);
+                    Grid_CurrentHost.BeginAnimation(OpacityProperty, fadeInAnimation);
+                    Grid_Tasks.BeginAnimation(OpacityProperty, fadeOutAnimation);
                 }
                 else
                 {
-                    Scroll_Tasks.Visibility = Visibility.Hidden;
-                    Border_CurrentHost.Opacity = 1;
+                    Grid_Tasks.Visibility = Visibility.Hidden;
+                    Grid_CurrentHost.Opacity = 1;
                 }
 
                 _blockView = blockView;
@@ -123,6 +120,11 @@ namespace InDoOut_Desktop.UI.Controls.TaskManager
         private void BlockViewChanged(IBlockView blockView)
         {
             BringToFront(blockView);
+        }
+
+        private void Button_NewTask_Click(object sender, RoutedEventArgs e)
+        {
+            CreateNewTask();
         }
     }
 }
