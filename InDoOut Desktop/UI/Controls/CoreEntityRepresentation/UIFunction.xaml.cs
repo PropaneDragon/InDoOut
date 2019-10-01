@@ -16,6 +16,7 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
     public partial class UIFunction : UserControl, IUIFunction
     {
         private DispatcherTimer _updateTimer = null;
+        private DoubleAnimation _fadeAnimation = null;
         private UIFunctionDisplayMode _displayMode = UIFunctionDisplayMode.None;
         private IFunction _function = null;
         private readonly List<IUIConnection> _cachedVisualConnections = new List<IUIConnection>();
@@ -155,8 +156,17 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
         {
             if (AssociatedFunction != null)
             {
+                var running = AssociatedFunction?.Running ?? false;
+
+                if ((running && Text_Processing.Opacity <= 0.01) || (!running && Text_Processing.Opacity >= 0.99))
+                {
+                    _fadeAnimation = new DoubleAnimation(running ? 1 : 0, TimeSpan.FromMilliseconds(running ? 200 : 300)) { EasingFunction = new CircleEase() { EasingMode = EasingMode.EaseInOut } };
+
+                    Text_Processing.BeginAnimation(OpacityProperty, _fadeAnimation);
+                }
+
                 Text_FunctionName.Text = AssociatedFunction.SafeName;
-                Text_Processing.Visibility = AssociatedFunction.Running ? Visibility.Visible : Visibility.Hidden;
+                Text_Processing.Visibility = Visibility.Visible;
             }
         }
 
@@ -306,9 +316,11 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            _updateTimer = new DispatcherTimer(DispatcherPriority.Normal);
+            _updateTimer = new DispatcherTimer(DispatcherPriority.Normal)
+            {
+                Interval = TimeSpan.FromMilliseconds(100)
+            };
 
-            _updateTimer.Interval = TimeSpan.FromMilliseconds(100);
             _updateTimer.Tick += UpdateTimer_Tick;
             _updateTimer.Start();
         }
