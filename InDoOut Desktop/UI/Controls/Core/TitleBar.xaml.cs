@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shell;
@@ -39,6 +40,9 @@ namespace InDoOut_Desktop.UI.Controls.Core
                 };
 
                 WindowChrome.SetWindowChrome(window, chrome);
+
+                HwndSource source = HwndSource.FromHwnd(new WindowInteropHelper(_attachedWindow).Handle);
+                source.AddHook(WindowHook);
             }
         }
 
@@ -50,6 +54,24 @@ namespace InDoOut_Desktop.UI.Controls.Core
 
                 _attachedWindow.WindowState = state == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
             }
+        }
+
+        private IntPtr WindowHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            if (msg == 0x0084 /*WM_NCHITTEST*/)
+            {
+                // This prevents a crash in WindowChromeWorker._HandleNCHitTest
+                try
+                {
+                    lParam.ToInt32();
+                }
+                catch (OverflowException)
+                {
+                    handled = true;
+                }
+            }
+
+            return IntPtr.Zero;
         }
 
         private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
@@ -133,7 +155,15 @@ namespace InDoOut_Desktop.UI.Controls.Core
         {
             if (_attachedWindow != null)
             {
-                _attachedWindow.DragMove();
+                try
+                {
+                    _attachedWindow.DragMove();
+                }
+                catch (OverflowException)
+                {
+
+                }
+                catch { }
             }
         }
     }
