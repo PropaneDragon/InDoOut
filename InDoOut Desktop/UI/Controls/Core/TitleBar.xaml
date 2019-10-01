@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InDoOut_Desktop.UI.Controls.Core"
              mc:Ignorable="d" d:DesignWidth="1920" Foreground="White" FontFamily="Segoe UI Light" Loaded="UserControl_Loaded" PreviewMouseDoubleClick="UserControl_PreviewMouseDoubleClick" Unloaded="UserControl_Unloaded">
-    <Border Padding="16">
+    <Border>
         <Border.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                 <GradientStop Color="#4111" Offset="0.6"/>
@@ -20,7 +20,7 @@
                     <Button Template="{DynamicResource Template_Buttons_Control}" x:Name="Button_Close" Content="" Click="Button_Close_Click"/>
                 </StackPanel>
             </ContentControl>
-            <TextBlock x:Name="Text_Title" DockPanel.Dock="Left" FontSize="24" Text="ido" TextAlignment="Center" PreviewMouseLeftButtonDown="Text_Title_PreviewMouseLeftButtonDown" />
+            <TextBlock  Padding="16" x:Name="Text_Title" DockPanel.Dock="Left" FontSize="24" Text="ido" TextAlignment="Center" PreviewMouseLeftButtonDown="Text_Title_PreviewMouseLeftButtonDown" />
         </DockPanel>
     </Border>
 </UserControl>
