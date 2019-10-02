@@ -25,6 +25,8 @@ namespace InDoOut_Desktop.UI.Controls.TaskManager
 
             UpdateSnapshot();
             UpdateProgramName();
+
+            Dock_HiddenContent.Opacity = 0;
         }
 
         public void UpdateSnapshot()
@@ -74,12 +76,29 @@ namespace InDoOut_Desktop.UI.Controls.TaskManager
 
         private void UserControl_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            TaskView?.BringToFront(this);
+            if (e.ChangedButton == System.Windows.Input.MouseButton.Left)
+            {
+                TaskView?.BringToFront(this);
 
-            var expandAnimation = new DoubleAnimation(5, TimeSpan.FromMilliseconds(500)) { EasingFunction = new CircleEase() { EasingMode = EasingMode.EaseInOut } };
+                var expandAnimation = new DoubleAnimation(5, TimeSpan.FromMilliseconds(500)) { EasingFunction = new CircleEase() { EasingMode = EasingMode.EaseInOut } };
 
-            Image_ScaleTransform.BeginAnimation(ScaleTransform.ScaleXProperty, expandAnimation);
-            Image_ScaleTransform.BeginAnimation(ScaleTransform.ScaleYProperty, expandAnimation);
+                Image_ScaleTransform.BeginAnimation(ScaleTransform.ScaleXProperty, expandAnimation);
+                Image_ScaleTransform.BeginAnimation(ScaleTransform.ScaleYProperty, expandAnimation);
+            }
+        }
+
+        private void UserControl_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            var fadeInAnimation = new DoubleAnimation(1, TimeSpan.FromMilliseconds(300)) { EasingFunction = new CircleEase() { EasingMode = EasingMode.EaseInOut } };
+
+            Dock_HiddenContent.BeginAnimation(OpacityProperty, fadeInAnimation);
+        }
+
+        private void UserControl_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            var fadeOutAnimation = new DoubleAnimation(0, TimeSpan.FromMilliseconds(300)) { EasingFunction = new CircleEase() { EasingMode = EasingMode.EaseInOut } };
+
+            Dock_HiddenContent.BeginAnimation(OpacityProperty, fadeOutAnimation);
         }
     }
 }
