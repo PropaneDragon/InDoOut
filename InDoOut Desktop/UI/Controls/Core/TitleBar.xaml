@@ -17,10 +17,10 @@
                 <StackPanel Orientation="Horizontal">
                     <Button Template="{DynamicResource Template_Buttons_Control}" x:Name="Button_Minimise" Content="" Click="Button_Minimise_Click"/>
                     <Button Template="{DynamicResource Template_Buttons_Control}" x:Name="Button_Restore" Content="" Click="Button_Restore_Click"/>
-                    <Button Template="{DynamicResource Template_Buttons_Control}" x:Name="Button_Close" Content="" Click="Button_Close_Click"/>
+                    <Button Template="{DynamicResource Template_Buttons_Control}" x:Name="Button_Close" Content="" Click="Button_Close_Click" Padding="0,0,16,0"/>
                 </StackPanel>
             </ContentControl>
-            <TextBlock  Padding="16" x:Name="Text_Title" DockPanel.Dock="Left" FontSize="24" Text="ido" TextAlignment="Center" PreviewMouseMove="Text_Title_PreviewMouseMove" PreviewMouseLeftButtonDown="Text_Title_PreviewMouseLeftButtonDown" />
+            <TextBlock Padding="16" x:Name="Text_Title" DockPanel.Dock="Left" FontSize="24" Text="ido" TextAlignment="Center" PreviewMouseMove="Text_Title_PreviewMouseMove" PreviewMouseLeftButtonDown="Text_Title_PreviewMouseLeftButtonDown" />
         </DockPanel>
     </Border>
 </UserControl>
