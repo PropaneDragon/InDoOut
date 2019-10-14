@@ -13,7 +13,7 @@ namespace InDoOut_Desktop.Loading.BlockView
     internal class BlockViewProgramLoader
     {
         private readonly IBlockView _associatedBlockView = null;
-        private DispatcherTimer _wireRedrawTimer = null;
+        private readonly DispatcherTimer _wireRedrawTimer = null;
 
         public BlockViewProgramLoader(IBlockView blockView)
         {

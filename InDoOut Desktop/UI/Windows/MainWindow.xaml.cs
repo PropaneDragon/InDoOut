@@ -12,7 +12,7 @@ namespace InDoOut_Desktop.UI.Windows
     {
         private static readonly bool OLD_SPLASH = false;
 
-        private DispatcherTimer _titleTimer = new DispatcherTimer(DispatcherPriority.Background);
+        private readonly DispatcherTimer _titleTimer = new DispatcherTimer(DispatcherPriority.Background);
 
         public MainWindow()
         {

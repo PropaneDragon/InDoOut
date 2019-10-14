@@ -17,7 +17,7 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
 
         private bool _collapsed = false;
         private IBlockView _blockView = null;
-        private DispatcherTimer _updateTimer = new DispatcherTimer(DispatcherPriority.Normal);
+        private readonly DispatcherTimer _updateTimer = new DispatcherTimer(DispatcherPriority.Normal);
 
         public bool Collapsed { get => _collapsed; set { if (value) Collapse(); else Expand(); } }
         public IBlockView BlockView { get => _blockView; set => BlockViewChanged(value); }
