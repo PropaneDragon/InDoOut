@@ -9,7 +9,7 @@ namespace InDoOut_Core.Entities.Functions
     /// </summary>
     public abstract class StartFunction : Function, IStartFunction
     {
-        private static readonly int TOTAL_OUTPUTS = 10;
+        public static readonly int TOTAL_OUTPUTS = 10;
 
         /// <summary>
         /// The group this function belongs to.
