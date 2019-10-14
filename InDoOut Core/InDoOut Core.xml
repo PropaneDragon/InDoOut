@@ -376,6 +376,12 @@
             An exception safe version of <see cref="P:InDoOut_Core.Entities.Functions.Function.Keywords"/>
             </summary>
         </member>
+        <member name="P:InDoOut_Core.Entities.Functions.Function.TriggerOnFailure">
+            <summary>
+            The output that should be triggered if the function has an uncaught exception.
+            If an output should not be triggered on failure, it should be null.
+            </summary>
+        </member>
         <member name="P:InDoOut_Core.Entities.Functions.Function.Description">
             <summary>
             The description of what the function does.
@@ -600,6 +606,12 @@
         <member name="P:InDoOut_Core.Entities.Functions.IFunction.Results">
             <summary>
             All results that this function gives.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Functions.IFunction.TriggerOnFailure">
+            <summary>
+            The output that should be triggered if the function has an uncaught exception.
+            If an output should not be triggered on failure, it should be null.
             </summary>
         </member>
         <member name="P:InDoOut_Core.Entities.Functions.IFunction.VariableStore">
