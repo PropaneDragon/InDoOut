@@ -1,14 +1,13 @@
 ﻿using InDoOut_Core.Entities.Functions;
-using System;
 using System.IO;
 
 namespace InDoOut_Core_Plugins.Files
 {
-    public class ReadFile : Function
+    public class ReadFileFunction : Function
     {
-        private IOutput _success, _failure;
-        private IProperty<string> _fileLocation;
-        private IResult _fileContents;
+        private readonly IOutput _success, _failure;
+        private readonly IProperty<string> _fileLocation;
+        private readonly IResult _fileContents;
 
         public override string Description => "Reads the contents of a file.";
 
@@ -18,12 +17,12 @@ namespace InDoOut_Core_Plugins.Files
 
         public override string[] Keywords => new[] { "read", "contents", "text", "all", "load", "open", "string" };
 
-        public ReadFile() : base()
+        public ReadFileFunction() : base()
         {
             _ = CreateInput("Read file");
 
-            _success = CreateOutput("File read");
-            _failure = CreateOutput("Read failed");
+            _success = CreateOutput("File read", OutputType.Positive);
+            _failure = CreateOutput("Read failed", OutputType.Negative);
 
             _fileLocation = AddProperty(new Property<string>("File location", "The location and file name of the file to read.", true));
 
