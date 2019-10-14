@@ -6,6 +6,7 @@ using InDoOut_Plugins.Loaders;
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 
@@ -63,6 +64,8 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
                 BeginAnimation(MarginProperty, sidebarAnimation);
                 Grid_CollapsibleContent.BeginAnimation(OpacityProperty, opacityAnimation);
             }
+
+            Focus();
 
             _collapsed = false;
         }
@@ -136,17 +139,23 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
 
         private void Button_NewProgram_Click(object sender, RoutedEventArgs e)
         {
-            _ = ProgramHolder.Instance.RemoveProgram(_blockView?.AssociatedProgram);
-            _blockView.AssociatedProgram = ProgramHolder.Instance.NewProgram();
+            if (_blockView != null)
+            {
+                _ = ProgramHolder.Instance.RemoveProgram(_blockView?.AssociatedProgram);
+                _blockView.AssociatedProgram = ProgramHolder.Instance.NewProgram();
+            }
         }
 
         private async void Button_OpenProgram_Click(object sender, RoutedEventArgs e)
         {
-            var program = await ProgramSaveLoad.Instance.LoadProgramDialogAsync(ProgramHolder.Instance, new ProgramJsonStorer(new FunctionBuilder(), LoadedPlugins.Instance), Window.GetWindow(this));
-            if (program != null)
+            if (_blockView != null)
             {
-                _ = ProgramHolder.Instance.RemoveProgram(_blockView?.AssociatedProgram);
-                _blockView.AssociatedProgram = program;
+                var program = await ProgramSaveLoad.Instance.LoadProgramDialogAsync(ProgramHolder.Instance, new ProgramJsonStorer(new FunctionBuilder(), LoadedPlugins.Instance), Window.GetWindow(this));
+                if (program != null)
+                {
+                    _ = ProgramHolder.Instance.RemoveProgram(_blockView?.AssociatedProgram);
+                    _blockView.AssociatedProgram = program;
+                }
             }
         }
 
@@ -162,9 +171,6 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
 
         private void Button_TaskViewer_Click(object sender, RoutedEventArgs e)
         {
-            /*var taskViewer = new Windows.TaskManager(ProgramHolder.Instance);
-            taskViewer.Show();*/
-
             TaskView?.ShowTasks();
             Collapse();
         }

@@ -100,5 +100,18 @@ namespace InDoOut_Desktop.UI.Controls.TaskManager
 
             Dock_HiddenContent.BeginAnimation(OpacityProperty, fadeOutAnimation);
         }
+
+        private void Button_RemoveTask_Click(object sender, RoutedEventArgs e)
+        {
+            if (TaskView != null)
+            {
+                TaskView.RemoveTask(this);
+            }
+        }
+
+        private void Button_StartWithProgram_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

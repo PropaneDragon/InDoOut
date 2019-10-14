@@ -111,6 +111,12 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
             }
         }
 
+        public void MoveToCentre()
+        {
+            Scroll_Content.ScrollToHorizontalOffset((Canvas_Content.ActualWidth / 2d) - (Scroll_Content.ActualWidth / 2d));
+            Scroll_Content.ScrollToVerticalOffset((Canvas_Content.ActualHeight / 2d) - (Scroll_Content.ActualHeight / 2d));
+        }
+
         public IUIFunction Create(IFunction function)
         {
             return Create(function, CentreViewCoordinate);
@@ -429,8 +435,7 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
 
         private void UserControl_Initialized(object sender, EventArgs e)
         {
-            Scroll_Content.ScrollToHorizontalOffset((Canvas_Content.ActualWidth / 2d) - (Scroll_Content.ActualWidth / 2d));
-            Scroll_Content.ScrollToVerticalOffset((Canvas_Content.ActualHeight / 2d) - (Scroll_Content.ActualHeight / 2d));
+            MoveToCentre();
         }
     }
 }

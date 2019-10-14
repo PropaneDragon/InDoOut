@@ -33,9 +33,16 @@ namespace InDoOut_Desktop.Loading.BlockView
             {
                 var functionToUIFunctionMap = new Dictionary<IFunction, IUIFunction>();
 
-                if (ExtractLocationFromMetadata(program, out var location) && _associatedBlockView is IScrollable scrollable)
+                if (_associatedBlockView is IScrollable scrollable)
                 {
-                    scrollable.Offset = location;
+                    if (ExtractLocationFromMetadata(program, out var location))
+                    {
+                        scrollable.Offset = location;
+                    }
+                    else
+                    {
+                        scrollable.MoveToCentre();
+                    }
                 }
 
                 foreach (var function in program.Functions)
@@ -130,7 +137,14 @@ namespace InDoOut_Desktop.Loading.BlockView
 
         public bool UnloadProgram(IProgram program)
         {
-            return program != null;
+            if (program != null)
+            {
+                program.Stop();
+
+                return true;
+            }
+
+            return false;
         }
 
         private bool ExtractLocationFromMetadata(IStored stored, out Point location)

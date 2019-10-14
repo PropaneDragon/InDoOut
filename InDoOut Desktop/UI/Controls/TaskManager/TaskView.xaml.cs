@@ -71,6 +71,11 @@ namespace InDoOut_Desktop.UI.Controls.TaskManager
 
             Grid_Tasks.Visibility = Visibility.Visible;
             Grid_Tasks.BeginAnimation(OpacityProperty, fadeInAnimation);
+
+            if (Sidebar != null)
+            {
+                Sidebar.BlockView = null;
+            }
         }
 
         public void BringToFront(ITaskItem taskItem)
@@ -115,6 +120,30 @@ namespace InDoOut_Desktop.UI.Controls.TaskManager
                     Sidebar.BlockView = blockView;
                 }
             }
+        }
+
+        public bool RemoveTask(ITaskItem task)
+        {
+            if (task != null)
+            {
+                foreach (UIElement child in Wrap_Tasks.Children)
+                {
+                    if (child is ITaskItem item && item == child)
+                    {
+                        var program = task?.BlockView?.AssociatedProgram;
+                        if (program != null)
+                        {
+                            program.Stop();
+                        }
+
+                        Wrap_Tasks.Children.Remove(child);
+
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
         private void BlockViewChanged(IBlockView blockView)

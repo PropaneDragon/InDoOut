@@ -9,5 +9,7 @@
         void ShowTasks();
         void BringToFront(ITaskItem taskItem);
         void BringToFront(IBlockView blockView);
+
+        bool RemoveTask(ITaskItem task);
     }
 }
