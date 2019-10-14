@@ -23,7 +23,7 @@ namespace InDoOut_Core.Entities.Functions
         private List<IInput> _inputs = new List<IInput>();
         private List<IProperty> _properties = new List<IProperty>();
         private List<IResult> _results = new List<IResult>();
-        private Dictionary<IProperty, IResult> _mirroredResults = new Dictionary<IProperty, IResult>();
+        private readonly Dictionary<IProperty, IResult> _mirroredResults = new Dictionary<IProperty, IResult>();
 
         /// <summary>
         /// Stop has been requested on the task, and it should be terminated as soon
@@ -98,6 +98,12 @@ namespace InDoOut_Core.Entities.Functions
         /// An exception safe version of <see cref="Keywords"/>
         /// </summary>
         public string[] SafeKeywords => TryGet.ValueOrDefault(() => Keywords);
+
+        /// <summary>
+        /// The output that should be triggered if the function has an uncaught exception.
+        /// If an output should not be triggered on failure, it should be null.
+        /// </summary>
+        public virtual IOutput TriggerOnFailure { get; protected set; } = null;
 
         /// <summary>
         /// The description of what the function does.
@@ -293,15 +299,22 @@ namespace InDoOut_Core.Entities.Functions
                         Thread.Sleep(TimeSpan.FromMilliseconds(1));
                     }
 
-                    if (State != State.Stopping && nextOutput != null && Outputs.Contains(nextOutput) && nextOutput.CanBeTriggered(this))
-                    {
-                        nextOutput.Trigger(this);
-                    }
+                    TriggerOutput(nextOutput);
 
                     State = State.Waiting;
                 }
                 catch (Exception)
                 {
+                    var outputToTrigger = TryGet.ValueOrDefault(() => TriggerOnFailure, null);
+                    if (outputToTrigger != null)
+                    {
+                        try
+                        {
+                            TriggerOutput(outputToTrigger);
+                        }
+                        catch { }
+                    }
+
                     State = State.InError;
                 }
             }
@@ -314,5 +327,13 @@ namespace InDoOut_Core.Entities.Functions
         /// <param name="triggeredBy">The entity that triggered this.</param>
         /// <returns>An <see cref="IOutput"/> that should be triggered after this code.</returns>
         protected abstract IOutput Started(IInput triggeredBy);
+
+        private void TriggerOutput(IOutput output)
+        {
+            if (State != State.Stopping && output != null && Outputs.Contains(output) && output.CanBeTriggered(this))
+            {
+                output.Trigger(this);
+            }
+        }
     }
 }

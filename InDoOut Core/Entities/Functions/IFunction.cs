@@ -117,6 +117,12 @@ namespace InDoOut_Core.Entities.Functions
         List<IResult> Results { get; }
 
         /// <summary>
+        /// The output that should be triggered if the function has an uncaught exception.
+        /// If an output should not be triggered on failure, it should be null.
+        /// </summary>
+        IOutput TriggerOnFailure { get; }
+
+        /// <summary>
         /// A shared variable store between multiple functions.
         /// </summary>
         /// <seealso cref="IVariableStore"/>
