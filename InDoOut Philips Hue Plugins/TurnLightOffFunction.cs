@@ -20,6 +20,8 @@ namespace InDoOut_Philips_Hue_Plugins
 
         public override string[] Keywords => new[] { "light", "state", "dark", "black", "off", "switch", "change" };
 
+        public override IOutput TriggerOnFailure => _error;
+
         public LightOffFunction()
         {
             _ = CreateInput("Turn light off");

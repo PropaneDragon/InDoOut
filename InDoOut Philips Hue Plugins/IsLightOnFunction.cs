@@ -15,6 +15,8 @@ namespace InDoOut_Philips_Hue_Plugins
 
         public override string[] Keywords => new[] { "light", "state", "light", "white", "bright", "on", "off", "status" };
 
+        public override IOutput TriggerOnFailure => _error;
+
         public IsLightOnFunction()
         {
             _ = CreateInput("Check light");

@@ -22,6 +22,8 @@ namespace InDoOut_Philips_Hue_Plugins
 
         public override string[] Keywords => new[] { "hue", "philips", "bridge", "connect", "sync", "connection", "create", "user", "api" };
 
+        public override IOutput TriggerOnFailure => _failed;
+
         public ConnectToBridgeFunction()
         {
             _ = CreateInput("Connect");

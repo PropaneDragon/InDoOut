@@ -17,6 +17,8 @@ namespace InDoOut_Philips_Hue_Plugins
 
         public override string[] Keywords => new[] { "group", "precise", "id", "search", "find" };
 
+        public override IOutput TriggerOnFailure => _groupInvalid;
+
         public GetGroupByNameFunction()
         {
             _ = CreateInput("Find group");

@@ -3,7 +3,7 @@ using System;
 
 namespace InDoOut_Core_Tests
 {
-    public class ExceptionFunction : Function
+    public class ExceptionFunction : TestFunction
     {
         public override string Description => throw new Exception();
 

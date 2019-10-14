@@ -551,8 +551,17 @@ namespace InDoOut_Core_Tests
         [TestMethod]
         public void ExceptionSafety()
         {
-            var function = new ExceptionFunction();
+            var function = new ExceptionFunction { OutputToTriggerOnException = null };
+            var testTriggerFunction = new TestFunction() { HasRun = false };
+            var exceptionOutput = function.CreateOutputPublic("Exception");
+            var normalOutput = function.CreateOutputPublic();
+            var exceptionInput = testTriggerFunction.CreateInputPublic("Exception");
+            var normalInput = testTriggerFunction.CreateInputPublic();
 
+            Assert.IsTrue(exceptionOutput.Connect(exceptionInput));
+            Assert.IsTrue(normalOutput.Connect(normalInput));
+
+            function.OutputToTrigger = normalOutput;
 
             _ = Assert.ThrowsException<Exception>(() => function.Name);
             _ = Assert.ThrowsException<Exception>(() => function.Description);
@@ -566,9 +575,18 @@ namespace InDoOut_Core_Tests
 
             function.Trigger(null);
 
-            Thread.Sleep(TimeSpan.FromMilliseconds(10));
-
+            Assert.IsTrue(function.WaitForCompletion(TimeSpan.FromMilliseconds(10), false));
             Assert.AreEqual(State.InError, function.State);
+            Assert.IsFalse(testTriggerFunction.HasRun);
+            Assert.IsNull(testTriggerFunction.LastInput);
+
+            function.OutputToTriggerOnException = exceptionOutput;
+            function.Trigger(null);
+
+            Assert.IsTrue(function.WaitForCompletion(TimeSpan.FromMilliseconds(10), false));
+            Assert.AreEqual(State.InError, function.State);
+            Assert.IsTrue(testTriggerFunction.HasRun);
+            Assert.AreEqual(exceptionInput, testTriggerFunction.LastInput);
         }
 
         [TestMethod]

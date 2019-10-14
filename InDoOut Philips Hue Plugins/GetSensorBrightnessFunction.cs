@@ -18,6 +18,8 @@ namespace InDoOut_Philips_Hue_Plugins
 
         public override string[] Keywords => new[] { "lux", "daylight", "dark", "night", "day", "sun", "brightness", "light", "room" };
 
+        public override IOutput TriggerOnFailure => _invalidSensor;
+
         public GetSensorBrightnessFunction()
         {
             _ = CreateInput("Check room brightness");

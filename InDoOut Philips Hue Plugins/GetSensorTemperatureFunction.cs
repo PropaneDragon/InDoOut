@@ -20,6 +20,8 @@ namespace InDoOut_Philips_Hue_Plugins
 
         public override string[] Keywords => new[] { "heat", "temperature", "celsius", "farenheit", "cold", "hot", "warm", "chilly", "thermostat" };
 
+        public override IOutput TriggerOnFailure => _invalidSensor;
+
         public GetSensorTemperatureFunction()
         {
             _ = CreateInput("Check temperature");

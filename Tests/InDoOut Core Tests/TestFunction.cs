@@ -7,6 +7,7 @@ namespace InDoOut_Core_Tests
     {
         public IInput LastInput { get; private set; } = null;
         public IOutput OutputToTrigger { get; set; } = null;
+        public IOutput OutputToTriggerOnException { get => TriggerOnFailure; set => TriggerOnFailure = value; }
         public IInput InputToBuild { get; set; } = null;
         public IOutput OutputToBuild { get; set; } = null;
         public Action Action { get; set; } = null;

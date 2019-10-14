@@ -19,6 +19,8 @@ namespace InDoOut_Philips_Hue_Plugins
 
         public override string[] Keywords => new[] { "light", "state", "light", "white", "bright", "on", "switch", "change", "colour", "color", "hue", "red", "green", "blue", "hsv", "rgb" };
 
+        public override IOutput TriggerOnFailure => _error;
+
         public SetLightColourFunction()
         {
             _ = CreateInput("Change colour");

@@ -14,6 +14,8 @@ namespace InDoOut_Core_Plugins.Maths
 
         public override string Group => "Maths";
 
+        public override IOutput TriggerOnFailure => _outputFailed;
+
         protected abstract string Verb { get; }
 
         public AbstractPairArithmeticFunction() : base()

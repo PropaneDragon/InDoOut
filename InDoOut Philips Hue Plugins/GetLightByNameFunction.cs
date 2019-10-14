@@ -17,6 +17,8 @@ namespace InDoOut_Philips_Hue_Plugins
 
         public override string[] Keywords => new[] { "light", "precise", "id", "search", "find" };
 
+        public override IOutput TriggerOnFailure => _lightInvalid;
+
         public GetLightByNameFunction()
         {
             _ = CreateInput("Find light");

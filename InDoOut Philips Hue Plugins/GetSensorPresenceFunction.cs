@@ -16,6 +16,8 @@ namespace InDoOut_Philips_Hue_Plugins
 
         public override string[] Keywords => new[] { "presence", "sensor", "motion", "activated", "triggered" };
 
+        public override IOutput TriggerOnFailure => _invalidSensor;
+
         public GetSensorPresenceFunction()
         {
             _ = CreateInput("Check for presence");

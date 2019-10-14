@@ -17,6 +17,8 @@ namespace InDoOut_Philips_Hue_Plugins
 
         public override string[] Keywords => new[] { "sensor", "precise", "id", "search", "find" };
 
+        public override IOutput TriggerOnFailure => _sensorInvalid;
+
         public GetSensorByNameFunction()
         {
             _ = CreateInput("Find sensor");
