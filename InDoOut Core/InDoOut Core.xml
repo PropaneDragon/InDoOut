@@ -1239,6 +1239,11 @@
             they are triggered automatically at the start of a <see cref="T:InDoOut_Core.Entities.Programs.IProgram"/>.
             </summary>
         </member>
+        <member name="F:InDoOut_Core.Entities.Functions.StartFunction.TOTAL_OUTPUTS">
+            <summary>
+            The total number of passthrough outputs available on the start function.
+            </summary>
+        </member>
         <member name="P:InDoOut_Core.Entities.Functions.StartFunction.Group">
             <summary>
             The group this function belongs to.
