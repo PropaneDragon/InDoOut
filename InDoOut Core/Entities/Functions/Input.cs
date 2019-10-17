@@ -1,4 +1,5 @@
 ﻿using InDoOut_Core.Entities.Core;
+using InDoOut_Core.Logging;
 using System.Linq;
 
 namespace InDoOut_Core.Entities.Functions
@@ -34,10 +35,10 @@ namespace InDoOut_Core.Entities.Functions
         }
 
         /// <summary>
-        /// 
+        /// Checks whether an input is equal to another input.
         /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
+        /// <param name="obj">The other object to compare.</param>
+        /// <returns>Whether a given object is equal to this input.</returns>
         public override bool Equals(object obj)
         {
             return obj is Input input && Name == input.Name && Connections.Count == input.Connections.Count && Connections.All(connection => input.Connections.Contains(connection));
@@ -58,8 +59,12 @@ namespace InDoOut_Core.Entities.Functions
         /// <param name="triggeredBy">The <see cref="IOutput"/> that triggered this input.</param>
         protected override void Process(IOutput triggeredBy)
         {
+            Log.Instance.Info($"Processing {this}");
+
             if (Parent != null && Parent.CanBeTriggered(this))
             {
+                Log.Instance.Info($"Triggering parent from {this}: {Parent?.ToString() ?? "null"}");
+
                 Parent.Trigger(this);
             }
         }

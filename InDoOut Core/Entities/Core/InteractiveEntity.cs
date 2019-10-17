@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using InDoOut_Core.Logging;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -40,6 +41,8 @@ namespace InDoOut_Core.Entities.Core
         /// <param name="triggeredBy">The entity that triggered this one.</param>
         public void Trigger(ConnectsFromType triggeredBy)
         {
+            Log.Instance.Info($"Triggered {this}");
+
             _runner = Task.Run(() =>
             {
                 try { Process(triggeredBy); }
@@ -80,8 +83,12 @@ namespace InDoOut_Core.Entities.Core
                 {
                     _connections.Add(connection);
 
+                    Log.Instance.Info($"Added a connection from {this} to {connection?.ToString() ?? "null"}");
+
                     return true;
                 }
+
+                Log.Instance.Info($"Failed to make a connection from {this} to {connection?.ToString() ?? "null"}");
 
                 return false;
             }
@@ -113,6 +120,8 @@ namespace InDoOut_Core.Entities.Core
         {
             lock (_connectionsLock)
             {
+                Log.Instance.Info($"Removed a connection from {this} to {connection?.ToString() ?? "null"}");
+
                 return connection != null && _connections.Contains(connection) ? _connections.Remove(connection) : false;
             }
         }

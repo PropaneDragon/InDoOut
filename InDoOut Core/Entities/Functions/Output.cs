@@ -1,4 +1,5 @@
 ﻿using InDoOut_Core.Entities.Core;
+using InDoOut_Core.Logging;
 using System.Linq;
 
 namespace InDoOut_Core.Entities.Functions
@@ -68,10 +69,14 @@ namespace InDoOut_Core.Entities.Functions
         /// <param name="triggeredBy">The <see cref="IFunction"/> that triggered this output.</param>
         protected override void Process(IFunction triggeredBy)
         {
+            Log.Instance.Info($"Processing {this}");
+
             foreach (var connection in Connections)
             {
                 if (connection != null && connection.CanBeTriggered(this))
                 {
+                    Log.Instance.Info($"Triggering connection from {this}: {connection?.ToString() ?? "null"}");
+
                     connection.Trigger(this);
                 }
             }

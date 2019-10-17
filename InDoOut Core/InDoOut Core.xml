@@ -140,6 +140,12 @@
             Metadata associated with the entity.
             </summary>
         </member>
+        <member name="M:InDoOut_Core.Entities.Core.NamedEntity.ToString">
+            <summary>
+            Gets the string representation of this entity.
+            </summary>
+            <returns>The string representation of this entity.</returns>
+        </member>
         <member name="T:InDoOut_Core.Entities.Core.IConnectable">
             <summary>
             Represents an object that can be connected to an entity.
@@ -669,10 +675,10 @@
         </member>
         <member name="M:InDoOut_Core.Entities.Functions.Input.Equals(System.Object)">
             <summary>
-            
+            Checks whether an input is equal to another input.
             </summary>
-            <param name="obj"></param>
-            <returns></returns>
+            <param name="obj">The other object to compare.</param>
+            <returns>Whether a given object is equal to this input.</returns>
         </member>
         <member name="M:InDoOut_Core.Entities.Functions.Input.GetHashCode">
             <summary>
@@ -1503,6 +1509,109 @@
             Creates and returns a brand new instance of type <typeparamref name="T"/>.
             </summary>
             <returns>A new instance of type <typeparamref name="T"/>.</returns>
+        </member>
+        <member name="T:InDoOut_Core.Logging.Log">
+            <summary>
+            Handles logs between all elements of IDO. Thread safe and can be called from anywhere.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Logging.Log.MaxLogMessages">
+            <summary>
+            The maximum number of log messages allowed to be kept at once.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Logging.Log.Logs">
+            <summary>
+            All current logs that have been sent so far, up to <see cref="P:InDoOut_Core.Logging.Log.MaxLogMessages"/>.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Core.Logging.Log.Error(System.Object)">
+            <summary>
+            Logs an error with the given message.
+            </summary>
+            <param name="message">The message to log.</param>
+        </member>
+        <member name="M:InDoOut_Core.Logging.Log.Warning(System.Object)">
+            <summary>
+            Logs a warning with the given message.
+            </summary>
+            <param name="message">The message to log.</param>
+        </member>
+        <member name="M:InDoOut_Core.Logging.Log.Info(System.Object)">
+            <summary>
+            Logs info with the given message.
+            </summary>
+            <param name="message">The message to log.</param>
+        </member>
+        <member name="T:InDoOut_Core.Logging.LogMessage">
+            <summary>
+            Represents a single logged message.
+            </summary>
+        </member>
+        <member name="T:InDoOut_Core.Logging.LogMessage.LogLevel">
+            <summary>
+            The severity level of a log.
+            </summary>
+        </member>
+        <member name="F:InDoOut_Core.Logging.LogMessage.LogLevel.Info">
+            <summary>
+            A simple info message. Nothing critical to program operation.
+            </summary>
+        </member>
+        <member name="F:InDoOut_Core.Logging.LogMessage.LogLevel.Warning">
+            <summary>
+            A warning message. These do not impede the program operation, 
+            nor have they effected the program operation, but should be noted down.
+            </summary>
+        </member>
+        <member name="F:InDoOut_Core.Logging.LogMessage.LogLevel.Error">
+            <summary>
+            An unintended exception has occurred and shouldn't have. These are unexpected
+            events and should not happen.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Logging.LogMessage.Message">
+            <summary>
+            The log message. This contains the main part of the log that the user should see.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Logging.LogMessage.CallingAssembly">
+            <summary>
+            The assembly that activated this message. This can be used for filtering and tracing.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Logging.LogMessage.Level">
+            <summary>
+            The log level of this log message.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Logging.LogMessage.Time">
+            <summary>
+            The time that this message was logged.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Core.Logging.LogMessage.#ctor(System.Object,InDoOut_Core.Logging.LogMessage.LogLevel,System.Reflection.Assembly)">
+            <summary>
+            Creates a basic <see cref="T:InDoOut_Core.Logging.LogMessage"/>.
+            </summary>
+            <param name="message">The message to log.</param>
+            <param name="level">The level of the current log.</param>
+            <param name="calledFrom">The assembly that activated this log.</param>
+        </member>
+        <member name="M:InDoOut_Core.Logging.LogMessage.#ctor(System.Object,InDoOut_Core.Logging.LogMessage.LogLevel,System.Reflection.Assembly,System.DateTime)">
+            <summary>
+            Creates a basic <see cref="T:InDoOut_Core.Logging.LogMessage"/>, with manual entry of the <paramref name="time"/>.
+            </summary>
+            <param name="message">The message to log.</param>
+            <param name="level">The level of the current log.</param>
+            <param name="calledFrom">The assembly that activated this log.</param>
+            <param name="time">The time that this log message occurred.</param>
+        </member>
+        <member name="M:InDoOut_Core.Logging.LogMessage.ToString">
+            <summary>
+            Converts the log message to a string.
+            </summary>
+            <returns>The log message in string form.</returns>
         </member>
         <member name="T:InDoOut_Core.Reporting.FailureReport">
             <summary>

@@ -18,5 +18,14 @@ namespace InDoOut_Core.Entities.Core
         /// Metadata associated with the entity.
         /// </summary>
         public Dictionary<string, string> Metadata { get; } = new Dictionary<string, string>();
+
+        /// <summary>
+        /// Gets the string representation of this entity.
+        /// </summary>
+        /// <returns>The string representation of this entity.</returns>
+        public override string ToString()
+        {
+            return $"[{GetType()}] ({Id})";
+        }
     }
 }
