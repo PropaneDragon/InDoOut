@@ -16,8 +16,8 @@
                 </Grid.RenderTransform>
                 <Image x:Name="Image_Preview" Stretch="UniformToFill" MaxWidth="800" MaxHeight="400" MinWidth="800" MinHeight="400" StretchDirection="Both" Opacity="1" />
                 <DockPanel x:Name="Dock_HiddenContent" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="8">
-                    <Button x:Name="Button_RemoveTask" DockPanel.Dock="Right" FontFamily="Segoe MDL2 Assets" FontSize="24" Content="" ToolTip="Remove task" Template="{DynamicResource Template_Buttons_Transparent}" VerticalAlignment="Stretch" HorizontalAlignment="Right" Padding="2" Click="Button_RemoveTask_Click" />
-                    <Button x:Name="Button_StartWithProgram" DockPanel.Dock="Right" FontFamily="Segoe MDL2 Assets" FontSize="24" Content="" ToolTip="Start with program" Template="{DynamicResource Template_Buttons_Transparent}" VerticalAlignment="Stretch" HorizontalAlignment="Right" Padding="2" Click="Button_StartWithProgram_Click" />
+                    <Button x:Name="Button_RemoveTask" DockPanel.Dock="Right" FontFamily="Material Icons" FontSize="24" Content="" ToolTip="Remove task" Template="{DynamicResource Template_Buttons_Transparent}" VerticalAlignment="Stretch" HorizontalAlignment="Right" Padding="2" Click="Button_RemoveTask_Click" />
+                    <Button x:Name="Button_StartWithProgram" DockPanel.Dock="Right" FontFamily="Material Icons" FontSize="24" Content="" ToolTip="Start with program" Template="{DynamicResource Template_Buttons_Transparent}" VerticalAlignment="Stretch" HorizontalAlignment="Right" Padding="2" Click="Button_StartWithProgram_Click" />
                 </DockPanel>
             </Grid>
             <Grid VerticalAlignment="Bottom">
