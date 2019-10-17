@@ -9,6 +9,9 @@ namespace InDoOut_Core.Entities.Functions
     /// </summary>
     public abstract class StartFunction : Function, IStartFunction
     {
+        /// <summary>
+        /// The total number of passthrough outputs available on the start function.
+        /// </summary>
         public static readonly int TOTAL_OUTPUTS = 10;
 
         /// <summary>

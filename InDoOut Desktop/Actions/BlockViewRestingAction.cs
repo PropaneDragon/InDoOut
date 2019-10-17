@@ -14,8 +14,6 @@ namespace InDoOut_Desktop.Actions
     {
         private readonly IBlockView _blockView = null;
 
-        private bool _hasDragged = false;
-
         public BlockViewRestingAction(IBlockView blockView)
         {
             _blockView = blockView;
@@ -23,15 +21,11 @@ namespace InDoOut_Desktop.Actions
 
         public override bool MouseLeftDown(Point mousePosition)
         {
-            _hasDragged = false;
-
             return false;
         }
 
         public override bool MouseLeftMove(Point mousePosition)
         {
-            _hasDragged = true;
-
             if (_blockView != null)
             {
                 var elementsUnderMouse = _blockView.GetElementsUnderMouse();

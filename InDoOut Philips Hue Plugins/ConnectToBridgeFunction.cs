@@ -80,7 +80,7 @@ namespace InDoOut_Philips_Hue_Plugins
                     }
                 }
             }
-            catch (AggregateException ex)
+            catch (AggregateException)
             {
                 return _pressSyncButton;
             }
