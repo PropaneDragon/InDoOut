@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace InDoOut_Core.Logging
 {
@@ -13,6 +14,10 @@ namespace InDoOut_Core.Logging
         /// </summary>
         public enum LogLevel
         {
+            /// <summary>
+            /// Represents a header over a block of information
+            /// </summary>
+            Header,
             /// <summary>
             /// A simple info message. Nothing critical to program operation.
             /// </summary>
@@ -80,7 +85,39 @@ namespace InDoOut_Core.Logging
         /// <returns>The log message in string form.</returns>
         public override string ToString()
         {
-            return $"[{Time.ToString("dd/MM/yyyy")}][{Level}] {Message}";
+            return $"[{FormatDate()}][{FormatAssembly()}]{FormatMessage()}";
+        }
+
+        private string FormatDate()
+        {
+            return Time.ToString("yyyy-MM-dd HH:mm:ss");
+        }
+
+        private string FormatAssembly()
+        {
+            return CallingAssembly?.GetName()?.Name ?? "";
+        }
+
+        private string FormatMessage()
+        {
+            return Level switch
+            {
+                LogLevel.Header => $"### {Regex.Replace(Message.ToString().ToUpper(), ".", "$0 ")}###",
+
+                _ => $"{GetLevelGlyph(Level)} {Message}"
+            };
+        }
+
+        private string GetLevelGlyph(LogLevel level)
+        {
+            return level switch
+            {
+                LogLevel.Error => "[!]",
+                LogLevel.Info => "[i]",
+                LogLevel.Warning => "[@]",
+
+                _ => ""
+            };
         }
     }
 }

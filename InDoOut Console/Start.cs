@@ -2,7 +2,9 @@
 using InDoOut_Console.ProgramView;
 using InDoOut_Core.Entities.Programs;
 using InDoOut_Core.Functions;
+using InDoOut_Core.Logging;
 using InDoOut_Executable_Core.Location;
+using InDoOut_Executable_Core.Logging;
 using InDoOut_Json_Storage;
 using InDoOut_Plugins.Loaders;
 using System;
@@ -15,7 +17,12 @@ namespace InDoOut_Console
     {
         static void Main(string[] args)
         {
+            Log.Instance.Header("Console application started");
+
+            var logFileSaver = new LogFileSaver(StandardLocations.Instance);
             var originalBackgroundColour = Console.BackgroundColor;
+
+            logFileSaver.BeginAutoSave();
 
             Console.BackgroundColor = ConsoleColor.DarkGray;
             Console.WriteLine();
@@ -129,10 +136,16 @@ namespace InDoOut_Console
                 ColourConsole.WriteErrorLine("No program to load.");
             }
 
+            Log.Instance.Header("Console application waiting for user to finish");
+
             Console.WriteLine();
             ColourConsole.WriteInfo("Press any key to close... ");
 
             _ = Console.ReadKey();
+
+            Log.Instance.Header("Console application finished");
+
+            _ = logFileSaver.SaveLog();
         }
     }
 }

@@ -52,5 +52,14 @@
         public FailureReport(int id, string summary, bool critical) : this(id, summary, null, critical)
         {
         }
+
+        /// <summary>
+        /// Converts the failure report to a string representation.
+        /// </summary>
+        /// <returns>A string representation of a failure report.</returns>
+        public override string ToString()
+        {
+            return $"{(Critical ? "Critical" : "Warning")}: {Summary}";
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using InDoOut_Core.Entities.Programs;
 using InDoOut_Core.Functions;
+using InDoOut_Core.Logging;
 using InDoOut_Core.Reporting;
 using InDoOut_Executable_Core.Storage;
 using InDoOut_Plugins.Loaders;
@@ -51,6 +52,8 @@ namespace InDoOut_Json_Storage
         /// <returns>The loaded program, or null if invalid.</returns>
         public List<IFailureReport> Load(IProgram program)
         {
+            Log.Instance.Header($"Attempting to load new program from: {FilePath ?? "null"}");
+
             var failures = new List<IFailureReport>();
 
             if (program != null)
@@ -87,6 +90,13 @@ namespace InDoOut_Json_Storage
             else
             {
                 failures.Add(new FailureReport((int)LoadResult.InvalidLocation, $"Invalid file location given ({FilePath}).", true));
+            }
+
+            Log.Instance.Header($"Program loaded with {failures.Count} issues");
+
+            foreach (var failure in failures)
+            {
+                Log.Instance.Error(failure);
             }
 
             return failures;

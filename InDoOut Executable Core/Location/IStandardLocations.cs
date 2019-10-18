@@ -13,7 +13,7 @@ namespace InDoOut_Executable_Core.Location
 
     public interface IStandardLocations : ISingleton<IStandardLocations>
     {
-        bool PathEditable(Location location);
+        bool IsPathEditable(Location location);
         bool PathSet(Location location);
         bool SetPathTo(Location location, string path);
         string GetPathTo(Location location);

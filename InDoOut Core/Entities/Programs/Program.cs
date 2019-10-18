@@ -1,5 +1,6 @@
 ﻿using InDoOut_Core.Entities.Core;
 using InDoOut_Core.Entities.Functions;
+using InDoOut_Core.Logging;
 using InDoOut_Core.Threading.Safety;
 using InDoOut_Core.Variables;
 using System;
@@ -12,7 +13,7 @@ namespace InDoOut_Core.Entities.Programs
     /// A collection of <see cref="IFunction"/> entities linked together and started through the
     /// <see cref="StartFunctions"/>.
     /// </summary>
-    public class Program : IProgram
+    public class Program : NamedEntity, IProgram
     {
         /// <summary>
         /// All functions within this program.
@@ -47,20 +48,10 @@ namespace InDoOut_Core.Entities.Programs
         public string Name { get; protected set; } = null;
 
         /// <summary>
-        /// The unique ID for this program.
-        /// </summary>
-        public Guid Id { get; set; } = Guid.NewGuid();
-
-        /// <summary>
         /// The current variable store for all program variables.
         /// </summary>
         /// <seealso cref="VariableStore"/>
         public IVariableStore VariableStore { get; protected set; } = new VariableStore();
-
-        /// <summary>
-        /// Metadata associated with the program.
-        /// </summary>
-        public Dictionary<string, string> Metadata { get; } = new Dictionary<string, string>();
 
         /// <summary>
         /// Creates a program with optional passthrough values.
@@ -70,6 +61,8 @@ namespace InDoOut_Core.Entities.Programs
         public Program(params string[] passthroughValues)
         {
             PassthroughValues = passthroughValues.ToList();
+
+            Log.Instance.Header($"New program created: {this}");
         }
 
         /// <summary>
@@ -84,6 +77,8 @@ namespace InDoOut_Core.Entities.Programs
                 function.VariableStore = VariableStore;
 
                 Functions.Add(function);
+
+                Log.Instance.Info($"New function ({function}) added to program: {this}");
 
                 return true;
             }
@@ -101,6 +96,8 @@ namespace InDoOut_Core.Entities.Programs
             if (function != null && Functions.Contains(function))
             {
                 _ = Functions.Remove(function);
+
+                Log.Instance.Info($"Function ({function}) removed from program: {this}");
 
                 return true;
             }
@@ -124,6 +121,8 @@ namespace InDoOut_Core.Entities.Programs
         /// <param name="triggeredBy">The <see cref="IEntity"/> that triggered this.</param>
         public void Trigger(IEntity triggeredBy)
         {
+            Log.Instance.Header($"Program triggered: {this}");
+
             foreach (var startFunction in StartFunctions)
             {
                 for (var index = 0; index < PassthroughValues.Count; ++index)
@@ -145,6 +144,8 @@ namespace InDoOut_Core.Entities.Programs
         /// </summary>
         public void Stop()
         {
+            Log.Instance.Header($"Program stopping: {this}");
+
             foreach (var function in Functions)
             {
                  _ = TryGet.ExecuteOrFail(() => function?.PolitelyStop());
@@ -158,6 +159,15 @@ namespace InDoOut_Core.Entities.Programs
         public void SetName(string name)
         {
             Name = name;
+        }
+
+        /// <summary>
+        /// Returns a string representation of a program.
+        /// </summary>
+        /// <returns>A string representation of the program.</returns>
+        public override string ToString()
+        {
+            return $"{base.ToString()} ({Name})";
         }
     }
 }

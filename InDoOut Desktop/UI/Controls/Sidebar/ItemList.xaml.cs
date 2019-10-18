@@ -1,5 +1,6 @@
 ﻿using InDoOut_Core.Entities.Functions;
 using InDoOut_Core.Instancing;
+using InDoOut_Core.Logging;
 using InDoOut_Desktop.UI.Interfaces;
 using InDoOut_Desktop.UI.Threading;
 using InDoOut_Plugins.Loaders;
@@ -65,6 +66,8 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
 
         private async void Instance_PluginsChanged(object sender, EventArgs e)
         {
+            Log.Instance.Header($"REBUILDING PLUGIN LIST ON SIDEBAR");
+
             if (sender is LoadedPlugins loadedPlugins)
             {
                 var plugins = loadedPlugins.Plugins;
@@ -81,7 +84,9 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
                     }
                 }
 
-                _ = UIThread.Instance.TryRunOnUI(() => SetFunctions(functions));              
+                _ = UIThread.Instance.TryRunOnUI(() => SetFunctions(functions));
+
+                Log.Instance.Header($"DONE REBUILDING PLUGIN LIST ON SIDEBAR");
             }
         }
 

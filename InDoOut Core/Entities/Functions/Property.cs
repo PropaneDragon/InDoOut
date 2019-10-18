@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using InDoOut_Core.Basic;
 using InDoOut_Core.Entities.Core;
+using InDoOut_Core.Logging;
 using InDoOut_Core.Threading.Safety;
 using InDoOut_Core.Variables;
 
@@ -135,10 +136,14 @@ namespace InDoOut_Core.Entities.Functions
         /// <param name="triggeredBy">The <see cref="IResult"/> that triggerd this.</param>
         protected override void Process(IResult triggeredBy)
         {
+            Log.Instance.Info($"Processing {this} as {Name ?? "null"}");
+
             if (triggeredBy != null && !string.IsNullOrEmpty(triggeredBy.VariableName))
             {
                 var variable = Connections.Select(function => function?.VariableStore?.GetVariable(triggeredBy.VariableName)).Where(variable => variable != null).FirstOrDefault();
                 AssociatedVariable = variable;
+
+                Log.Instance.Info($"Value for {Name ?? "null"}: [COMPUTED]: {RawComputedValue ?? "null"}, [USER]: {RawValue ?? "null"}");
             }
         }
     }

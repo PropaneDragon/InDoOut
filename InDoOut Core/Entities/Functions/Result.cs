@@ -1,5 +1,6 @@
 ﻿using InDoOut_Core.Basic;
 using InDoOut_Core.Entities.Core;
+using InDoOut_Core.Logging;
 using InDoOut_Core.Variables;
 using System;
 using System.Linq;
@@ -149,7 +150,16 @@ namespace InDoOut_Core.Entities.Functions
         /// <param name="triggeredBy">The function that triggered this result.</param>
         protected override void Process(IFunction triggeredBy)
         {
-            _ = SetVariable(triggeredBy?.VariableStore);
+            Log.Instance.Info($"Processing {this} as {Name ?? "null"}");
+
+            if (SetVariable(triggeredBy?.VariableStore))
+            {
+                Log.Instance.Info($"Value for {Name ?? "null"}: {RawValue ?? "null"}");
+            }
+            else
+            {
+                Log.Instance.Error($"Failed to set value for {Name ?? "null"}");
+            }
 
             foreach (var connection in Connections)
             {

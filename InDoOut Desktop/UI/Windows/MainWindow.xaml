@@ -11,7 +11,7 @@
         xmlns:background="clr-namespace:InDoOut_Desktop.UI.Controls.Background"
         xmlns:splash="clr-namespace:InDoOut_Desktop.UI.Controls.Splash"
         mc:Ignorable="d"
-        Title="Test Program > ido" Height="1080" Width="1920" Loaded="Window_Loaded" WindowState="Normal" Background="#111" Foreground="White">
+        Title="Test Program > ido" Height="1080" Width="1920" Loaded="Window_Loaded" Closed="Window_Closed" WindowState="Normal" Background="#111" Foreground="White">
     <Grid>
         <Grid>
             <background:BackgroundImage Opacity="0.01"/>

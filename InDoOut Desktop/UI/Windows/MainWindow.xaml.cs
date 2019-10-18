@@ -1,7 +1,11 @@
-﻿using InDoOut_Desktop.Loading;
+﻿using InDoOut_Core.Logging;
+using InDoOut_Desktop.Loading;
 using InDoOut_Desktop.UI.Interfaces;
 using InDoOut_Desktop.UI.Threading;
+using InDoOut_Executable_Core.Location;
+using InDoOut_Executable_Core.Logging;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
@@ -13,6 +17,7 @@ namespace InDoOut_Desktop.UI.Windows
         private static readonly bool OLD_SPLASH = false;
 
         private readonly DispatcherTimer _titleTimer = new DispatcherTimer(DispatcherPriority.Background);
+        private readonly LogFileSaver _logSaver = new LogFileSaver(StandardLocations.Instance);
 
         public MainWindow()
         {
@@ -23,6 +28,10 @@ namespace InDoOut_Desktop.UI.Windows
             _titleTimer.Interval = TimeSpan.FromMilliseconds(300);
             _titleTimer.Start();
             _titleTimer.Tick += UpdateTimer_Tick;
+
+            _logSaver.BeginAutoSave();
+
+            Application.Current.DispatcherUnhandledException += Application_DispatcherUnhandledException;
         }
 
         private async Task FinishLoading()
@@ -55,6 +64,32 @@ namespace InDoOut_Desktop.UI.Windows
             }
 
             Close();
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            Log.Instance.Header("Application closing");
+
+            var saveAttempts = 0;
+
+            while ((!_logSaver?.SaveLog() ?? false) && saveAttempts++ < 3)
+            {
+                Thread.Sleep(TimeSpan.FromMilliseconds(100));
+            }
+        }
+
+        private void Application_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        {
+            Log.Instance.Header("Application crash!");
+            Log.Instance.Error(e?.Exception?.Message ?? "null");
+            Log.Instance.Error(e?.Exception?.StackTrace ?? "null");
+
+            var saveAttempts = 0;
+
+            while ((!_logSaver?.SaveLog() ?? false) && saveAttempts++ < 3)
+            {
+                Thread.Sleep(TimeSpan.FromMilliseconds(100));
+            }
         }
 
         private void UpdateTimer_Tick(object sender, EventArgs e)

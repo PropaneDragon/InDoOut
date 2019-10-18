@@ -159,9 +159,10 @@ namespace InDoOut_Desktop.Programs
 
                 _ = MessageBox.Show(parent, $"The program couldn't be loaded due to the following errors:\n\n{string.Join("\n- ", resultStrings)}");
             }
-            else
+            else if (program != null)
             {
-                program?.SetName(Path.GetFileNameWithoutExtension(filePath));
+                program.Metadata[PROGRAM_METADATA_LAST_LOADED_FROM] = filePath;
+                program.SetName(Path.GetFileNameWithoutExtension(filePath));
             }
 
             return failureReports.Count == 0;

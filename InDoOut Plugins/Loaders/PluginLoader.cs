@@ -1,4 +1,5 @@
-﻿using InDoOut_Plugins.Containers;
+﻿using InDoOut_Core.Logging;
+using InDoOut_Plugins.Containers;
 using InDoOut_Plugins.Core;
 using System;
 using System.Linq;
@@ -33,6 +34,8 @@ namespace InDoOut_Plugins.Loaders
         /// <returns>A <see cref="IPluginContainer"/>, if valid. Returns null otherwise.</returns>
         public IPluginContainer LoadPlugin(string path)
         {
+            Log.Instance.Info($"Attempting to load plugin from path: {path ?? "null"}");
+
             if (!string.IsNullOrEmpty(path))
             {
                 try
@@ -56,6 +59,8 @@ namespace InDoOut_Plugins.Loaders
         /// <returns>A <see cref="IPluginContainer"/>, if valid. Returns null otherwise.</returns>
         public IPluginContainer LoadPlugin(Assembly assembly)
         {
+            Log.Instance.Info($"Attempting to load plugin: {assembly?.ToString() ?? "null"}");
+
             if (assembly != null)
             {
                 PluginLoading?.Invoke(this, new PluginLoadEventArgs(this, assembly));
@@ -63,12 +68,16 @@ namespace InDoOut_Plugins.Loaders
                 var plugin = FindPlugin(assembly);
                 if (plugin != null)
                 {
+                    Log.Instance.Info($"Plugin loaded: {assembly?.ToString() ?? "null"}");
+
                     PluginLoadSuccess?.Invoke(this, new PluginLoadEventArgs(this, assembly));
 
                     return CreateContainer(plugin);
                 }
                 else
                 {
+                    Log.Instance.Error($"Failed to load plugin: {assembly?.ToString() ?? "null"}");
+
                     PluginLoadFail?.Invoke(this, new PluginLoadEventArgs(this, assembly));
                 }
             }

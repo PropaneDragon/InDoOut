@@ -42,7 +42,7 @@ namespace InDoOut_Executable_Core.Location
             return null;
         }
 
-        public bool PathEditable(Location location)
+        public bool IsPathEditable(Location location)
         {
             return _editablePaths.Contains(location);
         }
@@ -54,7 +54,7 @@ namespace InDoOut_Executable_Core.Location
 
         public bool SetPathTo(Location location, string path)
         {
-            if (PathEditable(location))
+            if (IsPathEditable(location))
             {
                 ForcePathTo(location, path);
 

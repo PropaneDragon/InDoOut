@@ -1,4 +1,5 @@
-﻿using InDoOut_Executable_Core.Location;
+﻿using InDoOut_Core.Logging;
+using InDoOut_Executable_Core.Location;
 using InDoOut_Plugins.Loaders;
 using System;
 using System.Threading.Tasks;
@@ -13,6 +14,8 @@ namespace InDoOut_Desktop.Loading
 
         protected override async Task<bool> RunTaskAsync()
         {
+            Log.Instance.Header($"PLUGIN LOADING BEGINNING");
+
             Name = "Loading plugins...";
 
             if (LoadedPlugins.Instance.Plugins.Count <= 0) {
@@ -33,12 +36,16 @@ namespace InDoOut_Desktop.Loading
 
                 Name = "Plugins loaded.";
 
+                Log.Instance.Header($"PLUGIN LOADING DONE");
+
                 await Task.Delay(TimeSpan.FromMilliseconds(500));
 
                 return true;
             }
 
             Name = "Plugin load failed.";
+
+            Log.Instance.Header($"PLUGIN LOADING FAILED");
 
             await Task.Delay(TimeSpan.FromSeconds(5));
 

@@ -64,6 +64,17 @@ namespace InDoOut_Core.Logging
             CreateEntry(new LogMessage(message, LogMessage.LogLevel.Info, calledFrom));
         }
 
+        /// <summary>
+        /// Logs info with the given message.
+        /// </summary>
+        /// <param name="message">The message to log.</param>
+        public void Header(object message)
+        {
+            var calledFrom = Assembly.GetCallingAssembly();
+
+            CreateEntry(new LogMessage(message, LogMessage.LogLevel.Header, calledFrom));
+        }
+
         private void CreateEntry(LogMessage message)
         {
             if (message != null)
