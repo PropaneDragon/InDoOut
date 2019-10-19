@@ -45,6 +45,15 @@ namespace InDoOut_Core.Entities.Functions
         }
 
         /// <summary>
+        /// A string representation of this entity.
+        /// </summary>
+        /// <returns>A string representation of this entity.</returns>
+        public override string ToString()
+        {
+            return $"[OUTPUT {base.ToString()} [Name: {Name ?? "null"}]]";
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="obj"></param>
@@ -75,11 +84,13 @@ namespace InDoOut_Core.Entities.Functions
             {
                 if (connection != null && connection.CanBeTriggered(this))
                 {
-                    Log.Instance.Info($"Triggering connection from {this}: {connection?.ToString() ?? "null"}");
+                    Log.Instance.Info($"Triggering: {this} >>>>>>>>>> ", connection);
 
                     connection.Trigger(this);
                 }
             }
+
+            Log.Instance.Info($"Processed {this}");
         }
     }
 }

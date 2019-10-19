@@ -7,7 +7,7 @@ namespace InDoOut_Core.Entities.Core
     /// A base, saveable entity. The root of all other entities.
     /// </summary>
     /// <seealso cref="IEntity"/>
-    public abstract class NamedEntity : IEntity
+    public abstract class Entity : IEntity
     {
         /// <summary>
         /// The unique ID of this entity.
@@ -25,7 +25,7 @@ namespace InDoOut_Core.Entities.Core
         /// <returns>The string representation of this entity.</returns>
         public override string ToString()
         {
-            return $"[{GetType()}] ({Id})";
+            return $"[Type: {GetType()}] [Id: {Id}]";
         }
     }
 }

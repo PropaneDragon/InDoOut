@@ -131,20 +131,31 @@ namespace InDoOut_Core.Entities.Functions
         public Type ValueAs<Type>(Type defaultValue = default) => _value.ValueAs(defaultValue);
 
         /// <summary>
+        /// A string representation of this entity.
+        /// </summary>
+        /// <returns>A string representation of this entity.</returns>
+        public override string ToString()
+        {
+            return $"[PROPERTY {base.ToString()} [Name: {Name ?? "null"}] [Computed value: {RawComputedValue ?? "null"}] [Raw value: {RawValue ?? "null"}]]";
+        }
+
+        /// <summary>
         /// Processes the property fro the <see cref="IResult"/> that triggered it.
         /// </summary>
         /// <param name="triggeredBy">The <see cref="IResult"/> that triggerd this.</param>
         protected override void Process(IResult triggeredBy)
         {
-            Log.Instance.Info($"Processing {this} as {Name ?? "null"}");
+            Log.Instance.Info($"Processing {this}");
 
             if (triggeredBy != null && !string.IsNullOrEmpty(triggeredBy.VariableName))
             {
                 var variable = Connections.Select(function => function?.VariableStore?.GetVariable(triggeredBy.VariableName)).Where(variable => variable != null).FirstOrDefault();
                 AssociatedVariable = variable;
 
-                Log.Instance.Info($"Value for {Name ?? "null"}: [COMPUTED]: {RawComputedValue ?? "null"}, [USER]: {RawValue ?? "null"}");
+                Log.Instance.Info($"Applying variable from ", triggeredBy, $" to {this}");
             }
+
+            Log.Instance.Info($"Processed {this}");
         }
     }
 }

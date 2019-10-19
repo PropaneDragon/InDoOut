@@ -10,7 +10,7 @@ namespace InDoOut_Core.Entities.Core
     /// </summary>
     /// <typeparam name="ConnectsToType">The <see cref="ITriggerable"/> that this entity can connect to.</typeparam>
     /// <typeparam name="ConnectsFromType">The <see cref="IEntity"/> that this entity can accept connections from.</typeparam>
-    public abstract class InteractiveEntity<ConnectsToType, ConnectsFromType> : NamedEntity, IConnectable<ConnectsToType>, ITriggerable<ConnectsFromType> where ConnectsToType : class, ITriggerable where ConnectsFromType : class, IEntity
+    public abstract class InteractiveEntity<ConnectsToType, ConnectsFromType> : Entity, IConnectable<ConnectsToType>, ITriggerable<ConnectsFromType> where ConnectsToType : class, ITriggerable where ConnectsFromType : class, IEntity
     {
         private readonly object _connectionsLock = new object();
 
@@ -48,6 +48,8 @@ namespace InDoOut_Core.Entities.Core
                 try { Process(triggeredBy); }
                 catch { }
             });
+
+            Log.Instance.Info($"Completed {this}");
         }
 
         /// <summary>
@@ -71,6 +73,15 @@ namespace InDoOut_Core.Entities.Core
         }
 
         /// <summary>
+        /// A string representation of this entity.
+        /// </summary>
+        /// <returns>A string representation of this entity.</returns>
+        public override string ToString()
+        {
+            return $"{base.ToString()} [Running: {Running}]";
+        }
+
+        /// <summary>
         /// Adds a connection to the entity.
         /// </summary>
         /// <param name="connection">The connection to add.</param>
@@ -83,12 +94,12 @@ namespace InDoOut_Core.Entities.Core
                 {
                     _connections.Add(connection);
 
-                    Log.Instance.Info($"Added a connection from {this} to {connection?.ToString() ?? "null"}");
+                    Log.Instance.Info($"Connection added: {this} ++++++++++ ", connection);
 
                     return true;
                 }
 
-                Log.Instance.Info($"Failed to make a connection from {this} to {connection?.ToString() ?? "null"}");
+                Log.Instance.Error($"Connection failed: {this} ++++++++++ ", connection);
 
                 return false;
             }
@@ -120,7 +131,7 @@ namespace InDoOut_Core.Entities.Core
         {
             lock (_connectionsLock)
             {
-                Log.Instance.Info($"Removed a connection from {this} to {connection?.ToString() ?? "null"}");
+                Log.Instance.Info($"Connection removed: {this} ---------- ", connection);
 
                 return connection != null && _connections.Contains(connection) ? _connections.Remove(connection) : false;
             }

@@ -3,7 +3,6 @@ using InDoOut_Core.Entities.Functions;
 using InDoOut_Core.Logging;
 using InDoOut_Core.Threading.Safety;
 using InDoOut_Core.Variables;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,7 +12,7 @@ namespace InDoOut_Core.Entities.Programs
     /// A collection of <see cref="IFunction"/> entities linked together and started through the
     /// <see cref="StartFunctions"/>.
     /// </summary>
-    public class Program : NamedEntity, IProgram
+    public class Program : Entity, IProgram
     {
         /// <summary>
         /// All functions within this program.
@@ -62,7 +61,7 @@ namespace InDoOut_Core.Entities.Programs
         {
             PassthroughValues = passthroughValues.ToList();
 
-            Log.Instance.Header($"New program created: {this}");
+            Log.Instance.Header($"Program created: {this}");
         }
 
         /// <summary>
@@ -72,13 +71,15 @@ namespace InDoOut_Core.Entities.Programs
         /// <returns>Whether the function was added.</returns>
         public bool AddFunction(IFunction function)
         {
+            Log.Instance.Info($"Attempting to add ", function, $" to: {this}");
+
             if (function != null && !Functions.Contains(function))
             {
                 function.VariableStore = VariableStore;
 
                 Functions.Add(function);
 
-                Log.Instance.Info($"New function ({function}) added to program: {this}");
+                Log.Instance.Info("Added ", function, $" to {this}");
 
                 return true;
             }
@@ -97,7 +98,7 @@ namespace InDoOut_Core.Entities.Programs
             {
                 _ = Functions.Remove(function);
 
-                Log.Instance.Info($"Function ({function}) removed from program: {this}");
+                Log.Instance.Info("Removed ", function, $" from {this}");
 
                 return true;
             }
@@ -121,7 +122,7 @@ namespace InDoOut_Core.Entities.Programs
         /// <param name="triggeredBy">The <see cref="IEntity"/> that triggered this.</param>
         public void Trigger(IEntity triggeredBy)
         {
-            Log.Instance.Header($"Program triggered: {this}");
+            Log.Instance.Header($"Triggered {this}");
 
             foreach (var startFunction in StartFunctions)
             {
@@ -144,7 +145,7 @@ namespace InDoOut_Core.Entities.Programs
         /// </summary>
         public void Stop()
         {
-            Log.Instance.Header($"Program stopping: {this}");
+            Log.Instance.Header($"Stopping {this}");
 
             foreach (var function in Functions)
             {
@@ -167,7 +168,7 @@ namespace InDoOut_Core.Entities.Programs
         /// <returns>A string representation of the program.</returns>
         public override string ToString()
         {
-            return $"{base.ToString()} ({Name})";
+            return $"[PROGRAM {base.ToString()} [Name: {Name}] [Running: {Running}]]";
         }
     }
 }

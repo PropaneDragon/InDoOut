@@ -35,44 +35,44 @@ namespace InDoOut_Core.Logging
         /// Logs an error with the given message.
         /// </summary>
         /// <param name="message">The message to log.</param>
-        public void Error(object message)
+        public void Error(params object[] message)
         {
             var calledFrom = Assembly.GetCallingAssembly();
 
-            CreateEntry(new LogMessage(message, LogMessage.LogLevel.Error, calledFrom));
+            CreateEntry(new LogMessage(LogMessage.LogLevel.Error, calledFrom, message));
         }
 
         /// <summary>
         /// Logs a warning with the given message.
         /// </summary>
         /// <param name="message">The message to log.</param>
-        public void Warning(object message)
+        public void Warning(params object[] message)
         {
             var calledFrom = Assembly.GetCallingAssembly();
 
-            CreateEntry(new LogMessage(message, LogMessage.LogLevel.Warning, calledFrom));
+            CreateEntry(new LogMessage(LogMessage.LogLevel.Warning, calledFrom, message));
         }
 
         /// <summary>
         /// Logs info with the given message.
         /// </summary>
         /// <param name="message">The message to log.</param>
-        public void Info(object message)
+        public void Info(params object[] message)
         {
             var calledFrom = Assembly.GetCallingAssembly();
 
-            CreateEntry(new LogMessage(message, LogMessage.LogLevel.Info, calledFrom));
+            CreateEntry(new LogMessage(LogMessage.LogLevel.Info, calledFrom, message));
         }
 
         /// <summary>
         /// Logs info with the given message.
         /// </summary>
         /// <param name="message">The message to log.</param>
-        public void Header(object message)
+        public void Header(params object[] message)
         {
             var calledFrom = Assembly.GetCallingAssembly();
 
-            CreateEntry(new LogMessage(message, LogMessage.LogLevel.Header, calledFrom));
+            CreateEntry(new LogMessage(LogMessage.LogLevel.Header, calledFrom, message));
         }
 
         private void CreateEntry(LogMessage message)

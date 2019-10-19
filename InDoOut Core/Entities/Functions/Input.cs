@@ -35,6 +35,15 @@ namespace InDoOut_Core.Entities.Functions
         }
 
         /// <summary>
+        /// A string representation of this entity.
+        /// </summary>
+        /// <returns>A string representation of this entity.</returns>
+        public override string ToString()
+        {
+            return $"[INPUT {base.ToString()} [Name: {Name ?? "null"}]]";
+        }
+
+        /// <summary>
         /// Checks whether an input is equal to another input.
         /// </summary>
         /// <param name="obj">The other object to compare.</param>
@@ -63,10 +72,12 @@ namespace InDoOut_Core.Entities.Functions
 
             if (Parent != null && Parent.CanBeTriggered(this))
             {
-                Log.Instance.Info($"Triggering parent from {this}: {Parent?.ToString() ?? "null"}");
+                Log.Instance.Info($"Triggering: {this} >>>>>>>>>> ", Parent);
 
                 Parent.Trigger(this);
             }
+
+            Log.Instance.Info($"Processed {this}");
         }
     }
 }

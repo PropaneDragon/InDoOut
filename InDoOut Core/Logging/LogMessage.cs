@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
@@ -37,7 +38,7 @@ namespace InDoOut_Core.Logging
         /// <summary>
         /// The log message. This contains the main part of the log that the user should see.
         /// </summary>
-        public object Message { get; protected set; }
+        public object[] Message { get; protected set; } = new object[] { };
 
         /// <summary>
         /// The assembly that activated this message. This can be used for filtering and tracing.
@@ -60,7 +61,7 @@ namespace InDoOut_Core.Logging
         /// <param name="message">The message to log.</param>
         /// <param name="level">The level of the current log.</param>
         /// <param name="calledFrom">The assembly that activated this log.</param>
-        public LogMessage(object message, LogLevel level, Assembly calledFrom) : this(message, level, calledFrom, DateTime.Now)
+        public LogMessage(LogLevel level, Assembly calledFrom, params object[] message) : this(level, calledFrom, DateTime.Now, message)
         {
         }
 
@@ -71,7 +72,7 @@ namespace InDoOut_Core.Logging
         /// <param name="level">The level of the current log.</param>
         /// <param name="calledFrom">The assembly that activated this log.</param>
         /// <param name="time">The time that this log message occurred.</param>
-        public LogMessage(object message, LogLevel level, Assembly calledFrom, DateTime time)
+        public LogMessage(LogLevel level, Assembly calledFrom, DateTime time, params object[] message)
         {
             Message = message;
             Level = level;
@@ -98,13 +99,18 @@ namespace InDoOut_Core.Logging
             return CallingAssembly?.GetName()?.Name ?? "";
         }
 
+        private string ConcatenateMessageSafely()
+        {
+            return string.Concat(Message.Select(messageObject => messageObject?.ToString() ?? "null"));
+        }
+
         private string FormatMessage()
         {
             return Level switch
             {
-                LogLevel.Header => $"### {Regex.Replace(Message.ToString().ToUpper(), ".", "$0 ")}###",
+                LogLevel.Header => $"### {Regex.Replace(ConcatenateMessageSafely().ToUpper(), ".", "$0 ")}###",
 
-                _ => $"{GetLevelGlyph(Level)} {Message}"
+                _ => $"{GetLevelGlyph(Level)} {ConcatenateMessageSafely()}"
             };
         }
 

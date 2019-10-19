@@ -145,24 +145,35 @@ namespace InDoOut_Core.Entities.Functions
         public T ValueAs<T>(T defaultValue = default) => _value.ValueAs(defaultValue);
 
         /// <summary>
+        /// A string representation of this entity.
+        /// </summary>
+        /// <returns>A string representation of this entity.</returns>
+        public override string ToString()
+        {
+            return $"[RESULT {base.ToString()} [Name: {Name ?? "null"}] [Value: {RawValue ?? "null"}]]";
+        }
+
+        /// <summary>
         /// Processes the result from the function that triggered it.
         /// </summary>
         /// <param name="triggeredBy">The function that triggered this result.</param>
         protected override void Process(IFunction triggeredBy)
         {
-            Log.Instance.Info($"Processing {this} as {Name ?? "null"}");
+            Log.Instance.Info($"Processing {this}");
 
             if (SetVariable(triggeredBy?.VariableStore))
             {
-                Log.Instance.Info($"Value for {Name ?? "null"}: {RawValue ?? "null"}");
+                Log.Instance.Info($"Applied variable value: {this}");
             }
             else
             {
-                Log.Instance.Error($"Failed to set value for {Name ?? "null"}");
+                Log.Instance.Error($"Failed to apply variable value for {this}");
             }
 
             foreach (var connection in Connections)
             {
+                Log.Instance.Info($"Setting: {this} ========== ", connection);
+
                 connection.Trigger(this);
             }
 
@@ -170,6 +181,8 @@ namespace InDoOut_Core.Entities.Functions
             {
                 Thread.Sleep(TimeSpan.FromMilliseconds(1));
             }
+
+            Log.Instance.Info($"Processed {this}");
         }
     }
 }

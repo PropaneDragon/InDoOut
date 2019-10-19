@@ -124,23 +124,23 @@
             <param name="value">The value of the type to convert to a string.</param>
             <returns>A string representation of the value given.</returns>
         </member>
-        <member name="T:InDoOut_Core.Entities.Core.NamedEntity">
+        <member name="T:InDoOut_Core.Entities.Core.Entity">
             <summary>
             A base, saveable entity. The root of all other entities.
             </summary>
             <seealso cref="T:InDoOut_Core.Entities.Core.IEntity"/>
         </member>
-        <member name="P:InDoOut_Core.Entities.Core.NamedEntity.Id">
+        <member name="P:InDoOut_Core.Entities.Core.Entity.Id">
             <summary>
             The unique ID of this entity.
             </summary>
         </member>
-        <member name="P:InDoOut_Core.Entities.Core.NamedEntity.Metadata">
+        <member name="P:InDoOut_Core.Entities.Core.Entity.Metadata">
             <summary>
             Metadata associated with the entity.
             </summary>
         </member>
-        <member name="M:InDoOut_Core.Entities.Core.NamedEntity.ToString">
+        <member name="M:InDoOut_Core.Entities.Core.Entity.ToString">
             <summary>
             Gets the string representation of this entity.
             </summary>
@@ -231,6 +231,12 @@
             </summary>
             <param name="entity">The entity to check.</param>
             <returns>Whether the given <see cref="T:InDoOut_Core.Entities.Core.IEntity"/> can trigger this.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Core.InteractiveEntity`2.ToString">
+            <summary>
+            A string representation of this entity.
+            </summary>
+            <returns>A string representation of this entity.</returns>
         </member>
         <member name="M:InDoOut_Core.Entities.Core.InteractiveEntity`2.AddConnection(`0)">
             <summary>
@@ -424,6 +430,12 @@
             this method is called.
             </summary>
             <seealso cref="P:InDoOut_Core.Entities.Functions.Function.StopRequested"/>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Functions.Function.ToString">
+            <summary>
+            A string representation of this entity.
+            </summary>
+            <returns>A string representation of this entity.</returns>
         </member>
         <member name="M:InDoOut_Core.Entities.Functions.Function.CreateInput(System.String)">
             <summary>
@@ -673,6 +685,12 @@
             <param name="parent">The <see cref="T:InDoOut_Core.Entities.Functions.IFunction"/> this input belongs to.</param>
             <param name="name">The name of this input.</param>
         </member>
+        <member name="M:InDoOut_Core.Entities.Functions.Input.ToString">
+            <summary>
+            A string representation of this entity.
+            </summary>
+            <returns>A string representation of this entity.</returns>
+        </member>
         <member name="M:InDoOut_Core.Entities.Functions.Input.Equals(System.Object)">
             <summary>
             Checks whether an input is equal to another input.
@@ -880,6 +898,16 @@
             <param name="variable">The variable to set.</param>
             <returns>Whether the variable was set or not.</returns>
         </member>
+        <member name="T:InDoOut_Core.Entities.Functions.ISelfRunnerFunction">
+            <summary>
+            Represents a function capable of running an <see cref="T:InDoOut_Core.Entities.Programs.IProgram"/> within itself.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Functions.ISelfRunnerFunction.LoadedProgram">
+            <summary>
+            The program currently loaded into the function.
+            </summary>
+        </member>
         <member name="T:InDoOut_Core.Entities.Functions.IStartFunction">
             <summary>
             Represents a function that is called automatically when the <see cref="T:InDoOut_Core.Entities.Programs.IProgram"/> is started.
@@ -956,6 +984,12 @@
             </summary>
             <param name="input">The <see cref="T:InDoOut_Core.Entities.Functions.IInput"/> to disconnect from.</param>
             <returns>Whether the connection was disconnected.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Functions.Output.ToString">
+            <summary>
+            A string representation of this entity.
+            </summary>
+            <returns>A string representation of this entity.</returns>
         </member>
         <member name="M:InDoOut_Core.Entities.Functions.Output.Equals(System.Object)">
             <summary>
@@ -1124,6 +1158,12 @@
             <param name="defaultValue">On failure, default to this value.</param>
             <returns>The value as <typeparamref name="Type"/>, or <paramref name="defaultValue"/> if failed.</returns>
         </member>
+        <member name="M:InDoOut_Core.Entities.Functions.Property`1.ToString">
+            <summary>
+            A string representation of this entity.
+            </summary>
+            <returns>A string representation of this entity.</returns>
+        </member>
         <member name="M:InDoOut_Core.Entities.Functions.Property`1.Process(InDoOut_Core.Entities.Functions.IResult)">
             <summary>
             Processes the property fro the <see cref="T:InDoOut_Core.Entities.Functions.IResult"/> that triggered it.
@@ -1232,11 +1272,28 @@
             <param name="defaultValue">The default value to return if converison is not possible.</param>
             <returns>The <see cref="P:InDoOut_Core.Entities.Functions.Result.RawValue"/> as type <typeparamref name="T"/>, or <paramref name="defaultValue"/> if conversion was not possible.</returns>
         </member>
+        <member name="M:InDoOut_Core.Entities.Functions.Result.ToString">
+            <summary>
+            A string representation of this entity.
+            </summary>
+            <returns>A string representation of this entity.</returns>
+        </member>
         <member name="M:InDoOut_Core.Entities.Functions.Result.Process(InDoOut_Core.Entities.Functions.IFunction)">
             <summary>
             Processes the result from the function that triggered it.
             </summary>
             <param name="triggeredBy">The function that triggered this result.</param>
+        </member>
+        <member name="T:InDoOut_Core.Entities.Functions.SelfRunnerFunction">
+            <summary>
+            A function that is capable of running another <see cref="T:InDoOut_Core.Entities.Programs.IProgram"/> internally. This allows
+            for visibility into what the program is processing.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Functions.SelfRunnerFunction.LoadedProgram">
+            <summary>
+            The currently loaded program.
+            </summary>
         </member>
         <member name="T:InDoOut_Core.Entities.Functions.StartFunction">
             <summary>
@@ -1521,25 +1578,25 @@
             All current logs that have been sent so far, up to <see cref="P:InDoOut_Core.Logging.Log.MaxLogMessages"/>.
             </summary>
         </member>
-        <member name="M:InDoOut_Core.Logging.Log.Error(System.Object)">
+        <member name="M:InDoOut_Core.Logging.Log.Error(System.Object[])">
             <summary>
             Logs an error with the given message.
             </summary>
             <param name="message">The message to log.</param>
         </member>
-        <member name="M:InDoOut_Core.Logging.Log.Warning(System.Object)">
+        <member name="M:InDoOut_Core.Logging.Log.Warning(System.Object[])">
             <summary>
             Logs a warning with the given message.
             </summary>
             <param name="message">The message to log.</param>
         </member>
-        <member name="M:InDoOut_Core.Logging.Log.Info(System.Object)">
+        <member name="M:InDoOut_Core.Logging.Log.Info(System.Object[])">
             <summary>
             Logs info with the given message.
             </summary>
             <param name="message">The message to log.</param>
         </member>
-        <member name="M:InDoOut_Core.Logging.Log.Header(System.Object)">
+        <member name="M:InDoOut_Core.Logging.Log.Header(System.Object[])">
             <summary>
             Logs info with the given message.
             </summary>
@@ -1597,7 +1654,7 @@
             The time that this message was logged.
             </summary>
         </member>
-        <member name="M:InDoOut_Core.Logging.LogMessage.#ctor(System.Object,InDoOut_Core.Logging.LogMessage.LogLevel,System.Reflection.Assembly)">
+        <member name="M:InDoOut_Core.Logging.LogMessage.#ctor(InDoOut_Core.Logging.LogMessage.LogLevel,System.Reflection.Assembly,System.Object[])">
             <summary>
             Creates a basic <see cref="T:InDoOut_Core.Logging.LogMessage"/>.
             </summary>
@@ -1605,7 +1662,7 @@
             <param name="level">The level of the current log.</param>
             <param name="calledFrom">The assembly that activated this log.</param>
         </member>
-        <member name="M:InDoOut_Core.Logging.LogMessage.#ctor(System.Object,InDoOut_Core.Logging.LogMessage.LogLevel,System.Reflection.Assembly,System.DateTime)">
+        <member name="M:InDoOut_Core.Logging.LogMessage.#ctor(InDoOut_Core.Logging.LogMessage.LogLevel,System.Reflection.Assembly,System.DateTime,System.Object[])">
             <summary>
             Creates a basic <see cref="T:InDoOut_Core.Logging.LogMessage"/>, with manual entry of the <paramref name="time"/>.
             </summary>

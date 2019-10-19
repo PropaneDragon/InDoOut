@@ -148,11 +148,20 @@ namespace InDoOut_Core.Entities.Functions
         {
             if (Running)
             {
-                Log.Instance.Info($"Attempting to stop stopping {this}");
+                Log.Instance.Info($"Attempting to stop {this}");
 
                 StopRequested = true;
                 State = State.Stopping;
             }
+        }
+
+        /// <summary>
+        /// A string representation of this entity.
+        /// </summary>
+        /// <returns>A string representation of this entity.</returns>
+        public override string ToString()
+        {
+            return $"[FUNCTION {base.ToString()} [Name: {SafeName ?? "null"}] [State: {State}]]";
         }
 
         /// <summary>
@@ -162,14 +171,14 @@ namespace InDoOut_Core.Entities.Functions
         /// <returns>The input that was created.</returns>
         protected IInput CreateInput(string name = "Input")
         {
-            Log.Instance.Info($"Attempting to build an input on {this} with a name of {name ?? "null"}");
+            Log.Instance.Info($"Attempting to build an input named \"", name, $"\" on {this}");
 
             var input = TryGet.ValueOrDefault(() => BuildInput(name), null);
             if (input != null && !Inputs.Contains(input))
             {
                 Inputs.Add(input);
 
-                Log.Instance.Info($"Input successfully built on {this}");
+                Log.Instance.Info("Built ", input, $" on {this}: ");
 
                 return input;
             }
@@ -185,12 +194,12 @@ namespace InDoOut_Core.Entities.Functions
         /// <returns>The output that was created.</returns>
         protected IOutput CreateOutput(string name = "Output", OutputType outputType = OutputType.Neutral)
         {
-            Log.Instance.Info($"Attempting to build an output on {this} with a name of {name ?? "null"} and an output type of {outputType}");
+            Log.Instance.Info($"Attempting to build an output named \"", name, $"\" with output type of \"{outputType}\" on {this}");
 
             var output = TryGet.ValueOrDefault(() => BuildOutput(name, outputType), null);
             if (output != null && AddConnection(output))
             {
-                Log.Instance.Info($"Output successfully built on {this}");
+                Log.Instance.Info("Built ", output, $" on {this}: ");
 
                 return output;
             }
@@ -216,7 +225,7 @@ namespace InDoOut_Core.Entities.Functions
         /// <returns>The given <paramref name="property"/>.</returns>
         protected T AddProperty<T>(T property, bool mirrorAsResult = true) where T : IProperty
         {
-            Log.Instance.Info($"Attempting to add a property {property.ToString() ?? "null"} to {this}");
+            Log.Instance.Info($"Attempting to add a property ", property, $" to {this}");
 
             if (property != null && !Properties.Contains(property))
             {
@@ -224,12 +233,16 @@ namespace InDoOut_Core.Entities.Functions
 
                 if (property.Connect(this))
                 {
-                    Log.Instance.Info($"Property successfully built on {this}");
+                    Log.Instance.Info("Connected ", property, $" to {this}");
+                }
+                else
+                {
+                    Log.Instance.Error("Failed to connect ", property, $" to {this}");
                 }
 
                 if (mirrorAsResult)
                 {
-                    Log.Instance.Info($"Mirroring property as result on {this}");
+                    Log.Instance.Info($"Mirroring {this} as a result");
 
                     _mirroredResults[property] = AddResult(new Result($"{property.Name} *", $"Passthrough: {property.Description}", property.RawComputedValue));
                 }
@@ -247,11 +260,17 @@ namespace InDoOut_Core.Entities.Functions
         /// <returns>The given <paramref name="result"/>.</returns>
         protected T AddResult<T>(T result) where T : IResult
         {
-            Log.Instance.Info($"Attempting to add a result {result.ToString() ?? "null"} to {this}");
+            Log.Instance.Info($"Attempting to add a result ", result, $" to {this}");
 
             if (result != null && !Results.Contains(result))
             {
+                Log.Instance.Info("Added ", result, $" to {this}");
+
                 Results.Add(result);
+            }
+            else
+            {
+                Log.Instance.Info("Failed to add ", result, $" to {this}");
             }
 
             return result;
@@ -336,7 +355,7 @@ namespace InDoOut_Core.Entities.Functions
                 }
                 catch (Exception ex)
                 {
-                    Log.Instance.Info($"Exception thrown by {this}: {ex.Message}");
+                    Log.Instance.Error($"Exception thrown by {this}: {ex.Message}");
 
                     var outputToTrigger = TryGet.ValueOrDefault(() => TriggerOnFailure, null);
                     if (outputToTrigger != null)
@@ -353,8 +372,10 @@ namespace InDoOut_Core.Entities.Functions
             }
             else
             {
-                Log.Instance.Info($"Processing not carried out due to being disabled on {this}");
+                Log.Instance.Error($"Processing not carried out due to being disabled on {this}");
             }
+
+            Log.Instance.Info($"Processed {this}");
         }
 
         /// <summary>
@@ -367,7 +388,7 @@ namespace InDoOut_Core.Entities.Functions
 
         private void TriggerOutput(IOutput output)
         {
-            Log.Instance.Info($"Triggering output from {this}: {output?.ToString() ?? "null"}");
+            Log.Instance.Info($"Triggering: {this} >>>>>>>>>> ", output);
 
             if (State != State.Stopping && output != null && Outputs.Contains(output) && output.CanBeTriggered(this))
             {
@@ -375,7 +396,7 @@ namespace InDoOut_Core.Entities.Functions
             }
             else
             {
-                Log.Instance.Info($"Could not trigger output on {this}");
+                Log.Instance.Error($"Could not trigger ", output, $" from {this}");
             }
         }
     }
