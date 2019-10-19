@@ -54,9 +54,9 @@ namespace InDoOut_Testing
         /// <param name="triggeredBy">The entity that triggered this connection.</param>
         protected override void Process(IOutput triggeredBy)
         {
+            ++TriggeredCount;
             LastTriggeredBy = triggeredBy;
             Triggered = true;
-            ++TriggeredCount;
 
             base.Process(triggeredBy);
         }

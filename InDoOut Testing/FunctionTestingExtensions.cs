@@ -154,12 +154,7 @@ namespace InDoOut_Testing
         public static string GetResultValue(this IFunction function, string resultName)
         {
             var foundResult = function?.GetResultByName(resultName);
-            if (foundResult != null)
-            {
-                return foundResult.RawValue;
-            }
-
-            return null;
+            return foundResult?.RawValue;
         }
 
         private static T FindByName<T>(List<T> names, string name) where T : class, INamed
