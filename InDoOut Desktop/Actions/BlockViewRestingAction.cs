@@ -1,7 +1,9 @@
-﻿using InDoOut_Desktop.Actions.Copying;
+﻿using InDoOut_Core.Entities.Functions;
+using InDoOut_Desktop.Actions.Copying;
 using InDoOut_Desktop.Actions.Deleting;
 using InDoOut_Desktop.Actions.Dragging;
 using InDoOut_Desktop.Actions.Selecting;
+using InDoOut_Desktop.UI.Controls.BlockView;
 using InDoOut_Desktop.UI.Interfaces;
 using System.Linq;
 using System.Windows;
@@ -110,6 +112,29 @@ namespace InDoOut_Desktop.Actions
                     if (_blockView.GetFirstElementOfType<IUIConnection>(elementsUnderMouse) is IUIConnection connection)
                     {
                         Finish(new ConnectionMenuAction(connection, _blockView, mousePosition));
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        public override bool MouseDoubleClick(Point mousePosition)
+        {
+            if (_blockView != null)
+            {
+                var elementsUnderMouse = _blockView.GetElementsUnderMouse();
+                if (elementsUnderMouse.Count > 0)
+                {
+                    if (_blockView.GetFirstElementOfType<IUIFunction>(elementsUnderMouse) is IUIFunction uiFunction && uiFunction is FrameworkElement element && uiFunction?.AssociatedFunction is ISelfRunnerFunction selfRunnerFunction && selfRunnerFunction.LoadedProgram != null)
+                    {
+                        /*var previewBlockView = new BlockView(selfRunnerFunction.LoadedProgram)
+                        {
+                            Width = 300,
+                            Height = 300
+                        };
+
+                        _blockView.Add(previewBlockView, _blockView.GetPosition(element));*/
                     }
                 }
             }

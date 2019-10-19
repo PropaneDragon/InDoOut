@@ -419,6 +419,13 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
             e.Handled = false;
         }
 
+        private void Scroll_Content_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            _ = _actionHandler?.MouseDoubleClick(e.GetPosition(sender as ScrollViewer));
+
+            e.Handled = false;
+        }
+
         private void Scroll_Content_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             _ = _actionHandler?.KeyDown(e.Key);

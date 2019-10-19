@@ -15,6 +15,7 @@ namespace InDoOut_Desktop.Actions
         public virtual bool MouseRightDown(Point mousePosition) => false;
         public virtual bool MouseRightMove(Point mousePosition) => false;
         public virtual bool MouseRightUp(Point mousePosition) => false;
+        public virtual bool MouseDoubleClick(Point mousePosition) => false;
         public virtual bool KeyDown(Key key) => false;
         public virtual bool KeyUp(Key key) => false;
 

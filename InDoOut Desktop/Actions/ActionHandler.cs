@@ -26,6 +26,7 @@ namespace InDoOut_Desktop.Actions
         public bool MouseRightDown(Point mousePosition) => CurrentAction?.MouseRightDown(mousePosition) ?? false;
         public bool MouseRightMove(Point mousePosition) => CurrentAction?.MouseRightMove(mousePosition) ?? false;
         public bool MouseRightUp(Point mousePosition) => CurrentAction?.MouseRightUp(mousePosition) ?? false;
+        public bool MouseDoubleClick(Point mousePosition) => CurrentAction?.MouseDoubleClick(mousePosition) ?? false;
         public bool KeyDown(Key key) => CurrentAction?.KeyDown(key) ?? false;
         public bool KeyUp(Key key) => CurrentAction?.KeyUp(key) ?? false;
 

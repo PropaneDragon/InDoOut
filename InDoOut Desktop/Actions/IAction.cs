@@ -15,6 +15,7 @@ namespace InDoOut_Desktop.Actions
         bool MouseRightMove(Point mousePosition);
         bool MouseRightDown(Point mousePosition);
         bool MouseRightUp(Point mousePosition);
+        bool MouseDoubleClick(Point mousePosition);
         bool KeyDown(Key key);
         bool KeyUp(Key key);
     }

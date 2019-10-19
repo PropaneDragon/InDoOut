@@ -364,5 +364,10 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
         {
             _function?.Trigger(null);
         }
+
+        private void UserControl_PreviewMouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+
+        }
     }
 }
