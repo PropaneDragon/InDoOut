@@ -1,6 +1,8 @@
 ﻿using InDoOut_Console.Display;
+using InDoOut_Core.Entities.Functions;
 using InDoOut_Core.Entities.Programs;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
@@ -24,7 +26,7 @@ namespace InDoOut_Console.ProgramView
                 var currentCursorPositionTop = Console.CursorTop;
                 var charactersToWrite = 0;
 
-                while (IsProgramRunning())
+                while (IsProgramRunning(_program))
                 {
                     currentCursorPositionTop = Console.CursorTop;
                     charactersToWrite = Console.BufferWidth * ((currentCursorPositionTop - originalCursorPositionTop) + 1);
@@ -33,7 +35,7 @@ namespace InDoOut_Console.ProgramView
                     Console.Write(new string(' ', charactersToWrite));
                     Console.SetCursorPosition(originalCursorPositionLeft, originalCursorPositionTop);
 
-                    var runningFunctions = _program.Functions.Where(function => function.Running);
+                    var runningFunctions = GetAllFunctionsForProgram(_program).Where(function => function.Running);
 
                     Console.WriteLine();
                     ColourConsole.WriteInfoLine("Running:");
@@ -64,15 +66,35 @@ namespace InDoOut_Console.ProgramView
             }
         }
 
-        private bool IsProgramRunning()
+        private List<IFunction> GetAllFunctionsForProgram(IProgram program)
         {
-            if (_program != null)
+            var functions = new List<IFunction>();
+
+            if (program != null)
             {
-                var maxRetry = 3;
+                foreach (var function in program.Functions)
+                {
+                    if (function is ISelfRunnerFunction selfRunner)
+                    {
+                        functions.AddRange(GetAllFunctionsForProgram(selfRunner.LoadedProgram));
+                    }
+
+                    functions.Add(function);
+                }
+            }
+
+            return functions;
+        }
+
+        private bool IsProgramRunning(IProgram program)
+        {
+            if (program != null)
+            {
+                var maxRetry = 100;
 
                 for (var retryCount = 0; retryCount < maxRetry; ++retryCount)
                 {
-                    if (_program.Running)
+                    if (program.Running)
                     {
                         return true;
                     }

@@ -16,7 +16,7 @@ namespace InDoOut_Executable_Core.Logging
         private int _completeResetTime = 0;
         private DateTime _lastLogTime = DateTime.MinValue;
 
-        public string LogFileName => "IDO.log";
+        public string LogFileName { get; set; } = "IDO.log";
 
         public LogFileSaver(IStandardLocations locations)
         {

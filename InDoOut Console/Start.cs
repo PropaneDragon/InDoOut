@@ -8,6 +8,7 @@ using InDoOut_Executable_Core.Logging;
 using InDoOut_Json_Storage;
 using InDoOut_Plugins.Loaders;
 using System;
+using System.IO;
 using System.Linq;
 using System.Threading;
 
@@ -58,9 +59,12 @@ namespace InDoOut_Console
             if (args.Length > 0)
             {
                 var programToStart = args[0];
+
                 if (!string.IsNullOrEmpty(programToStart))
                 {
                     ColourConsole.WriteInfoLine(new ColourBlock("Attempting to load program at "), new ColourBlock(programToStart, ConsoleColor.Yellow), new ColourBlock("..."));
+
+                    logFileSaver.LogFileName = $"IDO-{Path.GetFileNameWithoutExtension(programToStart)}.log";
 
                     var program = new Program();
                     var storage = new ProgramJsonStorer(new FunctionBuilder(), LoadedPlugins.Instance, programToStart);
@@ -96,6 +100,8 @@ namespace InDoOut_Console
                         }
 
                         ColourConsole.WriteInfoLine("Program loaded successfully.", ConsoleColor.Green);
+
+                        _ = StandardLocations.Instance.SetPathTo(Location.SaveFile, programToStart);
 
                         if (program.StartFunctions.Count > 0)
                         {

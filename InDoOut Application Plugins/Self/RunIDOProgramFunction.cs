@@ -11,14 +11,16 @@ using System.Threading;
 
 namespace InDoOut_Application_Plugins.Self
 {
-    public class RunIDOProgramFunction : Function
+    public class RunIDOProgramFunction : SelfRunnerFunction
     {
-        private static readonly int MAX_WAIT_COUNT = 3;
+        private static readonly int MAX_WAIT_COUNT = 100;
 
         private readonly IOutput _completed, _failed;
         private readonly IProperty<string> _programPath;
-        private readonly List<IProperty<string>> _inputValues = new List<IProperty<string>>();
         private readonly IResult _result;
+        private readonly List<IProperty<string>> _inputValues = new List<IProperty<string>>();
+
+        private IProgram _currentProgram = null;
 
         public override IOutput TriggerOnFailure => _failed;
 
@@ -29,6 +31,8 @@ namespace InDoOut_Application_Plugins.Self
         public override string Group => "Self";
 
         public override string[] Keywords => new[] { "function", "run", "runner", "selfaware", "aware" };
+
+        public override IProgram LoadedProgram => _currentProgram;
 
         public RunIDOProgramFunction()
         {
@@ -56,18 +60,24 @@ namespace InDoOut_Application_Plugins.Self
 
                 if (plugins != null)
                 {
-                    var loader = new ProgramJsonStorer(builder, plugins, _programPath.FullValue);
-                    var program = new Program(_inputValues.Select(value => value.FullValue).ToArray());
-                    var loadResult = loader.Load(program);
+                    _currentProgram = new Program(_inputValues.Select(value => value.FullValue).ToArray());
 
-                    if (loadResult.Count == 0 && program.StartFunctions.Count > 0)
+                    var loader = new ProgramJsonStorer(builder, plugins, _programPath.FullValue);
+                    var loadResult = loader.Load(_currentProgram);
+
+                    if (loadResult.Count == 0 && _currentProgram.StartFunctions.Count > 0)
                     {
-                        program.Trigger(this);
+                        _currentProgram.Trigger(this);
 
                         var waitCount = 0;
-                        while(waitCount < MAX_WAIT_COUNT)
+                        while (waitCount < MAX_WAIT_COUNT)
                         {
-                            if (program.Running)
+                            if (StopRequested && !_currentProgram.Stopping)
+                            {
+                                _currentProgram.Stop();
+                            }
+
+                            if (_currentProgram.Running || _currentProgram.Stopping)
                             {
                                 waitCount = 0;
                             }
@@ -80,6 +90,12 @@ namespace InDoOut_Application_Plugins.Self
                         }
 
                         _result.RawValue = ""; //Todo: Add result from program when implemented.
+
+                        _currentProgram.Stop();
+                        _currentProgram = null;
+
+                        loader = null;
+                        builder = null;
 
                         return _completed;
                     }
