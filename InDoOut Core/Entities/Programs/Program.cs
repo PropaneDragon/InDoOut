@@ -34,7 +34,7 @@ namespace InDoOut_Core.Entities.Programs
         /// <summary>
         /// Whether any of the functions within this program are running.
         /// </summary>
-        public bool Running => Functions.Any(function => function.Running);
+        public bool Running => Functions.Any(function => function.Running || function.Outputs.Any(output => output != function && output.Running));
 
         /// <summary>
         /// Whether any of the functions within this program are still stopping.

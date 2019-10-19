@@ -13,6 +13,7 @@ namespace InDoOut_Core.Entities.Core
     public abstract class InteractiveEntity<ConnectsToType, ConnectsFromType> : Entity, IConnectable<ConnectsToType>, ITriggerable<ConnectsFromType> where ConnectsToType : class, ITriggerable where ConnectsFromType : class, IEntity
     {
         private readonly object _connectionsLock = new object();
+        private readonly List<TaskStatus> _validRunningStatuses = new List<TaskStatus>() { TaskStatus.Created, TaskStatus.Running, TaskStatus.WaitingForActivation, TaskStatus.WaitingForChildrenToComplete, TaskStatus.WaitingToRun };
 
         private Task _runner = null;
         private readonly List<ConnectsToType> _connections = new List<ConnectsToType>();
@@ -20,7 +21,7 @@ namespace InDoOut_Core.Entities.Core
         /// <summary>
         /// The current running state of this entity.
         /// </summary>
-        public bool Running => _runner != null && (_runner.Status == TaskStatus.Running || _runner.Status == TaskStatus.WaitingToRun || _runner.Status == TaskStatus.WaitingForChildrenToComplete || _runner.Status == TaskStatus.WaitingForActivation);
+        public bool Running => _runner != null && _validRunningStatuses.Contains(_runner.Status);
 
         /// <summary>
         /// The connections that this entity has.
