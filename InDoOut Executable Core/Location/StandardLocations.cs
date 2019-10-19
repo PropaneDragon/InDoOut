@@ -47,7 +47,7 @@ namespace InDoOut_Executable_Core.Location
             return _editablePaths.Contains(location);
         }
 
-        public bool PathSet(Location location)
+        public bool IsPathSet(Location location)
         {
             return !string.IsNullOrEmpty(GetPathTo(location));
         }

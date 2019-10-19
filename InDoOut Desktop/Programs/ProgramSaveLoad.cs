@@ -1,6 +1,7 @@
 ﻿using InDoOut_Core.Entities.Programs;
 using InDoOut_Core.Instancing;
 using InDoOut_Core.Reporting;
+using InDoOut_Executable_Core.Location;
 using InDoOut_Executable_Core.Storage;
 using Microsoft.Win32;
 using System.Collections.Generic;
@@ -54,6 +55,8 @@ namespace InDoOut_Desktop.Programs
                         programStorer.FilePath = filePath;
 
                         failureReports.AddRange(await Task.Run(() => programStorer.Load(program)));
+
+                        _ = StandardLocations.Instance.SetPathTo(Location.SaveFile, filePath);
 
                         program.Metadata[PROGRAM_METADATA_LAST_LOADED_FROM] = filePath;
                         program.SetName(Path.GetFileNameWithoutExtension(filePath));
@@ -161,6 +164,8 @@ namespace InDoOut_Desktop.Programs
             }
             else if (program != null)
             {
+                _ = StandardLocations.Instance.SetPathTo(Location.SaveFile, filePath);
+
                 program.Metadata[PROGRAM_METADATA_LAST_LOADED_FROM] = filePath;
                 program.SetName(Path.GetFileNameWithoutExtension(filePath));
             }
