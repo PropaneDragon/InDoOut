@@ -33,8 +33,8 @@ namespace InDoOut_Core_Tests
         public IInput CreateInputPublic(string name = "Input") => CreateInput(name);
         public IOutput CreateOutputPublic(string name = "Output", OutputType outputType = OutputType.Neutral) => CreateOutput(name, outputType);
         public IOutput CreateOutputPublic(OutputType outputType, string name = "Output") => CreateOutput(name, outputType);
-        public T AddPropertyPublic<T>(T property, bool mirrorAsResult = true) where T : IProperty => AddProperty<T>(property, mirrorAsResult);
-        public T AddResultPublic<T>(T result) where T : IResult => AddResult<T>(result);
+        public T AddPropertyPublic<T>(T property, bool mirrorAsResult = true) where T : IProperty => AddProperty(property, mirrorAsResult);
+        public T AddResultPublic<T>(T result) where T : IResult => AddResult(result);
 
         protected override IOutput Started(IInput triggeredBy)
         {

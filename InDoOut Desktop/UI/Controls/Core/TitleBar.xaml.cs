@@ -42,7 +42,7 @@ namespace InDoOut_Desktop.UI.Controls.Core
 
                 WindowChrome.SetWindowChrome(window, chrome);
 
-                HwndSource source = HwndSource.FromHwnd(new WindowInteropHelper(_attachedWindow).Handle);
+                var source = HwndSource.FromHwnd(new WindowInteropHelper(_attachedWindow).Handle);
                 source.AddHook(WindowHook);
             }
         }
@@ -75,7 +75,7 @@ namespace InDoOut_Desktop.UI.Controls.Core
             return IntPtr.Zero;
         }
 
-        private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             AttachToWindow();
 

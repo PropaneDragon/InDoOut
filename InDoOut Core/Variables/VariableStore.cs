@@ -60,7 +60,7 @@ namespace InDoOut_Core.Variables
         public T GetVariableValueAs<T>(string name, T defaultValue = default)
         {
             var foundVariable = GetVariable(name);
-            return foundVariable == null ? defaultValue : foundVariable.ValueAs<T>(defaultValue);
+            return foundVariable == null ? defaultValue : foundVariable.ValueAs(defaultValue);
         }
 
         /// <summary>

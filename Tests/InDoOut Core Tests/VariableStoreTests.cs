@@ -59,13 +59,13 @@ namespace InDoOut_Core_Tests
             Assert.IsTrue(variableStore.SetVariable("bool", "true"));
 
             Assert.AreEqual(12, variableStore.GetVariableValueAs<int>("integer"));
-            Assert.AreEqual(12, variableStore.GetVariableValueAs<int>("integer", 34));
+            Assert.AreEqual(12, variableStore.GetVariableValueAs("integer", 34));
             Assert.AreEqual(987.6543f, variableStore.GetVariableValueAs<float>("floatdouble"));
-            Assert.AreEqual(987.6543f, variableStore.GetVariableValueAs<float>("floatdouble", 84646.5416f));
+            Assert.AreEqual(987.6543f, variableStore.GetVariableValueAs("floatdouble", 84646.5416f));
             Assert.AreEqual(987.6543d, variableStore.GetVariableValueAs<double>("floatdouble"));
-            Assert.AreEqual(987.6543d, variableStore.GetVariableValueAs<double>("floatdouble", 541615.515d));
+            Assert.AreEqual(987.6543d, variableStore.GetVariableValueAs("floatdouble", 541615.515d));
             Assert.IsTrue(variableStore.GetVariableValueAs<bool>("bool"));
-            Assert.IsTrue(variableStore.GetVariableValueAs<bool>("bool", false));
+            Assert.IsTrue(variableStore.GetVariableValueAs("bool", false));
 
             Assert.AreEqual(default, variableStore.GetVariableValueAs<int>("string"));
             Assert.AreEqual(default, variableStore.GetVariableValueAs<bool>("string"));

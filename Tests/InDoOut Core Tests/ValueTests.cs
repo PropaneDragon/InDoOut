@@ -63,72 +63,72 @@ namespace InDoOut_Core_Tests
             Assert.AreEqual("Actually not null", namedValue.ValueOrDefault("not null"));
 
             Assert.AreEqual(default, namedValue.ValueAs<int>());
-            Assert.AreEqual(-80085, namedValue.ValueAs<int>(-80085));
+            Assert.AreEqual(-80085, namedValue.ValueAs(-80085));
 
             Assert.AreEqual(default, namedValue.ValueAs<double>());
-            Assert.AreEqual(123.4546d, namedValue.ValueAs<double>(123.4546));
+            Assert.AreEqual(123.4546d, namedValue.ValueAs(123.4546));
 
             Assert.AreEqual(default, namedValue.ValueAs<float>());
-            Assert.AreEqual(-65654.51f, namedValue.ValueAs<float>(-65654.51f));
+            Assert.AreEqual(-65654.51f, namedValue.ValueAs(-65654.51f));
 
             Assert.AreEqual(default, namedValue.ValueAs<bool>());
-            Assert.AreEqual(true, namedValue.ValueAs<bool>(true));
+            Assert.AreEqual(true, namedValue.ValueAs(true));
 
             namedValue.RawValue = "-1234";
 
             Assert.AreEqual(-1234, namedValue.ValueAs<int>());
-            Assert.AreEqual(-1234, namedValue.ValueAs<int>(-80085));
+            Assert.AreEqual(-1234, namedValue.ValueAs(-80085));
 
             Assert.AreEqual(-1234d, namedValue.ValueAs<double>());
-            Assert.AreEqual(-1234d, namedValue.ValueAs<double>(123.4546));
+            Assert.AreEqual(-1234d, namedValue.ValueAs(123.4546));
 
             Assert.AreEqual(-1234f, namedValue.ValueAs<float>());
-            Assert.AreEqual(-1234f, namedValue.ValueAs<float>(-65654.5156f));
+            Assert.AreEqual(-1234f, namedValue.ValueAs(-65654.5156f));
 
             Assert.AreEqual(default, namedValue.ValueAs<bool>());
-            Assert.AreEqual(true, namedValue.ValueAs<bool>(true));
+            Assert.AreEqual(true, namedValue.ValueAs(true));
 
             namedValue.RawValue = "5678.92";
 
             Assert.AreEqual(default, namedValue.ValueAs<int>());
-            Assert.AreEqual(-80085, namedValue.ValueAs<int>(-80085));
+            Assert.AreEqual(-80085, namedValue.ValueAs(-80085));
 
             Assert.AreEqual(5678.92d, namedValue.ValueAs<double>());
-            Assert.AreEqual(5678.92d, namedValue.ValueAs<double>(123.4546));
+            Assert.AreEqual(5678.92d, namedValue.ValueAs(123.4546));
 
             Assert.AreEqual(5678.92f, namedValue.ValueAs<float>());
-            Assert.AreEqual(5678.92f, namedValue.ValueAs<float>(-65654.5156f));
+            Assert.AreEqual(5678.92f, namedValue.ValueAs(-65654.5156f));
 
             Assert.AreEqual(default, namedValue.ValueAs<bool>());
-            Assert.AreEqual(true, namedValue.ValueAs<bool>(true));
+            Assert.AreEqual(true, namedValue.ValueAs(true));
 
             namedValue.RawValue = "true";
 
             Assert.AreEqual(default, namedValue.ValueAs<int>());
-            Assert.AreEqual(-80085, namedValue.ValueAs<int>(-80085));
+            Assert.AreEqual(-80085, namedValue.ValueAs(-80085));
 
             Assert.AreEqual(default, namedValue.ValueAs<double>());
-            Assert.AreEqual(123.4546d, namedValue.ValueAs<double>(123.4546));
+            Assert.AreEqual(123.4546d, namedValue.ValueAs(123.4546));
 
             Assert.AreEqual(default, namedValue.ValueAs<float>());
-            Assert.AreEqual(-65654.51f, namedValue.ValueAs<float>(-65654.51f));
+            Assert.AreEqual(-65654.51f, namedValue.ValueAs(-65654.51f));
 
             Assert.AreEqual(true, namedValue.ValueAs<bool>());
-            Assert.AreEqual(true, namedValue.ValueAs<bool>(true));
+            Assert.AreEqual(true, namedValue.ValueAs(true));
 
             namedValue.RawValue = "1";
 
             Assert.AreEqual(1, namedValue.ValueAs<int>());
-            Assert.AreEqual(1, namedValue.ValueAs<int>(-80085));
+            Assert.AreEqual(1, namedValue.ValueAs(-80085));
 
             Assert.AreEqual(1d, namedValue.ValueAs<double>());
-            Assert.AreEqual(1d, namedValue.ValueAs<double>(123.4546));
+            Assert.AreEqual(1d, namedValue.ValueAs(123.4546));
 
             Assert.AreEqual(1f, namedValue.ValueAs<float>());
-            Assert.AreEqual(1f, namedValue.ValueAs<float>(-65654.51f));
+            Assert.AreEqual(1f, namedValue.ValueAs(-65654.51f));
 
             Assert.AreEqual(default, namedValue.ValueAs<bool>());
-            Assert.AreEqual(true, namedValue.ValueAs<bool>(true));
+            Assert.AreEqual(true, namedValue.ValueAs(true));
         }
 
         [TestMethod]

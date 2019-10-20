@@ -6,7 +6,7 @@ namespace InDoOut_Core.Entities.Functions
 {
     /// <summary>
     /// Represents a result from a <see cref="IFunction"/>. Results are values given when the function has
-    /// completed, and can be used to set <see cref="Variables.IVariable"/> values which can then be
+    /// completed, and can be used to set <see cref="IVariable"/> values which can then be
     /// used to set <see cref="IProperty"/> values on other functions.
     /// </summary>
     public interface IResult : IOutputable, INamedEntity, IValue, ITriggerable<IFunction>, IConnectable<IProperty>

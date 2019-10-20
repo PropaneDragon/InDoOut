@@ -48,7 +48,7 @@ namespace InDoOut_Desktop.UI.Controls.Search
             PerformSearch();
         }
 
-        private void TextBox_Query_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        private void TextBox_Query_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {

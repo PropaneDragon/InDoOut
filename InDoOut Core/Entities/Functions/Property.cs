@@ -113,7 +113,7 @@ namespace InDoOut_Core.Entities.Functions
         /// <typeparam name="Type">The type to convert from.</typeparam>
         /// <param name="value">The value to store.</param>
         /// <returns></returns>
-        public bool ValueFrom<Type>(Type value) => _value.ValueFrom<Type>(value);
+        public bool ValueFrom<Type>(Type value) => _value.ValueFrom(value);
 
         /// <summary>
         /// Gets the <see cref="RawValue"/>, or <paramref name="defaultValue"/> if null.

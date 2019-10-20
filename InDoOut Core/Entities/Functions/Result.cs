@@ -10,7 +10,7 @@ namespace InDoOut_Core.Entities.Functions
 {
     /// <summary>
     /// Results are values that are set when a <see cref="Function"/> is run. These values
-    /// can be named and will set a <see cref="Variables.IVariable"/> of that name when
+    /// can be named and will set a <see cref="IVariable"/> of that name when
     /// the function is finished. Those values can then be used on <see cref="IProperty"/>
     /// values.
     /// </summary>
