@@ -1,4 +1,5 @@
 ﻿using InDoOut_Core.Entities.Functions;
+using InDoOut_Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
@@ -127,9 +128,9 @@ namespace InDoOut_Core_Tests
 
             interactiveEntity.Trigger(otherInteractiveEntity);
 
-            var startTime = DateTime.UtcNow;
+            var startTime = DateTime.Now;
 
-            while (!interactiveEntity.Processed && DateTime.UtcNow < startTime.AddSeconds(1))
+            while (!interactiveEntity.Processed && DateTime.Now < startTime.AddSeconds(1))
             {
                 Thread.Sleep(TimeSpan.FromMilliseconds(1));
             }
@@ -141,17 +142,53 @@ namespace InDoOut_Core_Tests
 
             Assert.IsFalse(interactiveEntity.Processed);
 
+            Thread.Sleep(TimeSpan.FromMilliseconds(10));
+
             interactiveEntity.Trigger(null);
 
-            startTime = DateTime.UtcNow;
+            startTime = DateTime.Now;
 
-            while (!interactiveEntity.Processed && DateTime.UtcNow < startTime.AddSeconds(1))
+            while (!interactiveEntity.Processed && DateTime.Now < startTime.AddSeconds(1))
             {
                 Thread.Sleep(TimeSpan.FromMilliseconds(1));
             }
 
             Assert.IsTrue(interactiveEntity.Processed);
             Assert.IsNull(interactiveEntity.LastTriggeredBy);
+        }
+
+        [TestMethod]
+        public void TriggeredWithin()
+        {
+            var interactiveEntity = new TestInteractiveEntity(() => Thread.Sleep(TimeSpan.FromMilliseconds(15)));
+
+            Assert.IsFalse(interactiveEntity.HasBeenTriggeredSince(DateTime.Now));
+            Assert.IsFalse(interactiveEntity.HasBeenTriggeredSince(DateTime.Today));
+            Assert.IsFalse(interactiveEntity.HasBeenTriggeredSince(DateTime.MinValue.AddSeconds(1)));
+            Assert.IsTrue(interactiveEntity.HasBeenTriggeredSince(DateTime.MinValue));
+
+            Assert.IsFalse(interactiveEntity.HasBeenTriggeredWithin(TimeSpan.FromMilliseconds(15)));
+            Assert.IsFalse(interactiveEntity.HasBeenTriggeredWithin(TimeSpan.FromSeconds(1)));
+            Assert.IsFalse(interactiveEntity.HasBeenTriggeredWithin(TimeSpan.FromSeconds(100)));
+            Assert.IsFalse(interactiveEntity.HasBeenTriggeredWithin(TimeSpan.FromDays(1)));
+            Assert.IsFalse(interactiveEntity.HasBeenTriggeredWithin(TimeSpan.FromDays(1000)));
+
+            interactiveEntity.Trigger(null);
+
+            Assert.IsTrue(interactiveEntity.WaitForCompletion(TimeSpan.FromMilliseconds(30), false));
+
+            Assert.IsFalse(interactiveEntity.HasBeenTriggeredSince(DateTime.Now));
+            Assert.IsFalse(interactiveEntity.HasBeenTriggeredSince(DateTime.Now - TimeSpan.FromMilliseconds(10)));
+            Assert.IsTrue(interactiveEntity.HasBeenTriggeredSince(DateTime.Now - TimeSpan.FromMilliseconds(20)));
+            Assert.IsTrue(interactiveEntity.HasBeenTriggeredSince(DateTime.Now - TimeSpan.FromSeconds(1)));
+            Assert.IsTrue(interactiveEntity.HasBeenTriggeredSince(DateTime.Now - TimeSpan.FromDays(1)));
+
+            Assert.IsFalse(interactiveEntity.HasBeenTriggeredWithin(TimeSpan.FromMilliseconds(1)));
+            Assert.IsFalse(interactiveEntity.HasBeenTriggeredWithin(TimeSpan.FromMilliseconds(10)));
+            Assert.IsTrue(interactiveEntity.HasBeenTriggeredWithin(TimeSpan.FromMilliseconds(20)));
+            Assert.IsTrue(interactiveEntity.HasBeenTriggeredWithin(TimeSpan.FromMilliseconds(200)));
+            Assert.IsTrue(interactiveEntity.HasBeenTriggeredWithin(TimeSpan.FromSeconds(20)));
+            Assert.IsTrue(interactiveEntity.HasBeenTriggeredWithin(TimeSpan.FromDays(20)));
         }
     }
 }

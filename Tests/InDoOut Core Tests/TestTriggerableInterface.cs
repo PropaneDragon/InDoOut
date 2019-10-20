@@ -1,4 +1,5 @@
-﻿using InDoOut_Core.Entities.Core;
+﻿using System;
+using InDoOut_Core.Entities.Core;
 
 namespace InDoOut_Core_Tests
 {
@@ -8,6 +9,8 @@ namespace InDoOut_Core_Tests
         public bool Triggerable { get; set; } = true;
         public bool Triggered { get; set; } = false;
 
+        public DateTime LastTriggerTime { get; set; } = DateTime.MinValue; 
+
         public bool CanBeTriggered(IEntity entity)
         {
             return Triggerable;
@@ -15,7 +18,19 @@ namespace InDoOut_Core_Tests
 
         public void Trigger(IEntity triggeredBy)
         {
+            LastTriggerTime = DateTime.Now;
+
             Triggered = true;
+        }
+
+        public bool HasBeenTriggeredSince(DateTime time)
+        {
+            return LastTriggerTime >= time;
+        }
+
+        public bool HasBeenTriggeredWithin(TimeSpan time)
+        {
+            return LastTriggerTime >= DateTime.Now - time;
         }
     }
 }

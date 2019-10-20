@@ -202,6 +202,11 @@
             The current running state of this entity.
             </summary>
         </member>
+        <member name="P:InDoOut_Core.Entities.Core.InteractiveEntity`2.LastTriggerTime">
+            <summary>
+            The last time this entity was triggered.
+            </summary>
+        </member>
         <member name="P:InDoOut_Core.Entities.Core.InteractiveEntity`2.RawConnections">
             <summary>
             The connections that this entity has.
@@ -231,6 +236,21 @@
             </summary>
             <param name="entity">The entity to check.</param>
             <returns>Whether the given <see cref="T:InDoOut_Core.Entities.Core.IEntity"/> can trigger this.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Core.InteractiveEntity`2.HasBeenTriggeredSince(System.DateTime)">
+            <summary>
+            Checks whether the entity has been triggered since the given <paramref name="time"/>.
+            </summary>
+            <param name="time">The time to check.</param>
+            <returns>Whether the entity has been triggered since the given time.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Core.InteractiveEntity`2.HasBeenTriggeredWithin(System.TimeSpan)">
+            <summary>
+            Checks whether the entity has been triggered within the given <paramref name="time"/>. Passing a time
+            of 5 seconds will return whether the entity has been triggered within the last 5 seconds.
+            </summary>
+            <param name="time">The time to check.</param>
+            <returns>Whether the entity has been triggered within the given time.</returns>
         </member>
         <member name="M:InDoOut_Core.Entities.Core.InteractiveEntity`2.ToString">
             <summary>
@@ -306,12 +326,32 @@
             The current running state of the object.
             </summary>
         </member>
+        <member name="P:InDoOut_Core.Entities.Core.ITriggerable.LastTriggerTime">
+            <summary>
+            The time this entity was last triggered.
+            </summary>
+        </member>
         <member name="M:InDoOut_Core.Entities.Core.ITriggerable.CanBeTriggered(InDoOut_Core.Entities.Core.IEntity)">
             <summary>
             Check whether or not the given <see cref="T:InDoOut_Core.Entities.Core.IEntity"/> can trigger this object.
             </summary>
             <param name="entity">The entity to check.</param>
             <returns>Whether this object can be triggered by the given <see cref="T:InDoOut_Core.Entities.Core.IEntity"/>.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Core.ITriggerable.HasBeenTriggeredSince(System.DateTime)">
+            <summary>
+            Checks whether the entity has been triggered since the given <paramref name="time"/>.
+            </summary>
+            <param name="time">The time to check.</param>
+            <returns>Whether the entity has been triggered since the given time.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Core.ITriggerable.HasBeenTriggeredWithin(System.TimeSpan)">
+            <summary>
+            Checks whether the entity has been triggered within the given <paramref name="time"/>. Passing a time
+            of 5 seconds will return whether the entity has been triggered within the last 5 seconds.
+            </summary>
+            <param name="time">The time to check.</param>
+            <returns>Whether the entity has been triggered within the given time.</returns>
         </member>
         <member name="T:InDoOut_Core.Entities.Core.ITriggerable`1">
             <summary>
@@ -1424,6 +1464,11 @@
             The name of this program.
             </summary>
         </member>
+        <member name="P:InDoOut_Core.Entities.Programs.Program.LastTriggerTime">
+            <summary>
+            The last time this program was triggered.
+            </summary>
+        </member>
         <member name="P:InDoOut_Core.Entities.Programs.Program.VariableStore">
             <summary>
             The current variable store for all program variables.
@@ -1476,6 +1521,21 @@
             Sets the program name to the given value.
             </summary>
             <param name="name">The program name to set.</param>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Programs.Program.HasBeenTriggeredSince(System.DateTime)">
+            <summary>
+            Checks whether the program has been triggered since the given <paramref name="time"/>.
+            </summary>
+            <param name="time">The time to check.</param>
+            <returns>Whether the program has been triggered since the given time.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Entities.Programs.Program.HasBeenTriggeredWithin(System.TimeSpan)">
+            <summary>
+            Checks whether the program has been triggered within the given <paramref name="time"/>. Passing a time
+            of 5 seconds will return whether the program has been triggered within the last 5 seconds.
+            </summary>
+            <param name="time">The time to check.</param>
+            <returns>Whether the program has been triggered within the given time.</returns>
         </member>
         <member name="M:InDoOut_Core.Entities.Programs.Program.ToString">
             <summary>

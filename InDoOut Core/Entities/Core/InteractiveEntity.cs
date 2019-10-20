@@ -1,4 +1,5 @@
 ﻿using InDoOut_Core.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,15 +14,22 @@ namespace InDoOut_Core.Entities.Core
     public abstract class InteractiveEntity<ConnectsToType, ConnectsFromType> : Entity, IConnectable<ConnectsToType>, ITriggerable<ConnectsFromType> where ConnectsToType : class, ITriggerable where ConnectsFromType : class, IEntity
     {
         private readonly object _connectionsLock = new object();
+        private readonly object _lastTriggerTimeLock = new object();
         private readonly List<TaskStatus> _validRunningStatuses = new List<TaskStatus>() { TaskStatus.Created, TaskStatus.Running, TaskStatus.WaitingForActivation, TaskStatus.WaitingForChildrenToComplete, TaskStatus.WaitingToRun };
 
         private Task _runner = null;
+        private DateTime _lastTriggerTime = DateTime.MinValue;
         private readonly List<ConnectsToType> _connections = new List<ConnectsToType>();
 
         /// <summary>
         /// The current running state of this entity.
         /// </summary>
         public bool Running => _runner != null && _validRunningStatuses.Contains(_runner.Status);
+
+        /// <summary>
+        /// The last time this entity was triggered.
+        /// </summary>
+        public DateTime LastTriggerTime { get { lock (_lastTriggerTimeLock) return _lastTriggerTime; } }
 
         /// <summary>
         /// The connections that this entity has.
@@ -43,6 +51,11 @@ namespace InDoOut_Core.Entities.Core
         public void Trigger(ConnectsFromType triggeredBy)
         {
             Log.Instance.Info($"Triggered {this}");
+
+            lock (_lastTriggerTimeLock)
+            {
+                _lastTriggerTime = DateTime.Now;
+            }
 
             _runner = Task.Run(() =>
             {
@@ -71,6 +84,27 @@ namespace InDoOut_Core.Entities.Core
         public bool CanAcceptConnection(IEntity entity)
         {
             return entity != null && entity != this && typeof(ConnectsFromType).IsAssignableFrom(entity.GetType());
+        }
+
+        /// <summary>
+        /// Checks whether the entity has been triggered since the given <paramref name="time"/>.
+        /// </summary>
+        /// <param name="time">The time to check.</param>
+        /// <returns>Whether the entity has been triggered since the given time.</returns>
+        public bool HasBeenTriggeredSince(DateTime time)
+        {
+            return LastTriggerTime >= time;
+        }
+
+        /// <summary>
+        /// Checks whether the entity has been triggered within the given <paramref name="time"/>. Passing a time
+        /// of 5 seconds will return whether the entity has been triggered within the last 5 seconds.
+        /// </summary>
+        /// <param name="time">The time to check.</param>
+        /// <returns>Whether the entity has been triggered within the given time.</returns>
+        public bool HasBeenTriggeredWithin(TimeSpan time)
+        {
+            return LastTriggerTime >= DateTime.Now - time;
         }
 
         /// <summary>

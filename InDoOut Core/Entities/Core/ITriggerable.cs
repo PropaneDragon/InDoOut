@@ -1,4 +1,6 @@
-﻿namespace InDoOut_Core.Entities.Core
+﻿using System;
+
+namespace InDoOut_Core.Entities.Core
 {
     /// <summary>
     /// Represents an entity that can be triggered by another entity.
@@ -11,11 +13,31 @@
         bool Running { get; }
 
         /// <summary>
+        /// The time this entity was last triggered.
+        /// </summary>
+        DateTime LastTriggerTime { get; }
+
+        /// <summary>
         /// Check whether or not the given <see cref="IEntity"/> can trigger this object.
         /// </summary>
         /// <param name="entity">The entity to check.</param>
         /// <returns>Whether this object can be triggered by the given <see cref="IEntity"/>.</returns>
         bool CanBeTriggered(IEntity entity);
+
+        /// <summary>
+        /// Checks whether the entity has been triggered since the given <paramref name="time"/>.
+        /// </summary>
+        /// <param name="time">The time to check.</param>
+        /// <returns>Whether the entity has been triggered since the given time.</returns>
+        bool HasBeenTriggeredSince(DateTime time);
+
+        /// <summary>
+        /// Checks whether the entity has been triggered within the given <paramref name="time"/>. Passing a time
+        /// of 5 seconds will return whether the entity has been triggered within the last 5 seconds.
+        /// </summary>
+        /// <param name="time">The time to check.</param>
+        /// <returns>Whether the entity has been triggered within the given time.</returns>
+        bool HasBeenTriggeredWithin(TimeSpan time);
     }
 
     /// <summary>

@@ -3,6 +3,7 @@ using InDoOut_Core.Entities.Functions;
 using InDoOut_Core.Logging;
 using InDoOut_Core.Threading.Safety;
 using InDoOut_Core.Variables;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,6 +15,10 @@ namespace InDoOut_Core.Entities.Programs
     /// </summary>
     public class Program : Entity, IProgram
     {
+        private readonly object _lastTriggerTimeLock = new object();
+
+        private DateTime _lastTriggerTime = DateTime.MinValue;
+
         /// <summary>
         /// All functions within this program.
         /// </summary>
@@ -45,6 +50,11 @@ namespace InDoOut_Core.Entities.Programs
         /// The name of this program.
         /// </summary>
         public string Name { get; protected set; } = null;
+
+        /// <summary>
+        /// The last time this program was triggered.
+        /// </summary>
+        public DateTime LastTriggerTime { get { lock (_lastTriggerTimeLock) return _lastTriggerTime; } }
 
         /// <summary>
         /// The current variable store for all program variables.
@@ -124,6 +134,11 @@ namespace InDoOut_Core.Entities.Programs
         {
             Log.Instance.Header($"Triggered {this}");
 
+            lock (_lastTriggerTimeLock)
+            {
+                _lastTriggerTime = DateTime.Now;
+            }
+
             foreach (var startFunction in StartFunctions)
             {
                 for (var index = 0; index < PassthroughValues.Count; ++index)
@@ -160,6 +175,27 @@ namespace InDoOut_Core.Entities.Programs
         public void SetName(string name)
         {
             Name = name;
+        }
+
+        /// <summary>
+        /// Checks whether the program has been triggered since the given <paramref name="time"/>.
+        /// </summary>
+        /// <param name="time">The time to check.</param>
+        /// <returns>Whether the program has been triggered since the given time.</returns>
+        public bool HasBeenTriggeredSince(DateTime time)
+        {
+            return LastTriggerTime >= time;
+        }
+
+        /// <summary>
+        /// Checks whether the program has been triggered within the given <paramref name="time"/>. Passing a time
+        /// of 5 seconds will return whether the program has been triggered within the last 5 seconds.
+        /// </summary>
+        /// <param name="time">The time to check.</param>
+        /// <returns>Whether the program has been triggered within the given time.</returns>
+        public bool HasBeenTriggeredWithin(TimeSpan time)
+        {
+            return LastTriggerTime >= DateTime.Now - time;
         }
 
         /// <summary>
