@@ -45,6 +45,8 @@ namespace InDoOut_Desktop.UI.Controls.Core
                 var source = HwndSource.FromHwnd(new WindowInteropHelper(_attachedWindow).Handle);
                 source.AddHook(WindowHook);
             }
+
+            UpdateTooltipText();
         }
 
         private void ToggleWindowState()
@@ -54,6 +56,8 @@ namespace InDoOut_Desktop.UI.Controls.Core
                 var state = _attachedWindow.WindowState;
 
                 _attachedWindow.WindowState = state == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
+
+                UpdateTooltipText();
             }
         }
 
@@ -73,6 +77,11 @@ namespace InDoOut_Desktop.UI.Controls.Core
             }
 
             return IntPtr.Zero;
+        }
+
+        private void UpdateTooltipText()
+        {
+            Button_Restore.ToolTip = (_attachedWindow?.WindowState ?? WindowState.Maximized) == WindowState.Maximized ? "Restore" : "Maximise";
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -167,6 +176,8 @@ namespace InDoOut_Desktop.UI.Controls.Core
                     _attachedWindow.Top = mousePosition.Y - (Text_Title.ActualHeight / 2d);
                     _attachedWindow.WindowState = WindowState.Normal;
                     _attachedWindow.Left = mousePosition.X - (_attachedWindow.ActualWidth / 2d);
+
+                    UpdateTooltipText();
                 }
 
                 try
