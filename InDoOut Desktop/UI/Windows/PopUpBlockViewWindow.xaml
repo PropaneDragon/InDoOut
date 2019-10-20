@@ -8,7 +8,7 @@
         xmlns:blockview="clr-namespace:InDoOut_Desktop.UI.Controls.BlockView"
         xmlns:background="clr-namespace:InDoOut_Desktop.UI.Controls.Background"
         mc:Ignorable="d"
-        Title="Untitled > ido" Height="1080" Width="1920" Loaded="Window_Loaded" Closed="Window_Closed" WindowState="Normal" Background="#111" Foreground="White">
+        Title="Untitled > ido" Height="1080" Width="1920" Loaded="Window_Loaded" Closed="Window_Closed" WindowState="Normal" Background="#111" Foreground="White" MinWidth="500" MinHeight="500" WindowStartupLocation="CenterOwner">
     <Grid>
         <Grid>
             <background:BackgroundImage Opacity="0.01"/>

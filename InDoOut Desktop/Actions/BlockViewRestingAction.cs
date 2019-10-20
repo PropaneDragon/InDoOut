@@ -138,8 +138,8 @@ namespace InDoOut_Desktop.Actions
                     {
                         var previewWindow = new PopUpBlockViewWindow(selfRunnerFunction.LoadedProgram)
                         {
-                            Width = _blockView.ViewSize.Width,
-                            Height = _blockView.ViewSize.Height
+                            Width = _blockView.ViewSize.Width - 150,
+                            Height = _blockView.ViewSize.Height - 150
                         };
 
                         if (_blockView is DependencyObject dependencyObject)
@@ -149,14 +149,6 @@ namespace InDoOut_Desktop.Actions
 
                         previewWindow.Show();
                         _ = previewWindow.Activate();
-
-                        /*var previewBlockView = new BlockView(selfRunnerFunction.LoadedProgram)
-                        {
-                            Width = 300,
-                            Height = 300
-                        };
-
-                        _blockView.Add(previewBlockView, _blockView.GetPosition(element));*/
                     }
                 }
             }
