@@ -2,7 +2,9 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Threading;
 
 namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
 {
@@ -10,8 +12,12 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
     {
         private bool _startIsLeft = true;
         private bool _endIsLeft = true;
+        private bool _lastRunningState = false;
         private IUIConnectionEnd _end = null;
         private IUIConnectionStart _start = null;
+        private DispatcherTimer _updateTimer = null;
+        private ColorAnimation _fadeAnimation = null;
+        private Color _regularWireColour = Color.FromRgb(255, 255, 255);
 
         public bool Hidden { get => Visibility != Visibility.Visible; set => SetHidden(value); }
 
@@ -24,6 +30,8 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
         public UIConnection()
         {
             InitializeComponent();
+
+            _regularWireColour = Path_Wire.Stroke is SolidColorBrush solidColour ? solidColour.Color : Color.FromRgb(255, 255, 255);
         }
 
         public bool CanDelete(IBlockView blockView) => true;
@@ -153,6 +161,42 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
 
             Segment_Curve.Point1 = new Point(start.X + (differenceStart.X / 2d), start.Y);
             Segment_Curve.Point2 = new Point(end.X - (differenceEnd.X / 2d), end.Y);
+        }
+
+        private void UpdateTimer_Tick(object sender, EventArgs e)
+        {
+            if (_start is IUIOutput uiOutput)
+            {
+                var running = (uiOutput?.AssociatedOutput?.Running ?? false) || (uiOutput?.AssociatedOutput?.HasBeenTriggeredWithin(TimeSpan.FromMilliseconds(200)) ?? false);
+                if (running != _lastRunningState)
+                {
+                    _lastRunningState = running;
+
+                    var activeColour = Color.FromRgb(255, 100, 100);
+
+                    _fadeAnimation = new ColorAnimation(running ? activeColour : _regularWireColour, TimeSpan.FromMilliseconds(running ? 200 : 800)) { EasingFunction = new CircleEase() { EasingMode = EasingMode.EaseInOut } };
+
+                    Path_Wire.Stroke.BeginAnimation(SolidColorBrush.ColorProperty, _fadeAnimation);
+                }
+            }
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            _updateTimer = new DispatcherTimer(DispatcherPriority.Normal)
+            {
+                Interval = TimeSpan.FromMilliseconds(100)
+            };
+
+            _updateTimer.Tick += UpdateTimer_Tick;
+            _updateTimer.Start();
+        }
+
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            _updateTimer.Tick -= UpdateTimer_Tick;
+            _updateTimer.Stop();
+            _updateTimer = null;
         }
     }
 }

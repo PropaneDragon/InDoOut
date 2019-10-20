@@ -151,7 +151,7 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
         {
             if (AssociatedFunction != null)
             {
-                var running = AssociatedFunction?.Running ?? false;
+                var running = (AssociatedFunction?.Running ?? false) || (AssociatedFunction?.HasBeenTriggeredWithin(TimeSpan.FromMilliseconds(200)) ?? false);
 
                 if ((running && Text_Processing.Opacity <= 0.01) || (!running && Text_Processing.Opacity >= 0.99))
                 {
