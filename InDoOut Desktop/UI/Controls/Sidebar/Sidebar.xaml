@@ -52,7 +52,7 @@
                 <Grid>
                     <StackPanel x:Name="Stack_ButtonsBottom" VerticalAlignment="Bottom" Margin="0,0,0,20">
                         <Button x:Name="Button_TaskViewer" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Material Icons" FontSize="30" Content="" ToolTip="Task viewer" Template="{DynamicResource Template_Buttons_Transparent}" Click="Button_TaskViewer_Click" Margin="0,8,0,0" />
-                        <Button x:Name="Button_Settings" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Material Icons" FontSize="30" Content="" ToolTip="Settings" Template="{DynamicResource Template_Buttons_Transparent}" Margin="0,8,0,0" />
+                        <Button x:Name="Button_Settings" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Material Icons" FontSize="30" Content="" ToolTip="Settings" Template="{DynamicResource Template_Buttons_Transparent}" Click="Button_Settings_Click" Margin="0,8,0,0" />
                     </StackPanel>
                 </Grid>
             </Border>

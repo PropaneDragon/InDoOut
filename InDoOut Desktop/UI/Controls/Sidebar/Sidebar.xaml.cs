@@ -174,5 +174,18 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
             TaskView?.ShowTasks();
             Collapse();
         }
+
+        private void Button_Settings_Click(object sender, RoutedEventArgs e)
+        {
+            Log.Instance.Header("Settings button clicked");
+
+            var settingsWindow = new SettingsWindow()
+            {
+                Owner = Window.GetWindow(this)
+            };
+
+            settingsWindow.Show();
+            Collapse();
+        }
     }
 }
