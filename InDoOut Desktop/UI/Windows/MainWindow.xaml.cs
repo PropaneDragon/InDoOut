@@ -49,6 +49,8 @@ namespace InDoOut_Desktop.UI.Windows
             {
                 sidebar.TaskView = taskView;
             }
+
+            _ = Activate();
         }
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
@@ -56,6 +58,8 @@ namespace InDoOut_Desktop.UI.Windows
             var splash = OLD_SPLASH ? new SplashWindow() { Owner = this } : (ISplashScreen)Splash_Overlay;
             if (splash != null)
             {
+                _ = Activate();
+
                 if (await splash.RunTaskAsync(new MainWindowLoadingTask()))
                 {
                     await FinishLoading();

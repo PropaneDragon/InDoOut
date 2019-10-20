@@ -1,6 +1,8 @@
 ﻿using InDoOut_Core.Functions;
+using InDoOut_Core.Logging;
 using InDoOut_Desktop.Programs;
 using InDoOut_Desktop.UI.Interfaces;
+using InDoOut_Desktop.UI.Windows;
 using InDoOut_Json_Storage;
 using InDoOut_Plugins.Loaders;
 using System;
@@ -109,11 +111,16 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
 
         private void SearchBar_SearchRequested(object sender, Search.SearchArgs e)
         {
+            Log.Instance.Header("Search requested");
+            Log.Instance.Info("Search query: ", e?.Query);
+
             ItemList_Functions.Filter(e.Query);
         }
 
         private void Button_SwitchMode_Click(object sender, RoutedEventArgs e)
         {
+            Log.Instance.Header("Switch button clicked");
+
             if (_blockView != null)
             {
                 _blockView.CurrentViewMode = _blockView.CurrentViewMode == BlockViewMode.IO ? BlockViewMode.Variables : BlockViewMode.IO;
@@ -122,6 +129,8 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
 
         private void Button_RunProgram_Click(object sender, RoutedEventArgs e)
         {
+            Log.Instance.Header("Run button clicked");
+
             if ((!_blockView?.AssociatedProgram?.Running ?? false) && (!_blockView.AssociatedProgram?.Stopping ?? false))
             {
                 _blockView?.AssociatedProgram?.Trigger(null);
@@ -132,6 +141,8 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
 
         private void Button_StopProgram_Click(object sender, RoutedEventArgs e)
         {
+            Log.Instance.Header("Stop button clicked");
+
             _blockView?.AssociatedProgram?.Stop();
 
             UpdatePlayStopButtons();
@@ -139,6 +150,8 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
 
         private void Button_NewProgram_Click(object sender, RoutedEventArgs e)
         {
+            Log.Instance.Header("New button clicked");
+
             if (_blockView != null)
             {
                 _ = ProgramHolder.Instance.RemoveProgram(_blockView?.AssociatedProgram);
@@ -148,6 +161,8 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
 
         private async void Button_OpenProgram_Click(object sender, RoutedEventArgs e)
         {
+            Log.Instance.Header("Open button clicked");
+
             if (_blockView != null)
             {
                 var program = await ProgramSaveLoad.Instance.LoadProgramDialogAsync(ProgramHolder.Instance, new ProgramJsonStorer(new FunctionBuilder(), LoadedPlugins.Instance), Window.GetWindow(this));
@@ -161,16 +176,22 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
 
         private async void Button_SaveProgram_Click(object sender, RoutedEventArgs e)
         {
+            Log.Instance.Header("Save button clicked");
+
             _ = await ProgramSaveLoad.Instance.TrySaveProgramFromMetadataAsync(_blockView?.AssociatedProgram, new ProgramJsonStorer(new FunctionBuilder(), LoadedPlugins.Instance), Window.GetWindow(this));
         }
 
         private async void Button_SaveProgramAs_Click(object sender, RoutedEventArgs e)
         {
+            Log.Instance.Header("Save as button clicked");
+
             _ = await ProgramSaveLoad.Instance.SaveProgramDialogAsync(_blockView?.AssociatedProgram, new ProgramJsonStorer(new FunctionBuilder(), LoadedPlugins.Instance), Window.GetWindow(this));
         }
 
         private void Button_TaskViewer_Click(object sender, RoutedEventArgs e)
         {
+            Log.Instance.Header("Task viewer button clicked");
+
             TaskView?.ShowTasks();
             Collapse();
         }
