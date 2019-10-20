@@ -1,25 +1,19 @@
-﻿<Window x:Class="InDoOut_Desktop.UI.Windows.MainWindow"
+﻿<Window x:Class="InDoOut_Desktop.UI.Windows.PopUpBlockViewWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InDoOut_Desktop.UI.Windows"
         xmlns:core="clr-namespace:InDoOut_Desktop.UI.Controls.Core"
-        xmlns:sidebar="clr-namespace:InDoOut_Desktop.UI.Controls.Sidebar"
         xmlns:blockview="clr-namespace:InDoOut_Desktop.UI.Controls.BlockView"
-        xmlns:taskManager="clr-namespace:InDoOut_Desktop.UI.Controls.TaskManager"
         xmlns:background="clr-namespace:InDoOut_Desktop.UI.Controls.Background"
-        xmlns:splash="clr-namespace:InDoOut_Desktop.UI.Controls.Splash"
         mc:Ignorable="d"
         Title="Untitled > ido" Height="1080" Width="1920" Loaded="Window_Loaded" Closed="Window_Closed" WindowState="Normal" Background="#111" Foreground="White">
     <Grid>
         <Grid>
             <background:BackgroundImage Opacity="0.01"/>
         </Grid>
-        <taskManager:TaskView x:Name="TaskView_Main" />
-        <!--<blockview:BlockView x:Name="BlockView_Main" />-->
+        <blockview:BlockView x:Name="BlockView_Main" />
         <core:TitleBar x:Name="TitleBar_Main" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
-        <sidebar:Sidebar x:Name="Sidebar_Main" Width="500" HorizontalAlignment="Left" />
-        <splash:SplashOverlay x:Name="Splash_Overlay" Visibility="Collapsed" />
     </Grid>
 </Window>
