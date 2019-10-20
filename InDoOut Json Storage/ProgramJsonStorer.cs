@@ -47,8 +47,6 @@ namespace InDoOut_Json_Storage
         /// <returns>The loaded program, or null if invalid.</returns>
         protected override List<IFailureReport> TryLoad(IProgram program, string path)
         {
-            Log.Instance.Header($"Attempting to load new program from: {path ?? "null"}");
-
             var failures = new List<IFailureReport>();
 
             if (program != null)
@@ -85,13 +83,6 @@ namespace InDoOut_Json_Storage
             else
             {
                 failures.Add(new FailureReport((int)LoadResult.InvalidLocation, $"Invalid file location given ({path}).", true));
-            }
-
-            Log.Instance.Header($"Program loaded with {failures.Count} issues");
-
-            foreach (var failure in failures)
-            {
-                Log.Instance.Error(failure);
             }
 
             return failures;
