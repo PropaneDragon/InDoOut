@@ -106,7 +106,7 @@ namespace InDoOut_Desktop.UI.Windows
                 programName = string.IsNullOrEmpty(program.Name) ? "Untitled" : program.Name;
             }
 
-            Title = $"{programName} > ido";
+            Title = $"{programName}";
         }
     }
 }

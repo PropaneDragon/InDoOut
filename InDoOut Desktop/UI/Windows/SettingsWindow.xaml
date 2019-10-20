@@ -7,7 +7,7 @@
         xmlns:core="clr-namespace:InDoOut_Desktop.UI.Controls.Core"
         xmlns:background="clr-namespace:InDoOut_Desktop.UI.Controls.Background"
         mc:Ignorable="d"
-        Title="Settings > ido" Height="1080" Width="1920" WindowState="Normal" Background="#111" Foreground="White" MinWidth="500" MinHeight="500" WindowStartupLocation="CenterOwner" ShowActivated="True">
+        Title="Settings" Height="1080" Width="1920" WindowState="Normal" Background="#111" Foreground="White" MinWidth="500" MinHeight="500" WindowStartupLocation="CenterOwner" ShowActivated="True">
     <Grid>
         <Grid>
             <background:BackgroundImage Opacity="0.01"/>

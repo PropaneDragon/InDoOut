@@ -64,7 +64,7 @@ namespace InDoOut_Desktop.UI.Controls.Core
                 // This prevents a crash in WindowChromeWorker._HandleNCHitTest
                 try
                 {
-                    lParam.ToInt32();
+                    _ = lParam.ToInt32();
                 }
                 catch (OverflowException)
                 {
@@ -105,7 +105,7 @@ namespace InDoOut_Desktop.UI.Controls.Core
         {
             if (_attachedWindow != null)
             {
-                var windowTitle = _attachedWindow.Title;
+                var windowTitle = $"{_attachedWindow.Title} > ido";
 
                 if (_lastTitle == null || _lastTitle != windowTitle)
                 {
@@ -117,7 +117,7 @@ namespace InDoOut_Desktop.UI.Controls.Core
                     {
                         var opacityAnimationIn = new DoubleAnimation(1, TimeSpan.FromMilliseconds(100));
 
-                        Text_Title.Text = _attachedWindow.Title;
+                        Text_Title.Text = windowTitle;
                         Text_Title.BeginAnimation(OpacityProperty, opacityAnimationIn);
                     };
 

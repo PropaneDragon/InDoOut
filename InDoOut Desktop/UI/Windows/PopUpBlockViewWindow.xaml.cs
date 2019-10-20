@@ -34,7 +34,7 @@ namespace InDoOut_Desktop.UI.Windows
                 programName = string.IsNullOrEmpty(program.Name) ? "Untitled" : program.Name;
             }
 
-            Title = $"{programName} (Preview) > ido";
+            Title = $"{programName} (Preview)";
         }
 
         private void Window_Closed(object sender, System.EventArgs e)
