@@ -14,8 +14,6 @@ namespace InDoOut_Desktop.Programs
 {
     internal class ProgramSaveLoad : Singleton<ProgramSaveLoad>
     {
-        private static readonly string PROGRAM_METADATA_LAST_LOADED_FROM = "lastLoadedFrom";
-
         public async Task<IProgram> LoadProgramDialogAsync(IProgramHolder programHolder, IProgramStorer programStorer, Window parent = null)
         {
             if (programHolder != null && programStorer != null)
@@ -57,9 +55,6 @@ namespace InDoOut_Desktop.Programs
                         failureReports.AddRange(await Task.Run(() => programStorer.Load(program)));
 
                         _ = StandardLocations.Instance.SetPathTo(Location.SaveFile, filePath);
-
-                        program.Metadata[PROGRAM_METADATA_LAST_LOADED_FROM] = filePath;
-                        program.SetName(Path.GetFileNameWithoutExtension(filePath));
                     }
                     else
                     {
@@ -130,8 +125,8 @@ namespace InDoOut_Desktop.Programs
 
         public async Task<bool> TrySaveProgramFromMetadataAsync(IProgram program, IProgramStorer programStorer, Window parent = null)
         {
-            return program != null && program.Metadata.ContainsKey(PROGRAM_METADATA_LAST_LOADED_FROM)
-                ? await SaveProgramAsync(program.Metadata[PROGRAM_METADATA_LAST_LOADED_FROM], program, programStorer, parent)
+            return program != null && program.Metadata.ContainsKey(ProgramStorer.PROGRAM_METADATA_LAST_LOADED_FROM)
+                ? await SaveProgramAsync(program.Metadata[ProgramStorer.PROGRAM_METADATA_LAST_LOADED_FROM], program, programStorer, parent)
                 : await SaveProgramDialogAsync(program, programStorer, parent);
         }
 
@@ -165,9 +160,6 @@ namespace InDoOut_Desktop.Programs
             else if (program != null)
             {
                 _ = StandardLocations.Instance.SetPathTo(Location.SaveFile, filePath);
-
-                program.Metadata[PROGRAM_METADATA_LAST_LOADED_FROM] = filePath;
-                program.SetName(Path.GetFileNameWithoutExtension(filePath));
             }
 
             return failureReports.Count == 0;

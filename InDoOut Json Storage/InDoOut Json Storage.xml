@@ -240,11 +240,6 @@
             The extension of the generated files.
             </summary>
         </member>
-        <member name="P:InDoOut_Json_Storage.ProgramJsonStorer.FilePath">
-            <summary>
-            The path to save to and load from.
-            </summary>
-        </member>
         <member name="M:InDoOut_Json_Storage.ProgramJsonStorer.#ctor(InDoOut_Core.Functions.IFunctionBuilder,InDoOut_Plugins.Loaders.ILoadedPlugins,System.String)">
             <summary>
             Creates an instance of the JSON storer.
@@ -253,30 +248,33 @@
             <param name="builder">A function builder that can load functions with the program.</param>
             <param name="loadedPlugins">Available plugins that can be loaded.</param>
         </member>
-        <member name="M:InDoOut_Json_Storage.ProgramJsonStorer.Load(InDoOut_Core.Entities.Programs.IProgram)">
+        <member name="M:InDoOut_Json_Storage.ProgramJsonStorer.TryLoad(InDoOut_Core.Entities.Programs.IProgram,System.String)">
             <summary>
-            Loads a program from the JSON storage file at the given <see cref="P:InDoOut_Json_Storage.ProgramJsonStorer.FilePath"/>.
+            Loads a program from the JSON storage file at the given <paramref name="path"/>.
             </summary>
             <param name="program">The program to load data into.</param>
+            <param name="path">The path to load from.</param>
             <returns>The loaded program, or null if invalid.</returns>
         </member>
-        <member name="M:InDoOut_Json_Storage.ProgramJsonStorer.Save(InDoOut_Core.Entities.Programs.IProgram)">
+        <member name="M:InDoOut_Json_Storage.ProgramJsonStorer.TrySave(InDoOut_Core.Entities.Programs.IProgram,System.String)">
             <summary>
-            Saves a program to the given <see cref="P:InDoOut_Json_Storage.ProgramJsonStorer.FilePath"/>.
+            Saves a program to the given <paramref name="path"/>.
             </summary>
             <param name="program">The program to save.</param>
+            <param name="path">The path to save to.</param>
             <returns>Whether or not the program could be saved to the path.</returns>
         </member>
-        <member name="M:InDoOut_Json_Storage.ProgramJsonStorer.Save(InDoOut_Json_Storage.JsonProgram)">
+        <member name="M:InDoOut_Json_Storage.ProgramJsonStorer.Save(InDoOut_Json_Storage.JsonProgram,System.String)">
             <summary>
-            Saves a program to the given <see cref="P:InDoOut_Json_Storage.ProgramJsonStorer.FilePath"/> from JSON shell data.
+            Saves a program to the given <paramref name="path"/> from JSON shell data.
             </summary>
             <param name="jsonProgram">The program to save.</param>
+            <param name="path">The path to save to.</param>
             <returns>Whether or not the program could be saved to the path.</returns>
         </member>
-        <member name="M:InDoOut_Json_Storage.ProgramJsonStorer.Load">
+        <member name="M:InDoOut_Json_Storage.ProgramJsonStorer.Load(System.String)">
             <summary>
-            Loads JSON shell data for a program from the given <see cref="P:InDoOut_Json_Storage.ProgramJsonStorer.FilePath"/>.
+            Loads JSON shell data for a program from the given <paramref name="path"/>.
             </summary>
             <returns>A JSON shell program from the path, or null if failed.</returns>
         </member>

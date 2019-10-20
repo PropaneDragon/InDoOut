@@ -16,17 +16,12 @@ namespace InDoOut_Json_Storage
     /// <summary>
     /// Stores a program in the JSON format.
     /// </summary>
-    public class ProgramJsonStorer : IProgramStorer
+    public class ProgramJsonStorer : ProgramStorer
     {
         /// <summary>
         /// The extension of the generated files.
         /// </summary>
-        public string FileExtension => ".ido";
-
-        /// <summary>
-        /// The path to save to and load from.
-        /// </summary>
-        public string FilePath { get; set; } = null;
+        public override string FileExtension => ".ido";
 
         IFunctionBuilder FunctionBuilder { get; set; } = null;
 
@@ -38,21 +33,21 @@ namespace InDoOut_Json_Storage
         /// <param name="path">The path to save to and load from.</param>
         /// <param name="builder">A function builder that can load functions with the program.</param>
         /// <param name="loadedPlugins">Available plugins that can be loaded.</param>
-        public ProgramJsonStorer(IFunctionBuilder builder, ILoadedPlugins loadedPlugins, string path = null)
+        public ProgramJsonStorer(IFunctionBuilder builder, ILoadedPlugins loadedPlugins, string path = null) : base(path)
         {
-            FilePath = path;
             FunctionBuilder = builder;
             LoadedPlugins = loadedPlugins;
         }
 
         /// <summary>
-        /// Loads a program from the JSON storage file at the given <see cref="FilePath"/>.
+        /// Loads a program from the JSON storage file at the given <paramref name="path"/>.
         /// </summary>
         /// <param name="program">The program to load data into.</param>
+        /// <param name="path">The path to load from.</param>
         /// <returns>The loaded program, or null if invalid.</returns>
-        public List<IFailureReport> Load(IProgram program)
+        protected override List<IFailureReport> TryLoad(IProgram program, string path)
         {
-            Log.Instance.Header($"Attempting to load new program from: {FilePath ?? "null"}");
+            Log.Instance.Header($"Attempting to load new program from: {path ?? "null"}");
 
             var failures = new List<IFailureReport>();
 
@@ -60,27 +55,27 @@ namespace InDoOut_Json_Storage
             {
                 try
                 {
-                    var jsonProgram = Load();
+                    var jsonProgram = Load(path);
                     if (jsonProgram != null)
                     {
                         failures.AddRange(jsonProgram.Set(program, FunctionBuilder, LoadedPlugins));
                     }
                     else
                     {
-                        failures.Add(new FailureReport((int)LoadResult.InvalidFile, $"The program could not be loaded from the given path ({FilePath}).", true));
+                        failures.Add(new FailureReport((int)LoadResult.InvalidFile, $"The program could not be loaded from the given path ({path}).", true));
                     }
                 }
                 catch (Exception ex) when (ex is PathTooLongException || ex is DirectoryNotFoundException)
                 {
-                    failures.Add(new FailureReport((int)LoadResult.InvalidLocation, $"The location given is invalid ({FilePath}).", true));
+                    failures.Add(new FailureReport((int)LoadResult.InvalidLocation, $"The location given is invalid ({path}).", true));
                 }
                 catch (IOException)
                 {
-                    failures.Add(new FailureReport((int)LoadResult.InvalidFile, $"The given file doesn't appear to be valid ({FilePath}).", true));
+                    failures.Add(new FailureReport((int)LoadResult.InvalidFile, $"The given file doesn't appear to be valid ({path}).", true));
                 }
                 catch (UnauthorizedAccessException)
                 {
-                    failures.Add(new FailureReport((int)LoadResult.InsufficientPermissions, $"You don't have access to the file path given ({FilePath}).", true));
+                    failures.Add(new FailureReport((int)LoadResult.InsufficientPermissions, $"You don't have access to the file path given ({path}).", true));
                 }
                 catch
                 {
@@ -89,7 +84,7 @@ namespace InDoOut_Json_Storage
             }
             else
             {
-                failures.Add(new FailureReport((int)LoadResult.InvalidLocation, $"Invalid file location given ({FilePath}).", true));
+                failures.Add(new FailureReport((int)LoadResult.InvalidLocation, $"Invalid file location given ({path}).", true));
             }
 
             Log.Instance.Header($"Program loaded with {failures.Count} issues");
@@ -103,45 +98,47 @@ namespace InDoOut_Json_Storage
         }
 
         /// <summary>
-        /// Saves a program to the given <see cref="FilePath"/>.
+        /// Saves a program to the given <paramref name="path"/>.
         /// </summary>
         /// <param name="program">The program to save.</param>
+        /// <param name="path">The path to save to.</param>
         /// <returns>Whether or not the program could be saved to the path.</returns>
-        public List<IFailureReport> Save(IProgram program)
+        protected override List<IFailureReport> TrySave(IProgram program, string path)
         {
             var jsonProgram = JsonProgram.CreateFromProgram(program);
-            return Save(jsonProgram);
+            return Save(jsonProgram, path);
         }
 
         /// <summary>
-        /// Saves a program to the given <see cref="FilePath"/> from JSON shell data.
+        /// Saves a program to the given <paramref name="path"/> from JSON shell data.
         /// </summary>
         /// <param name="jsonProgram">The program to save.</param>
+        /// <param name="path">The path to save to.</param>
         /// <returns>Whether or not the program could be saved to the path.</returns>
-        protected List<IFailureReport> Save(JsonProgram jsonProgram)
+        protected List<IFailureReport> Save(JsonProgram jsonProgram, string path)
         {
             var failures = new List<IFailureReport>();
 
-            if (!string.IsNullOrEmpty(FilePath) && jsonProgram != null)
+            if (!string.IsNullOrEmpty(path) && jsonProgram != null)
             {
                 try
                 {
                     var jsonText = JsonConvert.SerializeObject(jsonProgram, Formatting.Indented);
 
-                    File.WriteAllText(FilePath, jsonText);
+                    File.WriteAllText(path, jsonText);
 
-                    if (!File.Exists(FilePath))
+                    if (!File.Exists(path))
                     {
-                        failures.Add(new FailureReport((int)SaveResult.InsufficientPermissions, $"The file could not be saved to the given path ({FilePath})", true));
+                        failures.Add(new FailureReport((int)SaveResult.InsufficientPermissions, $"The file could not be saved to the given path ({path})", true));
                     }
                 }
                 catch (Exception ex) when (ex is PathTooLongException || ex is DirectoryNotFoundException)
                 {
-                    failures.Add(new FailureReport((int)SaveResult.InvalidLocation, $"The location given is invalid ({FilePath})", true));
+                    failures.Add(new FailureReport((int)SaveResult.InvalidLocation, $"The location given is invalid ({path})", true));
                 }
                 catch (UnauthorizedAccessException)
                 {
-                    failures.Add(new FailureReport((int)SaveResult.InsufficientPermissions, $"You don't have access to the file path given ({FilePath})", true));
+                    failures.Add(new FailureReport((int)SaveResult.InsufficientPermissions, $"You don't have access to the file path given ({path})", true));
                 }
                 catch
                 {
@@ -150,21 +147,21 @@ namespace InDoOut_Json_Storage
             }
             else
             {
-                failures.Add(new FailureReport((int)SaveResult.InvalidLocation, $"Invalid file location given ({FilePath})", true));
+                failures.Add(new FailureReport((int)SaveResult.InvalidLocation, $"Invalid file location given ({path})", true));
             }
 
             return failures;
         }
 
         /// <summary>
-        /// Loads JSON shell data for a program from the given <see cref="FilePath"/>.
+        /// Loads JSON shell data for a program from the given <paramref name="path"/>.
         /// </summary>
         /// <returns>A JSON shell program from the path, or null if failed.</returns>
-        protected JsonProgram Load()
+        protected JsonProgram Load(string path)
         {
-            if (!string.IsNullOrEmpty(FilePath) && File.Exists(FilePath))
+            if (!string.IsNullOrEmpty(path) && File.Exists(path))
             {
-                var fileText = File.ReadAllText(FilePath);
+                var fileText = File.ReadAllText(path);
                 var jsonProgram = JsonConvert.DeserializeObject<JsonProgram>(fileText);
 
                 return jsonProgram;
