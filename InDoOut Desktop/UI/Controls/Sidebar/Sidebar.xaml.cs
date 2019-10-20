@@ -67,7 +67,7 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
                 Grid_CollapsibleContent.BeginAnimation(OpacityProperty, opacityAnimation);
             }
 
-            Focus();
+            _ = Focus();
 
             _collapsed = false;
         }

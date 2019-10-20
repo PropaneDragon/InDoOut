@@ -65,12 +65,7 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
 
         public bool CopyTo(ICopyable other)
         {
-            if (other != null)
-            {
-                return true;
-            }
-
-            return false;
+            return other != null;
         }
 
         public ICopyable CreateCopy(IBlockView blockView)

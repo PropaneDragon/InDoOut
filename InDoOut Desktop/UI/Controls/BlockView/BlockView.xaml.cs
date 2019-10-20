@@ -219,12 +219,7 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
 
         public Point GetBestSide(FrameworkElement element, Point point)
         {
-            if (element != null)
-            {
-                return GetBestSide(new Rect(GetPosition(element), new Size(element.ActualWidth, element.ActualHeight)), point);
-            }
-
-            return point;
+            return element != null ? GetBestSide(new Rect(GetPosition(element), new Size(element.ActualWidth, element.ActualHeight)), point) : point;
         }
 
         public Point GetBestSide(FrameworkElement element, FrameworkElement otherElement)
@@ -393,7 +388,9 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
             {
                 _ = _actionHandler?.MouseLeftMove(e.GetPosition(sender as ScrollViewer));
             }
+#pragma warning disable IDE0045 // Convert to conditional expression
             else if (e.RightButton == MouseButtonState.Pressed)
+#pragma warning restore IDE0045 // Convert to conditional expression
             {
                 _ = _actionHandler?.MouseRightMove(e.GetPosition(sender as ScrollViewer));
             }
