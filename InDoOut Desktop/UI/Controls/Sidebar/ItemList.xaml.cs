@@ -3,6 +3,7 @@ using InDoOut_Core.Instancing;
 using InDoOut_Core.Logging;
 using InDoOut_Desktop.UI.Interfaces;
 using InDoOut_Desktop.UI.Threading;
+using InDoOut_Executable_Core.Messaging;
 using InDoOut_Plugins.Loaders;
 using System;
 using System.Collections.Generic;
@@ -103,8 +104,14 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
                     var uiFunction = FunctionView.Create(function);
                     if (uiFunction == null)
                     {
-                        //Todo: Show some sort of error on failure.
+                        Log.Instance.Error("UI Function for ", function, " couldn't be created on the interface");
+                        UserMessageSystemHolder.Instance.CurrentUserMessageSystem?.ShowError("Unable to create function", "The function couldn't be placed in the program due to an unknown reason.");
                     }
+                }
+                else
+                {
+                    Log.Instance.Error("Couldn't build a function for ", functionType, " to place on the interface");
+                    UserMessageSystemHolder.Instance.CurrentUserMessageSystem?.ShowError("Unable to create function", "The function couldn't be created due to an unknown reason.");
                 }
             }
         }

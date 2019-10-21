@@ -1,5 +1,6 @@
 ﻿using InDoOut_Core.Entities.Functions;
 using InDoOut_Core.Functions;
+using InDoOut_Core.Logging;
 using InDoOut_Desktop.Actions.Copying;
 using InDoOut_Desktop.UI.Interfaces;
 using System;
@@ -56,7 +57,7 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
 
                 if (!RemoveAllConnections(blockView))
                 {
-                    //Todo: Display/log an error if connections can't be removed.
+                    Log.Instance.Error($"Couldn't remove all connections from {this}");
                 }
 
                 blockView.Remove(this);
