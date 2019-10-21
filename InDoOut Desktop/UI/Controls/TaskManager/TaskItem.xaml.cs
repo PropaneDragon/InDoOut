@@ -105,7 +105,7 @@ namespace InDoOut_Desktop.UI.Controls.TaskManager
         {
             if (TaskView != null)
             {
-                TaskView.RemoveTask(this);
+                _ = TaskView.RemoveTask(this);
             }
         }
 

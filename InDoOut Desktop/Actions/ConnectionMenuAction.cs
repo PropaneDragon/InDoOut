@@ -9,13 +9,11 @@ namespace InDoOut_Desktop.Actions
     {
         private readonly IUIConnection _connection;
         private readonly IBlockView _blockView;
-        private Point _mousePosition;
 
         public ConnectionMenuAction(IUIConnection connection, IBlockView blockView, Point mousePosition) : base()
         {
             _connection = connection;
             _blockView = blockView;
-            _mousePosition = mousePosition;
 
             if (_connection != null && _blockView != null)
             {
