@@ -1,10 +1,12 @@
 ﻿using InDoOut_Console.Display;
+using InDoOut_Console.Messaging;
 using InDoOut_Console.ProgramView;
 using InDoOut_Core.Entities.Programs;
 using InDoOut_Core.Functions;
 using InDoOut_Core.Logging;
 using InDoOut_Executable_Core.Location;
 using InDoOut_Executable_Core.Logging;
+using InDoOut_Executable_Core.Messaging;
 using InDoOut_Json_Storage;
 using InDoOut_Plugins.Loaders;
 using System;
@@ -19,6 +21,8 @@ namespace InDoOut_Console
         static void Main(string[] args)
         {
             Log.Instance.Header("Console application started");
+
+            UserMessageSystemHolder.Instance.CurrentUserMessageSystem = new ConsoleUserMessageSystem();
 
             var logFileSaver = new LogFileSaver(StandardLocations.Instance);
             var originalBackgroundColour = Console.BackgroundColor;

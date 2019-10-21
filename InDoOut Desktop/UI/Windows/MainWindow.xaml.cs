@@ -1,9 +1,11 @@
 ﻿using InDoOut_Core.Logging;
 using InDoOut_Desktop.Loading;
 using InDoOut_Desktop.UI.Interfaces;
+using InDoOut_Desktop.UI.Messaging;
 using InDoOut_Desktop.UI.Threading;
 using InDoOut_Executable_Core.Location;
 using InDoOut_Executable_Core.Logging;
+using InDoOut_Executable_Core.Messaging;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,15 +25,15 @@ namespace InDoOut_Desktop.UI.Windows
         {
             InitializeComponent();
 
+            Application.Current.DispatcherUnhandledException += Application_DispatcherUnhandledException;
             UIThread.Instance.SetCurrentThreadAsUIThread();
+            UserMessageSystemHolder.Instance.CurrentUserMessageSystem = new DesktopUserMessageSystem();
 
             _titleTimer.Interval = TimeSpan.FromMilliseconds(300);
             _titleTimer.Start();
             _titleTimer.Tick += UpdateTimer_Tick;
 
             _logSaver.BeginAutoSave();
-
-            Application.Current.DispatcherUnhandledException += Application_DispatcherUnhandledException;
         }
 
         private async Task FinishLoading()
