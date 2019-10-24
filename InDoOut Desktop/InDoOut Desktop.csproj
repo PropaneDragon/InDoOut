@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Display\**" />
+    <EmbeddedResource Remove="Display\**" />
+    <None Remove="Display\**" />
+    <Page Remove="Display\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Resources\IDO_Main_BackgroundLogo.png" />
     <None Remove="Resources\IDO_Splash_Logo.png" />
     <None Remove="SplashWindow.xaml" />
@@ -42,10 +49,6 @@
   <ItemGroup>
     <Resource Include="Resources\IDO_Main_BackgroundLogo.png" />
     <Resource Include="Resources\IDO_Splash_Logo.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Display\" />
   </ItemGroup>
 
 </Project>
