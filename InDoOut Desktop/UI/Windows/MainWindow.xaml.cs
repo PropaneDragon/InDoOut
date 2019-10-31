@@ -1,5 +1,6 @@
 ﻿using InDoOut_Core.Logging;
 using InDoOut_Desktop.Loading;
+using InDoOut_Desktop.Options;
 using InDoOut_Desktop.UI.Interfaces;
 using InDoOut_Desktop.UI.Messaging;
 using InDoOut_Desktop.UI.Threading;
@@ -52,7 +53,14 @@ namespace InDoOut_Desktop.UI.Windows
                 sidebar.TaskView = taskView;
             }
 
-            _ = Activate();
+            if (ProgramSettings.START_IN_BACKGROUND.Value)
+            {
+                WindowState = WindowState.Minimized;
+            }
+            else
+            {
+                _ = Activate();
+            }
         }
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)

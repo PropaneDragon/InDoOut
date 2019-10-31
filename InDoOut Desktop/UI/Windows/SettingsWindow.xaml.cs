@@ -1,14 +1,7 @@
-﻿using System;
+﻿using InDoOut_Desktop.Options;
+using InDoOut_Plugins.Options;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace InDoOut_Desktop.UI.Windows
 {
@@ -20,6 +13,12 @@ namespace InDoOut_Desktop.UI.Windows
         public SettingsWindow()
         {
             InitializeComponent();
+
+            Options_Program.PopulateForOptions(new List<IOption>()
+            {
+                ProgramSettings.START_IN_BACKGROUND,
+                ProgramSettings.START_WITH_COMPUTER
+            });
         }
     }
 }

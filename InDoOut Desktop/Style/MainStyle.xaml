@@ -7,7 +7,7 @@
         <Setter Property="Foreground" Value="White" />
     </Style>
 
-    <Style  TargetType="{x:Type DataGridRow}">
+    <Style TargetType="{x:Type DataGridRow}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="SnapsToDevicePixels" Value="true"/>
         <Setter Property="Validation.ErrorTemplate" Value="{x:Null}"/>
@@ -126,7 +126,7 @@
             </MultiTrigger>
         </Style.Triggers>
     </Style>
-    
+
     <ControlTemplate x:Key="Template_Buttons_Transparent" TargetType="{x:Type ButtonBase}">
         <Border x:Name="border" TextElement.Foreground="White" TextElement.FontFamily="{TemplateBinding FontFamily}" TextElement.FontSize="{TemplateBinding FontSize}" Background="Transparent" BorderThickness="0" Padding="{TemplateBinding Padding}" BorderBrush="{TemplateBinding BorderBrush}" SnapsToDevicePixels="true">
             <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
