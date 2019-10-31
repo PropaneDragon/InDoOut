@@ -8,7 +8,7 @@
              d:DesignHeight="50" d:DesignWidth="400" Foreground="White" FontFamily="Segoe UI Light" FontSize="24">
     <Border>
         <DockPanel>
-            <Button DockPanel.Dock="Right" FontFamily="Segoe MDL2 Assets" Content="" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="4" Margin="0,0,8,0" Template="{DynamicResource Template_Buttons_Transparent}" Click="Button_Click" />
+            <Button DockPanel.Dock="Right" FontFamily="Material Icons" Content="" FontSize="32" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="4" Margin="0,0,8,0" Template="{DynamicResource Template_Buttons_Transparent}" Click="Button_Click" />
             <TextBox x:Name="TextBox_Query" DockPanel.Dock="Left" Background="{x:Null}" BorderBrush="{x:Null}" Text="Search here" Foreground="White" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" CaretBrush="White" IsUndoEnabled="True" MaxLines="1" GotFocus="TextBox_Query_GotFocus" LostFocus="TextBox_Query_LostFocus" KeyUp="TextBox_Query_KeyUp"/>
         </DockPanel>
     </Border>
