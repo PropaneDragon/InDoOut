@@ -8,13 +8,13 @@
         xmlns:background="clr-namespace:InDoOut_Desktop.UI.Controls.Background"
         xmlns:options="clr-namespace:InDoOut_Desktop.UI.Controls.Options"
         mc:Ignorable="d"
-        Title="Settings" Height="1080" Width="500" WindowState="Normal" Background="#111" Foreground="White" MinWidth="500" MinHeight="500" WindowStartupLocation="CenterOwner" ShowActivated="True">
+        Title="Settings" Height="1080" Width="450" WindowState="Normal" Background="#111" Foreground="White" MinWidth="450" MinHeight="500" WindowStartupLocation="CenterOwner" ShowActivated="True">
     <Grid>
         <Grid>
             <background:BackgroundImage Opacity="0.01"/>
             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-                <Grid Margin="0,80,0,0">                    
-                    <options:OptionsDisplay x:Name="Options_Program" />
+                <Grid Margin="0,80,0,0">
+                    <StackPanel x:Name="Stack_Options" />
                 </Grid>
             </ScrollViewer>
         </Grid>

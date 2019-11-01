@@ -8,7 +8,7 @@ using System.Reflection;
 
 namespace InDoOut_Desktop.UI.Controls.Options
 {
-    public class OptionInterfaceFactory : Singleton<OptionInterfaceFactory>
+    public class OptionInterfaceFactory : Singleton<OptionInterfaceFactory>, IOptionInterfaceFactory
     {
         private readonly Dictionary<Type, Type> _optionToInterfaceAssociations = new Dictionary<Type, Type>();
 

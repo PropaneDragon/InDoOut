@@ -7,6 +7,13 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <WrapPanel x:Name="Wrap_Options" HorizontalAlignment="Center" />
+        <DockPanel>
+            <Border DockPanel.Dock="Top" Padding="16, 16, 16, 0">
+                <TextBlock x:Name="Text_Title" Text="Title" Foreground="#66FFFFFF" FontFamily="Segoe UI Light" FontSize="22" />
+            </Border>
+            <Border DockPanel.Dock="Top" Padding="10">
+                <WrapPanel x:Name="Wrap_Options" HorizontalAlignment="Center" />
+            </Border>
+        </DockPanel>
     </Grid>
 </UserControl>

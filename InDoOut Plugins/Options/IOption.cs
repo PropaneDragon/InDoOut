@@ -8,6 +8,11 @@ namespace InDoOut_Plugins.Options
     public interface IOption : IValue, INamed
     {
         /// <summary>
+        /// Whether this option should be visible to the user or not.
+        /// </summary>
+        bool Visible { get; }
+
+        /// <summary>
         /// The description of the option to be displayed on the interface.
         /// </summary>
         string Description { get; }

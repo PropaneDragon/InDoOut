@@ -354,6 +354,11 @@
             Represents an option that can be saved, loaded and modified by the user.
             </summary>
         </member>
+        <member name="P:InDoOut_Plugins.Options.IOption.Visible">
+            <summary>
+            Whether this option should be visible to the user or not.
+            </summary>
+        </member>
         <member name="P:InDoOut_Plugins.Options.IOption.Description">
             <summary>
             The description of the option to be displayed on the interface.
@@ -373,6 +378,11 @@
         <member name="T:InDoOut_Plugins.Options.Option`1">
             <summary>
             An option that can be modified by the user.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Plugins.Options.Option`1.Visible">
+            <summary>
+            Whether this option is visible to the user or not.
             </summary>
         </member>
         <member name="P:InDoOut_Plugins.Options.Option`1.Description">

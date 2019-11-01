@@ -9,6 +9,11 @@ namespace InDoOut_Plugins.Options
     public abstract class Option<ValueType> : Value, IOption<ValueType>
     {
         /// <summary>
+        /// Whether this option is visible to the user or not.
+        /// </summary>
+        public bool Visible { get; protected set; } = true;
+
+        /// <summary>
         /// A description of what the option changes in more detail.
         /// </summary>
         public string Description { get; private set; } = null;
