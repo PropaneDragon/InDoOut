@@ -5,8 +5,8 @@ namespace InDoOut_Debug_Plugins.Logging
 {
     public class LogErrorFunction : Function
     {
-        private IOutput _logged;
-        private IProperty<string> _text;
+        private readonly IOutput _logged;
+        private readonly IProperty<string> _text;
 
         public override string Description => "Logs an error to the log file.";
 

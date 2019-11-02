@@ -7,10 +7,10 @@ namespace InDoOut_Core_Plugins.Network
 {
     public class PingAddressFunction : Function
     {
-        private IOutput _success, _noResponse, _error;
-        private IProperty<string> _address;
-        private IProperty<double> _timeout;
-        private IResult _replyAddress, _roundTripTime;
+        private readonly IOutput _success, _noResponse, _error;
+        private readonly IProperty<string> _address;
+        private readonly IProperty<double> _timeout;
+        private readonly IResult _replyAddress, _roundTripTime;
 
         public override string Description => "Pings a network address to see whether a response is given. Useful for checking if a device is active on the network.";
 
