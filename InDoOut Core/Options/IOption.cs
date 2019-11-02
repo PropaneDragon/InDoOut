@@ -1,6 +1,6 @@
 ﻿using InDoOut_Core.Basic;
 
-namespace InDoOut_Plugins.Options
+namespace InDoOut_Core.Options
 {
     /// <summary>
     /// Represents an option that can be saved, loaded and modified by the user.

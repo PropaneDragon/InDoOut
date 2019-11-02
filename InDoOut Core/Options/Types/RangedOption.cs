@@ -1,4 +1,4 @@
-﻿namespace InDoOut_Plugins.Options.Types
+﻿namespace InDoOut_Core.Options.Types
 {
     /// <summary>
     /// An abstract ranged option. These store a minimum and maximum possible value for the option and only

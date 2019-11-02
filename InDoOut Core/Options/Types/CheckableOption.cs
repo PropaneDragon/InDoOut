@@ -1,4 +1,4 @@
-﻿namespace InDoOut_Plugins.Options.Types
+﻿namespace InDoOut_Core.Options.Types
 {
     /// <summary>
     /// An option that can be checked or unchecked.

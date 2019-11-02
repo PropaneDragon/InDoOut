@@ -349,58 +349,58 @@
             <param name="loader">The loader that is currently loading the plugin.</param>
             <param name="assembly">The assembly that is currently being loaded.</param>
         </member>
-        <member name="T:InDoOut_Plugins.Options.IOption">
+        <member name="T:InDoOut_Core.Options.IOption">
             <summary>
             Represents an option that can be saved, loaded and modified by the user.
             </summary>
         </member>
-        <member name="P:InDoOut_Plugins.Options.IOption.Visible">
+        <member name="P:InDoOut_Core.Options.IOption.Visible">
             <summary>
             Whether this option should be visible to the user or not.
             </summary>
         </member>
-        <member name="P:InDoOut_Plugins.Options.IOption.Description">
+        <member name="P:InDoOut_Core.Options.IOption.Description">
             <summary>
             The description of the option to be displayed on the interface.
             </summary>
         </member>
-        <member name="T:InDoOut_Plugins.Options.IOption`1">
+        <member name="T:InDoOut_Core.Options.IOption`1">
             <summary>
             Represents a specialised option that has <typeparamref name="ValueType"/> to convert between.
             </summary>
             <typeparam name="ValueType">The core value of this option.</typeparam>
         </member>
-        <member name="P:InDoOut_Plugins.Options.IOption`1.Value">
+        <member name="P:InDoOut_Core.Options.IOption`1.Value">
             <summary>
             The full value of this option.
             </summary>
         </member>
-        <member name="T:InDoOut_Plugins.Options.Option`1">
+        <member name="T:InDoOut_Core.Options.Option`1">
             <summary>
             An option that can be modified by the user.
             </summary>
         </member>
-        <member name="P:InDoOut_Plugins.Options.Option`1.Visible">
+        <member name="P:InDoOut_Core.Options.Option`1.Visible">
             <summary>
             Whether this option is visible to the user or not.
             </summary>
         </member>
-        <member name="P:InDoOut_Plugins.Options.Option`1.Description">
+        <member name="P:InDoOut_Core.Options.Option`1.Description">
             <summary>
             A description of what the option changes in more detail.
             </summary>
         </member>
-        <member name="P:InDoOut_Plugins.Options.Option`1.Name">
+        <member name="P:InDoOut_Core.Options.Option`1.Name">
             <summary>
             The name of the option.
             </summary>
         </member>
-        <member name="P:InDoOut_Plugins.Options.Option`1.Value">
+        <member name="P:InDoOut_Core.Options.Option`1.Value">
             <summary>
             The current value of the option.
             </summary>
         </member>
-        <member name="M:InDoOut_Plugins.Options.Option`1.#ctor(System.String,System.String,`0)">
+        <member name="M:InDoOut_Core.Options.Option`1.#ctor(System.String,System.String,`0)">
             <summary>
             Creates a basic option with a name and optional description.
             </summary>
@@ -408,12 +408,12 @@
             <param name="description">A more detailed description of what the option is for.</param>
             <param name="defaultValue">The default value of the option before a user changes it.</param>
         </member>
-        <member name="T:InDoOut_Plugins.Options.Types.CheckableOption">
+        <member name="T:InDoOut_Core.Options.Types.CheckableOption">
             <summary>
             An option that can be checked or unchecked.
             </summary>
         </member>
-        <member name="M:InDoOut_Plugins.Options.Types.CheckableOption.#ctor(System.String,System.String,System.Boolean)">
+        <member name="M:InDoOut_Core.Options.Types.CheckableOption.#ctor(System.String,System.String,System.Boolean)">
             <summary>
             Creates a basic checkable option with name, description and default value.
             </summary>
@@ -421,17 +421,17 @@
             <param name="description">A more detailed description of what the option does.</param>
             <param name="defaultValue">The default value of the option before the user interacts with it.</param>
         </member>
-        <member name="T:InDoOut_Plugins.Options.Types.MultiChoiceOption">
+        <member name="T:InDoOut_Core.Options.Types.MultiChoiceOption">
             <summary>
             A multi-choice option where a user can select a value from a list of possible values.
             </summary>
         </member>
-        <member name="P:InDoOut_Plugins.Options.Types.MultiChoiceOption.Items">
+        <member name="P:InDoOut_Core.Options.Types.MultiChoiceOption.Items">
             <summary>
             The available items to select from in the option.
             </summary>
         </member>
-        <member name="M:InDoOut_Plugins.Options.Types.MultiChoiceOption.#ctor(System.String,System.String,System.String,System.String[])">
+        <member name="M:InDoOut_Core.Options.Types.MultiChoiceOption.#ctor(System.String,System.String,System.String,System.String[])">
             <summary>
             Creates a basic multi choice option with a name, description, default value and list of items.
             </summary>
@@ -440,13 +440,13 @@
             <param name="defaultValue">The default value of the option.</param>
             <param name="items">The available items to be selected from.</param>
         </member>
-        <member name="T:InDoOut_Plugins.Options.Types.RangedDoubleOption">
+        <member name="T:InDoOut_Core.Options.Types.RangedDoubleOption">
             <summary>
             A ranged option that stores a double.
-            See <see cref="T:InDoOut_Plugins.Options.Types.RangedOption`1"/> for further info.
+            See <see cref="T:InDoOut_Core.Options.Types.RangedOption`1"/> for further info.
             </summary>
         </member>
-        <member name="M:InDoOut_Plugins.Options.Types.RangedDoubleOption.#ctor(System.String,System.Double,System.Double,System.String,System.Double)">
+        <member name="M:InDoOut_Core.Options.Types.RangedDoubleOption.#ctor(System.String,System.Double,System.Double,System.String,System.Double)">
             <summary>
             Creates a basic ranged option that can store a double value, with an inclusive minimum and maximum value.
             </summary>
@@ -456,19 +456,19 @@
             <param name="description">A more detailed description of what the option is for.</param>
             <param name="defaultValue">The default option value before it is set by the user.</param>
         </member>
-        <member name="M:InDoOut_Plugins.Options.Types.RangedDoubleOption.ValueWithinBounds">
+        <member name="M:InDoOut_Core.Options.Types.RangedDoubleOption.ValueWithinBounds">
             <summary>
             Returns whether the option value is within the minimum and maximum values (inclusive).
             </summary>
             <returns>Whether the option value is within the minimum and maximum values (inclusive).</returns>
         </member>
-        <member name="T:InDoOut_Plugins.Options.Types.RangedIntOption">
+        <member name="T:InDoOut_Core.Options.Types.RangedIntOption">
             <summary>
             A ranged option that stores an integer.
-            See <see cref="T:InDoOut_Plugins.Options.Types.RangedOption`1"/> for further info.
+            See <see cref="T:InDoOut_Core.Options.Types.RangedOption`1"/> for further info.
             </summary>
         </member>
-        <member name="M:InDoOut_Plugins.Options.Types.RangedIntOption.#ctor(System.String,System.Int32,System.Int32,System.String,System.Int32)">
+        <member name="M:InDoOut_Core.Options.Types.RangedIntOption.#ctor(System.String,System.Int32,System.Int32,System.String,System.Int32)">
             <summary>
             Creates a basic ranged option that can store an integer value, with an inclusive minimum and maximum value.
             </summary>
@@ -478,30 +478,30 @@
             <param name="description">A more detailed description of what the option is for.</param>
             <param name="defaultValue">The default option value before it is set by the user.</param>
         </member>
-        <member name="M:InDoOut_Plugins.Options.Types.RangedIntOption.ValueWithinBounds">
+        <member name="M:InDoOut_Core.Options.Types.RangedIntOption.ValueWithinBounds">
             <summary>
             Returns whether the option value is within the minimum and maximum values (inclusive).
             </summary>
             <returns>Whether the option value is within the minimum and maximum values (inclusive).</returns>
         </member>
-        <member name="T:InDoOut_Plugins.Options.Types.RangedOption`1">
+        <member name="T:InDoOut_Core.Options.Types.RangedOption`1">
             <summary>
             An abstract ranged option. These store a minimum and maximum possible value for the option and only
             allow the user to select a value between these values.
             </summary>
             <typeparam name="RangedType">The type to store.</typeparam>
         </member>
-        <member name="P:InDoOut_Plugins.Options.Types.RangedOption`1.MinimumValue">
+        <member name="P:InDoOut_Core.Options.Types.RangedOption`1.MinimumValue">
             <summary>
             The inclusive minimum value allowed for the option.
             </summary>
         </member>
-        <member name="P:InDoOut_Plugins.Options.Types.RangedOption`1.MaximumValue">
+        <member name="P:InDoOut_Core.Options.Types.RangedOption`1.MaximumValue">
             <summary>
             The inclusive maximum value allowed for the option.
             </summary>
         </member>
-        <member name="M:InDoOut_Plugins.Options.Types.RangedOption`1.#ctor(System.String,`0,`0,System.String,`0)">
+        <member name="M:InDoOut_Core.Options.Types.RangedOption`1.#ctor(System.String,`0,`0,System.String,`0)">
             <summary>
             Creates a basic ranged option with a name, minimum value, maximum values, description and default value.
             </summary>
@@ -511,18 +511,18 @@
             <param name="description">A more detailed description of what the option is for.</param>
             <param name="defaultValue">The default value given before the user sets it.</param>
         </member>
-        <member name="M:InDoOut_Plugins.Options.Types.RangedOption`1.ValueWithinBounds">
+        <member name="M:InDoOut_Core.Options.Types.RangedOption`1.ValueWithinBounds">
             <summary>
             Checks whether the option value is within the minimum and maximum values.
             </summary>
             <returns>Whether the option value is within the minimum and maximum values.</returns>
         </member>
-        <member name="T:InDoOut_Plugins.Options.Types.StringOption">
+        <member name="T:InDoOut_Core.Options.Types.StringOption">
             <summary>
             A string based option where a user can enter any string they want.
             </summary>
         </member>
-        <member name="M:InDoOut_Plugins.Options.Types.StringOption.#ctor(System.String,System.String,System.String)">
+        <member name="M:InDoOut_Core.Options.Types.StringOption.#ctor(System.String,System.String,System.String)">
             <summary>
             Creates a basic string option that allows a user to enter any string.
             </summary>

@@ -1,6 +1,6 @@
 ﻿using InDoOut_Core.Instancing;
 using InDoOut_Desktop.UI.Controls.Options.Types;
-using InDoOut_Plugins.Options;
+using InDoOut_Core.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;

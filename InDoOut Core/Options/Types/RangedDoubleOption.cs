@@ -1,4 +1,4 @@
-﻿namespace InDoOut_Plugins.Options.Types
+﻿namespace InDoOut_Core.Options.Types
 {
     /// <summary>
     /// A ranged option that stores a double.

@@ -1,4 +1,4 @@
-﻿namespace InDoOut_Plugins.Options.Types
+﻿namespace InDoOut_Core.Options.Types
 {
     /// <summary>
     /// A string based option where a user can enter any string they want.

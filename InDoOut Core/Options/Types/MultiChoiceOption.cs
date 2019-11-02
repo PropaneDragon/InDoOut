@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace InDoOut_Plugins.Options.Types
+namespace InDoOut_Core.Options.Types
 {
     /// <summary>
     /// A multi-choice option where a user can select a value from a list of possible values.

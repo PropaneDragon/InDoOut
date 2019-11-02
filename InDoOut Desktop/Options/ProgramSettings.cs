@@ -1,4 +1,4 @@
-﻿using InDoOut_Plugins.Options.Types;
+﻿using InDoOut_Core.Options.Types;
 
 namespace InDoOut_Desktop.Options
 {

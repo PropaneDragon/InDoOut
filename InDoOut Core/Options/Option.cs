@@ -1,6 +1,6 @@
 ﻿using InDoOut_Core.Basic;
 
-namespace InDoOut_Plugins.Options
+namespace InDoOut_Core.Options
 {
     /// <summary>
     /// An option that can be modified by the user.
