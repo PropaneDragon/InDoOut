@@ -4,27 +4,6 @@ using System.Collections.Generic;
 
 namespace InDoOut_Executable_Core.Storage
 {
-    public enum LoadResult
-    {
-        Unknown = -1,
-        OK = 0,
-        InvalidLocation,
-        InvalidFile,
-        InvalidExtension,
-        InsufficientPermissions,
-        MissingData,
-        WrongVersion
-    }
-
-    public enum SaveResult
-    {
-        Unknown = -1,
-        OK = 0,
-        InvalidLocation,
-        InsufficientPermissions,
-        InvalidFileName
-    }
-
     /// <summary>
     /// Represents an interface that can store a <see cref="IProgram"/> to a storage device, and then
     /// read the data back off again to create the same <see cref="IProgram"/>.
