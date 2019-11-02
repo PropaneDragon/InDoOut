@@ -1,7 +1,4 @@
 ﻿using InDoOut_Core.Entities.Functions;
-using InDoOut_Core.Threading.Safety;
-using Q42.HueApi;
-using Q42.HueApi.Models;
 using System.Linq;
 
 namespace InDoOut_Philips_Hue_Plugins

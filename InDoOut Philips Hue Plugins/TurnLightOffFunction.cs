@@ -1,5 +1,4 @@
 ﻿using InDoOut_Core.Entities.Functions;
-using InDoOut_Core.Threading.Safety;
 using Q42.HueApi;
 using System;
 using System.Collections.Generic;

@@ -1,6 +1,5 @@
 ﻿using InDoOut_Core.Entities.Programs;
 using InDoOut_Core.Functions;
-using InDoOut_Core.Logging;
 using InDoOut_Core.Reporting;
 using InDoOut_Executable_Core.Storage;
 using InDoOut_Plugins.Loaders;

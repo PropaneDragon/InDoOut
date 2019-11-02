@@ -1,5 +1,4 @@
 ﻿using InDoOut_Core.Basic;
-using InDoOut_Core.Threading.Safety;
 
 namespace InDoOut_Plugins.Options
 {
