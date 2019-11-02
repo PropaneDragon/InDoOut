@@ -1,5 +1,5 @@
 ﻿using InDoOut_Core.Entities.Functions;
-using InDoOut_Plugins.Core;
+using InDoOut_Core.Plugins;
 using System;
 using System.Collections.Generic;
 

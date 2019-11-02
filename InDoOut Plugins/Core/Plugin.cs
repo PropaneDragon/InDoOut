@@ -1,4 +1,5 @@
-﻿using InDoOut_Core.Threading.Safety;
+﻿using InDoOut_Core.Plugins;
+using InDoOut_Core.Threading.Safety;
 
 namespace InDoOut_Plugins.Core
 {

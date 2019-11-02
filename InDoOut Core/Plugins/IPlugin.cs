@@ -1,4 +1,4 @@
-﻿namespace InDoOut_Plugins.Core
+﻿namespace InDoOut_Core.Plugins
 {
     /// <summary>
     /// Represents a plugin that is recognised by the application and loaded in automatically.
