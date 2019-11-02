@@ -51,8 +51,8 @@ namespace InDoOut_Core_Plugins.Network
                     {
                         Log.Instance.Info("Ping result: ", reply?.Status);
 
-                        _replyAddress.ValueFrom(reply.Address.ToString());
-                        _roundTripTime.ValueFrom(reply.RoundtripTime);
+                        _ = _replyAddress.ValueFrom(reply.Address.ToString());
+                        _ = _roundTripTime.ValueFrom(reply.RoundtripTime);
 
                         return reply.Status switch
                         {

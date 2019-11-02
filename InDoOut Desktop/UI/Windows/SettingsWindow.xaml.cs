@@ -33,7 +33,7 @@ namespace InDoOut_Desktop.UI.Windows
         {
             if (display != null)
             {
-                Stack_Options.Children.Add(display);
+                _ = Stack_Options.Children.Add(display);
             }
         }
     }
