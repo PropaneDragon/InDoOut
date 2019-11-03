@@ -65,6 +65,12 @@ namespace InDoOut_Json_Storage
         }
 
         /// <summary>
+        /// The version of the program saved.
+        /// </summary>
+        [JsonProperty("version")]
+        public Version Version { get; set; } = new Version(0, 1);
+
+        /// <summary>
         /// Program Id.
         /// </summary>
         [JsonProperty("id")]

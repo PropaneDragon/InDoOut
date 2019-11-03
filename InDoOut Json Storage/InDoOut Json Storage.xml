@@ -4,6 +4,25 @@
         <name>InDoOut Json Storage</name>
     </assembly>
     <members>
+        <member name="T:InDoOut_Json_Storage.GenericJsonStorer">
+            <summary>
+            A generic class for storing and loading JSON data to the disk.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Json_Storage.GenericJsonStorer.Save``1(``0,System.String)">
+            <summary>
+            Saves <typeparamref name="JsonType"/> to the given <paramref name="path"/>.
+            </summary>
+            <param name="jsonType">The JSON to save.</param>
+            <param name="path">The path to save to.</param>
+            <returns>Whether or not the JSON data could be saved to the path.</returns>
+        </member>
+        <member name="M:InDoOut_Json_Storage.GenericJsonStorer.Load``1(System.String)">
+            <summary>
+            Loads JSON shell data as type <typeparamref name="JsonType"/> from the given <paramref name="path"/>.
+            </summary>
+            <returns>JSON data from the path, or null if failed.</returns>
+        </member>
         <member name="T:InDoOut_Json_Storage.JsonConnection">
             <summary>
             Represents a raw JSON connection between two functions.
@@ -105,6 +124,60 @@
             <param name="function">The function to set.</param>
             <returns>Whether the data was set successfully.</returns>
         </member>
+        <member name="T:InDoOut_Json_Storage.JsonOption">
+            <summary>
+            Represents a basic JSON shell for an <see cref="T:InDoOut_Core.Options.IOption"/>.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Json_Storage.JsonOption.Value">
+            <summary>
+            The property value.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Json_Storage.JsonOption.Name">
+            <summary>
+            The property name.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Json_Storage.JsonOption.CreateFromOption(InDoOut_Core.Options.IOption)">
+            <summary>
+            Creates a JSON representation of an <see cref="T:InDoOut_Core.Options.IOption"/> for storage.
+            </summary>
+            <param name="option">The option to store.</param>
+            <returns>A JSON representation of the given <paramref name="option"/>.</returns>
+        </member>
+        <member name="M:InDoOut_Json_Storage.JsonOption.Set(InDoOut_Core.Options.IOption,System.Boolean)">
+            <summary>
+            Sets a given <paramref name="option"/> to the value in this <see cref="T:InDoOut_Json_Storage.JsonOption"/>. Fails if
+            the names are differnent and <paramref name="failIfNameDifferent"/> is true. Set to false to set
+            the value regardless of the name matching.
+            </summary>
+            <param name="option">The option to set the value of.</param>
+            <param name="failIfNameDifferent">Returns false if this is true and name of the <paramref name="option"/> and <see cref="P:InDoOut_Json_Storage.JsonOption.Name"/> are different.</param>
+            <returns>Whether or not the <see cref="P:InDoOut_Json_Storage.JsonOption.Value"/> was applied to the <paramref name="option"/>.</returns>
+        </member>
+        <member name="T:InDoOut_Json_Storage.JsonOptions">
+            <summary>
+            Represents a basic JSON shell for a list of <see cref="T:InDoOut_Core.Options.IOption"/>
+            </summary>
+        </member>
+        <member name="M:InDoOut_Json_Storage.JsonOptions.CreateFromList(InDoOut_Core.Options.IOptionHolder)">
+            <summary>
+            Creates a JSON container for a list of options for storage.
+            </summary>
+            <param name="optionHolder">The options to create a container for.</param>
+            <returns>A container for storing options.</returns>
+        </member>
+        <member name="M:InDoOut_Json_Storage.JsonOptions.SetListValues(InDoOut_Core.Options.IOptionHolder)">
+            <summary>
+            Sets the values in a list of options to the stored values.
+            <para />
+            Note that values will only get set on options with matching names in the stored
+            options.
+            </summary>
+            <param name="optionHolder">A list of options to apply values to.</param>
+            <returns>Whether or not all options were set correctly.</returns>
+        </member>
         <member name="T:InDoOut_Json_Storage.JsonProgram">
             <summary>
             Represents a basic JSON shell for an <see cref="T:InDoOut_Core.Entities.Programs.IProgram"/>.
@@ -153,6 +226,11 @@
         <member name="F:InDoOut_Json_Storage.JsonProgram.FailureIds.ConnectionFailed">
             <summary>
             A connection could not be made.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Json_Storage.JsonProgram.Version">
+            <summary>
+            The version of the program saved.
             </summary>
         </member>
         <member name="P:InDoOut_Json_Storage.JsonProgram.Id">
@@ -230,6 +308,46 @@
             <param name="function">The function to set.</param>
             <returns>Whether the property was set.</returns>
         </member>
+        <member name="T:InDoOut_Json_Storage.OptionsJsonStorer">
+            <summary>
+            Stores a set of options in the JSON format.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Json_Storage.OptionsJsonStorer.#ctor">
+            <summary>
+            Creates a basic <see cref="T:InDoOut_Json_Storage.OptionsJsonStorer"/> without a path, which can be set later using
+            <see cref="P:InDoOut_Executable_Core.Storage.OptionsStorer.FilePath"/>.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Json_Storage.OptionsJsonStorer.#ctor(System.String)">
+            <summary>
+            Creates a <see cref="T:InDoOut_Json_Storage.OptionsJsonStorer"/> with a <paramref name="filePath"/>.
+            </summary>
+            <param name="filePath">The path to the file that will be saved or loaded.</param>
+        </member>
+        <member name="P:InDoOut_Json_Storage.OptionsJsonStorer.FileExtension">
+            <summary>
+            The extension of the generated files.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Json_Storage.OptionsJsonStorer.TryLoad(InDoOut_Core.Options.IOptionHolder,System.String)">
+            <summary>
+            Attempts to load option values into the given list of <paramref name="optionHolder"/> from the given
+            <paramref name="path"/>.
+            </summary>
+            <param name="optionHolder">The options to load values into.</param>
+            <param name="path">The location to load options from.</param>
+            <returns></returns>
+        </member>
+        <member name="M:InDoOut_Json_Storage.OptionsJsonStorer.TrySave(InDoOut_Core.Options.IOptionHolder,System.String)">
+            <summary>
+            Attempts to save the given list of <paramref name="optionHolder"/> to the given <paramref name="path"/>
+            on disk.
+            </summary>
+            <param name="optionHolder">The options to save.</param>
+            <param name="path">The path to save the options to.</param>
+            <returns></returns>
+        </member>
         <member name="T:InDoOut_Json_Storage.ProgramJsonStorer">
             <summary>
             Stores a program in the JSON format.
@@ -263,20 +381,6 @@
             <param name="program">The program to save.</param>
             <param name="path">The path to save to.</param>
             <returns>Whether or not the program could be saved to the path.</returns>
-        </member>
-        <member name="M:InDoOut_Json_Storage.ProgramJsonStorer.Save(InDoOut_Json_Storage.JsonProgram,System.String)">
-            <summary>
-            Saves a program to the given <paramref name="path"/> from JSON shell data.
-            </summary>
-            <param name="jsonProgram">The program to save.</param>
-            <param name="path">The path to save to.</param>
-            <returns>Whether or not the program could be saved to the path.</returns>
-        </member>
-        <member name="M:InDoOut_Json_Storage.ProgramJsonStorer.Load(System.String)">
-            <summary>
-            Loads JSON shell data for a program from the given <paramref name="path"/>.
-            </summary>
-            <returns>A JSON shell program from the path, or null if failed.</returns>
         </member>
     </members>
 </doc>

@@ -75,5 +75,14 @@ namespace InDoOut_Core.Basic
 
             return TypeDescriptor.GetConverter(typeof(T)).ConvertToString(value);
         }
+
+        /// <summary>
+        /// Gets the string representation of this value.
+        /// </summary>
+        /// <returns>The string representation of this value.</returns>
+        public override string ToString()
+        {
+            return $"[Valid: {ValidValue}] [Value: {RawValue}]";
+        }
     }
 }

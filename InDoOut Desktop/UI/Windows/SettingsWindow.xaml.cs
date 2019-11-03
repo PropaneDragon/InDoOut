@@ -12,11 +12,7 @@ namespace InDoOut_Desktop.UI.Windows
         {
             InitializeComponent();
 
-            AddOptions("Program options", new List<IOption>()
-            {
-                ProgramSettings.START_IN_BACKGROUND,
-                ProgramSettings.START_WITH_COMPUTER
-            });
+            AddOptions("Program options", ProgramSettings.Instance.OptionHolder.Options);
         }
 
         private void AddOptions(string title, List<IOption> options)

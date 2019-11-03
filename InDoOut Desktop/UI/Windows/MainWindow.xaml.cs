@@ -27,6 +27,7 @@ namespace InDoOut_Desktop.UI.Windows
             InitializeComponent();
 
             Application.Current.DispatcherUnhandledException += Application_DispatcherUnhandledException;
+            ProgramSettings.Instance.RegisterOptions();
             UIThread.Instance.SetCurrentThreadAsUIThread();
             UserMessageSystemHolder.Instance.CurrentUserMessageSystem = new DesktopUserMessageSystem();
 
@@ -54,7 +55,7 @@ namespace InDoOut_Desktop.UI.Windows
                 sidebar.TaskView = taskView;
             }
 
-            if (ProgramSettings.START_IN_BACKGROUND.Value)
+            if (ProgramSettings.Instance.StartInBackground.Value)
             {
                 WindowState = WindowState.Minimized;
             }

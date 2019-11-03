@@ -43,5 +43,34 @@ namespace InDoOut_Core.Options
             Description = description;
             Value = defaultValue;
         }
+
+        /// <summary>
+        /// Checks for eqaulity with another object. If the other object is of type <see cref="IOption"/>
+        /// it will compare the name.
+        /// </summary>
+        /// <param name="obj">The object to compare.</param>
+        /// <returns>Whether the objects are equal.</returns>
+        public override bool Equals(object obj)
+        {
+            return obj is IOption otherOption ? otherOption.Name == Name : base.Equals(obj);
+        }
+
+        /// <summary>
+        /// Serves as the default hash function.
+        /// </summary>
+        /// <returns>The object hash.</returns>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        /// <summary>
+        /// Gets the string representation of this option.
+        /// </summary>
+        /// <returns>The string representation of this option.</returns>
+        public override string ToString()
+        {
+            return $"[OPTION [Name: {Name}] [Description: {Description}] [Type: {GetType()}] [ValueType: {typeof(ValueType)}] {base.ToString()}]";
+        }
     }
 }
