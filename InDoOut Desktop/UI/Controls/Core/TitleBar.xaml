@@ -15,8 +15,8 @@
         <DockPanel>
             <ContentControl DockPanel.Dock="Right">
                 <StackPanel Orientation="Horizontal">
-                    <Button Template="{DynamicResource Template_Buttons_Control}" x:Name="Button_Minimise" ToolTip="Minimise" Content="" Click="Button_Minimise_Click"/>
-                    <Button Template="{DynamicResource Template_Buttons_Control}" x:Name="Button_Restore" ToolTip="Restore" Content="" Click="Button_Restore_Click"/>
+                    <Button Template="{DynamicResource Template_Buttons_Control}" x:Name="Button_Minimise" ToolTip="Minimise" Content="" Click="Button_Minimise_Click" Padding="0" />
+                    <Button Template="{DynamicResource Template_Buttons_Control}" x:Name="Button_Restore" ToolTip="Restore" Content="" Click="Button_Restore_Click" Padding="0" />
                     <Button Template="{DynamicResource Template_Buttons_Control}" x:Name="Button_Close" ToolTip="Close" Content="" Click="Button_Close_Click" Padding="0,0,16,0"/>
                 </StackPanel>
             </ContentControl>

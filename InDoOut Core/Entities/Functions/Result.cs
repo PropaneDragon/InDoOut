@@ -23,6 +23,13 @@ namespace InDoOut_Core.Entities.Functions
         private readonly Value _value = new Value();
 
         /// <summary>
+        /// An event that gets fired when the value changes.
+        /// <para/>
+        /// Note: Not thread safe. This spawns a new thread every time the value changes.
+        /// </summary>
+        public event EventHandler<ValueChangedEvent> OnValueChanged;
+
+        /// <summary>
         /// Whether this result contains a valid value, in order to set a corrisponding
         /// <see cref="IVariable"/>.
         /// </summary>
@@ -69,6 +76,8 @@ namespace InDoOut_Core.Entities.Functions
             Name = name;
             Description = description;
             RawValue = defaultValue;
+
+            _value.OnValueChanged += Value_OnValueChanged;
         }
 
         /// <summary>
@@ -183,6 +192,11 @@ namespace InDoOut_Core.Entities.Functions
             }
 
             Log.Instance.Info($"Processed {this}");
+        }
+
+        private void Value_OnValueChanged(object sender, ValueChangedEvent e)
+        {
+            OnValueChanged?.Invoke(this, e);
         }
     }
 }

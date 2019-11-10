@@ -35,6 +35,14 @@
             Represents a basic value as well as conversion utilities.
             </summary>
         </member>
+        <member name="E:InDoOut_Core.Basic.IValue.OnValueChanged">
+            <summary>
+            An event that gets fired when the value changes.
+            <para/>
+            Note: This may not be thread safe, and you should take precautions to ensure your
+            code can handle multiple threads sending this event at once.
+            </summary>
+        </member>
         <member name="M:InDoOut_Core.Basic.IValue.ValueFrom``1(``0)">
             <summary>
             Sets the value from the given type <typeparamref name="T"/>
@@ -72,6 +80,13 @@
         <member name="T:InDoOut_Core.Basic.Value">
             <summary>
             A basic value, along with some conversion utilities.
+            </summary>
+        </member>
+        <member name="E:InDoOut_Core.Basic.Value.OnValueChanged">
+            <summary>
+            An event that gets fired when the value changes.
+            <para/>
+            Note: Not thread safe. This spawns a new thread every time the value changes.
             </summary>
         </member>
         <member name="P:InDoOut_Core.Basic.Value.ValidValue">
@@ -129,6 +144,22 @@
             Gets the string representation of this value.
             </summary>
             <returns>The string representation of this value.</returns>
+        </member>
+        <member name="T:InDoOut_Core.Basic.ValueChangedEvent">
+            <summary>
+            Represents an event triggered when the stored value is changed.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Basic.ValueChangedEvent.Value">
+            <summary>
+            The value that has changed.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Core.Basic.ValueChangedEvent.#ctor(InDoOut_Core.Basic.IValue)">
+            <summary>
+            Creates a basic event with a given value.
+            </summary>
+            <param name="value">The value that has changed.</param>
         </member>
         <member name="T:InDoOut_Core.Entities.Core.Entity">
             <summary>
@@ -1098,6 +1129,13 @@
             function to be calculated. These can be set by the user, or automatically set by the <see cref="P:InDoOut_Core.Entities.Functions.Property`1.AssociatedVariable"/>.
             </summary>
         </member>
+        <member name="E:InDoOut_Core.Entities.Functions.Property`1.OnValueChanged">
+            <summary>
+            An event that gets fired when the value changes.
+            <para/>
+            Note: Not thread safe. This spawns a new thread every time the value changes.
+            </summary>
+        </member>
         <member name="P:InDoOut_Core.Entities.Functions.Property`1.SafeDescription">
             <summary>
             A safe way of getting the <see cref="P:InDoOut_Core.Entities.Functions.Property`1.Description"/> of a property without exceptions.
@@ -1222,6 +1260,13 @@
             can be named and will set a <see cref="T:InDoOut_Core.Variables.IVariable"/> of that name when
             the function is finished. Those values can then be used on <see cref="T:InDoOut_Core.Entities.Functions.IProperty"/>
             values.
+            </summary>
+        </member>
+        <member name="E:InDoOut_Core.Entities.Functions.Result.OnValueChanged">
+            <summary>
+            An event that gets fired when the value changes.
+            <para/>
+            Note: Not thread safe. This spawns a new thread every time the value changes.
             </summary>
         </member>
         <member name="P:InDoOut_Core.Entities.Functions.Result.IsSet">
@@ -2023,7 +2068,8 @@
             Creates a basic string option that allows a user to enter any string.
             </summary>
             <param name="name">The name of the option.</param>
-            <param name="description"></param>
+            <param name="description">The description of the option.</param>
+            <param name="defaultValue">The default value of the option.</param>
         </member>
         <member name="T:InDoOut_Core.Plugins.IPlugin">
             <summary>

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using InDoOut_Core.Basic;
 using InDoOut_Core.Entities.Core;
 using InDoOut_Core.Logging;
@@ -14,6 +15,13 @@ namespace InDoOut_Core.Entities.Functions
     public class Property<T> : InteractiveEntity<IFunction, IResult>, IProperty<T>
     {
         private readonly Value _value = new Value();
+
+        /// <summary>
+        /// An event that gets fired when the value changes.
+        /// <para/>
+        /// Note: Not thread safe. This spawns a new thread every time the value changes.
+        /// </summary>
+        public event EventHandler<ValueChangedEvent> OnValueChanged;
 
         /// <summary>
         /// A safe way of getting the <see cref="Description"/> of a property without exceptions.
@@ -95,6 +103,8 @@ namespace InDoOut_Core.Entities.Functions
             Description = description;
             Required = required;
             BasicValue = initialValue;
+
+            _value.OnValueChanged += Value_OnValueChanged;
         }
 
         /// <summary>
@@ -156,6 +166,11 @@ namespace InDoOut_Core.Entities.Functions
             }
 
             Log.Instance.Info($"Processed {this}");
+        }
+
+        private void Value_OnValueChanged(object sender, ValueChangedEvent e)
+        {
+            OnValueChanged?.Invoke(this, e);
         }
     }
 }

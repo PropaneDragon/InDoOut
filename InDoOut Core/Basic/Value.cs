@@ -1,5 +1,7 @@
 ﻿using InDoOut_Core.Threading.Safety;
+using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
 
 namespace InDoOut_Core.Basic
 {
@@ -10,6 +12,13 @@ namespace InDoOut_Core.Basic
     {
         private readonly object _rawValueLock = new object();
         private string _rawValue = "";
+        
+        /// <summary>
+        /// An event that gets fired when the value changes.
+        /// <para/>
+        /// Note: Not thread safe. This spawns a new thread every time the value changes.
+        /// </summary>
+        public event EventHandler<ValueChangedEvent> OnValueChanged;
 
         /// <summary>
         /// Whether it has a valid name and value.
@@ -22,7 +31,7 @@ namespace InDoOut_Core.Basic
         public string RawValue
         {
             get { lock (_rawValueLock) { return _rawValue; } }
-            set { lock (_rawValueLock) { _rawValue = value; } }
+            set { lock (_rawValueLock) { UpdateRawValueAndAnnounce(value); } }
         }
 
         /// <summary>
@@ -83,6 +92,17 @@ namespace InDoOut_Core.Basic
         public override string ToString()
         {
             return $"[Valid: {ValidValue}] [Value: {RawValue}]";
+        }
+
+        private void UpdateRawValueAndAnnounce(string value)
+        {
+            var oldValue = _rawValue;
+            _rawValue = value;
+
+            if (oldValue != value)
+            {
+                _ = Task.Run(() => OnValueChanged?.Invoke(this, new ValueChangedEvent(this)));
+            }
         }
     }
 }

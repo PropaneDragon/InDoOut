@@ -12,11 +12,19 @@
     <Grid>
         <Grid>
             <background:BackgroundImage Opacity="0.01"/>
-            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-                <Grid Margin="0,80,0,0">
-                    <StackPanel x:Name="Stack_Options" />
-                </Grid>
-            </ScrollViewer>
+            <DockPanel>
+                <Border DockPanel.Dock="Bottom" Padding="10">
+                    <DockPanel LastChildFill="False">
+                        <Button x:Name="Button_Apply"  DockPanel.Dock="Right" Content="Apply" Margin="12,0,0,0" Click="Button_Apply_Click" />
+                        <Button x:Name="Button_Cancel" DockPanel.Dock="Right" Content="Cancel" Margin="12,0,0,0" Click="Button_Cancel_Click" />
+                    </DockPanel>
+                </Border>
+                <ScrollViewer DockPanel.Dock="Top" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                    <Grid Margin="0,80,0,0">
+                        <StackPanel x:Name="Stack_Options" />
+                    </Grid>
+                </ScrollViewer>
+            </DockPanel>
         </Grid>
         <core:TitleBar x:Name="TitleBar_Main" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
     </Grid>

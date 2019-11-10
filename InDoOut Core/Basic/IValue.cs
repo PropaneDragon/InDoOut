@@ -1,10 +1,20 @@
-﻿namespace InDoOut_Core.Basic
+﻿using System;
+
+namespace InDoOut_Core.Basic
 {
     /// <summary>
     /// Represents a basic value as well as conversion utilities.
     /// </summary>
     public interface IValue
     {
+        /// <summary>
+        /// An event that gets fired when the value changes.
+        /// <para/>
+        /// Note: This may not be thread safe, and you should take precautions to ensure your
+        /// code can handle multiple threads sending this event at once.
+        /// </summary>
+        event EventHandler<ValueChangedEvent> OnValueChanged;
+
         /// <summary>
         /// Sets the value from the given type <typeparamref name="T"/>
         /// </summary>

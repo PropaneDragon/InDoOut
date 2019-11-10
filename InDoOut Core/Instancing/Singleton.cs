@@ -15,6 +15,15 @@
         public static T Instance => GetOrCreateInstance();
 
         /// <summary>
+        /// Ensures an instance has been built. Useful for if something needs to happen in the
+        /// constructor.
+        /// </summary>
+        public static void EnsureInstanceBuilt()
+        {
+            _ = Instance;
+        }
+
+        /// <summary>
         /// Creates and returns a brand new instance of type <typeparamref name="T"/>.
         /// </summary>
         /// <returns>A new instance of type <typeparamref name="T"/>.</returns>

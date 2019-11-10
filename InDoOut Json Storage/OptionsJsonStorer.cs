@@ -31,7 +31,7 @@ namespace InDoOut_Json_Storage
         /// <summary>
         /// The extension of the generated files.
         /// </summary>
-        public override string FileExtension => ".ido.settings";
+        public override string FileExtension => ".idosettings";
 
         /// <summary>
         /// Attempts to load option values into the given list of <paramref name="optionHolder"/> from the given
@@ -53,7 +53,7 @@ namespace InDoOut_Json_Storage
                     {
                         failures.AddRange(jsonOptions.SetListValues(optionHolder));
                     }
-                    else
+                    else if (File.Exists(path))
                     {
                         failures.Add(new FailureReport((int)LoadResult.InvalidFile, $"The options could not be loaded from the given path ({path}).", true));
                     }
