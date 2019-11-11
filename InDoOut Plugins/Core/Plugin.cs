@@ -1,4 +1,5 @@
-﻿using InDoOut_Core.Plugins;
+﻿using InDoOut_Core.Options;
+using InDoOut_Core.Plugins;
 using InDoOut_Core.Threading.Safety;
 
 namespace InDoOut_Plugins.Core
@@ -44,5 +45,10 @@ namespace InDoOut_Plugins.Core
         /// The author(s) of this plugin. Visible to the user.
         /// </summary>
         public abstract string Author { get; }
+
+        /// <summary>
+        /// An option holder that stores options for this plugin.
+        /// </summary>
+        public IOptionHolder OptionHolder { get; } = new OptionHolder();
     }
 }

@@ -1,5 +1,6 @@
 ﻿using InDoOut_Core.Instancing;
 using InDoOut_Core.Options;
+using InDoOut_Core.Plugins;
 using InDoOut_Core.Reporting;
 using InDoOut_Executable_Core.Storage;
 using InDoOut_Json_Storage;
@@ -24,9 +25,19 @@ namespace InDoOut_Desktop.Options
             return await LoadOptionsAsync(ProgramOptionsFilename, ProgramSettings.Instance.OptionHolder, parent);
         }
 
+        public async Task<bool> LoadPluginOptionsAsync(IPlugin plugin, Window parent = null)
+        {
+            return plugin != null ? await LoadOptionsAsync(GetPluginFileName(plugin), plugin?.OptionHolder, parent) : false;
+        }
+
         public async Task<bool> SaveProgramOptionsAsync(Window parent = null)
         {
             return await SaveOptionsAsync(ProgramOptionsFilename, ProgramSettings.Instance.OptionHolder, parent);
+        }
+
+        public async Task<bool> SavePluginOptionsAsync(IPlugin plugin, Window parent = null)
+        {
+            return plugin != null ? await SaveOptionsAsync(GetPluginFileName(plugin), plugin?.OptionHolder, parent) : false;
         }
 
         public async Task<bool> LoadOptionsAsync(string filePath, IOptionHolder optionHolder, Window parent = null)
@@ -91,6 +102,16 @@ namespace InDoOut_Desktop.Options
             }
 
             return failureReports.Count == 0;
+        }
+
+        private string GetPluginFileName(IPlugin plugin)
+        {
+            if (plugin != null)
+            {
+                return $"{plugin.SafeName}{OptionsStorer?.FileExtension ?? ""}";
+            }
+
+            return null;
         }
     }
 }

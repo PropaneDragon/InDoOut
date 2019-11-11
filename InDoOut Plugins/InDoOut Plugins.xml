@@ -109,6 +109,11 @@
             The author(s) of this plugin. Visible to the user.
             </summary>
         </member>
+        <member name="P:InDoOut_Plugins.Core.Plugin.OptionHolder">
+            <summary>
+            An option holder that stores options for this plugin.
+            </summary>
+        </member>
         <member name="T:InDoOut_Plugins.Loaders.ILoadedPlugins">
             <summary>
             Represents a storage area for loaded <see cref="T:InDoOut_Plugins.Containers.IPluginContainer"/>s.

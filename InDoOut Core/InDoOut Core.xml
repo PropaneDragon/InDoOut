@@ -2111,6 +2111,11 @@
             The safe version of <see cref="P:InDoOut_Core.Plugins.IPlugin.Author"/>. This has exception handling in the case of an invalid author.
             </summary>
         </member>
+        <member name="P:InDoOut_Core.Plugins.IPlugin.OptionHolder">
+            <summary>
+            The option storage for this plugin.
+            </summary>
+        </member>
         <member name="T:InDoOut_Core.Reporting.FailureReport">
             <summary>
             A failure report containing details about a failure that

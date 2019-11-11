@@ -1,4 +1,6 @@
-﻿namespace InDoOut_Core.Plugins
+﻿using InDoOut_Core.Options;
+
+namespace InDoOut_Core.Plugins
 {
     /// <summary>
     /// Represents a plugin that is recognised by the application and loaded in automatically.
@@ -39,5 +41,10 @@
         /// The safe version of <see cref="Author"/>. This has exception handling in the case of an invalid author.
         /// </summary>
         string SafeAuthor { get; }
+
+        /// <summary>
+        /// The option storage for this plugin.
+        /// </summary>
+        IOptionHolder OptionHolder { get; }
     }
 }

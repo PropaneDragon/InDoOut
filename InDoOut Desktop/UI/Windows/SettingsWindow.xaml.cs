@@ -3,7 +3,8 @@ using InDoOut_Desktop.UI.Controls.Options;
 using InDoOut_Core.Options;
 using System.Collections.Generic;
 using System.Windows;
-using System.Threading.Tasks;
+using InDoOut_Plugins.Loaders;
+using System;
 
 namespace InDoOut_Desktop.UI.Windows
 {
@@ -13,7 +14,31 @@ namespace InDoOut_Desktop.UI.Windows
         {
             InitializeComponent();
 
+            AddProgramOptions();
+            AddPluginOptions();
+        }
+
+        private void AddProgramOptions()
+        {
             AddOptions("Program options", ProgramSettings.Instance.OptionHolder.Options);
+        }
+
+        private void AddPluginOptions()
+        {
+            foreach (var pluginContainer in LoadedPlugins.Instance.Plugins)
+            {
+                var plugin = pluginContainer?.Plugin;
+                if (plugin != null)
+                {
+                    var pluginName = plugin?.SafeName;
+                    var pluginOptions = plugin?.OptionHolder;
+
+                    if (pluginOptions != null && !string.IsNullOrEmpty(pluginName))
+                    {
+                        AddOptions(pluginName, pluginOptions.Options);
+                    }
+                }
+            }
         }
 
         private void AddOptions(string title, List<IOption> options)
