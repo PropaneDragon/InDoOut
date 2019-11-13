@@ -44,7 +44,7 @@ namespace InDoOut_Desktop.UI.Windows
             var sidebar = Sidebar_Main;
             var taskView = TaskView_Main;
 
-            _ = await OptionsSaveLoad.Instance.LoadProgramOptionsAsync(this);
+            _ = await OptionsSaveLoad.Instance.LoadAllOptionsAsync(this);
 
             if (taskView != null)
             {

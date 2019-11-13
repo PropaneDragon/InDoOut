@@ -71,7 +71,7 @@ namespace InDoOut_Desktop.UI.Windows
                 }
             }
 
-            _ = await OptionsSaveLoad.Instance.SaveProgramOptionsAsync(this);
+            _ = await OptionsSaveLoad.Instance.SaveAllOptionsAsync(this);
 
             Button_Apply.IsEnabled = true;
         }

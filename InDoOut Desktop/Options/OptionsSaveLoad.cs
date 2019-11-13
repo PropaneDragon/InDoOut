@@ -4,6 +4,7 @@ using InDoOut_Core.Plugins;
 using InDoOut_Core.Reporting;
 using InDoOut_Executable_Core.Storage;
 using InDoOut_Json_Storage;
+using InDoOut_Plugins.Loaders;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -20,9 +21,40 @@ namespace InDoOut_Desktop.Options
 
         public IOptionsStorer OptionsStorer { get; set; } = new OptionsJsonStorer();
 
+        public async Task<bool> LoadAllOptionsAsync(Window parent = null)
+        {
+            var allSucceded = await LoadProgramOptionsAsync(parent);
+            allSucceded = await LoadPluginOptionsAsync(parent) && allSucceded;
+
+            return allSucceded;
+        }
+
+        public async Task<bool> SaveAllOptionsAsync(Window parent = null)
+        {
+            var allSucceded = await SaveProgramOptionsAsync(parent);
+            allSucceded = await SavePluginOptionsAsync(parent) && allSucceded;
+
+            return allSucceded;
+        }
+
         public async Task<bool> LoadProgramOptionsAsync(Window parent = null)
         {
             return await LoadOptionsAsync(ProgramOptionsFilename, ProgramSettings.Instance.OptionHolder, parent);
+        }
+
+        public async Task<bool> LoadPluginOptionsAsync(Window parent = null)
+        {
+            var allSucceeded = true;
+
+            foreach (var pluginContainer in LoadedPlugins.Instance.Plugins)
+            {
+                if (pluginContainer.Plugin != null)
+                {
+                    allSucceeded = await LoadPluginOptionsAsync(pluginContainer.Plugin, parent) && allSucceeded;
+                }
+            }
+
+            return allSucceeded;
         }
 
         public async Task<bool> LoadPluginOptionsAsync(IPlugin plugin, Window parent = null)
@@ -33,6 +65,21 @@ namespace InDoOut_Desktop.Options
         public async Task<bool> SaveProgramOptionsAsync(Window parent = null)
         {
             return await SaveOptionsAsync(ProgramOptionsFilename, ProgramSettings.Instance.OptionHolder, parent);
+        }
+
+        public async Task<bool> SavePluginOptionsAsync(Window parent = null)
+        {
+            var allSucceeded = true;
+
+            foreach (var pluginContainer in LoadedPlugins.Instance.Plugins)
+            {
+                if (pluginContainer.Plugin != null)
+                {
+                    allSucceeded = await SavePluginOptionsAsync(pluginContainer.Plugin, parent) && allSucceeded;
+                }
+            }
+
+            return allSucceeded;
         }
 
         public async Task<bool> SavePluginOptionsAsync(IPlugin plugin, Window parent = null)
