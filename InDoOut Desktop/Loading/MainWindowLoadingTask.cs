@@ -1,4 +1,5 @@
 ﻿using InDoOut_Core.Logging;
+using InDoOut_Desktop.Options;
 using InDoOut_Executable_Core.Location;
 using InDoOut_Plugins.Loaders;
 using System;
@@ -39,6 +40,12 @@ namespace InDoOut_Desktop.Loading
                 Log.Instance.Header($"PLUGIN LOADING DONE");
 
                 await Task.Delay(TimeSpan.FromMilliseconds(500));
+
+                Name = "Loading options.";
+
+                _ = await OptionsSaveLoad.Instance.LoadAllOptionsAsync();
+
+                Name = "Options loaded.";
 
                 return true;
             }
