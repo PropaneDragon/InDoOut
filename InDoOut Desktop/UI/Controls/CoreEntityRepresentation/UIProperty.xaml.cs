@@ -127,11 +127,13 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
 
         private void TextBox_ValueEdit_LostFocus(object sender, RoutedEventArgs e)
         {
+            UpdatePropertyFromEditor();
             HideEditor();
         }
 
         private void TextBox_ValueEdit_PreviewLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
+            UpdatePropertyFromEditor();
             HideEditor();
         }
 
