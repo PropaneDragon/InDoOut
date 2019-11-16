@@ -13,8 +13,9 @@ namespace InDoOut_Desktop.Options
     internal class ProgramSettings : Singleton<ProgramSettings>
     {
         //public CheckableOption StartWithComputerAll { get; } = new CheckableOption("Start with computer (All users)", "Starts IDO when the computer starts. This sets the program to start for all users, so regardless of what user logs on the program will start.", true);
-        public CheckableOption StartWithComputerCurrent { get; } = new CheckableOption("Start with computer (Current user)", "Starts IDO when the computer starts. This sets the program to start for only you. Other users of this machine are unaffected.", false);
+        public CheckableOption StartWithComputerCurrent { get; } = new CheckableOption("Start with computer (current user)", "Starts IDO when the computer starts. This sets the program to start for only you. Other users of this machine are unaffected.", false);
         public CheckableOption StartInBackground { get; } = new CheckableOption("Start in the background", "Starts IDO minimised.", false);
+        public CheckableOption AllowLogging { get; } = new CheckableOption("Logging", "Allows IDO to log all events to a file for debugging.", true);
 
         public IOptionHolder OptionHolder { get; } = new OptionHolder();
         
@@ -47,6 +48,12 @@ namespace InDoOut_Desktop.Options
         {
             //StartWithComputerAll.OnValueChanged += StartWithComputer_OnValueChanged;
             StartWithComputerCurrent.OnValueChanged += StartWithComputer_OnValueChanged;
+            AllowLogging.OnValueChanged += AllowLogging_OnValueChanged;
+        }
+
+        private void AllowLogging_OnValueChanged(object sender, ValueChangedEvent e)
+        {
+            Log.Instance.Enabled = e.Value.ValueAs(true);
         }
 
         private void StartWithComputer_OnValueChanged(object sender, ValueChangedEvent e)
