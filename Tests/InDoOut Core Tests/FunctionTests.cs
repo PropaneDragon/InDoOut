@@ -178,14 +178,14 @@ namespace InDoOut_Core_Tests
             startFunction.OutputToTrigger = outputA;
             startFunction.Trigger(null);
 
-            Thread.Sleep(TimeSpan.FromMilliseconds(5));
+            endFunction.WaitForCompletion(true);
 
             Assert.AreEqual(inputA, endFunction.LastInput);
 
             startFunction.OutputToTrigger = outputB;
             startFunction.Trigger(null);
 
-            Thread.Sleep(TimeSpan.FromMilliseconds(5));
+            endFunction.WaitForCompletion(true);
 
             Assert.AreEqual(inputB, endFunction.LastInput);
         }
@@ -213,7 +213,7 @@ namespace InDoOut_Core_Tests
 
             var totalDuration = DateTime.UtcNow - startTime;
 
-            Assert.AreEqual(duration.TotalMilliseconds, totalDuration.TotalMilliseconds, 5);
+            Assert.AreEqual(duration.TotalMilliseconds, totalDuration.TotalMilliseconds, 20);
         }
 
         [TestMethod]
@@ -575,7 +575,7 @@ namespace InDoOut_Core_Tests
 
             function.Trigger(null);
 
-            Assert.IsTrue(function.WaitForCompletion(TimeSpan.FromMilliseconds(10), false));
+            Assert.IsFalse(testTriggerFunction.WaitForCompletion(TimeSpan.FromMilliseconds(80), true));
             Assert.AreEqual(State.InError, function.State);
             Assert.IsFalse(testTriggerFunction.HasRun);
             Assert.IsNull(testTriggerFunction.LastInput);
@@ -583,7 +583,7 @@ namespace InDoOut_Core_Tests
             function.OutputToTriggerOnException = exceptionOutput;
             function.Trigger(null);
 
-            Assert.IsTrue(function.WaitForCompletion(TimeSpan.FromMilliseconds(10), false));
+            Assert.IsTrue(testTriggerFunction.WaitForCompletion(TimeSpan.FromMilliseconds(80), true));
             Assert.AreEqual(State.InError, function.State);
             Assert.IsTrue(testTriggerFunction.HasRun);
             Assert.AreEqual(exceptionInput, testTriggerFunction.LastInput);

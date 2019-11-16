@@ -13,9 +13,8 @@ namespace InDoOut_Json_Storage_Tests
     {
         [TestMethod]
         public void LoadJsonProgram()
-        {
-            var storer = new TestProgramJsonStorer("ExpectedJsonProgramFormat.json", new FunctionBuilder(), new LoadedPlugins());
-            var jsonProgram = storer.LoadPublic();
+        {            
+            var jsonProgram = GenericJsonStorer.Load<JsonProgram>("ExpectedJsonProgramFormat.json");
 
             Assert.IsNotNull(jsonProgram);
 
@@ -174,7 +173,7 @@ namespace InDoOut_Json_Storage_Tests
             var loadedPlugins = new LoadedPlugins();
             loadedPlugins.Plugins.Add(loadedPlugin);
 
-            var storer = new TestProgramJsonStorer("ExpectedJsonProgramFormat.json", new FunctionBuilder(), loadedPlugins);
+            var storer = new ProgramJsonStorer(new FunctionBuilder(), loadedPlugins, "ExpectedJsonProgramFormat.json");
             var program = new Program();
 
             Assert.AreNotEqual(new Guid("12345678-1234-1234-1234-123456789abc"), program.Id);

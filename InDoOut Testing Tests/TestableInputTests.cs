@@ -27,7 +27,7 @@ namespace InDoOut_Testing_Tests
 
             function.OutputToTrigger = outputA;
             function.Trigger(null);
-            function.WaitForCompletion(true);
+            testableInput.WaitForCompletion(true);
 
             Assert.IsTrue(testableInput.Triggered);
             Assert.AreEqual(1, testableInput.TriggeredCount);
@@ -35,7 +35,7 @@ namespace InDoOut_Testing_Tests
 
             function.OutputToTrigger = outputC;
             function.Trigger(null);
-            function.WaitForCompletion(true);
+            testableInput.WaitForCompletion(true);
 
             Assert.IsTrue(testableInput.Triggered);
             Assert.AreEqual(2, testableInput.TriggeredCount);
@@ -43,7 +43,7 @@ namespace InDoOut_Testing_Tests
 
             function.OutputToTrigger = outputB;
             function.Trigger(null);
-            function.WaitForCompletion(true);
+            testableInput.WaitForCompletion(true);
 
             Assert.IsTrue(testableInput.Triggered);
             Assert.AreEqual(3, testableInput.TriggeredCount);
@@ -51,7 +51,7 @@ namespace InDoOut_Testing_Tests
 
             function.OutputToTrigger = outputA;
             function.Trigger(null);
-            function.WaitForCompletion(true);
+            testableInput.WaitForCompletion(true);
 
             Assert.IsTrue(testableInput.Triggered);
             Assert.AreEqual(4, testableInput.TriggeredCount);
@@ -65,7 +65,7 @@ namespace InDoOut_Testing_Tests
 
             function.OutputToTrigger = outputB;
             function.Trigger(null);
-            function.WaitForCompletion(true);
+            testableInput.WaitForCompletion(true);
 
             Assert.IsTrue(testableInput.Triggered);
             Assert.AreEqual(5, testableInput.TriggeredCount);
@@ -79,7 +79,7 @@ namespace InDoOut_Testing_Tests
 
             function.OutputToTrigger = outputC;
             function.Trigger(null);
-            function.WaitForCompletion(true);
+            testableInput.WaitForCompletion(true);
 
             Assert.IsTrue(testableInput.Triggered);
             Assert.AreEqual(1, testableInput.TriggeredCount);

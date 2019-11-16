@@ -1,8 +1,10 @@
 using InDoOut_Core.Entities.Functions;
+using InDoOut_Core.Logging;
 using InDoOut_Core_Tests;
 using InDoOut_Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Diagnostics;
 using System.Threading;
 
 namespace InDoOut_Testing_Tests
@@ -13,43 +15,49 @@ namespace InDoOut_Testing_Tests
         [TestMethod]
         public void WaitForCompletion()
         {
+            Log.Instance.Enabled = false;
+
             var function = new TestFunction(() => Thread.Sleep(TimeSpan.FromMilliseconds(50)));
             function.Trigger(null);
 
-            var startTime = DateTime.UtcNow;
+            var stopwatch = Stopwatch.StartNew();
 
             Assert.IsTrue(function.WaitForCompletion(TimeSpan.FromMilliseconds(80)));
 
-            var waitTime = DateTime.UtcNow - startTime;
+            var waitTime = stopwatch.Elapsed;
 
-            Assert.AreEqual(50, waitTime.TotalMilliseconds, 10, $"Total time: {waitTime.TotalMilliseconds}ms");
+            Assert.AreEqual(50, waitTime.TotalMilliseconds, 20, $"Total time: {waitTime.TotalMilliseconds}ms");
 
             function = new TestFunction(() => Thread.Sleep(TimeSpan.FromSeconds(2)));
             function.Trigger(null);
 
-            startTime = DateTime.UtcNow;
+            stopwatch.Restart();
 
             Assert.IsFalse(function.WaitForCompletion(TimeSpan.FromMilliseconds(60)));
+            
+            waitTime = stopwatch.Elapsed;
 
-            waitTime = DateTime.UtcNow - startTime;
-
-            Assert.AreEqual(60, waitTime.TotalMilliseconds, 10, $"Total time: {waitTime.TotalMilliseconds}ms");
+            Assert.AreEqual(60, waitTime.TotalMilliseconds, 20, $"Total time: {waitTime.TotalMilliseconds}ms");
 
             function = new TestFunction(() => Thread.Sleep(TimeSpan.FromMilliseconds(10)));
             function.Trigger(null);
 
-            startTime = DateTime.UtcNow;
+            stopwatch.Restart();
 
             function.WaitForCompletion();
 
-            waitTime = DateTime.UtcNow - startTime;
+            waitTime = stopwatch.Elapsed;
 
-            Assert.AreEqual(10, waitTime.TotalMilliseconds, 10, $"Total time: {waitTime.TotalMilliseconds}ms");
+            Assert.AreEqual(10, waitTime.TotalMilliseconds, 20, $"Total time: {waitTime.TotalMilliseconds}ms");
+
+            Log.Instance.Enabled = true;
         }
 
         [TestMethod]
         public void WaitForStartAndCompletion()
         {
+            Log.Instance.Enabled = false;
+
             var startFunction = new TestFunction(() => Thread.Sleep(TimeSpan.FromMilliseconds(50)));
             var endFunction = new TestFunction(() => Thread.Sleep(TimeSpan.FromMilliseconds(50)));
 
@@ -67,7 +75,9 @@ namespace InDoOut_Testing_Tests
 
             var waitTime = DateTime.UtcNow - startTime;
 
-            Assert.AreEqual(100, waitTime.TotalMilliseconds, 10, $"Total time: {waitTime.TotalMilliseconds}");
+            Assert.AreEqual(100, waitTime.TotalMilliseconds, 40, $"Total time: {waitTime.TotalMilliseconds}");
+
+            Log.Instance.Enabled = true;
         }
 
         [TestMethod]

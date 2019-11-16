@@ -42,6 +42,11 @@ namespace InDoOut_Core.Entities.Programs
         public bool Running => Functions.Any(function => function.Running || function.Outputs.Any(output => output != function && output.Running));
 
         /// <summary>
+        /// Whether the program is currently tidying up before completion.
+        /// </summary>
+        public bool Finishing => false;
+
+        /// <summary>
         /// Whether any of the functions within this program are still stopping.
         /// </summary>
         public bool Stopping => Functions.Any(function => function.State == State.Stopping && function.Running);
@@ -149,7 +154,14 @@ namespace InDoOut_Core.Entities.Programs
                     }
                 }
 
-                startFunction.Trigger(null);
+                if (startFunction != null)
+                {
+                    startFunction.Trigger(null);
+                }
+                else
+                {
+                    Log.Instance.Warning("Unable to trigger: ", startFunction, " from ", this, " as it's not in a state to accept triggers.");
+                }
             }
         }
 

@@ -13,6 +13,11 @@ namespace InDoOut_Core.Logging
         private readonly List<LogMessage> _logs = new List<LogMessage>();
 
         /// <summary>
+        /// Gets or sets whether logging is active or not.
+        /// </summary>
+        public bool Enabled { get; set; } = true;
+
+        /// <summary>
         /// The maximum number of log messages allowed to be kept at once.
         /// </summary>
         public int MaxLogMessages { get; set; } = 10000;
@@ -37,9 +42,12 @@ namespace InDoOut_Core.Logging
         /// <param name="message">The message to log.</param>
         public void Error(params object[] message)
         {
-            var calledFrom = Assembly.GetCallingAssembly();
+            if (Enabled)
+            {
+                var calledFrom = Assembly.GetCallingAssembly();
 
-            CreateEntry(new LogMessage(LogMessage.LogLevel.Error, calledFrom, message));
+                CreateEntry(new LogMessage(LogMessage.LogLevel.Error, calledFrom, message));
+            }
         }
 
         /// <summary>
@@ -48,9 +56,12 @@ namespace InDoOut_Core.Logging
         /// <param name="message">The message to log.</param>
         public void Warning(params object[] message)
         {
-            var calledFrom = Assembly.GetCallingAssembly();
+            if (Enabled)
+            {
+                var calledFrom = Assembly.GetCallingAssembly();
 
-            CreateEntry(new LogMessage(LogMessage.LogLevel.Warning, calledFrom, message));
+                CreateEntry(new LogMessage(LogMessage.LogLevel.Warning, calledFrom, message));
+            }
         }
 
         /// <summary>
@@ -59,9 +70,12 @@ namespace InDoOut_Core.Logging
         /// <param name="message">The message to log.</param>
         public void Info(params object[] message)
         {
-            var calledFrom = Assembly.GetCallingAssembly();
+            if (Enabled)
+            {
+                var calledFrom = Assembly.GetCallingAssembly();
 
-            CreateEntry(new LogMessage(LogMessage.LogLevel.Info, calledFrom, message));
+                CreateEntry(new LogMessage(LogMessage.LogLevel.Info, calledFrom, message));
+            }
         }
 
         /// <summary>
@@ -70,14 +84,17 @@ namespace InDoOut_Core.Logging
         /// <param name="message">The message to log.</param>
         public void Header(params object[] message)
         {
-            var calledFrom = Assembly.GetCallingAssembly();
+            if (Enabled)
+            {
+                var calledFrom = Assembly.GetCallingAssembly();
 
-            CreateEntry(new LogMessage(LogMessage.LogLevel.Header, calledFrom, message));
+                CreateEntry(new LogMessage(LogMessage.LogLevel.Header, calledFrom, message));
+            }
         }
 
         private void CreateEntry(LogMessage message)
         {
-            if (message != null)
+            if (Enabled && message != null)
             {
                 lock (_logLock)
                 {

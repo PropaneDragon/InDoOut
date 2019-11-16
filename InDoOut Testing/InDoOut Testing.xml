@@ -11,7 +11,7 @@
         </member>
         <member name="M:InDoOut_Testing.TriggerableTestingExtensions.WaitForCompletion(InDoOut_Core.Entities.Core.ITriggerable,System.Boolean)">
             <summary>
-            Waits indefinitely (1 day) for <paramref name="triggerable"/> to complete, then continues. This can be used to ensure the running
+            Waits  for a maximum of 1 minute for <paramref name="triggerable"/> to complete, then continues. This can be used to ensure the running
             of a particular triggerable is complete before testing outputs.
             </summary>
             <param name="triggerable">The triggerable to wait for.</param>

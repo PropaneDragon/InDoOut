@@ -21,6 +21,12 @@ namespace InDoOut_Core.Entities.Functions
         /// </summary>
         public IFunction Parent => Connections.FirstOrDefault();
 
+        /// <summary>
+        /// Whether this input is currently tidying up and ready to accept
+        /// a new trigger, even if it's technically still running.
+        /// </summary>
+        public override bool Finishing => true;
+
         private Input() { }
 
         /// <summary>
@@ -75,6 +81,10 @@ namespace InDoOut_Core.Entities.Functions
                 Log.Instance.Info($"Triggering: {this} >>>>>>>>>> ", Parent);
 
                 Parent.Trigger(this);
+            }
+            else
+            {
+                Log.Instance.Warning("Unable to trigger: ", Parent, " from ", this, " as it's not in a state to accept triggers.");
             }
 
             Log.Instance.Info($"Processed {this}");

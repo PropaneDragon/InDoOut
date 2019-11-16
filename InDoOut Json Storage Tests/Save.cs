@@ -209,9 +209,9 @@ namespace InDoOut_Json_Storage_Tests
                 }
             };
 
-            var storer = new TestProgramJsonStorer(_temporaryPath, new FunctionBuilder(), new LoadedPlugins());
+            var result = GenericJsonStorer.Save(jsonProgram, _temporaryPath);
 
-            Assert.AreEqual(0, storer.SavePublic(jsonProgram).Count);
+            Assert.AreEqual(0, result.Count);
 
             var actualFileData = File.ReadAllText(_temporaryPath);
             var expectedFileData = File.ReadAllText("ExpectedJsonProgramFormat.json");
@@ -272,9 +272,10 @@ namespace InDoOut_Json_Storage_Tests
             _ = program.AddFunction(thirdFunction);
             _ = program.AddFunction(fourthFunction);
 
-            var storer = new TestProgramJsonStorer(_temporaryPath, new FunctionBuilder(), new LoadedPlugins());
+            var jsonStorer = new ProgramJsonStorer(new FunctionBuilder(), new LoadedPlugins(), _temporaryPath);
+            var result = jsonStorer.Save(program);
 
-            Assert.AreEqual(0, storer.Save(program).Count);
+            Assert.AreEqual(0, result.Count);
 
             var actualFileData = File.ReadAllText(_temporaryPath);
             var expectedFileData = File.ReadAllText("ExpectedJsonProgramFormat.json");

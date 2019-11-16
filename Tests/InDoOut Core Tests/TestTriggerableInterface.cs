@@ -9,7 +9,9 @@ namespace InDoOut_Core_Tests
         public bool Triggerable { get; set; } = true;
         public bool Triggered { get; set; } = false;
 
-        public DateTime LastTriggerTime { get; set; } = DateTime.MinValue; 
+        public DateTime LastTriggerTime { get; set; } = DateTime.MinValue;
+
+        public bool Finishing => false;
 
         public bool CanBeTriggered(IEntity entity)
         {

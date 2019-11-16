@@ -31,6 +31,10 @@ namespace InDoOut_Core.Entities.Functions
         /// </summary>
         Processing,
         /// <summary>
+        /// The function has finished core processing and is cleaning up.
+        /// </summary>
+        Completing,
+        /// <summary>
         /// The function has been requested to stop and is stopping.
         /// </summary>
         Stopping,

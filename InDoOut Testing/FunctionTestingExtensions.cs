@@ -3,6 +3,7 @@ using InDoOut_Core.Entities.Core;
 using InDoOut_Core.Entities.Functions;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 
@@ -14,14 +15,14 @@ namespace InDoOut_Testing
     public static class TriggerableTestingExtensions
     {
         /// <summary>
-        /// Waits indefinitely (1 day) for <paramref name="triggerable"/> to complete, then continues. This can be used to ensure the running
+        /// Waits  for a maximum of 1 minute for <paramref name="triggerable"/> to complete, then continues. This can be used to ensure the running
         /// of a particular triggerable is complete before testing outputs.
         /// </summary>
         /// <param name="triggerable">The triggerable to wait for.</param>
         /// <param name="waitForStart">Whether to wait for the function to start first.</param>
         public static void WaitForCompletion(this ITriggerable triggerable, bool waitForStart = false)
         {
-            _ = WaitForCompletion(triggerable, TimeSpan.FromDays(1), waitForStart);
+            _ = WaitForCompletion(triggerable, TimeSpan.FromMinutes(1), waitForStart);
         }
 
         /// <summary>
@@ -36,27 +37,25 @@ namespace InDoOut_Testing
         {
             if (triggerable != null)
             {
-                var endTime = DateTime.UtcNow + timeout;
+                var stopwatch = Stopwatch.StartNew();
 
                 if (waitForStart && !triggerable.Running)
                 {
-                    while (!triggerable.Running && DateTime.UtcNow < endTime)
+                    while (!triggerable.Running && stopwatch.Elapsed < timeout)
                     {
-                        Thread.Sleep(TimeSpan.FromMilliseconds(1));
                     }
 
-                    if (DateTime.UtcNow >= endTime)
+                    if (stopwatch.Elapsed >= timeout)
                     {
                         return false;
                     }
                 }
 
-                while (triggerable.Running && DateTime.UtcNow < endTime)
+                while (triggerable.Running && stopwatch.Elapsed < timeout)
                 {
-                    Thread.Sleep(TimeSpan.FromMilliseconds(1));
                 }
 
-                return DateTime.UtcNow >= endTime ? false : !triggerable.Running;
+                return stopwatch.Elapsed >= timeout ? false : !triggerable.Running;
             }
 
             return false;

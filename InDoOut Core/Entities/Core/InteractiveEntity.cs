@@ -15,7 +15,6 @@ namespace InDoOut_Core.Entities.Core
     {
         private readonly object _connectionsLock = new object();
         private readonly object _lastTriggerTimeLock = new object();
-        private readonly List<TaskStatus> _validRunningStatuses = new List<TaskStatus>() { TaskStatus.Created, TaskStatus.Running, TaskStatus.WaitingForActivation, TaskStatus.WaitingForChildrenToComplete, TaskStatus.WaitingToRun };
 
         private Task _runner = null;
         private DateTime _lastTriggerTime = DateTime.MinValue;
@@ -24,7 +23,7 @@ namespace InDoOut_Core.Entities.Core
         /// <summary>
         /// The current running state of this entity.
         /// </summary>
-        public bool Running => _runner != null && _validRunningStatuses.Contains(_runner.Status);
+        public bool Running => CheckRunningState();
 
         /// <summary>
         /// The last time this entity was triggered.
@@ -45,6 +44,12 @@ namespace InDoOut_Core.Entities.Core
         }
 
         /// <summary>
+        /// Represents a state where the entity is technically still running, but is in a state
+        /// where it is tidying up from the previous trigger, and can accept new triggers.
+        /// </summary>
+        public virtual bool Finishing => false;
+
+        /// <summary>
         /// Triggers this entity from another entity.
         /// </summary>
         /// <param name="triggeredBy">The entity that triggered this one.</param>
@@ -60,7 +65,10 @@ namespace InDoOut_Core.Entities.Core
             _runner = Task.Run(() =>
             {
                 try { Process(triggeredBy); }
-                catch { }
+                catch (Exception ex) 
+                {
+                    Log.Instance.Error($"Caught an exception ({ex.Message}) during trigger for {this}");
+                }
             });
 
             Log.Instance.Info($"Completed {this}");
@@ -73,7 +81,7 @@ namespace InDoOut_Core.Entities.Core
         /// <returns>Whether the given <see cref="IEntity"/> can trigger this.</returns>
         public bool CanBeTriggered(IEntity entity)
         {
-            return CanAcceptConnection(entity) && !Running;
+            return CanAcceptConnection(entity) && (!Running || Finishing);
         }
 
         /// <summary>
@@ -219,5 +227,18 @@ namespace InDoOut_Core.Entities.Core
         /// </summary>
         /// <param name="triggeredBy">The entity that triggered this.</param>
         protected abstract void Process(ConnectsFromType triggeredBy);
+
+        private bool CheckRunningState()
+        {
+            return _runner?.Status switch
+            {
+                TaskStatus.Created => true,
+                TaskStatus.Running => true,
+                TaskStatus.WaitingForActivation => true,
+                TaskStatus.WaitingForChildrenToComplete => true,
+                TaskStatus.WaitingToRun => true,
+                _ => false
+            };
+        }
     }
 }

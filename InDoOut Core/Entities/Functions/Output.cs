@@ -16,6 +16,12 @@ namespace InDoOut_Core.Entities.Functions
         public string Name { get; protected set; } = "Output";
 
         /// <summary>
+        /// Whether this output is currently tidying up and ready to accept
+        /// a new trigger, even if it's technically still running.
+        /// </summary>
+        public override bool Finishing => true;
+
+        /// <summary>
         /// Creates a basic output with a name.
         /// </summary>
         /// <param name="name">The name to give the output.</param>
@@ -87,6 +93,10 @@ namespace InDoOut_Core.Entities.Functions
                     Log.Instance.Info($"Triggering: {this} >>>>>>>>>> ", connection);
 
                     connection.Trigger(this);
+                }
+                else
+                {
+                    Log.Instance.Warning("Unable to trigger: ", connection, " from ", this, " as it's not in a state to accept triggers.");
                 }
             }
 

@@ -254,6 +254,12 @@
             The connections that this entity has.
             </summary>
         </member>
+        <member name="P:InDoOut_Core.Entities.Core.InteractiveEntity`2.Finishing">
+            <summary>
+            Represents a state where the entity is technically still running, but is in a state
+            where it is tidying up from the previous trigger, and can accept new triggers.
+            </summary>
+        </member>
         <member name="M:InDoOut_Core.Entities.Core.InteractiveEntity`2.Trigger(`1)">
             <summary>
             Triggers this entity from another entity.
@@ -363,6 +369,12 @@
             The current running state of the object.
             </summary>
         </member>
+        <member name="P:InDoOut_Core.Entities.Core.ITriggerable.Finishing">
+            <summary>
+            Represents a state where the entity is technically still running, but is in a state
+            where it is coming to a finish and can be triggered again regardless.
+            </summary>
+        </member>
         <member name="P:InDoOut_Core.Entities.Core.ITriggerable.LastTriggerTime">
             <summary>
             The time this entity was last triggered.
@@ -463,6 +475,12 @@
         <member name="P:InDoOut_Core.Entities.Functions.Function.SafeKeywords">
             <summary>
             An exception safe version of <see cref="P:InDoOut_Core.Entities.Functions.Function.Keywords"/>
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Functions.Function.Finishing">
+            <summary>
+            Returns whether the function is in a finishing state, where it can be triggered again regardless
+            of the current <see cref="P:InDoOut_Core.Entities.Core.ITriggerable.Running"/> state.
             </summary>
         </member>
         <member name="P:InDoOut_Core.Entities.Functions.Function.TriggerOnFailure">
@@ -617,6 +635,11 @@
             The function has been triggered and is currently processing.
             </summary>
         </member>
+        <member name="F:InDoOut_Core.Entities.Functions.State.Completing">
+            <summary>
+            The function has finished core processing and is cleaning up.
+            </summary>
+        </member>
         <member name="F:InDoOut_Core.Entities.Functions.State.Stopping">
             <summary>
             The function has been requested to stop and is stopping.
@@ -753,6 +776,12 @@
         <member name="P:InDoOut_Core.Entities.Functions.Input.Parent">
             <summary>
             The parent this input belongs to.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Functions.Input.Finishing">
+            <summary>
+            Whether this input is currently tidying up and ready to accept
+            a new trigger, even if it's technically still running.
             </summary>
         </member>
         <member name="M:InDoOut_Core.Entities.Functions.Input.#ctor(InDoOut_Core.Entities.Functions.IFunction,System.String)">
@@ -1040,6 +1069,12 @@
         <member name="P:InDoOut_Core.Entities.Functions.Output.Name">
             <summary>
             The name of this output.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Entities.Functions.Output.Finishing">
+            <summary>
+            Whether this output is currently tidying up and ready to accept
+            a new trigger, even if it's technically still running.
             </summary>
         </member>
         <member name="M:InDoOut_Core.Entities.Functions.Output.#ctor(System.String)">
@@ -1505,6 +1540,11 @@
             Whether any of the functions within this program are running.
             </summary>
         </member>
+        <member name="P:InDoOut_Core.Entities.Programs.Program.Finishing">
+            <summary>
+            Whether the program is currently tidying up before completion.
+            </summary>
+        </member>
         <member name="P:InDoOut_Core.Entities.Programs.Program.Stopping">
             <summary>
             Whether any of the functions within this program are still stopping.
@@ -1683,6 +1723,11 @@
         <member name="T:InDoOut_Core.Logging.Log">
             <summary>
             Handles logs between all elements of IDO. Thread safe and can be called from anywhere.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Core.Logging.Log.Enabled">
+            <summary>
+            Gets or sets whether logging is active or not.
             </summary>
         </member>
         <member name="P:InDoOut_Core.Logging.Log.MaxLogMessages">

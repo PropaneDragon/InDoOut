@@ -13,6 +13,12 @@ namespace InDoOut_Core.Entities.Core
         bool Running { get; }
 
         /// <summary>
+        /// Represents a state where the entity is technically still running, but is in a state
+        /// where it is coming to a finish and can be triggered again regardless.
+        /// </summary>
+        bool Finishing { get; }
+
+        /// <summary>
         /// The time this entity was last triggered.
         /// </summary>
         DateTime LastTriggerTime { get; }

@@ -101,6 +101,12 @@ namespace InDoOut_Core.Entities.Functions
         public string[] SafeKeywords => TryGet.ValueOrDefault(() => Keywords);
 
         /// <summary>
+        /// Returns whether the function is in a finishing state, where it can be triggered again regardless
+        /// of the current <see cref="ITriggerable.Running"/> state.
+        /// </summary>
+        public override bool Finishing => State == State.Completing || State == State.InError || State == State.Waiting;
+
+        /// <summary>
         /// The output that should be triggered if the function has an uncaught exception.
         /// If an output should not be triggered on failure, it should be null.
         /// </summary>
@@ -335,6 +341,9 @@ namespace InDoOut_Core.Entities.Functions
                     var nextOutput = Started(triggeredBy);
 
                     Log.Instance.Info($"Specialised code finished on {this}");
+                    Log.Instance.Info($"Next output: {nextOutput}");
+
+                    State = State.Completing;
 
                     foreach (var result in Results)
                     {
@@ -346,7 +355,7 @@ namespace InDoOut_Core.Entities.Functions
 
                     while (Results.Any(result => result.Running))
                     {
-                        Thread.Sleep(TimeSpan.FromMilliseconds(1));
+                        Thread.Sleep(0);
                     }
 
                     TriggerOutput(nextOutput);
@@ -390,13 +399,13 @@ namespace InDoOut_Core.Entities.Functions
         {
             Log.Instance.Info($"Triggering: {this} >>>>>>>>>> ", output);
 
-            if (State != State.Stopping && output != null && Outputs.Contains(output) && output.CanBeTriggered(this))
+            if (!StopRequested && output != null && Outputs.Contains(output) && output.CanBeTriggered(this))
             {
                 output.Trigger(this);
             }
             else
             {
-                Log.Instance.Error($"Could not trigger ", output, $" from {this}");
+                Log.Instance.Warning("Unable to trigger: ", output, " from ", this, " as it's not in a state to accept triggers.");
             }
         }
     }
