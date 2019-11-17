@@ -176,8 +176,11 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
         {
             await Task.Delay(TimeSpan.FromMilliseconds(new Random().Next(0, 333)));
 
-            _valueUpdateTimer = new DispatcherTimer(DispatcherPriority.Normal);
-            _valueUpdateTimer.Interval = TimeSpan.FromMilliseconds(333);
+            _valueUpdateTimer = new DispatcherTimer(DispatcherPriority.Normal)
+            {
+                Interval = TimeSpan.FromMilliseconds(333)
+            };
+
             _valueUpdateTimer.Start();
             _valueUpdateTimer.Tick += UpdateTimer_Tick;
 

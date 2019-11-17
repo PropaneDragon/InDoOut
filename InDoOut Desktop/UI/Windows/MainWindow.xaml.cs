@@ -1,7 +1,6 @@
 ﻿using InDoOut_Core.Logging;
 using InDoOut_Desktop.Loading;
 using InDoOut_Desktop.Options;
-using InDoOut_Desktop.Programs;
 using InDoOut_Desktop.UI.Interfaces;
 using InDoOut_Desktop.UI.Messaging;
 using InDoOut_Desktop.UI.Threading;
@@ -39,7 +38,9 @@ namespace InDoOut_Desktop.UI.Windows
             _logSaver.BeginAutoSave();
         }
 
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         private async Task FinishLoading()
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             var sidebar = Sidebar_Main;
             var taskView = TaskView_Main;
