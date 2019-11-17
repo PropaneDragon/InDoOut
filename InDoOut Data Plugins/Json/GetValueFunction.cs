@@ -35,12 +35,7 @@ namespace InDoOut_Data_Plugins.Json
         protected override IOutput Started(IInput triggeredBy)
         {
             var jsonValue = JToken.Parse(_json.FullValue);
-            if (jsonValue != null)
-            {
-                return _value.ValueFrom(jsonValue.Value<string>()) ? _output : _error;
-            }
-
-            return _error;
+            return jsonValue != null ? (_value.ValueFrom(jsonValue.Value<string>()) ? _output : _error) : _error;
         }
     }
 }
