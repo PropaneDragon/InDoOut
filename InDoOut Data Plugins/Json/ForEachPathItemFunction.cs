@@ -1,7 +1,6 @@
 ﻿using InDoOut_Core.Entities.Functions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,7 +15,7 @@ namespace InDoOut_Data_Plugins.Json
 
         public override string Description => "Loops through all returned results from a JSON Path query.";
 
-        public override string Name => "For each path item";
+        public override string Name => "For each JSON path item";
 
         public override string Group => "JSON";
 
@@ -32,7 +31,7 @@ namespace InDoOut_Data_Plugins.Json
 
         protected override void AllItemsComplete()
         {
-
+            _tokens = null;
         }
 
         protected override bool PopulateItemDataForIndex(int index)
