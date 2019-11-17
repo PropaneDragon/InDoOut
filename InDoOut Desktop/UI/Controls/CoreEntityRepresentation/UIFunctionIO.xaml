@@ -10,7 +10,7 @@
         <Grid>
             <StackPanel>
                 <TextBlock x:Name="Text_IOName" Text="I/O" TextAlignment="Center" />
-                <TextBlock x:Name="Text_IOValue" Text="Value" TextAlignment="Center" FontSize="10" TextTrimming="CharacterEllipsis" />
+                <TextBlock x:Name="Text_IOValue" Text="Value" TextAlignment="Center" FontSize="10" TextTrimming="CharacterEllipsis" MaxHeight="13" />
             </StackPanel>
         </Grid>
     </Border>
