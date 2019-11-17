@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <RootNamespace>InDoOut_Data_Plugins</RootNamespace>
+  </PropertyGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy  /Y /F &quot;$(TargetPath)&quot;  &quot;$(SolutionDir)\InDoOut Desktop\$(OutDir)\Plugins\*&quot;&#xD;&#xA;xcopy  /Y /F &quot;$(TargetPath)&quot;  &quot;$(SolutionDir)\InDoOut Console\$(OutDir)\Plugins\*&quot;" />
+  </Target>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\InDoOut Core\InDoOut Core.csproj" />
+    <ProjectReference Include="..\InDoOut Plugins\InDoOut Plugins.csproj" />
+  </ItemGroup>
+
+</Project>
