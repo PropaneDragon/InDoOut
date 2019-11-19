@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InDoOut_Desktop.UI.Controls.TaskManager"
              mc:Ignorable="d" 
-             Foreground="White" Loaded="UserControl_Loaded" MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave" MouseLeftButtonUp="UserControl_PreviewMouseUp">
+             Foreground="White" Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded" MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave" MouseLeftButtonUp="UserControl_PreviewMouseUp">
     <Border Background="#3b77e4" Margin="10">
         <Grid Margin="1" Background="#000">
             <Grid RenderTransformOrigin="0.5,0.5">
@@ -16,6 +16,9 @@
                 </Grid.RenderTransform>
                 <Image x:Name="Image_Preview" Stretch="UniformToFill" MaxWidth="800" MaxHeight="400" MinWidth="800" MinHeight="400" StretchDirection="Both" Opacity="1" />
                 <DockPanel x:Name="Dock_HiddenContent" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="8">
+                    <Button x:Name="Button_RunTask" DockPanel.Dock="Left" FontFamily="Material Icons" FontSize="24" Content="" ToolTip="Run task" Template="{DynamicResource Template_Buttons_Transparent}" VerticalAlignment="Stretch" HorizontalAlignment="Right" Padding="2" Click="Button_RunTask_Click" />
+                    <Button x:Name="Button_StopTask" DockPanel.Dock="Left" FontFamily="Material Icons" FontSize="24" Content="" ToolTip="Run task" Template="{DynamicResource Template_Buttons_Transparent}" VerticalAlignment="Stretch" HorizontalAlignment="Right" Padding="2" Click="Button_StopTask_Click" />
+                    <Button x:Name="Button_StoppingTask" DockPanel.Dock="Left" FontFamily="Material Icons" FontSize="24" Content="" ToolTip="Run task" Template="{DynamicResource Template_Buttons_Transparent}" VerticalAlignment="Stretch" HorizontalAlignment="Right" Padding="2" />
                     <Button x:Name="Button_RemoveTask" DockPanel.Dock="Right" FontFamily="Material Icons" FontSize="24" Content="" ToolTip="Remove task" Template="{DynamicResource Template_Buttons_Transparent}" VerticalAlignment="Stretch" HorizontalAlignment="Right" Padding="2" Click="Button_RemoveTask_Click" />
                     <Button x:Name="Button_StartWithProgram" DockPanel.Dock="Right" FontFamily="Material Icons" FontSize="24" Content="" ToolTip="Start with program" Template="{DynamicResource Template_Buttons_Transparent}" VerticalAlignment="Stretch" HorizontalAlignment="Right" Padding="2" Click="Button_StartWithProgram_Click" />
                 </DockPanel>
