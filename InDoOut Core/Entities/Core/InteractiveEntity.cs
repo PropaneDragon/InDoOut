@@ -121,7 +121,7 @@ namespace InDoOut_Core.Entities.Core
         /// <returns>A string representation of this entity.</returns>
         public override string ToString()
         {
-            return $"{base.ToString()} [Running: {Running}]";
+            return $"{base.ToString()} [Running: {Running}] [Connections: {Connections.Count}]";
         }
 
         /// <summary>
