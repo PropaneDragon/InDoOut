@@ -4,6 +4,7 @@
     {
         IBlockView BlockView { get; }
 
+        void UpdateSnapshotWithTransition();
         void UpdateSnapshot();
     }
 }

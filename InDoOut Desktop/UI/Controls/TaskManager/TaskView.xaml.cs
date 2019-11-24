@@ -54,7 +54,7 @@ namespace InDoOut_Desktop.UI.Controls.TaskManager
             {
                 if (child is TaskItem taskItem && taskItem.BlockView == CurrentBlockView)
                 {
-                    taskItem.UpdateSnapshot();
+                    taskItem.UpdateSnapshotWithTransition();
                 }
             }
 

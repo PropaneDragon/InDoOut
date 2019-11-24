@@ -26,10 +26,25 @@ namespace InDoOut_Desktop.UI.Controls.TaskManager
             BlockView = blockView;
             TaskView = taskView;
 
-            UpdateSnapshot();
+            UpdateSnapshotWithTransition();
             UpdateProgramName();
 
             Dock_HiddenContent.Opacity = 0;
+        }
+
+        public void UpdateSnapshotWithTransition()
+        {
+            UpdateSnapshot();
+
+            Image_ScaleTransform.ScaleX = 5;
+            Image_ScaleTransform.ScaleY = 5;
+
+            var contractAnimation = new DoubleAnimation(1, TimeSpan.FromMilliseconds(500)) { EasingFunction = new CircleEase() { EasingMode = EasingMode.EaseInOut } };
+
+            Image_ScaleTransform.BeginAnimation(ScaleTransform.ScaleXProperty, contractAnimation);
+            Image_ScaleTransform.BeginAnimation(ScaleTransform.ScaleYProperty, contractAnimation);
+
+            UpdateProgramName();
         }
 
         public void UpdateSnapshot()
@@ -51,17 +66,7 @@ namespace InDoOut_Desktop.UI.Controls.TaskManager
                 bitmap.Render(drawingVisual);
 
                 Image_Preview.Source = bitmap;
-
-                Image_ScaleTransform.ScaleX = 5;
-                Image_ScaleTransform.ScaleY = 5;
-
-                var contractAnimation = new DoubleAnimation(1, TimeSpan.FromMilliseconds(500)) { EasingFunction = new CircleEase() { EasingMode = EasingMode.EaseInOut } };
-
-                Image_ScaleTransform.BeginAnimation(ScaleTransform.ScaleXProperty, contractAnimation);
-                Image_ScaleTransform.BeginAnimation(ScaleTransform.ScaleYProperty, contractAnimation);
             }
-
-            UpdateProgramName();
         }
 
         private void UpdateProgramName()
@@ -96,7 +101,7 @@ namespace InDoOut_Desktop.UI.Controls.TaskManager
                 _updateTimer.Tick += UpdateTimer_Tick;
             }
 
-            UpdateSnapshot();
+            UpdateSnapshotWithTransition();
             UpdateProgramName();
         }
 
