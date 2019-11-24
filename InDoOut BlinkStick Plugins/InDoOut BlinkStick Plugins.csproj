@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <RootNamespace>InDoOut_BlinkStick_Plugins</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BlinkStickDotNet" Version="2.0.16" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\InDoOut Philips Hue Plugins\InDoOut Philips Hue Plugins.csproj" />
+    <ProjectReference Include="..\InDoOut Plugins\InDoOut Plugins.csproj" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy  /Y /F &quot;$(TargetDir)\*&quot;  &quot;$(SolutionDir)\InDoOut Desktop\$(OutDir)\Plugins\*&quot;&#xD;&#xA;xcopy  /Y /F &quot;$(TargetDir)\*&quot;  &quot;$(SolutionDir)\InDoOut Console\$(OutDir)\Plugins\*&quot;&#xD;&#xA;xcopy  /Y &quot;%25USERPROFILE%25\.nuget\packages\blinkstickdotnet\2.0.16\lib\net40\*.dll&quot;  &quot;$(SolutionDir)\InDoOut Desktop\$(OutDir)\Plugins\&quot;&#xD;&#xA;xcopy  /Y &quot;%25USERPROFILE%25\.nuget\packages\blinkstickdotnet\2.0.16\lib\net40\*.dll&quot;  &quot;$(SolutionDir)\InDoOut Console\$(OutDir)\Plugins\&quot;&#xD;&#xA;xcopy  /Y &quot;%25USERPROFILE%25\.nuget\packages\hidsharp\1.5.0\lib\net35\*.dll&quot;  &quot;$(SolutionDir)\InDoOut Desktop\$(OutDir)\Plugins\&quot;&#xD;&#xA;xcopy  /Y &quot;%25USERPROFILE%25\.nuget\packages\hidsharp\1.5.0\lib\net35\*.dll&quot;  &quot;$(SolutionDir)\InDoOut Console\$(OutDir)\Plugins\&quot;&#xD;&#xA;xcopy  /Y &quot;%25USERPROFILE%25\.nuget\packages\libusbdotnet\2.2.8\lib\*.dll&quot;  &quot;$(SolutionDir)\InDoOut Desktop\$(OutDir)\Plugins\&quot;&#xD;&#xA;xcopy  /Y &quot;%25USERPROFILE%25\.nuget\packages\libusbdotnet\2.2.8\lib\*.dll&quot;  &quot;$(SolutionDir)\InDoOut Console\$(OutDir)\Plugins\&quot;" />
+  </Target>
+
+</Project>

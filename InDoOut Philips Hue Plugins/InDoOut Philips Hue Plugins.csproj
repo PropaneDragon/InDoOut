@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="xcopy /Y /F &quot;C:\Users\seanw\.nuget\packages\q42.hueapi\3.11.0\lib\netstandard2.0\*.dll&quot; &quot;$(TargetDir)&quot;&#xD;&#xA;xcopy /Y /F &quot;$(TargetDir)\*&quot;  &quot;$(SolutionDir)\InDoOut Desktop\$(OutDir)\Plugins\&quot;&#xD;&#xA;xcopy /Y /F &quot;$(TargetDir)\*&quot;  &quot;$(SolutionDir)\InDoOut Console\$(OutDir)\Plugins\&quot;" />
+    <Exec Command="xcopy /Y /F &quot;%25USERPROFILE%25\.nuget\packages\q42.hueapi\3.11.0\lib\netstandard2.0\*.dll&quot; &quot;$(TargetDir)&quot;&#xD;&#xA;xcopy /Y /F &quot;$(TargetDir)\*&quot;  &quot;$(SolutionDir)\InDoOut Desktop\$(OutDir)\Plugins\&quot;&#xD;&#xA;xcopy /Y /F &quot;$(TargetDir)\*&quot;  &quot;$(SolutionDir)\InDoOut Console\$(OutDir)\Plugins\&quot;" />
   </Target>
 
   <ItemGroup>
