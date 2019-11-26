@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <RootNamespace>InDoOut_Conversion_Plugins</RootNamespace>
+  </PropertyGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy  /Y /F &quot;$(TargetDir)\*&quot;  &quot;$(SolutionDir)\InDoOut Desktop\$(OutDir)\Plugins\*&quot;&#xD;&#xA;xcopy  /Y /F &quot;$(TargetDir)\*&quot;  &quot;$(SolutionDir)\InDoOut Console\$(OutDir)\Plugins\*&quot;" />
+  </Target>
+
+  <ItemGroup>
+    <ProjectReference Include="..\InDoOut Plugins\InDoOut Plugins.csproj" />
+  </ItemGroup>
+
+</Project>
