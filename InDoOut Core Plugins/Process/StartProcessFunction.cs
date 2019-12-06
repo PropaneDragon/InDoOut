@@ -8,7 +8,7 @@ namespace InDoOut_Core_Plugins.Process
     {
         private readonly IOutput _outputExecuted, _outputFailed;
         private readonly IProperty<string> _propertyLocation, _propertyArguments, _startInFolder;
-        private readonly IResult _returnCode;
+        private readonly IResult _returnCode, _fullConsoleOutput;
 
         public override string Description => "Starts a process on the device.";
 
@@ -24,15 +24,18 @@ namespace InDoOut_Core_Plugins.Process
 
             _outputExecuted = CreateOutput("Executed", OutputType.Positive);
             _outputFailed = CreateOutput("Failed", OutputType.Negative);
+
             _propertyLocation = AddProperty(new Property<string>("Process location", "The location of the process to execute.", true, ""));
             _propertyArguments = AddProperty(new Property<string>("Process arguments", "Arguments to pass to the executable.", false, ""));
             _startInFolder = AddProperty(new Property<string>("Working directory", "Starts the process from the given location.", false, ""));
+
+            _fullConsoleOutput = AddResult(new Result("Console output", "The full console output of the process.", ""));
             _returnCode = AddResult(new Result("Return code", "The value returned from the process after execution.", "0"));
         }
 
         protected override IOutput Started(IInput triggeredBy)
         {
-            if (_propertyLocation.FullValue != null && File.Exists(_propertyLocation.FullValue))
+            if (_propertyLocation.FullValue != null)
             {
                 try
                 {
@@ -40,9 +43,12 @@ namespace InDoOut_Core_Plugins.Process
                     {
                         StartInfo = new ProcessStartInfo(_propertyLocation.FullValue, _propertyArguments.FullValue)
                         {
-                            CreateNoWindow = false,
+                            CreateNoWindow = true,
                             UseShellExecute = false,
-                            WorkingDirectory = _startInFolder.FullValue ?? ""
+                            WindowStyle = ProcessWindowStyle.Hidden,
+                            WorkingDirectory = _startInFolder.FullValue ?? "",
+                            RedirectStandardOutput = true,
+                            RedirectStandardError = true
                         }
                     };
 
@@ -50,12 +56,18 @@ namespace InDoOut_Core_Plugins.Process
                     {
                         process.WaitForExit();
 
+                        var output = process.StandardOutput?.ReadToEnd();
+
+                        _ = _fullConsoleOutput.ValueFrom(output ?? "");
                         _ = _returnCode.ValueFrom(process.ExitCode);
 
                         return _outputExecuted;
                     }
                 }
-                catch { }
+                catch (System.Exception ex)
+                {
+                    int a = 1;
+                }
             }
 
             return _outputFailed;
