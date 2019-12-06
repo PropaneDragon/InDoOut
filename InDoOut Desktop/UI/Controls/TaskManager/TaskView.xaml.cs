@@ -128,7 +128,7 @@ namespace InDoOut_Desktop.UI.Controls.TaskManager
             {
                 foreach (UIElement child in Wrap_Tasks.Children)
                 {
-                    if (child is ITaskItem item && item == child)
+                    if (child is ITaskItem item && item == task)
                     {
                         var program = task?.BlockView?.AssociatedProgram;
                         if (program != null)
