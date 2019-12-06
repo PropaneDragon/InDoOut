@@ -31,7 +31,7 @@ namespace InDoOut_Core_Plugins.Text
 
         protected override IOutput Started(IInput triggeredBy)
         {
-            var textToSplit = _text.ValueOrDefault("");
+            var textToSplit = _text.FullValue;
 
             if (_splitPosition.FullValue <= textToSplit.Length && _splitPosition.FullValue > 0)
             {
