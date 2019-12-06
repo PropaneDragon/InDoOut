@@ -33,6 +33,17 @@ namespace InDoOut_BlinkStick_Plugins
             using var stick = BlinkStick.FindBySerial(_lightId.FullValue);
             if (stick != null && stick.OpenDevice())
             {
+                var leds = stick.GetLedCount();
+                var colours = new byte[leds * 3];
+
+                for (var led = 0; led < leds; ++led)
+                {
+                    colours[led] = 0;
+                    colours[led + 1] = 0;
+                    colours[led + 2] = 0;
+                }
+
+                stick.SetColors(0, colours);
                 stick.TurnOff();
 
                 return _lightChanged;
