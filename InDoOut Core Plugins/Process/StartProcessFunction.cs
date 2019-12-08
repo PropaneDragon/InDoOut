@@ -64,10 +64,7 @@ namespace InDoOut_Core_Plugins.Process
                         return _outputExecuted;
                     }
                 }
-                catch (System.Exception ex)
-                {
-                    int a = 1;
-                }
+                catch { }
             }
 
             return _outputFailed;
