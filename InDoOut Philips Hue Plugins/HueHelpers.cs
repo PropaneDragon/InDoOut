@@ -5,13 +5,16 @@ using Q42.HueApi.Models;
 using Q42.HueApi.Models.Groups;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 
 namespace InDoOut_Philips_Hue_Plugins
 {
     internal static class HueHelpers
     {
+        private static CacheControlHeaderValue _cacheControl = new CacheControlHeaderValue { NoCache = true, NoStore = true };
+
         public static HueClient GetClient(IApiFunction apiFunction) => apiFunction != null ? GetClient(apiFunction.BridgeIPProperty.FullValue, apiFunction.UserIdProperty.FullValue) : null;
-        public static HueClient GetClient(string bridgeIp, string userId) => !string.IsNullOrEmpty(bridgeIp) && !string.IsNullOrEmpty(userId) ? TryGet.ValueOrDefault(() => new LocalHueClient(bridgeIp, userId), null) : null;
+        public static HueClient GetClient(string bridgeIp, string userId) => !string.IsNullOrEmpty(bridgeIp) && !string.IsNullOrEmpty(userId) ? TryGet.ValueOrDefault(() => GenerateHueClient(bridgeIp, userId), null) : null;
 
         public static Group GetGroup(HueClient client, IProperty<string> id) => GetGroup(client, id.FullValue);
         public static Group GetGroup(HueClient client, string id) => client != null && !string.IsNullOrEmpty(id) ? TryGet.ValueOrDefault(() => client.GetGroupAsync(id).Result, null) : null;
@@ -114,5 +117,17 @@ namespace InDoOut_Philips_Hue_Plugins
         public static List<Sensor> GetLightSensors(List<Sensor> sensors) => sensors?.Where(sensor => sensor?.State?.LightLevel != null).ToList();
 
         private static bool StringMatches(string @string, string match, bool allowPartialMatches = false) => @string != null && match != null ? (allowPartialMatches ? @string.Contains(match) : @string == match) : false;
+
+        private static LocalHueClient GenerateHueClient(string bridgeIp, string userId)
+        {
+            var client = new LocalHueClient(bridgeIp, userId);
+            var httpClient = client.GetHttpClient().Result;
+            if (httpClient != null)
+            {
+                httpClient.DefaultRequestHeaders.CacheControl = _cacheControl;
+            }
+
+            return client;
+        }
     }
 }
