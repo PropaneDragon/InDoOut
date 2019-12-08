@@ -17,6 +17,7 @@ namespace InDoOut_Application_Plugins.Self
 
         private readonly IOutput _completed, _failed;
         private readonly IProperty<string> _programPath;
+        private readonly IProperty<bool> _reloadEachTime;
         private readonly IResult _result;
         private readonly List<IProperty<string>> _inputValues = new List<IProperty<string>>();
 
@@ -42,6 +43,7 @@ namespace InDoOut_Application_Plugins.Self
             _failed = CreateOutput("Failed", OutputType.Negative);
 
             _programPath = AddProperty(new Property<string>("Path", "The full path to the IDO program.", true));
+            _reloadEachTime = AddProperty(new Property<bool>("Reload each time", "When this is true, it reads the program from the disk every time it is called. When false, it will only read it once.", false, false));
 
             _result = AddResult(new Result("Result", "The result value from the program."));
 
@@ -60,12 +62,18 @@ namespace InDoOut_Application_Plugins.Self
 
                 if (plugins != null)
                 {
-                    _currentProgram = new Program(_inputValues.Select(value => value.FullValue).ToArray());
+                    if (_reloadEachTime.FullValue || _currentProgram == null)
+                    {
+                        var loadedProgram = new Program(_inputValues.Select(value => value.FullValue).ToArray());
+                        var loader = new ProgramJsonStorer(builder, plugins, _programPath.FullValue);
+                        var loadResult = loader.Load(loadedProgram);
+                        if (loadResult.Count == 0)
+                        {
+                            _currentProgram = loadedProgram;
+                        }
+                    }
 
-                    var loader = new ProgramJsonStorer(builder, plugins, _programPath.FullValue);
-                    var loadResult = loader.Load(_currentProgram);
-
-                    if (loadResult.Count == 0 && _currentProgram.StartFunctions.Count > 0)
+                    if (_currentProgram != null && _currentProgram.StartFunctions.Count > 0)
                     {
                         _currentProgram.Trigger(this);
 
@@ -94,7 +102,6 @@ namespace InDoOut_Application_Plugins.Self
                         _currentProgram.Stop();
                         _currentProgram = null;
 
-                        loader = null;
                         builder = null;
 
                         return _completed;
