@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace InDoOut_Desktop.Loading
+namespace InDoOut_Executable_Core.Loading
 {
-    internal abstract class LoadingTask : ILoadingTask
+    public abstract class LoadingTask : ILoadingTask
     {
         private readonly object _nameLock = new object();
 

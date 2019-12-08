@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace InDoOut_Desktop.Loading
+namespace InDoOut_Executable_Core.Loading
 {
     public abstract class LoadingTaskEventArgs : EventArgs
     {

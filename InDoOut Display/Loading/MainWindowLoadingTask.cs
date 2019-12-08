@@ -1,26 +1,22 @@
-﻿using InDoOut_Core.Logging;
-using InDoOut_Desktop.Options;
+﻿using System;
+using System.Threading.Tasks;
+using InDoOut_Core.Logging;
 using InDoOut_Executable_Core.Loading;
 using InDoOut_Executable_Core.Location;
 using InDoOut_Plugins.Loaders;
-using System;
-using System.Threading.Tasks;
 
-namespace InDoOut_Desktop.Loading
+namespace InDoOut_Display.Loading
 {
     internal class MainWindowLoadingTask : LoadingTask
     {
-        public MainWindowLoadingTask()
-        {
-        }
-
         protected override async Task<bool> RunTaskAsync()
         {
             Log.Instance.Header($"PLUGIN LOADING BEGINNING");
 
             Name = "Loading plugins...";
 
-            if (LoadedPlugins.Instance.Plugins.Count <= 0) {
+            if (LoadedPlugins.Instance.Plugins.Count <= 0)
+            {
                 var pluginLoader = new PluginLoader();
                 var pluginDirectoryLoader = new PluginDirectoryLoader(pluginLoader, StandardLocations.Instance);
 
@@ -39,14 +35,6 @@ namespace InDoOut_Desktop.Loading
                 Name = "Plugins loaded.";
 
                 Log.Instance.Header($"PLUGIN LOADING DONE");
-
-                await Task.Delay(TimeSpan.FromMilliseconds(500));
-
-                Name = "Loading options.";
-
-                _ = await OptionsSaveLoad.Instance.LoadAllOptionsAsync();
-
-                Name = "Options loaded.";
 
                 return true;
             }

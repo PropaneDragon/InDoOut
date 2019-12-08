@@ -8,10 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="UI\Controls\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\InDoOut Executable Core\InDoOut Executable Core.csproj" />
+    <ProjectReference Include="..\InDoOut Plugins\InDoOut Plugins.csproj" />
     <ProjectReference Include="..\InDoOut UI Common\InDoOut UI Common.csproj" />
   </ItemGroup>
 

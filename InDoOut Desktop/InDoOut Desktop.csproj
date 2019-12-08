@@ -9,9 +9,13 @@
 
   <ItemGroup>
     <Compile Remove="Display\**" />
+    <Compile Remove="UI\Controls\Core\**" />
     <EmbeddedResource Remove="Display\**" />
+    <EmbeddedResource Remove="UI\Controls\Core\**" />
     <None Remove="Display\**" />
+    <None Remove="UI\Controls\Core\**" />
     <Page Remove="Display\**" />
+    <Page Remove="UI\Controls\Core\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -49,10 +53,6 @@
   <ItemGroup>
     <Resource Include="Resources\IDO_Main_BackgroundLogo.png" />
     <Resource Include="Resources\IDO_Splash_Logo.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="UI\Controls\Core\" />
   </ItemGroup>
 
 </Project>
