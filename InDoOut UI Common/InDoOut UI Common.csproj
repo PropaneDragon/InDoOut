@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <RootNamespace>InDoOut_UI_Common</RootNamespace>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>InDoOutUICommon</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Page Update="Controls\Core\TitleBar.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\Style\TitleBarStyle.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+
+</Project>
