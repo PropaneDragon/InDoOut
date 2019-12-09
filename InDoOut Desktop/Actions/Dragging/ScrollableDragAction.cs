@@ -3,7 +3,7 @@ using System.Windows;
 
 namespace InDoOut_Desktop.Actions.Dragging
 {
-    internal class ScrollableDragAction : DragAction
+    internal class ScrollableDragAction : InDoOut_UI_Common.Actions.Dragging.DragAction
     {
         private Point _initialScrollPosition = new Point();
 

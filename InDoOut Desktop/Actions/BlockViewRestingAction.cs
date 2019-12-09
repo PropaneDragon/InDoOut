@@ -5,6 +5,7 @@ using InDoOut_Desktop.Actions.Dragging;
 using InDoOut_Desktop.Actions.Selecting;
 using InDoOut_Desktop.UI.Interfaces;
 using InDoOut_Desktop.UI.Windows;
+using InDoOut_UI_Common.Actions;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;

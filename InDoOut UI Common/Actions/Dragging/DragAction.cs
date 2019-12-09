@@ -1,13 +1,13 @@
 ﻿using System.Windows;
 
-namespace InDoOut_Desktop.Actions.Dragging
+namespace InDoOut_UI_Common.Actions.Dragging
 {
-    internal abstract class DragAction : Action
+    public abstract class DragAction : Action
     {
         private bool _dragging = false;
         private Point _lastMousePosition = new Point();
 
-        internal Point MouseDelta { get; private set; } = new Point();
+        protected Point MouseDelta { get; private set; } = new Point();
 
         public override bool MouseLeftDown(Point mousePosition)
         {

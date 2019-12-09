@@ -2,9 +2,9 @@
 using System.Windows;
 using System.Windows.Input;
 
-namespace InDoOut_Desktop.Actions
+namespace InDoOut_UI_Common.Actions
 {
-    internal abstract class Action : IAction
+    public abstract class Action : IAction
     {
         public event EventHandler<ActionCompleteEventArgs> ActionComplete;
 

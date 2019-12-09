@@ -1,6 +1,6 @@
-﻿namespace InDoOut_Desktop.Actions
+﻿namespace InDoOut_UI_Common.Actions
 {
-    internal interface IActionHandler : IAction
+    public interface IActionHandler : IAction
     {
         IAction DefaultAction { get; }
         IAction CurrentAction { get; }

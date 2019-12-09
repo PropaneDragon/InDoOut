@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace InDoOut_Desktop.Actions
+namespace InDoOut_UI_Common.Actions
 {
-    internal class ActionCompleteEventArgs : EventArgs
+    public class ActionCompleteEventArgs : EventArgs
     {
         public IAction CurrentAction { get; private set; } = null;
         public IAction NextAction { get; private set; } = null;

@@ -5,7 +5,7 @@ using System.Windows;
 
 namespace InDoOut_Desktop.Actions.Dragging
 {
-    internal class DraggableDragAction : DragAction
+    internal class DraggableDragAction : InDoOut_UI_Common.Actions.Dragging.DragAction
     {
         private readonly Dictionary<IDraggable, Point> _initialPositions = new Dictionary<IDraggable, Point>();
         private readonly IBlockView _blockView = null;
