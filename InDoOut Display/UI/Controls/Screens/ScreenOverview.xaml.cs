@@ -8,11 +8,13 @@ namespace InDoOut_Display.UI.Controls.Screens
 {
     public partial class ScreenOverview : UserControl
     {
-        private readonly ActionHandler _actionHandler = new ActionHandler(new ScreenItemRestingAction());
+        private readonly ActionHandler _actionHandler = null;
 
         public ScreenOverview()
         {
             InitializeComponent();
+
+            _actionHandler = new ActionHandler(new ScreenItemRestingAction(ScreenItem_Overview));
         }
 
         private void Scroll_Content_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)

@@ -8,13 +8,13 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <ScrollViewer x:Name="Scroll_Content" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" PreviewMouseLeftButtonDown="Scroll_Content_PreviewMouseLeftButtonDown" PreviewMouseLeftButtonUp="Scroll_Content_PreviewMouseLeftButtonUp" PreviewMouseMove="Scroll_Content_PreviewMouseMove" PreviewMouseRightButtonDown="Scroll_Content_PreviewMouseRightButtonDown" PreviewMouseRightButtonUp="Scroll_Content_PreviewMouseRightButtonUp" PreviewMouseDoubleClick="Scroll_Content_PreviewMouseDoubleClick" PreviewKeyDown="Scroll_Content_PreviewKeyDown" PreviewKeyUp="Scroll_Content_PreviewKeyUp">
-            <Grid Width="2100" Height="1200" Margin="40,80,40,40">
+            <Grid Margin="40,80,40,40" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <Border Background="#fff">
                     <Border.Effect>
                         <DropShadowEffect BlurRadius="30" ShadowDepth="0" Opacity="0.8" />
                     </Border.Effect>
                 </Border>
-                <local:ScreenItem x:Name="ScreenItem_Overview" />
+                <local:ScreenItem x:Name="ScreenItem_Overview" Width="1200" Height="1200" />
             </Grid>
         </ScrollViewer>
         <StackPanel x:Name="StackPanel_AvailableScreens" Orientation="Horizontal">
