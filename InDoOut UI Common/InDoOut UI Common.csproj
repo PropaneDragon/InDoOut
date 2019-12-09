@@ -11,7 +11,7 @@
     <Page Update="Controls\Core\TitleBar.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Controls\Style\TitleBarStyle.xaml">
+    <Page Update="Style\TitleBarStyle.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

@@ -84,9 +84,19 @@ namespace InDoOut_UI_Common.Controls.Core
             Button_Restore.ToolTip = (_attachedWindow?.WindowState ?? WindowState.Maximized) == WindowState.Maximized ? "Restore" : "Maximise";
         }
 
+        private void UpdateWindowBorders()
+        {
+            _attachedWindow.BorderThickness = (_attachedWindow?.WindowState ?? WindowState.Maximized) == WindowState.Maximized ? new Thickness(8) : new Thickness(1);
+        }
+
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             AttachToWindow();
+
+            if (_attachedWindow != null)
+            {
+                _attachedWindow.StateChanged += AttachedWindow_StateChanged;
+            }
 
             if (_periodicUpdateTimer == null)
             {
@@ -102,6 +112,11 @@ namespace InDoOut_UI_Common.Controls.Core
 
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
+            if (_attachedWindow != null)
+            {
+                _attachedWindow.StateChanged -= AttachedWindow_StateChanged;
+            }
+
             if (_periodicUpdateTimer != null)
             {
                 _periodicUpdateTimer.Stop();
@@ -190,6 +205,12 @@ namespace InDoOut_UI_Common.Controls.Core
                 }
                 catch { }
             }
+        }
+
+        private void AttachedWindow_StateChanged(object sender, EventArgs e)
+        {
+            UpdateTooltipText();
+            UpdateWindowBorders();
         }
     }
 }
