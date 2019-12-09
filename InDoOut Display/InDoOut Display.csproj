@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <RootNamespace>InDoOut_Display</RootNamespace>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\InDoOut Executable Core\InDoOut Executable Core.csproj" />
+    <ProjectReference Include="..\InDoOut Plugins\InDoOut Plugins.csproj" />
+    <ProjectReference Include="..\InDoOut UI Common\InDoOut UI Common.csproj" />
+  </ItemGroup>
+
+</Project>

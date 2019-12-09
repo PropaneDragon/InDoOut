@@ -1,5 +1,7 @@
 ﻿using InDoOut_Core.Entities.Functions;
 using System;
+using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace InDoOut_Core_Plugins.Time
@@ -37,13 +39,14 @@ namespace InDoOut_Core_Plugins.Time
 
         protected override IOutput Started(IInput triggeredBy)
         {
-            var currentTime = DateTime.UtcNow;
-            var endTime = currentTime + new TimeSpan(_days.FullValue, _hours.FullValue, _minutes.FullValue, _seconds.FullValue, _milliseconds.FullValue);
+            var stopwatch = new Stopwatch();
+            var endTime = new TimeSpan(_days.FullValue, _hours.FullValue, _minutes.FullValue, _seconds.FullValue, _milliseconds.FullValue);
 
-            while (!StopRequested && DateTime.UtcNow < endTime)
+            stopwatch.Start();
+
+            while (!StopRequested && stopwatch.Elapsed < endTime)
             {
-                var waitTask = Task.Delay(TimeSpan.FromMilliseconds(1));
-                waitTask.Wait();
+                Thread.Sleep(TimeSpan.FromMilliseconds(1));
             }
 
             return _output;

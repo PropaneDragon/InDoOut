@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace InDoOut_Desktop.Loading
+namespace InDoOut_Executable_Core.Loading
 {
     public enum TaskState
     {

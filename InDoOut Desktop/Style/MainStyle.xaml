@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:InDoOut_Desktop.Style">
+                    xmlns:local="clr-namespace:InDoOut_UI_Core.Style">
 
     <Style TargetType="{x:Type Control}">
         <Setter Property="FontFamily" Value="Segoe UI Light" />

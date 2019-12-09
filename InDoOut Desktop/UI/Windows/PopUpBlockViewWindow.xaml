@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InDoOut_Desktop.UI.Windows"
-        xmlns:core="clr-namespace:InDoOut_Desktop.UI.Controls.Core"
+        xmlns:core="clr-namespace:InDoOut_UI_Common.Controls.Core;assembly=InDoOutUICommon"
         xmlns:blockview="clr-namespace:InDoOut_Desktop.UI.Controls.BlockView"
         xmlns:background="clr-namespace:InDoOut_Desktop.UI.Controls.Background"
         mc:Ignorable="d"
