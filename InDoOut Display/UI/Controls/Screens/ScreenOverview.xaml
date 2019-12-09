@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
+        <ScrollViewer x:Name="Scroll_Content" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" PreviewMouseLeftButtonDown="Scroll_Content_PreviewMouseLeftButtonDown" PreviewMouseLeftButtonUp="Scroll_Content_PreviewMouseLeftButtonUp" PreviewMouseMove="Scroll_Content_PreviewMouseMove" PreviewMouseRightButtonDown="Scroll_Content_PreviewMouseRightButtonDown" PreviewMouseRightButtonUp="Scroll_Content_PreviewMouseRightButtonUp" PreviewMouseDoubleClick="Scroll_Content_PreviewMouseDoubleClick" PreviewKeyDown="Scroll_Content_PreviewKeyDown" PreviewKeyUp="Scroll_Content_PreviewKeyUp">
             <Grid Width="2100" Height="1200" Margin="40,80,40,40">
                 <Border Background="#fff">
                     <Border.Effect>
