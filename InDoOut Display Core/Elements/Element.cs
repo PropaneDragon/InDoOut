@@ -36,11 +36,12 @@ namespace InDoOut_Display_Core.Elements
             _lastUpdateTime = DateTime.Now;
         }
 
-        protected abstract void FunctionChanged(T function);
+        protected virtual void FunctionChanged(T function) { };
 
         private void ChangeFunction(T function)
         {
             _associatedFunction = function;
+            _lastUpdateTime = DateTime.MinValue;
 
             FunctionChanged(function);
         }
