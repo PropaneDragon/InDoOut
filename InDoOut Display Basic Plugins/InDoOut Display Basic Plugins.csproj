@@ -6,12 +6,12 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Text\" />
-  </ItemGroup>
-
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="xcopy /Y /F &quot;$(TargetDir)\*&quot;  &quot;$(SolutionDir)\InDoOut Display\$(OutDir)\Plugins\&quot;" />
   </Target>
+
+  <ItemGroup>
+    <ProjectReference Include="..\InDoOut Display Core\InDoOut Display Core.csproj" />
+  </ItemGroup>
 
 </Project>

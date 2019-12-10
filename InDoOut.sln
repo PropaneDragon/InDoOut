@@ -78,6 +78,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InDoOut Conversion Plugins", "InDoOut Conversion Plugins\InDoOut Conversion Plugins.csproj", "{0F10D392-1FF8-46AA-BB2C-964BFDB21EE5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InDoOut Display", "InDoOut Display\InDoOut Display.csproj", "{891CACF0-BFFC-418E-A48F-381DC8BB9EC9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E6FA78A2-BDA4-4190-BDCC-1D328C020F2C} = {E6FA78A2-BDA4-4190-BDCC-1D328C020F2C}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Applications", "Applications", "{5BF25E21-75F2-48BB-8E34-C1ED2B7D69FA}"
 EndProject
