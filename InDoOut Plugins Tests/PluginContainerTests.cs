@@ -1,6 +1,6 @@
 using InDoOut_Desktop_API_Tests;
 using InDoOut_Desktop_API_Tests.External_Plugin_Testing;
-using InDoOut_Plugins.Containers;
+using InDoOut_Function_Plugins.Containers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 
@@ -18,7 +18,7 @@ namespace InDoOut_Plugins_Tests
                 PublicDescription = "Description",
                 PublicName = "Name"
             };
-            var pluginContainer = new PluginContainer(plugin);
+            var pluginContainer = new FunctionPluginContainer(plugin);
 
             Assert.IsTrue(pluginContainer.Initialise());
             Assert.AreEqual(3, pluginContainer.FunctionTypes.Count);
@@ -31,14 +31,14 @@ namespace InDoOut_Plugins_Tests
         [TestMethod]
         public void Valid()
         {
-            var pluginContainer = new PluginContainer(null);
+            var pluginContainer = new FunctionPluginContainer(null);
             _ = pluginContainer.Initialise();
 
             Assert.IsFalse(pluginContainer.Valid);
             Assert.IsNull(pluginContainer.Plugin);
             Assert.AreEqual(0, pluginContainer.FunctionTypes.Count);
 
-            pluginContainer = new PluginContainer(new TestPlugin()
+            pluginContainer = new FunctionPluginContainer(new TestPlugin()
             {
                 PublicName = null,
                 PublicAuthor = "An author",
@@ -51,7 +51,7 @@ namespace InDoOut_Plugins_Tests
             Assert.IsNotNull(pluginContainer.Plugin);
             Assert.AreEqual(0, pluginContainer.FunctionTypes.Count);
 
-            pluginContainer = new PluginContainer(new TestPlugin()
+            pluginContainer = new FunctionPluginContainer(new TestPlugin()
             {
                 PublicAuthor = "An author",
                 PublicDescription = "A description",

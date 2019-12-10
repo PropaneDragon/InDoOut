@@ -7,6 +7,7 @@ using InDoOut_Core.Logging;
 using InDoOut_Executable_Core.Location;
 using InDoOut_Executable_Core.Logging;
 using InDoOut_Executable_Core.Messaging;
+using InDoOut_Function_Plugins.Loaders;
 using InDoOut_Json_Storage;
 using InDoOut_Plugins.Loaders;
 using System;
@@ -39,7 +40,7 @@ namespace InDoOut_Console
 
             ColourConsole.WriteInfoLine("Loading plugins...");
 
-            var pluginLoader = new PluginDirectoryLoader(new PluginLoader(), StandardLocations.Instance);
+            var pluginLoader = new PluginDirectoryLoader(new FunctionPluginLoader(), StandardLocations.Instance);
             var loadedPlugins = pluginLoader.LoadPlugins().Result;
 
             foreach (var plugin in loadedPlugins)

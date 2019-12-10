@@ -1,6 +1,7 @@
 ﻿using InDoOut_Core.Entities.Programs;
 using InDoOut_Core.Functions;
 using InDoOut_Desktop_API_Tests.External_Plugin_Testing;
+using InDoOut_Function_Plugins.Loaders;
 using InDoOut_Json_Storage;
 using InDoOut_Plugins.Loaders;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -165,7 +166,7 @@ namespace InDoOut_Json_Storage_Tests
         [TestMethod]
         public void LoadProgram()
         {
-            var pluginLoader = new PluginLoader();
+            var pluginLoader = new FunctionPluginLoader();
             var loadedPlugin = pluginLoader.LoadPlugin("InDoOut Desktop API Tests.dll");
 
             Assert.IsTrue(loadedPlugin.Initialise());

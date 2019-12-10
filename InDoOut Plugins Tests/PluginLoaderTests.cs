@@ -1,4 +1,4 @@
-﻿using InDoOut_Plugins.Loaders;
+﻿using InDoOut_Function_Plugins.Loaders;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Reflection;
 
@@ -12,7 +12,7 @@ namespace InDoOut_Plugins_Tests
         {
             var validAssembly = Assembly.LoadFrom("InDoOut Desktop API Tests.dll");
             var invalidAssembly = Assembly.LoadFrom("Newtonsoft.Json.dll");
-            var pluginLoader = new PluginLoader();
+            var pluginLoader = new FunctionPluginLoader();
 
             Assert.IsNotNull(validAssembly);
 
@@ -27,7 +27,7 @@ namespace InDoOut_Plugins_Tests
         [TestMethod]
         public void LoadPluginFromPath()
         {
-            var pluginLoader = new PluginLoader();
+            var pluginLoader = new FunctionPluginLoader();
             var loadedPluginContainer = pluginLoader.LoadPlugin("InDoOut Desktop API Tests.dll");
 
             Assert.IsNotNull(loadedPluginContainer);
