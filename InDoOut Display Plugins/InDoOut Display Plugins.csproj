@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <RootNamespace>InDoOut_Display_Plugins</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Containers\" />
+    <Folder Include="Loaders\" />
+  </ItemGroup>
+
+</Project>

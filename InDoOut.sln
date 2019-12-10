@@ -85,6 +85,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InDoOut UI Common", "InDoOu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InDoOut Function Plugins", "InDoOut Function Plugins\InDoOut Function Plugins.csproj", "{671114D7-F15E-4E9E-AED1-46FD5387E3F6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InDoOut Display Plugins", "InDoOut Display Plugins\InDoOut Display Plugins.csproj", "{3A135DB4-D1FE-4FD1-A2F7-2F4F37269298}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InDoOut Display Core", "InDoOut Display Core\InDoOut Display Core.csproj", "{638B0EDB-C2CA-4ACA-B4FB-FEBD55C1B073}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -309,6 +313,22 @@ Global
 		{671114D7-F15E-4E9E-AED1-46FD5387E3F6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{671114D7-F15E-4E9E-AED1-46FD5387E3F6}.Release|x86.ActiveCfg = Release|Any CPU
 		{671114D7-F15E-4E9E-AED1-46FD5387E3F6}.Release|x86.Build.0 = Release|Any CPU
+		{3A135DB4-D1FE-4FD1-A2F7-2F4F37269298}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A135DB4-D1FE-4FD1-A2F7-2F4F37269298}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A135DB4-D1FE-4FD1-A2F7-2F4F37269298}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3A135DB4-D1FE-4FD1-A2F7-2F4F37269298}.Debug|x86.Build.0 = Debug|Any CPU
+		{3A135DB4-D1FE-4FD1-A2F7-2F4F37269298}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A135DB4-D1FE-4FD1-A2F7-2F4F37269298}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A135DB4-D1FE-4FD1-A2F7-2F4F37269298}.Release|x86.ActiveCfg = Release|Any CPU
+		{3A135DB4-D1FE-4FD1-A2F7-2F4F37269298}.Release|x86.Build.0 = Release|Any CPU
+		{638B0EDB-C2CA-4ACA-B4FB-FEBD55C1B073}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{638B0EDB-C2CA-4ACA-B4FB-FEBD55C1B073}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{638B0EDB-C2CA-4ACA-B4FB-FEBD55C1B073}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{638B0EDB-C2CA-4ACA-B4FB-FEBD55C1B073}.Debug|x86.Build.0 = Debug|Any CPU
+		{638B0EDB-C2CA-4ACA-B4FB-FEBD55C1B073}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{638B0EDB-C2CA-4ACA-B4FB-FEBD55C1B073}.Release|Any CPU.Build.0 = Release|Any CPU
+		{638B0EDB-C2CA-4ACA-B4FB-FEBD55C1B073}.Release|x86.ActiveCfg = Release|Any CPU
+		{638B0EDB-C2CA-4ACA-B4FB-FEBD55C1B073}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
