@@ -16,8 +16,10 @@ namespace InDoOut_Core.Entities.Programs
     public class Program : Entity, IProgram
     {
         private readonly object _lastTriggerTimeLock = new object();
+        private readonly object _lastCompletionTimeLock = new object();
 
         private DateTime _lastTriggerTime = DateTime.MinValue;
+        private DateTime _lastCompletionTime = DateTime.MinValue;
 
         /// <summary>
         /// All functions within this program.
@@ -60,6 +62,11 @@ namespace InDoOut_Core.Entities.Programs
         /// The last time this program was triggered.
         /// </summary>
         public DateTime LastTriggerTime { get { lock (_lastTriggerTimeLock) return _lastTriggerTime; } }
+
+        /// <summary>
+        /// The time this program last completed a run (successfully or unsuccessfully).
+        /// </summary>
+        public DateTime LastCompletionTime { get { lock (_lastCompletionTimeLock) return _lastCompletionTime; } }
 
         /// <summary>
         /// The current variable store for all program variables.
@@ -208,6 +215,27 @@ namespace InDoOut_Core.Entities.Programs
         public bool HasBeenTriggeredWithin(TimeSpan time)
         {
             return LastTriggerTime >= DateTime.Now - time;
+        }
+
+        /// <summary>
+        /// Checks whether the program has completed a run (successfully or unsuccessfully) since the given <paramref name="time"/>.
+        /// </summary>
+        /// <param name="time">The time to check.</param>
+        /// <returns>Whether the program has completed since the given time.</returns>
+        public bool HasCompletedSince(DateTime time)
+        {
+            return LastCompletionTime >= time;
+        }
+
+        /// <summary>
+        /// Checks whether the program has completed a run (successfully or unsuccessfully) within the given <paramref name="time"/>. Passing a time
+        /// of 5 seconds will return whether the program has completed within the last 5 seconds.
+        /// </summary>
+        /// <param name="time">The time to check.</param>
+        /// <returns>Whether the program has completed within the given time.</returns>
+        public bool HasCompletedWithin(TimeSpan time)
+        {
+            return LastCompletionTime >= DateTime.Now - time;
         }
 
         /// <summary>

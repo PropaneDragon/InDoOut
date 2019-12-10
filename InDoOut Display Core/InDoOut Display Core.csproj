@@ -9,4 +9,8 @@
     <DocumentationFile>P:\Repositories\Personal\InDoOut\InDoOut Display Core\InDoOut Display Core.xml</DocumentationFile>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\InDoOut Core\InDoOut Core.csproj" />
+  </ItemGroup>
+
 </Project>

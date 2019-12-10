@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>InDoOut Plugins</name>
+        <name>InDoOut Plugins Core</name>
     </assembly>
     <members>
         <member name="T:InDoOut_Plugins.Containers.IPluginContainer">
@@ -17,11 +17,6 @@
         <member name="P:InDoOut_Plugins.Containers.IPluginContainer.Plugin">
             <summary>
             The plugin that this container houses.
-            </summary>
-        </member>
-        <member name="P:InDoOut_Plugins.Containers.IPluginContainer.FunctionTypes">
-            <summary>
-            The functions that this plugin makes visible.
             </summary>
         </member>
         <member name="M:InDoOut_Plugins.Containers.IPluginContainer.Initialise">
@@ -45,11 +40,6 @@
             The plugin this container houses.
             </summary>
         </member>
-        <member name="P:InDoOut_Plugins.Containers.PluginContainer.FunctionTypes">
-            <summary>
-            The functions the plugin makes available.
-            </summary>
-        </member>
         <member name="M:InDoOut_Plugins.Containers.PluginContainer.#ctor">
             <summary>
             Creates a standard plugin container with an empty plugin.
@@ -66,6 +56,22 @@
             Initialises the metadata for the stored plugin.
             </summary>
             <returns>Whether or not the initialisation was a success.</returns>
+        </member>
+        <member name="M:InDoOut_Plugins.Containers.PluginContainer.InspectType(System.Type)">
+            <summary>
+            Checks a type given from an exported assembly type when importing a plugin. This allows for 
+            types to be inspected and added to lists when <see cref="M:InDoOut_Plugins.Containers.PluginContainer.Initialise"/> is called.
+            </summary>
+            <param name="type"></param>
+        </member>
+        <member name="M:InDoOut_Plugins.Containers.PluginContainer.CheckAssignableAndAdd``1(System.Collections.Generic.List{System.Type},System.Type)">
+            <summary>
+            Checks whether the type <typeparamref name="T"/> is assignable from the given type <paramref name="type"/>.
+            If it is then it will be added to the list given in <paramref name="addTo"/>.
+            </summary>
+            <typeparam name="T">The type to check if it can be assigned from <paramref name="type"/>.</typeparam>
+            <param name="addTo">The list to insert the <paramref name="type"/> into if <typeparamref name="T"/> is assignable from it.</param>
+            <param name="type">The type to check assignability against.</param>
         </member>
         <member name="T:InDoOut_Plugins.Core.Plugin">
             <summary>

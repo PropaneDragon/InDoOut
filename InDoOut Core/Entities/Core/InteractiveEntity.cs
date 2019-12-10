@@ -15,9 +15,11 @@ namespace InDoOut_Core.Entities.Core
     {
         private readonly object _connectionsLock = new object();
         private readonly object _lastTriggerTimeLock = new object();
+        private readonly object _lastCompletionTimeLock = new object();
 
         private Task _runner = null;
         private DateTime _lastTriggerTime = DateTime.MinValue;
+        private DateTime _lastCompletionTime = DateTime.MinValue;
         private readonly List<ConnectsToType> _connections = new List<ConnectsToType>();
 
         /// <summary>
@@ -29,6 +31,11 @@ namespace InDoOut_Core.Entities.Core
         /// The last time this entity was triggered.
         /// </summary>
         public DateTime LastTriggerTime { get { lock (_lastTriggerTimeLock) return _lastTriggerTime; } }
+
+        /// <summary>
+        /// The time this entity last completed a run (successfully or unsuccessfully).
+        /// </summary>
+        public DateTime LastCompletionTime { get { lock (_lastCompletionTimeLock) return _lastCompletionTime; } }
 
         /// <summary>
         /// The connections that this entity has.
@@ -69,9 +76,14 @@ namespace InDoOut_Core.Entities.Core
                 {
                     Log.Instance.Error($"Caught an exception ({ex.Message}) during trigger for {this}");
                 }
-            });
 
-            Log.Instance.Info($"Completed {this}");
+                lock (_lastCompletionTimeLock)
+                {
+                    _lastCompletionTime = DateTime.Now;
+                }
+
+                Log.Instance.Info($"Completed {this}");
+            });
         }
 
         /// <summary>
@@ -111,6 +123,27 @@ namespace InDoOut_Core.Entities.Core
         /// <param name="time">The time to check.</param>
         /// <returns>Whether the entity has been triggered within the given time.</returns>
         public bool HasBeenTriggeredWithin(TimeSpan time)
+        {
+            return LastTriggerTime >= DateTime.Now - time;
+        }
+
+        /// <summary>
+        /// Checks whether the entity has completed a run (successfully or unsuccessfully) since the given <paramref name="time"/>.
+        /// </summary>
+        /// <param name="time">The time to check.</param>
+        /// <returns>Whether the entity has completed since the given time.</returns>
+        public bool HasCompletedSince(DateTime time)
+        {
+            return LastTriggerTime >= time;
+        }
+
+        /// <summary>
+        /// Checks whether the entity has completed a run (successfully or unsuccessfully) within the given <paramref name="time"/>. Passing a time
+        /// of 5 seconds will return whether the entity has completed within the last 5 seconds.
+        /// </summary>
+        /// <param name="time">The time to check.</param>
+        /// <returns>Whether the entity has completed within the given time.</returns>
+        public bool HasCompletedWithin(TimeSpan time)
         {
             return LastTriggerTime >= DateTime.Now - time;
         }

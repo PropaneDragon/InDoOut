@@ -10,6 +10,7 @@ namespace InDoOut_Core_Tests
         public bool Triggered { get; set; } = false;
 
         public DateTime LastTriggerTime { get; set; } = DateTime.MinValue;
+        public DateTime LastCompletionTime { get; set; } = DateTime.MinValue;
 
         public bool Finishing => false;
 
@@ -33,6 +34,16 @@ namespace InDoOut_Core_Tests
         public bool HasBeenTriggeredWithin(TimeSpan time)
         {
             return LastTriggerTime >= DateTime.Now - time;
+        }
+
+        public bool HasCompletedSince(DateTime time)
+        {
+            return LastCompletionTime >= time;
+        }
+
+        public bool HasCompletedWithin(TimeSpan time)
+        {
+            return LastCompletionTime >= DateTime.Now - time;
         }
     }
 }

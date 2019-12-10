@@ -24,6 +24,11 @@ namespace InDoOut_Core.Entities.Core
         DateTime LastTriggerTime { get; }
 
         /// <summary>
+        /// The time this entity last completed a run (successfully or unsuccessfully).
+        /// </summary>
+        DateTime LastCompletionTime { get; }
+
+        /// <summary>
         /// Check whether or not the given <see cref="IEntity"/> can trigger this object.
         /// </summary>
         /// <param name="entity">The entity to check.</param>
@@ -44,6 +49,21 @@ namespace InDoOut_Core.Entities.Core
         /// <param name="time">The time to check.</param>
         /// <returns>Whether the entity has been triggered within the given time.</returns>
         bool HasBeenTriggeredWithin(TimeSpan time);
+
+        /// <summary>
+        /// Checks whether the entity has completed a run (successfully or unsuccessfully) since the given <paramref name="time"/>.
+        /// </summary>
+        /// <param name="time">The time to check.</param>
+        /// <returns>Whether the entity has completed since the given time.</returns>
+        bool HasCompletedSince(DateTime time);
+
+        /// <summary>
+        /// Checks whether the entity has completed a run (successfully or unsuccessfully) within the given <paramref name="time"/>. Passing a time
+        /// of 5 seconds will return whether the entity has completed within the last 5 seconds.
+        /// </summary>
+        /// <param name="time">The time to check.</param>
+        /// <returns>Whether the entity has completed within the given time.</returns>
+        bool HasCompletedWithin(TimeSpan time);
     }
 
     /// <summary>

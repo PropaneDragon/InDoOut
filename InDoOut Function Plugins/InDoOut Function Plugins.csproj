@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>P:\Repositories\Personal\InDoOut\InDoOut Function Plugins\InDoOut Function Plugins.xml</DocumentationFile>
+    <DocumentationFile>D:\Projects\InDoOut\App\InDoOut Function Plugins\InDoOut Function Plugins.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

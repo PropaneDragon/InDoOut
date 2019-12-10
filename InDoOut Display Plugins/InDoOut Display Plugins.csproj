@@ -6,8 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Containers\" />
-    <Folder Include="Loaders\" />
+    <ProjectReference Include="..\InDoOut Display Core\InDoOut Display Core.csproj" />
+    <ProjectReference Include="..\InDoOut Plugins\InDoOut Plugins Core.csproj" />
   </ItemGroup>
 
 </Project>
