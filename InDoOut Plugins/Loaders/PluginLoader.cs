@@ -1,7 +1,6 @@
 ﻿using InDoOut_Core.Logging;
 using InDoOut_Core.Plugins;
 using InDoOut_Plugins.Containers;
-using InDoOut_Plugins.Core;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -11,7 +10,7 @@ namespace InDoOut_Plugins.Loaders
     /// <summary>
     /// Loads plugins as <see cref="IPluginContainer"/>s.
     /// </summary>
-    public class PluginLoader : IPluginLoader
+    public abstract class PluginLoader : IPluginLoader
     {
         /// <summary>
         /// Triggered when a plugin has begun loading.
@@ -91,10 +90,7 @@ namespace InDoOut_Plugins.Loaders
         /// </summary>
         /// <param name="plugin">The plugin to containerise.</param>
         /// <returns>A plugin container for the plugin, if valid. Otherwise null.</returns>
-        protected virtual IPluginContainer CreateContainer(IPlugin plugin)
-        {
-            return plugin != null ? new PluginContainer(plugin) : null;
-        }
+        protected abstract IPluginContainer CreateContainer(IPlugin plugin);
 
         private IPlugin FindPlugin(Assembly assembly)
         {

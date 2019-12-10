@@ -2,6 +2,7 @@
 using InDoOut_Desktop.Options;
 using InDoOut_Executable_Core.Loading;
 using InDoOut_Executable_Core.Location;
+using InDoOut_Function_Plugins.Loaders;
 using InDoOut_Plugins.Loaders;
 using System;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ namespace InDoOut_Desktop.Loading
             Name = "Loading plugins...";
 
             if (LoadedPlugins.Instance.Plugins.Count <= 0) {
-                var pluginLoader = new PluginLoader();
+                var pluginLoader = new FunctionPluginLoader();
                 var pluginDirectoryLoader = new PluginDirectoryLoader(pluginLoader, StandardLocations.Instance);
 
                 pluginLoader.PluginLoadSuccess += PluginLoader_OnPluginLoadSuccess;

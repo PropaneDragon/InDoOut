@@ -1,5 +1,4 @@
-﻿using InDoOut_Core.Entities.Functions;
-using InDoOut_Core.Plugins;
+﻿using InDoOut_Core.Plugins;
 using System;
 using System.Collections.Generic;
 
@@ -8,7 +7,7 @@ namespace InDoOut_Plugins.Containers
     /// <summary>
     /// A container that contains metadata for a standard <see cref="IPlugin"/>.
     /// </summary>
-    public class PluginContainer : IPluginContainer
+    public abstract class PluginContainer : IPluginContainer
     {
         /// <summary>
         /// Whether or not the container has a valid plugin.
@@ -21,14 +20,9 @@ namespace InDoOut_Plugins.Containers
         public IPlugin Plugin { get; private set; } = null;
 
         /// <summary>
-        /// The functions the plugin makes available.
-        /// </summary>
-        public List<Type> FunctionTypes { get; } = new List<Type>();
-
-        /// <summary>
         /// Creates a standard plugin container with an empty plugin.
         /// </summary>
-        protected PluginContainer()
+        private PluginContainer()
         {
         }
 
@@ -65,15 +59,21 @@ namespace InDoOut_Plugins.Containers
             return false;
         }
 
-        private void InspectType(Type type)
-        {
-            if (type != null)
-            {
-                CheckAssignableAndAdd<IFunction>(FunctionTypes, type);
-            }
-        }
+        /// <summary>
+        /// Checks a type given from an exported assembly type when importing a plugin. This allows for 
+        /// types to be inspected and added to lists when <see cref="Initialise"/> is called.
+        /// </summary>
+        /// <param name="type"></param>
+        protected abstract void InspectType(Type type);
 
-        private void CheckAssignableAndAdd<T>(List<Type> addTo, Type type) where T : class
+        /// <summary>
+        /// Checks whether the type <typeparamref name="T"/> is assignable from the given type <paramref name="type"/>.
+        /// If it is then it will be added to the list given in <paramref name="addTo"/>.
+        /// </summary>
+        /// <typeparam name="T">The type to check if it can be assigned from <paramref name="type"/>.</typeparam>
+        /// <param name="addTo">The list to insert the <paramref name="type"/> into if <typeparamref name="T"/> is assignable from it.</param>
+        /// <param name="type">The type to check assignability against.</param>
+        protected void CheckAssignableAndAdd<T>(List<Type> addTo, Type type) where T : class
         {
             if (typeof(T).IsAssignableFrom(type))
             {

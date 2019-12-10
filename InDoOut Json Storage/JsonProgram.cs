@@ -4,6 +4,7 @@ using InDoOut_Core.Entities.Functions;
 using InDoOut_Core.Entities.Programs;
 using InDoOut_Core.Functions;
 using InDoOut_Core.Reporting;
+using InDoOut_Function_Plugins.Containers;
 using InDoOut_Plugins.Loaders;
 using Newtonsoft.Json;
 using System;
@@ -341,7 +342,7 @@ namespace InDoOut_Json_Storage
 
         private IFunction CreateFunction(JsonFunction functionItem, IProgram program, IFunctionBuilder builder, ILoadedPlugins loadedPlugins)
         {
-            var availableFunctionTypes = loadedPlugins.Plugins.SelectMany(pluginContainer => pluginContainer.FunctionTypes);
+            var availableFunctionTypes = loadedPlugins.Plugins.Where(pluginContainer => pluginContainer is IFunctionPluginContainer).Cast<IFunctionPluginContainer>().SelectMany(pluginContainer => pluginContainer.FunctionTypes);
 
             var foundFunctionType = availableFunctionTypes.FirstOrDefault(functionType => functionType.AssemblyQualifiedName == functionItem.FunctionClass);
             if (foundFunctionType != null)

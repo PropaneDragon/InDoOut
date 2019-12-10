@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>InDoOut Function Plugins</name>
+    </assembly>
+    <members>
+        <member name="T:InDoOut_Function_Plugins.Containers.FunctionPluginContainer">
+            <summary>
+            A plugin container for any plugin that can be assigned by <see cref="T:InDoOut_Core.Entities.Functions.IFunction"/>.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Function_Plugins.Containers.FunctionPluginContainer.FunctionTypes">
+            <summary>
+            The functions the plugin makes available.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Function_Plugins.Containers.FunctionPluginContainer.#ctor(InDoOut_Core.Plugins.IPlugin)">
+            <summary>
+            Creates a plugin container for storing plugins that can be assigned to a <see cref="T:InDoOut_Core.Entities.Functions.IFunction"/>.
+            </summary>
+            <param name="plugin"></param>
+        </member>
+        <member name="M:InDoOut_Function_Plugins.Containers.FunctionPluginContainer.InspectType(System.Type)">
+            <summary>
+            Inspects the incoming type and checks whether it can be assigned from an <see cref="T:InDoOut_Core.Entities.Functions.IFunction"/>.
+            </summary>
+            <param name="type"></param>
+        </member>
+        <member name="T:InDoOut_Function_Plugins.Containers.IFunctionPluginContainer">
+            <summary>
+            Represents a plugin container for Function types.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Function_Plugins.Containers.IFunctionPluginContainer.FunctionTypes">
+            <summary>
+            The functions that this plugin makes visible.
+            </summary>
+        </member>
+    </members>
+</doc>

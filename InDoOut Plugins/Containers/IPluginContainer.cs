@@ -1,5 +1,4 @@
 ﻿using InDoOut_Core.Plugins;
-using InDoOut_Plugins.Core;
 using System;
 using System.Collections.Generic;
 
@@ -19,11 +18,6 @@ namespace InDoOut_Plugins.Containers
         /// The plugin that this container houses.
         /// </summary>
         IPlugin Plugin { get; }
-
-        /// <summary>
-        /// The functions that this plugin makes visible.
-        /// </summary>
-        List<Type> FunctionTypes { get; }
 
         /// <summary>
         /// Initialises the plugin container, which populates the metadata.

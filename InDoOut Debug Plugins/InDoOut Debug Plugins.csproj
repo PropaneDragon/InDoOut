@@ -10,7 +10,7 @@
   </Target>
 
   <ItemGroup>
-    <ProjectReference Include="..\InDoOut Plugins\InDoOut Plugins.csproj" />
+    <ProjectReference Include="..\InDoOut Plugins\InDoOut Plugins Core.csproj" />
   </ItemGroup>
 
 </Project>

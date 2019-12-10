@@ -15,7 +15,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\InDoOut Core\InDoOut Core.csproj" />
-    <ProjectReference Include="..\InDoOut Plugins\InDoOut Plugins.csproj" />
+    <ProjectReference Include="..\InDoOut Function Plugins\InDoOut Function Plugins.csproj" />
+    <ProjectReference Include="..\InDoOut Plugins\InDoOut Plugins Core.csproj" />
   </ItemGroup>
 
 </Project>

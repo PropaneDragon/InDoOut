@@ -29,7 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InDoOut Desktop API Tests",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InDoOut Desktop Tests", "InDoOut Desktop Tests\InDoOut Desktop Tests.csproj", "{AB730D68-DD2F-42DC-A00B-9C21CCAF3A44}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InDoOut Plugins", "InDoOut Plugins\InDoOut Plugins.csproj", "{2DC628DA-5E8D-4273-A8C3-762D0EFF34C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InDoOut Plugins Core", "InDoOut Plugins\InDoOut Plugins Core.csproj", "{2DC628DA-5E8D-4273-A8C3-762D0EFF34C3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InDoOut Plugins Tests", "InDoOut Plugins Tests\InDoOut Plugins Tests.csproj", "{3E8B44DE-E327-43CA-90D0-78E8713D5050}"
 EndProject
@@ -77,11 +77,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InDoOut BlinkStick Plugins"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InDoOut Conversion Plugins", "InDoOut Conversion Plugins\InDoOut Conversion Plugins.csproj", "{0F10D392-1FF8-46AA-BB2C-964BFDB21EE5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InDoOut Display", "InDoOut Display\InDoOut Display.csproj", "{891CACF0-BFFC-418E-A48F-381DC8BB9EC9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InDoOut Display", "InDoOut Display\InDoOut Display.csproj", "{891CACF0-BFFC-418E-A48F-381DC8BB9EC9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Applications", "Applications", "{5BF25E21-75F2-48BB-8E34-C1ED2B7D69FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InDoOut UI Common", "InDoOut UI Common\InDoOut UI Common.csproj", "{6AEB1ACC-ED96-43FA-865B-9B00E0D55802}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InDoOut UI Common", "InDoOut UI Common\InDoOut UI Common.csproj", "{6AEB1ACC-ED96-43FA-865B-9B00E0D55802}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InDoOut Function Plugins", "InDoOut Function Plugins\InDoOut Function Plugins.csproj", "{671114D7-F15E-4E9E-AED1-46FD5387E3F6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -299,6 +301,14 @@ Global
 		{6AEB1ACC-ED96-43FA-865B-9B00E0D55802}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6AEB1ACC-ED96-43FA-865B-9B00E0D55802}.Release|x86.ActiveCfg = Release|Any CPU
 		{6AEB1ACC-ED96-43FA-865B-9B00E0D55802}.Release|x86.Build.0 = Release|Any CPU
+		{671114D7-F15E-4E9E-AED1-46FD5387E3F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{671114D7-F15E-4E9E-AED1-46FD5387E3F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{671114D7-F15E-4E9E-AED1-46FD5387E3F6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{671114D7-F15E-4E9E-AED1-46FD5387E3F6}.Debug|x86.Build.0 = Debug|Any CPU
+		{671114D7-F15E-4E9E-AED1-46FD5387E3F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{671114D7-F15E-4E9E-AED1-46FD5387E3F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{671114D7-F15E-4E9E-AED1-46FD5387E3F6}.Release|x86.ActiveCfg = Release|Any CPU
+		{671114D7-F15E-4E9E-AED1-46FD5387E3F6}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

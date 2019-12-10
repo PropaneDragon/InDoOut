@@ -4,6 +4,7 @@ using InDoOut_Core.Logging;
 using InDoOut_Desktop.UI.Interfaces;
 using InDoOut_Desktop.UI.Threading;
 using InDoOut_Executable_Core.Messaging;
+using InDoOut_Function_Plugins.Containers;
 using InDoOut_Plugins.Loaders;
 using System;
 using System.Collections.Generic;
@@ -72,7 +73,7 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
             if (sender is LoadedPlugins loadedPlugins)
             {
                 var plugins = loadedPlugins.Plugins;
-                var allTypes = await Task.Run(() => plugins.SelectMany(plugin => plugin.FunctionTypes).Distinct());
+                var allTypes = await Task.Run(() => plugins.Where(pluginContainer => pluginContainer is IFunctionPluginContainer).Cast<IFunctionPluginContainer>().SelectMany(plugin => plugin.FunctionTypes).Distinct());
                 var functionBuilder = new InstanceBuilder<IFunction>();
                 var functions = new List<IFunction>();
 
