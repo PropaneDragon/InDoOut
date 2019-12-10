@@ -5,4 +5,8 @@
     <RootNamespace>InDoOut_Display_Core</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>P:\Repositories\Personal\InDoOut\InDoOut Display Core\InDoOut Display Core.xml</DocumentationFile>
+  </PropertyGroup>
+
 </Project>
