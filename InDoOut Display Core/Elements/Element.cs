@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using InDoOut_Display_Core.Functions;
 
 namespace InDoOut_Display_Core.Elements
@@ -8,7 +9,7 @@ namespace InDoOut_Display_Core.Elements
         private T _associatedFunction = null;
         private DateTime _lastUpdateTime = DateTime.MinValue;
 
-        protected bool ShouldDisplayUpdate => _associatedFunction?.HasCompletedSince(_lastUpdateTime) ?? false;
+        public bool ShouldDisplayUpdate => _associatedFunction?.HasCompletedSince(_lastUpdateTime) ?? false;
 
         public T AssociatedFunction { get => _associatedFunction; set => ChangeFunction(value); }
 
@@ -30,13 +31,14 @@ namespace InDoOut_Display_Core.Elements
 
             return false;
         }
+        public abstract UIElement CreateAssociatedUIElement();
 
         protected void PerformedAnUpdate()
         {
             _lastUpdateTime = DateTime.Now;
         }
 
-        protected virtual void FunctionChanged(T function) { };
+        protected virtual void FunctionChanged(T function) { }
 
         private void ChangeFunction(T function)
         {

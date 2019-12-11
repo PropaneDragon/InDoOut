@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>InDoOut Display Core</name>
+    </assembly>
+    <members>
+        <member name="T:InDoOut_Display_Core.Functions.ElementFunction">
+            <summary>
+            A function that is capable of updating an associated <see cref="T:InDoOut_Display_Core.Elements.IElement"/> when triggered.
+            </summary>
+        </member>
+        <member name="T:InDoOut_Display_Core.Functions.IElementFunction">
+            <summary>
+            Represents a type of <see cref="T:InDoOut_Core.Entities.Functions.IFunction"/> that can be used to update an interactive
+            UI Element (<see cref="T:InDoOut_Display_Core.Elements.IElement"/>) on a screen.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Display_Core.Functions.IElementFunction.CreateAssociatedElement">
+            <summary>
+            Creates an element that is associated with the function and can be updated
+            from it.
+            </summary>
+            <returns>A new <see cref="T:InDoOut_Display_Core.Elements.IElement"/> that can be updated from this <see cref="T:InDoOut_Display_Core.Functions.IElementFunction"/>.</returns>
+        </member>
+        <member name="T:InDoOut_Display_Core.Screens.IScreen">
+            <summary>
+            Represents a single screen on a display. Screens can be switched between, and contain
+            unique functionality separated from the display as a whole.
+            </summary>
+        </member>
+    </members>
+</doc>
