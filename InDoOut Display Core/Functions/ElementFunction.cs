@@ -9,11 +9,22 @@ namespace InDoOut_Display_Core.Functions
     /// </summary>
     public abstract class ElementFunction : Function, IElementFunction
     {
-        public abstract IElement CreateAssociatedElement();
+        private DateTime _lastUIUpdate = DateTime.MinValue;
+
+        public bool ShouldDisplayUpdate => HasCompletedSince(_lastUIUpdate);
+
+        public abstract IDisplayElement CreateAssociatedUIElement();
+
+        public void PerformedUIUpdate()
+        {
+            _lastUIUpdate = DateTime.Now;
+        }
 
         protected override IOutput Started(IInput triggeredBy)
         {
-            throw new NotImplementedException();
+            //Todo: This might need some functionality
+
+            return null;
         }
     }
 }

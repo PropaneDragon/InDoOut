@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <RootNamespace>InDoOut_Display_Core</RootNamespace>
     <UseWPF>true</UseWPF>
+    <AssemblyName>InDoOutDisplayCore</AssemblyName>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

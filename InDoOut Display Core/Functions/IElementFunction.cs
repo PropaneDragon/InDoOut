@@ -9,11 +9,10 @@ namespace InDoOut_Display_Core.Functions
     /// </summary>
     public interface IElementFunction : IFunction
     {
-        /// <summary>
-        /// Creates an element that is associated with the function and can be updated
-        /// from it.
-        /// </summary>
-        /// <returns>A new <see cref="IElement"/> that can be updated from this <see cref="IElementFunction"/>.</returns>
-        IElement CreateAssociatedElement();
+        bool ShouldDisplayUpdate { get; }
+
+        void PerformedUIUpdate();
+
+        IDisplayElement CreateAssociatedUIElement();
     }
 }

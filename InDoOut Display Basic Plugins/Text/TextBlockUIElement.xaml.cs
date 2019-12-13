@@ -1,52 +1,25 @@
-﻿using System;
-using System.Windows.Controls;
-using System.Windows.Threading;
+﻿using InDoOut_Display_Core.Elements;
+using InDoOut_Display_Core.Functions;
 
 namespace InDoOut_Display_Basic_Plugins.Text
 {
-    public partial class TextBlockUIElement : UserControl
+    public partial class TextBlockUIElement : DisplayElement
     {
-        private DispatcherTimer _updateTimer = null;
-
-        public TextBlockElement Element { get; set; } = null;
-
-        public TextBlockUIElement()
+        public TextBlockUIElement(IElementFunction element) : base(element)
         {
             InitializeComponent();
         }
 
-        private void UpdateFromElement()
+        protected override bool UpdateRequested(IElementFunction element)
         {
-            if (Element.ShouldDisplayUpdate)
+            if (element is TextBlockElementFunction textBlockFunction)
             {
+                Text_Main.Text = textBlockFunction.Text;
 
+                return true;
             }
-        }
 
-        private void UpdateTimer_Tick(object sender, EventArgs e)
-        {
-            UpdateFromElement();
-        }
-
-        private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
-        {
-            if (_updateTimer == null)
-            {
-                _updateTimer = new DispatcherTimer(DispatcherPriority.Normal)
-                {
-                    Interval = TimeSpan.FromMilliseconds(300),
-                    IsEnabled = true
-                };
-
-                _updateTimer.Tick += UpdateTimer_Tick;
-            }
-        }
-
-        private void UserControl_Unloaded(object sender, System.Windows.RoutedEventArgs e)
-        {
-            _updateTimer.Stop();
-            _updateTimer.Tick -= UpdateTimer_Tick;
-            _updateTimer = null;
+            return false;
         }
     }
 }
