@@ -1,4 +1,5 @@
 ﻿using InDoOut_Core.Entities.Functions;
+using InDoOut_Core.Functions;
 using InDoOut_Core.Instancing;
 using InDoOut_Core.Logging;
 using InDoOut_Desktop.UI.Interfaces;
@@ -74,7 +75,7 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
             {
                 var plugins = loadedPlugins.Plugins;
                 var allTypes = await Task.Run(() => plugins.Where(pluginContainer => pluginContainer is IFunctionPluginContainer).Cast<IFunctionPluginContainer>().SelectMany(plugin => plugin.FunctionTypes).Distinct());
-                var functionBuilder = new InstanceBuilder<IFunction>();
+                var functionBuilder = new FunctionBuilder();
                 var functions = new List<IFunction>();
 
                 foreach (var type in allTypes)

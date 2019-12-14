@@ -8,6 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\InDoOut Display Core\InDoOut Display Core.csproj" />
+    <ProjectReference Include="..\InDoOut Display Plugins\InDoOut Display Plugins.csproj" />
     <ProjectReference Include="..\InDoOut Executable Core\InDoOut Executable Core.csproj" />
     <ProjectReference Include="..\InDoOut Function Plugins\InDoOut Function Plugins.csproj" />
     <ProjectReference Include="..\InDoOut Plugins\InDoOut Plugins Core.csproj" />

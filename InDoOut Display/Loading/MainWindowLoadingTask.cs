@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 using InDoOut_Core.Logging;
+using InDoOut_Display_Plugins.Loaders;
 using InDoOut_Executable_Core.Loading;
 using InDoOut_Executable_Core.Location;
-using InDoOut_Function_Plugins.Loaders;
 using InDoOut_Plugins.Loaders;
 
 namespace InDoOut_Display.Loading
@@ -18,7 +18,7 @@ namespace InDoOut_Display.Loading
 
             if (LoadedPlugins.Instance.Plugins.Count <= 0)
             {
-                var pluginLoader = new FunctionPluginLoader();
+                var pluginLoader = new ElementPluginLoader();
                 var pluginDirectoryLoader = new PluginDirectoryLoader(pluginLoader, StandardLocations.Instance);
 
                 pluginLoader.PluginLoadSuccess += PluginLoader_OnPluginLoadSuccess;

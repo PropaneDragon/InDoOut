@@ -5,11 +5,17 @@ using System.Windows.Threading;
 
 namespace InDoOut_Display_Core.Elements
 {
+    /// <summary>
+    /// A display element capable of being hosted on a screen and showing information to users.
+    /// </summary>
     public abstract class DisplayElement : UserControl, IDisplayElement
     {
         private DispatcherTimer _updateTimer = null;
 
-        public IElementFunction AssociatedElement { get; private set; }
+        /// <summary>
+        /// The associated background function responsible for updating this element.
+        /// </summary>
+        public IElementFunction AssociatedElementFunction { get; private set; }
 
         private DisplayElement()
         {
@@ -17,19 +23,31 @@ namespace InDoOut_Display_Core.Elements
             Unloaded += UIElement_Unloaded;
         }
 
-        public DisplayElement(IElementFunction element) : this()
+        /// <summary>
+        /// Creates a new display element with an associated function.
+        /// </summary>
+        /// <param name="function">The function to associate with this element.</param>
+        public DisplayElement(IElementFunction function) : this()
         {
-            AssociatedElement = element;
+            AssociatedElementFunction = function;
         }
 
-        protected abstract bool UpdateRequested(IElementFunction element);
+        /// <summary>
+        /// Called whenever an update has been requested by the <see cref="AssociatedElementFunction"/>. This should
+        /// update this UI element to display information provided by the function.
+        /// </summary>
+        /// <param name="function">The function that requested the update.</param>
+        /// <returns></returns>
+        protected abstract bool UpdateRequested(IElementFunction function);
 
         private void UpdateTimer_Tick(object sender, EventArgs e)
         {
-            if (AssociatedElement?.ShouldDisplayUpdate ?? false)
+            if (AssociatedElementFunction?.ShouldDisplayUpdate ?? false)
             {
-                UpdateRequested(AssociatedElement);
-                AssociatedElement.PerformedUIUpdate();
+                if (UpdateRequested(AssociatedElementFunction))
+                {
+                    AssociatedElementFunction.PerformedUIUpdate();
+                }
             }
         }
 

@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>InDoOutDisplayCore</name>
+    </assembly>
+    <members>
+        <member name="T:InDoOut_Display_Core.Elements.DisplayElement">
+            <summary>
+            A display element capable of being hosted on a screen and showing information to users.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Display_Core.Elements.DisplayElement.AssociatedElementFunction">
+            <summary>
+            The associated background function responsible for updating this element.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Display_Core.Elements.DisplayElement.#ctor(InDoOut_Display_Core.Functions.IElementFunction)">
+            <summary>
+            Creates a new display element with an associated function.
+            </summary>
+            <param name="function">The function to associate with this element.</param>
+        </member>
+        <member name="M:InDoOut_Display_Core.Elements.DisplayElement.UpdateRequested(InDoOut_Display_Core.Functions.IElementFunction)">
+            <summary>
+            Called whenever an update has been requested by the <see cref="P:InDoOut_Display_Core.Elements.DisplayElement.AssociatedElementFunction"/>. This should
+            update this UI element to display information provided by the function.
+            </summary>
+            <param name="function">The function that requested the update.</param>
+            <returns></returns>
+        </member>
+        <member name="T:InDoOut_Display_Core.Elements.IDisplayElement">
+            <summary>
+            Represents an element to be displayed on an interface.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Display_Core.Elements.IDisplayElement.AssociatedElementFunction">
+            <summary>
+            The associated background function responsible for updating this
+            element.
+            </summary>
+        </member>
+        <member name="T:InDoOut_Display_Core.Functions.ElementFunction">
+            <summary>
+            A function that is capable of updating an associated <see cref="T:InDoOut_Display_Core.Elements.IDisplayElement"/> when triggered.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Display_Core.Functions.ElementFunction.ShouldDisplayUpdate">
+            <summary>
+            Whether an update of the interface is required due to a change on the contained data.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Display_Core.Functions.ElementFunction.CreateAssociatedUIElement">
+            <summary>
+            Creats a <see cref="T:InDoOut_Display_Core.Elements.IDisplayElement"/> which can be associated with this function.
+            </summary>
+            <returns>A <see cref="T:InDoOut_Display_Core.Elements.IDisplayElement"/> that can be associated with and update from this function.</returns>
+        </member>
+        <member name="M:InDoOut_Display_Core.Functions.ElementFunction.PerformedUIUpdate">
+            <summary>
+            Should be called when an update on the UI has taken place, in order to
+            reset <see cref="P:InDoOut_Display_Core.Functions.ElementFunction.ShouldDisplayUpdate"/>.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Display_Core.Functions.ElementFunction.Started(InDoOut_Core.Entities.Functions.IInput)">
+            <summary>
+            Called when this function should be started.
+            </summary>
+            <param name="triggeredBy">The input that triggered this function.</param>
+            <returns>The output to call after this function completes.</returns>
+        </member>
+        <member name="T:InDoOut_Display_Core.Functions.ElementFunctionBuilder">
+            <summary>
+            A builder that is capable of creating instances of <see cref="T:InDoOut_Display_Core.Functions.IElementFunction"/> functions.
+            </summary>
+        </member>
+        <member name="T:InDoOut_Display_Core.Functions.IElementFunction">
+            <summary>
+            Represents a type of <see cref="T:InDoOut_Core.Entities.Functions.IFunction"/> that can be used to update an interactive
+            UI Element (<see cref="T:InDoOut_Display_Core.Elements.IDisplayElement"/>) on a screen.
+            </summary>
+        </member>
+        <member name="P:InDoOut_Display_Core.Functions.IElementFunction.ShouldDisplayUpdate">
+            <summary>
+            Whether an update of the interface is required due to a change on the contained data.
+            </summary>
+        </member>
+        <member name="M:InDoOut_Display_Core.Functions.IElementFunction.PerformedUIUpdate">
+            <summary>
+            Creats a <see cref="T:InDoOut_Display_Core.Elements.IDisplayElement"/> which can be associated with this function.
+            </summary>
+            <returns>A <see cref="T:InDoOut_Display_Core.Elements.IDisplayElement"/> that can be associated with and update from this function.</returns>
+        </member>
+        <member name="M:InDoOut_Display_Core.Functions.IElementFunction.CreateAssociatedUIElement">
+            <summary>
+            Should be called when an update on the UI has taken place, in order to
+            reset <see cref="P:InDoOut_Display_Core.Functions.IElementFunction.ShouldDisplayUpdate"/>.
+            </summary>
+        </member>
+        <member name="T:InDoOut_Display_Core.Functions.IElementFunctionBuilder">
+            <summary>
+            Represents a function builder capable of creating <see cref="T:InDoOut_Display_Core.Functions.IElementFunction"/> instances, which
+            host logic for interface elements.
+            </summary>
+        </member>
+        <member name="T:InDoOut_Display_Core.Screens.IScreen">
+            <summary>
+            Represents a single screen on a display. Screens can be switched between, and contain
+            unique functionality separated from the display as a whole.
+            </summary>
+        </member>
+    </members>
+</doc>

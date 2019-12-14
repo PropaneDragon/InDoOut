@@ -8,7 +8,7 @@ namespace InDoOut_Display_Plugins.Loaders
     /// <summary>
     /// A plugin loader that can load in <see cref="ElementPluginContainer"/>s.
     /// </summary>
-    public class FunctionPluginLoader : PluginLoader
+    public class ElementPluginLoader : PluginLoader
     {
         /// <summary>
         /// Creates an element container for a given plugin.

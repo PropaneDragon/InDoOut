@@ -1,5 +1,6 @@
 ﻿using InDoOut_Core.Plugins;
 using InDoOut_Display_Core.Elements;
+using InDoOut_Display_Core.Functions;
 using InDoOut_Plugins.Containers;
 using System;
 using System.Collections.Generic;
@@ -12,9 +13,14 @@ namespace InDoOut_Display_Plugins.Containers
     public class ElementPluginContainer : PluginContainer, IElementPluginContainer
     {
         /// <summary>
-        /// The elements the plugin makes available.
+        /// The UI elements the plugin makes available.
         /// </summary>
-        public List<Type> ElementTypes { get; } = new List<Type>();
+        public List<Type> DisplayElementTypes { get; } = new List<Type>();
+
+        /// <summary>
+        /// The element functions that this plugin makes visible.
+        /// </summary>
+        public List<Type> ElementFunctionTypes { get; } = new List<Type>();
 
         /// <summary>
         /// Creates a plugin container for storing plugins that can be assigned to a <see cref="IElement"/>.
@@ -32,7 +38,8 @@ namespace InDoOut_Display_Plugins.Containers
         {
             if (type != null)
             {
-                CheckAssignableAndAdd<IElement>(ElementTypes, type);
+                CheckAssignableAndAdd<IElementFunction>(ElementFunctionTypes, type);
+                CheckAssignableAndAdd<IDisplayElement>(DisplayElementTypes, type);
             }
         }
     }

@@ -1718,11 +1718,27 @@
             <param name="type">The type to build.</param>
             <returns>The requested type <paramref name="type"/> as type <typeparamref name="T"/>, or null if it has failed.</returns>
         </member>
+        <member name="M:InDoOut_Core.Instancing.IInstanceBuilder`1.BuildInstance(System.Type,System.Object[])">
+            <summary>
+            Builds an instance of the given type with additional parameters. The type has to be inherited from <typeparamref name="T"/>.
+            </summary>
+            <param name="type">The type to build.</param>
+            <param name="parameters">Additional parameters to pass to the constructor.</param>
+            <returns>The requested type <paramref name="type"/> as type <typeparamref name="T"/>, or null if it has failed.</returns>
+        </member>
         <member name="M:InDoOut_Core.Instancing.IInstanceBuilder`1.BuildInstance``1">
             <summary>
             Builds an instance of the given type <typeparamref name="InstanceOf"/>. The type has to be inherited from <typeparamref name="T"/>.
             </summary>
             <typeparam name="InstanceOf">The type to build.</typeparam>
+            <returns>The requested type <typeparamref name="InstanceOf"/> as <typeparamref name="T"/>, or null if it has failed.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Instancing.IInstanceBuilder`1.BuildInstance``1(System.Object[])">
+            <summary>
+            Builds an instance of the given type with additional parameters. The type has to be inherited from <typeparamref name="T"/>.
+            </summary>
+            <typeparam name="InstanceOf">The type to build.</typeparam>
+            <param name="parameters">Additional parameters to pass to the constructor.</param>
             <returns>The requested type <typeparamref name="InstanceOf"/> as <typeparamref name="T"/>, or null if it has failed.</returns>
         </member>
         <member name="T:InDoOut_Core.Instancing.InstanceBuilder`1">
@@ -1738,11 +1754,27 @@
             <param name="type">The type to build.</param>
             <returns>The requested type <paramref name="type"/> as type <typeparamref name="T"/>, or null if it has failed.</returns>
         </member>
+        <member name="M:InDoOut_Core.Instancing.InstanceBuilder`1.BuildInstance(System.Type,System.Object[])">
+            <summary>
+            Builds an instance of the given type with additional parameters. The type has to be inherited from <typeparamref name="T"/>.
+            </summary>
+            <param name="type">The type to build.</param>
+            <param name="parameters">Additional parameters to pass to the constructor.</param>
+            <returns>The requested type <paramref name="type"/> as type <typeparamref name="T"/>, or null if it has failed.</returns>
+        </member>
         <member name="M:InDoOut_Core.Instancing.InstanceBuilder`1.BuildInstance``1">
             <summary>
             Builds an instance of the given type <typeparamref name="InstanceOf"/>. The type has to be inherited from <typeparamref name="T"/>.
             </summary>
             <typeparam name="InstanceOf">The type to build.</typeparam>
+            <returns>The requested type <typeparamref name="InstanceOf"/> as <typeparamref name="T"/>, or null if it has failed.</returns>
+        </member>
+        <member name="M:InDoOut_Core.Instancing.InstanceBuilder`1.BuildInstance``1(System.Object[])">
+            <summary>
+            Builds an instance of the given type with additional parameters. The type has to be inherited from <typeparamref name="T"/>.
+            </summary>
+            <typeparam name="InstanceOf">The type to build.</typeparam>
+            <param name="parameters">Additional parameters to pass to the constructor.</param>
             <returns>The requested type <typeparamref name="InstanceOf"/> as <typeparamref name="T"/>, or null if it has failed.</returns>
         </member>
         <member name="T:InDoOut_Core.Instancing.ISingleton`1">

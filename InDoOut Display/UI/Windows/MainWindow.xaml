@@ -6,10 +6,17 @@
         xmlns:local="clr-namespace:InDoOut_Display"
         xmlns:screens="clr-namespace:InDoOut_Display.UI.Controls.Screens"
         xmlns:core="clr-namespace:InDoOut_UI_Common.Controls.Core;assembly=InDoOutUICommon"
+        xmlns:sidebar="clr-namespace:InDoOut_Display.UI.Controls.Sidebar"
+        xmlns:popup="clr-namespace:InDoOut_UI_Common.Controls.Popup;assembly=InDoOutUICommon"
+        xmlns:selector="clr-namespace:InDoOut_Display.UI.Controls.ElementSelector"
         mc:Ignorable="d"
         Title="Designer" Height="1080" Width="1920" Background="#111" Loaded="Window_Loaded">
     <Grid>
         <screens:ScreenOverview />
+        <sidebar:Sidebar HorizontalAlignment="Left" />
+        <popup:OverlayPopup x:Name="Popup_Test" Visibility="Visible">
+            <selector:ElementSelector />
+        </popup:OverlayPopup>
         <core:TitleBar x:Name="TitleBar_Main" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
     </Grid>
 </Window>

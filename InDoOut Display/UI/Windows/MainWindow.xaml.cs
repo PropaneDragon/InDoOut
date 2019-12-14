@@ -1,4 +1,5 @@
 ﻿using InDoOut_Display.Loading;
+using InDoOut_Display.UI.Controls.ElementSelector;
 using InDoOut_Executable_Core.Location;
 using InDoOut_Executable_Core.Logging;
 using System.Threading.Tasks;
@@ -19,7 +20,10 @@ namespace InDoOut_Display.UI.Windows
 
         private async Task FinishLoading()
         {
-
+            if (Popup_Test.Content is ElementSelector ElementSelector_Overlay)
+            {
+                ElementSelector_Overlay.LoadElementsSlowly();
+            }
         }
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)

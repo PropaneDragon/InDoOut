@@ -11,8 +11,13 @@ namespace InDoOut_Display_Plugins.Containers
     public interface IElementPluginContainer : IPluginContainer
     {
         /// <summary>
-        /// The elements that this plugin makes visible.
+        /// The UI elements that this plugin makes visible.
         /// </summary>
-        List<Type> ElementTypes { get; }
+        List<Type> DisplayElementTypes { get; }
+
+        /// <summary>
+        /// The element functions that this plugin makes visible.
+        /// </summary>
+        List<Type> ElementFunctionTypes { get; }
     }
 }

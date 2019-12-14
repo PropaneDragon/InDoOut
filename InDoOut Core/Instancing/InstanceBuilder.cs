@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InDoOut_Core.Threading.Safety;
+using System;
 
 namespace InDoOut_Core.Instancing
 {
@@ -15,6 +16,17 @@ namespace InDoOut_Core.Instancing
         /// <returns>The requested type <paramref name="type"/> as type <typeparamref name="T"/>, or null if it has failed.</returns>
         public T BuildInstance(Type type)
         {
+            return BuildInstance(type, new object[] { });
+        }
+
+        /// <summary>
+        /// Builds an instance of the given type with additional parameters. The type has to be inherited from <typeparamref name="T"/>.
+        /// </summary>
+        /// <param name="type">The type to build.</param>
+        /// <param name="parameters">Additional parameters to pass to the constructor.</param>
+        /// <returns>The requested type <paramref name="type"/> as type <typeparamref name="T"/>, or null if it has failed.</returns>
+        public T BuildInstance(Type type, params object[] parameters)
+        {
             if (typeof(T).IsAssignableFrom(type) && !type.IsAbstract)
             {
                 try
@@ -22,7 +34,7 @@ namespace InDoOut_Core.Instancing
                     var constructor = type.GetConstructor(Type.EmptyTypes);
                     if (constructor != null && !constructor.IsAbstract)
                     {
-                        var instance = constructor.Invoke(new object[] { });
+                        var instance = TryGet.ValueOrDefault(() => constructor.Invoke(parameters), null);
                         return instance as T;
                     }
                 }
@@ -40,6 +52,17 @@ namespace InDoOut_Core.Instancing
         public T BuildInstance<InstanceOf>() where InstanceOf : class, T
         {
             return BuildInstance(typeof(InstanceOf));
+        }
+
+        /// <summary>
+        /// Builds an instance of the given type with additional parameters. The type has to be inherited from <typeparamref name="T"/>.
+        /// </summary>
+        /// <typeparam name="InstanceOf">The type to build.</typeparam>
+        /// <param name="parameters">Additional parameters to pass to the constructor.</param>
+        /// <returns>The requested type <typeparamref name="InstanceOf"/> as <typeparamref name="T"/>, or null if it has failed.</returns>
+        public T BuildInstance<InstanceOf>(params object[] parameters) where InstanceOf : class, T
+        {
+            return BuildInstance(typeof(InstanceOf), parameters);
         }
     }
 }

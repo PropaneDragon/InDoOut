@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>P:\Repositories\Personal\InDoOut\InDoOut Display Core\InDoOut Display Core.xml</DocumentationFile>
+    <DocumentationFile>D:\Projects\InDoOut\App\InDoOut Display Core\InDoOutDisplayCore.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
