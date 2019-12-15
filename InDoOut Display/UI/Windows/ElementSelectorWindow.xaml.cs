@@ -1,5 +1,4 @@
 ﻿using InDoOut_Display.UI.Controls.Screens;
-using System;
 using System.Windows;
 
 namespace InDoOut_Display.UI.Windows
@@ -19,6 +18,7 @@ namespace InDoOut_Display.UI.Windows
         {
             AssociatedScreen = screen;
         }
+
         private void ChangeScreen(IScreenItem screen)
         {
             _associatedScreen = screen;
