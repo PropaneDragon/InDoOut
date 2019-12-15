@@ -22,7 +22,7 @@ namespace InDoOut_Display.UI.Controls.ElementSelector
             InitializeComponent();
         }
 
-        public void LoadElementsSlowly()
+        public void LoadElements()
         {
             KillElementLoader();
 
@@ -89,9 +89,24 @@ namespace InDoOut_Display.UI.Controls.ElementSelector
             }
         }
 
-        private void UserControl_Initialized(object sender, System.EventArgs e)
+        private void Instance_PluginsChanged(object sender, EventArgs e)
         {
-            LoadElementsSlowly();
+            LoadElements();
+        }
+
+        private void UserControl_Initialized(object sender, EventArgs e)
+        {
+            LoadElements();
+        }
+
+        private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            LoadedPlugins.Instance.PluginsChanged += Instance_PluginsChanged;
+        }
+
+        private void UserControl_Unloaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            LoadedPlugins.Instance.PluginsChanged -= Instance_PluginsChanged;
         }
     }
 }

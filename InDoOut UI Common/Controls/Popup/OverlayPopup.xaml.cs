@@ -5,7 +5,7 @@ using System.Windows.Media.Animation;
 
 namespace InDoOut_UI_Common.Controls.Popup
 {
-    public partial class OverlayPopup : UserControl
+    public partial class OverlayPopup : UserControl, IOverlayPopup
     {
         public OverlayPopup()
         {
@@ -17,7 +17,7 @@ namespace InDoOut_UI_Common.Controls.Popup
             Visibility = Visibility.Visible;
 
             var easingFunction = new ExponentialEase() { EasingMode = EasingMode.EaseInOut };
-            var fadeInAnimation = new DoubleAnimation(1, TimeSpan.FromMilliseconds(100)) { EasingFunction = easingFunction };
+            var fadeInAnimation = new DoubleAnimation(1, TimeSpan.FromMilliseconds(400)) { EasingFunction = easingFunction };
 
             BeginAnimation(OpacityProperty, fadeInAnimation);
         }
@@ -25,7 +25,7 @@ namespace InDoOut_UI_Common.Controls.Popup
         public void Hide()
         {
             var easingFunction = new ExponentialEase() { EasingMode = EasingMode.EaseInOut };
-            var fadeOutAnimation = new DoubleAnimation(0, TimeSpan.FromMilliseconds(100)) { EasingFunction = easingFunction };
+            var fadeOutAnimation = new DoubleAnimation(0, TimeSpan.FromMilliseconds(400)) { EasingFunction = easingFunction };
 
             fadeOutAnimation.Completed += (sender, e) => Visibility = Visibility.Collapsed;
 

@@ -13,10 +13,11 @@ namespace InDoOut_Display.UI.Controls.Screens
         public ScreenItemEdge GetCloseEdge(Point point, double distance = 5d)
         {
             var size = new Size(ActualWidth, ActualHeight);
-            var nearLeft = PointWithin(point.X, -distance, distance);
-            var nearTop = PointWithin(point.Y, -distance, distance);
-            var nearRight = PointWithin(point.X, size.Width - distance, size.Width + distance);
-            var nearBottom = PointWithin(point.Y, size.Height - distance, size.Height + distance);
+            var inBounds = point.X > -distance && point.X < (size.Width + distance) && point.Y > -distance && point.Y < (size.Height + distance);
+            var nearLeft = inBounds && PointWithin(point.X, -distance, distance);
+            var nearTop = inBounds && PointWithin(point.Y, -distance, distance);
+            var nearRight = inBounds && PointWithin(point.X, size.Width - distance, size.Width + distance);
+            var nearBottom = inBounds && PointWithin(point.Y, size.Height - distance, size.Height + distance);
 
             if (nearLeft)
             {

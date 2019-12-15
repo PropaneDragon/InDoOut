@@ -13,10 +13,7 @@
         Title="Designer" Height="1080" Width="1920" Background="#111" Loaded="Window_Loaded">
     <Grid>
         <screens:ScreenOverview />
-        <sidebar:Sidebar HorizontalAlignment="Left" />
-        <popup:OverlayPopup x:Name="Popup_Test" Visibility="Visible">
-            <selector:ElementSelector />
-        </popup:OverlayPopup>
+        <sidebar:Sidebar x:Name="Sidebar_Main" HorizontalAlignment="Left" />
         <core:TitleBar x:Name="TitleBar_Main" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
     </Grid>
 </Window>
