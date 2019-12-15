@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using InDoOut_Display_Core.Elements;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace InDoOut_Display.UI.Controls.Screens
@@ -8,6 +9,26 @@ namespace InDoOut_Display.UI.Controls.Screens
         public ScreenItem()
         {
             InitializeComponent();
+        }
+
+        public bool AddDisplayElement(IDisplayElement displayElement)
+        {
+            if (displayElement != null && displayElement is UIElement uiElement)
+            {
+                _ = Grid_Elements.Children.Add(uiElement);
+            }
+
+            return false;
+        }
+
+        public bool RemoveDisplayElement(IDisplayElement displayElement)
+        {
+            if (displayElement != null)
+            {
+
+            }
+
+            return false;
         }
 
         public ScreenItemEdge GetCloseEdge(Point point, double distance = 5d)

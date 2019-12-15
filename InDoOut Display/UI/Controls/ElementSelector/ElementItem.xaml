@@ -7,17 +7,44 @@
              mc:Ignorable="d" 
              Width="350" Height="200" Foreground="White" Background="#3b77e4">
     <Grid>
-        <Border Padding="2">
-            <DockPanel>
-                <Border DockPanel.Dock="Bottom" Padding="8">
-                    <TextBlock x:Name="Text_Name" Text="Element" FontSize="16" FontFamily="Segoe UI Light" TextAlignment="Center" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
-                </Border>
-                <Border DockPanel.Dock="Top" Padding="8" Background="#000">
-                    <Viewbox x:Name="Viewbox_Container">
-                        <Border x:Name="Border_Container" />
-                    </Viewbox>
-                </Border>
-            </DockPanel>
-        </Border>
+        <Button Margin="0" Padding="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Click="Button_Click">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}">
+                        <ContentPresenter/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Duration="0:0:0.1" To="#3000" Storyboard.TargetProperty="Background.Color"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Duration="0:0:0.1" To="#0000" Storyboard.TargetProperty="Background.Color"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+            <Border Padding="2">
+                <DockPanel>
+                    <Border DockPanel.Dock="Bottom" Padding="8">
+                        <TextBlock x:Name="Text_Name" Text="Element" FontSize="16" FontFamily="Segoe UI Light" TextAlignment="Center" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
+                    </Border>
+                    <Border DockPanel.Dock="Top" Padding="8" Background="#000">
+                        <Viewbox x:Name="Viewbox_Container">
+                            <Border x:Name="Border_Container" />
+                        </Viewbox>
+                    </Border>
+                </DockPanel>
+            </Border>
+        </Button>
     </Grid>
 </UserControl>

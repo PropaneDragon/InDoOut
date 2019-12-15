@@ -6,9 +6,11 @@ using System.Windows.Input;
 
 namespace InDoOut_Display.UI.Controls.Screens
 {
-    public partial class ScreenOverview : UserControl
+    public partial class ScreenOverview : UserControl, IScreenOverview
     {
         private readonly ActionHandler _actionHandler = null;
+
+        public IScreenItem CurrentScreen => ScreenItem_Overview;
 
         public ScreenOverview()
         {

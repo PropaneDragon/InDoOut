@@ -16,6 +16,8 @@ namespace InDoOut_Display.UI.Windows
             InitializeComponent();
 
             _logSaver.BeginAutoSave();
+
+            Sidebar_Main.AssociatedScreenOverview = ScreenOverview_Main;
         }
 
         private async Task FinishLoading()

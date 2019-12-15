@@ -1,5 +1,6 @@
 ﻿using InDoOut_Display_Core.Elements;
 using InDoOut_Display_Core.Functions;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -10,6 +11,8 @@ namespace InDoOut_Display.UI.Controls.ElementSelector
         private IDisplayElement _displayElement = null;
 
         public IDisplayElement DisplayElement { get => _displayElement; set => ChangeDisplayElement(value); }
+
+        public event EventHandler<EventArgs> ElementSelected;
 
         public ElementItem()
         {
@@ -46,6 +49,11 @@ namespace InDoOut_Display.UI.Controls.ElementSelector
                 Text_Name.Text = element.AssociatedElementFunction?.SafeName ?? "Invalid";
                 Border_Container.Child = uiElement;
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ElementSelected?.Invoke(this, e);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using InDoOut_Display_Core.Functions;
+﻿using InDoOut_Display.UI.Controls.Screens;
+using InDoOut_Display_Core.Functions;
 using InDoOut_Display_Plugins.Containers;
 using InDoOut_Plugins.Loaders;
 using System;
@@ -16,6 +17,8 @@ namespace InDoOut_Display.UI.Controls.ElementSelector
         private int _lastElementId = 0;
         private DispatcherTimer _slowElementLoader = null;
         private IEnumerable<Type> _pluginTypes = null;
+
+        public IScreenItem AssociatedScreen { get; set; } = null;
 
         public ElementSelector()
         {
@@ -59,6 +62,16 @@ namespace InDoOut_Display.UI.Controls.ElementSelector
                 if (item.LoadElementFromFunction(function))
                 {
                     _ = Wrap_Elements.Children.Add(item);
+
+                    item.ElementSelected += (sender, e) =>
+                    {
+                        var functionBuilder = new ElementFunctionBuilder();
+                        var newFunctionInstance = functionBuilder.BuildInstance(function.GetType());
+                        if (newFunctionInstance != null)
+                        {
+                            _ = AssociatedScreen?.AddDisplayElement(newFunctionInstance?.CreateAssociatedUIElement()) ?? false;
+                        }
+                    };
                 }
             }
         }
