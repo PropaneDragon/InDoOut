@@ -18,7 +18,7 @@ namespace InDoOut_Display.UI.Controls.ElementSelector
         private DispatcherTimer _slowElementLoader = null;
         private IEnumerable<Type> _pluginTypes = null;
 
-        public IScreenItem AssociatedScreen { get; set; } = null;
+        public IScreen AssociatedScreen { get; set; } = null;
 
         public ElementSelector()
         {

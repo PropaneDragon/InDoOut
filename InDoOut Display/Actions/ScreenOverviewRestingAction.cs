@@ -1,16 +1,15 @@
-﻿using InDoOut_Display.UI.Controls.Screens;
-using InDoOut_UI_Common.Actions;
-using System;
+﻿using InDoOut_Display.Actions.Resizing;
+using InDoOut_Display.UI.Controls.Screens;
 using System.Windows;
 using System.Windows.Input;
 
 namespace InDoOut_Display.Actions
 {
-    internal class ScreenItemRestingAction : InDoOut_UI_Common.Actions.Action
+    internal class ScreenOverviewRestingAction : InDoOut_UI_Common.Actions.Action
     {
-        public ScreenItem ScreenItem { get; private set; } = null;
+        public Screen ScreenItem { get; private set; } = null;
 
-        public ScreenItemRestingAction(ScreenItem screenItem)
+        public ScreenOverviewRestingAction(Screen screenItem)
         {
             ScreenItem = screenItem;
         }
@@ -32,7 +31,7 @@ namespace InDoOut_Display.Actions
                 var position = Mouse.GetPosition(ScreenItem);
                 if (ScreenItem?.PointCloseToScreenItemEdge(position) ?? false)
                 {
-                    Finish(new ScreenItemResizeAction(ScreenItem, mousePosition));
+                    Finish(new ScreenResizeAction(ScreenItem, mousePosition));
                 }
             }
 

@@ -5,21 +5,21 @@ namespace InDoOut_Display.UI.Windows
 {
     public partial class ElementSelectorWindow : Window
     {
-        private IScreenItem _associatedScreen = null;
+        private IScreen _associatedScreen = null;
 
-        public IScreenItem AssociatedScreen { get => _associatedScreen; set => ChangeScreen(value); }
+        public IScreen AssociatedScreen { get => _associatedScreen; set => ChangeScreen(value); }
 
         public ElementSelectorWindow()
         {
             InitializeComponent();
         }
 
-        public ElementSelectorWindow(IScreenItem screen) : this()
+        public ElementSelectorWindow(IScreen screen) : this()
         {
             AssociatedScreen = screen;
         }
 
-        private void ChangeScreen(IScreenItem screen)
+        private void ChangeScreen(IScreen screen)
         {
             _associatedScreen = screen;
             ElementSelector_Main.AssociatedScreen = screen;

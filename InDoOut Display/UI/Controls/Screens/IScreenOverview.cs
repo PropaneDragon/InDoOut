@@ -2,6 +2,6 @@
 {
     public interface IScreenOverview
     {
-        IScreenItem CurrentScreen { get; }
+        IScreen CurrentScreen { get; }
     }
 }

@@ -3,16 +3,16 @@ using System;
 using System.Windows;
 using System.Windows.Input;
 
-namespace InDoOut_Display.Actions
+namespace InDoOut_Display.Actions.Resizing
 {
     public class ScreenItemResizeAction : InDoOut_UI_Common.Actions.Dragging.DragAction
     {
         private Size _initialSize = new Size();
         private ScreenItemEdge _initialEdge = ScreenItemEdge.None;
 
-        public ScreenItem ScreenItem { get; private set; } = null;
+        public Screen ScreenItem { get; private set; } = null;
 
-        public ScreenItemResizeAction(ScreenItem screenItem, Point mousePosition)
+        public ScreenItemResizeAction(Screen screenItem, Point mousePosition)
         {
             ScreenItem = screenItem;
 
