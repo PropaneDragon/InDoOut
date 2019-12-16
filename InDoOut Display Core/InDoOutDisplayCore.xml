@@ -102,11 +102,5 @@
             host logic for interface elements.
             </summary>
         </member>
-        <member name="T:InDoOut_Display_Core.Screens.IScreen">
-            <summary>
-            Represents a single screen on a display. Screens can be switched between, and contain
-            unique functionality separated from the display as a whole.
-            </summary>
-        </member>
     </members>
 </doc>

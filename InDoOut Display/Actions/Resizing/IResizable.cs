@@ -4,9 +4,9 @@ namespace InDoOut_Display.Actions.Resizing
 {
     public interface IResizable
     {
-        void ResizeStarted(IScreenItem screen);
-        void ResizeEnded(IScreenItem screen);
+        void ResizeStarted(IScreen screen);
+        void ResizeEnded(IScreen screen);
 
-        bool CanResize(IScreenItem screen);
+        bool CanResize(IScreen screen);
     }
 }

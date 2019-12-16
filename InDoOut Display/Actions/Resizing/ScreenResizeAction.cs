@@ -5,14 +5,14 @@ using System.Windows.Input;
 
 namespace InDoOut_Display.Actions.Resizing
 {
-    public class ScreenItemResizeAction : InDoOut_UI_Common.Actions.Dragging.DragAction
+    public class ScreenResizeAction : InDoOut_UI_Common.Actions.Dragging.DragAction
     {
         private Size _initialSize = new Size();
         private ScreenItemEdge _initialEdge = ScreenItemEdge.None;
 
         public Screen ScreenItem { get; private set; } = null;
 
-        public ScreenItemResizeAction(Screen screenItem, Point mousePosition)
+        public ScreenResizeAction(Screen screenItem, Point mousePosition)
         {
             ScreenItem = screenItem;
 
