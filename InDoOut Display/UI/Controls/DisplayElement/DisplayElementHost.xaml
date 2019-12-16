@@ -7,6 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <Border BorderThickness="1" BorderBrush="#f00">
+            <ContentPresenter x:Name="ContentPresenter_Element" />
+        </Border>
     </Grid>
 </UserControl>

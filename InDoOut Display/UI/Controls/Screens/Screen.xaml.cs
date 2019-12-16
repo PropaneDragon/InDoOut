@@ -1,4 +1,5 @@
 ﻿using InDoOut_Display.Actions;
+using InDoOut_Display.UI.Controls.DisplayElement;
 using InDoOut_Display_Core.Elements;
 using InDoOut_UI_Common.Actions;
 using System.Windows;
@@ -22,7 +23,8 @@ namespace InDoOut_Display.UI.Controls.Screens
         {
             if (displayElement != null && displayElement is UIElement uiElement)
             {
-                _ = Grid_Elements.Children.Add(uiElement);
+                var host = new DisplayElementHost(displayElement);
+                _ = Grid_Elements.Children.Add(host);
             }
 
             return false;
