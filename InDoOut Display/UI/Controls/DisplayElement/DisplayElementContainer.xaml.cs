@@ -1,17 +1,16 @@
 ﻿using InDoOut_Display.Actions.Resizing;
 using InDoOut_Display.UI.Controls.Screens;
 using InDoOut_Display_Core.Elements;
-using System;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace InDoOut_Display.UI.Controls.DisplayElement
 {
-    public partial class DisplayElementHost : UserControl, IResizable
+    public partial class DisplayElementContainer : UserControl, IResizable
     {
         public IDisplayElement AssociatedDisplayElement { get => ContentPresenter_Element.Content as IDisplayElement; set => SetDisplayElement(value); }
 
-        public DisplayElementHost(IDisplayElement element = null)
+        public DisplayElementContainer(IDisplayElement element = null)
         {
             InitializeComponent();
 
@@ -33,10 +32,10 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
 
         public bool CloseToEdge(IScreen screen, Point point, double distance = 5)
         {
-            return GetCloseEdge(screen, point, distance) != ScreenItemEdge.None;
+            return GetCloseEdge(screen, point, distance) != ResizeEdge.None;
         }
 
-        public ScreenItemEdge GetCloseEdge(IScreen screen, Point point, double distance = 5)
+        public ResizeEdge GetCloseEdge(IScreen screen, Point point, double distance = 5)
         {
             var size = new Size(ActualWidth, ActualHeight);
             var inBounds = point.X > -distance && point.X < (size.Width + distance) && point.Y > -distance && point.Y < (size.Height + distance);
@@ -47,22 +46,22 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
 
             if (nearLeft)
             {
-                return nearTop ? ScreenItemEdge.TopLeft : nearBottom ? ScreenItemEdge.BottomLeft : ScreenItemEdge.Left;
+                return nearTop ? ResizeEdge.TopLeft : nearBottom ? ResizeEdge.BottomLeft : ResizeEdge.Left;
             }
             else if (nearRight)
             {
-                return nearTop ? ScreenItemEdge.TopRight : nearBottom ? ScreenItemEdge.BottomRight : ScreenItemEdge.Right;
+                return nearTop ? ResizeEdge.TopRight : nearBottom ? ResizeEdge.BottomRight : ResizeEdge.Right;
             }
             else if (nearBottom)
             {
-                return ScreenItemEdge.Bottom;
+                return ResizeEdge.Bottom;
             }
             else if (nearTop)
             {
-                return ScreenItemEdge.Top;
+                return ResizeEdge.Top;
             }
 
-            return ScreenItemEdge.None;
+            return ResizeEdge.None;
         }
 
         private bool PointWithin(double point, double min, double max)

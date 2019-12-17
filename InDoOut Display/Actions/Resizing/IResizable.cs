@@ -24,6 +24,6 @@ namespace InDoOut_Display.Actions.Resizing
         bool CanResize(IScreen screen);
         bool CloseToEdge(IScreen screen, Point point, double distance = 5);
 
-        ScreenItemEdge GetCloseEdge(IScreen screen, Point point, double distance = 5);
+        ResizeEdge GetCloseEdge(IScreen screen, Point point, double distance = 5);
     }
 }

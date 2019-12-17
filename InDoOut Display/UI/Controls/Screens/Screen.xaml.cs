@@ -2,9 +2,13 @@
 using InDoOut_Display.UI.Controls.DisplayElement;
 using InDoOut_Display_Core.Elements;
 using InDoOut_UI_Common.Actions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace InDoOut_Display.UI.Controls.Screens
 {
@@ -23,7 +27,7 @@ namespace InDoOut_Display.UI.Controls.Screens
         {
             if (displayElement != null && displayElement is UIElement uiElement)
             {
-                var host = new DisplayElementHost(displayElement);
+                var host = new DisplayElementContainer(displayElement);
                 _ = Grid_Elements.Children.Add(host);
             }
 
@@ -34,10 +38,72 @@ namespace InDoOut_Display.UI.Controls.Screens
         {
             if (displayElement != null)
             {
-
+                //Todo: Remove elements
             }
 
             return false;
+        }
+
+        public Point GetMousePosition()
+        {
+            return Mouse.GetPosition(this);
+        }
+
+        public FrameworkElement GetElementUnderMouse()
+        {
+            return GetElementAtPoint(GetMousePosition());
+        }
+
+        public FrameworkElement GetElementAtPoint(Point point)
+        {
+            return GetElementsAtPoint(point).FirstOrDefault();
+        }
+
+        public List<FrameworkElement> GetElementsUnderMouse()
+        {
+            return GetElementsAtPoint(GetMousePosition());
+        }
+
+        public List<FrameworkElement> GetElementsAtPoint(Point point)
+        {
+            var hits = new List<FrameworkElement>();
+
+            VisualTreeHelper.HitTest(Grid_Elements, FilterHit, (result) => NewHit(result, hits), new PointHitTestParameters(point));
+
+            hits.AddRange(new List<FrameworkElement>() { Grid_Elements, this });
+            return hits;
+        }
+
+        public T GetFirstElementOfType<T>(FrameworkElement element) where T : class
+        {
+            if (element != null)
+            {
+                if (typeof(T).IsAssignableFrom(element.GetType()) && element is T converted)
+                {
+                    return converted;
+                }
+                else
+                {
+                    var parent = VisualTreeHelper.GetParent(element);
+                    return GetFirstElementOfType<T>(parent as FrameworkElement);
+                }
+            }
+
+            return null;
+        }
+
+        public T GetFirstElementOfType<T>(List<FrameworkElement> elements) where T : class
+        {
+            foreach (var element in elements)
+            {
+                var foundElement = GetFirstElementOfType<T>(element);
+                if (foundElement != null)
+                {
+                    return foundElement;
+                }
+            }
+
+            return null;
         }
 
         public ScreenItemEdge GetCloseEdge(Point point, double distance = 5d)
@@ -72,6 +138,23 @@ namespace InDoOut_Display.UI.Controls.Screens
         public bool PointCloseToScreenItemEdge(Point point, double distance = 5d)
         {
             return GetCloseEdge(point, distance) != ScreenItemEdge.None;
+        }
+
+        private HitTestFilterBehavior FilterHit(DependencyObject potentialHitTestTarget)
+        {
+            return potentialHitTestTarget is UIElement uiElement && uiElement.Visibility != Visibility.Visible
+                ? HitTestFilterBehavior.ContinueSkipSelfAndChildren
+                : HitTestFilterBehavior.Continue;
+        }
+
+        private HitTestResultBehavior NewHit(HitTestResult result, List<FrameworkElement> hits)
+        {
+            if (result.VisualHit != null && result.VisualHit is FrameworkElement element)
+            {
+                hits.Add(element);
+            }
+
+            return HitTestResultBehavior.Continue;
         }
 
         private bool PointWithin(double point, double min, double max)

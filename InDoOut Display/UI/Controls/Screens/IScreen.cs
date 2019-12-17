@@ -15,9 +15,10 @@ namespace InDoOut_Display.UI.Controls.Screens
         BottomRight
     }
 
-    public interface IScreen : IDisplayElementHost
+    public interface IScreen : IElementHost, IDisplayElementHost
     {
         ScreenItemEdge GetCloseEdge(Point point, double distance = 5);
         bool PointCloseToScreenItemEdge(Point point, double distance = 5);
+        Point GetMousePosition();
     }
 }
