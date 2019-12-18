@@ -72,23 +72,26 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
 
         public void SetEdgeToMouse(IScreen screen, ResizeEdge edge)
         {
-            if (screen != null && edge.ValidEdge() && !edge.IsCorner())
+            if (screen != null && edge.ValidEdge())
             {
                 var mousePercentage = GetMouseLocationAsPercentage();
                 
-                if (edge == ResizeEdge.Left)
+                if (edge == ResizeEdge.Left || edge == ResizeEdge.BottomLeft || edge == ResizeEdge.TopLeft)
                 {
                     Column_Width_Left.Width = new GridLength(mousePercentage.X, GridUnitType.Star);
                 }
-                else if (edge == ResizeEdge.Right)
+                
+                if (edge == ResizeEdge.Right || edge == ResizeEdge.BottomRight || edge == ResizeEdge.TopRight)
                 {
                     Column_Width_Right.Width = new GridLength(1d - mousePercentage.X, GridUnitType.Star);
                 }
-                if (edge == ResizeEdge.Top)
+
+                if (edge == ResizeEdge.Top || edge == ResizeEdge.TopLeft || edge == ResizeEdge.TopRight)
                 {
                     Row_Height_Above.Height = new GridLength(mousePercentage.Y, GridUnitType.Star);
                 }
-                else if (edge == ResizeEdge.Bottom)
+
+                if (edge == ResizeEdge.Bottom || edge == ResizeEdge.BottomLeft || edge == ResizeEdge.BottomRight)
                 {
                     Row_Height_Below.Height = new GridLength(1d - mousePercentage.Y, GridUnitType.Star);
                 }

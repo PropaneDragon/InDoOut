@@ -26,15 +26,10 @@ namespace InDoOut_Display.Actions.Resizing
         public override bool MouseLeftMove(Point mousePosition)
         {
             _ = base.MouseLeftMove(mousePosition);
-
-            var resizeEdges = _initialEdge.IndividualEdges();
-
-            foreach (var edge in resizeEdges)
+            
+            if (AssociatedResizable != null && AssociatedScreen != null && AssociatedResizable.CanResize(AssociatedScreen))
             {
-                if (AssociatedResizable != null && AssociatedScreen != null && AssociatedResizable.CanResize(AssociatedScreen))
-                {
-                    AssociatedResizable.SetEdgeToMouse(AssociatedScreen, edge);
-                }
+                AssociatedResizable.SetEdgeToMouse(AssociatedScreen, _initialEdge);
             }
 
             return false;
