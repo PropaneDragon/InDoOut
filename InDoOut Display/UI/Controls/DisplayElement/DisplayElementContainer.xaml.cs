@@ -3,13 +3,14 @@ using InDoOut_Display.UI.Controls.Screens;
 using InDoOut_Display_Core.Elements;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace InDoOut_Display.UI.Controls.DisplayElement
 {
     public partial class DisplayElementContainer : UserControl, IResizable
     {
         public IDisplayElement AssociatedDisplayElement { get => ContentPresenter_Element.Content as IDisplayElement; set => SetDisplayElement(value); }
-        public Size Size { get => new Size(ActualWidth, ActualHeight); set => UpdateSize(value); }
+        public Size Size => new Size(ContentPresenter_Element.ActualWidth, ContentPresenter_Element.ActualHeight);
 
         public DisplayElementContainer(IDisplayElement element = null)
         {
@@ -39,53 +40,75 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
         public ResizeEdge GetCloseEdge(IScreen screen, Point point, double distance = 5)
         {            
             var size = Size;
-            var inBounds = point.X > -distance && point.X < (size.Width + distance) && point.Y > -distance && point.Y < (size.Height + distance);
-            var nearLeft = PointWithin(point.X, Margin.Left - distance, Margin.Left + distance);
-            var nearTop = PointWithin(point.Y, Margin.Top - distance, Margin.Top + distance);
-            var nearRight = PointWithin(point.X, (Margin.Left + size.Width) - distance, (Margin.Left + size.Width) + distance);
-            var nearBottom = PointWithin(point.Y, (Margin.Top + size.Height) - distance, (Margin.Top + size.Height) + distance);
+            var localPoint = TranslatePoint(point, ContentPresenter_Element);
+            var inBounds = localPoint.X > -distance && localPoint.X < (size.Width + distance) && localPoint.Y > -distance && localPoint.Y < (size.Height + distance);
+            var nearLeft = PointWithin(localPoint.X, -distance, distance);
+            var nearTop = PointWithin(localPoint.Y, -distance, distance);
+            var nearRight = PointWithin(localPoint.X, size.Width - distance, size.Width + distance);
+            var nearBottom = PointWithin(localPoint.Y, size.Height - distance, size.Height + distance);
 
-            if (nearLeft)
+            if (inBounds)
             {
-                return nearTop ? ResizeEdge.TopLeft : nearBottom ? ResizeEdge.BottomLeft : ResizeEdge.Left;
-            }
-            else if (nearRight)
-            {
-                return nearTop ? ResizeEdge.TopRight : nearBottom ? ResizeEdge.BottomRight : ResizeEdge.Right;
-            }
-            else if (nearBottom)
-            {
-                return ResizeEdge.Bottom;
-            }
-            else if (nearTop)
-            {
-                return ResizeEdge.Top;
+                if (nearLeft)
+                {
+                    return nearTop ? ResizeEdge.TopLeft : nearBottom ? ResizeEdge.BottomLeft : ResizeEdge.Left;
+                }
+                else if (nearRight)
+                {
+                    return nearTop ? ResizeEdge.TopRight : nearBottom ? ResizeEdge.BottomRight : ResizeEdge.Right;
+                }
+                else if (nearBottom)
+                {
+                    return ResizeEdge.Bottom;
+                }
+                else if (nearTop)
+                {
+                    return ResizeEdge.Top;
+                }
             }
 
             return ResizeEdge.None;
         }
 
-        public void SetEdgeDistance(IScreen screen, ResizeEdge edge, double distance)
+        public void SetEdgeToMouse(IScreen screen, ResizeEdge edge)
         {
             if (screen != null && edge.ValidEdge() && !edge.IsCorner())
             {
-                var calculatedSize = CalculateSizeFromScreen(screen);
-                var currentDistance = (edge == ResizeEdge.Left || edge == ResizeEdge.Right) ? calculatedSize.Width : calculatedSize.Height;
-                var adjustment = currentDistance - distance;
+                var mousePercentage = GetMouseLocationAsPercentage();
+                
+                if (edge == ResizeEdge.Left)
+                {
+                    Column_Width_Left.Width = new GridLength(mousePercentage.X, GridUnitType.Star);
+                }
+                else if (edge == ResizeEdge.Right)
+                {
+                    Column_Width_Right.Width = new GridLength(1d - mousePercentage.X, GridUnitType.Star);
+                }
+                if (edge == ResizeEdge.Top)
+                {
+                    Row_Height_Above.Height = new GridLength(mousePercentage.Y, GridUnitType.Star);
+                }
+                else if (edge == ResizeEdge.Bottom)
+                {
+                    Row_Height_Below.Height = new GridLength(1d - mousePercentage.Y, GridUnitType.Star);
+                }
 
-                UpdateMarginForEdge(edge, adjustment);
+                UpdateElementPercentages();
             }
         }
 
-        private Size CalculateSizeFromScreen(IScreen screen)
+        private void UpdateElementPercentages()
         {
-            return new Size(screen.Size.Width - Margin.Left - Margin.Right, screen.Size.Height - Margin.Top - Margin.Bottom);
+            Column_Width_Element.Width = new GridLength(1d - (Column_Width_Left.Width.Value + Column_Width_Right.Width.Value), GridUnitType.Star);
+            Row_Height_Element.Height = new GridLength(1d - (Row_Height_Above.Height.Value + Row_Height_Below.Height.Value), GridUnitType.Star);
         }
 
-        private void UpdateSize(Size size)
+        private Point GetMouseLocationAsPercentage()
         {
-            Width = size.Width;
-            Height = size.Height;
+            var position = Mouse.GetPosition(this);
+            var overallSize = new Size(ActualWidth, ActualHeight);
+
+            return new Point(position.X / overallSize.Width, position.Y / overallSize.Height);
         }
 
         private bool PointWithin(double point, double min, double max)
@@ -99,42 +122,6 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
             {
                 ContentPresenter_Element.Content = uiElement;
             }
-        }
-
-        private double GetMarginForEdge(ResizeEdge edge)
-        {
-            return edge switch
-            {
-                ResizeEdge.Bottom => Margin.Bottom,
-                ResizeEdge.Left => Margin.Left,
-                ResizeEdge.Right => Margin.Right,
-                ResizeEdge.Top => Margin.Top,
-
-                _ => 0
-            };
-        }
-
-        private void UpdateMarginForEdge(ResizeEdge edge, double margin)
-        {
-            var currentMargins = Margin;
-
-            switch (edge)
-            {
-                case ResizeEdge.Bottom:
-                    currentMargins.Bottom += margin;
-                    break;
-                case ResizeEdge.Left:
-                    currentMargins.Left += margin;
-                    break;
-                case ResizeEdge.Right:
-                    currentMargins.Right += margin;
-                    break;
-                case ResizeEdge.Top:
-                    currentMargins.Top += margin;
-                    break;
-            }
-
-            Margin = currentMargins;
         }
     }
 }

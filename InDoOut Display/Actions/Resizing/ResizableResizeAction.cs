@@ -31,12 +31,9 @@ namespace InDoOut_Display.Actions.Resizing
 
             foreach (var edge in resizeEdges)
             {
-                var distanceForEdge = GetDistanceForEdge(edge);
-                distanceForEdge = distanceForEdge < MINIMUM_SIZE ? MINIMUM_SIZE : distanceForEdge;
-
                 if (AssociatedResizable != null && AssociatedScreen != null && AssociatedResizable.CanResize(AssociatedScreen))
                 {
-                    AssociatedResizable.SetEdgeDistance(AssociatedScreen, edge, distanceForEdge);
+                    AssociatedResizable.SetEdgeToMouse(AssociatedScreen, edge);
                 }
             }
 
@@ -46,16 +43,16 @@ namespace InDoOut_Display.Actions.Resizing
         private double GetDistanceForEdge(ResizeEdge edge)
         {
             var adjustedDelta = new Point(MouseDelta.X * (edge == ResizeEdge.Left ? 1 : -1), MouseDelta.Y * (edge == ResizeEdge.Top ? 1 : -1));
-            var adjustedSize = new Size(_initialSize.Width + adjustedDelta.X, _initialSize.Height + adjustedDelta.Y);
+            var adjustedSize = new Point(_initialSize.Width + adjustedDelta.X, _initialSize.Height + adjustedDelta.Y);
 
             switch (edge)
             {
                 case ResizeEdge.Bottom:
                 case ResizeEdge.Top:
-                    return adjustedSize.Height;
+                    return adjustedSize.Y;
                 case ResizeEdge.Left:
                 case ResizeEdge.Right:
-                    return adjustedSize.Width;
+                    return adjustedSize.X;
             }
 
             return 0;

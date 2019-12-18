@@ -27,7 +27,7 @@ namespace InDoOut_Display.UI.Controls.Screens
 
         public bool AddDisplayElement(IDisplayElement displayElement)
         {
-            if (displayElement != null && displayElement is UIElement uiElement)
+            if (displayElement != null)
             {
                 var host = new DisplayElementContainer(displayElement);
                 _ = Grid_Elements.Children.Add(host);

@@ -18,11 +18,11 @@ namespace InDoOut_Display.Actions.Resizing
 
     public interface IResizable
     {
-        Size Size { get; set; }
+        Size Size { get; }
 
         void ResizeStarted(IScreen screen);
         void ResizeEnded(IScreen screen);
-        void SetEdgeDistance(IScreen screen, ResizeEdge edge, double distance);
+        void SetEdgeToMouse(IScreen screen, ResizeEdge edge);
 
         bool CanResize(IScreen screen);
         bool CloseToEdge(IScreen screen, Point point, double distance = 5);
