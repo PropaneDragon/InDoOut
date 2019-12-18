@@ -16,6 +16,8 @@ namespace InDoOut_Display.UI.Controls.Screens
     {
         private readonly ActionHandler _actionHandler = null;
 
+        public Size Size => new Size(Width, Height);
+
         public Screen()
         {
             InitializeComponent();

@@ -20,5 +20,6 @@ namespace InDoOut_Display.UI.Controls.Screens
         ScreenItemEdge GetCloseEdge(Point point, double distance = 5);
         bool PointCloseToScreenItemEdge(Point point, double distance = 5);
         Point GetMousePosition();
+        Size Size { get; }
     }
 }

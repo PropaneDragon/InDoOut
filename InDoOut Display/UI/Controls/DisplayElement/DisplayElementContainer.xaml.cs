@@ -9,6 +9,7 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
     public partial class DisplayElementContainer : UserControl, IResizable
     {
         public IDisplayElement AssociatedDisplayElement { get => ContentPresenter_Element.Content as IDisplayElement; set => SetDisplayElement(value); }
+        public Size Size { get => new Size(ActualWidth, ActualHeight); set => UpdateSize(value); }
 
         public DisplayElementContainer(IDisplayElement element = null)
         {
@@ -36,13 +37,13 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
         }
 
         public ResizeEdge GetCloseEdge(IScreen screen, Point point, double distance = 5)
-        {
-            var size = new Size(ActualWidth, ActualHeight);
+        {            
+            var size = Size;
             var inBounds = point.X > -distance && point.X < (size.Width + distance) && point.Y > -distance && point.Y < (size.Height + distance);
-            var nearLeft = inBounds && PointWithin(point.X, -distance, distance);
-            var nearTop = inBounds && PointWithin(point.Y, -distance, distance);
-            var nearRight = inBounds && PointWithin(point.X, size.Width - distance, size.Width + distance);
-            var nearBottom = inBounds && PointWithin(point.Y, size.Height - distance, size.Height + distance);
+            var nearLeft = PointWithin(point.X, Margin.Left - distance, Margin.Left + distance);
+            var nearTop = PointWithin(point.Y, Margin.Top - distance, Margin.Top + distance);
+            var nearRight = PointWithin(point.X, (Margin.Left + size.Width) - distance, (Margin.Left + size.Width) + distance);
+            var nearBottom = PointWithin(point.Y, (Margin.Top + size.Height) - distance, (Margin.Top + size.Height) + distance);
 
             if (nearLeft)
             {
@@ -64,6 +65,29 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
             return ResizeEdge.None;
         }
 
+        public void SetEdgeDistance(IScreen screen, ResizeEdge edge, double distance)
+        {
+            if (screen != null && edge.ValidEdge() && !edge.IsCorner())
+            {
+                var calculatedSize = CalculateSizeFromScreen(screen);
+                var currentDistance = (edge == ResizeEdge.Left || edge == ResizeEdge.Right) ? calculatedSize.Width : calculatedSize.Height;
+                var adjustment = currentDistance - distance;
+
+                UpdateMarginForEdge(edge, adjustment);
+            }
+        }
+
+        private Size CalculateSizeFromScreen(IScreen screen)
+        {
+            return new Size(screen.Size.Width - Margin.Left - Margin.Right, screen.Size.Height - Margin.Top - Margin.Bottom);
+        }
+
+        private void UpdateSize(Size size)
+        {
+            Width = size.Width;
+            Height = size.Height;
+        }
+
         private bool PointWithin(double point, double min, double max)
         {
             return point > min && point < max;
@@ -75,6 +99,42 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
             {
                 ContentPresenter_Element.Content = uiElement;
             }
+        }
+
+        private double GetMarginForEdge(ResizeEdge edge)
+        {
+            return edge switch
+            {
+                ResizeEdge.Bottom => Margin.Bottom,
+                ResizeEdge.Left => Margin.Left,
+                ResizeEdge.Right => Margin.Right,
+                ResizeEdge.Top => Margin.Top,
+
+                _ => 0
+            };
+        }
+
+        private void UpdateMarginForEdge(ResizeEdge edge, double margin)
+        {
+            var currentMargins = Margin;
+
+            switch (edge)
+            {
+                case ResizeEdge.Bottom:
+                    currentMargins.Bottom += margin;
+                    break;
+                case ResizeEdge.Left:
+                    currentMargins.Left += margin;
+                    break;
+                case ResizeEdge.Right:
+                    currentMargins.Right += margin;
+                    break;
+                case ResizeEdge.Top:
+                    currentMargins.Top += margin;
+                    break;
+            }
+
+            Margin = currentMargins;
         }
     }
 }

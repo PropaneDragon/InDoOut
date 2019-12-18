@@ -7,7 +7,7 @@ namespace InDoOut_Display.Actions
 {
     internal class ScreenRestingAction : InDoOut_UI_Common.Actions.Action
     {
-        private static readonly int RESIZE_EDGE_SENSITIVITY = 6;
+        private static readonly int RESIZE_EDGE_SENSITIVITY = 8;
 
         private IScreen _screen = null;
 
@@ -34,6 +34,23 @@ namespace InDoOut_Display.Actions
             }
 
             return base.MouseNoMove(mousePosition);
+        }
+
+        public override bool MouseLeftDown(Point mousePosition)
+        {
+            var topElement = _screen?.GetElementUnderMouse();
+            if (topElement != null)
+            {
+                var resizable = _screen?.GetFirstElementOfType<IResizable>(topElement);
+                if (resizable != null && resizable.CanResize(_screen) && resizable.CloseToEdge(_screen, _screen.GetMousePosition(), RESIZE_EDGE_SENSITIVITY))
+                {
+                    var edge = resizable.GetCloseEdge(_screen, _screen.GetMousePosition(), RESIZE_EDGE_SENSITIVITY);
+
+                    Finish(new ResizableResizeAction(_screen, resizable, edge, mousePosition));
+                }
+            }
+
+            return false;
         }
 
         private Cursor GetCursorForEdge(ResizeEdge edge)
