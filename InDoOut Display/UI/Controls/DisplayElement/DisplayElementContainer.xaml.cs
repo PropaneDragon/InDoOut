@@ -1,6 +1,7 @@
 ﻿using InDoOut_Display.Actions.Resizing;
 using InDoOut_Display.UI.Controls.Screens;
 using InDoOut_Display_Core.Elements;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -11,6 +12,7 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
     {
         public IDisplayElement AssociatedDisplayElement { get => ContentPresenter_Element.Content as IDisplayElement; set => SetDisplayElement(value); }
         public Size Size => new Size(ContentPresenter_Element.ActualWidth, ContentPresenter_Element.ActualHeight);
+        public Thickness MarginPercentages { get => GetMarginPercentages(); set => SetMarginPercentages(value); }
 
         public DisplayElementContainer(IDisplayElement element = null)
         {
@@ -75,35 +77,57 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
             if (screen != null && edge.ValidEdge())
             {
                 var mousePercentage = GetMouseLocationAsPercentage();
-                
+                var margins = MarginPercentages;
+                var minimumSize = 0.01;
+
                 if (edge == ResizeEdge.Left || edge == ResizeEdge.BottomLeft || edge == ResizeEdge.TopLeft)
                 {
-                    Column_Width_Left.Width = new GridLength(mousePercentage.X, GridUnitType.Star);
+                    margins.Left = minimumSize + mousePercentage.X + margins.Right < 1d ? mousePercentage.X : margins.Left;
                 }
                 
                 if (edge == ResizeEdge.Right || edge == ResizeEdge.BottomRight || edge == ResizeEdge.TopRight)
                 {
-                    Column_Width_Right.Width = new GridLength(1d - mousePercentage.X, GridUnitType.Star);
+                    var adjustedMargin = 1d - mousePercentage.X;
+                    margins.Right = minimumSize + adjustedMargin + margins.Left < 1d ? adjustedMargin : margins.Right;
                 }
 
                 if (edge == ResizeEdge.Top || edge == ResizeEdge.TopLeft || edge == ResizeEdge.TopRight)
                 {
-                    Row_Height_Above.Height = new GridLength(mousePercentage.Y, GridUnitType.Star);
+                    margins.Top = minimumSize + mousePercentage.Y + margins.Bottom < 1d ? mousePercentage.Y : margins.Top;
                 }
 
                 if (edge == ResizeEdge.Bottom || edge == ResizeEdge.BottomLeft || edge == ResizeEdge.BottomRight)
                 {
-                    Row_Height_Below.Height = new GridLength(1d - mousePercentage.Y, GridUnitType.Star);
+                    var adjustedMargin = 1d - mousePercentage.Y;
+                    margins.Bottom = minimumSize + adjustedMargin + margins.Top < 1d ? adjustedMargin : margins.Bottom;
                 }
+
+                MarginPercentages = margins;
 
                 UpdateElementPercentages();
             }
         }
 
+        private Thickness GetMarginPercentages()
+        {
+            return new Thickness(Column_Width_Left.Width.Value, Row_Height_Above.Height.Value, Column_Width_Right.Width.Value, Row_Height_Below.Height.Value);
+        }
+
+        private void SetMarginPercentages(Thickness thickness)
+        {
+            Column_Width_Left.Width = new GridLength(thickness.Left, GridUnitType.Star);
+            Column_Width_Right.Width = new GridLength(thickness.Right, GridUnitType.Star);
+            Row_Height_Above.Height = new GridLength(thickness.Top, GridUnitType.Star);
+            Row_Height_Below.Height = new GridLength(thickness.Bottom, GridUnitType.Star);
+        }
+
         private void UpdateElementPercentages()
         {
-            Column_Width_Element.Width = new GridLength(1d - (Column_Width_Left.Width.Value + Column_Width_Right.Width.Value), GridUnitType.Star);
-            Row_Height_Element.Height = new GridLength(1d - (Row_Height_Above.Height.Value + Row_Height_Below.Height.Value), GridUnitType.Star);
+            var width = 1d - (Column_Width_Left.Width.Value + Column_Width_Right.Width.Value);
+            var height = 1d - (Row_Height_Above.Height.Value + Row_Height_Below.Height.Value);
+
+            Column_Width_Element.Width = new GridLength(width, GridUnitType.Star);
+            Row_Height_Element.Height = new GridLength(height, GridUnitType.Star);
         }
 
         private Point GetMouseLocationAsPercentage()
