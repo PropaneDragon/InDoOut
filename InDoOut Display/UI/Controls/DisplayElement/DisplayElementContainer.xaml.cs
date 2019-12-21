@@ -1,14 +1,22 @@
 ﻿using InDoOut_Display.Actions.Resizing;
+using InDoOut_Display.Actions.Scaling;
 using InDoOut_Display.UI.Controls.Screens;
 using InDoOut_Display_Core.Elements;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace InDoOut_Display.UI.Controls.DisplayElement
 {
-    public partial class DisplayElementContainer : UserControl, IResizable
+    public partial class DisplayElementContainer : UserControl, IResizable, IScalable
     {
+        private static readonly Thickness SELECTED_BORDER_THICKNESS = new Thickness(2);
+        private Thickness _borderThickness = new Thickness(0);
+        private Thickness _marginThickness = new Thickness(0);
+
+        public bool AutoScale { get; set; } = false;
+        public double Scale { get; set; } = 1d;
         public IDisplayElement AssociatedDisplayElement { get => ContentPresenter_Element.Content as IDisplayElement; set => SetDisplayElement(value); }
         public Size Size => new Size(ContentPresenter_Element.ActualWidth, ContentPresenter_Element.ActualHeight);
         public Thickness MarginPercentages { get => GetMarginPercentages(); set => SetMarginPercentages(value); }
@@ -20,23 +28,30 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
             AssociatedDisplayElement = element;
         }
 
-        public void ResizeEnded(IScreen screen)
+        public bool CanResize(IScreen screen) => true;
+
+        public bool CanScale(IScreen screen) => true;
+
+        public void ScaleChanged(IScreen screen)
         {
         }
 
         public void ResizeStarted(IScreen screen)
         {
+            _borderThickness = Border_Presenter.BorderThickness;
+            _marginThickness = Border_Presenter.Margin;
+
+            Border_Presenter.BorderThickness = SELECTED_BORDER_THICKNESS;
+            Border_Presenter.Margin = NegateThickness(SELECTED_BORDER_THICKNESS);
         }
 
-        public bool CanResize(IScreen screen)
+        public void ResizeEnded(IScreen screen)
         {
-            return true;
+            Border_Presenter.BorderThickness = _borderThickness;
+            Border_Presenter.Margin = _marginThickness;
         }
 
-        public bool CloseToEdge(IScreen screen, Point point, double distance = 5)
-        {
-            return GetCloseEdge(screen, point, distance) != ResizeEdge.None;
-        }
+        public bool CloseToEdge(IScreen screen, Point point, double distance = 5) => GetCloseEdge(screen, point, distance) != ResizeEdge.None;
 
         public ResizeEdge GetCloseEdge(IScreen screen, Point point, double distance = 5)
         {            
@@ -107,11 +122,6 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
             }
         }
 
-        private Thickness GetMarginPercentages()
-        {
-            return new Thickness(Column_Width_Left.Width.Value, Row_Height_Above.Height.Value, Column_Width_Right.Width.Value, Row_Height_Below.Height.Value);
-        }
-
         private void SetMarginPercentages(Thickness thickness)
         {
             Column_Width_Left.Width = new GridLength(thickness.Left, GridUnitType.Star);
@@ -134,12 +144,7 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
             var position = Mouse.GetPosition(this);
             var overallSize = new Size(ActualWidth, ActualHeight);
 
-            return new Point(position.X / overallSize.Width, position.Y / overallSize.Height);
-        }
-
-        private bool PointWithin(double point, double min, double max)
-        {
-            return point > min && point < max;
+            return new Point(Math.Clamp(position.X / overallSize.Width, 0d, 1d), Math.Clamp(position.Y / overallSize.Height, 0d, 1d));
         }
 
         private void SetDisplayElement(IDisplayElement element)
@@ -149,5 +154,11 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
                 ContentPresenter_Element.Content = uiElement;
             }
         }
+
+        private bool PointWithin(double point, double min, double max) => point > min && point < max;
+
+        private Thickness GetMarginPercentages() => new Thickness(Column_Width_Left.Width.Value, Row_Height_Above.Height.Value, Column_Width_Right.Width.Value, Row_Height_Below.Height.Value);
+
+        private Thickness NegateThickness(Thickness thickness) => new Thickness(0 - thickness.Left, 0 - thickness.Top, 0 - thickness.Right, 0 - thickness.Bottom);
     }
 }

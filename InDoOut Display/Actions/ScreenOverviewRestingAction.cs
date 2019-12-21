@@ -17,7 +17,7 @@ namespace InDoOut_Display.Actions
         public override bool MouseNoMove(Point mousePosition)
         {
             var position = Mouse.GetPosition(ScreenItem);
-            var edge = ScreenItem?.GetCloseEdge(position, 3) ?? ScreenItemEdge.None;
+            var edge = ScreenItem?.GetCloseEdge(position, 5) ?? ScreenItemEdge.None;
 
             Mouse.OverrideCursor = GetCursorForEdge(edge);
 

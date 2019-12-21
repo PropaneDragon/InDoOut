@@ -5,8 +5,6 @@ namespace InDoOut_Display.Actions.Resizing
 {
     public class ResizableResizeAction : InDoOut_UI_Common.Actions.Dragging.DragAction
     {
-        private readonly static double MINIMUM_SIZE = 5;
-        private readonly Size _initialSize = new Size();
         private readonly ResizeEdge _initialEdge = ResizeEdge.None;
 
         public IScreen AssociatedScreen { get; private set; } = null;
@@ -17,10 +15,16 @@ namespace InDoOut_Display.Actions.Resizing
             AssociatedScreen = screen;
             AssociatedResizable = resizable;
 
-            _ = base.MouseLeftDown(mousePosition);
+            _ = MouseLeftDown(mousePosition);
 
-            _initialSize = AssociatedResizable?.Size ?? Size.Empty;
             _initialEdge = edge;
+        }
+
+        public override bool MouseLeftDown(Point mousePosition)
+        {
+            AssociatedResizable?.ResizeStarted(AssociatedScreen);
+
+            return base.MouseLeftDown(mousePosition);
         }
 
         public override bool MouseLeftMove(Point mousePosition)
@@ -35,27 +39,11 @@ namespace InDoOut_Display.Actions.Resizing
             return false;
         }
 
-        private double GetDistanceForEdge(ResizeEdge edge)
-        {
-            var adjustedDelta = new Point(MouseDelta.X * (edge == ResizeEdge.Left ? 1 : -1), MouseDelta.Y * (edge == ResizeEdge.Top ? 1 : -1));
-            var adjustedSize = new Point(_initialSize.Width + adjustedDelta.X, _initialSize.Height + adjustedDelta.Y);
-
-            switch (edge)
-            {
-                case ResizeEdge.Bottom:
-                case ResizeEdge.Top:
-                    return adjustedSize.Y;
-                case ResizeEdge.Left:
-                case ResizeEdge.Right:
-                    return adjustedSize.X;
-            }
-
-            return 0;
-        }
-
         public override bool MouseNoMove(Point mousePosition) => MouseLeftUp(mousePosition);
         public override bool MouseLeftUp(Point mousePosition)
         {
+            AssociatedResizable?.ResizeEnded(AssociatedScreen);
+
             _ = base.MouseLeftUp(mousePosition);
 
             Finish(null);
