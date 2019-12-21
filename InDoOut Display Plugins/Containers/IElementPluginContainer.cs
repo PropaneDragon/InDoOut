@@ -1,7 +1,6 @@
 ﻿using InDoOut_Plugins.Containers;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace InDoOut_Display_Plugins.Containers
 {

@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using InDoOut_Desktop.Actions;
 using InDoOut_UI_Common.Actions;
 
 namespace InDoOut_Desktop_Tests

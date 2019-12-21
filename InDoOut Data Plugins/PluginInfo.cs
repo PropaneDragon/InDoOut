@@ -1,5 +1,4 @@
-﻿using InDoOut_Core.Options.Types;
-using InDoOut_Plugins.Core;
+﻿using InDoOut_Plugins.Core;
 
 namespace InDoOut_Data_Plugins
 {

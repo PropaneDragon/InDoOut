@@ -3,7 +3,6 @@ using InDoOut_Core.Functions;
 using InDoOut_Core.Reporting;
 using InDoOut_Executable_Core.Storage;
 using InDoOut_Plugins.Loaders;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;

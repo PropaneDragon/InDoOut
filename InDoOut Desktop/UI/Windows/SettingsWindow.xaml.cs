@@ -4,7 +4,6 @@ using InDoOut_Core.Options;
 using System.Collections.Generic;
 using System.Windows;
 using InDoOut_Plugins.Loaders;
-using System;
 
 namespace InDoOut_Desktop.UI.Windows
 {

@@ -1,5 +1,4 @@
-﻿using InDoOut_Desktop.Loading;
-using InDoOut_Executable_Core.Loading;
+﻿using InDoOut_Executable_Core.Loading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Threading.Tasks;

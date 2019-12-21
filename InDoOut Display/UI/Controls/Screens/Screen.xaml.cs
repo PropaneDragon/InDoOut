@@ -2,7 +2,6 @@
 using InDoOut_Display.UI.Controls.DisplayElement;
 using InDoOut_Display_Core.Elements;
 using InDoOut_UI_Common.Actions;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;

@@ -1,5 +1,4 @@
 ﻿using InDoOut_Core.Basic;
-using System;
 
 namespace InDoOut_Core.Options
 {

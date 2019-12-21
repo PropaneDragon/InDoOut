@@ -1,6 +1,5 @@
 ﻿using InDoOut_Core.Entities.Functions;
 using System.Diagnostics;
-using System.IO;
 
 namespace InDoOut_Core_Plugins.Process
 {
