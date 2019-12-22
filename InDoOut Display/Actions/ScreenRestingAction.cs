@@ -1,5 +1,7 @@
 ﻿using InDoOut_Display.Actions.Resizing;
+using InDoOut_Display.Actions.Selecting;
 using InDoOut_Display.UI.Controls.Screens;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -9,7 +11,7 @@ namespace InDoOut_Display.Actions
     {
         private static readonly int RESIZE_EDGE_SENSITIVITY = 8;
 
-        private IScreen _screen = null;
+        private readonly IScreen _screen = null;
 
         public ScreenRestingAction(IScreen screen)
         {
@@ -18,10 +20,10 @@ namespace InDoOut_Display.Actions
 
         public override bool MouseNoMove(Point mousePosition)
         {
-            var topElement = _screen?.GetElementUnderMouse();
-            if (topElement != null)
+            var topElements = _screen?.GetElementsUnderMouse();
+            if (topElements != null)
             {
-                var resizable = _screen?.GetFirstElementOfType<IResizable>(topElement);
+                var resizable = _screen?.GetFirstElementOfType<IResizable>(topElements);
                 if (resizable != null && resizable.CanResize(_screen) && resizable.CloseToEdge(_screen, _screen.GetMousePosition(), RESIZE_EDGE_SENSITIVITY))
                 {
                     var edge = resizable.GetCloseEdge(_screen, _screen.GetMousePosition(), RESIZE_EDGE_SENSITIVITY);
@@ -38,15 +40,44 @@ namespace InDoOut_Display.Actions
 
         public override bool MouseLeftDown(Point mousePosition)
         {
-            var topElement = _screen?.GetElementUnderMouse();
-            if (topElement != null)
+            var topElements = _screen?.GetElementsUnderMouse();
+            var selectionManager = _screen?.SelectionManager;
+            var elementsSelected = selectionManager?.Selection;
+
+            if (topElements != null && selectionManager != null)
             {
-                var resizable = _screen?.GetFirstElementOfType<IResizable>(topElement);
-                if (resizable != null && resizable.CanResize(_screen) && resizable.CloseToEdge(_screen, _screen.GetMousePosition(), RESIZE_EDGE_SENSITIVITY))
+                var resizable = _screen?.GetFirstElementOfType<IResizable>(topElements);
+                if (resizable != null && resizable.CloseToEdge(_screen, _screen.GetMousePosition(), RESIZE_EDGE_SENSITIVITY) && elementsSelected.Any(selected => selected is IResizable resizable && resizable.CanResize(_screen)))
                 {
+                    var resizables = elementsSelected.Where(selected => selected is IResizable resizable && resizable.CanResize(_screen)).Cast<IResizable>();
                     var edge = resizable.GetCloseEdge(_screen, _screen.GetMousePosition(), RESIZE_EDGE_SENSITIVITY);
 
-                    Finish(new ResizableResizeAction(_screen, resizable, edge, mousePosition));
+                    Finish(new ResizableResizeAction(_screen, resizables, edge, mousePosition));
+                }
+            }
+
+            return false;
+        }
+
+        public override bool MouseLeftUp(Point mousePosition)
+        {
+            if (_screen != null)
+            {
+                var elementsUnderMouse = _screen.GetElementsUnderMouse();
+                elementsUnderMouse.Reverse();
+
+                if (elementsUnderMouse.Count > 0)
+                {
+                    if (_screen.GetFirstElementOfType<IScreenSelectable>(elementsUnderMouse) is IScreenSelectable selectable && selectable.CanSelect(_screen))
+                    {
+                        _ = Keyboard.Modifiers.HasFlag(ModifierKeys.Control) ? _screen.SelectionManager.Add(selectable, true) : _screen.SelectionManager.Set(selectable, false);
+                    }
+                    else if (!Keyboard.Modifiers.HasFlag(ModifierKeys.Control))
+                    {
+                        _screen.SelectionManager.Clear();
+                    }
+
+                    return true;
                 }
             }
 

@@ -1,4 +1,5 @@
 ﻿using InDoOut_Display.UI.Controls.Screens;
+using System.Collections.Generic;
 using System.Windows;
 
 namespace InDoOut_Display.Actions.Resizing
@@ -8,12 +9,12 @@ namespace InDoOut_Display.Actions.Resizing
         private readonly ResizeEdge _initialEdge = ResizeEdge.None;
 
         public IScreen AssociatedScreen { get; private set; } = null;
-        public IResizable AssociatedResizable { get; private set; } = null;
+        public IEnumerable<IResizable> AssociatedResizables { get; private set; } = null;
 
-        public ResizableResizeAction(IScreen screen, IResizable resizable, ResizeEdge edge, Point mousePosition)
+        public ResizableResizeAction(IScreen screen, IEnumerable<IResizable> resizables, ResizeEdge edge, Point mousePosition)
         {
             AssociatedScreen = screen;
-            AssociatedResizable = resizable;
+            AssociatedResizables = resizables;
 
             _ = MouseLeftDown(mousePosition);
 
@@ -22,29 +23,40 @@ namespace InDoOut_Display.Actions.Resizing
 
         public override bool MouseLeftDown(Point mousePosition)
         {
-            AssociatedResizable?.ResizeStarted(AssociatedScreen);
+            _ = base.MouseLeftDown(mousePosition);
 
-            return base.MouseLeftDown(mousePosition);
+            foreach (var resizable in AssociatedResizables)
+            {
+                resizable.ResizeStarted(AssociatedScreen);
+            }
+
+            return true;
         }
 
         public override bool MouseLeftMove(Point mousePosition)
         {
             _ = base.MouseLeftMove(mousePosition);
-            
-            if (AssociatedResizable != null && AssociatedScreen != null && AssociatedResizable.CanResize(AssociatedScreen))
+
+            foreach (var resizable in AssociatedResizables)
             {
-                AssociatedResizable.SetEdgeToMouse(AssociatedScreen, _initialEdge);
+                if (resizable != null && AssociatedScreen != null && resizable.CanResize(AssociatedScreen))
+                {
+                    resizable.ResizeMoved(AssociatedScreen, _initialEdge, MouseDelta);
+                }
             }
 
-            return false;
+            return true;
         }
 
         public override bool MouseNoMove(Point mousePosition) => MouseLeftUp(mousePosition);
         public override bool MouseLeftUp(Point mousePosition)
         {
-            AssociatedResizable?.ResizeEnded(AssociatedScreen);
-
             _ = base.MouseLeftUp(mousePosition);
+
+            foreach (var resizable in AssociatedResizables)
+            {
+                resizable.ResizeEnded(AssociatedScreen);
+            }
 
             Finish(null);
 

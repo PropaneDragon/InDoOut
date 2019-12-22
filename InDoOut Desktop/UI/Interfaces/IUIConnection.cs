@@ -4,7 +4,7 @@ using System.Windows;
 
 namespace InDoOut_Desktop.UI.Interfaces
 {
-    public interface IUIConnection : ISelectable, IDeletable
+    public interface IUIConnection : IBlockViewSelectable, IDeletable
     {
         bool Hidden { get; set; }
 

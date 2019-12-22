@@ -37,7 +37,7 @@ namespace InDoOut_Desktop.Actions
 
                 elementsUnderMouse.Reverse();
 
-                if (elementsUnderMouse.Count > 0 && _blockView.GetFirstElementOfType<ISelectable>(elementsUnderMouse) is ISelectable selectable && selectable.CanSelect(_blockView) && !selectionManager.Contains(selectable))
+                if (elementsUnderMouse.Count > 0 && _blockView.GetFirstElementOfType<IBlockViewSelectable>(elementsUnderMouse) is IBlockViewSelectable selectable && selectable.CanSelect(_blockView) && !selectionManager.Contains(selectable))
                 {
                     _ = selectionManager.Set(selectable);
                 }
@@ -91,7 +91,7 @@ namespace InDoOut_Desktop.Actions
 
                 if (elementsUnderMouse.Count > 0)
                 {
-                    if (_blockView.GetFirstElementOfType<ISelectable>(elementsUnderMouse) is ISelectable selectable && selectable.CanSelect(_blockView))
+                    if (_blockView.GetFirstElementOfType<IBlockViewSelectable>(elementsUnderMouse) is IBlockViewSelectable selectable && selectable.CanSelect(_blockView))
                     {
                         _ = Keyboard.Modifiers.HasFlag(ModifierKeys.Control) ? _blockView.SelectionManager.Add(selectable, true) : _blockView.SelectionManager.Set(selectable, false);
                     }

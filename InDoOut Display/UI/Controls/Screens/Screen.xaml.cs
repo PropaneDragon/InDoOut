@@ -1,7 +1,9 @@
 ﻿using InDoOut_Display.Actions;
+using InDoOut_Display.Actions.Selecting;
 using InDoOut_Display.UI.Controls.DisplayElement;
 using InDoOut_Display_Core.Elements;
 using InDoOut_UI_Common.Actions;
+using InDoOut_UI_Common.Actions.Selecting;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -14,14 +16,18 @@ namespace InDoOut_Display.UI.Controls.Screens
     public partial class Screen : UserControl, IScreen
     {
         private readonly ActionHandler _actionHandler = null;
+        private readonly SelectionManager _selectionManager = null;
 
         public Size Size => new Size(Width, Height);
+
+        public ISelectionManager<IScreenSelectable> SelectionManager => _selectionManager;
 
         public Screen()
         {
             InitializeComponent();
 
             _actionHandler = new ActionHandler(new ScreenRestingAction(this));
+            _selectionManager = new SelectionManager(this);
         }
 
         public bool AddDisplayElement(IDisplayElement displayElement)

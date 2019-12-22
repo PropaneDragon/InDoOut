@@ -17,8 +17,10 @@
             <RowDefinition x:Name="Row_Height_Element" Height="0.8*"/>
             <RowDefinition x:Name="Row_Height_Below" Height="0.1*"/>
         </Grid.RowDefinitions>
-        <Border x:Name="Border_Presenter" Grid.Row="1" Grid.Column="1" SnapsToDevicePixels="True" BorderThickness="1" Margin="-1" BorderBrush="#33FFFFFF">
-            <ContentPresenter x:Name="ContentPresenter_Element" />
+        <Border x:Name="Border_Presenter" Grid.Row="1" Grid.Column="1" SnapsToDevicePixels="True" BorderThickness="1" Margin="-1" BorderBrush="#33FFFFFF" Background="Transparent">
+            <Viewbox x:Name="Viewbox_Scaling">
+                <ContentPresenter x:Name="ContentPresenter_Element" />
+            </Viewbox>
         </Border>
     </Grid>
 </UserControl>

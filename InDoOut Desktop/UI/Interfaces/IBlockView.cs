@@ -1,4 +1,5 @@
 ﻿using InDoOut_Desktop.Actions.Selecting;
+using InDoOut_UI_Common.Actions.Selecting;
 using System.Windows;
 
 namespace InDoOut_Desktop.UI.Interfaces
@@ -11,7 +12,7 @@ namespace InDoOut_Desktop.UI.Interfaces
 
     public interface IBlockView : IProgramDisplay, IElementDisplay
     {
-        ISelectionManager SelectionManager { get; }
+        ISelectionManager<IBlockViewSelectable> SelectionManager { get; }
         BlockViewMode CurrentViewMode { get; set; }
 
         Size TotalSize { get; }

@@ -7,6 +7,7 @@ using InDoOut_Desktop.Programs;
 using InDoOut_Desktop.UI.Controls.CoreEntityRepresentation;
 using InDoOut_Desktop.UI.Interfaces;
 using InDoOut_UI_Common.Actions;
+using InDoOut_UI_Common.Actions.Selecting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,7 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
 
         public IProgram AssociatedProgram { get => _currentProgram; set => ChangeProgram(value); }
         public BlockViewMode CurrentViewMode { get => _currentViewMode; set => ChangeViewMode(value); }
-        public ISelectionManager SelectionManager => _selectionManager;
+        public ISelectionManager<IBlockViewSelectable> SelectionManager => _selectionManager;
 
         public Size TotalSize => new Size(Canvas_Content.ActualWidth, Canvas_Content.ActualHeight);
 

@@ -14,7 +14,7 @@ namespace InDoOut_Desktop.UI.Interfaces
         Variables
     }
 
-    public interface IUIFunction : IDraggable, ICopyable, IDeletable, ISelectable
+    public interface IUIFunction : IDraggable, ICopyable, IDeletable, IBlockViewSelectable
     {
         UIFunctionDisplayMode DisplayMode { get; set; }
         IFunction AssociatedFunction { get; set; }

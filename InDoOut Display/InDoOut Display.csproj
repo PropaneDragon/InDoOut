@@ -16,8 +16,4 @@
     <ProjectReference Include="..\InDoOut UI Common\InDoOut UI Common.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Actions\Selecting\" />
-  </ItemGroup>
-
 </Project>

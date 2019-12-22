@@ -1,80 +1,25 @@
 ﻿using InDoOut_Desktop.UI.Interfaces;
-using System.Collections.Generic;
+using InDoOut_UI_Common.Actions.Selecting;
 
 namespace InDoOut_Desktop.Actions.Selecting
 {
-    internal class SelectionManager : ISelectionManager
+    internal class SelectionManager : AbstractSelectionManager<IBlockViewSelectable>
     {
-        private readonly IBlockView _associatedBlockView = null;
-        private readonly List<ISelectable> _selection = new List<ISelectable>();
+        public IBlockView _associatedBlockView = null;
 
-        public List<ISelectable> Selection => new List<ISelectable>(_selection);
-
-        public SelectionManager(IBlockView blockView)
+        public SelectionManager(IBlockView blockView) : base()
         {
             _associatedBlockView = blockView;
         }
 
-        public void Clear()
+        protected override void NotifySelectableEnded(IBlockViewSelectable selectable)
         {
-            foreach (var item in Selection)
-            {
-                _ = Remove(item);
-            }
+            selectable.SelectionEnded(_associatedBlockView);
         }
 
-        public bool Add(ISelectable selectable, bool toggleIfAlreadyInserted = false)
+        protected override void NotifySelectableStarted(IBlockViewSelectable selectable)
         {
-            if (selectable != null)
-            {
-                if (!Contains(selectable))
-                {
-                    _selection.Add(selectable);
-
-                    selectable.SelectionStarted(_associatedBlockView);
-
-                    return true;
-                }
-                else if (toggleIfAlreadyInserted)
-                {
-                    return Remove(selectable);
-                }
-            }
-
-            return false;
-        }
-
-        public bool Set(ISelectable selectable, bool toggleIfAlreadyInserted = false)
-        {
-            if (selectable != null)
-            {
-                var stayCleared = Contains(selectable) && toggleIfAlreadyInserted;
-
-                Clear();
-
-                return !stayCleared ? Add(selectable) : true;
-            }
-
-            return false;
-        }
-
-        public bool Remove(ISelectable selectable)
-        {
-            if (selectable != null && Contains(selectable))
-            {
-                selectable.SelectionEnded(_associatedBlockView);
-
-                _ = _selection.Remove(selectable);
-
-                return true;
-            }
-
-            return false;
-        }
-
-        public bool Contains(ISelectable selectable)
-        {
-            return selectable != null && _selection.Contains(selectable);
+            selectable.SelectionStarted(_associatedBlockView);
         }
     }
 }

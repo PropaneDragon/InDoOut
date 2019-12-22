@@ -1,5 +1,6 @@
 ﻿using InDoOut_Display.Actions.Resizing;
 using InDoOut_Display.Actions.Scaling;
+using InDoOut_Display.Actions.Selecting;
 using InDoOut_Display.UI.Controls.Screens;
 using InDoOut_Display_Core.Elements;
 using System;
@@ -9,16 +10,19 @@ using System.Windows.Input;
 
 namespace InDoOut_Display.UI.Controls.DisplayElement
 {
-    public partial class DisplayElementContainer : UserControl, IResizable, IScalable
+    public partial class DisplayElementContainer : UserControl, IResizable, IScalable, IScreenSelectable
     {
-        private static readonly Thickness SELECTED_BORDER_THICKNESS = new Thickness(2);
-        private Thickness _borderThickness = new Thickness(0);
-        private Thickness _marginThickness = new Thickness(0);
+        private static readonly Thickness THICKNESS_STATIC = new Thickness(1);
+        private static readonly Thickness THICKNESS_SELECTED = new Thickness(2);
+
+        private bool _selected = false;
+        private bool _resizing = false;
+        private Thickness _originalMargins = new Thickness();
 
         public bool AutoScale { get; set; } = false;
         public double Scale { get; set; } = 1d;
         public IDisplayElement AssociatedDisplayElement { get => ContentPresenter_Element.Content as IDisplayElement; set => SetDisplayElement(value); }
-        public Size Size => new Size(ContentPresenter_Element.ActualWidth, ContentPresenter_Element.ActualHeight);
+        public Size Size => new Size(Border_Presenter.ActualWidth, Border_Presenter.ActualHeight);
         public Thickness MarginPercentages { get => GetMarginPercentages(); set => SetMarginPercentages(value); }
 
         public DisplayElementContainer(IDisplayElement element = null)
@@ -32,23 +36,35 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
 
         public bool CanScale(IScreen screen) => true;
 
+        public bool CanSelect(IScreen view) => true;
+
         public void ScaleChanged(IScreen screen)
         {
         }
 
+        public void SelectionStarted(IScreen view)
+        {
+            _selected = true;
+            UpdateBorder();
+        }
+
+        public void SelectionEnded(IScreen view)
+        {
+            _selected = false;
+            UpdateBorder();
+        }
+
         public void ResizeStarted(IScreen screen)
         {
-            _borderThickness = Border_Presenter.BorderThickness;
-            _marginThickness = Border_Presenter.Margin;
-
-            Border_Presenter.BorderThickness = SELECTED_BORDER_THICKNESS;
-            Border_Presenter.Margin = NegateThickness(SELECTED_BORDER_THICKNESS);
+            _resizing = true;
+            _originalMargins = MarginPercentages;
+            UpdateBorder();
         }
 
         public void ResizeEnded(IScreen screen)
         {
-            Border_Presenter.BorderThickness = _borderThickness;
-            Border_Presenter.Margin = _marginThickness;
+            _resizing = false;
+            UpdateBorder();
         }
 
         public bool CloseToEdge(IScreen screen, Point point, double distance = 5) => GetCloseEdge(screen, point, distance) != ResizeEdge.None;
@@ -56,7 +72,7 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
         public ResizeEdge GetCloseEdge(IScreen screen, Point point, double distance = 5)
         {            
             var size = Size;
-            var localPoint = TranslatePoint(point, ContentPresenter_Element);
+            var localPoint = TranslatePoint(point, Border_Presenter);
             var inBounds = localPoint.X > -distance && localPoint.X < (size.Width + distance) && localPoint.Y > -distance && localPoint.Y < (size.Height + distance);
             var nearLeft = PointWithin(localPoint.X, -distance, distance);
             var nearTop = PointWithin(localPoint.Y, -distance, distance);
@@ -86,34 +102,49 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
             return ResizeEdge.None;
         }
 
-        public void SetEdgeToMouse(IScreen screen, ResizeEdge edge)
+        public void ResizeMoved(IScreen screen, ResizeEdge edge, Point delta)
         {
             if (screen != null && edge.ValidEdge())
             {
-                var mousePercentage = GetMouseLocationAsPercentage();
-                var margins = MarginPercentages;
+                var deltaPercentage = GetDeltaAsPercentage(delta);
+                var margins = _originalMargins;
+                var currentMargins = MarginPercentages;
                 var minimumSize = 0.01;
 
                 if (edge == ResizeEdge.Left || edge == ResizeEdge.BottomLeft || edge == ResizeEdge.TopLeft)
                 {
-                    margins.Left = minimumSize + mousePercentage.X + margins.Right < 1d ? mousePercentage.X : margins.Left;
+                    var adjustedMargin = margins.Left - deltaPercentage.X;
+                    var totalMargin = adjustedMargin + minimumSize + margins.Right;
+                    var validMargin = totalMargin < 1d && adjustedMargin > minimumSize;
+
+                    margins.Left = validMargin ? adjustedMargin : currentMargins.Left;
                 }
-                
+
                 if (edge == ResizeEdge.Right || edge == ResizeEdge.BottomRight || edge == ResizeEdge.TopRight)
                 {
-                    var adjustedMargin = 1d - mousePercentage.X;
-                    margins.Right = minimumSize + adjustedMargin + margins.Left < 1d ? adjustedMargin : margins.Right;
+                    var adjustedMargin = margins.Right + deltaPercentage.X;
+                    var totalMargin = adjustedMargin + minimumSize + margins.Left;
+                    var validMargin = totalMargin < 1d && adjustedMargin > minimumSize;
+
+                    margins.Right = validMargin ? adjustedMargin : currentMargins.Right;
                 }
 
                 if (edge == ResizeEdge.Top || edge == ResizeEdge.TopLeft || edge == ResizeEdge.TopRight)
                 {
-                    margins.Top = minimumSize + mousePercentage.Y + margins.Bottom < 1d ? mousePercentage.Y : margins.Top;
+                    var adjustedMargin = margins.Top - deltaPercentage.Y;
+                    var totalMargin = adjustedMargin + minimumSize + margins.Bottom;
+                    var validMargin = totalMargin < 1d && adjustedMargin > minimumSize;
+
+                    margins.Top = validMargin ? adjustedMargin : currentMargins.Top;
                 }
 
                 if (edge == ResizeEdge.Bottom || edge == ResizeEdge.BottomLeft || edge == ResizeEdge.BottomRight)
                 {
-                    var adjustedMargin = 1d - mousePercentage.Y;
-                    margins.Bottom = minimumSize + adjustedMargin + margins.Top < 1d ? adjustedMargin : margins.Bottom;
+                    var adjustedMargin = margins.Bottom + deltaPercentage.Y;
+                    var totalMargin = adjustedMargin + minimumSize + margins.Top;
+                    var validMargin = totalMargin < 1d && adjustedMargin > minimumSize;
+
+                    margins.Bottom = validMargin ? adjustedMargin : currentMargins.Bottom;
                 }
 
                 MarginPercentages = margins;
@@ -139,12 +170,11 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
             Row_Height_Element.Height = new GridLength(height, GridUnitType.Star);
         }
 
-        private Point GetMouseLocationAsPercentage()
+        private Point GetDeltaAsPercentage(Point delta)
         {
-            var position = Mouse.GetPosition(this);
             var overallSize = new Size(ActualWidth, ActualHeight);
 
-            return new Point(Math.Clamp(position.X / overallSize.Width, 0d, 1d), Math.Clamp(position.Y / overallSize.Height, 0d, 1d));
+            return new Point(delta.X / overallSize.Width, delta.Y / overallSize.Height);
         }
 
         private void SetDisplayElement(IDisplayElement element)
@@ -153,6 +183,14 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
             {
                 ContentPresenter_Element.Content = uiElement;
             }
+        }
+
+        private void UpdateBorder()
+        {
+            var thickness = (_selected || _resizing) ? THICKNESS_SELECTED : THICKNESS_STATIC;
+
+            Border_Presenter.BorderThickness = thickness;
+            Border_Presenter.Margin = NegateThickness(thickness);
         }
 
         private bool PointWithin(double point, double min, double max) => point > min && point < max;
