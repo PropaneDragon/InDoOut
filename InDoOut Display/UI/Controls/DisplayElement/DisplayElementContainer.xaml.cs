@@ -110,46 +110,69 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
                 var margins = _originalMargins;
                 var currentMargins = MarginPercentages;
                 var minimumSize = 0.01;
+                var individualEdges = edge.IndividualEdges();
 
-                if (edge == ResizeEdge.Left || edge == ResizeEdge.BottomLeft || edge == ResizeEdge.TopLeft)
+                foreach (var individualEdge in individualEdges)
                 {
-                    var adjustedMargin = margins.Left - deltaPercentage.X;
-                    var totalMargin = adjustedMargin + minimumSize + margins.Right;
+                    var oppositeEdge = individualEdge.OppositeEdge();
+                    var deltaForEdge = GetDeltaForEdge(individualEdge, deltaPercentage);
+                    var adjustedMargin = GetMarginForEdge(individualEdge, margins) + deltaForEdge;
+                    var oppositeMargin = GetMarginForEdge(oppositeEdge, margins);
+                    var currentEdgeMargin = GetMarginForEdge(individualEdge, currentMargins);
+                    var totalMargin = adjustedMargin + minimumSize + oppositeMargin;
                     var validMargin = totalMargin < 1d && adjustedMargin > minimumSize;
 
-                    margins.Left = validMargin ? adjustedMargin : currentMargins.Left;
-                }
-
-                if (edge == ResizeEdge.Right || edge == ResizeEdge.BottomRight || edge == ResizeEdge.TopRight)
-                {
-                    var adjustedMargin = margins.Right + deltaPercentage.X;
-                    var totalMargin = adjustedMargin + minimumSize + margins.Left;
-                    var validMargin = totalMargin < 1d && adjustedMargin > minimumSize;
-
-                    margins.Right = validMargin ? adjustedMargin : currentMargins.Right;
-                }
-
-                if (edge == ResizeEdge.Top || edge == ResizeEdge.TopLeft || edge == ResizeEdge.TopRight)
-                {
-                    var adjustedMargin = margins.Top - deltaPercentage.Y;
-                    var totalMargin = adjustedMargin + minimumSize + margins.Bottom;
-                    var validMargin = totalMargin < 1d && adjustedMargin > minimumSize;
-
-                    margins.Top = validMargin ? adjustedMargin : currentMargins.Top;
-                }
-
-                if (edge == ResizeEdge.Bottom || edge == ResizeEdge.BottomLeft || edge == ResizeEdge.BottomRight)
-                {
-                    var adjustedMargin = margins.Bottom + deltaPercentage.Y;
-                    var totalMargin = adjustedMargin + minimumSize + margins.Top;
-                    var validMargin = totalMargin < 1d && adjustedMargin > minimumSize;
-
-                    margins.Bottom = validMargin ? adjustedMargin : currentMargins.Bottom;
+                    SetMarginForEdge(individualEdge, validMargin ? adjustedMargin : currentEdgeMargin, ref margins);
                 }
 
                 MarginPercentages = margins;
 
                 UpdateElementPercentages();
+            }
+        }
+
+        private double GetDeltaForEdge(ResizeEdge edge, Point delta)
+        {
+            return edge switch
+            {
+                ResizeEdge.Left => -delta.X,
+                ResizeEdge.Top => -delta.Y,
+                ResizeEdge.Right => delta.X,
+                ResizeEdge.Bottom => delta.Y,
+
+                _ => 0
+            };
+        }
+
+        private double GetMarginForEdge(ResizeEdge edge, Thickness margin)
+        {
+            return edge switch
+            {
+                ResizeEdge.Left => margin.Left,
+                ResizeEdge.Top => margin.Top,
+                ResizeEdge.Right => margin.Right,
+                ResizeEdge.Bottom => margin.Bottom,
+
+                _ => 0
+            };
+        }
+
+        private void SetMarginForEdge(ResizeEdge edge, double value, ref Thickness margin)
+        {
+            switch (edge)
+            {
+                case ResizeEdge.Left:
+                    margin.Left = value;
+                    break;
+                case ResizeEdge.Top:
+                    margin.Top = value;
+                    break;
+                case ResizeEdge.Right:
+                    margin.Right = value;
+                    break;
+                case ResizeEdge.Bottom:
+                    margin.Bottom = value;
+                    break;
             }
         }
 
