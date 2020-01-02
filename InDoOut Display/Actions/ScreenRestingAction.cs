@@ -64,8 +64,6 @@ namespace InDoOut_Display.Actions
             if (_screen != null)
             {
                 var elementsUnderMouse = _screen.GetElementsUnderMouse();
-                elementsUnderMouse.Reverse();
-
                 if (elementsUnderMouse.Count > 0)
                 {
                     if (_screen.GetFirstElementOfType<IScreenSelectable>(elementsUnderMouse) is IScreenSelectable selectable && selectable.CanSelect(_screen))
