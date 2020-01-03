@@ -12,6 +12,7 @@ namespace InDoOut_Philips_Hue_Plugins
     internal static class HueHelpers
     {
         private static CacheControlHeaderValue _cacheControl = new CacheControlHeaderValue { NoCache = true, NoStore = true };
+        private static Dictionary<string, HueClient> _clientStorage = new Dictionary<string, HueClient>();
 
         public static HueClient GetClient(IApiFunction apiFunction) => apiFunction != null ? GetClient(apiFunction.BridgeIPProperty.FullValue, apiFunction.UserIdProperty.FullValue) : null;
         public static HueClient GetClient(string bridgeIp, string userId) => !string.IsNullOrEmpty(bridgeIp) && !string.IsNullOrEmpty(userId) ? TryGet.ValueOrDefault(() => GenerateHueClient(bridgeIp, userId), null) : null;
@@ -118,9 +119,16 @@ namespace InDoOut_Philips_Hue_Plugins
 
         private static bool StringMatches(string @string, string match, bool allowPartialMatches = false) => @string != null && match != null ? (allowPartialMatches ? @string.Contains(match) : @string == match) : false;
 
-        private static LocalHueClient GenerateHueClient(string bridgeIp, string userId)
+        private static HueClient GenerateHueClient(string bridgeIp, string userId)
         {
-            var client = new LocalHueClient(bridgeIp, userId);
+            var key = $"{bridgeIp}|||{userId}";
+
+            if (!_clientStorage.ContainsKey(key))
+            {
+                _clientStorage[key] = new LocalHueClient(bridgeIp, userId);
+            }
+
+            var client = _clientStorage[key];
             var httpClient = client.GetHttpClient().Result;
             if (httpClient != null)
             {
