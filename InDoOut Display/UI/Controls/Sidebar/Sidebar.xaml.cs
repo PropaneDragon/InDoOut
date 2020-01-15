@@ -19,5 +19,34 @@ namespace InDoOut_Display.UI.Controls.Sidebar
             var elementWindow = new ElementSelectorWindow(AssociatedScreenOverview?.CurrentScreen) { Owner = Window.GetWindow(this) };
             elementWindow.Show();
         }
+
+        private void Button_SwitchMode_Click(object sender, RoutedEventArgs e)
+        {
+            var screen = AssociatedScreenOverview?.CurrentScreen;
+            if (screen != null)
+            {
+                screen.Mode = screen.Mode == ScreenMode.Connections ? ScreenMode.Layout : ScreenMode.Connections;
+            }
+        }
+
+        private void Button_New_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Open_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Save_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_SaveAs_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
