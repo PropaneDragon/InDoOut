@@ -30,6 +30,7 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
             AssociatedDisplayElement = element;
 
             UpdateBorder();
+            UpdateName();
         }
 
         public bool CanResize(IScreen screen) => true;
@@ -46,12 +47,14 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
         {
             _selected = true;
             UpdateBorder();
+            UpdateName();
         }
 
         public void SelectionEnded(IScreen view)
         {
             _selected = false;
             UpdateBorder();
+            UpdateName();
         }
 
         public void ResizeStarted(IScreen screen)
@@ -59,12 +62,14 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
             _resizing = true;
             _originalMargins = MarginPercentages;
             UpdateBorder();
+            UpdateName();
         }
 
         public void ResizeEnded(IScreen screen)
         {
             _resizing = false;
             UpdateBorder();
+            UpdateName();
         }
 
         public bool CloseToEdge(IScreen screen, Point point, double distance = 5) => GetCloseEdge(screen, point, distance) != ResizeEdge.None;
@@ -214,6 +219,11 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
 
             Border_Presenter.BorderThickness = thickness;
             Border_Presenter.Margin = NegateThickness(thickness);
+        }
+
+        private void UpdateName()
+        {
+            Grid_Name.Visibility = _selected || _resizing ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private bool PointWithin(double point, double min, double max) => point > min && point < max;
