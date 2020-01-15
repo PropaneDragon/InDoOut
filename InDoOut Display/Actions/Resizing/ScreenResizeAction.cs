@@ -8,7 +8,7 @@ namespace InDoOut_Display.Actions.Resizing
     public class ScreenResizeAction : InDoOut_UI_Common.Actions.Dragging.DragAction
     {
         private Size _initialSize = new Size();
-        private ScreenItemEdge _initialEdge = ScreenItemEdge.None;
+        private ScreenEdge _initialEdge = ScreenEdge.None;
 
         public Screen ScreenItem { get; private set; } = null;
 
@@ -19,7 +19,7 @@ namespace InDoOut_Display.Actions.Resizing
             _ = base.MouseLeftDown(mousePosition);
 
             _initialSize = new Size(ScreenItem?.ActualWidth ?? 0, ScreenItem?.ActualHeight ?? 0);
-            _initialEdge = ScreenItem?.GetCloseEdge(Mouse.GetPosition(screenItem)) ?? ScreenItemEdge.None;
+            _initialEdge = ScreenItem?.GetCloseEdge(Mouse.GetPosition(screenItem)) ?? ScreenEdge.None;
         }
 
         public override bool MouseLeftMove(Point mousePosition)
@@ -63,12 +63,12 @@ namespace InDoOut_Display.Actions.Resizing
         {
             return _initialEdge switch
             {
-                ScreenItemEdge.Left => 2,
-                ScreenItemEdge.TopLeft => 2,
-                ScreenItemEdge.BottomLeft => 2,
-                ScreenItemEdge.Right => -2,
-                ScreenItemEdge.TopRight => -2,
-                ScreenItemEdge.BottomRight => -2,
+                ScreenEdge.Left => 2,
+                ScreenEdge.TopLeft => 2,
+                ScreenEdge.BottomLeft => 2,
+                ScreenEdge.Right => -2,
+                ScreenEdge.TopRight => -2,
+                ScreenEdge.BottomRight => -2,
 
                 _ => 0
             };
@@ -78,12 +78,12 @@ namespace InDoOut_Display.Actions.Resizing
         {
             return _initialEdge switch
             {
-                ScreenItemEdge.Bottom => -2,
-                ScreenItemEdge.BottomLeft => -2,
-                ScreenItemEdge.BottomRight => -2,
-                ScreenItemEdge.Top => 2,
-                ScreenItemEdge.TopLeft => 2,
-                ScreenItemEdge.TopRight => 2,
+                ScreenEdge.Bottom => -2,
+                ScreenEdge.BottomLeft => -2,
+                ScreenEdge.BottomRight => -2,
+                ScreenEdge.Top => 2,
+                ScreenEdge.TopLeft => 2,
+                ScreenEdge.TopRight => 2,
 
                 _ => 0
             };

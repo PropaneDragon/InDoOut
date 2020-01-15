@@ -4,6 +4,7 @@ using InDoOut_Display.UI.Controls.DisplayElement;
 using InDoOut_Display_Core.Elements;
 using InDoOut_UI_Common.Actions;
 using InDoOut_UI_Common.Actions.Selecting;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -18,7 +19,11 @@ namespace InDoOut_Display.UI.Controls.Screens
         private readonly ActionHandler _actionHandler = null;
         private readonly SelectionManager _selectionManager = null;
 
+        private ScreenMode _mode = ScreenMode.Layout;
+
         public Size Size => new Size(Width, Height);
+
+        public ScreenMode Mode { get => _mode; set => ChangeMode(value); }
 
         public ISelectionManager<IScreenSelectable> SelectionManager => _selectionManager;
 
@@ -113,7 +118,7 @@ namespace InDoOut_Display.UI.Controls.Screens
             return null;
         }
 
-        public ScreenItemEdge GetCloseEdge(Point point, double distance = 5d)
+        public ScreenEdge GetCloseEdge(Point point, double distance = 5d)
         {
             var size = new Size(ActualWidth, ActualHeight);
             var inBounds = point.X > -distance && point.X < (size.Width + distance) && point.Y > -distance && point.Y < (size.Height + distance);
@@ -124,27 +129,27 @@ namespace InDoOut_Display.UI.Controls.Screens
 
             if (nearLeft)
             {
-                return nearTop ? ScreenItemEdge.TopLeft : nearBottom ? ScreenItemEdge.BottomLeft : ScreenItemEdge.Left;
+                return nearTop ? ScreenEdge.TopLeft : nearBottom ? ScreenEdge.BottomLeft : ScreenEdge.Left;
             }
             else if (nearRight)
             {
-                return nearTop ? ScreenItemEdge.TopRight : nearBottom ? ScreenItemEdge.BottomRight : ScreenItemEdge.Right;
+                return nearTop ? ScreenEdge.TopRight : nearBottom ? ScreenEdge.BottomRight : ScreenEdge.Right;
             }
             else if (nearBottom)
             {
-                return ScreenItemEdge.Bottom;
+                return ScreenEdge.Bottom;
             }
             else if (nearTop)
             {
-                return ScreenItemEdge.Top;
+                return ScreenEdge.Top;
             }
 
-            return ScreenItemEdge.None;
+            return ScreenEdge.None;
         }
 
         public bool PointCloseToScreenItemEdge(Point point, double distance = 5d)
         {
-            return GetCloseEdge(point, distance) != ScreenItemEdge.None;
+            return GetCloseEdge(point, distance) != ScreenEdge.None;
         }
 
         private HitTestFilterBehavior FilterHit(DependencyObject potentialHitTestTarget)
@@ -167,6 +172,14 @@ namespace InDoOut_Display.UI.Controls.Screens
         private bool PointWithin(double point, double min, double max)
         {
             return point > min && point < max;
+        }
+
+        private void ChangeMode(ScreenMode mode)
+        {
+            if (mode != _mode)
+            {
+                _mode = mode;
+            }
         }
 
         private void UserControl_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)

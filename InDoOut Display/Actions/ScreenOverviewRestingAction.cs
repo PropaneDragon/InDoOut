@@ -17,7 +17,7 @@ namespace InDoOut_Display.Actions
         public override bool MouseNoMove(Point mousePosition)
         {
             var position = Mouse.GetPosition(ScreenItem);
-            var edge = ScreenItem?.GetCloseEdge(position, 5) ?? ScreenItemEdge.None;
+            var edge = ScreenItem?.GetCloseEdge(position, 5) ?? ScreenEdge.None;
 
             Mouse.OverrideCursor = GetCursorForEdge(edge);
 
@@ -38,21 +38,21 @@ namespace InDoOut_Display.Actions
             return false;
         }
 
-        private Cursor GetCursorForEdge(ScreenItemEdge edge)
+        private Cursor GetCursorForEdge(ScreenEdge edge)
         {
             return edge switch
             {
-                ScreenItemEdge.Left => Cursors.SizeWE,
-                ScreenItemEdge.Right => Cursors.SizeWE,
+                ScreenEdge.Left => Cursors.SizeWE,
+                ScreenEdge.Right => Cursors.SizeWE,
 
-                ScreenItemEdge.Top => Cursors.SizeNS,
-                ScreenItemEdge.Bottom => Cursors.SizeNS,
+                ScreenEdge.Top => Cursors.SizeNS,
+                ScreenEdge.Bottom => Cursors.SizeNS,
                 
-                ScreenItemEdge.TopLeft => Cursors.SizeNWSE,
-                ScreenItemEdge.BottomRight => Cursors.SizeNWSE,
+                ScreenEdge.TopLeft => Cursors.SizeNWSE,
+                ScreenEdge.BottomRight => Cursors.SizeNWSE,
 
-                ScreenItemEdge.TopRight => Cursors.SizeNESW,
-                ScreenItemEdge.BottomLeft => Cursors.SizeNESW,
+                ScreenEdge.TopRight => Cursors.SizeNESW,
+                ScreenEdge.BottomLeft => Cursors.SizeNESW,
 
                 _ => null
             };

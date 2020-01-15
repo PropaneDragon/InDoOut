@@ -4,7 +4,7 @@ using System.Windows;
 
 namespace InDoOut_Display.UI.Controls.Screens
 {
-    public enum ScreenItemEdge
+    public enum ScreenEdge
     {
         None,
         Left,
@@ -17,12 +17,19 @@ namespace InDoOut_Display.UI.Controls.Screens
         BottomRight
     }
 
+    public enum ScreenMode
+    {
+        Layout,
+        Connections
+    }
+
     public interface IScreen : IElementHost, IDisplayElementHost
     {
+        ScreenMode Mode { get; set; }
         ISelectionManager<IScreenSelectable> SelectionManager { get; }
         Size Size { get; }
 
-        ScreenItemEdge GetCloseEdge(Point point, double distance = 5);
+        ScreenEdge GetCloseEdge(Point point, double distance = 5);
         bool PointCloseToScreenItemEdge(Point point, double distance = 5);
         Point GetMousePosition();
     }
