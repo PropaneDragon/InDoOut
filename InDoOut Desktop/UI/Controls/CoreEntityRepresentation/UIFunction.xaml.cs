@@ -1,8 +1,9 @@
 ﻿using InDoOut_Core.Entities.Functions;
 using InDoOut_Core.Functions;
 using InDoOut_Core.Logging;
-using InDoOut_Desktop.Actions.Copying;
 using InDoOut_Desktop.UI.Interfaces;
+using InDoOut_UI_Common.Actions.Copying;
+using InDoOut_UI_Common.InterfaceElements;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,13 +15,13 @@ using System.Windows.Threading;
 
 namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
 {
-    public partial class UIFunction : UserControl, IUIFunction
+    public partial class UIFunction : UserControl, IUIFunction<IBlockView>
     {
         private DispatcherTimer _updateTimer = null;
         private DoubleAnimation _fadeAnimation = null;
         private UIFunctionDisplayMode _displayMode = UIFunctionDisplayMode.None;
         private IFunction _function = null;
-        private readonly List<IUIConnection> _cachedVisualConnections = new List<IUIConnection>();
+        private readonly List<IUIConnection<IBlockView>> _cachedVisualConnections = new List<IUIConnection<IBlockView>>();
 
         public IFunction AssociatedFunction { get => _function; set => SetFunction(value); }
 
@@ -64,12 +65,12 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
             }
         }
 
-        public bool CopyTo(ICopyable other)
+        public bool CopyTo(ICopyable<IBlockView> other)
         {
             return other != null;
         }
 
-        public ICopyable CreateCopy(IBlockView blockView)
+        public ICopyable<IBlockView> CreateCopy(IBlockView blockView)
         {
             if (blockView != null && _function != null)
             {
@@ -286,7 +287,7 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
             return RemoveConnections(blockView.FindConnections(end.Cast<IUIConnectionEnd>().ToList()), blockView);
         }
 
-        private bool RemoveConnections(List<IUIConnection> connections, IBlockView blockView)
+        private bool RemoveConnections(List<IUIConnection<IBlockView>> connections, IBlockView blockView)
         {
             var allDeleted = true;
 

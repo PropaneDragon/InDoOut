@@ -1,5 +1,5 @@
 ﻿using InDoOut_Core.Entities.Functions;
-using InDoOut_Desktop.UI.Interfaces;
+using InDoOut_UI_Common.InterfaceElements;
 using System;
 using System.Threading.Tasks;
 using System.Windows;

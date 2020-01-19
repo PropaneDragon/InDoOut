@@ -1,4 +1,5 @@
 ﻿using InDoOut_Desktop.UI.Interfaces;
+using InDoOut_UI_Common.InterfaceElements;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -8,7 +9,7 @@ using System.Windows.Threading;
 
 namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
 {
-    public partial class UIConnection : UserControl, IUIConnection
+    public partial class UIConnection : UserControl, IUIConnection<IBlockView>
     {
         private bool _startIsLeft = true;
         private bool _endIsLeft = true;
@@ -54,7 +55,7 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
 
             if (blockView != null)
             {
-                blockView.Remove(this as IUIConnection);
+                blockView.Remove(this as IUIConnection<IBlockView>);
             }
         }
 
@@ -68,7 +69,7 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
             Stroke_Highlight.Visibility = Visibility.Hidden;
         }
 
-        public void UpdatePositionFromInputOutput(IElementDisplay display)
+        public void UpdatePositionFromInputOutput(IBlockView display)
         {
             if (display != null && AssociatedEnd != null && AssociatedStart != null)
             {

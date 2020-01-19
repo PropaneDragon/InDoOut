@@ -1,11 +1,11 @@
 ﻿using InDoOut_Core.Entities.Functions;
-using InDoOut_Desktop.Actions.Copying;
-using InDoOut_Desktop.Actions.Deleting;
-using InDoOut_Desktop.Actions.Dragging;
-using InDoOut_Desktop.Actions.Selecting;
+using InDoOut_UI_Common.Actions.Copying;
+using InDoOut_UI_Common.Actions.Deleting;
+using InDoOut_UI_Common.Actions.Dragging;
+using InDoOut_UI_Common.Actions.Selecting;
 using System.Collections.Generic;
 
-namespace InDoOut_Desktop.UI.Interfaces
+namespace InDoOut_UI_Common.InterfaceElements
 {
     public enum UIFunctionDisplayMode
     {
@@ -14,7 +14,7 @@ namespace InDoOut_Desktop.UI.Interfaces
         Variables
     }
 
-    public interface IUIFunction : IDraggable, ICopyable, IDeletable, IBlockViewSelectable
+    public interface IUIFunction<ViewType> : IDraggable<ViewType>, ICopyable<ViewType>, IDeletable<ViewType>, ISelectable<ViewType>
     {
         UIFunctionDisplayMode DisplayMode { get; set; }
         IFunction AssociatedFunction { get; set; }

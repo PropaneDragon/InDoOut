@@ -8,6 +8,7 @@ using InDoOut_Desktop.UI.Controls.CoreEntityRepresentation;
 using InDoOut_Desktop.UI.Interfaces;
 using InDoOut_UI_Common.Actions;
 using InDoOut_UI_Common.Actions.Selecting;
+using InDoOut_UI_Common.InterfaceElements;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,7 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
 
         public IProgram AssociatedProgram { get => _currentProgram; set => ChangeProgram(value); }
         public BlockViewMode CurrentViewMode { get => _currentViewMode; set => ChangeViewMode(value); }
-        public ISelectionManager<IBlockViewSelectable> SelectionManager => _selectionManager;
+        public ISelectionManager<ISelectable<IBlockView>> SelectionManager => _selectionManager;
 
         public Size TotalSize => new Size(Canvas_Content.ActualWidth, Canvas_Content.ActualHeight);
 
@@ -42,9 +43,9 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
 
         public Point Offset { get => new Point(Scroll_Content.HorizontalOffset, Scroll_Content.VerticalOffset); set => SetViewOffset(value); }
 
-        public List<IUIFunction> UIFunctions => FindCanvasChild<IUIFunction>();
+        public List<IUIFunction<IBlockView>> UIFunctions => FindCanvasChild<IUIFunction<IBlockView>>();
 
-        public List<IUIConnection> UIConnections => FindCanvasChild<IUIConnection>();
+        public List<IUIConnection<IBlockView>> UIConnections => FindCanvasChild<IUIConnection<IBlockView>>();
 
         public List<FrameworkElement> Elements => FindCanvasChild<FrameworkElement>();
 
@@ -119,12 +120,12 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
             Scroll_Content.ScrollToVerticalOffset((Canvas_Content.ActualHeight / 2d) - (Scroll_Content.ActualHeight / 2d));
         }
 
-        public IUIFunction Create(IFunction function)
+        public IUIFunction<IBlockView> Create(IFunction function)
         {
             return Create(function, CentreViewCoordinate);
         }
 
-        public IUIFunction Create(IFunction function, Point location)
+        public IUIFunction<IBlockView> Create(IFunction function, Point location)
         {
             if (AssociatedProgram != null)
             {
@@ -140,7 +141,7 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
             return null;
         }
 
-        public IUIConnection Create(IUIConnectionStart start, Point end)
+        public IUIConnection<IBlockView> Create(IUIConnectionStart start, Point end)
         {
             if (start != null && start is FrameworkElement element)
             {
@@ -160,7 +161,7 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
             return null;
         }
 
-        public IUIConnection Create(IUIConnectionStart start, IUIConnectionEnd end)
+        public IUIConnection<IBlockView> Create(IUIConnectionStart start, IUIConnectionEnd end)
         {
             if (start != null && end != null && end is FrameworkElement element)
             {
@@ -178,14 +179,14 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
             return null;
         }
 
-        public IUIConnection FindConnection(IUIConnectionStart start, IUIConnectionEnd end) => FindCanvasChild<IUIConnection>(uiConnection => uiConnection.AssociatedEnd == end && uiConnection.AssociatedStart == start).FirstOrDefault();
-        public List<IUIConnection> FindConnections(IUIConnectionStart start) => FindConnections(new List<IUIConnectionStart>() { start });
-        public List<IUIConnection> FindConnections(IUIConnectionEnd end) => FindConnections(new List<IUIConnectionEnd>() { end });
-        public List<IUIConnection> FindConnections(List<IUIConnectionStart> starts) => FindCanvasChild<IUIConnection>(uiConnection => starts.Contains(uiConnection.AssociatedStart));
-        public List<IUIConnection> FindConnections(List<IUIConnectionEnd> ends) => FindCanvasChild<IUIConnection>(uiConnection => ends.Contains(uiConnection.AssociatedEnd));
-        public IUIFunction FindFunction(IFunction function) => FindCanvasChild<IUIFunction>(uiFunction => uiFunction.AssociatedFunction == function).FirstOrDefault();
+        public IUIConnection<IBlockView> FindConnection(IUIConnectionStart start, IUIConnectionEnd end) => FindCanvasChild<IUIConnection<IBlockView>>(uiConnection => uiConnection.AssociatedEnd == end && uiConnection.AssociatedStart == start).FirstOrDefault();
+        public List<IUIConnection<IBlockView>> FindConnections(IUIConnectionStart start) => FindConnections(new List<IUIConnectionStart>() { start });
+        public List<IUIConnection<IBlockView>> FindConnections(IUIConnectionEnd end) => FindConnections(new List<IUIConnectionEnd>() { end });
+        public List<IUIConnection<IBlockView>> FindConnections(List<IUIConnectionStart> starts) => FindCanvasChild<IUIConnection<IBlockView>>(uiConnection => starts.Contains(uiConnection.AssociatedStart));
+        public List<IUIConnection<IBlockView>> FindConnections(List<IUIConnectionEnd> ends) => FindCanvasChild<IUIConnection<IBlockView>>(uiConnection => ends.Contains(uiConnection.AssociatedEnd));
+        public IUIFunction<IBlockView> FindFunction(IFunction function) => FindCanvasChild<IUIFunction<IBlockView>>(uiFunction => uiFunction.AssociatedFunction == function).FirstOrDefault();
 
-        public void Remove(IUIConnection output)
+        public void Remove(IUIConnection<IBlockView> output)
         {
             if (output is FrameworkElement element)
             {
@@ -320,9 +321,9 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
         {
             _currentViewMode = viewMode;
 
-            var functions = FindCanvasChild<IUIFunction>();
-            var ioConnections = FindCanvasChild<IUIConnection>(connection => connection.AssociatedStart is IUIOutput);
-            var variableConnections = FindCanvasChild<IUIConnection>(connection => connection.AssociatedStart is IUIResult);
+            var functions = FindCanvasChild<IUIFunction<IBlockView>>();
+            var ioConnections = FindCanvasChild<IUIConnection<IBlockView>>(connection => connection.AssociatedStart is IUIOutput);
+            var variableConnections = FindCanvasChild<IUIConnection<IBlockView>>(connection => connection.AssociatedStart is IUIResult);
 
             foreach (var function in functions)
             {

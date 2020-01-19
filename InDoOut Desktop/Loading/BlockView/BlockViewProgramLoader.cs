@@ -2,6 +2,7 @@
 using InDoOut_Core.Entities.Functions;
 using InDoOut_Core.Entities.Programs;
 using InDoOut_Desktop.UI.Interfaces;
+using InDoOut_UI_Common.InterfaceElements;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace InDoOut_Desktop.Loading.BlockView
         {
             if (program != null && _associatedBlockView != null)
             {
-                var functionToUIFunctionMap = new Dictionary<IFunction, IUIFunction>();
+                var functionToUIFunctionMap = new Dictionary<IFunction, IUIFunction<IBlockView>>();
 
                 if (_associatedBlockView is IScrollable scrollable)
                 {
@@ -62,7 +63,7 @@ namespace InDoOut_Desktop.Loading.BlockView
             return false;
         }
 
-        private void DisplayConnections(IProgram program, Dictionary<IFunction, IUIFunction> functionToUIFunctionMap)
+        private void DisplayConnections(IProgram program, Dictionary<IFunction, IUIFunction<IBlockView>> functionToUIFunctionMap)
         {
             foreach (var function in program.Functions)
             {

@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\InDoOut Core\InDoOut Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Page Update="Controls\Core\TitleBar.xaml">
       <SubType>Designer</SubType>
     </Page>

@@ -1,21 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using InDoOut_UI_Common.InterfaceElements;
+using System.Collections.Generic;
 using System.Windows;
 
 namespace InDoOut_Desktop.UI.Interfaces
 {
     public interface IConnectionDisplay
     {
-        List<IUIConnection> UIConnections { get; }
+        List<IUIConnection<IBlockView>> UIConnections { get; }
 
-        void Remove(IUIConnection connection);
+        void Remove(IUIConnection<IBlockView> connection);
 
-        IUIConnection Create(IUIConnectionStart start, Point end);
-        IUIConnection Create(IUIConnectionStart start, IUIConnectionEnd end);
-        IUIConnection FindConnection(IUIConnectionStart start, IUIConnectionEnd end);
+        IUIConnection<IBlockView> Create(IUIConnectionStart start, Point end);
+        IUIConnection<IBlockView> Create(IUIConnectionStart start, IUIConnectionEnd end);
+        IUIConnection<IBlockView> FindConnection(IUIConnectionStart start, IUIConnectionEnd end);
 
-        List<IUIConnection> FindConnections(IUIConnectionStart start);
-        List<IUIConnection> FindConnections(IUIConnectionEnd end);
-        List<IUIConnection> FindConnections(List<IUIConnectionStart> starts);
-        List<IUIConnection> FindConnections(List<IUIConnectionEnd> ends);
+        List<IUIConnection<IBlockView>> FindConnections(IUIConnectionStart start);
+        List<IUIConnection<IBlockView>> FindConnections(IUIConnectionEnd end);
+        List<IUIConnection<IBlockView>> FindConnections(List<IUIConnectionStart> starts);
+        List<IUIConnection<IBlockView>> FindConnections(List<IUIConnectionEnd> ends);
     }
 }

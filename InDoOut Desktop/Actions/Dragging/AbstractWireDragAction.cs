@@ -1,5 +1,6 @@
 ﻿using InDoOut_Desktop.UI.Interfaces;
 using InDoOut_UI_Common.Actions;
+using InDoOut_UI_Common.InterfaceElements;
 using System.Windows;
 
 namespace InDoOut_Desktop.Actions.Dragging
@@ -8,7 +9,7 @@ namespace InDoOut_Desktop.Actions.Dragging
     {
         private readonly IBlockView _view = null;
         private readonly IUIConnectionStart _start = null;
-        private readonly IUIConnection _uiConnection = null;
+        private readonly IUIConnection<IBlockView> _uiConnection = null;
 
         private AbstractWireDragAction()
         {

@@ -3,7 +3,7 @@ using InDoOut_UI_Common.Actions.Selecting;
 
 namespace InDoOut_Desktop.Actions.Selecting
 {
-    internal class SelectionManager : AbstractSelectionManager<IBlockViewSelectable>
+    internal class SelectionManager : AbstractSelectionManager<ISelectable<IBlockView>>
     {
         public IBlockView _associatedBlockView = null;
 
@@ -12,12 +12,12 @@ namespace InDoOut_Desktop.Actions.Selecting
             _associatedBlockView = blockView;
         }
 
-        protected override void NotifySelectableEnded(IBlockViewSelectable selectable)
+        protected override void NotifySelectableEnded(ISelectable<IBlockView> selectable)
         {
             selectable.SelectionEnded(_associatedBlockView);
         }
 
-        protected override void NotifySelectableStarted(IBlockViewSelectable selectable)
+        protected override void NotifySelectableStarted(ISelectable<IBlockView> selectable)
         {
             selectable.SelectionStarted(_associatedBlockView);
         }

@@ -12,7 +12,7 @@ namespace InDoOut_Desktop.UI.Interfaces
 
     public interface IBlockView : IProgramDisplay, IElementDisplay
     {
-        ISelectionManager<IBlockViewSelectable> SelectionManager { get; }
+        ISelectionManager<ISelectable<IBlockView>> SelectionManager { get; }
         BlockViewMode CurrentViewMode { get; set; }
 
         Size TotalSize { get; }
