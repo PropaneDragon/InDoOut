@@ -41,6 +41,8 @@ namespace InDoOut_Display.UI.Controls.Screens
             {
                 var host = new DisplayElementContainer(displayElement);
                 _ = Grid_Elements.Children.Add(host);
+
+                return true;
             }
 
             return false;

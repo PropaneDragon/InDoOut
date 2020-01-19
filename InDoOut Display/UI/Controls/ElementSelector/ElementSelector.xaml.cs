@@ -5,6 +5,7 @@ using InDoOut_Plugins.Loaders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 
@@ -18,6 +19,7 @@ namespace InDoOut_Display.UI.Controls.ElementSelector
         private DispatcherTimer _slowElementLoader = null;
         private IEnumerable<Type> _pluginTypes = null;
 
+        public bool CloseAssociatedWindowWhenSelected { get; set; } = true;
         public IScreen AssociatedScreen { get; set; } = null;
 
         public ElementSelector()
@@ -69,7 +71,14 @@ namespace InDoOut_Display.UI.Controls.ElementSelector
                         var newFunctionInstance = functionBuilder.BuildInstance(function.GetType());
                         if (newFunctionInstance != null)
                         {
-                            _ = AssociatedScreen?.AddDisplayElement(newFunctionInstance?.CreateAssociatedUIElement()) ?? false;
+                            if (AssociatedScreen?.AddDisplayElement(newFunctionInstance?.CreateAssociatedUIElement()) ?? false)
+                            {
+                                var associatedWindow = Window.GetWindow(this);
+                                if (CloseAssociatedWindowWhenSelected && associatedWindow != null)
+                                {
+                                    associatedWindow.Close();
+                                }
+                            }
                         }
                     };
                 }
@@ -78,7 +87,7 @@ namespace InDoOut_Display.UI.Controls.ElementSelector
 
         private void SlowElementLoader_Tick(object sender, EventArgs e)
         {
-            _slowElementLoader.Stop();
+            _slowElementLoader?.Stop();
 
             var currentElementId = _lastElementId++;
 
@@ -94,7 +103,7 @@ namespace InDoOut_Display.UI.Controls.ElementSelector
                     }
                 }
 
-                _slowElementLoader.Start();
+                _slowElementLoader?.Start();
             }
             else
             {
@@ -120,6 +129,8 @@ namespace InDoOut_Display.UI.Controls.ElementSelector
         private void UserControl_Unloaded(object sender, System.Windows.RoutedEventArgs e)
         {
             LoadedPlugins.Instance.PluginsChanged -= Instance_PluginsChanged;
+
+            KillElementLoader();
         }
     }
 }
