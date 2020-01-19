@@ -16,7 +16,7 @@
                 </DrawingBrush>
             </Border.Background>
             <Grid x:Name="Grid_Elements">
-                
+
             </Grid>
         </Border>
     </Grid>

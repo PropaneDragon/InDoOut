@@ -2,6 +2,6 @@
 {
     public interface IScreenOverview
     {
-        IScreen CurrentScreen { get; }
+        IScreenConnections CurrentConnectionsScreen { get; }
     }
 }

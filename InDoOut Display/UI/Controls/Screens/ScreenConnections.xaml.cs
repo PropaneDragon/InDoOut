@@ -6,15 +6,17 @@ using System.Windows.Input;
 
 namespace InDoOut_Display.UI.Controls.Screens
 {
-    public partial class ScreenOverview : UserControl, IScreenOverview
+    public partial class ScreenConnections : UserControl, IScreenConnections
     {
         private readonly ActionHandler _actionHandler = null;
 
-        public IScreenConnections CurrentConnectionsScreen => ScreenConnections_Main;
+        public IScreen CurrentScreen => ScreenItem_Overview;
 
-        public ScreenOverview()
+        public ScreenConnections()
         {
             InitializeComponent();
+
+            _actionHandler = new ActionHandler(new ScreenConnectionsRestingAction(ScreenItem_Overview));
         }
 
         private void Scroll_Content_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -72,6 +74,12 @@ namespace InDoOut_Display.UI.Controls.Screens
         private void Scroll_Content_PreviewKeyUp(object sender, KeyEventArgs e)
         {
             e.Handled = _actionHandler?.KeyUp(e.Key) ?? false;
+        }
+
+        private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            Scroll_Content.ScrollToHorizontalOffset((Canvas_Content.ActualWidth / 2d) - (ActualWidth / 2d));
+            Scroll_Content.ScrollToVerticalOffset((Canvas_Content.ActualHeight / 2d) - (ActualHeight / 2d));
         }
     }
 }

@@ -5,11 +5,11 @@ using System.Windows.Input;
 
 namespace InDoOut_Display.Actions
 {
-    internal class ScreenOverviewRestingAction : InDoOut_UI_Common.Actions.Action
+    internal class ScreenConnectionsRestingAction : InDoOut_UI_Common.Actions.Action
     {
         public Screen ScreenItem { get; private set; } = null;
 
-        public ScreenOverviewRestingAction(Screen screenItem)
+        public ScreenConnectionsRestingAction(Screen screenItem)
         {
             ScreenItem = screenItem;
         }

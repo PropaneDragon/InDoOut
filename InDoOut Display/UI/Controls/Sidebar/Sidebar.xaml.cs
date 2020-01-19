@@ -16,13 +16,13 @@ namespace InDoOut_Display.UI.Controls.Sidebar
 
         private void Button_Add_Click(object sender, RoutedEventArgs e)
         {
-            var elementWindow = new ElementSelectorWindow(AssociatedScreenOverview?.CurrentScreen) { Owner = Window.GetWindow(this) };
+            var elementWindow = new ElementSelectorWindow(AssociatedScreenOverview?.CurrentConnectionsScreen?.CurrentScreen) { Owner = Window.GetWindow(this) };
             elementWindow.Show();
         }
 
         private void Button_SwitchMode_Click(object sender, RoutedEventArgs e)
         {
-            var screen = AssociatedScreenOverview?.CurrentScreen;
+            var screen = AssociatedScreenOverview?.CurrentConnectionsScreen?.CurrentScreen;
             if (screen != null)
             {
                 screen.Mode = screen.Mode == ScreenMode.Connections ? ScreenMode.Layout : ScreenMode.Connections;
