@@ -33,7 +33,7 @@
                                             <VisualState x:Name="MouseOver">
                                                 <Storyboard>
                                                     <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border" Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
-                                                        <EasingColorKeyFrame KeyTime="0" Value="#33000000" />
+                                                        <EasingColorKeyFrame KeyTime="0" Value="#FF3B77E4" />
                                                     </ColorAnimationUsingKeyFrames>
                                                 </Storyboard>
                                             </VisualState>

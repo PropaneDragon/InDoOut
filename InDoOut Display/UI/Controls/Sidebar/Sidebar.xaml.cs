@@ -1,5 +1,6 @@
 ﻿using InDoOut_Display.UI.Controls.Screens;
 using InDoOut_Display.UI.Windows;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -36,12 +37,15 @@ namespace InDoOut_Display.UI.Controls.Sidebar
             var window = Window.GetWindow(this);
             var elementWindow = new FunctionSelectorWindow(AssociatedScreenOverview?.CurrentConnectionsScreen)
             {
-                Owner = Window.GetWindow(this)
+                Owner = Window.GetWindow(this),
+                Width = 400
             };
 
             if (window != null)
             {
-                elementWindow.Width = window.Width - 200;
+                elementWindow.WindowStartupLocation = WindowStartupLocation.Manual;
+                elementWindow.Top = window.Top + 100;
+                elementWindow.Left = window.Left + 200;
                 elementWindow.Height = window.Height - 200;
             }
 

@@ -16,7 +16,7 @@
                                 <DropShadowEffect BlurRadius="30" ShadowDepth="0" Opacity="0.8" />
                             </Border.Effect>
                         </Border>
-                        <local:Screen x:Name="ScreenItem_Overview" Width="1200" Height="1200" />
+                        <local:Screen x:Name="ScreenItem_Overview" Width="800" Height="500" />
                     </Grid>
                 </Grid>
             </Canvas>
