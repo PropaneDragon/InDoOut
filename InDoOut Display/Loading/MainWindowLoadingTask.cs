@@ -4,6 +4,7 @@ using InDoOut_Core.Logging;
 using InDoOut_Display_Plugins.Loaders;
 using InDoOut_Executable_Core.Loading;
 using InDoOut_Executable_Core.Location;
+using InDoOut_Function_Plugins.Loaders;
 using InDoOut_Plugins.Loaders;
 
 namespace InDoOut_Display.Loading
@@ -18,20 +19,8 @@ namespace InDoOut_Display.Loading
 
             if (LoadedPlugins.Instance.Plugins.Count <= 0)
             {
-                var pluginLoader = new ElementPluginLoader();
-                var pluginDirectoryLoader = new PluginDirectoryLoader(pluginLoader, StandardLocations.Instance);
-
-                pluginLoader.PluginLoadSuccess += PluginLoader_OnPluginLoadSuccess;
-
-                var pluginContainers = await pluginDirectoryLoader.LoadPlugins();
-
-                foreach (var pluginContainer in pluginContainers)
-                {
-                    Name = $"Initialising {pluginContainer?.Plugin?.SafeName ?? "unknown"}...";
-                    _ = await Task.Run(() => pluginContainer.Initialise());
-                }
-
-                LoadedPlugins.Instance.Plugins = pluginContainers;
+                await LoadPlugins(new ElementPluginLoader());
+                await LoadPlugins(new FunctionPluginLoader());
 
                 Name = "Plugins loaded.";
 
@@ -45,6 +34,35 @@ namespace InDoOut_Display.Loading
             Log.Instance.Header($"PLUGIN LOADING FAILED");
 
             await Task.Delay(TimeSpan.FromSeconds(5));
+
+            return false;
+        }
+
+        private async Task<bool> LoadPlugins(IPluginLoader loader)
+        {
+            if (loader != null)
+            {
+                var pluginDirectoryLoader = new PluginDirectoryLoader(loader, StandardLocations.Instance);
+
+                loader.PluginLoadSuccess += PluginLoader_OnPluginLoadSuccess;
+
+                var pluginContainers = await pluginDirectoryLoader.LoadPlugins();
+
+                foreach (var pluginContainer in pluginContainers)
+                {
+                    Name = $"Initialising {pluginContainer?.Plugin?.SafeName ?? "unknown"}...";
+                    _ = await Task.Run(() => pluginContainer.Initialise());
+                }
+
+                loader.PluginLoadSuccess -= PluginLoader_OnPluginLoadSuccess;
+
+                var currentPlugins = LoadedPlugins.Instance.Plugins;
+                currentPlugins.AddRange(pluginContainers);
+
+                LoadedPlugins.Instance.Plugins = currentPlugins;
+
+                return true;
+            }
 
             return false;
         }

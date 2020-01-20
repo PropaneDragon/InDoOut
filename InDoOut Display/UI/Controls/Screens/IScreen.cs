@@ -26,7 +26,7 @@ namespace InDoOut_Display.UI.Controls.Screens
     public interface IScreen : IElementHost, IDisplayElementHost
     {
         ScreenMode Mode { get; set; }
-        ISelectionManager<IScreenSelectable> SelectionManager { get; }
+        ISelectionManager<ISelectable<IScreen>> SelectionManager { get; }
         Size Size { get; }
 
         ScreenEdge GetCloseEdge(Point point, double distance = 5);

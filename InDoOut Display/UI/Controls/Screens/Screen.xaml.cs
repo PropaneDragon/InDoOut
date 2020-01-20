@@ -4,7 +4,6 @@ using InDoOut_Display.UI.Controls.DisplayElement;
 using InDoOut_Display_Core.Elements;
 using InDoOut_UI_Common.Actions;
 using InDoOut_UI_Common.Actions.Selecting;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -25,7 +24,7 @@ namespace InDoOut_Display.UI.Controls.Screens
 
         public ScreenMode Mode { get => _mode; set => ChangeMode(value); }
 
-        public ISelectionManager<IScreenSelectable> SelectionManager => _selectionManager;
+        public ISelectionManager<ISelectable<IScreen>> SelectionManager => _selectionManager;
 
         public Screen()
         {
@@ -41,6 +40,8 @@ namespace InDoOut_Display.UI.Controls.Screens
             {
                 var host = new DisplayElementContainer(displayElement);
                 _ = Grid_Elements.Children.Add(host);
+
+                SelectionManager?.Set(host);
 
                 return true;
             }

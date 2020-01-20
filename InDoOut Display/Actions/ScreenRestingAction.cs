@@ -1,6 +1,7 @@
 ﻿using InDoOut_Display.Actions.Resizing;
 using InDoOut_Display.Actions.Selecting;
 using InDoOut_Display.UI.Controls.Screens;
+using InDoOut_UI_Common.Actions.Selecting;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -66,7 +67,7 @@ namespace InDoOut_Display.Actions
                 var elementsUnderMouse = _screen.GetElementsUnderMouse();
                 if (elementsUnderMouse.Count > 0)
                 {
-                    if (_screen.GetFirstElementOfType<IScreenSelectable>(elementsUnderMouse) is IScreenSelectable selectable && selectable.CanSelect(_screen))
+                    if (_screen.GetFirstElementOfType<ISelectable<IScreen>>(elementsUnderMouse) is ISelectable<IScreen> selectable && selectable.CanSelect(_screen))
                     {
                         _ = Keyboard.Modifiers.HasFlag(ModifierKeys.Control) ? _screen.SelectionManager.Add(selectable, true) : _screen.SelectionManager.Set(selectable, false);
                     }

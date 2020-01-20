@@ -3,7 +3,7 @@ using InDoOut_UI_Common.Actions.Selecting;
 
 namespace InDoOut_Display.Actions.Selecting
 {
-    internal class SelectionManager : AbstractSelectionManager<IScreenSelectable>
+    internal class SelectionManager : AbstractSelectionManager<ISelectable<IScreen>>
     {
         private readonly IScreen _associatedScreen = null;
 
@@ -12,12 +12,12 @@ namespace InDoOut_Display.Actions.Selecting
             _associatedScreen = screen;
         }
 
-        protected override void NotifySelectableEnded(IScreenSelectable selectable)
+        protected override void NotifySelectableEnded(ISelectable<IScreen> selectable)
         {
             selectable.SelectionEnded(_associatedScreen);
         }
 
-        protected override void NotifySelectableStarted(IScreenSelectable selectable)
+        protected override void NotifySelectableStarted(ISelectable<IScreen> selectable)
         {
             selectable.SelectionStarted(_associatedScreen);
         }

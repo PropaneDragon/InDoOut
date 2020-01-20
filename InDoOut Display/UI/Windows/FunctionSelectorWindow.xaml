@@ -1,0 +1,17 @@
+﻿<Window x:Class="InDoOut_Display.UI.Windows.FunctionSelectorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:InDoOut_Display.UI.Windows"
+        xmlns:core="clr-namespace:InDoOut_UI_Common.Controls.Core;assembly=InDoOutUICommon"
+        xmlns:functionSelector="clr-namespace:InDoOut_Display.UI.Controls.FunctionSelector"
+        mc:Ignorable="d"
+        Title="Functions" Height="600" Width="1000" Background="#111" WindowStartupLocation="CenterOwner">
+    <Grid>
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <functionSelector:FunctionSelector x:Name="FunctionSelector_Main" Margin="0,80,0,0" />
+        </ScrollViewer>
+        <core:TitleBar VerticalAlignment="Top"/>
+    </Grid>
+</Window>

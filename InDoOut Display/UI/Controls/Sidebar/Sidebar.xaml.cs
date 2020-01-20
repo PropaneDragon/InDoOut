@@ -14,9 +14,37 @@ namespace InDoOut_Display.UI.Controls.Sidebar
             InitializeComponent();
         }
 
-        private void Button_Add_Click(object sender, RoutedEventArgs e)
+        private void Button_Add_Display_Click(object sender, RoutedEventArgs e)
         {
-            var elementWindow = new ElementSelectorWindow(AssociatedScreenOverview?.CurrentConnectionsScreen?.CurrentScreen) { Owner = Window.GetWindow(this) };
+            var window = Window.GetWindow(this);
+            var elementWindow = new ElementSelectorWindow(AssociatedScreenOverview?.CurrentConnectionsScreen?.CurrentScreen)
+            {
+                Owner = Window.GetWindow(this)
+            };
+
+            if (window != null)
+            {
+                elementWindow.Width = window.Width - 200;
+                elementWindow.Height = window.Height - 200;
+            }
+
+            elementWindow.Show();
+        }
+
+        private void Button_Add_Functions_Click(object sender, RoutedEventArgs e)
+        {
+            var window = Window.GetWindow(this);
+            var elementWindow = new FunctionSelectorWindow(AssociatedScreenOverview?.CurrentConnectionsScreen)
+            {
+                Owner = Window.GetWindow(this)
+            };
+
+            if (window != null)
+            {
+                elementWindow.Width = window.Width - 200;
+                elementWindow.Height = window.Height - 200;
+            }
+
             elementWindow.Show();
         }
 

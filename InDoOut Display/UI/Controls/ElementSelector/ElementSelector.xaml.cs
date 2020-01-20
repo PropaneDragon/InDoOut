@@ -71,7 +71,8 @@ namespace InDoOut_Display.UI.Controls.ElementSelector
                         var newFunctionInstance = functionBuilder.BuildInstance(function.GetType());
                         if (newFunctionInstance != null)
                         {
-                            if (AssociatedScreen?.AddDisplayElement(newFunctionInstance?.CreateAssociatedUIElement()) ?? false)
+                            var displayElement = newFunctionInstance?.CreateAssociatedUIElement();
+                            if (displayElement != null && (AssociatedScreen?.AddDisplayElement(displayElement) ?? false))
                             {
                                 var associatedWindow = Window.GetWindow(this);
                                 if (CloseAssociatedWindowWhenSelected && associatedWindow != null)

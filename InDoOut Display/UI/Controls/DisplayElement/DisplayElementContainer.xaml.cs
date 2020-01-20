@@ -1,14 +1,14 @@
 ﻿using InDoOut_Display.Actions.Resizing;
 using InDoOut_Display.Actions.Scaling;
-using InDoOut_Display.Actions.Selecting;
 using InDoOut_Display.UI.Controls.Screens;
 using InDoOut_Display_Core.Elements;
+using InDoOut_UI_Common.Actions.Selecting;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace InDoOut_Display.UI.Controls.DisplayElement
 {
-    public partial class DisplayElementContainer : UserControl, IResizable, IScalable, IScreenSelectable
+    public partial class DisplayElementContainer : UserControl, IResizable, IScalable, ISelectable<IScreen>
     {
         private static readonly Thickness THICKNESS_STATIC = new Thickness(0);
         private static readonly Thickness THICKNESS_SELECTED = new Thickness(2);
