@@ -1,8 +1,12 @@
-﻿using InDoOut_Display.Actions;
+﻿using InDoOut_Core.Entities.Functions;
+using InDoOut_Display.Actions;
 using InDoOut_UI_Common.Actions;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace InDoOut_Display.UI.Controls.Screens
 {
@@ -17,6 +21,113 @@ namespace InDoOut_Display.UI.Controls.Screens
             InitializeComponent();
 
             _actionHandler = new ActionHandler(new ScreenConnectionsRestingAction(ScreenItem_Overview));
+        }
+
+        public bool AddFunction(IFunction function)
+        {
+            if (function != null)
+            {
+                var functionContainer = new TextBlock
+                {
+                    Text = function.SafeName,
+                    FontSize = 50,
+                    Foreground = new SolidColorBrush(Color.FromRgb(255, 255, 255))
+                };
+
+                Canvas_Content.Children.Add(functionContainer);
+                Canvas.SetLeft(functionContainer, 200);
+                Canvas.SetTop(functionContainer, 200);
+
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool RemoveFunction(IFunction function)
+        {
+            //Todo: Make the remove function work.
+
+            return false;
+        }
+
+        public Point GetMousePosition()
+        {
+            return Mouse.GetPosition(this);
+        }
+
+        public FrameworkElement GetElementUnderMouse()
+        {
+            return GetElementAtPoint(GetMousePosition());
+        }
+
+        public FrameworkElement GetElementAtPoint(Point point)
+        {
+            return GetElementsAtPoint(point).FirstOrDefault();
+        }
+
+        public List<FrameworkElement> GetElementsUnderMouse()
+        {
+            return GetElementsAtPoint(GetMousePosition());
+        }
+
+        public List<FrameworkElement> GetElementsAtPoint(Point point)
+        {
+            var hits = new List<FrameworkElement>();
+
+            VisualTreeHelper.HitTest(Canvas_Content, FilterHit, (result) => NewHit(result, hits), new PointHitTestParameters(point));
+
+            hits.AddRange(new List<FrameworkElement>() { Canvas_Content, this });
+            return hits;
+        }
+
+        public T GetFirstElementOfType<T>(FrameworkElement element) where T : class
+        {
+            if (element != null)
+            {
+                if (typeof(T).IsAssignableFrom(element.GetType()) && element is T converted)
+                {
+                    return converted;
+                }
+                else
+                {
+                    var parent = VisualTreeHelper.GetParent(element);
+                    return GetFirstElementOfType<T>(parent as FrameworkElement);
+                }
+            }
+
+            return null;
+        }
+
+        public T GetFirstElementOfType<T>(List<FrameworkElement> elements) where T : class
+        {
+            foreach (var element in elements)
+            {
+                var foundElement = GetFirstElementOfType<T>(element);
+                if (foundElement != null)
+                {
+                    return foundElement;
+                }
+            }
+
+            return null;
+        }
+
+        private HitTestFilterBehavior FilterHit(DependencyObject potentialHitTestTarget)
+        {
+            return potentialHitTestTarget is UIElement uiElement && uiElement.Visibility != Visibility.Visible
+                ? HitTestFilterBehavior.ContinueSkipSelfAndChildren
+                : HitTestFilterBehavior.Continue;
+        }
+
+        private HitTestResultBehavior NewHit(HitTestResult result, List<FrameworkElement> hits)
+        {
+            if (result.VisualHit != null && result.VisualHit is FrameworkElement element)
+            {
+                hits.Add(element);
+            }
+
+            return HitTestResultBehavior.Continue;
         }
 
         private void Scroll_Content_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)

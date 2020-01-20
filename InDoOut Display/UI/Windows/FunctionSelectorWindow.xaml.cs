@@ -16,12 +16,13 @@ namespace InDoOut_Display.UI.Windows
 
         public FunctionSelectorWindow(IScreenConnections screenConnections) : this()
         {
-
+            ScreenConnections = screenConnections;
         }
 
         private void UpdateScreen(IScreenConnections screen)
         {
             _screenConnections = screen;
+            FunctionSelector_Main.Screen = screen;
         }
     }
 }

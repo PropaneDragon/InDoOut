@@ -67,11 +67,10 @@ namespace InDoOut_Display.UI.Controls.ElementSelector
 
                     item.ElementSelected += (sender, e) =>
                     {
-                        var functionBuilder = new ElementFunctionBuilder();
-                        var newFunctionInstance = functionBuilder.BuildInstance(function.GetType());
-                        if (newFunctionInstance != null)
+                        var newElementInstance = _functionBuilder?.BuildInstance(function.GetType());
+                        if (newElementInstance != null)
                         {
-                            var displayElement = newFunctionInstance?.CreateAssociatedUIElement();
+                            var displayElement = newElementInstance?.CreateAssociatedUIElement();
                             if (displayElement != null && (AssociatedScreen?.AddDisplayElement(displayElement) ?? false))
                             {
                                 var associatedWindow = Window.GetWindow(this);
