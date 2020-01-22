@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using InDoOut_UI_Common.Actions.Deleting;
+using System.Collections.Generic;
 using System.Windows;
 
-namespace InDoOut_Desktop.UI.Interfaces
+namespace InDoOut_UI_Common.InterfaceElements
 {
     public interface IElementDisplay
     {
@@ -11,12 +12,10 @@ namespace InDoOut_Desktop.UI.Interfaces
         void Add(FrameworkElement element, Point position, int zIndex = 0);
         void Remove(FrameworkElement element);
         void SetPosition(FrameworkElement element, Point position);
+        bool Remove(IDeletable deletable);
 
         Point GetMousePosition();
         Point GetPosition(FrameworkElement element);
-        Point GetBestSide(Rect rectangle, Point point);
-        Point GetBestSide(FrameworkElement element, Point point);
-        Point GetBestSide(FrameworkElement element, FrameworkElement otherElement);
 
         List<FrameworkElement> GetElementsUnderMouse();
         List<FrameworkElement> GetElementsAtPoint(Point point);

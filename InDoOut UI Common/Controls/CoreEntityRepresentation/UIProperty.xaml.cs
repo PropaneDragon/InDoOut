@@ -8,7 +8,7 @@ using System.Windows.Input;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 
-namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
+namespace InDoOut_UI_Common.Controls.CoreEntityRepresentation
 {
     public partial class UIProperty : UserControl, IUIProperty
     {

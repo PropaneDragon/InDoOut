@@ -9,10 +9,10 @@ namespace InDoOut_Desktop.Actions
 {
     internal class ConnectionMenuAction : Action
     {
-        private readonly IUIConnection<IBlockView> _connection;
+        private readonly IUIConnection _connection;
         private readonly IBlockView _blockView;
 
-        public ConnectionMenuAction(IUIConnection<IBlockView> connection, IBlockView blockView, Point mousePosition) : base()
+        public ConnectionMenuAction(IUIConnection connection, IBlockView blockView, Point mousePosition) : base()
         {
             _connection = connection;
             _blockView = blockView;

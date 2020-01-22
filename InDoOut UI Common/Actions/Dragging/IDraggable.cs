@@ -1,11 +1,13 @@
-﻿namespace InDoOut_UI_Common.Actions.Dragging
-{
-    public interface IDraggable<ViewType>
-    {
-        void DragStarted(ViewType view);
-        void DragMoved(ViewType view);
-        void DragEnded(ViewType view);
+﻿using InDoOut_UI_Common.InterfaceElements;
 
-        bool CanDrag(ViewType view);
+namespace InDoOut_UI_Common.Actions.Dragging
+{
+    public interface IDraggable
+    {
+        void DragStarted(IElementDisplay view);
+        void DragMoved(IElementDisplay view);
+        void DragEnded(IElementDisplay view);
+
+        bool CanDrag(IElementDisplay view);
     }
 }

@@ -32,7 +32,7 @@ namespace InDoOut_Desktop.Loading.BlockView
         {
             if (program != null && _associatedBlockView != null)
             {
-                var functionToUIFunctionMap = new Dictionary<IFunction, IUIFunction<IBlockView>>();
+                var functionToUIFunctionMap = new Dictionary<IFunction, IUIFunction>();
 
                 if (_associatedBlockView is IScrollable scrollable)
                 {
@@ -63,7 +63,7 @@ namespace InDoOut_Desktop.Loading.BlockView
             return false;
         }
 
-        private void DisplayConnections(IProgram program, Dictionary<IFunction, IUIFunction<IBlockView>> functionToUIFunctionMap)
+        private void DisplayConnections(IProgram program, Dictionary<IFunction, IUIFunction> functionToUIFunctionMap)
         {
             foreach (var function in program.Functions)
             {

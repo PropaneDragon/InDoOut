@@ -3,7 +3,7 @@ using InDoOut_UI_Common.InterfaceElements;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
+namespace InDoOut_UI_Common.Controls.CoreEntityRepresentation
 {
     public partial class UIOutput : UserControl, IUIOutput
     {

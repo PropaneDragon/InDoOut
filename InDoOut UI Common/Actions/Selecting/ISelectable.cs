@@ -1,14 +1,12 @@
-﻿namespace InDoOut_UI_Common.Actions.Selecting
+﻿using InDoOut_UI_Common.InterfaceElements;
+
+namespace InDoOut_UI_Common.Actions.Selecting
 {
     public interface ISelectable
     {
-    }
+        public void SelectionStarted(IElementDisplay view);
+        public void SelectionEnded(IElementDisplay view);
 
-    public interface ISelectable<ViewType> : ISelectable
-    {
-        public void SelectionStarted(ViewType view);
-        public void SelectionEnded(ViewType view);
-
-        public bool CanSelect(ViewType view);
+        public bool CanSelect(IElementDisplay view);
     }
 }

@@ -4,7 +4,7 @@ using System.Windows;
 
 namespace InDoOut_UI_Common.InterfaceElements
 {
-    public interface IUIConnection<ViewType> : ISelectable<ViewType>, IDeletable<ViewType>
+    public interface IUIConnection : ISelectable, IDeletable
     {
         bool Hidden { get; set; }
 
@@ -14,6 +14,6 @@ namespace InDoOut_UI_Common.InterfaceElements
         Point Start { get; set; }
         Point End { get; set; }
 
-        void UpdatePositionFromInputOutput(ViewType view);
+        void UpdatePositionFromInputOutput(IElementDisplay view);
     }
 }

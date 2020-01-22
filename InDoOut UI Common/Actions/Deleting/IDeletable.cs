@@ -1,9 +1,11 @@
-﻿namespace InDoOut_UI_Common.Actions.Deleting
-{
-    public interface IDeletable<ViewType>
-    {
-        void Deleted(ViewType view);
+﻿using InDoOut_UI_Common.InterfaceElements;
 
-        bool CanDelete(ViewType view);
+namespace InDoOut_UI_Common.Actions.Deleting
+{
+    public interface IDeletable
+    {
+        void Deleted(IElementDisplay view);
+
+        bool CanDelete(IElementDisplay view);
     }
 }

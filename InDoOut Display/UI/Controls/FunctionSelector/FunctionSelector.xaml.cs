@@ -3,6 +3,7 @@ using InDoOut_Core.Functions;
 using InDoOut_Display.UI.Controls.Screens;
 using InDoOut_Function_Plugins.Containers;
 using InDoOut_Plugins.Loaders;
+using InDoOut_UI_Common.InterfaceElements;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -79,9 +80,9 @@ namespace InDoOut_Display.UI.Controls.FunctionSelector
             if (selectedFunction != null)
             {
                 var newFunctionInstance = _functionBuilder.BuildInstance(selectedFunction.GetType());
-                if (newFunctionInstance != null && _screenConnections != null)
+                if (newFunctionInstance != null && _screenConnections != null && _screenConnections is IFunctionDisplay functionDisplay)
                 {
-                    _screenConnections.AddFunction(newFunctionInstance);
+                    functionDisplay.Create(newFunctionInstance);
 
                     if (CloseWindowOnSelection)
                     {

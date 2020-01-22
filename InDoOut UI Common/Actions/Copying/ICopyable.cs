@@ -1,10 +1,12 @@
-﻿namespace InDoOut_UI_Common.Actions.Copying
-{
-    public interface ICopyable<ViewType>
-    {
-        bool CopyTo(ICopyable<ViewType> other);
-        bool CanCopy(ViewType view);
+﻿using InDoOut_UI_Common.InterfaceElements;
 
-        ICopyable<ViewType> CreateCopy(ViewType view);
+namespace InDoOut_UI_Common.Actions.Copying
+{
+    public interface ICopyable
+    {
+        bool CopyTo(ICopyable other);
+        bool CanCopy(IElementDisplay view);
+
+        ICopyable CreateCopy(IElementDisplay view);
     }
 }

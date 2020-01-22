@@ -1,7 +1,6 @@
 ﻿using InDoOut_Core.Entities.Functions;
 using InDoOut_Core.Functions;
 using InDoOut_Core.Logging;
-using InDoOut_Desktop.UI.Interfaces;
 using InDoOut_UI_Common.Actions.Copying;
 using InDoOut_UI_Common.InterfaceElements;
 using System;
@@ -13,15 +12,15 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 
-namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
+namespace InDoOut_UI_Common.Controls.CoreEntityRepresentation
 {
-    public partial class UIFunction : UserControl, IUIFunction<IBlockView>
+    public partial class UIFunction : UserControl, IUIFunction
     {
         private DispatcherTimer _updateTimer = null;
         private DoubleAnimation _fadeAnimation = null;
         private UIFunctionDisplayMode _displayMode = UIFunctionDisplayMode.None;
         private IFunction _function = null;
-        private readonly List<IUIConnection<IBlockView>> _cachedVisualConnections = new List<IUIConnection<IBlockView>>();
+        private readonly List<IUIConnection> _cachedVisualConnections = new List<IUIConnection>();
 
         public IFunction AssociatedFunction { get => _function; set => SetFunction(value); }
 
@@ -45,71 +44,69 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
             AssociatedFunction = function;
         }
 
-        public bool CanSelect(IBlockView view) => true;
-        public bool CanDrag(IBlockView view) => true;
-        public bool CanCopy(IBlockView blockView) => true;
-        public bool CanDelete(IBlockView blockView) => true;
+        public bool CanSelect(IElementDisplay view) => true;
+        public bool CanDrag(IElementDisplay view) => true;
+        public bool CanCopy(IElementDisplay view) => true;
+        public bool CanDelete(IElementDisplay view) => true;
 
-        public void Deleted(IBlockView blockView)
+        public void Deleted(IElementDisplay view)
         {
-            if (blockView != null && (blockView.AssociatedProgram?.RemoveFunction(AssociatedFunction) ?? false))
+            if (view != null && view is IProgramDisplay programDisplay && (programDisplay.AssociatedProgram?.RemoveFunction(AssociatedFunction) ?? false))
             {
                 _function?.PolitelyStop();
 
-                if (!RemoveAllConnections(blockView))
+                if (!RemoveAllConnections(view))
                 {
                     Log.Instance.Error($"Couldn't remove all connections from {this}");
                 }
-
-                blockView.Remove(this);
             }
         }
 
-        public bool CopyTo(ICopyable<IBlockView> other)
+        public bool CopyTo(ICopyable other)
         {
             return other != null;
         }
 
-        public ICopyable<IBlockView> CreateCopy(IBlockView blockView)
+        public ICopyable CreateCopy(IElementDisplay view)
         {
-            if (blockView != null && _function != null)
+            if (view != null && view is IFunctionDisplay functionDisplay && _function != null)
             {
                 var functionBuilder = new FunctionBuilder();
                 var functionInstance = functionBuilder.BuildInstance(_function.GetType());
 
                 if (functionInstance != null)
                 {
-                    return blockView.Create(functionInstance);
+                    return functionDisplay.Create(functionInstance);
                 }
             }
 
             return null;
         }
 
-        public void SelectionStarted(IBlockView view)
+        public void SelectionStarted(IElementDisplay view)
         {
             Rectangle_Selected.Visibility = Visibility.Visible;
         }
 
-        public void SelectionEnded(IBlockView view)
+        public void SelectionEnded(IElementDisplay view)
         {
             Rectangle_Selected.Visibility = Visibility.Hidden;
         }
 
-        public void DragStarted(IBlockView view)
+        public void DragStarted(IElementDisplay view)
         {
             _cachedVisualConnections.Clear();
 
-            if (view != null)
+            if (view != null && view is IConnectionDisplay connectionDisplay)
             {
-                _cachedVisualConnections.AddRange(view.FindConnections(Inputs.Cast<IUIConnectionEnd>().ToList()));
-                _cachedVisualConnections.AddRange(view.FindConnections(Outputs.Cast<IUIConnectionStart>().ToList()));
-                _cachedVisualConnections.AddRange(view.FindConnections(Properties.Cast<IUIConnectionEnd>().ToList()));
-                _cachedVisualConnections.AddRange(view.FindConnections(Results.Cast<IUIConnectionStart>().ToList()));
+                _cachedVisualConnections.AddRange(connectionDisplay.FindConnections(Inputs.Cast<IUIConnectionEnd>().ToList()));
+                _cachedVisualConnections.AddRange(connectionDisplay.FindConnections(Outputs.Cast<IUIConnectionStart>().ToList()));
+                _cachedVisualConnections.AddRange(connectionDisplay.FindConnections(Properties.Cast<IUIConnectionEnd>().ToList()));
+                _cachedVisualConnections.AddRange(connectionDisplay.FindConnections(Results.Cast<IUIConnectionStart>().ToList()));
             }
         }
 
-        public void DragMoved(IBlockView view)
+        public void DragMoved(IElementDisplay view)
         {
             if (AssociatedFunction != null)
             {
@@ -125,7 +122,7 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
             }
         }
 
-        public void DragEnded(IBlockView view)
+        public void DragEnded(IElementDisplay view)
         {
             _cachedVisualConnections.Clear();
         }
@@ -265,42 +262,34 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
             _displayMode = displayMode;
         }
 
-        private bool RemoveAllConnections(IBlockView blockView)
+        private bool RemoveAllConnections(IElementDisplay view)
         {
             var allDeleted = true;
-
-            allDeleted = RemoveEndConnections(Inputs, blockView) && allDeleted;
-            allDeleted = RemoveEndConnections(Properties, blockView) && allDeleted;
-            allDeleted = RemoveStartConnections(Outputs, blockView) && allDeleted;
-            allDeleted = RemoveStartConnections(Results, blockView) && allDeleted;
+            allDeleted = RemoveEndConnections(Inputs, view) && allDeleted;
+            allDeleted = RemoveEndConnections(Properties, view) && allDeleted;
+            allDeleted = RemoveStartConnections(Outputs, view) && allDeleted;
+            allDeleted = RemoveStartConnections(Results, view) && allDeleted;
 
             return allDeleted;
         }
 
-        private bool RemoveStartConnections<StartType>(List<StartType> start, IBlockView blockView) where StartType : IUIConnectionStart
+        private bool RemoveStartConnections<StartType>(List<StartType> start, IElementDisplay elementDisplay) where StartType : IUIConnectionStart
         {
-            return RemoveConnections(blockView.FindConnections(start.Cast<IUIConnectionStart>().ToList()), blockView);
+            return elementDisplay is IConnectionDisplay connectionDisplay ? RemoveConnections(connectionDisplay.FindConnections(start.Cast<IUIConnectionStart>().ToList()), elementDisplay) : false;
         }
 
-        private bool RemoveEndConnections<EndType>(List<EndType> end, IBlockView blockView) where EndType : IUIConnectionEnd
+        private bool RemoveEndConnections<EndType>(List<EndType> end, IElementDisplay elementDisplay) where EndType : IUIConnectionEnd
         {
-            return RemoveConnections(blockView.FindConnections(end.Cast<IUIConnectionEnd>().ToList()), blockView);
+            return elementDisplay is IConnectionDisplay connectionDisplay ? RemoveConnections(connectionDisplay.FindConnections(end.Cast<IUIConnectionEnd>().ToList()), elementDisplay) : false;
         }
 
-        private bool RemoveConnections(List<IUIConnection<IBlockView>> connections, IBlockView blockView)
+        private bool RemoveConnections(List<IUIConnection> connections, IElementDisplay elementDisplay)
         {
             var allDeleted = true;
 
             foreach (var connection in connections)
             {
-                if (connection.CanDelete(blockView))
-                {
-                    connection.Deleted(blockView);
-                }
-                else
-                {
-                    allDeleted = false;
-                }
+                allDeleted = connection.CanDelete(elementDisplay) && (elementDisplay?.Remove(connection) ?? false);
             }
 
             return allDeleted;

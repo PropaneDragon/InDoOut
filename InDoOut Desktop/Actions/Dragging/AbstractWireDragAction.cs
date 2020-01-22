@@ -9,7 +9,7 @@ namespace InDoOut_Desktop.Actions.Dragging
     {
         private readonly IBlockView _view = null;
         private readonly IUIConnectionStart _start = null;
-        private readonly IUIConnection<IBlockView> _uiConnection = null;
+        private readonly IUIConnection _uiConnection = null;
 
         private AbstractWireDragAction()
         {

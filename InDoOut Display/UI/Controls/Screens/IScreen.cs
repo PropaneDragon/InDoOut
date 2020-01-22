@@ -1,5 +1,6 @@
 ﻿using InDoOut_Display.Actions.Selecting;
 using InDoOut_UI_Common.Actions.Selecting;
+using InDoOut_UI_Common.InterfaceElements;
 using System.Windows;
 
 namespace InDoOut_Display.UI.Controls.Screens
@@ -23,14 +24,13 @@ namespace InDoOut_Display.UI.Controls.Screens
         Connections
     }
 
-    public interface IScreen : IElementHost, IDisplayElementHost
+    public interface IScreen : IElementDisplay, IDisplayElementDisplay
     {
         ScreenMode Mode { get; set; }
-        ISelectionManager<ISelectable<IScreen>> SelectionManager { get; }
+        ISelectionManager<ISelectable> SelectionManager { get; }
         Size Size { get; }
 
         ScreenEdge GetCloseEdge(Point point, double distance = 5);
         bool PointCloseToScreenItemEdge(Point point, double distance = 5);
-        Point GetMousePosition();
     }
 }

@@ -8,10 +8,10 @@ namespace InDoOut_Desktop.Actions.Dragging
 {
     internal class DraggableDragAction : InDoOut_UI_Common.Actions.Dragging.DragAction
     {
-        private readonly Dictionary<IDraggable<IBlockView>, Point> _initialPositions = new Dictionary<IDraggable<IBlockView>, Point>();
+        private readonly Dictionary<IDraggable, Point> _initialPositions = new Dictionary<IDraggable, Point>();
         private readonly IBlockView _blockView = null;
 
-        public DraggableDragAction(IBlockView blockView, IEnumerable<IDraggable<IBlockView>> draggables, Point mousePosition)
+        public DraggableDragAction(IBlockView blockView, IEnumerable<IDraggable> draggables, Point mousePosition)
         {
             _ = base.MouseLeftDown(mousePosition);
 

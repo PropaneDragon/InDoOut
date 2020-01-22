@@ -67,7 +67,7 @@ namespace InDoOut_Display.Actions
                 var elementsUnderMouse = _screen.GetElementsUnderMouse();
                 if (elementsUnderMouse.Count > 0)
                 {
-                    if (_screen.GetFirstElementOfType<ISelectable<IScreen>>(elementsUnderMouse) is ISelectable<IScreen> selectable && selectable.CanSelect(_screen))
+                    if (_screen.GetFirstElementOfType<ISelectable>(elementsUnderMouse) is ISelectable selectable && selectable.CanSelect(_screen))
                     {
                         _ = Keyboard.Modifiers.HasFlag(ModifierKeys.Control) ? _screen.SelectionManager.Add(selectable, true) : _screen.SelectionManager.Set(selectable, false);
                     }

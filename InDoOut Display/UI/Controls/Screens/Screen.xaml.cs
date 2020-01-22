@@ -3,6 +3,7 @@ using InDoOut_Display.Actions.Selecting;
 using InDoOut_Display.UI.Controls.DisplayElement;
 using InDoOut_Display_Core.Elements;
 using InDoOut_UI_Common.Actions;
+using InDoOut_UI_Common.Actions.Deleting;
 using InDoOut_UI_Common.Actions.Selecting;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,9 @@ namespace InDoOut_Display.UI.Controls.Screens
 
         public ScreenMode Mode { get => _mode; set => ChangeMode(value); }
 
-        public ISelectionManager<ISelectable<IScreen>> SelectionManager => _selectionManager;
+        public ISelectionManager<ISelectable> SelectionManager => _selectionManager;
+
+        public List<FrameworkElement> Elements => throw new System.NotImplementedException();
 
         public Screen()
         {
@@ -57,6 +60,36 @@ namespace InDoOut_Display.UI.Controls.Screens
             }
 
             return false;
+        }
+
+        public void Add(FrameworkElement element)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Add(FrameworkElement element, Point position, int zIndex = 0)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Remove(FrameworkElement element)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void SetPosition(FrameworkElement element, Point position)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public bool Remove(IDeletable deletable)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Point GetPosition(FrameworkElement element)
+        {
+            throw new System.NotImplementedException();
         }
 
         public Point GetMousePosition()

@@ -14,7 +14,7 @@ namespace InDoOut_UI_Common.InterfaceElements
         Variables
     }
 
-    public interface IUIFunction<ViewType> : IDraggable<ViewType>, ICopyable<ViewType>, IDeletable<ViewType>, ISelectable<ViewType>
+    public interface IUIFunction : IDraggable, ICopyable, IDeletable, ISelectable
     {
         UIFunctionDisplayMode DisplayMode { get; set; }
         IFunction AssociatedFunction { get; set; }

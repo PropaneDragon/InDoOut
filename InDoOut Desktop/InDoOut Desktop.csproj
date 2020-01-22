@@ -26,13 +26,6 @@
     <None Remove="UI\Controls\Background\BackgroundImage.xaml" />
     <None Remove="UI\Controls\BlockView\BlockView.xaml" />
     <None Remove="UI\Controls\BlockView\Overview.xaml" />
-    <None Remove="UI\Controls\CoreEntityRepresentation\UIConnection.xaml" />
-    <None Remove="UI\Controls\CoreEntityRepresentation\UIFunction.xaml" />
-    <None Remove="UI\Controls\CoreEntityRepresentation\UIFunctionIO.xaml" />
-    <None Remove="UI\Controls\CoreEntityRepresentation\UIInput.xaml" />
-    <None Remove="UI\Controls\CoreEntityRepresentation\UIOutput.xaml" />
-    <None Remove="UI\Controls\CoreEntityRepresentation\UIProperty.xaml" />
-    <None Remove="UI\Controls\CoreEntityRepresentation\UIResult.xaml" />
     <None Remove="UI\Controls\Search\SearchBar.xaml" />
     <None Remove="UI\Controls\Sidebar\ItemList.xaml" />
     <None Remove="UI\Controls\Sidebar\Sidebar.xaml" />

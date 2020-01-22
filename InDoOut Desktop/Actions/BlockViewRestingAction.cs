@@ -2,14 +2,11 @@
 using InDoOut_Desktop.Actions.Dragging;
 using InDoOut_Desktop.UI.Interfaces;
 using InDoOut_Desktop.UI.Windows;
-using InDoOut_UI_Common.Actions;
 using InDoOut_UI_Common.Actions.Copying;
 using InDoOut_UI_Common.Actions.Deleting;
 using InDoOut_UI_Common.Actions.Dragging;
 using InDoOut_UI_Common.Actions.Selecting;
 using InDoOut_UI_Common.InterfaceElements;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -41,7 +38,7 @@ namespace InDoOut_Desktop.Actions
 
                 elementsUnderMouse.Reverse();
 
-                if (elementsUnderMouse.Count > 0 && _blockView.GetFirstElementOfType<ISelectable<IBlockView>>(elementsUnderMouse) is ISelectable<IBlockView> selectable && selectable.CanSelect(_blockView) && !selectionManager.Contains(selectable))
+                if (elementsUnderMouse.Count > 0 && _blockView.GetFirstElementOfType<ISelectable>(elementsUnderMouse) is ISelectable selectable && selectable.CanSelect(_blockView) && !selectionManager.Contains(selectable))
                 {
                     _ = selectionManager.Set(selectable);
                 }
@@ -66,9 +63,9 @@ namespace InDoOut_Desktop.Actions
 
                         return true;
                     }
-                    else if (_blockView.GetFirstElementOfType<IDraggable<IBlockView>>(elementsUnderMouse) != null && elementsSelected.Any(element => element is IDraggable<IBlockView> draggable && draggable.CanDrag(_blockView)))
+                    else if (_blockView.GetFirstElementOfType<IDraggable>(elementsUnderMouse) != null && elementsSelected.Any(element => element is IDraggable draggable && draggable.CanDrag(_blockView)))
                     {
-                        var draggables = elementsSelected.Where(element => element is IDraggable<IBlockView> draggable && draggable.CanDrag(_blockView)).Cast<IDraggable<IBlockView>>();
+                        var draggables = elementsSelected.Where(element => element is IDraggable draggable && draggable.CanDrag(_blockView)).Cast<IDraggable>();
 
                         Finish(new DraggableDragAction(_blockView, draggables, mousePosition));
 
@@ -86,11 +83,6 @@ namespace InDoOut_Desktop.Actions
             return false;
         }
 
-        private int ISelectable<T>(List<FrameworkElement> elementsUnderMouse)
-        {
-            throw new NotImplementedException();
-        }
-
         public override bool MouseLeftUp(Point mousePosition)
         {
             if (_blockView != null)
@@ -100,7 +92,7 @@ namespace InDoOut_Desktop.Actions
 
                 if (elementsUnderMouse.Count > 0)
                 {
-                    if (_blockView.GetFirstElementOfType<ISelectable<IBlockView>>(elementsUnderMouse) is ISelectable<IBlockView> selectable && selectable.CanSelect(_blockView))
+                    if (_blockView.GetFirstElementOfType<ISelectable>(elementsUnderMouse) is ISelectable selectable && selectable.CanSelect(_blockView))
                     {
                         _ = Keyboard.Modifiers.HasFlag(ModifierKeys.Control) ? _blockView.SelectionManager.Add(selectable, true) : _blockView.SelectionManager.Set(selectable, false);
                     }
@@ -125,7 +117,7 @@ namespace InDoOut_Desktop.Actions
 
                 if (elementsUnderMouse.Count > 0)
                 {
-                    if (_blockView.GetFirstElementOfType<IUIConnection<IBlockView>>(elementsUnderMouse) is IUIConnection<IBlockView> connection)
+                    if (_blockView.GetFirstElementOfType<IUIConnection>(elementsUnderMouse) is IUIConnection connection)
                     {
                         Finish(new ConnectionMenuAction(connection, _blockView, mousePosition));
                     }
@@ -144,7 +136,7 @@ namespace InDoOut_Desktop.Actions
 
                 if (elementsUnderMouse.Count > 0)
                 {
-                    if (_blockView.GetFirstElementOfType<IUIFunction<IBlockView>>(elementsUnderMouse) is IUIFunction<IBlockView> uiFunction && uiFunction?.AssociatedFunction is ISelfRunnerFunction selfRunnerFunction && selfRunnerFunction.LoadedProgram != null)
+                    if (_blockView.GetFirstElementOfType<IUIFunction>(elementsUnderMouse) is IUIFunction uiFunction && uiFunction?.AssociatedFunction is ISelfRunnerFunction selfRunnerFunction && selfRunnerFunction.LoadedProgram != null)
                     {
                         var previewWindow = new PopUpBlockViewWindow(selfRunnerFunction.LoadedProgram)
                         {
@@ -172,9 +164,9 @@ namespace InDoOut_Desktop.Actions
             {
                 var elementsSelected = _blockView.SelectionManager.Selection;
 
-                if (key == Key.D && Keyboard.Modifiers.HasFlag(ModifierKeys.Control) && elementsSelected.All(element => element is ICopyable<IBlockView> copyable && copyable.CanCopy(_blockView)))
+                if (key == Key.D && Keyboard.Modifiers.HasFlag(ModifierKeys.Control) && elementsSelected.All(element => element is ICopyable copyable && copyable.CanCopy(_blockView)))
                 {
-                    var copyables = elementsSelected.Cast<ICopyable<IBlockView>>();
+                    var copyables = elementsSelected.Cast<ICopyable>();
 
                     foreach (var copyable in copyables)
                     {
@@ -185,13 +177,13 @@ namespace InDoOut_Desktop.Actions
                         }
                     }
                 }
-                else if (key == Key.Delete && !(Keyboard.FocusedElement is TextBox) && elementsSelected.All(element => element is IDeletable<IBlockView> deletable && deletable.CanDelete(_blockView)))
+                else if (key == Key.Delete && !(Keyboard.FocusedElement is TextBox) && elementsSelected.All(element => element is IDeletable deletable && deletable.CanDelete(_blockView)))
                 {
-                    var deletables = elementsSelected.Cast<IDeletable<IBlockView>>();
+                    var deletables = elementsSelected.Cast<IDeletable>();
 
                     foreach (var deletable in deletables)
                     {
-                        deletable.Deleted(_blockView);
+                        _blockView?.Remove(deletable);
                     }
                 }
             }

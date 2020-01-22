@@ -3,12 +3,13 @@ using InDoOut_Display.Actions.Scaling;
 using InDoOut_Display.UI.Controls.Screens;
 using InDoOut_Display_Core.Elements;
 using InDoOut_UI_Common.Actions.Selecting;
+using InDoOut_UI_Common.InterfaceElements;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace InDoOut_Display.UI.Controls.DisplayElement
 {
-    public partial class DisplayElementContainer : UserControl, IResizable, IScalable, ISelectable<IScreen>
+    public partial class DisplayElementContainer : UserControl, IResizable, IScalable, ISelectable
     {
         private static readonly Thickness THICKNESS_STATIC = new Thickness(0);
         private static readonly Thickness THICKNESS_SELECTED = new Thickness(2);
@@ -37,20 +38,20 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
 
         public bool CanScale(IScreen screen) => true;
 
-        public bool CanSelect(IScreen view) => true;
+        public bool CanSelect(IElementDisplay view) => true;
 
         public void ScaleChanged(IScreen screen)
         {
         }
 
-        public void SelectionStarted(IScreen view)
+        public void SelectionStarted(IElementDisplay view)
         {
             _selected = true;
             UpdateBorder();
             UpdateName();
         }
 
-        public void SelectionEnded(IScreen view)
+        public void SelectionEnded(IElementDisplay view)
         {
             _selected = false;
             UpdateBorder();

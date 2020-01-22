@@ -1,9 +1,9 @@
-﻿<UserControl x:Class="InDoOut_Desktop.UI.Controls.CoreEntityRepresentation.UIOutput"
+﻿<UserControl x:Class="InDoOut_UI_Common.Controls.CoreEntityRepresentation.UIOutput"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:InDoOut_Desktop.UI.Controls.CoreEntityRepresentation"
+             xmlns:local="clr-namespace:InDoOut_UI_Common.Controls.CoreEntityRepresentation"
              mc:Ignorable="d">
     <Grid>
         <local:UIFunctionIO x:Name="IO_Main" Text="Output" Type="Neutral" VerticalAlignment="Center" HorizontalAlignment="Center" />

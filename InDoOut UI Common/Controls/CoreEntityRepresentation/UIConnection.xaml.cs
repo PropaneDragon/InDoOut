@@ -1,5 +1,4 @@
-﻿using InDoOut_Desktop.UI.Interfaces;
-using InDoOut_UI_Common.InterfaceElements;
+﻿using InDoOut_UI_Common.InterfaceElements;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -7,9 +6,9 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 
-namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
+namespace InDoOut_UI_Common.Controls.CoreEntityRepresentation
 {
-    public partial class UIConnection : UserControl, IUIConnection<IBlockView>
+    public partial class UIConnection : UserControl, IUIConnection
     {
         private bool _startIsLeft = true;
         private bool _endIsLeft = true;
@@ -35,10 +34,10 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
             _regularWireColour = Path_Wire.Stroke is SolidColorBrush solidColour ? solidColour.Color : Color.FromRgb(255, 255, 255);
         }
 
-        public bool CanDelete(IBlockView blockView) => true;
-        public bool CanSelect(IBlockView view) => true;
+        public bool CanDelete(IElementDisplay view) => true;
+        public bool CanSelect(IElementDisplay view) => true;
 
-        public void Deleted(IBlockView blockView)
+        public void Deleted(IElementDisplay view)
         {
             if (AssociatedEnd != null && AssociatedStart != null)
             {
@@ -52,31 +51,26 @@ namespace InDoOut_Desktop.UI.Controls.CoreEntityRepresentation
                     _ = result.AssociatedResult?.Disconnect(property.AssociatedProperty) ?? false;
                 }
             }
-
-            if (blockView != null)
-            {
-                blockView.Remove(this as IUIConnection<IBlockView>);
-            }
         }
 
-        public void SelectionStarted(IBlockView view)
+        public void SelectionStarted(IElementDisplay view)
         {
             Stroke_Highlight.Visibility = Visibility.Visible;
         }
 
-        public void SelectionEnded(IBlockView view)
+        public void SelectionEnded(IElementDisplay view)
         {
             Stroke_Highlight.Visibility = Visibility.Hidden;
         }
 
-        public void UpdatePositionFromInputOutput(IBlockView display)
+        public void UpdatePositionFromInputOutput(IElementDisplay display)
         {
-            if (display != null && AssociatedEnd != null && AssociatedStart != null)
+            if (display != null && display is IConnectionDisplay connectionDisplay && AssociatedEnd != null && AssociatedStart != null)
             {
                 if (AssociatedEnd is FrameworkElement inputElement && AssociatedStart is FrameworkElement outputElement)
                 {
-                    Start = display.GetBestSide(outputElement, inputElement);
-                    End = display.GetBestSide(inputElement, outputElement);
+                    Start = connectionDisplay.GetBestSide(outputElement, inputElement);
+                    End = connectionDisplay.GetBestSide(inputElement, outputElement);
 
                     _startIsLeft = Start.X <= display.GetPosition(outputElement).X;
                     _endIsLeft = End.X <= display.GetPosition(inputElement).X;

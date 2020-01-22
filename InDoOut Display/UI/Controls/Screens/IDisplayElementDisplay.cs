@@ -2,7 +2,7 @@
 
 namespace InDoOut_Display.UI.Controls.Screens
 {
-    public interface IDisplayElementHost
+    public interface IDisplayElementDisplay
     {
         bool AddDisplayElement(IDisplayElement displayElement);
         bool RemoveDisplayElement(IDisplayElement displayElement);

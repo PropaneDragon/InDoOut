@@ -1,6 +1,8 @@
 ﻿using InDoOut_Core.Entities.Functions;
 using InDoOut_Display.Actions;
 using InDoOut_UI_Common.Actions;
+using InDoOut_UI_Common.Actions.Deleting;
+using InDoOut_UI_Common.InterfaceElements;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -16,6 +18,12 @@ namespace InDoOut_Display.UI.Controls.Screens
 
         public IScreen CurrentScreen => ScreenItem_Overview;
 
+        public List<FrameworkElement> Elements => throw new System.NotImplementedException();
+
+        public List<IUIFunction> UIFunctions => throw new System.NotImplementedException();
+
+        public List<IUIConnection> UIConnections => throw new System.NotImplementedException();
+
         public ScreenConnections()
         {
             InitializeComponent();
@@ -23,32 +31,104 @@ namespace InDoOut_Display.UI.Controls.Screens
             _actionHandler = new ActionHandler(new ScreenConnectionsRestingAction(ScreenItem_Overview));
         }
 
-        public bool AddFunction(IFunction function)
+        public void Add(FrameworkElement element)
         {
-            if (function != null)
-            {
-                var functionContainer = new TextBlock
-                {
-                    Text = function.SafeName,
-                    FontSize = 50,
-                    Foreground = new SolidColorBrush(Color.FromRgb(255, 255, 255))
-                };
-
-                Canvas_Content.Children.Add(functionContainer);
-                Canvas.SetLeft(functionContainer, 200);
-                Canvas.SetTop(functionContainer, 200);
-
-                return true;
-            }
-
-            return false;
+            throw new System.NotImplementedException();
         }
 
-        public bool RemoveFunction(IFunction function)
+        public void Add(FrameworkElement element, Point position, int zIndex = 0)
         {
-            //Todo: Make the remove function work.
+            throw new System.NotImplementedException();
+        }
 
-            return false;
+        public void Remove(FrameworkElement element)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void SetPosition(FrameworkElement element, Point position)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public bool Remove(IDeletable deletable)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Point GetPosition(FrameworkElement element)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IUIFunction Create(IFunction function)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IUIFunction Create(IFunction function, Point location)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IUIFunction FindFunction(IFunction function)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Remove(IUIConnection connection)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Point GetBestSide(Rect rectangle, Point point)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Point GetBestSide(FrameworkElement element, Point point)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Point GetBestSide(FrameworkElement element, FrameworkElement otherElement)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IUIConnection Create(IUIConnectionStart start, Point end)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IUIConnection Create(IUIConnectionStart start, IUIConnectionEnd end)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IUIConnection FindConnection(IUIConnectionStart start, IUIConnectionEnd end)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public List<IUIConnection> FindConnections(IUIConnectionStart start)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public List<IUIConnection> FindConnections(IUIConnectionEnd end)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public List<IUIConnection> FindConnections(List<IUIConnectionStart> starts)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public List<IUIConnection> FindConnections(List<IUIConnectionEnd> ends)
+        {
+            throw new System.NotImplementedException();
         }
 
         public Point GetMousePosition()

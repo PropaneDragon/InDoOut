@@ -1,9 +1,9 @@
-﻿<UserControl x:Class="InDoOut_Desktop.UI.Controls.CoreEntityRepresentation.UIFunctionIO"
+﻿<UserControl x:Class="InDoOut_UI_Common.Controls.CoreEntityRepresentation.UIFunctionIO"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:InDoOut_Desktop.UI.Controls.CoreEntityRepresentation"
+             xmlns:local="clr-namespace:InDoOut_UI_Common.Controls.CoreEntityRepresentation"
              mc:Ignorable="d" 
              Width="180" MaxWidth="180" Foreground="White" Background="#3b77e4" FontFamily="Segoe UI Light" FontSize="14">
     <Border Padding="6">
