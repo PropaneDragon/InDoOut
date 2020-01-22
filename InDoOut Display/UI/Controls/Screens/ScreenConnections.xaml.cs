@@ -1,8 +1,11 @@
 ﻿using InDoOut_Core.Entities.Functions;
+using InDoOut_Core.Entities.Programs;
 using InDoOut_Display.Actions;
 using InDoOut_UI_Common.Actions;
 using InDoOut_UI_Common.Actions.Deleting;
+using InDoOut_UI_Common.Controls.CoreEntityRepresentation;
 using InDoOut_UI_Common.InterfaceElements;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -15,6 +18,7 @@ namespace InDoOut_Display.UI.Controls.Screens
     public partial class ScreenConnections : UserControl, IScreenConnections
     {
         private readonly ActionHandler _actionHandler = null;
+        private IProgram _currentProgram = null;
 
         public IScreen CurrentScreen => ScreenItem_Overview;
 
@@ -24,21 +28,40 @@ namespace InDoOut_Display.UI.Controls.Screens
 
         public List<IUIConnection> UIConnections => throw new System.NotImplementedException();
 
-        public ScreenConnections()
+        public IProgram AssociatedProgram { get => _currentProgram; set => ChangeProgram(value); }
+
+        public ScreenConnections() : this(new Program()) //Todo: Program manager
+        {
+
+        }   
+        
+        public ScreenConnections(IProgram program)
         {
             InitializeComponent();
 
             _actionHandler = new ActionHandler(new ScreenConnectionsRestingAction(ScreenItem_Overview));
+
+            ChangeProgram(program);
+            //ChangeViewMode(CurrentViewMode); Todo: View mode
         }
 
         public void Add(FrameworkElement element)
         {
-            throw new System.NotImplementedException();
+            //Todo: An actual relevant point. Not just 200, 200
+            Add(element, new Point(200, 200));
         }
 
         public void Add(FrameworkElement element, Point position, int zIndex = 0)
         {
-            throw new System.NotImplementedException();
+            if (element != null)
+            {
+                _ = Canvas_Content.Children.Add(element);
+
+                Panel.SetZIndex(element, zIndex);
+
+                SetPosition(element, position);
+                //ChangeViewMode(CurrentViewMode); Todo: View mode
+            }
         }
 
         public void Remove(FrameworkElement element)
@@ -48,7 +71,11 @@ namespace InDoOut_Display.UI.Controls.Screens
 
         public void SetPosition(FrameworkElement element, Point position)
         {
-            throw new System.NotImplementedException();
+            if (element != null)
+            {
+                Canvas.SetLeft(element, position.X);
+                Canvas.SetTop(element, position.Y);
+            }
         }
 
         public bool Remove(IDeletable deletable)
@@ -63,12 +90,24 @@ namespace InDoOut_Display.UI.Controls.Screens
 
         public IUIFunction Create(IFunction function)
         {
-            throw new System.NotImplementedException();
+            //Todo: An actual relevant point, not just 200, 200
+            return Create(function, new Point(200, 200));
         }
 
         public IUIFunction Create(IFunction function, Point location)
         {
-            throw new System.NotImplementedException();
+            if (AssociatedProgram != null)
+            {
+                if (AssociatedProgram.Functions.Contains(function) || AssociatedProgram.AddFunction(function))
+                {
+                    var uiFunction = new UIFunction(function);
+                    Add(uiFunction, location);
+
+                    return uiFunction;
+                }
+            }
+
+            return null;
         }
 
         public IUIFunction FindFunction(IFunction function)
@@ -191,6 +230,29 @@ namespace InDoOut_Display.UI.Controls.Screens
             }
 
             return null;
+        }
+
+        //Todo: Implement program loader
+        protected void ChangeProgram(IProgram program)
+        {
+            Clear();
+
+            if (_currentProgram != null)
+            {
+                //_ = _programLoader?.UnloadProgram(_currentProgram);
+            }
+
+            _currentProgram = program;
+
+            if (_currentProgram != null)
+            {
+                //_ = _programLoader?.DisplayProgram(_currentProgram);
+            }
+        }
+
+        private void Clear()
+        {
+            Canvas_Content.Children.Clear();
         }
 
         private HitTestFilterBehavior FilterHit(DependencyObject potentialHitTestTarget)

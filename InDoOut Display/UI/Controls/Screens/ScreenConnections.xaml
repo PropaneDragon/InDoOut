@@ -8,7 +8,10 @@
              d:DesignHeight="450" d:DesignWidth="800" Loaded="UserControl_Loaded">
     <Grid>
         <ScrollViewer x:Name="Scroll_Content" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" PreviewMouseLeftButtonDown="Scroll_Content_PreviewMouseLeftButtonDown" PreviewMouseLeftButtonUp="Scroll_Content_PreviewMouseLeftButtonUp" PreviewMouseMove="Scroll_Content_PreviewMouseMove" PreviewMouseRightButtonDown="Scroll_Content_PreviewMouseRightButtonDown" PreviewMouseRightButtonUp="Scroll_Content_PreviewMouseRightButtonUp" PreviewMouseDoubleClick="Scroll_Content_PreviewMouseDoubleClick" PreviewKeyDown="Scroll_Content_PreviewKeyDown" PreviewKeyUp="Scroll_Content_PreviewKeyUp" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" PanningMode="Both">
-            <Canvas x:Name="Canvas_Content" Width="5000" Height="5000">
+            <Grid>
+                <Canvas x:Name="Canvas_Content" Width="5000" Height="5000">
+
+                </Canvas>
                 <Grid Width="5000" Height="5000">
                     <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
                         <Border Background="#000">
@@ -19,7 +22,7 @@
                         <local:Screen x:Name="ScreenItem_Overview" Width="800" Height="500" />
                     </Grid>
                 </Grid>
-            </Canvas>
+            </Grid>
         </ScrollViewer>
     </Grid>
 </UserControl>
