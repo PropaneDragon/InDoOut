@@ -5,6 +5,7 @@ using InDoOut_Desktop.UI.Interfaces;
 using InDoOut_Desktop.UI.Windows;
 using InDoOut_Json_Storage;
 using InDoOut_Plugins.Loaders;
+using InDoOut_UI_Common.InterfaceElements;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -122,7 +123,7 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
 
             if (_blockView != null)
             {
-                _blockView.CurrentViewMode = _blockView.CurrentViewMode == BlockViewMode.IO ? BlockViewMode.Variables : BlockViewMode.IO;
+                _blockView.CurrentViewMode = _blockView.CurrentViewMode == ProgramViewMode.IO ? ProgramViewMode.Variables : ProgramViewMode.IO;
             }
         }
 

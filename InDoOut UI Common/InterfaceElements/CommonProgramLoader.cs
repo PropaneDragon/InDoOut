@@ -1,24 +1,22 @@
 ﻿using InDoOut_Core.Basic;
 using InDoOut_Core.Entities.Functions;
 using InDoOut_Core.Entities.Programs;
-using InDoOut_Desktop.UI.Interfaces;
-using InDoOut_UI_Common.InterfaceElements;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Threading;
 
-namespace InDoOut_Desktop.Loading.BlockView
+namespace InDoOut_UI_Common.InterfaceElements
 {
-    internal class BlockViewProgramLoader
+    internal class CommonProgramLoader : ICommonProgramLoader
     {
-        private readonly IBlockView _associatedBlockView = null;
-        private readonly DispatcherTimer _wireRedrawTimer = null;
+        private readonly ICommonProgramDisplay _display = null;
+        private readonly DispatcherTimer _wireRedrawTimer = null; //Todo: Look into making this safe.
 
-        public BlockViewProgramLoader(IBlockView blockView)
+        public CommonProgramLoader(ICommonProgramDisplay display)
         {
-            _associatedBlockView = blockView;
+            _display = display;
             _wireRedrawTimer = new DispatcherTimer(DispatcherPriority.Normal)
             {
                 Interval = TimeSpan.FromSeconds(2),
@@ -30,11 +28,11 @@ namespace InDoOut_Desktop.Loading.BlockView
 
         public bool DisplayProgram(IProgram program)
         {
-            if (program != null && _associatedBlockView != null)
+            if (program != null && _display != null)
             {
                 var functionToUIFunctionMap = new Dictionary<IFunction, IUIFunction>();
 
-                if (_associatedBlockView is IScrollable scrollable)
+                if (_display is IScrollable scrollable)
                 {
                     if (ExtractLocationFromMetadata(program, out var location))
                     {
@@ -48,7 +46,7 @@ namespace InDoOut_Desktop.Loading.BlockView
 
                 foreach (var function in program.Functions)
                 {
-                    var uiFunction = ExtractLocationFromMetadata(function, out var functionLocation) ? _associatedBlockView.Create(function, functionLocation) : _associatedBlockView.Create(function);
+                    var uiFunction = ExtractLocationFromMetadata(function, out var functionLocation) ? _display.Create(function, functionLocation) : _display.Create(function);
                     if (uiFunction != null)
                     {
                         functionToUIFunctionMap.Add(function, uiFunction);
@@ -83,7 +81,7 @@ namespace InDoOut_Desktop.Loading.BlockView
 
                                 if (uiOutput != null && uiInput != null)
                                 {
-                                    CreateConnection(uiOutput, uiInput, output, input);                                    
+                                    CreateConnection(uiOutput, uiInput, output, input);
                                 }
                             }
                         }
@@ -119,19 +117,19 @@ namespace InDoOut_Desktop.Loading.BlockView
         {
             if (uiStart != null && uiEnd != null && start != null && end != null)
             {
-                var connection = _associatedBlockView.Create(uiStart, uiEnd);
+                var connection = _display.Create(uiStart, uiEnd);
 
                 if (ExtractArea(start, out var startArea) && ExtractArea(end, out var endArea))
                 {
                     var startCentre = startArea.TopLeft + ((startArea.BottomRight - startArea.TopLeft) / 2d);
                     var endCentre = endArea.TopLeft + ((endArea.BottomRight - endArea.TopLeft) / 2d);
 
-                    connection.Start = _associatedBlockView.GetBestSide(startArea, endCentre);
-                    connection.End = _associatedBlockView.GetBestSide(endArea, startCentre);
+                    connection.Start = _display.GetBestSide(startArea, endCentre);
+                    connection.End = _display.GetBestSide(endArea, startCentre);
                 }
                 else
                 {
-                    _associatedBlockView.Remove(connection);
+                    _display.Remove(connection);
                 }
             }
         }
@@ -186,17 +184,17 @@ namespace InDoOut_Desktop.Loading.BlockView
         {
             _wireRedrawTimer?.Stop();
 
-            if (_associatedBlockView != null)
+            if (_display != null)
             {
-                if (_associatedBlockView is FrameworkElement frameworkElement)
+                if (_display is FrameworkElement frameworkElement)
                 {
                     frameworkElement.Measure(new Size(frameworkElement.ActualWidth, frameworkElement.ActualHeight));
                     frameworkElement.Arrange(new Rect(0, 0, frameworkElement.DesiredSize.Width, frameworkElement.DesiredSize.Height));
                 }
 
-                foreach (var uiConnection in _associatedBlockView.UIConnections)
+                foreach (var uiConnection in _display.UIConnections)
                 {
-                    uiConnection?.UpdatePositionFromInputOutput(_associatedBlockView);
+                    uiConnection?.UpdatePositionFromInputOutput(_display);
                 }
             }
         }

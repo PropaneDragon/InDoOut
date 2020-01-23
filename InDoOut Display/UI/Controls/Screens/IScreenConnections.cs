@@ -2,7 +2,7 @@
 
 namespace InDoOut_Display.UI.Controls.Screens
 {
-    public interface IScreenConnections : IProgramDisplay, IElementDisplay
+    public interface IScreenConnections : ICommonProgramDisplay
     {
         IScreen CurrentScreen { get; }
     }

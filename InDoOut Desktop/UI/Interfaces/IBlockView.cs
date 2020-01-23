@@ -1,25 +1,9 @@
-﻿using InDoOut_UI_Common.Actions.Selecting;
-using InDoOut_UI_Common.InterfaceElements;
-using System.Windows;
+﻿using InDoOut_UI_Common.InterfaceElements;
 
 namespace InDoOut_Desktop.UI.Interfaces
 {
-    public enum BlockViewMode
+
+    public interface IBlockView : ICommonProgramDisplay, IScrollable
     {
-        IO,
-        Variables
-    }
-
-    public interface IBlockView : IProgramDisplay, IElementDisplay, IFunctionDisplay, IConnectionDisplay
-    {
-        ISelectionManager<ISelectable> SelectionManager { get; }
-        BlockViewMode CurrentViewMode { get; set; }
-
-        Size TotalSize { get; }
-        Size ViewSize { get; }
-
-        Point TopLeftViewCoordinate { get; }
-        Point BottomRightViewCoordinate { get; }
-        Point CentreViewCoordinate { get; }
     }
 }

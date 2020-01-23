@@ -31,7 +31,7 @@ namespace InDoOut_Desktop.UI.Controls.TaskManager
         {
             if (program != null)
             {
-                var blockView = new BlockView.BlockView(program);
+                var blockView = new BlockView.BlockView() { AssociatedProgram = program };
                 var taskItem = new TaskItem(blockView, this);
                 var fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(600)) { EasingFunction = new CircleEase() { EasingMode = EasingMode.EaseInOut } };
 
