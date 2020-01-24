@@ -11,8 +11,8 @@ namespace InDoOut_Philips_Hue_Plugins
 {
     internal static class HueHelpers
     {
-        private static CacheControlHeaderValue _cacheControl = new CacheControlHeaderValue { NoCache = true, NoStore = true };
-        private static Dictionary<string, HueClient> _clientStorage = new Dictionary<string, HueClient>();
+        private static readonly CacheControlHeaderValue _cacheControl = new CacheControlHeaderValue { NoCache = true, NoStore = true };
+        private static readonly Dictionary<string, HueClient> _clientStorage = new Dictionary<string, HueClient>();
 
         public static HueClient GetClient(IApiFunction apiFunction) => apiFunction != null ? GetClient(apiFunction.BridgeIPProperty.FullValue, apiFunction.UserIdProperty.FullValue) : null;
         public static HueClient GetClient(string bridgeIp, string userId) => !string.IsNullOrEmpty(bridgeIp) && !string.IsNullOrEmpty(userId) ? TryGet.ValueOrDefault(() => GenerateHueClient(bridgeIp, userId), null) : null;

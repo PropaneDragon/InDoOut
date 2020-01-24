@@ -3,7 +3,6 @@ using InDoOut_Core.Instancing;
 using InDoOut_Core.Reporting;
 using InDoOut_Executable_Core.Location;
 using InDoOut_Executable_Core.Storage;
-using InDoOut_UI_Common.InterfaceElements;
 using Microsoft.Win32;
 using System.Collections.Generic;
 using System.IO;

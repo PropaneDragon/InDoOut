@@ -10,16 +10,19 @@ namespace InDoOut_Display.Actions.Resizing
         private Size _initialSize = new Size();
         private ScreenEdge _initialEdge = ScreenEdge.None;
 
-        public Screen ScreenItem { get; private set; } = null;
+        public IScreen ScreenItem { get; private set; } = null;
 
-        public ScreenResizeAction(Screen screenItem, Point mousePosition)
+        public ScreenResizeAction(IScreen screenItem, Point mousePosition)
         {
             ScreenItem = screenItem;
 
             _ = base.MouseLeftDown(mousePosition);
 
-            _initialSize = new Size(ScreenItem?.ActualWidth ?? 0, ScreenItem?.ActualHeight ?? 0);
-            _initialEdge = ScreenItem?.GetCloseEdge(Mouse.GetPosition(screenItem)) ?? ScreenEdge.None;
+            if (ScreenItem is FrameworkElement element)
+            {
+                _initialSize = new Size(element?.ActualWidth ?? 0, element?.ActualHeight ?? 0);
+                _initialEdge = ScreenItem?.GetCloseEdge(Mouse.GetPosition(element)) ?? ScreenEdge.None;
+            }
         }
 
         public override bool MouseLeftMove(Point mousePosition)
@@ -28,10 +31,10 @@ namespace InDoOut_Display.Actions.Resizing
 
             var movementAmount = CalculateMovementAmount();
 
-            if (ScreenItem != null)
+            if (ScreenItem != null && ScreenItem is FrameworkElement element)
             {
-                ScreenItem.Width = Math.Clamp(_initialSize.Width + movementAmount.X, 10d, double.MaxValue);
-                ScreenItem.Height = Math.Clamp(_initialSize.Height + movementAmount.Y, 10d, double.MaxValue);
+                element.Width = Math.Clamp(_initialSize.Width + movementAmount.X, 10d, double.MaxValue);
+                element.Height = Math.Clamp(_initialSize.Height + movementAmount.Y, 10d, double.MaxValue);
 
                 return true;
             }

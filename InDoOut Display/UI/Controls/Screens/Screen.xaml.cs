@@ -17,7 +17,7 @@ namespace InDoOut_Display.UI.Controls.Screens
     public partial class Screen : UserControl, IScreen
     {
         private readonly ActionHandler _actionHandler = null;
-        private readonly SelectionManager _selectionManager = null;
+        private readonly ScreenSelectionManager _selectionManager = null;
 
         private ScreenMode _mode = ScreenMode.Layout;
 
@@ -34,7 +34,7 @@ namespace InDoOut_Display.UI.Controls.Screens
             InitializeComponent();
 
             _actionHandler = new ActionHandler(new ScreenRestingAction(this));
-            _selectionManager = new SelectionManager(this);
+            _selectionManager = new ScreenSelectionManager(this);
         }
 
         public bool AddDisplayElement(IDisplayElement displayElement)
@@ -44,7 +44,7 @@ namespace InDoOut_Display.UI.Controls.Screens
                 var host = new DisplayElementContainer(displayElement);
                 _ = Grid_Elements.Children.Add(host);
 
-                SelectionManager?.Set(host);
+                _ = SelectionManager?.Set(host);
 
                 return true;
             }
@@ -230,7 +230,7 @@ namespace InDoOut_Display.UI.Controls.Screens
 
         private void UserControl_PreviewMouseMove(object sender, MouseEventArgs e)
         {
-            var handled = false;
+            bool handled;
 
             if (e.LeftButton == MouseButtonState.Pressed)
             {

@@ -1,6 +1,5 @@
 ﻿using InDoOut_Display.UI.Controls.Screens;
 using InDoOut_Display.UI.Windows;
-using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -43,9 +42,11 @@ namespace InDoOut_Display.UI.Controls.Sidebar
 
             if (window != null)
             {
+                var windowPosition = window.PointToScreen(new Point());
+
                 elementWindow.WindowStartupLocation = WindowStartupLocation.Manual;
-                elementWindow.Top = window.Top + 100;
-                elementWindow.Left = window.Left + 200;
+                elementWindow.Top = windowPosition.Y + 100;
+                elementWindow.Left = windowPosition.X + 200;
                 elementWindow.Height = window.Height - 200;
             }
 

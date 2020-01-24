@@ -1,10 +1,9 @@
-﻿using InDoOut_Desktop.UI.Interfaces;
-using InDoOut_UI_Common.InterfaceElements;
+﻿using InDoOut_UI_Common.InterfaceElements;
 using System.Windows;
 
-namespace InDoOut_Desktop.Actions.Dragging
+namespace InDoOut_UI_Common.Actions.Dragging
 {
-    internal class ScrollableDragAction : InDoOut_UI_Common.Actions.Dragging.DragAction
+    public class ScrollableDragAction : DragAction
     {
         private Point _initialScrollPosition = new Point();
 

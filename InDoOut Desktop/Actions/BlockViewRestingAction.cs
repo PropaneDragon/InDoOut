@@ -1,111 +1,22 @@
 ﻿using InDoOut_Core.Entities.Functions;
-using InDoOut_Desktop.Actions.Dragging;
 using InDoOut_Desktop.UI.Interfaces;
 using InDoOut_Desktop.UI.Windows;
-using InDoOut_UI_Common.Actions.Copying;
-using InDoOut_UI_Common.Actions.Deleting;
-using InDoOut_UI_Common.Actions.Dragging;
-using InDoOut_UI_Common.Actions.Selecting;
+using InDoOut_UI_Common.Actions;
 using InDoOut_UI_Common.InterfaceElements;
-using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace InDoOut_Desktop.Actions
 {
-    internal class BlockViewRestingAction : InDoOut_UI_Common.Actions.Action
+    internal class BlockViewRestingAction : Action
     {
         private readonly IBlockView _blockView = null;
+        private readonly ActionHandler _commonDisplayActions;
 
         public BlockViewRestingAction(IBlockView blockView)
         {
             _blockView = blockView;
-        }
-
-        public override bool MouseLeftDown(Point mousePosition)
-        {
-            return false;
-        }
-
-        public override bool MouseLeftMove(Point mousePosition)
-        {
-            if (_blockView != null)
-            {
-                var elementsUnderMouse = _blockView.GetElementsUnderMouse();
-                var selectionManager = _blockView.SelectionManager;
-                var elementsSelected = selectionManager.Selection;
-
-                elementsUnderMouse.Reverse();
-
-                if (elementsUnderMouse.Count > 0 && _blockView.GetFirstElementOfType<ISelectable>(elementsUnderMouse) is ISelectable selectable && selectable.CanSelect(_blockView) && !selectionManager.Contains(selectable))
-                {
-                    _ = selectionManager.Set(selectable);
-                }
-
-                elementsSelected = selectionManager.Selection;
-
-                if (elementsUnderMouse.Count > 0)
-                { 
-                    if (_blockView.GetFirstElementOfType<TextBox>(elementsUnderMouse) is TextBox)
-                    {
-                        return false;
-                    }
-                    else if (_blockView.GetFirstElementOfType<IUIOutput>(elementsUnderMouse) is IUIOutput output)
-                    {
-                        Finish(new IOWireDragAction(output, _blockView));
-
-                        return true;
-                    }
-                    else if (_blockView.GetFirstElementOfType<IUIResult>(elementsUnderMouse) is IUIResult result)
-                    {
-                        Finish(new VariableWireDragAction(result, _blockView));
-
-                        return true;
-                    }
-                    else if (_blockView.GetFirstElementOfType<IDraggable>(elementsUnderMouse) != null && elementsSelected.Any(element => element is IDraggable draggable && draggable.CanDrag(_blockView)))
-                    {
-                        var draggables = elementsSelected.Where(element => element is IDraggable draggable && draggable.CanDrag(_blockView)).Cast<IDraggable>();
-
-                        Finish(new DraggableDragAction(_blockView, draggables, mousePosition));
-
-                        return true;
-                    }
-                    else if (_blockView.GetFirstElementOfType<IScrollable>(elementsUnderMouse) is IScrollable scrollable)
-                    {
-                        Finish(new ScrollableDragAction(scrollable, mousePosition));
-
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-        }
-
-        public override bool MouseLeftUp(Point mousePosition)
-        {
-            if (_blockView != null)
-            {
-                var elementsUnderMouse = _blockView.GetElementsUnderMouse();
-                elementsUnderMouse.Reverse();
-
-                if (elementsUnderMouse.Count > 0)
-                {
-                    if (_blockView.GetFirstElementOfType<ISelectable>(elementsUnderMouse) is ISelectable selectable && selectable.CanSelect(_blockView))
-                    {
-                        _ = Keyboard.Modifiers.HasFlag(ModifierKeys.Control) ? _blockView.SelectionManager.Add(selectable, true) : _blockView.SelectionManager.Set(selectable, false);
-                    }
-                    else if (!Keyboard.Modifiers.HasFlag(ModifierKeys.Control))
-                    {
-                        _blockView.SelectionManager.Clear();
-                    }
-
-                    return true;
-                }
-            }
-
-            return false;
+            _commonDisplayActions = new ActionHandler(new CommonProgramDisplayRestingAction(_blockView));
         }
 
         public override bool MouseRightUp(Point mousePosition)
@@ -120,11 +31,13 @@ namespace InDoOut_Desktop.Actions
                     if (_blockView.GetFirstElementOfType<IUIConnection>(elementsUnderMouse) is IUIConnection connection)
                     {
                         Finish(new ConnectionMenuAction(connection, _blockView, mousePosition));
+
+                        return true;
                     }
                 }
             }
 
-            return false;
+            return _commonDisplayActions?.MouseRightUp(mousePosition) ?? false;
         }
 
         public override bool MouseDoubleClick(Point mousePosition)
@@ -151,44 +64,53 @@ namespace InDoOut_Desktop.Actions
 
                         previewWindow.Show();
                         _ = previewWindow.Activate();
+
+                        return true;
                     }
                 }
             }
 
-            return false;
+            return _commonDisplayActions?.MouseDoubleClick(mousePosition) ?? false;
+        }
+
+        public override bool MouseRightMove(Point mousePosition)
+        {
+            return _commonDisplayActions?.MouseRightMove(mousePosition) ?? false;
+        }
+
+        public override bool MouseRightDown(Point mousePosition)
+        {
+            return _commonDisplayActions?.MouseRightDown(mousePosition) ?? false;
+        }
+
+        public override bool MouseNoMove(Point mousePosition)
+        {
+            return _commonDisplayActions?.MouseNoMove(mousePosition) ?? false;
+        }
+
+        public override bool MouseLeftDown(Point mousePosition)
+        {
+            return _commonDisplayActions?.MouseLeftDown(mousePosition) ?? false;
+        }
+
+        public override bool MouseLeftMove(Point mousePosition)
+        {
+            return _commonDisplayActions?.MouseLeftMove(mousePosition) ?? false;
+        }
+
+        public override bool MouseLeftUp(Point mousePosition)
+        {
+            return _commonDisplayActions?.MouseLeftUp(mousePosition) ?? false;
         }
 
         public override bool KeyUp(Key key)
         {
-            if (_blockView != null)
-            {
-                var elementsSelected = _blockView.SelectionManager.Selection;
+            return _commonDisplayActions?.KeyUp(key) ?? false;
+        }
 
-                if (key == Key.D && Keyboard.Modifiers.HasFlag(ModifierKeys.Control) && elementsSelected.All(element => element is ICopyable copyable && copyable.CanCopy(_blockView)))
-                {
-                    var copyables = elementsSelected.Cast<ICopyable>();
-
-                    foreach (var copyable in copyables)
-                    {
-                        var copy = copyable.CreateCopy(_blockView);
-                        if (copy != null)
-                        {
-                            return copyable.CopyTo(copy);
-                        }
-                    }
-                }
-                else if (key == Key.Delete && !(Keyboard.FocusedElement is TextBox) && elementsSelected.All(element => element is IDeletable deletable && deletable.CanDelete(_blockView)))
-                {
-                    var deletables = elementsSelected.Cast<IDeletable>();
-
-                    foreach (var deletable in deletables)
-                    {
-                        _blockView?.Remove(deletable);
-                    }
-                }
-            }
-
-            return false;
+        public override bool KeyDown(Key key)
+        {
+            return _commonDisplayActions?.KeyDown(key) ?? false;
         }
     }
 }

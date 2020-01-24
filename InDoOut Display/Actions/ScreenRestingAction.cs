@@ -1,5 +1,4 @@
 ﻿using InDoOut_Display.Actions.Resizing;
-using InDoOut_Display.Actions.Selecting;
 using InDoOut_Display.UI.Controls.Screens;
 using InDoOut_UI_Common.Actions.Selecting;
 using System.Linq;

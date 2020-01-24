@@ -1,5 +1,4 @@
 ﻿using InDoOut_Display.UI.Controls.Screens;
-using System;
 using System.Windows;
 
 namespace InDoOut_Display.UI.Windows

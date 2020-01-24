@@ -3,13 +3,13 @@ using InDoOut_UI_Common.Actions.Selecting;
 
 namespace InDoOut_Display.Actions.Selecting
 {
-    internal class SelectionManager : AbstractSelectionManager<ISelectable>
+    internal class ScreenConnectionsSelectionManager : AbstractSelectionManager<ISelectable>
     {
-        private readonly IScreen _associatedScreen = null;
+        private readonly IScreenConnections _associatedScreen = null;
 
-        public SelectionManager(IScreen screen)
+        public ScreenConnectionsSelectionManager(IScreenConnections screenConnections)
         {
-            _associatedScreen = screen;
+            _associatedScreen = screenConnections;
         }
 
         protected override void NotifySelectableEnded(ISelectable selectable)

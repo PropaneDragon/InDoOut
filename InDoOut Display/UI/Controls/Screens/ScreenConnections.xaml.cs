@@ -34,8 +34,8 @@ namespace InDoOut_Display.UI.Controls.Screens
         {
             InitializeComponent();
 
-            SelectionManager = new SelectionManager(ScreenItem_Overview);
-            ActionHandler = new ActionHandler(new ScreenConnectionsRestingAction(ScreenItem_Overview));
+            SelectionManager = new ScreenConnectionsSelectionManager(this);
+            ActionHandler = new ActionHandler(new ScreenConnectionsRestingAction(this));
             ProgramHandler = null; //Todo
             AssociatedProgram = new Program();
         }
@@ -59,7 +59,7 @@ namespace InDoOut_Display.UI.Controls.Screens
 
         private void Scroll_Content_PreviewMouseMove(object sender, MouseEventArgs e)
         {
-            var handled = false;
+            bool handled;
 
             if (e.LeftButton == MouseButtonState.Pressed)
             {

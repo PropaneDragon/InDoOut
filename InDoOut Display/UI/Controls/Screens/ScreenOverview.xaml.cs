@@ -1,5 +1,4 @@
-﻿using InDoOut_Display.Actions;
-using InDoOut_UI_Common.Actions;
+﻿using InDoOut_UI_Common.Actions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -29,7 +28,7 @@ namespace InDoOut_Display.UI.Controls.Screens
 
         private void Scroll_Content_PreviewMouseMove(object sender, MouseEventArgs e)
         {
-            var handled = false;
+            bool handled;
 
             if (e.LeftButton == MouseButtonState.Pressed)
             {

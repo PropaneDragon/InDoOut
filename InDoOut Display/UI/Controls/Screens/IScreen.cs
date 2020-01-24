@@ -1,5 +1,4 @@
-﻿using InDoOut_Display.Actions.Selecting;
-using InDoOut_UI_Common.Actions.Selecting;
+﻿using InDoOut_UI_Common.Actions.Selecting;
 using InDoOut_UI_Common.InterfaceElements;
 using System.Windows;
 

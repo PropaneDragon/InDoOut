@@ -1,41 +1,100 @@
 ﻿using InDoOut_Display.Actions.Resizing;
 using InDoOut_Display.UI.Controls.Screens;
+using InDoOut_UI_Common.Actions;
 using System.Windows;
 using System.Windows.Input;
 
 namespace InDoOut_Display.Actions
 {
-    internal class ScreenConnectionsRestingAction : InDoOut_UI_Common.Actions.Action
+    internal class ScreenConnectionsRestingAction : Action
     {
-        public Screen ScreenItem { get; private set; } = null;
+        private readonly ActionHandler _commonDisplayActions;
 
-        public ScreenConnectionsRestingAction(Screen screenItem)
+        public IScreenConnections ScreenConnections { get; private set; } = null;
+
+        private ScreenConnectionsRestingAction()
         {
-            ScreenItem = screenItem;
+        }
+
+        public ScreenConnectionsRestingAction(IScreenConnections screenItem) : this()
+        {
+            ScreenConnections = screenItem;
+
+            _commonDisplayActions = new ActionHandler(new CommonProgramDisplayRestingAction(ScreenConnections));
         }
 
         public override bool MouseNoMove(Point mousePosition)
         {
-            var position = Mouse.GetPosition(ScreenItem);
-            var edge = ScreenItem?.GetCloseEdge(position, 5) ?? ScreenEdge.None;
+            if (ScreenConnections?.CurrentScreen != null && ScreenConnections?.CurrentScreen is FrameworkElement element)
+            {
+                var position = Mouse.GetPosition(element);
+                var edge = ScreenConnections?.CurrentScreen?.GetCloseEdge(position, 5) ?? ScreenEdge.None;
 
-            Mouse.OverrideCursor = GetCursorForEdge(edge);
+                Mouse.OverrideCursor = GetCursorForEdge(edge);
 
-            return false;
+                if (edge != ScreenEdge.None)
+                {
+                    return true;
+                }
+            }
+
+            return _commonDisplayActions?.MouseNoMove(mousePosition) ?? false;
         }
 
         public override bool MouseLeftDown(Point mousePosition)
         {
-            if (ScreenItem != null)
+            if (ScreenConnections?.CurrentScreen != null && ScreenConnections?.CurrentScreen is FrameworkElement element)
             {
-                var position = Mouse.GetPosition(ScreenItem);
-                if (ScreenItem?.PointCloseToScreenItemEdge(position) ?? false)
+                var position = Mouse.GetPosition(element);
+                if (ScreenConnections?.CurrentScreen?.PointCloseToScreenItemEdge(position) ?? false)
                 {
-                    Finish(new ScreenResizeAction(ScreenItem, mousePosition));
+                    Finish(new ScreenResizeAction(ScreenConnections?.CurrentScreen, mousePosition));
+
+                    return true;
                 }
             }
 
-            return false;
+            return _commonDisplayActions?.MouseLeftDown(mousePosition) ?? false;
+        }
+
+        public override bool MouseDoubleClick(Point mousePosition)
+        {
+            return _commonDisplayActions?.MouseDoubleClick(mousePosition) ?? false;
+        }
+
+        public override bool MouseLeftMove(Point mousePosition)
+        {
+            return _commonDisplayActions?.MouseLeftMove(mousePosition) ?? false;
+        }
+
+        public override bool MouseLeftUp(Point mousePosition)
+        {
+            return _commonDisplayActions?.MouseLeftUp(mousePosition) ?? false;
+        }
+
+        public override bool MouseRightDown(Point mousePosition)
+        {
+            return _commonDisplayActions?.MouseRightDown(mousePosition) ?? false;
+        }
+
+        public override bool MouseRightMove(Point mousePosition)
+        {
+            return _commonDisplayActions?.MouseRightMove(mousePosition) ?? false;
+        }
+
+        public override bool MouseRightUp(Point mousePosition)
+        {
+            return _commonDisplayActions?.MouseRightUp(mousePosition) ?? false;
+        }
+
+        public override bool KeyDown(Key key)
+        {
+            return _commonDisplayActions?.KeyDown(key) ?? false;
+        }
+
+        public override bool KeyUp(Key key)
+        {
+            return _commonDisplayActions?.KeyUp(key) ?? false;
         }
 
         private Cursor GetCursorForEdge(ScreenEdge edge)

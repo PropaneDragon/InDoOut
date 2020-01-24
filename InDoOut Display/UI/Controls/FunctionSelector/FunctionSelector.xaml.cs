@@ -15,7 +15,7 @@ namespace InDoOut_Display.UI.Controls.FunctionSelector
 {
     public partial class FunctionSelector : UserControl
     {
-        private IFunctionBuilder _functionBuilder = new FunctionBuilder();
+        private readonly IFunctionBuilder _functionBuilder = new FunctionBuilder();
         private IScreenConnections _screenConnections = null;
 
         public bool CloseWindowOnSelection { get; set; } = true;
@@ -76,13 +76,12 @@ namespace InDoOut_Display.UI.Controls.FunctionSelector
 
         private void List_Items_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            var selectedFunction = List_Items.SelectedItem as IFunction;
-            if (selectedFunction != null)
+            if (List_Items.SelectedItem is IFunction selectedFunction)
             {
                 var newFunctionInstance = _functionBuilder.BuildInstance(selectedFunction.GetType());
                 if (newFunctionInstance != null && _screenConnections != null && _screenConnections is IFunctionDisplay functionDisplay)
                 {
-                    functionDisplay.Create(newFunctionInstance);
+                    _ = functionDisplay.Create(newFunctionInstance);
 
                     if (CloseWindowOnSelection)
                     {
