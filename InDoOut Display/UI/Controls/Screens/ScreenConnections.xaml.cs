@@ -44,64 +44,78 @@ namespace InDoOut_Display.UI.Controls.Screens
         {
             //Todo
 
+            Canvas_Content.Children.Clear();
+
             return true;
         }
 
-        private void Scroll_Content_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void Scroll_Content_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            e.Handled = ActionHandler?.MouseLeftDown(e.GetPosition(sender as IInputElement)) ?? false;
+            _ = ActionHandler?.MouseLeftDown(e.GetPosition(sender as ScrollViewer));
+
+            e.Handled = false;
         }
 
-        private void Scroll_Content_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void Scroll_Content_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            e.Handled = ActionHandler?.MouseLeftUp(e.GetPosition(sender as IInputElement)) ?? false;
+            _ = ActionHandler?.MouseLeftUp(e.GetPosition(sender as ScrollViewer));
+
+            e.Handled = false;
         }
 
-        private void Scroll_Content_PreviewMouseMove(object sender, MouseEventArgs e)
+        private void Scroll_Content_MouseMove(object sender, MouseEventArgs e)
         {
-            bool handled;
-
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                handled = ActionHandler?.MouseLeftMove(e.GetPosition(sender as IInputElement)) ?? false;
+                _ = ActionHandler?.MouseLeftMove(e.GetPosition(sender as ScrollViewer));
             }
 #pragma warning disable IDE0045 // Convert to conditional expression
             else if (e.RightButton == MouseButtonState.Pressed)
 #pragma warning restore IDE0045 // Convert to conditional expression
             {
-                handled = ActionHandler?.MouseRightMove(e.GetPosition(sender as IInputElement)) ?? false;
+                _ = ActionHandler?.MouseRightMove(e.GetPosition(sender as ScrollViewer));
             }
             else
             {
-                handled = ActionHandler?.MouseNoMove(e.GetPosition(sender as IInputElement)) ?? false;
+                _ = ActionHandler?.MouseNoMove(e.GetPosition(sender as ScrollViewer));
             }
 
-            e.Handled = handled;
+            e.Handled = false;
         }
 
         private void Scroll_Content_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
-            e.Handled = ActionHandler?.MouseRightDown(e.GetPosition(sender as IInputElement)) ?? false;
+            _ = ActionHandler?.MouseRightDown(e.GetPosition(sender as ScrollViewer));
+
+            e.Handled = false;
         }
 
         private void Scroll_Content_PreviewMouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
-            e.Handled = ActionHandler?.MouseRightUp(e.GetPosition(sender as IInputElement)) ?? false;
+            _ = ActionHandler?.MouseRightUp(e.GetPosition(sender as ScrollViewer));
+
+            e.Handled = false;
         }
 
         private void Scroll_Content_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            e.Handled = ActionHandler?.MouseDoubleClick(e.GetPosition(sender as IInputElement)) ?? false;
+            _ = ActionHandler?.MouseDoubleClick(e.GetPosition(sender as ScrollViewer));
+
+            e.Handled = false;
         }
 
         private void Scroll_Content_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            e.Handled = ActionHandler?.KeyDown(e.Key) ?? false;
+            _ = ActionHandler?.KeyDown(e.Key);
+
+            e.Handled = false;
         }
 
         private void Scroll_Content_PreviewKeyUp(object sender, KeyEventArgs e)
         {
-            e.Handled = ActionHandler?.KeyUp(e.Key) ?? false;
+            _ = ActionHandler?.KeyUp(e.Key);
+
+            e.Handled = false;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)

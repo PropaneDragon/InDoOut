@@ -5,6 +5,7 @@ using InDoOut_Display_Core.Elements;
 using InDoOut_UI_Common.Actions;
 using InDoOut_UI_Common.Actions.Deleting;
 using InDoOut_UI_Common.Actions.Selecting;
+using InDoOut_UI_Common.InterfaceElements;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -19,11 +20,11 @@ namespace InDoOut_Display.UI.Controls.Screens
         private readonly ActionHandler _actionHandler = null;
         private readonly ScreenSelectionManager _selectionManager = null;
 
-        private ScreenMode _mode = ScreenMode.Layout;
+        private ProgramViewMode _currentViewMode = ProgramViewMode.IO;
 
         public Size Size => new Size(Width, Height);
 
-        public ScreenMode Mode { get => _mode; set => ChangeMode(value); }
+        public ProgramViewMode CurrentViewMode { get => _currentViewMode; set => ChangeMode(value); }
 
         public ISelectionManager<ISelectable> SelectionManager => _selectionManager;
 
@@ -210,11 +211,11 @@ namespace InDoOut_Display.UI.Controls.Screens
             return point > min && point < max;
         }
 
-        private void ChangeMode(ScreenMode mode)
+        private void ChangeMode(ProgramViewMode mode)
         {
-            if (mode != _mode)
+            if (mode != _currentViewMode)
             {
-                _mode = mode;
+                _currentViewMode = mode;
             }
         }
 

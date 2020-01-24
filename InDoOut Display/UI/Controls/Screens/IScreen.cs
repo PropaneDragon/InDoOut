@@ -17,15 +17,9 @@ namespace InDoOut_Display.UI.Controls.Screens
         BottomRight
     }
 
-    public enum ScreenMode
-    {
-        Layout,
-        Connections
-    }
-
     public interface IScreen : IElementDisplay, IDisplayElementDisplay
     {
-        ScreenMode Mode { get; set; }
+        ProgramViewMode CurrentViewMode { get; set; }
         ISelectionManager<ISelectable> SelectionManager { get; }
         Size Size { get; }
 

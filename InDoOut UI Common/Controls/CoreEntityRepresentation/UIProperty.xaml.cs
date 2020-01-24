@@ -110,7 +110,7 @@ namespace InDoOut_UI_Common.Controls.CoreEntityRepresentation
         private void UserControl_MouseLeave(object sender, MouseEventArgs e)
         {
             var fadeOutAnimation = new DoubleAnimation(0, TimeSpan.FromMilliseconds(200));
-            fadeOutAnimation.Completed += (sender, e) => Button_Edit.Visibility = System.Windows.Visibility.Hidden;
+            fadeOutAnimation.Completed += (sender, e) => Button_Edit.Visibility = Visibility.Hidden;
 
             Button_Edit.BeginAnimation(OpacityProperty, fadeOutAnimation);
         }

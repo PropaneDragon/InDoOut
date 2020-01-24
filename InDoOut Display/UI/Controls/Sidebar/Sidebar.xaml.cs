@@ -1,5 +1,6 @@
 ﻿using InDoOut_Display.UI.Controls.Screens;
 using InDoOut_Display.UI.Windows;
+using InDoOut_UI_Common.InterfaceElements;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -55,11 +56,20 @@ namespace InDoOut_Display.UI.Controls.Sidebar
 
         private void Button_SwitchMode_Click(object sender, RoutedEventArgs e)
         {
-            var screen = AssociatedScreenOverview?.CurrentConnectionsScreen?.CurrentScreen;
-            if (screen != null)
+            if (AssociatedScreenOverview?.CurrentConnectionsScreen != null)
             {
-                screen.Mode = screen.Mode == ScreenMode.Connections ? ScreenMode.Layout : ScreenMode.Connections;
+                var currentViewMode = AssociatedScreenOverview.CurrentConnectionsScreen.CurrentViewMode;
+                var nextViewMode = currentViewMode == ProgramViewMode.IO ? ProgramViewMode.Variables : ProgramViewMode.IO;
+                var screen = AssociatedScreenOverview.CurrentConnectionsScreen.CurrentScreen;
+
+                AssociatedScreenOverview.CurrentConnectionsScreen.CurrentViewMode = nextViewMode;
+
+                if (screen != null)
+                {
+                    screen.CurrentViewMode = nextViewMode;
+                }
             }
+                    
         }
 
         private void Button_New_Click(object sender, RoutedEventArgs e)
