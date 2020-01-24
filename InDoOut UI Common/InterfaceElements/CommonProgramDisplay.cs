@@ -293,7 +293,6 @@ namespace InDoOut_UI_Common.InterfaceElements
                 function.DisplayMode = viewMode == ProgramViewMode.IO ? UIFunctionDisplayMode.IO : UIFunctionDisplayMode.Variables;
             }
 
-            //Todo: Can the below be done in the UIFunction? Surely it knows about these itself.
             foreach (var ioConnection in ioConnections)
             {
                 ioConnection.Hidden = viewMode != ProgramViewMode.IO;
