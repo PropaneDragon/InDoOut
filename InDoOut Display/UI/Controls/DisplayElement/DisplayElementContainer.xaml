@@ -27,6 +27,12 @@
                         <TextBlock FontFamily="Material Icons" FontSize="20" Foreground="#fff" Text="" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" TextTrimming="CharacterEllipsis" TextWrapping="WrapWithOverflow" />
                     </Border>
                 </Grid>
+                <StackPanel x:Name="Stack_Inputs" HorizontalAlignment="Left" Margin="-8,0,0,0" VerticalAlignment="Center">
+                    <local:DisplayElementInput />
+                </StackPanel>
+                <StackPanel x:Name="Stack_Outputs" HorizontalAlignment="Right" Margin="0,0,-8,0" VerticalAlignment="Center">
+                    <local:DisplayElementOutput />
+                </StackPanel>
             </Grid>
         </Border>
     </Grid>

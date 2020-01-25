@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace InDoOut_Desktop.UI.Controls.Search
+namespace InDoOut_UI_Common.Controls.Search
 {
     public partial class SearchBar : UserControl, ISearch
     {

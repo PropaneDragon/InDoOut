@@ -22,6 +22,8 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
 
         protected override Canvas ElementCanvas => Canvas_Content;
 
+        protected override FrameworkElement HitTestElement => ElementCanvas;
+
         public override Size ViewSize => new Size(Scroll_Content.ActualWidth, Scroll_Content.ActualHeight);
 
         public override Point TopLeftViewCoordinate => new Point(Scroll_Content.HorizontalOffset, Scroll_Content.VerticalOffset);

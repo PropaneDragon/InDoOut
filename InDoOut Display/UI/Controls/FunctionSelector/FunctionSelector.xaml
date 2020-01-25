@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InDoOut_Display.UI.Controls.FunctionSelector"
+             xmlns:search="clr-namespace:InDoOut_UI_Common.Controls.Search;assembly=InDoOutUICommon"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded">
     <UserControl.Resources>
@@ -12,55 +13,58 @@
         </Style>
     </UserControl.Resources>
     <Border>
-        <ListView x:Name="List_Items" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" Foreground="White" FontFamily="Segoe UI Light" FontSize="24" SelectionMode="Single" MouseDoubleClick="List_Items_MouseDoubleClick">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Name" Width="{Binding Width, ElementName=List_Items}" DisplayMemberBinding="{Binding SafeName}" />
-                </GridView>
-            </ListView.View>
-            <ListView.ItemContainerStyle>
-                <Style TargetType="{x:Type ListViewItem}">
-                    <Setter Property="Background" Value="Transparent" />
-                    <Setter Property="BorderBrush" Value="Transparent" />
-                    <Setter Property="Margin" Value="0,0,8,0" />
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="ListBoxItem">
-                                <Border x:Name="Border" Padding="50,4,8,4" SnapsToDevicePixels="true" Background="Transparent">
-                                    <VisualStateManager.VisualStateGroups>
-                                        <VisualStateGroup x:Name="CommonStates">
-                                            <VisualState x:Name="Normal" />
-                                            <VisualState x:Name="MouseOver">
-                                                <Storyboard>
-                                                    <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border" Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
-                                                        <EasingColorKeyFrame KeyTime="0" Value="#FF3B77E4" />
-                                                    </ColorAnimationUsingKeyFrames>
-                                                </Storyboard>
-                                            </VisualState>
-                                            <VisualState x:Name="Disabled" />
-                                        </VisualStateGroup>
-                                        <VisualStateGroup x:Name="SelectionStates">
-                                            <VisualState x:Name="Unselected" />
-                                            <VisualState x:Name="Selected" />
-                                            <VisualState x:Name="SelectedUnfocused" />
-                                        </VisualStateGroup>
-                                    </VisualStateManager.VisualStateGroups>
-                                    <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-                                </Border>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </ListView.ItemContainerStyle>
-            <ListView.GroupStyle>
-                <GroupStyle>
-                    <GroupStyle.HeaderTemplate>
-                        <DataTemplate>
-                            <TextBlock Margin="30,22,0,0" Text="{Binding Name}" />
-                        </DataTemplate>
-                    </GroupStyle.HeaderTemplate>
-                </GroupStyle>
-            </ListView.GroupStyle>
-        </ListView>
+        <DockPanel>
+            <search:SearchBar DockPanel.Dock="Top" SearchRequested="SearchBar_SearchRequested" />
+            <ListView x:Name="List_Items" DockPanel.Dock="Top" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" Foreground="White" FontFamily="Segoe UI Light" FontSize="24" SelectionMode="Single" MouseDoubleClick="List_Items_MouseDoubleClick">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Name" Width="{Binding Width, ElementName=List_Items}" DisplayMemberBinding="{Binding SafeName}" />
+                    </GridView>
+                </ListView.View>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Setter Property="Background" Value="Transparent" />
+                        <Setter Property="BorderBrush" Value="Transparent" />
+                        <Setter Property="Margin" Value="0,0,8,0" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListBoxItem">
+                                    <Border x:Name="Border" Padding="50,4,8,4" SnapsToDevicePixels="true" Background="Transparent">
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup x:Name="CommonStates">
+                                                <VisualState x:Name="Normal" />
+                                                <VisualState x:Name="MouseOver">
+                                                    <Storyboard>
+                                                        <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border" Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
+                                                            <EasingColorKeyFrame KeyTime="0" Value="#ee3b77e4" />
+                                                        </ColorAnimationUsingKeyFrames>
+                                                    </Storyboard>
+                                                </VisualState>
+                                                <VisualState x:Name="Disabled" />
+                                            </VisualStateGroup>
+                                            <VisualStateGroup x:Name="SelectionStates">
+                                                <VisualState x:Name="Unselected" />
+                                                <VisualState x:Name="Selected" />
+                                                <VisualState x:Name="SelectedUnfocused" />
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                        <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.GroupStyle>
+                    <GroupStyle>
+                        <GroupStyle.HeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock Margin="30,22,0,0" Text="{Binding Name}" />
+                            </DataTemplate>
+                        </GroupStyle.HeaderTemplate>
+                    </GroupStyle>
+                </ListView.GroupStyle>
+            </ListView>
+        </DockPanel>
     </Border>
 </UserControl>

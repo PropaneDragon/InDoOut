@@ -9,7 +9,7 @@
              d:DesignHeight="450" d:DesignWidth="800" Loaded="UserControl_Loaded">
     <Grid>
         <ScrollViewer x:Name="Scroll_Content" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" PreviewMouseLeftButtonDown="Scroll_Content_MouseLeftButtonDown" PreviewMouseLeftButtonUp="Scroll_Content_MouseLeftButtonUp" PreviewMouseMove="Scroll_Content_MouseMove" PreviewMouseRightButtonDown="Scroll_Content_PreviewMouseRightButtonDown" PreviewMouseRightButtonUp="Scroll_Content_PreviewMouseRightButtonUp" PreviewMouseDoubleClick="Scroll_Content_PreviewMouseDoubleClick" PreviewKeyDown="Scroll_Content_PreviewKeyDown" PreviewKeyUp="Scroll_Content_PreviewKeyUp" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" PanningMode="Both">
-            <Grid>
+            <Grid x:Name="Grid_CombinedContent">
                 <Grid Width="5000" Height="5000">
                     <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
                         <Border Background="#000">

@@ -30,6 +30,8 @@ namespace InDoOut_Display.UI.Controls.Screens
 
         protected override Canvas ElementCanvas => Canvas_Content;
 
+        protected override FrameworkElement HitTestElement => Grid_CombinedContent;
+
         public ScreenConnections() : base()
         {
             InitializeComponent();

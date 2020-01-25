@@ -32,6 +32,7 @@ namespace InDoOut_UI_Common.InterfaceElements
         public abstract IActionHandler ActionHandler { get; protected set; }
         protected abstract IProgramHandler ProgramHandler { get; set; }
         protected abstract Canvas ElementCanvas { get; }
+        protected abstract FrameworkElement HitTestElement { get; }
 
         public abstract Size ViewSize { get; }
         public abstract Point TopLeftViewCoordinate { get; }
@@ -117,9 +118,9 @@ namespace InDoOut_UI_Common.InterfaceElements
 
         public List<FrameworkElement> GetElementsAtPoint(Point point)
         {
-            var hits = new List<FrameworkElement>() { ElementCanvas, this };
+            var hits = new List<FrameworkElement>() { HitTestElement, this };
 
-            VisualTreeHelper.HitTest(ElementCanvas, FilterHit, (result) => NewHit(result, hits), new PointHitTestParameters(point));
+            VisualTreeHelper.HitTest(HitTestElement, FilterHit, (result) => NewHit(result, hits), new PointHitTestParameters(point));
 
             return hits;
         }

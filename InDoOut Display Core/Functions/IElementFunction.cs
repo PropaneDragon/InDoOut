@@ -15,15 +15,15 @@ namespace InDoOut_Display_Core.Functions
         bool ShouldDisplayUpdate { get; }
 
         /// <summary>
-        /// Creats a <see cref="IDisplayElement"/> which can be associated with this function.
-        /// </summary>
-        /// <returns>A <see cref="IDisplayElement"/> that can be associated with and update from this function.</returns>
-        void PerformedUIUpdate();
-
-        /// <summary>
         /// Should be called when an update on the UI has taken place, in order to
         /// reset <see cref="ShouldDisplayUpdate"/>.
         /// </summary>
+        void PerformedUIUpdate();
+
+        /// <summary>
+        /// Creats a <see cref="IDisplayElement"/> which can be associated with this function.
+        /// </summary>
+        /// <returns>A <see cref="IDisplayElement"/> that can be associated with and update from this function.</returns>
         IDisplayElement CreateAssociatedUIElement();
     }
 }

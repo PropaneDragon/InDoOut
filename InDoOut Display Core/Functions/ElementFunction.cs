@@ -9,6 +9,8 @@ namespace InDoOut_Display_Core.Functions
     /// </summary>
     public abstract class ElementFunction : Function, IElementFunction
     {
+        private readonly IOutput _updated;
+
         private DateTime _lastUIUpdate = DateTime.MinValue;
 
         /// <summary>
@@ -17,10 +19,13 @@ namespace InDoOut_Display_Core.Functions
         public bool ShouldDisplayUpdate => HasCompletedSince(_lastUIUpdate);
 
         /// <summary>
-        /// Creats a <see cref="IDisplayElement"/> which can be associated with this function.
+        /// Constructs a standard <see cref="ElementFunction"/> and sets up all standard connections
         /// </summary>
-        /// <returns>A <see cref="IDisplayElement"/> that can be associated with and update from this function.</returns>
-        public abstract IDisplayElement CreateAssociatedUIElement();
+        public ElementFunction()
+        {
+            _ = CreateInput("Update");
+            _updated = CreateOutput("Updated");
+        }
 
         /// <summary>
         /// Should be called when an update on the UI has taken place, in order to
@@ -32,6 +37,12 @@ namespace InDoOut_Display_Core.Functions
         }
 
         /// <summary>
+        /// Creats a <see cref="IDisplayElement"/> which can be associated with this function.
+        /// </summary>
+        /// <returns>A <see cref="IDisplayElement"/> that can be associated with and update from this function.</returns>
+        public abstract IDisplayElement CreateAssociatedUIElement();
+
+        /// <summary>
         /// Called when this function should be started.
         /// </summary>
         /// <param name="triggeredBy">The input that triggered this function.</param>
@@ -40,7 +51,7 @@ namespace InDoOut_Display_Core.Functions
         {
             //Todo: This might need some functionality
 
-            return null;
+            return _updated;
         }
     }
 }

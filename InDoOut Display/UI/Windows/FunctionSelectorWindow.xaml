@@ -9,9 +9,9 @@
         mc:Ignorable="d"
         Title="Functions" Height="600" Width="1000" Background="#111" WindowStartupLocation="CenterOwner">
     <Grid>
-        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-            <functionSelector:FunctionSelector x:Name="FunctionSelector_Main" Margin="0,80,0,0" />
-        </ScrollViewer>
+        <DockPanel Margin="0,80,0,0">
+            <functionSelector:FunctionSelector x:Name="FunctionSelector_Main" />
+        </DockPanel>
         <core:TitleBar VerticalAlignment="Top"/>
     </Grid>
 </Window>

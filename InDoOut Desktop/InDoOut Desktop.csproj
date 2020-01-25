@@ -26,7 +26,6 @@
     <None Remove="UI\Controls\Background\BackgroundImage.xaml" />
     <None Remove="UI\Controls\BlockView\BlockView.xaml" />
     <None Remove="UI\Controls\BlockView\Overview.xaml" />
-    <None Remove="UI\Controls\Search\SearchBar.xaml" />
     <None Remove="UI\Controls\Sidebar\ItemList.xaml" />
     <None Remove="UI\Controls\Sidebar\Sidebar.xaml" />
     <None Remove="UI\Controls\Splash\SplashOverlay.xaml" />

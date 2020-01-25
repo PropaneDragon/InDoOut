@@ -2,17 +2,22 @@
 using InDoOut_Display.Actions.Scaling;
 using InDoOut_Display.UI.Controls.Screens;
 using InDoOut_Display_Core.Elements;
+using InDoOut_UI_Common.Actions.Dragging;
 using InDoOut_UI_Common.Actions.Selecting;
 using InDoOut_UI_Common.InterfaceElements;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace InDoOut_Display.UI.Controls.DisplayElement
 {
-    public partial class DisplayElementContainer : UserControl, IResizable, IScalable, ISelectable
+    public partial class DisplayElementContainer : UserControl, IResizable, IScalable, ISelectable, IDraggable
     {
         private static readonly Thickness THICKNESS_STATIC = new Thickness(0);
         private static readonly Thickness THICKNESS_SELECTED = new Thickness(2);
+
+        private readonly List<IUIConnection> _cachedVisualConnections = new List<IUIConnection>();
 
         private bool _selected = false;
         private bool _resizing = false;
@@ -21,6 +26,11 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
         public bool AutoScale { get; set; } = false;
         public double Scale { get; set; } = 1d;
         public IDisplayElement AssociatedDisplayElement { get => ContentPresenter_Element.Content as IDisplayElement; set => SetDisplayElement(value); }
+        public List<IUIInput> Inputs => FindInCollection<IUIInput>(Stack_Inputs?.Children);
+        public List<IUIOutput> Outputs => FindInCollection<IUIOutput>(Stack_Outputs?.Children);
+        /*public List<IUIProperty> Properties => FindInCollection<IUIProperty>(Stack_Properties?.Children);
+        public List<IUIResult> Results => FindInCollection<IUIResult>(Stack_Results?.Children);*/ //Todo
+
         public Size Size => new Size(Border_Presenter.ActualWidth, Border_Presenter.ActualHeight);
         public Thickness MarginPercentages { get => GetMarginPercentages(); set => SetMarginPercentages(value); }
 
@@ -34,11 +44,13 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
             UpdateName();
         }
 
-        public bool CanResize(IScreen screen) => true;
+        public bool CanResize(IScreen screen) => _selected && !screen.GetElementsUnderMouse().Any(element => screen.GetFirstElementOfType<IUIInput>(element) != null || screen.GetFirstElementOfType<IUIOutput>(element) != null);
 
         public bool CanScale(IScreen screen) => true;
 
         public bool CanSelect(IElementDisplay view) => true;
+
+        public bool CanDrag(IElementDisplay view) => true; //Todo: Draggable by only the draggable icon maybe?
 
         public void ScaleChanged(IScreen screen)
         {
@@ -64,11 +76,35 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
             _originalMargins = MarginPercentages;
             UpdateBorder();
             UpdateName();
+            CacheConnections(screen);
         }
 
         public void ResizeEnded(IScreen screen)
         {
             _resizing = false;
+            UpdateBorder();
+            UpdateName();
+        }
+
+        public void DragStarted(IElementDisplay view)
+        {
+            _selected = true;
+            UpdateBorder();
+            UpdateName();
+            CacheConnections(view);
+        }
+
+        public void DragMoved(IElementDisplay view)
+        {
+            foreach (var cachedVisualConnection in _cachedVisualConnections)
+            {
+                cachedVisualConnection.UpdatePositionFromInputOutput(view);
+            }
+        }
+
+        public void DragEnded(IElementDisplay view)
+        {
+            _selected = false;
             UpdateBorder();
             UpdateName();
         }
@@ -134,7 +170,43 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
                 MarginPercentages = margins;
 
                 UpdateElementPercentages();
+
+                foreach (var cachedVisualConnection in _cachedVisualConnections)
+                {
+                    cachedVisualConnection.UpdatePositionFromInputOutput(screen);
+                }
             }
+        }
+
+        private void CacheConnections(IElementDisplay view)
+        {
+            _cachedVisualConnections.Clear();
+
+            if (view != null && view is IConnectionDisplay connectionDisplay)
+            {
+                _cachedVisualConnections.AddRange(connectionDisplay.FindConnections(Inputs.Cast<IUIConnectionEnd>().ToList()));
+                _cachedVisualConnections.AddRange(connectionDisplay.FindConnections(Outputs.Cast<IUIConnectionStart>().ToList()));
+                /*_cachedVisualConnections.AddRange(connectionDisplay.FindConnections(Properties.Cast<IUIConnectionEnd>().ToList()));
+                _cachedVisualConnections.AddRange(connectionDisplay.FindConnections(Results.Cast<IUIConnectionStart>().ToList()));*/ //Todo
+            }
+        }
+
+        private List<T> FindInCollection<T>(UIElementCollection collection) where T : class
+        {
+            var foundElements = new List<T>();
+
+            if (collection != null)
+            {
+                foreach (var element in collection)
+                {
+                    if (element is T elementAsType)
+                    {
+                        foundElements.Add(elementAsType);
+                    }
+                }
+            }
+
+            return foundElements;
         }
 
         private double GetDeltaForEdge(ResizeEdge edge, Point delta)
@@ -211,6 +283,33 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
             if (element != null && element is UIElement uiElement)
             {
                 ContentPresenter_Element.Content = uiElement;
+            }
+
+            UpdateIO();
+        }
+
+        private void UpdateIO()
+        {
+            Stack_Inputs.Children.Clear();
+            Stack_Outputs.Children.Clear();
+
+            var inputs = AssociatedDisplayElement?.AssociatedElementFunction?.Inputs;
+            var outputs = AssociatedDisplayElement?.AssociatedElementFunction?.Outputs;
+
+            if (inputs != null)
+            {
+                foreach (var input in inputs)
+                {
+                    _ = Stack_Inputs.Children.Add(new DisplayElementInput(input));
+                }
+            }
+
+            if (outputs != null)
+            {
+                foreach (var output in outputs)
+                {
+                    _ = Stack_Outputs.Children.Add(new DisplayElementOutput(output));
+                }
             }
         }
 

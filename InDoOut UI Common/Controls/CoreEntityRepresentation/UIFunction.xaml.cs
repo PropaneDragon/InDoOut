@@ -16,11 +16,12 @@ namespace InDoOut_UI_Common.Controls.CoreEntityRepresentation
 {
     public partial class UIFunction : UserControl, IUIFunction
     {
+        private readonly List<IUIConnection> _cachedVisualConnections = new List<IUIConnection>();
+
         private DispatcherTimer _updateTimer = null;
         private DoubleAnimation _fadeAnimation = null;
         private UIFunctionDisplayMode _displayMode = UIFunctionDisplayMode.None;
         private IFunction _function = null;
-        private readonly List<IUIConnection> _cachedVisualConnections = new List<IUIConnection>();
 
         public IFunction AssociatedFunction { get => _function; set => SetFunction(value); }
 

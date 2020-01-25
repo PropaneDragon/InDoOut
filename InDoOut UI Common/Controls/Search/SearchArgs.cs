@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace InDoOut_Desktop.UI.Controls.Search
+namespace InDoOut_UI_Common.Controls.Search
 {
     public class SearchArgs : EventArgs
     {

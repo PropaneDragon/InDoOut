@@ -109,7 +109,7 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
             Collapsed = true;
         }
 
-        private void SearchBar_SearchRequested(object sender, Search.SearchArgs e)
+        private void SearchBar_SearchRequested(object sender, InDoOut_UI_Common.Controls.Search.SearchArgs e)
         {
             Log.Instance.Header("Search requested");
             Log.Instance.Info("Search query: ", e?.Query);
