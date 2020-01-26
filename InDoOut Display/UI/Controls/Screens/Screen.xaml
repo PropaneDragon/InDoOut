@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:InDoOut_Display.UI.Controls.Screens"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Background="#222" PreviewMouseLeftButtonDown="UserControl_PreviewMouseLeftButtonDown"  PreviewMouseLeftButtonUp="UserControl_PreviewMouseLeftButtonUp" PreviewMouseMove="UserControl_PreviewMouseMove" PreviewMouseRightButtonDown="UserControl_PreviewMouseRightButtonDown" PreviewMouseRightButtonUp="UserControl_PreviewMouseRightButtonUp" PreviewMouseDoubleClick="UserControl_PreviewMouseDoubleClick" PreviewKeyDown="UserControl_PreviewKeyDown" PreviewKeyUp="UserControl_PreviewKeyUp">
-    <Grid>
+    <Grid ClipToBounds="false">
         <Border>
             <Border.Background>
                 <DrawingBrush TileMode="Tile" Viewport="0,0,32,32" ViewportUnits="Absolute">
@@ -15,7 +15,7 @@
                     </DrawingBrush.Drawing>
                 </DrawingBrush>
             </Border.Background>
-            <Grid x:Name="Grid_Elements">
+            <Grid x:Name="Grid_Elements" ClipToBounds="false">
 
             </Grid>
         </Border>

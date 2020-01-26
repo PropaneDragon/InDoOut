@@ -48,7 +48,7 @@ namespace InDoOut_Display.Actions
                 var position = Mouse.GetPosition(element);
                 if (ScreenConnections?.CurrentScreen?.PointCloseToScreenItemEdge(position) ?? false)
                 {
-                    Finish(new ScreenResizeAction(ScreenConnections?.CurrentScreen, mousePosition));
+                    Finish(new ScreenResizeAction(ScreenConnections, mousePosition));
 
                     return true;
                 }

@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InDoOut_Display.UI.Controls.DisplayElement"
+             xmlns:coreEntity="clr-namespace:InDoOut_UI_Common.Controls.CoreEntityRepresentation;assembly=InDoOutUICommon"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
@@ -17,6 +18,12 @@
             <RowDefinition x:Name="Row_Height_Element" Height="0.8*"/>
             <RowDefinition x:Name="Row_Height_Below" Height="0.1*"/>
         </Grid.RowDefinitions>
+        <StackPanel x:Name="Stack_Inputs" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" ClipToBounds="false">
+            <coreEntity:UIInput />
+        </StackPanel>
+        <StackPanel x:Name="Stack_Properties" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" ClipToBounds="false">
+            <coreEntity:UIProperty />
+        </StackPanel>
         <Border x:Name="Border_Presenter" Grid.Row="1" Grid.Column="1" SnapsToDevicePixels="True" BorderThickness="1" Margin="-1" BorderBrush="#33FFFFFF" Background="Transparent">
             <Grid>
                 <Viewbox x:Name="Viewbox_Scaling">
@@ -27,13 +34,13 @@
                         <TextBlock FontFamily="Material Icons" FontSize="20" Foreground="#fff" Text="" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" TextTrimming="CharacterEllipsis" TextWrapping="WrapWithOverflow" />
                     </Border>
                 </Grid>
-                <StackPanel x:Name="Stack_Inputs" HorizontalAlignment="Left" Margin="-8,0,0,0" VerticalAlignment="Center">
-                    <local:DisplayElementInput />
-                </StackPanel>
-                <StackPanel x:Name="Stack_Outputs" HorizontalAlignment="Right" Margin="0,0,-8,0" VerticalAlignment="Center">
-                    <local:DisplayElementOutput />
-                </StackPanel>
             </Grid>
         </Border>
+        <StackPanel x:Name="Stack_Outputs" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,0,0" ClipToBounds="false">
+            <coreEntity:UIOutput />
+        </StackPanel>
+        <StackPanel x:Name="Stack_Results" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,0,0" ClipToBounds="false">
+            <coreEntity:UIResult />
+        </StackPanel>
     </Grid>
 </UserControl>

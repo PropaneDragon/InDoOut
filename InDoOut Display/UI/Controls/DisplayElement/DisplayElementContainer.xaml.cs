@@ -1,10 +1,9 @@
 ﻿using InDoOut_Display.Actions.Resizing;
-using InDoOut_Display.Actions.Scaling;
 using InDoOut_Display.UI.Controls.Screens;
 using InDoOut_Display_Core.Elements;
-using InDoOut_UI_Common.Actions.Dragging;
-using InDoOut_UI_Common.Actions.Selecting;
+using InDoOut_UI_Common.Controls.CoreEntityRepresentation;
 using InDoOut_UI_Common.InterfaceElements;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -12,7 +11,7 @@ using System.Windows.Controls;
 
 namespace InDoOut_Display.UI.Controls.DisplayElement
 {
-    public partial class DisplayElementContainer : UserControl, IResizable, IScalable, ISelectable, IDraggable
+    public partial class DisplayElementContainer : UserControl, IDisplayElementContainer
     {
         private static readonly Thickness THICKNESS_STATIC = new Thickness(0);
         private static readonly Thickness THICKNESS_SELECTED = new Thickness(2);
@@ -22,14 +21,17 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
         private bool _selected = false;
         private bool _resizing = false;
         private Thickness _originalMargins = new Thickness();
+        private ProgramViewMode _viewMode = ProgramViewMode.IO;
 
         public bool AutoScale { get; set; } = false;
         public double Scale { get; set; } = 1d;
         public IDisplayElement AssociatedDisplayElement { get => ContentPresenter_Element.Content as IDisplayElement; set => SetDisplayElement(value); }
+        public ProgramViewMode ViewMode { get => _viewMode; set => ChangeViewMode(value); }
+
         public List<IUIInput> Inputs => FindInCollection<IUIInput>(Stack_Inputs?.Children);
         public List<IUIOutput> Outputs => FindInCollection<IUIOutput>(Stack_Outputs?.Children);
-        /*public List<IUIProperty> Properties => FindInCollection<IUIProperty>(Stack_Properties?.Children);
-        public List<IUIResult> Results => FindInCollection<IUIResult>(Stack_Results?.Children);*/ //Todo
+        public List<IUIProperty> Properties => FindInCollection<IUIProperty>(Stack_Properties?.Children);
+        public List<IUIResult> Results => FindInCollection<IUIResult>(Stack_Results?.Children);
 
         public Size Size => new Size(Border_Presenter.ActualWidth, Border_Presenter.ActualHeight);
         public Thickness MarginPercentages { get => GetMarginPercentages(); set => SetMarginPercentages(value); }
@@ -178,6 +180,14 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
             }
         }
 
+        private void ChangeViewMode(ProgramViewMode mode)
+        {
+            Stack_Inputs.Visibility = mode == ProgramViewMode.IO ? Visibility.Visible : Visibility.Collapsed;
+            Stack_Outputs.Visibility = mode == ProgramViewMode.IO ? Visibility.Visible : Visibility.Collapsed;
+            Stack_Properties.Visibility = mode == ProgramViewMode.Variables ? Visibility.Visible : Visibility.Collapsed;
+            Stack_Results.Visibility = mode == ProgramViewMode.Variables ? Visibility.Visible : Visibility.Collapsed;
+        }
+
         private void CacheConnections(IElementDisplay view)
         {
             _cachedVisualConnections.Clear();
@@ -186,8 +196,8 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
             {
                 _cachedVisualConnections.AddRange(connectionDisplay.FindConnections(Inputs.Cast<IUIConnectionEnd>().ToList()));
                 _cachedVisualConnections.AddRange(connectionDisplay.FindConnections(Outputs.Cast<IUIConnectionStart>().ToList()));
-                /*_cachedVisualConnections.AddRange(connectionDisplay.FindConnections(Properties.Cast<IUIConnectionEnd>().ToList()));
-                _cachedVisualConnections.AddRange(connectionDisplay.FindConnections(Results.Cast<IUIConnectionStart>().ToList()));*/ //Todo
+                _cachedVisualConnections.AddRange(connectionDisplay.FindConnections(Properties.Cast<IUIConnectionEnd>().ToList()));
+                _cachedVisualConnections.AddRange(connectionDisplay.FindConnections(Results.Cast<IUIConnectionStart>().ToList()));
             }
         }
 
@@ -292,15 +302,19 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
         {
             Stack_Inputs.Children.Clear();
             Stack_Outputs.Children.Clear();
+            Stack_Properties.Children.Clear();
+            Stack_Results.Children.Clear();
 
             var inputs = AssociatedDisplayElement?.AssociatedElementFunction?.Inputs;
             var outputs = AssociatedDisplayElement?.AssociatedElementFunction?.Outputs;
+            var properties = AssociatedDisplayElement?.AssociatedElementFunction?.Properties;
+            var results = AssociatedDisplayElement?.AssociatedElementFunction?.Results;
 
             if (inputs != null)
             {
                 foreach (var input in inputs)
                 {
-                    _ = Stack_Inputs.Children.Add(new DisplayElementInput(input));
+                    _ = Stack_Inputs.Children.Add(new UIInput(input));
                 }
             }
 
@@ -308,7 +322,23 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
             {
                 foreach (var output in outputs)
                 {
-                    _ = Stack_Outputs.Children.Add(new DisplayElementOutput(output));
+                    _ = Stack_Outputs.Children.Add(new UIOutput(output));
+                }
+            }
+
+            if (properties != null)
+            {
+                foreach (var property in properties)
+                {
+                    _ = Stack_Properties.Children.Add(new UIProperty(property));
+                }
+            }
+
+            if (results != null)
+            {
+                foreach (var result in results)
+                {
+                    _ = Stack_Results.Children.Add(new UIResult(result));
                 }
             }
         }

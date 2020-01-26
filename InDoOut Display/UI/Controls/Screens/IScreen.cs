@@ -1,4 +1,5 @@
-﻿using InDoOut_UI_Common.Actions.Selecting;
+﻿using InDoOut_Core.Entities.Programs;
+using InDoOut_UI_Common.Actions.Selecting;
 using InDoOut_UI_Common.InterfaceElements;
 using System.Windows;
 
@@ -20,6 +21,7 @@ namespace InDoOut_Display.UI.Controls.Screens
     public interface IScreen : IElementDisplay, IDisplayElementDisplay
     {
         ProgramViewMode CurrentViewMode { get; set; }
+        IProgram AssociatedProgram { get; set; }
         ISelectionManager<ISelectable> SelectionManager { get; }
         Size Size { get; }
 

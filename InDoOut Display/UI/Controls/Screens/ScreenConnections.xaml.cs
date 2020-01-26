@@ -40,6 +40,8 @@ namespace InDoOut_Display.UI.Controls.Screens
             ActionHandler = new ActionHandler(new ScreenConnectionsRestingAction(this));
             ProgramHandler = null; //Todo
             AssociatedProgram = new Program();
+
+            ScreenItem_Overview.AssociatedProgram = AssociatedProgram;
         }
 
         protected override bool ClearCurrentProgram()

@@ -1,5 +1,8 @@
 ﻿using InDoOut_Display.UI.Controls.Screens;
+using InDoOut_UI_Common.Actions.Dragging;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -9,19 +12,28 @@ namespace InDoOut_Display.Actions.Resizing
     {
         private Size _initialSize = new Size();
         private ScreenEdge _initialEdge = ScreenEdge.None;
+        private IEnumerable<IDraggable> _cachedElements;
 
-        public IScreen ScreenItem { get; private set; } = null;
+        public IScreenConnections ScreenConnections { get; private set; } = null;
 
-        public ScreenResizeAction(IScreen screenItem, Point mousePosition)
+        public ScreenResizeAction(IScreenConnections screenConnections, Point mousePosition)
         {
-            ScreenItem = screenItem;
+            ScreenConnections = screenConnections;
+
+            var screen = ScreenConnections?.CurrentScreen;
 
             _ = base.MouseLeftDown(mousePosition);
 
-            if (ScreenItem is FrameworkElement element)
+            if (screen is FrameworkElement element)
             {
                 _initialSize = new Size(element?.ActualWidth ?? 0, element?.ActualHeight ?? 0);
-                _initialEdge = ScreenItem?.GetCloseEdge(Mouse.GetPosition(element)) ?? ScreenEdge.None;
+                _initialEdge = screen?.GetCloseEdge(Mouse.GetPosition(element)) ?? ScreenEdge.None;
+                _cachedElements = screen?.Elements?.Where(element => element is IDraggable).Cast<IDraggable>();
+
+                foreach (var cachedElement in _cachedElements)
+                {
+                    cachedElement.DragStarted(ScreenConnections);
+                }
             }
         }
 
@@ -29,12 +41,21 @@ namespace InDoOut_Display.Actions.Resizing
         {
             _ = base.MouseLeftMove(mousePosition);
 
+            var screen = ScreenConnections?.CurrentScreen;
             var movementAmount = CalculateMovementAmount();
 
-            if (ScreenItem != null && ScreenItem is FrameworkElement element)
+            if (screen != null && screen is FrameworkElement element)
             {
                 element.Width = Math.Clamp(_initialSize.Width + movementAmount.X, 10d, double.MaxValue);
                 element.Height = Math.Clamp(_initialSize.Height + movementAmount.Y, 10d, double.MaxValue);
+
+                if (_cachedElements != null)
+                {
+                    foreach (var cachedElement in _cachedElements)
+                    {
+                        cachedElement.DragMoved(ScreenConnections);
+                    }
+                }
 
                 return true;
             }
@@ -45,6 +66,14 @@ namespace InDoOut_Display.Actions.Resizing
         public override bool MouseLeftUp(Point mousePosition)
         {
             _ = base.MouseLeftUp(mousePosition);
+
+            if (_cachedElements != null)
+            {
+                foreach (var cachedElement in _cachedElements)
+                {
+                    cachedElement.DragEnded(ScreenConnections);
+                }
+            }
 
             Finish(null);
 

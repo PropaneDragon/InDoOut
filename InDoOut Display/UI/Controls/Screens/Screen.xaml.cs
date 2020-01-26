@@ -1,4 +1,6 @@
-﻿using InDoOut_Display.Actions;
+﻿using InDoOut_Core.Entities.Programs;
+using InDoOut_Core.Variables;
+using InDoOut_Display.Actions;
 using InDoOut_Display.Actions.Selecting;
 using InDoOut_Display.UI.Controls.DisplayElement;
 using InDoOut_Display_Core.Elements;
@@ -23,12 +25,10 @@ namespace InDoOut_Display.UI.Controls.Screens
         private ProgramViewMode _currentViewMode = ProgramViewMode.IO;
 
         public Size Size => new Size(Width, Height);
-
         public ProgramViewMode CurrentViewMode { get => _currentViewMode; set => ChangeMode(value); }
-
+        public IProgram AssociatedProgram { get; set; } = null;
         public ISelectionManager<ISelectable> SelectionManager => _selectionManager;
-
-        public List<FrameworkElement> Elements => throw new System.NotImplementedException();
+        public List<FrameworkElement> Elements => Grid_Elements.Children.Cast<FrameworkElement>().ToList();
 
         public Screen()
         {
@@ -40,14 +40,16 @@ namespace InDoOut_Display.UI.Controls.Screens
 
         public bool AddDisplayElement(IDisplayElement displayElement)
         {
-            if (displayElement != null)
+            if (displayElement != null && AssociatedProgram != null)
             {
-                var host = new DisplayElementContainer(displayElement);
-                _ = Grid_Elements.Children.Add(host);
+                if (AssociatedProgram.Functions.Contains(displayElement.AssociatedElementFunction) || AssociatedProgram.AddFunction(displayElement.AssociatedElementFunction))
+                {
+                    var host = new DisplayElementContainer(displayElement);
+                    _ = Grid_Elements.Children.Add(host);
+                    _ = SelectionManager?.Set(host);
 
-                _ = SelectionManager?.Set(host);
-
-                return true;
+                    return true;
+                }
             }
 
             return false;
@@ -216,64 +218,86 @@ namespace InDoOut_Display.UI.Controls.Screens
             if (mode != _currentViewMode)
             {
                 _currentViewMode = mode;
+
+                var elements = Elements;
+
+                foreach (var element in elements)
+                {
+                    if (element is IDisplayElementContainer elementContainer)
+                    {
+                        elementContainer.ViewMode = mode;
+                    }
+                }
             }
         }
 
         private void UserControl_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            e.Handled = _actionHandler?.MouseLeftDown(e.GetPosition(sender as IInputElement)) ?? false;
+            _ = _actionHandler?.MouseLeftDown(e.GetPosition(sender as IInputElement)) ?? false;
+
+            e.Handled = false;
         }
 
         private void UserControl_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            e.Handled = _actionHandler?.MouseLeftUp(e.GetPosition(sender as IInputElement)) ?? false;
+            _ = _actionHandler?.MouseLeftUp(e.GetPosition(sender as IInputElement)) ?? false;
+
+            e.Handled = false;
         }
 
         private void UserControl_PreviewMouseMove(object sender, MouseEventArgs e)
         {
-            bool handled;
-
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                handled = _actionHandler?.MouseLeftMove(e.GetPosition(sender as IInputElement)) ?? false;
+                _ = _actionHandler?.MouseLeftMove(e.GetPosition(sender as IInputElement)) ?? false;
             }
 #pragma warning disable IDE0045 // Convert to conditional expression
             else if (e.RightButton == MouseButtonState.Pressed)
 #pragma warning restore IDE0045 // Convert to conditional expression
             {
-                handled = _actionHandler?.MouseRightMove(e.GetPosition(sender as IInputElement)) ?? false;
+                _ = _actionHandler?.MouseRightMove(e.GetPosition(sender as IInputElement)) ?? false;
             }
             else
             {
-                handled = _actionHandler?.MouseNoMove(e.GetPosition(sender as IInputElement)) ?? false;
+                _ = _actionHandler?.MouseNoMove(e.GetPosition(sender as IInputElement)) ?? false;
             }
 
-            e.Handled = handled;
+            e.Handled = false;
         }
 
         private void UserControl_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
-            e.Handled = _actionHandler?.MouseRightDown(e.GetPosition(sender as IInputElement)) ?? false;
+            _ = _actionHandler?.MouseRightDown(e.GetPosition(sender as IInputElement)) ?? false;
+
+            e.Handled = false;
         }
 
         private void UserControl_PreviewMouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
-            e.Handled = _actionHandler?.MouseRightUp(e.GetPosition(sender as IInputElement)) ?? false;
+            _ = _actionHandler?.MouseRightUp(e.GetPosition(sender as IInputElement)) ?? false;
+
+            e.Handled = false;
         }
 
         private void UserControl_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            e.Handled = _actionHandler?.MouseDoubleClick(e.GetPosition(sender as IInputElement)) ?? false;
+            _ = _actionHandler?.MouseDoubleClick(e.GetPosition(sender as IInputElement)) ?? false;
+
+            e.Handled = false;
         }
 
         private void UserControl_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            e.Handled = _actionHandler?.KeyDown(e.Key) ?? false;
+            _ = _actionHandler?.KeyDown(e.Key) ?? false;
+
+            e.Handled = false;
         }
 
         private void UserControl_PreviewKeyUp(object sender, KeyEventArgs e)
         {
-            e.Handled = _actionHandler?.KeyUp(e.Key) ?? false;
+            _ = _actionHandler?.KeyUp(e.Key) ?? false;
+
+            e.Handled = false;
         }
     }
 }
