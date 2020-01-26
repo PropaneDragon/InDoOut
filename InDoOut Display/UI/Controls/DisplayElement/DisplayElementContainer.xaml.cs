@@ -41,6 +41,7 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
             InitializeComponent();
 
             AssociatedDisplayElement = element;
+            ViewMode = ProgramViewMode.IO;
 
             UpdateBorder();
             UpdateName();
