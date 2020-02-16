@@ -1,4 +1,5 @@
-﻿using InDoOut_Display_Core.Functions;
+﻿using InDoOut_Core.Logging;
+using InDoOut_Display_Core.Functions;
 using System;
 using System.Windows.Controls;
 using System.Windows.Threading;
@@ -44,7 +45,28 @@ namespace InDoOut_Display_Core.Elements
         {
             if (AssociatedElementFunction?.ShouldDisplayUpdate ?? false)
             {
-                if (UpdateRequested(AssociatedElementFunction))
+                Log.Instance.Info("Updating ", this, " from function ", AssociatedElementFunction);
+
+                var updateCompleted = true;
+
+                try
+                {
+                    updateCompleted = UpdateRequested(AssociatedElementFunction);
+                    if (updateCompleted)
+                    {
+                        Log.Instance.Info("Updated ", this, " from function ", AssociatedElementFunction, " successfully.");
+                    }
+                    else
+                    {
+                        Log.Instance.Info("Updated ", this, " from function ", AssociatedElementFunction, ", however it returned false so will not count as an update.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Log.Instance.Error("Failed to properly update UI element (", this, ") from function (", AssociatedElementFunction, "). ", ex);
+                }
+
+                if (updateCompleted)
                 {
                     AssociatedElementFunction.PerformedUIUpdate();
                 }
