@@ -308,7 +308,7 @@ namespace InDoOut_Core.Entities.Functions
                 OutputType.Negative => new OutputNegative(name),
                 OutputType.Neutral => new OutputNeutral(name),
 
-                _ => (IOutput)null,
+                _ => null,
             };
         }
 
