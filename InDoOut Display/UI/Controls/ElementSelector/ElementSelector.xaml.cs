@@ -63,7 +63,13 @@ namespace InDoOut_Display.UI.Controls.ElementSelector
                 var item = new ElementItem();
                 if (item.LoadElementFromFunction(function))
                 {
-                    _ = Wrap_Elements.Children.Add(item);
+                    var padding = new Border()
+                    {
+                        Padding = new Thickness(4),
+                        Child = item
+                    };
+
+                    _ = Wrap_Elements.Children.Add(padding);
 
                     item.ElementSelected += (sender, e) =>
                     {
