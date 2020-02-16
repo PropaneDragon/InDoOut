@@ -17,6 +17,7 @@ namespace InDoOut_Display_Basic_Plugins.Media
             {
                 Media_VideoPlayer.Source = new Uri(elementFunction.MediaPath);
                 Media_VideoPlayer.Volume = Math.Clamp(elementFunction.MediaVolumePercentage, 0, 100) / 100d;
+                Media_VideoPlayer.Play();
 
                 return true;
             }
