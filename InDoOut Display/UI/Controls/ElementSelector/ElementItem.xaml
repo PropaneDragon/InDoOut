@@ -40,7 +40,7 @@
                     </Border>
                     <Border DockPanel.Dock="Top" Padding="8" Background="#000">
                         <Viewbox x:Name="Viewbox_Container">
-                            <Border x:Name="Border_Container" />
+                            <Border x:Name="Border_Container" MinWidth="50" MinHeight="50" />
                         </Viewbox>
                     </Border>
                 </DockPanel>

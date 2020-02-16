@@ -27,7 +27,7 @@
         <Border x:Name="Border_Presenter" Grid.Row="1" Grid.Column="1" SnapsToDevicePixels="True" BorderThickness="1" Margin="-1" BorderBrush="#33FFFFFF" Background="Transparent">
             <Grid>
                 <Viewbox x:Name="Viewbox_Scaling">
-                    <ContentPresenter x:Name="ContentPresenter_Element" />
+                    <ContentPresenter x:Name="ContentPresenter_Element" MinWidth="5" MinHeight="5" />
                 </Viewbox>
                 <Grid x:Name="Grid_Name">
                     <Border Background="#7F3B77E4" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="2">
