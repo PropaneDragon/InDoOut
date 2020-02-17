@@ -41,7 +41,7 @@ namespace InDoOut_Display_Core.Elements
         /// <returns></returns>
         protected abstract bool UpdateRequested(IElementFunction function);
 
-        private void UpdateTimer_Tick(object sender, EventArgs e)
+        private void TryUpdateFromFunction()
         {
             if (AssociatedElementFunction?.ShouldDisplayUpdate ?? false)
             {
@@ -73,17 +73,24 @@ namespace InDoOut_Display_Core.Elements
             }
         }
 
+        private void UpdateTimer_Tick(object sender, EventArgs e)
+        {
+            TryUpdateFromFunction();
+        }
+
         private void UIElement_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             if (_updateTimer == null)
             {
                 _updateTimer = new DispatcherTimer()
                 {
-                    Interval = TimeSpan.FromMilliseconds(100),
+                    Interval = TimeSpan.FromMilliseconds(10),
                     IsEnabled = true
                 };
 
                 _updateTimer.Tick += UpdateTimer_Tick;
+
+                TryUpdateFromFunction();
             }
         }
 
