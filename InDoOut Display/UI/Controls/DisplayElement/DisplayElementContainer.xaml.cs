@@ -91,7 +91,6 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
 
         public void DragStarted(IElementDisplay view)
         {
-            _selected = true;
             UpdateBorder();
             UpdateName();
             CacheConnections(view);
@@ -107,7 +106,6 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
 
         public void DragEnded(IElementDisplay view)
         {
-            _selected = false;
             UpdateBorder();
             UpdateName();
         }
