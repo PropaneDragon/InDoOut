@@ -44,7 +44,7 @@ namespace InDoOut_Display.UI.Controls.Screens
             {
                 if (AssociatedProgram.Functions.Contains(displayElement.AssociatedElementFunction) || AssociatedProgram.AddFunction(displayElement.AssociatedElementFunction))
                 {
-                    var host = new DisplayElementContainer(displayElement);
+                    var host = new DisplayElementContainer(displayElement) { ViewMode = CurrentViewMode };
                     _ = Grid_Elements.Children.Add(host);
                     _ = SelectionManager?.Set(host);
 

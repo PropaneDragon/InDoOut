@@ -43,8 +43,7 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
             AssociatedDisplayElement = element;
             ViewMode = ProgramViewMode.IO;
 
-            UpdateBorder();
-            UpdateName();
+            UpdateEChildElementVisibility();
         }
 
         public bool CanResize(IScreen screen) => _selected && !screen.GetElementsUnderMouse().Any(element => screen.GetFirstElementOfType<IUIInput>(element) != null || screen.GetFirstElementOfType<IUIOutput>(element) != null);
@@ -62,37 +61,32 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
         public void SelectionStarted(IElementDisplay view)
         {
             _selected = true;
-            UpdateBorder();
-            UpdateName();
+            UpdateEChildElementVisibility();
         }
 
         public void SelectionEnded(IElementDisplay view)
         {
             _selected = false;
-            UpdateBorder();
-            UpdateName();
+            UpdateEChildElementVisibility();
         }
 
         public void ResizeStarted(IScreen screen)
         {
             _resizing = true;
             _originalMargins = MarginPercentages;
-            UpdateBorder();
-            UpdateName();
+            UpdateEChildElementVisibility();
             CacheConnections(screen);
         }
 
         public void ResizeEnded(IScreen screen)
         {
             _resizing = false;
-            UpdateBorder();
-            UpdateName();
+            UpdateEChildElementVisibility();
         }
 
         public void DragStarted(IElementDisplay view)
         {
-            UpdateBorder();
-            UpdateName();
+            UpdateEChildElementVisibility();
             CacheConnections(view);
         }
 
@@ -106,8 +100,7 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
 
         public void DragEnded(IElementDisplay view)
         {
-            UpdateBorder();
-            UpdateName();
+            UpdateEChildElementVisibility();
         }
 
         public bool CloseToEdge(IScreen screen, Point point, double distance = 5) => GetCloseEdge(screen, point, distance) != ResizeEdge.None;
@@ -181,10 +174,12 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
 
         private void ChangeViewMode(ProgramViewMode mode)
         {
-            Stack_Inputs.Visibility = mode == ProgramViewMode.IO ? Visibility.Visible : Visibility.Collapsed;
-            Stack_Outputs.Visibility = mode == ProgramViewMode.IO ? Visibility.Visible : Visibility.Collapsed;
-            Stack_Properties.Visibility = mode == ProgramViewMode.Variables ? Visibility.Visible : Visibility.Collapsed;
-            Stack_Results.Visibility = mode == ProgramViewMode.Variables ? Visibility.Visible : Visibility.Collapsed;
+            _viewMode = mode;
+
+            Stack_Inputs.Visibility = _selected && mode == ProgramViewMode.IO ? Visibility.Visible : Visibility.Collapsed;
+            Stack_Outputs.Visibility = _selected && mode == ProgramViewMode.IO ? Visibility.Visible : Visibility.Collapsed;
+            Stack_Properties.Visibility = _selected && mode == ProgramViewMode.Variables ? Visibility.Visible : Visibility.Collapsed;
+            Stack_Results.Visibility = _selected && mode == ProgramViewMode.Variables ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void CacheConnections(IElementDisplay view)
@@ -340,6 +335,13 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
                     _ = Stack_Results.Children.Add(new UIResult(result));
                 }
             }
+        }
+
+        private void UpdateEChildElementVisibility()
+        {
+            ChangeViewMode(_viewMode);
+            UpdateBorder();
+            UpdateName();
         }
 
         private void UpdateBorder()
