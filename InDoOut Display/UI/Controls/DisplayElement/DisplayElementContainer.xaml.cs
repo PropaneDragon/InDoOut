@@ -43,7 +43,7 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
             AssociatedDisplayElement = element;
             ViewMode = ProgramViewMode.IO;
 
-            UpdateEChildElementVisibility();
+            UpdateChildElementVisibility();
         }
 
         public bool CanResize(IScreen screen) => _selected && !screen.GetElementsUnderMouse().Any(element => screen.GetFirstElementOfType<IUIInput>(element) != null || screen.GetFirstElementOfType<IUIOutput>(element) != null);
@@ -61,32 +61,32 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
         public void SelectionStarted(IElementDisplay view)
         {
             _selected = true;
-            UpdateEChildElementVisibility();
+            UpdateChildElementVisibility();
         }
 
         public void SelectionEnded(IElementDisplay view)
         {
             _selected = false;
-            UpdateEChildElementVisibility();
+            UpdateChildElementVisibility();
         }
 
         public void ResizeStarted(IScreen screen)
         {
             _resizing = true;
             _originalMargins = MarginPercentages;
-            UpdateEChildElementVisibility();
+            UpdateChildElementVisibility();
             CacheConnections(screen);
         }
 
         public void ResizeEnded(IScreen screen)
         {
             _resizing = false;
-            UpdateEChildElementVisibility();
+            UpdateChildElementVisibility();
         }
 
         public void DragStarted(IElementDisplay view)
         {
-            UpdateEChildElementVisibility();
+            UpdateChildElementVisibility();
             CacheConnections(view);
         }
 
@@ -100,7 +100,7 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
 
         public void DragEnded(IElementDisplay view)
         {
-            UpdateEChildElementVisibility();
+            UpdateChildElementVisibility();
         }
 
         public bool CloseToEdge(IScreen screen, Point point, double distance = 5) => GetCloseEdge(screen, point, distance) != ResizeEdge.None;
@@ -337,7 +337,7 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
             }
         }
 
-        private void UpdateEChildElementVisibility()
+        private void UpdateChildElementVisibility()
         {
             ChangeViewMode(_viewMode);
             UpdateBorder();
