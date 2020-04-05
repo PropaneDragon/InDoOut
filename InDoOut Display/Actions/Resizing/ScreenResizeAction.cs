@@ -53,7 +53,7 @@ namespace InDoOut_Display.Actions.Resizing
                 {
                     foreach (var cachedElement in _cachedElements)
                     {
-                        cachedElement.DragMoved(ScreenConnections);
+                        cachedElement.DragMoved(ScreenConnections, MouseDelta);
                     }
                 }
 

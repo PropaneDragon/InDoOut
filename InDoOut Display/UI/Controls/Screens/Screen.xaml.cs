@@ -44,9 +44,7 @@ namespace InDoOut_Display.UI.Controls.Screens
             {
                 if (AssociatedProgram.Functions.Contains(displayElement.AssociatedElementFunction) || AssociatedProgram.AddFunction(displayElement.AssociatedElementFunction))
                 {
-                    var host = new DisplayElementContainer(displayElement) { ViewMode = CurrentViewMode };
-                    _ = Grid_Elements.Children.Add(host);
-                    _ = SelectionManager?.Set(host);
+                    Add(displayElement as FrameworkElement);
 
                     return true;
                 }
@@ -57,9 +55,11 @@ namespace InDoOut_Display.UI.Controls.Screens
 
         public bool RemoveDisplayElement(IDisplayElement displayElement)
         {
-            if (displayElement != null)
+            if (displayElement != null && displayElement is FrameworkElement element)
             {
-                //Todo: Remove elements
+                Remove(element);
+
+                return true;
             }
 
             return false;
@@ -67,32 +67,52 @@ namespace InDoOut_Display.UI.Controls.Screens
 
         public void Add(FrameworkElement element)
         {
-            throw new System.NotImplementedException();
+            if (element != null)
+            {
+                var container = AttachToContainer(element);
+                if (container != null)
+                {
+                    _ = SelectionManager?.Set(container);
+                    _ = Grid_Elements.Children.Add(container as FrameworkElement);
+                }
+            }
         }
 
         public void Add(FrameworkElement element, Point position, int zIndex = 0)
         {
-            throw new System.NotImplementedException();
+            Add(element);
+            SetPosition(element, position);
         }
 
         public void Remove(FrameworkElement element)
         {
-            throw new System.NotImplementedException();
+            if (element != null)
+            {
+                Grid_Elements.Children.Remove(element);
+            }
         }
 
         public void SetPosition(FrameworkElement element, Point position)
         {
-            throw new System.NotImplementedException();
+            /* We do nothing. The containers position themselves as they're 
+             * set as percentages as part of their movement/resize methods. */
         }
 
         public bool Remove(IDeletable deletable)
         {
-            throw new System.NotImplementedException();
+            if (deletable != null && deletable.CanDelete(this))
+            {
+                Remove(deletable as FrameworkElement);
+
+                return true;
+            }
+
+            return false;
         }
 
         public Point GetPosition(FrameworkElement element)
         {
-            throw new System.NotImplementedException();
+            return new Point();
         }
 
         public Point GetMousePosition()
@@ -189,6 +209,27 @@ namespace InDoOut_Display.UI.Controls.Screens
         public bool PointCloseToScreenItemEdge(Point point, double distance = 5d)
         {
             return GetCloseEdge(point, distance) != ScreenEdge.None;
+        }
+
+        private Point GetPointAsPercentage(Point point)
+        {
+            var overallSize = new Size(ActualWidth, ActualHeight);
+
+            return new Point(point.X / overallSize.Width, point.Y / overallSize.Height);
+        }
+
+        private IStaticMarginElementContainer AttachToContainer(FrameworkElement element)
+        {
+            if (element is IDisplayElement displayElement)
+            {
+                return new DisplayElementContainer(displayElement) { ViewMode = CurrentViewMode };
+            }
+            else if (element != null)
+            {
+                return new StaticMarginElementContainer(element);
+            }
+
+            return null;
         }
 
         private HitTestFilterBehavior FilterHit(DependencyObject potentialHitTestTarget)

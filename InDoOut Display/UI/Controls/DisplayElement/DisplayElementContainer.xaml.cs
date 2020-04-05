@@ -20,6 +20,7 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
 
         private bool _selected = false;
         private bool _resizing = false;
+        private bool _moving = false;
         private Thickness _originalMargins = new Thickness();
         private ProgramViewMode _viewMode = ProgramViewMode.IO;
 
@@ -27,16 +28,15 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
         public double Scale { get; set; } = 1d;
         public IDisplayElement AssociatedDisplayElement { get => ContentPresenter_Element.Content as IDisplayElement; set => SetDisplayElement(value); }
         public ProgramViewMode ViewMode { get => _viewMode; set => ChangeViewMode(value); }
+        public Thickness MarginPercentages { get => GetMarginPercentages(); set => SetMarginPercentages(value); }
+        public Size Size => new Size(Border_Presenter.ActualWidth, Border_Presenter.ActualHeight);
 
         public List<IUIInput> Inputs => FindInCollection<IUIInput>(Stack_Inputs?.Children);
         public List<IUIOutput> Outputs => FindInCollection<IUIOutput>(Stack_Outputs?.Children);
         public List<IUIProperty> Properties => FindInCollection<IUIProperty>(Stack_Properties?.Children);
         public List<IUIResult> Results => FindInCollection<IUIResult>(Stack_Results?.Children);
 
-        public Size Size => new Size(Border_Presenter.ActualWidth, Border_Presenter.ActualHeight);
-        public Thickness MarginPercentages { get => GetMarginPercentages(); set => SetMarginPercentages(value); }
-
-        public DisplayElementContainer(IDisplayElement element = null)
+        public DisplayElementContainer(IDisplayElement element = null) : base()
         {
             InitializeComponent();
 
@@ -86,20 +86,15 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
 
         public void DragStarted(IElementDisplay view)
         {
+            _moving = true;
+            _originalMargins = MarginPercentages;
             UpdateChildElementVisibility();
             CacheConnections(view);
         }
 
-        public void DragMoved(IElementDisplay view)
-        {
-            foreach (var cachedVisualConnection in _cachedVisualConnections)
-            {
-                cachedVisualConnection.UpdatePositionFromInputOutput(view);
-            }
-        }
-
         public void DragEnded(IElementDisplay view)
         {
+            _moving = false;
             UpdateChildElementVisibility();
         }
 
@@ -138,11 +133,26 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
             return ResizeEdge.None;
         }
 
+        public void DragMoved(IElementDisplay view, Point delta)
+        {
+            if (view != null)
+            {
+                var mousePosition = view.GetMousePosition();
+                var mousePercentage = GetPointAsPercentage(mousePosition);
+                var percentageDifference = new Point(mousePercentage.X - _originalMargins.Left, mousePercentage.Y - _originalMargins.Top);
+
+                MarginPercentages = new Thickness(_originalMargins.Left + percentageDifference.X, _originalMargins.Top + percentageDifference.Y, _originalMargins.Right - percentageDifference.X, _originalMargins.Bottom - percentageDifference.Y);
+
+                UpdateElementPercentages();
+                UpdateCachedConnectionPositions(view);
+            }
+        }
+
         public void ResizeMoved(IScreen screen, ResizeEdge edge, Point delta)
         {
             if (screen != null && edge.ValidEdge())
             {
-                var deltaPercentage = GetDeltaAsPercentage(delta);
+                var deltaPercentage = GetPointAsPercentage(delta);
                 var margins = _originalMargins;
                 var currentMargins = MarginPercentages;
                 var minimumSize = 0.01;
@@ -164,11 +174,7 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
                 MarginPercentages = margins;
 
                 UpdateElementPercentages();
-
-                foreach (var cachedVisualConnection in _cachedVisualConnections)
-                {
-                    cachedVisualConnection.UpdatePositionFromInputOutput(screen);
-                }
+                UpdateCachedConnectionPositions(screen);
             }
         }
 
@@ -192,6 +198,14 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
                 _cachedVisualConnections.AddRange(connectionDisplay.FindConnections(Outputs.Cast<IUIConnectionStart>().ToList()));
                 _cachedVisualConnections.AddRange(connectionDisplay.FindConnections(Properties.Cast<IUIConnectionEnd>().ToList()));
                 _cachedVisualConnections.AddRange(connectionDisplay.FindConnections(Results.Cast<IUIConnectionStart>().ToList()));
+            }
+        }
+
+        private void UpdateCachedConnectionPositions(IElementDisplay view)
+        {
+            foreach (var cachedVisualConnection in _cachedVisualConnections)
+            {
+                cachedVisualConnection.UpdatePositionFromInputOutput(view);
             }
         }
 
@@ -258,33 +272,25 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
             }
         }
 
-        private void SetMarginPercentages(Thickness thickness)
-        {
-            Column_Width_Left.Width = new GridLength(thickness.Left, GridUnitType.Star);
-            Column_Width_Right.Width = new GridLength(thickness.Right, GridUnitType.Star);
-            Row_Height_Above.Height = new GridLength(thickness.Top, GridUnitType.Star);
-            Row_Height_Below.Height = new GridLength(thickness.Bottom, GridUnitType.Star);
-        }
-
         private void UpdateElementPercentages()
         {
-            var width = 1d - (Column_Width_Left.Width.Value + Column_Width_Right.Width.Value);
-            var height = 1d - (Row_Height_Above.Height.Value + Row_Height_Below.Height.Value);
+            var width = Math.Clamp(1d - (Column_Width_Left.Width.Value + Column_Width_Right.Width.Value), 0, double.MaxValue);
+            var height = Math.Clamp(1d - (Row_Height_Above.Height.Value + Row_Height_Below.Height.Value), 0, double.MaxValue);
 
             Column_Width_Element.Width = new GridLength(width, GridUnitType.Star);
             Row_Height_Element.Height = new GridLength(height, GridUnitType.Star);
         }
 
-        private Point GetDeltaAsPercentage(Point delta)
+        private Point GetPointAsPercentage(Point point)
         {
             var overallSize = new Size(ActualWidth, ActualHeight);
 
-            return new Point(delta.X / overallSize.Width, delta.Y / overallSize.Height);
+            return new Point(point.X / overallSize.Width, point.Y / overallSize.Height);
         }
 
         private void SetDisplayElement(IDisplayElement element)
         {
-            if (element != null && element is UIElement uiElement)
+            if (element != null && element is FrameworkElement uiElement)
             {
                 ContentPresenter_Element.Content = uiElement;
             }
@@ -356,6 +362,15 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
         {
             Grid_Name.Visibility = _selected || _resizing ? Visibility.Visible : Visibility.Collapsed;
         }
+
+        private void SetMarginPercentages(Thickness thickness)
+        {
+            Column_Width_Left.Width = new GridLength(Math.Clamp(thickness.Left, 0, double.MaxValue), GridUnitType.Star);
+            Column_Width_Right.Width = new GridLength(Math.Clamp(thickness.Right, 0, double.MaxValue), GridUnitType.Star);
+            Row_Height_Above.Height = new GridLength(Math.Clamp(thickness.Top, 0, double.MaxValue), GridUnitType.Star);
+            Row_Height_Below.Height = new GridLength(Math.Clamp(thickness.Bottom, 0, double.MaxValue), GridUnitType.Star);
+        }
+
 
         private bool PointWithin(double point, double min, double max) => point > min && point < max;
 

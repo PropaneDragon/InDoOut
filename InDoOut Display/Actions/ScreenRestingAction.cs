@@ -1,5 +1,6 @@
 ﻿using InDoOut_Display.Actions.Resizing;
 using InDoOut_Display.UI.Controls.Screens;
+using InDoOut_UI_Common.Actions.Dragging;
 using InDoOut_UI_Common.Actions.Selecting;
 using System.Linq;
 using System.Windows;
@@ -47,12 +48,20 @@ namespace InDoOut_Display.Actions
             if (topElements != null && selectionManager != null)
             {
                 var resizable = _screen?.GetFirstElementOfType<IResizable>(topElements);
+                var draggable = _screen?.GetFirstElementOfType<IDraggable>(topElements);
+
                 if (resizable != null && resizable.CloseToEdge(_screen, _screen.GetMousePosition(), RESIZE_EDGE_SENSITIVITY) && elementsSelected.Any(selected => selected is IResizable resizable && resizable.CanResize(_screen)))
                 {
                     var resizables = elementsSelected.Where(selected => selected is IResizable resizable && resizable.CanResize(_screen)).Cast<IResizable>();
                     var edge = resizable.GetCloseEdge(_screen, _screen.GetMousePosition(), RESIZE_EDGE_SENSITIVITY);
 
                     Finish(new ResizableResizeAction(_screen, resizables, edge, mousePosition));
+                }
+                else if (draggable != null && draggable.CanDrag(_screen))
+                {
+                    var draggables = elementsSelected.Where(selected => selected is IDraggable resizable && resizable.CanDrag(_screen)).Cast<IDraggable>();
+
+                    Finish(new DraggableDragAction(_screen, draggables, mousePosition));
                 }
             }
 

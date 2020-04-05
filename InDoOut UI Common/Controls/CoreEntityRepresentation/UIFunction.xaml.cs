@@ -107,7 +107,7 @@ namespace InDoOut_UI_Common.Controls.CoreEntityRepresentation
             }
         }
 
-        public void DragMoved(IElementDisplay view)
+        public void DragMoved(IElementDisplay view, Point delta)
         {
             if (AssociatedFunction != null)
             {
