@@ -1,10 +1,11 @@
 ﻿using InDoOut_Core.Functions;
 using InDoOut_Core.Logging;
 using InDoOut_Desktop.Programs;
-using InDoOut_Desktop.UI.Interfaces;
 using InDoOut_Desktop.UI.Windows;
+using InDoOut_Executable_Core.Programs;
 using InDoOut_Json_Storage;
 using InDoOut_Plugins.Loaders;
+using InDoOut_UI_Common.Events;
 using InDoOut_UI_Common.InterfaceElements;
 using System;
 using System.Windows;
@@ -17,14 +18,15 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
     public partial class Sidebar : UserControl
     {
         private readonly TimeSpan _animationTime = TimeSpan.FromMilliseconds(500);
-
-        private bool _collapsed = false;
-        private IBlockView _blockView = null;
         private readonly DispatcherTimer _updateTimer = new DispatcherTimer(DispatcherPriority.Normal);
 
+        private bool _collapsed = false;
+        private ITaskView _taskView = null;
+        private ICommonProgramDisplay _programDisplay = null;
+
         public bool Collapsed { get => _collapsed; set { if (value) Collapse(); else Expand(); } }
-        public IBlockView BlockView { get => _blockView; set => BlockViewChanged(value); }
-        public ITaskView TaskView { get; set; } = null;
+        public ITaskView TaskView { get => _taskView; set => TaskViewChanged(value); }
+        public ICommonProgramDisplay ProgramDisplay { get => _programDisplay; set => ProgramDisplayChanged(value); }
 
         public Sidebar()
         {
@@ -72,21 +74,42 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
             _collapsed = false;
         }
 
-        private void BlockViewChanged(IBlockView blockView)
+        private void TaskViewChanged(ITaskView taskView)
         {
-            _blockView = blockView;
+            if (_taskView != null)
+            {
+                _taskView.OnProgramDisplayChanged -= TaskView_OnProgramDisplayChanged;
+            }
 
-            ItemList_Functions.FunctionView = blockView;
+            _taskView = taskView;
+
+            if (_taskView != null)
+            {
+                _taskView.OnProgramDisplayChanged += TaskView_OnProgramDisplayChanged;
+                ProgramDisplay = _taskView.CurrentProgramDisplay;
+            }
+        }
+
+        private void TaskView_OnProgramDisplayChanged(object sender, CurrentProgramDisplayEventArgs e)
+        {
+            ProgramDisplay = e.ProgramDisplay;
+        }
+
+        private void ProgramDisplayChanged(ICommonProgramDisplay programDisplay)
+        {
+            _programDisplay = programDisplay;
+
+            ItemList_Functions.FunctionView = programDisplay;
 
             UpdatePlayStopButtons();
         }
 
         private void UpdatePlayStopButtons()
         {
-            if (_blockView != null)
+            if (_programDisplay != null)
             {
-                var programRunning = _blockView?.AssociatedProgram?.Running ?? false;
-                var programStopping = _blockView?.AssociatedProgram?.Stopping ?? false;
+                var programRunning = _programDisplay?.AssociatedProgram?.Running ?? false;
+                var programStopping = _programDisplay?.AssociatedProgram?.Stopping ?? false;
 
                 Button_RunProgram.Visibility = !programStopping && !programRunning ? Visibility.Visible : Visibility.Hidden;
                 Button_StopProgram.Visibility = !programStopping && programRunning ? Visibility.Visible : Visibility.Hidden;
@@ -121,9 +144,9 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
         {
             Log.Instance.Header("Switch button clicked");
 
-            if (_blockView != null)
+            if (_programDisplay != null)
             {
-                _blockView.CurrentViewMode = _blockView.CurrentViewMode == ProgramViewMode.IO ? ProgramViewMode.Variables : ProgramViewMode.IO;
+                _programDisplay.CurrentViewMode = _programDisplay.CurrentViewMode == ProgramViewMode.IO ? ProgramViewMode.Variables : ProgramViewMode.IO;
             }
         }
 
@@ -131,9 +154,9 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
         {
             Log.Instance.Header("Run button clicked");
 
-            if ((!_blockView?.AssociatedProgram?.Running ?? false) && (!_blockView.AssociatedProgram?.Stopping ?? false))
+            if ((!_programDisplay?.AssociatedProgram?.Running ?? false) && (!_programDisplay.AssociatedProgram?.Stopping ?? false))
             {
-                _blockView?.AssociatedProgram?.Trigger(null);
+                _programDisplay?.AssociatedProgram?.Trigger(null);
             }
 
             UpdatePlayStopButtons();
@@ -143,7 +166,7 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
         {
             Log.Instance.Header("Stop button clicked");
 
-            _blockView?.AssociatedProgram?.Stop();
+            _programDisplay?.AssociatedProgram?.Stop();
 
             UpdatePlayStopButtons();
         }
@@ -152,10 +175,10 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
         {
             Log.Instance.Header("New button clicked");
 
-            if (_blockView != null)
+            if (_programDisplay != null)
             {
-                _ = ProgramHolder.Instance.RemoveProgram(_blockView?.AssociatedProgram);
-                _blockView.AssociatedProgram = ProgramHolder.Instance.NewProgram();
+                _ = ProgramHolder.Instance.RemoveProgram(_programDisplay?.AssociatedProgram);
+                _programDisplay.AssociatedProgram = ProgramHolder.Instance.NewProgram();
             }
         }
 
@@ -163,13 +186,13 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
         {
             Log.Instance.Header("Open button clicked");
 
-            if (_blockView != null)
+            if (_programDisplay != null)
             {
                 var program = await ProgramSaveLoad.Instance.LoadProgramDialogAsync(ProgramHolder.Instance, new ProgramJsonStorer(new FunctionBuilder(), LoadedPlugins.Instance), Window.GetWindow(this));
                 if (program != null)
                 {
-                    _ = ProgramHolder.Instance.RemoveProgram(_blockView?.AssociatedProgram);
-                    _blockView.AssociatedProgram = program;
+                    _ = ProgramHolder.Instance.RemoveProgram(_programDisplay?.AssociatedProgram);
+                    _programDisplay.AssociatedProgram = program;
                 }
             }
         }
@@ -178,14 +201,14 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
         {
             Log.Instance.Header("Save button clicked");
 
-            _ = await ProgramSaveLoad.Instance.TrySaveProgramFromMetadataAsync(_blockView?.AssociatedProgram, new ProgramJsonStorer(new FunctionBuilder(), LoadedPlugins.Instance), Window.GetWindow(this));
+            _ = await ProgramSaveLoad.Instance.TrySaveProgramFromMetadataAsync(_programDisplay?.AssociatedProgram, new ProgramJsonStorer(new FunctionBuilder(), LoadedPlugins.Instance), Window.GetWindow(this));
         }
 
         private async void Button_SaveProgramAs_Click(object sender, RoutedEventArgs e)
         {
             Log.Instance.Header("Save as button clicked");
 
-            _ = await ProgramSaveLoad.Instance.SaveProgramDialogAsync(_blockView?.AssociatedProgram, new ProgramJsonStorer(new FunctionBuilder(), LoadedPlugins.Instance), Window.GetWindow(this));
+            _ = await ProgramSaveLoad.Instance.SaveProgramDialogAsync(_programDisplay?.AssociatedProgram, new ProgramJsonStorer(new FunctionBuilder(), LoadedPlugins.Instance), Window.GetWindow(this));
         }
 
         private void Button_TaskViewer_Click(object sender, RoutedEventArgs e)

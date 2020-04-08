@@ -1,6 +1,7 @@
 ﻿using InDoOut_Core.Entities.Functions;
 using InDoOut_Core.Functions;
 using InDoOut_Core.Logging;
+using InDoOut_Executable_Core.Programs;
 using InDoOut_UI_Common.Actions.Copying;
 using InDoOut_UI_Common.InterfaceElements;
 using System;

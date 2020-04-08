@@ -1,9 +1,8 @@
 ﻿using InDoOut_Core.Entities.Programs;
 using InDoOut_Core.Instancing;
-using InDoOut_UI_Common.InterfaceElements;
 using System.Collections.Generic;
 
-namespace InDoOut_Desktop.Programs
+namespace InDoOut_Executable_Core.Programs
 {
     public interface IProgramHolder : ISingleton<IProgramHolder>, IProgramHandler
     {

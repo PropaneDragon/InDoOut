@@ -1,8 +1,8 @@
-﻿namespace InDoOut_Desktop.UI.Interfaces
+﻿namespace InDoOut_UI_Common.InterfaceElements
 {
     public interface ITaskItem
     {
-        IBlockView BlockView { get; }
+        ICommonProgramDisplay ProgramDisplay { get; }
 
         void UpdateSnapshotWithTransition();
         void UpdateSnapshot();

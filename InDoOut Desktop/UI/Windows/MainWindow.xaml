@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:InDoOut_Desktop.UI.Windows"
         xmlns:core="clr-namespace:InDoOut_UI_Common.Controls.Core;assembly=InDoOutUICommon"
         xmlns:sidebar="clr-namespace:InDoOut_Desktop.UI.Controls.Sidebar"
-        xmlns:taskManager="clr-namespace:InDoOut_Desktop.UI.Controls.TaskManager"
+        xmlns:taskManager="clr-namespace:InDoOut_UI_Common.Controls.TaskManager;assembly=InDoOutUICommon"
         xmlns:background="clr-namespace:InDoOut_Desktop.UI.Controls.Background"
         xmlns:splash="clr-namespace:InDoOut_Desktop.UI.Controls.Splash"
         mc:Ignorable="d"

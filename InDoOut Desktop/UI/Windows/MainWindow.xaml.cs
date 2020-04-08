@@ -1,6 +1,7 @@
 ﻿using InDoOut_Core.Logging;
 using InDoOut_Desktop.Loading;
 using InDoOut_Desktop.Options;
+using InDoOut_Desktop.Programs;
 using InDoOut_Desktop.UI.Interfaces;
 using InDoOut_Desktop.UI.Messaging;
 using InDoOut_Desktop.UI.Threading;
@@ -47,7 +48,7 @@ namespace InDoOut_Desktop.UI.Windows
 
             if (taskView != null)
             {
-                taskView.Sidebar = sidebar;
+                taskView.ProgramDisplayCreator = new ProgramDisplayCreator();
                 taskView.CreateNewTask(true);
             }
 
@@ -112,7 +113,7 @@ namespace InDoOut_Desktop.UI.Windows
         private void UpdateTimer_Tick(object sender, EventArgs e)
         {
             var programName = "No program";
-            var program = TaskView_Main?.CurrentBlockView?.AssociatedProgram;
+            var program = TaskView_Main.CurrentProgramDisplay?.AssociatedProgram;
 
             if (program != null)
             {

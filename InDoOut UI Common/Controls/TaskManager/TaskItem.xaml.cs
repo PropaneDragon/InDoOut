@@ -1,4 +1,4 @@
-﻿using InDoOut_Desktop.UI.Interfaces;
+﻿using InDoOut_UI_Common.InterfaceElements;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -7,13 +7,13 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
-namespace InDoOut_Desktop.UI.Controls.TaskManager
+namespace InDoOut_UI_Common.Controls.TaskManager
 {
     public partial class TaskItem : UserControl, ITaskItem
     {
         private DispatcherTimer _updateTimer = null;
 
-        public IBlockView BlockView { get; private set; } = null;
+        public ICommonProgramDisplay ProgramDisplay { get; private set; } = null;
         public ITaskView TaskView { get; private set; } = null;
 
         public TaskItem()
@@ -21,9 +21,9 @@ namespace InDoOut_Desktop.UI.Controls.TaskManager
             InitializeComponent();
         }
 
-        public TaskItem(IBlockView blockView, ITaskView taskView) : this()
+        public TaskItem(ICommonProgramDisplay programDisplay, ITaskView taskView) : this()
         {
-            BlockView = blockView;
+            ProgramDisplay = programDisplay;
             TaskView = taskView;
 
             UpdateSnapshotWithTransition();
@@ -49,7 +49,7 @@ namespace InDoOut_Desktop.UI.Controls.TaskManager
 
         public void UpdateSnapshot()
         {
-            if (BlockView != null && BlockView is UIElement uiElement && uiElement.RenderSize.Width > 0 && uiElement.RenderSize.Height > 0)
+            if (ProgramDisplay != null && ProgramDisplay is UIElement uiElement && uiElement.RenderSize.Width > 0 && uiElement.RenderSize.Height > 0)
             {
                 var captureSize = uiElement.RenderSize;
                 var captureRectangle = new Rect(captureSize);
@@ -71,15 +71,15 @@ namespace InDoOut_Desktop.UI.Controls.TaskManager
 
         private void UpdateProgramName()
         {
-            if (BlockView != null)
+            if (ProgramDisplay != null)
             {
-                Text_ProgramName.Text = BlockView?.AssociatedProgram?.Name ?? "Untitled";
+                Text_ProgramName.Text = ProgramDisplay?.AssociatedProgram?.Name ?? "Untitled";
             }
         }
 
         private void UpdateProgramState()
         {
-            var program = BlockView?.AssociatedProgram;
+            var program = ProgramDisplay?.AssociatedProgram;
 
             Button_RunTask.Visibility = (program != null && !program.Running && !program.Stopping) ? Visibility.Visible : Visibility.Collapsed;
             Button_StopTask.Visibility = (program != null && program.Running && !program.Stopping) ? Visibility.Visible : Visibility.Collapsed;
@@ -154,12 +154,12 @@ namespace InDoOut_Desktop.UI.Controls.TaskManager
 
         private void Button_RunTask_Click(object sender, RoutedEventArgs e)
         {
-            BlockView?.AssociatedProgram?.Trigger(null);
+            ProgramDisplay?.AssociatedProgram?.Trigger(null);
         }
 
         private void Button_StopTask_Click(object sender, RoutedEventArgs e)
         {
-            BlockView?.AssociatedProgram?.Stop();
+            ProgramDisplay?.AssociatedProgram?.Stop();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using InDoOut_UI_Common.Actions;
+﻿using InDoOut_Executable_Core.Programs;
+using InDoOut_UI_Common.Actions;
 using InDoOut_UI_Common.Actions.Selecting;
 using System.Windows;
 

@@ -29,8 +29,6 @@
     <None Remove="UI\Controls\Sidebar\ItemList.xaml" />
     <None Remove="UI\Controls\Sidebar\Sidebar.xaml" />
     <None Remove="UI\Controls\Splash\SplashOverlay.xaml" />
-    <None Remove="UI\Controls\TaskManager\TaskItem.xaml" />
-    <None Remove="UI\Controls\TaskManager\TaskView.xaml" />
   </ItemGroup>
 
   <ItemGroup>

@@ -2,9 +2,9 @@
 using InDoOut_Core.Instancing;
 using System.Collections.Generic;
 
-namespace InDoOut_Desktop.Programs
+namespace InDoOut_Executable_Core.Programs
 {
-    internal class ProgramHolder : Singleton<ProgramHolder>, IProgramHolder
+    public class ProgramHolder : Singleton<ProgramHolder>, IProgramHolder
     {
         public List<IProgram> Programs { get; } = new List<IProgram>();
 

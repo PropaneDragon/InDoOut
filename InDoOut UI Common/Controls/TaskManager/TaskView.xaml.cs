@@ -1,21 +1,23 @@
 ﻿using InDoOut_Core.Entities.Programs;
-using InDoOut_Desktop.Programs;
-using InDoOut_Desktop.UI.Interfaces;
+using InDoOut_Executable_Core.Programs;
+using InDoOut_UI_Common.Events;
+using InDoOut_UI_Common.InterfaceElements;
 using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 
-namespace InDoOut_Desktop.UI.Controls.TaskManager
+namespace InDoOut_UI_Common.Controls.TaskManager
 {
     public partial class TaskView : UserControl, ITaskView
     {
-        private IBlockView _blockView = null;
+        private ICommonProgramDisplay _programDisplay = null;
 
-        public IBlockView CurrentBlockView { get => _blockView; set => BlockViewChanged(value); }
+        public IProgramDisplayCreator ProgramDisplayCreator { get; set; } = new NullProgramDisplayCreator();
+        public ICommonProgramDisplay CurrentProgramDisplay { get => _programDisplay; set => ProgramDisplayChanged(value); }
 
-        public Sidebar.Sidebar Sidebar { get; set; } = null;
+        public event EventHandler<CurrentProgramDisplayEventArgs> OnProgramDisplayChanged;
 
         public TaskView()
         {
@@ -31,19 +33,22 @@ namespace InDoOut_Desktop.UI.Controls.TaskManager
         {
             if (program != null)
             {
-                var blockView = new BlockView.BlockView() { AssociatedProgram = program };
-                var taskItem = new TaskItem(blockView, this);
-                var fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(600)) { EasingFunction = new CircleEase() { EasingMode = EasingMode.EaseInOut } };
-
-                _ = Wrap_Tasks.Children.Add(taskItem);
-
-                if (bringToFront)
+                var programDisplay = ProgramDisplayCreator?.CreateProgramDisplay(program);
+                if (programDisplay != null)
                 {
-                    BringToFront(taskItem);
-                }
-                else
-                {
-                    taskItem.BeginAnimation(OpacityProperty, fadeInAnimation);
+                    var taskItem = new TaskItem(programDisplay, this);
+                    var fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(600)) { EasingFunction = new CircleEase() { EasingMode = EasingMode.EaseInOut } };
+
+                    _ = Wrap_Tasks.Children.Add(taskItem);
+
+                    if (bringToFront)
+                    {
+                        BringToFront(taskItem);
+                    }
+                    else
+                    {
+                        taskItem.BeginAnimation(OpacityProperty, fadeInAnimation);
+                    }
                 }
             }
         }
@@ -52,7 +57,7 @@ namespace InDoOut_Desktop.UI.Controls.TaskManager
         {
             foreach (var child in Wrap_Tasks.Children)
             {
-                if (child is TaskItem taskItem && taskItem.BlockView == CurrentBlockView)
+                if (child is TaskItem taskItem && taskItem.ProgramDisplay == CurrentProgramDisplay)
                 {
                     taskItem.UpdateSnapshotWithTransition();
                 }
@@ -72,29 +77,26 @@ namespace InDoOut_Desktop.UI.Controls.TaskManager
             Grid_Tasks.Visibility = Visibility.Visible;
             Grid_Tasks.BeginAnimation(OpacityProperty, fadeInAnimation);
 
-            if (Sidebar != null)
-            {
-                Sidebar.BlockView = null;
-            }
+            CurrentProgramDisplay = null;
         }
 
         public void BringToFront(ITaskItem taskItem)
         {
-            if (taskItem?.BlockView != null)
+            if (taskItem?.ProgramDisplay != null)
             {
-                BringToFront(taskItem.BlockView);
+                BringToFront(taskItem.ProgramDisplay);
             }
         }
 
-        public void BringToFront(IBlockView blockView)
+        public void BringToFront(ICommonProgramDisplay programDisplay)
         {
-            if (blockView != null && blockView is UIElement uiElement)
+            if (programDisplay != null && programDisplay is UIElement uiElement)
             {
                 Grid_CurrentHost.Visibility = Visibility.Visible;
 
                 Border_CurrentHost.Child = uiElement;
 
-                if (_blockView != null)
+                if (_programDisplay != null)
                 {
                     var fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(500)) { EasingFunction = new CircleEase() { EasingMode = EasingMode.EaseInOut } };
                     var fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromMilliseconds(500)) { EasingFunction = new CircleEase() { EasingMode = EasingMode.EaseInOut } };
@@ -113,12 +115,7 @@ namespace InDoOut_Desktop.UI.Controls.TaskManager
                     Grid_CurrentHost.Opacity = 1;
                 }
 
-                _blockView = blockView;
-
-                if (Sidebar != null)
-                {
-                    Sidebar.BlockView = blockView;
-                }
+                CurrentProgramDisplay = programDisplay;
             }
         }
 
@@ -130,7 +127,7 @@ namespace InDoOut_Desktop.UI.Controls.TaskManager
                 {
                     if (child is ITaskItem item && item == task)
                     {
-                        var program = task?.BlockView?.AssociatedProgram;
+                        var program = task?.ProgramDisplay?.AssociatedProgram;
                         if (program != null)
                         {
                             program.Stop();
@@ -146,9 +143,19 @@ namespace InDoOut_Desktop.UI.Controls.TaskManager
             return false;
         }
 
-        private void BlockViewChanged(IBlockView blockView)
+        private void ProgramDisplayChanged(ICommonProgramDisplay programDisplay)
         {
-            BringToFront(blockView);
+            if (programDisplay != _programDisplay)
+            {
+                _programDisplay = programDisplay;
+
+                if (programDisplay != null)
+                {
+                    BringToFront(programDisplay);
+                }
+
+                OnProgramDisplayChanged?.Invoke(this, new CurrentProgramDisplayEventArgs(programDisplay));
+            }
         }
 
         private void Button_NewTask_Click(object sender, RoutedEventArgs e)

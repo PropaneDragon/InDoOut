@@ -1,7 +1,7 @@
 ﻿using InDoOut_Desktop.Actions;
 using InDoOut_Desktop.Actions.Selecting;
-using InDoOut_Desktop.Programs;
 using InDoOut_Desktop.UI.Interfaces;
+using InDoOut_Executable_Core.Programs;
 using InDoOut_UI_Common.Actions;
 using InDoOut_UI_Common.Actions.Selecting;
 using InDoOut_UI_Common.InterfaceElements;
