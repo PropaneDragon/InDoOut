@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InDoOut_Display.UI.Controls.Sidebar"
              mc:Ignorable="d" 
-             d:DesignHeight="450">
+             d:DesignHeight="650">
     <Border Padding="16">
         <Border.Background>
             <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
@@ -23,7 +23,7 @@
                 <Button x:Name="Button_Save" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Material Icons" FontSize="30" Content="" ToolTip="Save" Template="{DynamicResource Template_Buttons_Transparent}" Click="Button_Save_Click" Padding="1,1,1,1" Margin="0,8,0,0" />
                 <Button x:Name="Button_SaveAs" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Material Icons" FontSize="30" Content="" ToolTip="Save as..." Template="{DynamicResource Template_Buttons_Transparent}" Click="Button_SaveAs_Click" Padding="1,1,1,1" Margin="0,8,0,0" />
             </StackPanel>
-            <StackPanel DockPanel.Dock="Bottom">
+            <StackPanel DockPanel.Dock="Bottom" VerticalAlignment="Bottom" Margin="0,0,0,20">
                 <Button x:Name="Button_TaskViewer" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Material Icons" FontSize="30" Content="" ToolTip="Task viewer" Template="{DynamicResource Template_Buttons_Transparent}" Click="Button_TaskViewer_Click" Margin="0,8,0,0" Padding="1" />
                 <Button x:Name="Button_Settings" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Material Icons" FontSize="30" Content="" ToolTip="Settings" Template="{DynamicResource Template_Buttons_Transparent}" Click="Button_Settings_Click" Margin="0,8,0,0" Padding="1" />
             </StackPanel>
