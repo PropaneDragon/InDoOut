@@ -279,6 +279,8 @@ namespace InDoOut_UI_Common.InterfaceElements
                 {
                     _ = CommonProgramLoader?.DisplayProgram(_currentProgram);
                 }
+
+                ProgramChanged(program);
             }
         }
 
@@ -304,7 +306,12 @@ namespace InDoOut_UI_Common.InterfaceElements
             {
                 variableConnection.Hidden = viewMode != ProgramViewMode.Variables;
             }
+
+            ViewModeChanged(viewMode);
         }
+
+        protected abstract void ViewModeChanged(ProgramViewMode viewMode);
+        protected abstract void ProgramChanged(IProgram program);
 
         private List<T> FindCanvasChild<T>() where T : class => FindCanvasChild<T>(T => true);
         private List<T> FindCanvasChild<T>(Func<T, bool> matchFunction) where T : class

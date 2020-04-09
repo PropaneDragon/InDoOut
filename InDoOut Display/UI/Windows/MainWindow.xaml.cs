@@ -1,4 +1,5 @@
 ﻿using InDoOut_Display.Loading;
+using InDoOut_Display.Programs;
 using InDoOut_Executable_Core.Location;
 using InDoOut_Executable_Core.Logging;
 using System.Threading.Tasks;
@@ -16,11 +17,18 @@ namespace InDoOut_Display.UI.Windows
 
             _logSaver.BeginAutoSave();
 
-            Sidebar_Main.AssociatedScreenOverview = ScreenOverview_Main;
+            Sidebar_Main.AssociatedTaskView = TaskView_Main;
         }
 
         private async Task FinishLoading()
         {
+            var taskView = TaskView_Main;
+
+            if (taskView != null)
+            {
+                taskView.ProgramDisplayCreator = new ProgramDisplayCreator();
+                taskView.CreateNewTask(true);
+            }
         }
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)

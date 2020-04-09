@@ -1,27 +1,28 @@
 ﻿using InDoOut_Display.UI.Controls.Screens;
+using InDoOut_UI_Common.InterfaceElements;
 using System.Windows;
 
 namespace InDoOut_Display.UI.Windows
 {
     public partial class FunctionSelectorWindow : Window
     {
-        private IScreenConnections _screenConnections = null;
-        public IScreenConnections ScreenConnections { get => _screenConnections; set => UpdateScreen(value); }
+        private ICommonProgramDisplay _programDisplay = null;
+        public ICommonProgramDisplay ProgramDisplay { get => _programDisplay; set => UpdateScreen(value); }
 
         public FunctionSelectorWindow()
         {
             InitializeComponent();
         }
 
-        public FunctionSelectorWindow(IScreenConnections screenConnections) : this()
+        public FunctionSelectorWindow(ICommonProgramDisplay programDisplay) : this()
         {
-            ScreenConnections = screenConnections;
+            ProgramDisplay = programDisplay;
         }
 
-        private void UpdateScreen(IScreenConnections screen)
+        private void UpdateScreen(ICommonProgramDisplay programDisplay)
         {
-            _screenConnections = screen;
-            FunctionSelector_Main.Screen = screen;
+            _programDisplay = programDisplay;
+            FunctionSelector_Main.ProgramDisplay = programDisplay;
         }
     }
 }

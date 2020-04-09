@@ -40,9 +40,6 @@ namespace InDoOut_Display.UI.Controls.Screens
             SelectionManager = new ScreenConnectionsSelectionManager(this);
             ActionHandler = new ActionHandler(new ScreenConnectionsRestingAction(this));
             ProgramHandler = null; //Todo
-            AssociatedProgram = new Program();
-
-            ScreenItem_Overview.AssociatedProgram = AssociatedProgram;
         }
 
         protected override bool ClearCurrentProgram()
@@ -52,6 +49,22 @@ namespace InDoOut_Display.UI.Controls.Screens
             Canvas_Content.Children.Clear();
 
             return true;
+        }
+
+        protected override void ViewModeChanged(ProgramViewMode viewMode)
+        {
+            if (CurrentScreen != null)
+            {
+                CurrentScreen.CurrentViewMode = viewMode;
+            }
+        }
+
+        protected override void ProgramChanged(IProgram program)
+        {
+            if (CurrentScreen != null)
+            {
+                CurrentScreen.AssociatedProgram = program;
+            }
         }
 
         private void Scroll_Content_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

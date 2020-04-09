@@ -24,7 +24,8 @@
                 <Button x:Name="Button_SaveAs" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Material Icons" FontSize="30" Content="" ToolTip="Save as..." Template="{DynamicResource Template_Buttons_Transparent}" Click="Button_SaveAs_Click" Padding="1,1,1,1" Margin="0,8,0,0" />
             </StackPanel>
             <StackPanel DockPanel.Dock="Bottom">
-                
+                <Button x:Name="Button_TaskViewer" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Material Icons" FontSize="30" Content="" ToolTip="Task viewer" Template="{DynamicResource Template_Buttons_Transparent}" Click="Button_TaskViewer_Click" Margin="0,8,0,0" Padding="1" />
+                <Button x:Name="Button_Settings" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Material Icons" FontSize="30" Content="" ToolTip="Settings" Template="{DynamicResource Template_Buttons_Transparent}" Click="Button_Settings_Click" Margin="0,8,0,0" Padding="1" />
             </StackPanel>
         </DockPanel>
     </Border>

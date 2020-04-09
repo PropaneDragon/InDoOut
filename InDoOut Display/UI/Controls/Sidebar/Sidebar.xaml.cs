@@ -8,7 +8,7 @@ namespace InDoOut_Display.UI.Controls.Sidebar
 {
     public partial class Sidebar : UserControl
     {
-        public IScreenOverview AssociatedScreenOverview { get; set; } = null;
+        public ITaskView AssociatedTaskView { get; set; } = null;
 
         public Sidebar()
         {
@@ -18,7 +18,7 @@ namespace InDoOut_Display.UI.Controls.Sidebar
         private void Button_Add_Display_Click(object sender, RoutedEventArgs e)
         {
             var window = Window.GetWindow(this);
-            var elementWindow = new ElementSelectorWindow(AssociatedScreenOverview?.CurrentConnectionsScreen?.CurrentScreen)
+            var elementWindow = new ElementSelectorWindow(AssociatedTaskView?.CurrentProgramDisplay)
             {
                 Owner = Window.GetWindow(this)
             };
@@ -35,7 +35,7 @@ namespace InDoOut_Display.UI.Controls.Sidebar
         private void Button_Add_Functions_Click(object sender, RoutedEventArgs e)
         {
             var window = Window.GetWindow(this);
-            var elementWindow = new FunctionSelectorWindow(AssociatedScreenOverview?.CurrentConnectionsScreen)
+            var elementWindow = new FunctionSelectorWindow(AssociatedTaskView?.CurrentProgramDisplay)
             {
                 Owner = Window.GetWindow(this),
                 Width = 400
@@ -56,20 +56,13 @@ namespace InDoOut_Display.UI.Controls.Sidebar
 
         private void Button_SwitchMode_Click(object sender, RoutedEventArgs e)
         {
-            if (AssociatedScreenOverview?.CurrentConnectionsScreen != null)
+            if (AssociatedTaskView?.CurrentProgramDisplay != null)
             {
-                var currentViewMode = AssociatedScreenOverview.CurrentConnectionsScreen.CurrentViewMode;
+                var currentViewMode = AssociatedTaskView.CurrentProgramDisplay.CurrentViewMode;
                 var nextViewMode = currentViewMode == ProgramViewMode.IO ? ProgramViewMode.Variables : ProgramViewMode.IO;
-                var screen = AssociatedScreenOverview.CurrentConnectionsScreen.CurrentScreen;
 
-                AssociatedScreenOverview.CurrentConnectionsScreen.CurrentViewMode = nextViewMode;
-
-                if (screen != null)
-                {
-                    screen.CurrentViewMode = nextViewMode;
-                }
-            }
-                    
+                AssociatedTaskView.CurrentProgramDisplay.CurrentViewMode = nextViewMode;
+            }                    
         }
 
         private void Button_New_Click(object sender, RoutedEventArgs e)
@@ -88,6 +81,16 @@ namespace InDoOut_Display.UI.Controls.Sidebar
         }
 
         private void Button_SaveAs_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_TaskViewer_Click(object sender, RoutedEventArgs e)
+        {
+            AssociatedTaskView?.ShowTasks();
+        }
+
+        private void Button_Settings_Click(object sender, RoutedEventArgs e)
         {
 
         }

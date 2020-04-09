@@ -1,6 +1,5 @@
 ﻿using InDoOut_Core.Entities.Functions;
 using InDoOut_Core.Functions;
-using InDoOut_Display.UI.Controls.Screens;
 using InDoOut_Display_Core.Functions;
 using InDoOut_Function_Plugins.Containers;
 using InDoOut_Plugins.Loaders;
@@ -19,13 +18,13 @@ namespace InDoOut_Display.UI.Controls.FunctionSelector
     public partial class FunctionSelector : UserControl
     {
         private readonly IFunctionBuilder _functionBuilder = new FunctionBuilder();
-        private IScreenConnections _screenConnections = null;
+        private ICommonProgramDisplay _programDisplay = null;
         private IEnumerable<Type> _previousFunctionTypes = null;
         private List<IFunction> _functions = null;
         private DispatcherTimer _reloadTimer = null;
 
         public bool CloseWindowOnSelection { get; set; } = true;
-        public IScreenConnections Screen { get => _screenConnections; set => UpdateScreen(value); }
+        public ICommonProgramDisplay ProgramDisplay { get => _programDisplay; set => UpdateProgramDisplay(value); }
 
         public FunctionSelector()
         {
@@ -74,9 +73,9 @@ namespace InDoOut_Display.UI.Controls.FunctionSelector
             collectionView.GroupDescriptions.Add(new PropertyGroupDescription("SafeGroup"));
         }
 
-        private void UpdateScreen(IScreenConnections screen)
+        private void UpdateProgramDisplay(ICommonProgramDisplay programDisplay)
         {
-            _screenConnections = screen;
+            _programDisplay = programDisplay;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -119,9 +118,9 @@ namespace InDoOut_Display.UI.Controls.FunctionSelector
             if (List_Items.SelectedItem is IFunction selectedFunction)
             {
                 var newFunctionInstance = _functionBuilder.BuildInstance(selectedFunction.GetType());
-                if (newFunctionInstance != null && _screenConnections != null && _screenConnections is IFunctionDisplay functionDisplay)
+                if (newFunctionInstance != null && _programDisplay != null)
                 {
-                    _ = functionDisplay.Create(newFunctionInstance);
+                    _ = _programDisplay.Create(newFunctionInstance);
 
                     if (CloseWindowOnSelection)
                     {

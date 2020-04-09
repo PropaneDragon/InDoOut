@@ -1,4 +1,5 @@
-﻿using InDoOut_Desktop.Actions;
+﻿using InDoOut_Core.Entities.Programs;
+using InDoOut_Desktop.Actions;
 using InDoOut_Desktop.Actions.Selecting;
 using InDoOut_Desktop.UI.Interfaces;
 using InDoOut_Executable_Core.Programs;
@@ -55,6 +56,14 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
             Canvas_Content.Children.Clear();
 
             return true;
+        }
+
+        protected override void ViewModeChanged(ProgramViewMode viewMode)
+        {
+        }
+
+        protected override void ProgramChanged(IProgram program)
+        {
         }
 
         private void SetViewOffset(Point offset)

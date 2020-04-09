@@ -1,28 +1,29 @@
 ﻿using InDoOut_Display.UI.Controls.Screens;
+using InDoOut_UI_Common.InterfaceElements;
 using System.Windows;
 
 namespace InDoOut_Display.UI.Windows
 {
     public partial class ElementSelectorWindow : Window
     {
-        private IScreen _associatedScreen = null;
+        private ICommonProgramDisplay _associatedProgramDisplay = null;
 
-        public IScreen AssociatedScreen { get => _associatedScreen; set => ChangeScreen(value); }
+        public ICommonProgramDisplay AssociatedProgramDisplay { get => _associatedProgramDisplay; set => ChangeScreen(value); }
 
         public ElementSelectorWindow()
         {
             InitializeComponent();
         }
 
-        public ElementSelectorWindow(IScreen screen) : this()
+        public ElementSelectorWindow(ICommonProgramDisplay programDisplay) : this()
         {
-            AssociatedScreen = screen;
+            AssociatedProgramDisplay = programDisplay;
         }
 
-        private void ChangeScreen(IScreen screen)
+        private void ChangeScreen(ICommonProgramDisplay programDisplay)
         {
-            _associatedScreen = screen;
-            ElementSelector_Main.AssociatedScreen = screen;
+            _associatedProgramDisplay = programDisplay;
+            ElementSelector_Main.AssociatedScreen = (programDisplay as IScreenConnections)?.CurrentScreen;
         }
     }
 }
