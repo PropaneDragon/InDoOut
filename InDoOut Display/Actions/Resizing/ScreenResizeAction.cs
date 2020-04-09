@@ -1,8 +1,5 @@
 ﻿using InDoOut_Display.UI.Controls.Screens;
-using InDoOut_UI_Common.Actions.Dragging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -12,7 +9,6 @@ namespace InDoOut_Display.Actions.Resizing
     {
         private Size _initialSize = new Size();
         private ScreenEdge _initialEdge = ScreenEdge.None;
-        private IEnumerable<IDraggable> _cachedElements;
 
         public IScreenConnections ScreenConnections { get; private set; } = null;
 
@@ -28,12 +24,6 @@ namespace InDoOut_Display.Actions.Resizing
             {
                 _initialSize = new Size(element?.ActualWidth ?? 0, element?.ActualHeight ?? 0);
                 _initialEdge = screen?.GetCloseEdge(Mouse.GetPosition(element)) ?? ScreenEdge.None;
-                _cachedElements = screen?.Elements?.Where(element => element is IDraggable).Cast<IDraggable>();
-
-                foreach (var cachedElement in _cachedElements)
-                {
-                    cachedElement.DragStarted(ScreenConnections);
-                }
             }
         }
 
@@ -49,14 +39,6 @@ namespace InDoOut_Display.Actions.Resizing
                 element.Width = Math.Clamp(_initialSize.Width + movementAmount.X, 10d, double.MaxValue);
                 element.Height = Math.Clamp(_initialSize.Height + movementAmount.Y, 10d, double.MaxValue);
 
-                if (_cachedElements != null)
-                {
-                    foreach (var cachedElement in _cachedElements)
-                    {
-                        cachedElement.DragMoved(ScreenConnections, MouseDelta);
-                    }
-                }
-
                 return true;
             }
 
@@ -66,14 +48,6 @@ namespace InDoOut_Display.Actions.Resizing
         public override bool MouseLeftUp(Point mousePosition)
         {
             _ = base.MouseLeftUp(mousePosition);
-
-            if (_cachedElements != null)
-            {
-                foreach (var cachedElement in _cachedElements)
-                {
-                    cachedElement.DragEnded(ScreenConnections);
-                }
-            }
 
             Finish(null);
 
