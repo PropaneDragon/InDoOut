@@ -52,7 +52,7 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
 
         public bool CanSelect(IElementDisplay view) => true;
 
-        public bool CanDrag(IElementDisplay view) => true; //Todo: Draggable by only the draggable icon maybe?
+        public bool CanDrag(IElementDisplay view) => view.GetElementsUnderMouse().Any(element => element == Border_DragArea);
 
         public void ScaleChanged(IScreen screen)
         {
@@ -274,8 +274,8 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
 
         private void UpdateElementPercentages()
         {
-            var width = Math.Clamp(1d - (Column_Width_Left.Width.Value + Column_Width_Right.Width.Value), 0, double.MaxValue);
-            var height = Math.Clamp(1d - (Row_Height_Above.Height.Value + Row_Height_Below.Height.Value), 0, double.MaxValue);
+            var width = Math.Clamp(1d - (Column_Width_Left.Width.Value + Column_Width_Right.Width.Value), 0.01, double.MaxValue);
+            var height = Math.Clamp(1d - (Row_Height_Above.Height.Value + Row_Height_Below.Height.Value), 0.01, double.MaxValue);
 
             Column_Width_Element.Width = new GridLength(width, GridUnitType.Star);
             Row_Height_Element.Height = new GridLength(height, GridUnitType.Star);
@@ -365,10 +365,10 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
 
         private void SetMarginPercentages(Thickness thickness)
         {
-            Column_Width_Left.Width = new GridLength(Math.Clamp(thickness.Left, 0, double.MaxValue), GridUnitType.Star);
-            Column_Width_Right.Width = new GridLength(Math.Clamp(thickness.Right, 0, double.MaxValue), GridUnitType.Star);
-            Row_Height_Above.Height = new GridLength(Math.Clamp(thickness.Top, 0, double.MaxValue), GridUnitType.Star);
-            Row_Height_Below.Height = new GridLength(Math.Clamp(thickness.Bottom, 0, double.MaxValue), GridUnitType.Star);
+            Column_Width_Left.Width = new GridLength(Math.Clamp(thickness.Left, 0d, 1d), GridUnitType.Star);
+            Column_Width_Right.Width = new GridLength(Math.Clamp(thickness.Right, 0d, 1d), GridUnitType.Star);
+            Row_Height_Above.Height = new GridLength(Math.Clamp(thickness.Top, 0d, 1d), GridUnitType.Star);
+            Row_Height_Below.Height = new GridLength(Math.Clamp(thickness.Bottom, 0d, 1d), GridUnitType.Star);
         }
 
 

@@ -30,7 +30,7 @@
                     <ContentPresenter x:Name="ContentPresenter_Element" MinWidth="5" MinHeight="5" />
                 </Viewbox>
                 <Grid x:Name="Grid_Name">
-                    <Border Background="#7F3B77E4" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="2">
+                    <Border x:Name="Border_DragArea" Background="#7F3B77E4" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="2">
                         <TextBlock FontFamily="Material Icons" FontSize="14" Foreground="#fff" Text="" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" TextTrimming="CharacterEllipsis" TextWrapping="WrapWithOverflow" />
                     </Border>
                 </Grid>
