@@ -1,5 +1,5 @@
 ﻿using InDoOut_Display.Actions.Resizing;
-using InDoOut_Display.UI.Controls.Screens;
+using InDoOut_Display_Core.Screens;
 using InDoOut_UI_Common.Actions;
 using System.Windows;
 using System.Windows.Input;

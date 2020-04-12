@@ -9,7 +9,7 @@ using System.Windows.Threading;
 
 namespace InDoOut_UI_Common.InterfaceElements
 {
-    internal class CommonProgramLoader : ICommonProgramLoader
+    internal class CommonProgramLoader : AbstractCreator, ICommonProgramLoader
     {
         private readonly ICommonProgramDisplay _display = null;
         private readonly DispatcherTimer _wireRedrawTimer = null; //Todo: Look into making this safe.
@@ -34,7 +34,7 @@ namespace InDoOut_UI_Common.InterfaceElements
 
                 if (_display is IScrollable scrollable)
                 {
-                    if (ExtractLocationFromMetadata(program, out var location))
+                    if (ExtractPointFromMetadata(program, out var location))
                     {
                         scrollable.Offset = location;
                     }
@@ -46,7 +46,7 @@ namespace InDoOut_UI_Common.InterfaceElements
 
                 foreach (var function in program.Functions)
                 {
-                    var uiFunction = ExtractLocationFromMetadata(function, out var functionLocation) ? _display.Create(function, functionLocation) : _display.Create(function);
+                    var uiFunction = _display.Create(function);
                     if (uiFunction != null)
                     {
                         functionToUIFunctionMap.Add(function, uiFunction);
@@ -56,6 +56,18 @@ namespace InDoOut_UI_Common.InterfaceElements
                 DisplayConnections(program, functionToUIFunctionMap);
 
                 _wireRedrawTimer?.Start();
+            }
+
+            return false;
+        }
+
+        public bool UnloadProgram(IProgram program)
+        {
+            if (program != null)
+            {
+                program.Stop();
+
+                return true;
             }
 
             return false;
@@ -119,7 +131,7 @@ namespace InDoOut_UI_Common.InterfaceElements
             {
                 var connection = _display.Create(uiStart, uiEnd);
 
-                if (ExtractArea(start, out var startArea) && ExtractArea(end, out var endArea))
+                if (ExtractRectFromMetadata(start, out var startArea) && ExtractRectFromMetadata(end, out var endArea))
                 {
                     var startCentre = startArea.TopLeft + ((startArea.BottomRight - startArea.TopLeft) / 2d);
                     var endCentre = endArea.TopLeft + ((endArea.BottomRight - endArea.TopLeft) / 2d);
@@ -132,52 +144,6 @@ namespace InDoOut_UI_Common.InterfaceElements
                     _display.Remove(connection);
                 }
             }
-        }
-
-        public bool UnloadProgram(IProgram program)
-        {
-            if (program != null)
-            {
-                program.Stop();
-
-                return true;
-            }
-
-            return false;
-        }
-
-        private bool ExtractLocationFromMetadata(IStored stored, out Point location)
-        {
-            location = new Point();
-
-            if (stored != null && ExtractMetadataValue(stored, "x", out var x) && ExtractMetadataValue(stored, "y", out var y))
-            {
-                location = new Point(x, y);
-
-                return true;
-            }
-
-            return false;
-        }
-
-        private bool ExtractArea(IStored stored, out Rect area)
-        {
-            area = new Rect();
-
-            if (stored != null && ExtractLocationFromMetadata(stored, out var location) && ExtractMetadataValue(stored, "w", out var width) && ExtractMetadataValue(stored, "h", out var height))
-            {
-                area = new Rect(location, new Size(width, height));
-
-                return true;
-            }
-
-            return false;
-        }
-
-        private bool ExtractMetadataValue(IStored stored, string key, out double value)
-        {
-            value = 0;
-            return !string.IsNullOrEmpty(key) && stored != null && stored.Metadata.ContainsKey(key) && double.TryParse(stored.Metadata[key], out value);
         }
 
         private void WireRedrawTimer_Tick(object sender, EventArgs e)

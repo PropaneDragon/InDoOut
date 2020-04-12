@@ -1,7 +1,6 @@
 ﻿using InDoOut_Display_Core.Elements;
 using InDoOut_Display_Core.Functions;
 using InDoOut_Plugins.Helpers;
-using System;
 using System.Drawing;
 
 namespace InDoOut_Display_Basic_Plugins.Shapes

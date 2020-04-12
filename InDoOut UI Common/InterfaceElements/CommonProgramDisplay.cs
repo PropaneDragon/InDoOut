@@ -4,7 +4,6 @@ using InDoOut_Executable_Core.Programs;
 using InDoOut_UI_Common.Actions;
 using InDoOut_UI_Common.Actions.Deleting;
 using InDoOut_UI_Common.Actions.Selecting;
-using InDoOut_UI_Common.Controls.CoreEntityRepresentation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +19,9 @@ namespace InDoOut_UI_Common.InterfaceElements
         private IProgram _currentProgram = null;
         private ProgramViewMode _currentViewMode = ProgramViewMode.IO;
 
-        protected ICommonProgramLoader CommonProgramLoader { get; private set; } = null;
+        protected ICommonProgramLoader CommonProgramLoader { get; set; } = null;
+        protected IFunctionCreator FunctionCreator { get; set; } = new BasicFunctionCreator();
+        protected IConnectionCreator ConnectionCreator { get; set; } = new BasicConnectionCreator();
 
         public IProgram AssociatedProgram { get => _currentProgram; set => ChangeProgram(value); }
         public ProgramViewMode CurrentViewMode { get => _currentViewMode; set => ChangeViewMode(value); }
@@ -165,65 +166,9 @@ namespace InDoOut_UI_Common.InterfaceElements
             return point.X < centre.X ? new Point(topLeft.X, centre.Y) : new Point(topLeft.X + size.Width, centre.Y);
         }
 
-        public IUIFunction Create(IFunction function)
-        {
-            return Create(function, CentreViewCoordinate);
-        }
-
-        public IUIFunction Create(IFunction function, Point location)
-        {
-            if (AssociatedProgram != null)
-            {
-                if (AssociatedProgram.Functions.Contains(function) || AssociatedProgram.AddFunction(function))
-                {
-                    var uiFunction = new UIFunction(function);
-                    Add(uiFunction, location);
-
-                    return uiFunction;
-                }
-            }
-
-            return null;
-        }
-
-        public IUIConnection Create(IUIConnectionStart start, Point end)
-        {
-            if (start != null && start is FrameworkElement element)
-            {
-                var bestSidePoint = GetBestSide(element, end);
-                var uiConnection = new UIConnection()
-                {
-                    Start = bestSidePoint,
-                    End = end,
-                    AssociatedStart = start
-                };
-
-                Add(uiConnection, new Point(0, 0), -999);
-
-                return uiConnection;
-            }
-
-            return null;
-        }
-
-        public IUIConnection Create(IUIConnectionStart start, IUIConnectionEnd end)
-        {
-            if (start != null && end != null && end is FrameworkElement element)
-            {
-                var endPosition = GetPosition(element);
-                var uiConnection = Create(start, endPosition);
-
-                if (uiConnection != null)
-                {
-                    uiConnection.AssociatedEnd = end;
-
-                    return uiConnection;
-                }
-            }
-
-            return null;
-        }
-
+        public IUIFunction Create(IFunction function) => FunctionCreator?.Create(this, function);
+        public IUIConnection Create(IUIConnectionStart start, Point end) => ConnectionCreator?.Create(this, start, end);
+        public IUIConnection Create(IUIConnectionStart start, IUIConnectionEnd end) => ConnectionCreator?.Create(this, start, end);
         public void Remove(IUIConnection output) => Remove(output as FrameworkElement);
         public IUIConnection FindConnection(IUIConnectionStart start, IUIConnectionEnd end) => FindCanvasChild<IUIConnection>(uiConnection => uiConnection.AssociatedEnd == end && uiConnection.AssociatedStart == start).FirstOrDefault();
         public List<IUIConnection> FindConnections(IUIConnectionStart start) => FindConnections(new List<IUIConnectionStart>() { start });

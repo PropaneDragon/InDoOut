@@ -12,8 +12,13 @@
     <ProjectReference Include="..\InDoOut Display Plugins\InDoOut Display Plugins.csproj" />
     <ProjectReference Include="..\InDoOut Executable Core\InDoOut Executable Core.csproj" />
     <ProjectReference Include="..\InDoOut Function Plugins\InDoOut Function Plugins.csproj" />
+    <ProjectReference Include="..\InDoOut Json Storage\InDoOut Json Storage.csproj" />
     <ProjectReference Include="..\InDoOut Plugins\InDoOut Plugins Core.csproj" />
     <ProjectReference Include="..\InDoOut UI Common\InDoOut UI Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Actions\Scaling\" />
   </ItemGroup>
 
 </Project>

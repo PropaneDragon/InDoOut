@@ -11,9 +11,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace InDoOut_Desktop.Programs
+namespace InDoOut_UI_Common.SaveLoad
 {
-    internal class ProgramSaveLoad : Singleton<ProgramSaveLoad>
+    public class ProgramSaveLoad : Singleton<ProgramSaveLoad>
     {
         public async Task<IProgram> LoadProgramDialogAsync(IProgramHolder programHolder, IProgramStorer programStorer, Window parent = null)
         {

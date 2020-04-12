@@ -1,5 +1,6 @@
 ﻿using InDoOut_Display.Actions.Resizing;
-using InDoOut_Display.UI.Controls.Screens;
+using InDoOut_Display_Core.Actions.Resizing;
+using InDoOut_Display_Core.Screens;
 using InDoOut_UI_Common.Actions.Dragging;
 using InDoOut_UI_Common.Actions.Selecting;
 using System.Linq;

@@ -1,4 +1,4 @@
-﻿using InDoOut_Display.UI.Controls.Screens;
+﻿using InDoOut_Display_Core.Screens;
 using System;
 using System.Windows;
 using System.Windows.Input;

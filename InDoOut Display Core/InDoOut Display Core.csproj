@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\InDoOut Core\InDoOut Core.csproj" />
+    <ProjectReference Include="..\InDoOut UI Common\InDoOut UI Common.csproj" />
   </ItemGroup>
 
 </Project>

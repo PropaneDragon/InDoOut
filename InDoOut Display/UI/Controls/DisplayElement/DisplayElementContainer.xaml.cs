@@ -1,6 +1,9 @@
-﻿using InDoOut_Display.Actions.Resizing;
-using InDoOut_Display.UI.Controls.Screens;
+﻿using InDoOut_Core.Entities.Functions;
+using InDoOut_Display.Actions.Resizing;
+using InDoOut_Display_Core.Actions.Resizing;
 using InDoOut_Display_Core.Elements;
+using InDoOut_Display_Core.Screens;
+using InDoOut_UI_Common.Actions.Copying;
 using InDoOut_UI_Common.Controls.CoreEntityRepresentation;
 using InDoOut_UI_Common.InterfaceElements;
 using System;
@@ -22,12 +25,12 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
         private bool _resizing = false;
         private bool _moving = false;
         private Thickness _originalMargins = new Thickness();
-        private ProgramViewMode _viewMode = ProgramViewMode.IO;
+        private UIFunctionDisplayMode _displayMode = UIFunctionDisplayMode.IO;
 
         public bool AutoScale { get; set; } = false;
         public double Scale { get; set; } = 1d;
         public IDisplayElement AssociatedDisplayElement { get => ContentPresenter_Element.Content as IDisplayElement; set => SetDisplayElement(value); }
-        public ProgramViewMode ViewMode { get => _viewMode; set => ChangeViewMode(value); }
+        public UIFunctionDisplayMode DisplayMode { get => _displayMode; set => ChangeDisplayMode(value); }
         public Thickness MarginPercentages { get => GetMarginPercentages(); set => SetMarginPercentages(value); }
         public Size Size => new Size(Border_Presenter.ActualWidth, Border_Presenter.ActualHeight);
 
@@ -36,12 +39,14 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
         public List<IUIProperty> Properties => FindInCollection<IUIProperty>(Stack_Properties?.Children);
         public List<IUIResult> Results => FindInCollection<IUIResult>(Stack_Results?.Children);
 
+        public IFunction AssociatedFunction { get => AssociatedDisplayElement?.AssociatedElementFunction; set => throw new InvalidOperationException("Setting the associated function of a DisplayElementContainer is not supported"); }
+
         public DisplayElementContainer(IDisplayElement element = null) : base()
         {
             InitializeComponent();
 
             AssociatedDisplayElement = element;
-            ViewMode = ProgramViewMode.IO;
+            DisplayMode = UIFunctionDisplayMode.IO;
 
             UpdateChildElementVisibility();
         }
@@ -54,8 +59,13 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
 
         public bool CanDrag(IElementDisplay view) => view.GetElementsUnderMouse().Any(element => element == Border_DragArea);
 
+        public bool CanCopy(IElementDisplay view) => false;
+
+        public bool CanDelete(IElementDisplay view) => false;
+
         public void ScaleChanged(IScreen screen)
         {
+            UpdateFunctionMetadata();
         }
 
         public void SelectionStarted(IElementDisplay view)
@@ -68,6 +78,7 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
         {
             _selected = false;
             UpdateChildElementVisibility();
+            UpdateFunctionMetadata();
         }
 
         public void ResizeStarted(IScreen screen)
@@ -82,6 +93,7 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
         {
             _resizing = false;
             UpdateChildElementVisibility();
+            UpdateFunctionMetadata();
         }
 
         public void DragStarted(IElementDisplay view)
@@ -96,6 +108,21 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
         {
             _moving = false;
             UpdateChildElementVisibility();
+            UpdateFunctionMetadata();
+        }
+
+        public bool CopyTo(ICopyable other)
+        {
+            return false;
+        }
+
+        public ICopyable CreateCopy(IElementDisplay view)
+        {
+            return null;
+        }
+
+        public void Deleted(IElementDisplay view)
+        {
         }
 
         public bool CloseToEdge(IScreen screen, Point point, double distance = 5) => GetCloseEdge(screen, point, distance) != ResizeEdge.None;
@@ -178,14 +205,14 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
             }
         }
 
-        private void ChangeViewMode(ProgramViewMode mode)
+        private void ChangeDisplayMode(UIFunctionDisplayMode mode)
         {
-            _viewMode = mode;
+            _displayMode = mode;
 
-            Stack_Inputs.Visibility = _selected && mode == ProgramViewMode.IO ? Visibility.Visible : Visibility.Collapsed;
-            Stack_Outputs.Visibility = _selected && mode == ProgramViewMode.IO ? Visibility.Visible : Visibility.Collapsed;
-            Stack_Properties.Visibility = _selected && mode == ProgramViewMode.Variables ? Visibility.Visible : Visibility.Collapsed;
-            Stack_Results.Visibility = _selected && mode == ProgramViewMode.Variables ? Visibility.Visible : Visibility.Collapsed;
+            Stack_Inputs.Visibility = _selected && mode == UIFunctionDisplayMode.IO ? Visibility.Visible : Visibility.Collapsed;
+            Stack_Outputs.Visibility = _selected && mode == UIFunctionDisplayMode.IO ? Visibility.Visible : Visibility.Collapsed;
+            Stack_Properties.Visibility = _selected && mode == UIFunctionDisplayMode.Variables ? Visibility.Visible : Visibility.Collapsed;
+            Stack_Results.Visibility = _selected && mode == UIFunctionDisplayMode.Variables ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void CacheConnections(IElementDisplay view)
@@ -343,9 +370,21 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
             }
         }
 
+        private void UpdateFunctionMetadata()
+        {
+            var elementFunction = AssociatedDisplayElement?.AssociatedElementFunction;
+            if (elementFunction != null)
+            {
+                elementFunction.Metadata["l"] = MarginPercentages.Left.ToString();
+                elementFunction.Metadata["t"] = MarginPercentages.Top.ToString();
+                elementFunction.Metadata["r"] = MarginPercentages.Right.ToString();
+                elementFunction.Metadata["b"] = MarginPercentages.Bottom.ToString();
+            }
+        }
+
         private void UpdateChildElementVisibility()
         {
-            ChangeViewMode(_viewMode);
+            ChangeDisplayMode(_displayMode);
             UpdateBorder();
             UpdateName();
         }

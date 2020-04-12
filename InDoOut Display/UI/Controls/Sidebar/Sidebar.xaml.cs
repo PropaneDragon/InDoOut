@@ -1,6 +1,11 @@
-﻿using InDoOut_Display.UI.Controls.Screens;
+﻿using InDoOut_Core.Functions;
+using InDoOut_Core.Logging;
 using InDoOut_Display.UI.Windows;
+using InDoOut_Executable_Core.Programs;
+using InDoOut_Json_Storage;
+using InDoOut_Plugins.Loaders;
 using InDoOut_UI_Common.InterfaceElements;
+using InDoOut_UI_Common.SaveLoad;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -67,22 +72,42 @@ namespace InDoOut_Display.UI.Controls.Sidebar
 
         private void Button_New_Click(object sender, RoutedEventArgs e)
         {
+            Log.Instance.Header("New button clicked");
 
+            if (AssociatedTaskView?.CurrentProgramDisplay != null)
+            {
+                _ = ProgramHolder.Instance.RemoveProgram(AssociatedTaskView?.CurrentProgramDisplay?.AssociatedProgram);
+                AssociatedTaskView.CurrentProgramDisplay.AssociatedProgram = ProgramHolder.Instance.NewProgram();
+            }
         }
 
-        private void Button_Open_Click(object sender, RoutedEventArgs e)
+        private async void Button_Open_Click(object sender, RoutedEventArgs e)
         {
+            Log.Instance.Header("Open button clicked");
 
+            if (AssociatedTaskView?.CurrentProgramDisplay != null)
+            {
+                var program = await ProgramSaveLoad.Instance.LoadProgramDialogAsync(ProgramHolder.Instance, new ProgramJsonStorer(new FunctionBuilder(), LoadedPlugins.Instance), Window.GetWindow(this));
+                if (program != null)
+                {
+                    _ = ProgramHolder.Instance.RemoveProgram(AssociatedTaskView?.CurrentProgramDisplay?.AssociatedProgram);
+                    AssociatedTaskView.CurrentProgramDisplay.AssociatedProgram = program;
+                }
+            }
         }
 
-        private void Button_Save_Click(object sender, RoutedEventArgs e)
+        private async void Button_Save_Click(object sender, RoutedEventArgs e)
         {
+            Log.Instance.Header("Save button clicked");
 
+            _ = await ProgramSaveLoad.Instance.TrySaveProgramFromMetadataAsync(AssociatedTaskView?.CurrentProgramDisplay?.AssociatedProgram, new ProgramJsonStorer(new FunctionBuilder(), LoadedPlugins.Instance), Window.GetWindow(this));
         }
 
-        private void Button_SaveAs_Click(object sender, RoutedEventArgs e)
+        private async void Button_SaveAs_Click(object sender, RoutedEventArgs e)
         {
+            Log.Instance.Header("Save as button clicked");
 
+            _ = await ProgramSaveLoad.Instance.SaveProgramDialogAsync(AssociatedTaskView?.CurrentProgramDisplay?.AssociatedProgram, new ProgramJsonStorer(new FunctionBuilder(), LoadedPlugins.Instance), Window.GetWindow(this));
         }
 
         private void Button_TaskViewer_Click(object sender, RoutedEventArgs e)

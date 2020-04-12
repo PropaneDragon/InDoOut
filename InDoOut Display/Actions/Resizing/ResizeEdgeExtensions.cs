@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using InDoOut_Display_Core.Actions.Resizing;
+using System.Collections.Generic;
 
 namespace InDoOut_Display.Actions.Resizing
 {

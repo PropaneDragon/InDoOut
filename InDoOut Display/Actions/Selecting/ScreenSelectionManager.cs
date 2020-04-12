@@ -1,4 +1,4 @@
-﻿using InDoOut_Display.UI.Controls.Screens;
+﻿using InDoOut_Display_Core.Screens;
 using InDoOut_UI_Common.Actions.Selecting;
 
 namespace InDoOut_Display.Actions.Selecting

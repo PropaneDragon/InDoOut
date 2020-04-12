@@ -1,4 +1,5 @@
-﻿using InDoOut_Display.UI.Controls.Screens;
+﻿using InDoOut_Display_Core.Actions.Resizing;
+using InDoOut_Display_Core.Screens;
 using System.Collections.Generic;
 using System.Windows;
 

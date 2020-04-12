@@ -1,9 +1,9 @@
 ﻿using InDoOut_Core.Entities.Programs;
-using InDoOut_Core.Variables;
 using InDoOut_Display.Actions;
 using InDoOut_Display.Actions.Selecting;
 using InDoOut_Display.UI.Controls.DisplayElement;
 using InDoOut_Display_Core.Elements;
+using InDoOut_Display_Core.Screens;
 using InDoOut_UI_Common.Actions;
 using InDoOut_UI_Common.Actions.Deleting;
 using InDoOut_UI_Common.Actions.Selecting;
@@ -220,9 +220,13 @@ namespace InDoOut_Display.UI.Controls.Screens
 
         private IStaticMarginElementContainer AttachToContainer(FrameworkElement element)
         {
+            if (element is IStaticMarginElementContainer container)
+            {
+                return container;
+            } 
             if (element is IDisplayElement displayElement)
             {
-                return new DisplayElementContainer(displayElement) { ViewMode = CurrentViewMode };
+                return new DisplayElementContainer(displayElement) { DisplayMode = CurrentViewMode == ProgramViewMode.IO ? UIFunctionDisplayMode.IO : UIFunctionDisplayMode.Variables };
             }
             else if (element != null)
             {
@@ -266,7 +270,7 @@ namespace InDoOut_Display.UI.Controls.Screens
                 {
                     if (element is IDisplayElementContainer elementContainer)
                     {
-                        elementContainer.ViewMode = mode;
+                        elementContainer.DisplayMode = mode == ProgramViewMode.Variables ? UIFunctionDisplayMode.Variables : UIFunctionDisplayMode.IO;
                     }
                 }
             }

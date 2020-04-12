@@ -1,5 +1,5 @@
-﻿using InDoOut_Display.UI.Controls.Screens;
-using InDoOut_Display_Core.Functions;
+﻿using InDoOut_Display_Core.Functions;
+using InDoOut_Display_Core.Screens;
 using InDoOut_Display_Plugins.Containers;
 using InDoOut_Plugins.Loaders;
 using System;
@@ -127,12 +127,12 @@ namespace InDoOut_Display.UI.Controls.ElementSelector
             LoadElements();
         }
 
-        private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             LoadedPlugins.Instance.PluginsChanged += Instance_PluginsChanged;
         }
 
-        private void UserControl_Unloaded(object sender, System.Windows.RoutedEventArgs e)
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             LoadedPlugins.Instance.PluginsChanged -= Instance_PluginsChanged;
 

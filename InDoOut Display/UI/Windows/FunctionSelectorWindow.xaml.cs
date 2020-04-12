@@ -1,5 +1,4 @@
-﻿using InDoOut_Display.UI.Controls.Screens;
-using InDoOut_UI_Common.InterfaceElements;
+﻿using InDoOut_UI_Common.InterfaceElements;
 using System.Windows;
 
 namespace InDoOut_Display.UI.Windows
