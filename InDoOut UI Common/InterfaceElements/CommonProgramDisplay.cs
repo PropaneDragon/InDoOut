@@ -21,8 +21,8 @@ namespace InDoOut_UI_Common.InterfaceElements
         private ProgramViewMode _currentViewMode = ProgramViewMode.IO;
 
         protected ICommonProgramLoader CommonProgramLoader { get; set; } = null;
-        protected IFunctionFactory FunctionCreator { get; set; } = new BasicFunctionFactory();
-        protected IConnectionFactory ConnectionCreator { get; set; } = new BasicConnectionFactory();
+        protected IFunctionFactory FunctionFactory { get; set; }
+        protected IConnectionFactory ConnectionFactory { get; set; }
 
         public IProgram AssociatedProgram { get => _currentProgram; set => ChangeProgram(value); }
         public ProgramViewMode CurrentViewMode { get => _currentViewMode; set => ChangeViewMode(value); }
@@ -45,6 +45,8 @@ namespace InDoOut_UI_Common.InterfaceElements
         public CommonProgramDisplay()
         {
             CommonProgramLoader = new CommonProgramLoader(this);
+            FunctionFactory = new BasicFunctionFactory(this);
+            ConnectionFactory = new BasicConnectionFactory(this);
 
             ChangeViewMode(CurrentViewMode);
         }
@@ -167,9 +169,9 @@ namespace InDoOut_UI_Common.InterfaceElements
             return point.X < centre.X ? new Point(topLeft.X, centre.Y) : new Point(topLeft.X + size.Width, centre.Y);
         }
 
-        public IUIFunction Create(IFunction function) => FunctionCreator?.Create(this, function);
-        public IUIConnection Create(IUIConnectionStart start, Point end) => ConnectionCreator?.Create(this, start, end);
-        public IUIConnection Create(IUIConnectionStart start, IUIConnectionEnd end) => ConnectionCreator?.Create(this, start, end);
+        public IUIFunction Create(IFunction function) => FunctionFactory?.Create(function);
+        public IUIConnection Create(IUIConnectionStart start, Point end) => ConnectionFactory?.Create(start, end);
+        public IUIConnection Create(IUIConnectionStart start, IUIConnectionEnd end) => ConnectionFactory?.Create(start, end);
         public void Remove(IUIConnection output) => Remove(output as FrameworkElement);
         public IUIConnection FindConnection(IUIConnectionStart start, IUIConnectionEnd end) => FindCanvasChild<IUIConnection>(uiConnection => uiConnection.AssociatedEnd == end && uiConnection.AssociatedStart == start).FirstOrDefault();
         public List<IUIConnection> FindConnections(IUIConnectionStart start) => FindConnections(new List<IUIConnectionStart>() { start });

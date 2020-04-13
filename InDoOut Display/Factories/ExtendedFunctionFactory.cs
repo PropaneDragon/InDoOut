@@ -10,19 +10,18 @@ namespace InDoOut_Display.Factories
 {
     internal class ExtendedFunctionFactory : BasicFunctionFactory
     {
-        protected override IUIFunction AddFunctionToDisplay(IFunction function, ICommonProgramDisplay display, bool setPositionFromMetadata = true)
+        public ExtendedFunctionFactory(ICommonProgramDisplay display) : base(display)
         {
-            if (function is IElementFunction elementFunction)
-            {
-                return AddElementFunctionToDisplay(elementFunction, display, setPositionFromMetadata);
-            } 
-
-            return base.AddFunctionToDisplay(function, display, setPositionFromMetadata);
         }
 
-        protected IUIFunction AddElementFunctionToDisplay(IElementFunction function, ICommonProgramDisplay display, bool setPositionFromMetadata = true)
+        protected override IUIFunction AddFunctionToDisplay(IFunction function, bool setPositionFromMetadata = true)
         {
-            if (function != null && display is IScreenConnections screenConnections)
+            return function is IElementFunction elementFunction ? AddElementFunctionToDisplay(elementFunction, setPositionFromMetadata) : base.AddFunctionToDisplay(function, setPositionFromMetadata);
+        }
+
+        protected IUIFunction AddElementFunctionToDisplay(IElementFunction function, bool setPositionFromMetadata = true)
+        {
+            if (function != null && Display is IScreenConnections screenConnections)
             {
                 var margins = new Thickness(5);
 
@@ -32,7 +31,7 @@ namespace InDoOut_Display.Factories
                 }
 
                 var displayElement = function.CreateAssociatedUIElement();
-                var elementContainer = new DisplayElementContainer(displayElement) { MarginPercentages = margins, DisplayMode = display.CurrentViewMode == ProgramViewMode.IO ? UIFunctionDisplayMode.IO : UIFunctionDisplayMode.Variables };
+                var elementContainer = new DisplayElementContainer(displayElement) { MarginPercentages = margins, DisplayMode = Display.CurrentViewMode == ProgramViewMode.IO ? UIFunctionDisplayMode.IO : UIFunctionDisplayMode.Variables };
 
                 screenConnections?.CurrentScreen?.Add(elementContainer);
 

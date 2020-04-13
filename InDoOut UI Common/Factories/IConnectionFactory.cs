@@ -5,8 +5,8 @@ namespace InDoOut_UI_Common.Factories
 {
     public interface IConnectionFactory
     {
-        IUIConnection Create(ICommonProgramDisplay display, IUIConnectionStart start, Point end);
+        IUIConnection Create(IUIConnectionStart start, Point end);
 
-        IUIConnection Create(ICommonProgramDisplay display, IUIConnectionStart start, IUIConnectionEnd end);
+        IUIConnection Create(IUIConnectionStart start, IUIConnectionEnd end);
     }
 }

@@ -6,12 +6,23 @@ namespace InDoOut_UI_Common.Factories
 {
     public class BasicConnectionFactory : AbstractElementFactory, IConnectionFactory
     {
-        public virtual IUIConnection Create(ICommonProgramDisplay display, IUIConnectionStart start, IUIConnectionEnd end)
+        protected ICommonProgramDisplay Display { get; private set; } = null;
+
+        private BasicConnectionFactory()
         {
-            if (display != null && start != null && end != null && end is FrameworkElement element)
+        }
+
+        public BasicConnectionFactory(ICommonProgramDisplay display) : this()
+        {
+            Display = display;
+        }
+
+        public virtual IUIConnection Create(IUIConnectionStart start, IUIConnectionEnd end)
+        {
+            if (Display != null && start != null && end != null && end is FrameworkElement element)
             {
-                var endPosition = display.GetPosition(element);
-                var uiConnection = Create(display, start, endPosition);
+                var endPosition = Display.GetPosition(element);
+                var uiConnection = Create(start, endPosition);
 
                 if (uiConnection != null)
                 {
@@ -24,11 +35,11 @@ namespace InDoOut_UI_Common.Factories
             return null;
         }
 
-        public virtual IUIConnection Create(ICommonProgramDisplay display, IUIConnectionStart start, Point end)
+        public virtual IUIConnection Create(IUIConnectionStart start, Point end)
         {
-            if (display != null && start != null && start is FrameworkElement element)
+            if (Display != null && start != null && start is FrameworkElement element)
             {
-                var bestSidePoint = display.GetBestSide(element, end);
+                var bestSidePoint = Display.GetBestSide(element, end);
                 var uiConnection = new UIConnection()
                 {
                     Start = bestSidePoint,
@@ -36,7 +47,7 @@ namespace InDoOut_UI_Common.Factories
                     AssociatedStart = start
                 };
 
-                display.Add(uiConnection, new Point(0, 0), -999);
+                Display.Add(uiConnection, new Point(0, 0), -999);
 
                 return uiConnection;
             }

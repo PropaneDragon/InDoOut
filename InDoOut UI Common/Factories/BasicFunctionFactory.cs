@@ -7,27 +7,38 @@ namespace InDoOut_UI_Common.Factories
 {
     public class BasicFunctionFactory : AbstractElementFactory, IFunctionFactory
     {
-        public virtual IUIFunction Create(ICommonProgramDisplay display, IFunction function, bool setPositionFromMetadata = true)
+        protected ICommonProgramDisplay Display { get; private set; } = null;
+
+        private BasicFunctionFactory()
         {
-            var program = display?.AssociatedProgram;
+        }
+
+        public BasicFunctionFactory(ICommonProgramDisplay display)
+        {
+            Display = display;
+        }
+
+        public virtual IUIFunction Create(IFunction function, bool setPositionFromMetadata = true)
+        {
+            var program = Display?.AssociatedProgram;
             if (program != null && function != null)
             {
                 if (program.Functions.Contains(function) || program.AddFunction(function))
                 {
-                    return AddFunctionToDisplay(function, display, setPositionFromMetadata);
+                    return AddFunctionToDisplay(function, setPositionFromMetadata);
                 }
             }
 
             return null;
         }
 
-        protected virtual IUIFunction AddFunctionToDisplay(IFunction function, ICommonProgramDisplay display, bool setPositionFromMetadata = true) => AddBasicUIFunctionToDisplay(function, display, setPositionFromMetadata);
+        protected virtual IUIFunction AddFunctionToDisplay(IFunction function, bool setPositionFromMetadata = true) => AddBasicUIFunctionToDisplay(function, setPositionFromMetadata);
 
-        protected IUIFunction AddBasicUIFunctionToDisplay(IFunction function, ICommonProgramDisplay display, bool setPositionFromMetadata = true)
+        protected IUIFunction AddBasicUIFunctionToDisplay(IFunction function, bool setPositionFromMetadata = true)
         {
-            if (function != null)
+            if (function != null && Display != null)
             {
-                var location = display?.CentreViewCoordinate ?? new Point();
+                var location = Display?.CentreViewCoordinate ?? new Point();
 
                 if (setPositionFromMetadata && ExtractPointFromMetadata(function, out var extractedLocation))
                 {
@@ -36,7 +47,7 @@ namespace InDoOut_UI_Common.Factories
 
                 var uiFunction = new UIFunction(function);
 
-                display?.Add(uiFunction, location);
+                Display?.Add(uiFunction, location);
 
                 return uiFunction;
             }

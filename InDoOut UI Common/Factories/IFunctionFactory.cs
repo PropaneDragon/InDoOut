@@ -5,6 +5,6 @@ namespace InDoOut_UI_Common.Factories
 {
     public interface IFunctionFactory
     {
-        IUIFunction Create(ICommonProgramDisplay display, IFunction function, bool setPositionFromMetadata = true);
+        IUIFunction Create(IFunction function, bool setPositionFromMetadata = true);
     }
 }
