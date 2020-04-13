@@ -1,4 +1,5 @@
-﻿using InDoOut_Display_Core.Elements;
+﻿using InDoOut_Display_Core.Creation;
+using InDoOut_Display_Core.Elements;
 
 namespace InDoOut_Display_Core.Screens
 {
@@ -8,17 +9,9 @@ namespace InDoOut_Display_Core.Screens
     public interface IDisplayElementDisplay
     {
         /// <summary>
-        /// Adds a display element to this display.
+        /// A <see cref="IDisplayElementCreator"/> to handle the creation of
+        /// <see cref="IDisplayElement"/>s.
         /// </summary>
-        /// <param name="displayElement">The display element to add.</param>
-        /// <returns>Whether or not the display element was added.</returns>
-        bool AddDisplayElement(IDisplayElement displayElement);
-
-        /// <summary>
-        /// Removes a display element from this display.
-        /// </summary>
-        /// <param name="displayElement">The display element to remove.</param>
-        /// <returns>Whether or not the display element was removed.</returns>
-        bool RemoveDisplayElement(IDisplayElement displayElement);
+        IDisplayElementCreator DisplayElementCreator { get; }
     }
 }

@@ -76,14 +76,12 @@ namespace InDoOut_Display.UI.Controls.ElementSelector
                         var newElementInstance = _functionBuilder?.BuildInstance(function.GetType());
                         if (newElementInstance != null)
                         {
-                            var displayElement = newElementInstance?.CreateAssociatedUIElement();
-                            if (displayElement != null && (AssociatedScreen?.AddDisplayElement(displayElement) ?? false))
+                            var associatedWindow = Window.GetWindow(this);
+                            var container = AssociatedScreen?.DisplayElementCreator?.Create(newElementInstance);
+
+                            if (container != null && CloseAssociatedWindowWhenSelected && associatedWindow != null)
                             {
-                                var associatedWindow = Window.GetWindow(this);
-                                if (CloseAssociatedWindowWhenSelected && associatedWindow != null)
-                                {
-                                    associatedWindow.Close();
-                                }
+                                associatedWindow.Close();
                             }
                         }
                     };

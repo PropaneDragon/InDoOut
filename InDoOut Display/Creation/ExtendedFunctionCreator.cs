@@ -1,10 +1,8 @@
 ﻿using InDoOut_Core.Entities.Functions;
-using InDoOut_Display.UI.Controls.DisplayElement;
 using InDoOut_Display_Core.Functions;
 using InDoOut_Display_Core.Screens;
 using InDoOut_UI_Common.Creation;
 using InDoOut_UI_Common.InterfaceElements;
-using System.Windows;
 
 namespace InDoOut_Display.Creation
 {
@@ -23,19 +21,11 @@ namespace InDoOut_Display.Creation
         {
             if (function != null && Display is IScreenConnections screenConnections)
             {
-                var margins = new Thickness(5);
-
-                if (setPositionFromMetadata && ExtractThicknessFomMetadata(function, out var extractedThickness))
+                var associatedScreen = screenConnections?.CurrentScreen;
+                if (associatedScreen != null)
                 {
-                    margins = extractedThickness;
+                    associatedScreen?.DisplayElementCreator?.Create(function, setPositionFromMetadata);
                 }
-
-                var displayElement = function.CreateAssociatedUIElement();
-                var elementContainer = new DisplayElementContainer(displayElement) { MarginPercentages = margins, DisplayMode = Display.CurrentViewMode == ProgramViewMode.IO ? UIFunctionDisplayMode.IO : UIFunctionDisplayMode.Variables };
-
-                screenConnections?.CurrentScreen?.Add(elementContainer);
-
-                return elementContainer;
             }
 
             return null;

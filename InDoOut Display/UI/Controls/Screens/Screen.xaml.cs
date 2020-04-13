@@ -1,7 +1,9 @@
 ﻿using InDoOut_Core.Entities.Programs;
 using InDoOut_Display.Actions;
 using InDoOut_Display.Actions.Selecting;
+using InDoOut_Display.Creation;
 using InDoOut_Display.UI.Controls.DisplayElement;
+using InDoOut_Display_Core.Creation;
 using InDoOut_Display_Core.Elements;
 using InDoOut_Display_Core.Screens;
 using InDoOut_UI_Common.Actions;
@@ -29,6 +31,7 @@ namespace InDoOut_Display.UI.Controls.Screens
         public ProgramViewMode CurrentViewMode { get => _currentViewMode; set => ChangeMode(value); }
         public IProgram AssociatedProgram { get; set; } = null;
         public IScreenConnections AssociatedScreenConnections { get; set; } = null;
+        public IDisplayElementCreator DisplayElementCreator { get; private set; } = null;
         public IDeletableRemover DeletableRemover { get; private set; } = null;
         public IActionHandler ActionHandler { get; private set; } = null;
         public ISelectionManager<ISelectable> SelectionManager { get; private set; } = null;
@@ -41,6 +44,7 @@ namespace InDoOut_Display.UI.Controls.Screens
             ActionHandler = new ActionHandler(new ScreenRestingAction(this));
             SelectionManager = new ScreenSelectionManager(this);
             DeletableRemover = new BasicDeletableRemover(this);
+            DisplayElementCreator = new DisplayElementCreator(this);
         }
 
         public bool Clear()
@@ -48,33 +52,6 @@ namespace InDoOut_Display.UI.Controls.Screens
             Grid_Elements.Children.Clear();
 
             return true;
-        }
-
-        public bool AddDisplayElement(IDisplayElement displayElement)
-        {
-            if (displayElement != null && AssociatedProgram != null)
-            {
-                if (AssociatedProgram.Functions.Contains(displayElement.AssociatedElementFunction) || AssociatedProgram.AddFunction(displayElement.AssociatedElementFunction))
-                {
-                    Add(displayElement as FrameworkElement);
-
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        public bool RemoveDisplayElement(IDisplayElement displayElement)
-        {
-            if (displayElement != null && displayElement is FrameworkElement element)
-            {
-                Remove(element);
-
-                return true;
-            }
-
-            return false;
         }
 
         public void Add(FrameworkElement element)
@@ -209,13 +186,6 @@ namespace InDoOut_Display.UI.Controls.Screens
         public bool PointCloseToScreenItemEdge(Point point, double distance = 5d)
         {
             return GetCloseEdge(point, distance) != ScreenEdge.None;
-        }
-
-        private Point GetPointAsPercentage(Point point)
-        {
-            var overallSize = new Size(ActualWidth, ActualHeight);
-
-            return new Point(point.X / overallSize.Width, point.Y / overallSize.Height);
         }
 
         private IStaticMarginElementContainer AttachToContainer(FrameworkElement element)
