@@ -2,17 +2,17 @@
 using InDoOut_UI_Common.InterfaceElements;
 using System.Windows;
 
-namespace InDoOut_UI_Common.Factories
+namespace InDoOut_UI_Common.Creators
 {
-    public class BasicConnectionFactory : AbstractElementFactory, IConnectionFactory
+    public class BasicConnectionCreator : AbstractElementCreator, IConnectionCreator
     {
         protected ICommonProgramDisplay Display { get; private set; } = null;
 
-        private BasicConnectionFactory()
+        private BasicConnectionCreator()
         {
         }
 
-        public BasicConnectionFactory(ICommonProgramDisplay display) : this()
+        public BasicConnectionCreator(ICommonProgramDisplay display) : this()
         {
             Display = display;
         }

@@ -1,9 +1,9 @@
 ﻿using InDoOut_Core.Basic;
 using System.Windows;
 
-namespace InDoOut_UI_Common.Factories
+namespace InDoOut_UI_Common.Creators
 {
-    public abstract class AbstractElementFactory
+    public abstract class AbstractElementCreator
     {
         protected bool ExtractPointFromMetadata(IStored stored, out Point location)
         {

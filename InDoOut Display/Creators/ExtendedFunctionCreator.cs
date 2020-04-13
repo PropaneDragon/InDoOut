@@ -2,15 +2,15 @@
 using InDoOut_Display.UI.Controls.DisplayElement;
 using InDoOut_Display_Core.Functions;
 using InDoOut_Display_Core.Screens;
-using InDoOut_UI_Common.Factories;
+using InDoOut_UI_Common.Creators;
 using InDoOut_UI_Common.InterfaceElements;
 using System.Windows;
 
-namespace InDoOut_Display.Factories
+namespace InDoOut_Display.Creators
 {
-    internal class ExtendedFunctionFactory : BasicFunctionFactory
+    internal class ExtendedFunctionCreator : BasicFunctionCreator
     {
-        public ExtendedFunctionFactory(ICommonProgramDisplay display) : base(display)
+        public ExtendedFunctionCreator(ICommonProgramDisplay display) : base(display)
         {
         }
 

@@ -3,17 +3,17 @@ using InDoOut_UI_Common.Controls.CoreEntityRepresentation;
 using InDoOut_UI_Common.InterfaceElements;
 using System.Windows;
 
-namespace InDoOut_UI_Common.Factories
+namespace InDoOut_UI_Common.Creators
 {
-    public class BasicFunctionFactory : AbstractElementFactory, IFunctionFactory
+    public class BasicFunctionCreator : AbstractElementCreator, IFunctionCreator
     {
         protected ICommonProgramDisplay Display { get; private set; } = null;
 
-        private BasicFunctionFactory()
+        private BasicFunctionCreator()
         {
         }
 
-        public BasicFunctionFactory(ICommonProgramDisplay display)
+        public BasicFunctionCreator(ICommonProgramDisplay display)
         {
             Display = display;
         }

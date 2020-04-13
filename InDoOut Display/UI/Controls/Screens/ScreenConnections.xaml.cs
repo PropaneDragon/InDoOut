@@ -1,7 +1,7 @@
 ﻿using InDoOut_Core.Entities.Programs;
 using InDoOut_Display.Actions;
 using InDoOut_Display.Actions.Selecting;
-using InDoOut_Display.Factories;
+using InDoOut_Display.Creators;
 using InDoOut_Display_Core.Screens;
 using InDoOut_Executable_Core.Programs;
 using InDoOut_UI_Common.Actions;
@@ -39,7 +39,7 @@ namespace InDoOut_Display.UI.Controls.Screens
         {
             InitializeComponent();
 
-            FunctionFactory = new ExtendedFunctionFactory(this);
+            FunctionFactory = new ExtendedFunctionCreator(this);
             SelectionManager = new ScreenConnectionsSelectionManager(this);
             ActionHandler = new ActionHandler(new ScreenConnectionsRestingAction(this));
             ProgramHandler = null; //Todo

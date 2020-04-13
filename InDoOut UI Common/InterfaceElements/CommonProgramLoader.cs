@@ -1,7 +1,7 @@
 ﻿using InDoOut_Core.Basic;
 using InDoOut_Core.Entities.Functions;
 using InDoOut_Core.Entities.Programs;
-using InDoOut_UI_Common.Factories;
+using InDoOut_UI_Common.Creators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,7 @@ using System.Windows.Threading;
 
 namespace InDoOut_UI_Common.InterfaceElements
 {
-    internal class CommonProgramLoader : AbstractElementFactory, ICommonProgramLoader
+    internal class CommonProgramLoader : AbstractElementCreator, ICommonProgramLoader
     {
         private readonly ICommonProgramDisplay _display = null;
         private readonly DispatcherTimer _wireRedrawTimer = null; //Todo: Look into making this safe.
