@@ -11,6 +11,11 @@ namespace InDoOut_Executable_Core.Storage
     public interface IProgramStorer
     {
         /// <summary>
+        /// The name of the file extension that will be readable by the user.
+        /// </summary>
+        string FileReadableName { get; }
+
+        /// <summary>
         /// The extension of the files that are generated or loaded.
         /// </summary>
         string FileExtension { get; }

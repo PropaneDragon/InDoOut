@@ -11,6 +11,7 @@ namespace InDoOut_Executable_Core.Storage
     {
         public static readonly string PROGRAM_METADATA_LAST_LOADED_FROM = "lastLoadedFrom";
 
+        public abstract string FileReadableName { get; }
         public abstract string FileExtension { get; }
         public string FilePath { get; set; }
 

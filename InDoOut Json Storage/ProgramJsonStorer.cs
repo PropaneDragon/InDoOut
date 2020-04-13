@@ -17,6 +17,11 @@ namespace InDoOut_Json_Storage
     public class ProgramJsonStorer : ProgramStorer
     {
         /// <summary>
+        /// The name of the file extension that will be readable by the user.
+        /// </summary>
+        public override string FileReadableName => "ido Program";
+
+        /// <summary>
         /// The extension of the generated files.
         /// </summary>
         public override string FileExtension => ".ido";
