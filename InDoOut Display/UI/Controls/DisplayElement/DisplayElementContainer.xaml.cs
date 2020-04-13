@@ -213,20 +213,23 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
         {
             _cachedVisualConnections.Clear();
 
-            if (view != null && view is IConnectionDisplay connectionDisplay)
+            if (view != null && view is IScreen screen)
             {
-                _cachedVisualConnections.AddRange(connectionDisplay.FindConnections(Inputs.Cast<IUIConnectionEnd>().ToList()));
-                _cachedVisualConnections.AddRange(connectionDisplay.FindConnections(Outputs.Cast<IUIConnectionStart>().ToList()));
-                _cachedVisualConnections.AddRange(connectionDisplay.FindConnections(Properties.Cast<IUIConnectionEnd>().ToList()));
-                _cachedVisualConnections.AddRange(connectionDisplay.FindConnections(Results.Cast<IUIConnectionStart>().ToList()));
+                _cachedVisualConnections.AddRange(screen.AssociatedScreenConnections.FindConnections(Inputs.Cast<IUIConnectionEnd>().ToList()));
+                _cachedVisualConnections.AddRange(screen.AssociatedScreenConnections.FindConnections(Outputs.Cast<IUIConnectionStart>().ToList()));
+                _cachedVisualConnections.AddRange(screen.AssociatedScreenConnections.FindConnections(Properties.Cast<IUIConnectionEnd>().ToList()));
+                _cachedVisualConnections.AddRange(screen.AssociatedScreenConnections.FindConnections(Results.Cast<IUIConnectionStart>().ToList()));
             }
         }
 
         private void UpdateCachedConnectionPositions(IElementDisplay view)
         {
-            foreach (var cachedVisualConnection in _cachedVisualConnections)
+            if (view is IScreen screen)
             {
-                cachedVisualConnection.UpdatePositionFromInputOutput(view);
+                foreach (var cachedVisualConnection in _cachedVisualConnections)
+                {
+                    cachedVisualConnection.UpdatePositionFromInputOutput(screen?.AssociatedScreenConnections);
+                }
             }
         }
 

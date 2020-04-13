@@ -45,6 +45,8 @@ namespace InDoOut_Display.UI.Controls.Screens
             ProgramHandler = ProgramHolder.Instance;
 
             AssociatedProgram = ProgramHandler.NewProgram();
+
+            CurrentScreen.AssociatedScreenConnections = this;
         }
 
         protected override bool ClearCurrentProgram()

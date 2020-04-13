@@ -65,6 +65,11 @@ namespace InDoOut_Display_Core.Screens
         IProgram AssociatedProgram { get; set; }
 
         /// <summary>
+        /// The parent screen that holds base connections.
+        /// </summary>
+        IScreenConnections AssociatedScreenConnections { get; set; }
+
+        /// <summary>
         /// Returns the closest edge to the element. If no edge is close, <see cref="ScreenEdge.None"/> is returned.
         /// </summary>
         /// <param name="point">The position to check proximity against.</param>

@@ -28,6 +28,7 @@ namespace InDoOut_Display.UI.Controls.Screens
         public Point CentreViewCoordinate => new Point(BottomRightViewCoordinate.X / 2d, BottomRightViewCoordinate.Y / 2d);
         public ProgramViewMode CurrentViewMode { get => _currentViewMode; set => ChangeMode(value); }
         public IProgram AssociatedProgram { get; set; } = null;
+        public IScreenConnections AssociatedScreenConnections { get; set; } = null;
         public IDeletableRemover DeletableRemover { get; private set; } = null;
         public IActionHandler ActionHandler { get; private set; } = null;
         public ISelectionManager<ISelectable> SelectionManager { get; private set; } = null;
