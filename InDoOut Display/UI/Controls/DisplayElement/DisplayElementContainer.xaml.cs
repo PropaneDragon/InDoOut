@@ -203,10 +203,10 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
         {
             _displayMode = mode;
 
-            Stack_Inputs.Visibility = _selected && mode == UIFunctionDisplayMode.IO ? Visibility.Visible : Visibility.Collapsed;
-            Stack_Outputs.Visibility = _selected && mode == UIFunctionDisplayMode.IO ? Visibility.Visible : Visibility.Collapsed;
-            Stack_Properties.Visibility = _selected && mode == UIFunctionDisplayMode.Variables ? Visibility.Visible : Visibility.Collapsed;
-            Stack_Results.Visibility = _selected && mode == UIFunctionDisplayMode.Variables ? Visibility.Visible : Visibility.Collapsed;
+            Stack_Inputs.Visibility = mode == UIFunctionDisplayMode.IO ? Visibility.Visible : Visibility.Collapsed;
+            Stack_Outputs.Visibility = mode == UIFunctionDisplayMode.IO ? Visibility.Visible : Visibility.Collapsed;
+            Stack_Properties.Visibility = mode == UIFunctionDisplayMode.Variables ? Visibility.Visible : Visibility.Collapsed;
+            Stack_Results.Visibility = mode == UIFunctionDisplayMode.Variables ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void CacheConnections(IElementDisplay view)

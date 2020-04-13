@@ -23,7 +23,7 @@ namespace InDoOut_UI_Common.Actions
             Display = display;
         }
 
-        public override bool MouseLeftMove(Point mousePosition)
+        public override bool MouseLeftDown(Point mousePosition)
         {
             if (Display != null)
             {
@@ -69,7 +69,7 @@ namespace InDoOut_UI_Common.Actions
                 }
             }
 
-            return base.MouseLeftMove(mousePosition);
+            return base.MouseLeftDown(mousePosition);
         }
 
         public override bool MouseLeftUp(Point mousePosition)
