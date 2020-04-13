@@ -6,7 +6,7 @@ namespace InDoOut_UI_Common.Actions.Dragging
     {
         private IUIConnectionStart _start = null;
 
-        public CommonWireDragAction(IUIConnectionStart start, ICommonProgramDisplay display) : base(start, display)
+        public CommonWireDragAction(IUIConnectionStart start, ICommonDisplay display) : base(start, display)
         {
             _start = start;
         }

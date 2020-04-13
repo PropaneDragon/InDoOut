@@ -59,9 +59,9 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
 
         public bool CanDrag(ICommonDisplay display) => display.GetElementsUnderMouse().Any(element => element == Border_DragArea);
 
-        public bool CanCopy(ICommonDisplay display) => false;
+        public bool CanCopy(ICommonDisplay display) => true;
 
-        public bool CanDelete(ICommonDisplay display) => false;
+        public bool CanDelete(ICommonDisplay display) => true;
 
         public void ScaleChanged(IScreen screen)
         {

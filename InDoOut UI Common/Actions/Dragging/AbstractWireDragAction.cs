@@ -5,7 +5,7 @@ namespace InDoOut_UI_Common.Actions.Dragging
 {
     public abstract class AbstractWireDragAction : Action
     {
-        private readonly ICommonProgramDisplay _display = null;
+        private readonly ICommonDisplay _display = null;
         private readonly IUIConnectionStart _start = null;
         private readonly IUIConnection _uiConnection = null;
 
@@ -13,14 +13,14 @@ namespace InDoOut_UI_Common.Actions.Dragging
         {
         }
 
-        public AbstractWireDragAction(IUIConnectionStart start, ICommonProgramDisplay display) : this()
+        public AbstractWireDragAction(IUIConnectionStart start, ICommonDisplay display) : this()
         {
-            if (start != null && display != null)
+            if (start != null && display != null && display is ICommonProgramDisplay programDisplay)
             {
                 _start = start;
                 _display = display;
 
-                _uiConnection = _display?.ConnectionCreator?.Create(start, _display.GetMousePosition());
+                _uiConnection = programDisplay?.ConnectionCreator?.Create(start, _display.GetMousePosition());
 
                 if (_uiConnection == null)
                 {
@@ -66,10 +66,10 @@ namespace InDoOut_UI_Common.Actions.Dragging
 
         private void UpdateWireForMousePos(Point _)
         {
-            if (_uiConnection != null && _start != null && _start is FrameworkElement element)
+            if (_uiConnection != null && _start != null && _start is FrameworkElement element && _display is ICommonProgramDisplay programDisplay)
             {
                 var viewMousePosition = _display.GetMousePosition();
-                _uiConnection.Start = _display.GetBestSide(element, viewMousePosition);
+                _uiConnection.Start = programDisplay.GetBestSide(element, viewMousePosition);
                 _uiConnection.End = viewMousePosition;
             }
             else

@@ -2,7 +2,6 @@
 using InDoOut_Core.Entities.Programs;
 using InDoOut_Executable_Core.Programs;
 using InDoOut_UI_Common.Actions;
-using InDoOut_UI_Common.Actions.Deleting;
 using InDoOut_UI_Common.Actions.Selecting;
 using InDoOut_UI_Common.Creation;
 using InDoOut_UI_Common.Removal;

@@ -39,6 +39,14 @@ namespace InDoOut_Display.UI.Controls.Screens
 
             ActionHandler = new ActionHandler(new ScreenRestingAction(this));
             SelectionManager = new ScreenSelectionManager(this);
+            DeletableRemover = new BasicDeletableRemover(this);
+        }
+
+        public bool Clear()
+        {
+            Grid_Elements.Children.Clear();
+
+            return true;
         }
 
         public bool AddDisplayElement(IDisplayElement displayElement)
@@ -283,6 +291,11 @@ namespace InDoOut_Display.UI.Controls.Screens
 
         private void UserControl_PreviewMouseMove(object sender, MouseEventArgs e)
         {
+            if (!IsKeyboardFocusWithin)
+            {
+                Keyboard.Focus(this);
+            } 
+
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 _ = ActionHandler?.MouseLeftMove(e.GetPosition(sender as IInputElement)) ?? false;

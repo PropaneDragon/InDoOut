@@ -73,6 +73,12 @@ namespace InDoOut_Display_Core.Screens
         ScreenEdge GetCloseEdge(Point point, double distance = 5);
 
         /// <summary>
+        /// Clears the screen of all elements.
+        /// </summary>
+        /// <returns>Whether it successfully cleared elements.</returns>
+        bool Clear();
+
+        /// <summary>
         /// Whether or not the <paramref name="point"/> is close to any edge of this element.
         /// </summary>
         /// <param name="point">The position to check proximity against.</param>

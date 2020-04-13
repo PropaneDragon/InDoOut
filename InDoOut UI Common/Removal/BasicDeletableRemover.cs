@@ -6,13 +6,13 @@ namespace InDoOut_UI_Common.Removal
 {
     public class BasicDeletableRemover : AbstractElementRemover<IDeletable>, IDeletableRemover
     {
-        protected ICommonProgramDisplay Display { get; private set; } = null;
+        protected ICommonDisplay Display { get; private set; } = null;
 
         private BasicDeletableRemover()
         {
         }
 
-        public BasicDeletableRemover(ICommonProgramDisplay display) : this()
+        public BasicDeletableRemover(ICommonDisplay display) : this()
         {
             Display = display;
         }

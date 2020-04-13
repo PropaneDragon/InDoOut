@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InDoOut_Display.UI.Controls.Screens"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Background="#222" PreviewMouseLeftButtonDown="UserControl_PreviewMouseLeftButtonDown"  PreviewMouseLeftButtonUp="UserControl_PreviewMouseLeftButtonUp" PreviewMouseMove="UserControl_PreviewMouseMove" PreviewMouseRightButtonDown="UserControl_PreviewMouseRightButtonDown" PreviewMouseRightButtonUp="UserControl_PreviewMouseRightButtonUp" PreviewMouseDoubleClick="UserControl_PreviewMouseDoubleClick" PreviewKeyDown="UserControl_PreviewKeyDown" PreviewKeyUp="UserControl_PreviewKeyUp">
+             d:DesignHeight="450" d:DesignWidth="800" Background="#222" PreviewMouseLeftButtonDown="UserControl_PreviewMouseLeftButtonDown"  PreviewMouseLeftButtonUp="UserControl_PreviewMouseLeftButtonUp" PreviewMouseMove="UserControl_PreviewMouseMove" PreviewMouseRightButtonDown="UserControl_PreviewMouseRightButtonDown" PreviewMouseRightButtonUp="UserControl_PreviewMouseRightButtonUp" PreviewMouseDoubleClick="UserControl_PreviewMouseDoubleClick" PreviewKeyDown="UserControl_PreviewKeyDown" PreviewKeyUp="UserControl_PreviewKeyUp" Focusable="True">
     <Grid ClipToBounds="false">
         <Border>
             <Border.Background>

@@ -42,14 +42,16 @@ namespace InDoOut_Display.UI.Controls.Screens
             FunctionCreator = new ExtendedFunctionCreator(this);
             SelectionManager = new ScreenConnectionsSelectionManager(this);
             ActionHandler = new ActionHandler(new ScreenConnectionsRestingAction(this));
-            ProgramHandler = null; //Todo
+            ProgramHandler = ProgramHolder.Instance;
+
+            AssociatedProgram = ProgramHandler.NewProgram();
         }
 
         protected override bool ClearCurrentProgram()
         {
             Canvas_Content.Children.Clear();
 
-            return true;
+            return CurrentScreen?.Clear() ?? false;
         }
 
         protected override void ViewModeChanged(ProgramViewMode viewMode)
