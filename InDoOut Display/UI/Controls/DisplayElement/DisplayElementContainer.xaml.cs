@@ -78,7 +78,6 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
         {
             _selected = false;
             UpdateChildElementVisibility();
-            UpdateFunctionMetadata();
         }
 
         public void ResizeStarted(IScreen screen)
@@ -93,7 +92,6 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
         {
             _resizing = false;
             UpdateChildElementVisibility();
-            UpdateFunctionMetadata();
         }
 
         public void DragStarted(ICommonDisplay view)
@@ -101,14 +99,12 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
             _moving = true;
             _originalMargins = MarginPercentages;
             UpdateChildElementVisibility();
-            CacheConnections(view);
         }
 
         public void DragEnded(ICommonDisplay view)
         {
             _moving = false;
             UpdateChildElementVisibility();
-            UpdateFunctionMetadata();
         }
 
         public bool CopyTo(ICopyable other)
@@ -170,7 +166,6 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
 
                 MarginPercentages = new Thickness(_originalMargins.Left + percentageDifference.X, _originalMargins.Top + percentageDifference.Y, _originalMargins.Right - percentageDifference.X, _originalMargins.Bottom - percentageDifference.Y);
 
-                UpdateElementPercentages();
                 UpdateCachedConnectionPositions(view);
             }
         }
@@ -200,7 +195,6 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
 
                 MarginPercentages = margins;
 
-                UpdateElementPercentages();
                 UpdateCachedConnectionPositions(screen);
             }
         }
@@ -408,8 +402,10 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
             Column_Width_Right.Width = new GridLength(Math.Clamp(thickness.Right, 0d, 1d), GridUnitType.Star);
             Row_Height_Above.Height = new GridLength(Math.Clamp(thickness.Top, 0d, 1d), GridUnitType.Star);
             Row_Height_Below.Height = new GridLength(Math.Clamp(thickness.Bottom, 0d, 1d), GridUnitType.Star);
-        }
 
+            UpdateFunctionMetadata();
+            UpdateElementPercentages();
+        }
 
         private bool PointWithin(double point, double min, double max) => point > min && point < max;
 
