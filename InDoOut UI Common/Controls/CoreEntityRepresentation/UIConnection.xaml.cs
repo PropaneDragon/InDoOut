@@ -34,10 +34,10 @@ namespace InDoOut_UI_Common.Controls.CoreEntityRepresentation
             _regularWireColour = Path_Wire.Stroke is SolidColorBrush solidColour ? solidColour.Color : Color.FromRgb(255, 255, 255);
         }
 
-        public bool CanDelete(IElementDisplay view) => true;
-        public bool CanSelect(IElementDisplay view) => true;
+        public bool CanDelete(ICommonDisplay display) => true;
+        public bool CanSelect(ICommonDisplay display) => true;
 
-        public void Deleted(IElementDisplay view)
+        public void Deleted(ICommonDisplay display)
         {
             if (AssociatedEnd != null && AssociatedStart != null)
             {
@@ -53,12 +53,12 @@ namespace InDoOut_UI_Common.Controls.CoreEntityRepresentation
             }
         }
 
-        public void SelectionStarted(IElementDisplay view)
+        public void SelectionStarted(ICommonDisplay display)
         {
             Stroke_Highlight.Visibility = Visibility.Visible;
         }
 
-        public void SelectionEnded(IElementDisplay view)
+        public void SelectionEnded(ICommonDisplay display)
         {
             Stroke_Highlight.Visibility = Visibility.Hidden;
         }

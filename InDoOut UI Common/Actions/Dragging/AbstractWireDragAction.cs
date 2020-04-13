@@ -20,7 +20,7 @@ namespace InDoOut_UI_Common.Actions.Dragging
                 _start = start;
                 _display = display;
 
-                _uiConnection = _display.Create(start, _display.GetMousePosition());
+                _uiConnection = _display?.ConnectionCreator?.Create(start, _display.GetMousePosition());
 
                 if (_uiConnection == null)
                 {
@@ -82,7 +82,7 @@ namespace InDoOut_UI_Common.Actions.Dragging
         {
             if (_uiConnection != null)
             {
-                _display.Remove(_uiConnection);
+                _display?.DeletableRemover?.Remove(_uiConnection);
             }
 
             Abort();

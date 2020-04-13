@@ -123,7 +123,7 @@ namespace InDoOut_UI_Common.Actions
 
                     foreach (var deletable in deletables)
                     {
-                        _ = Display?.Remove(deletable);
+                        _ = Display?.DeletableRemover?.Remove(deletable);
                     }
                 }
             }

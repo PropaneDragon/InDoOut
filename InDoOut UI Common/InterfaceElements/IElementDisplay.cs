@@ -1,5 +1,4 @@
-﻿using InDoOut_UI_Common.Actions.Deleting;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows;
 
 namespace InDoOut_UI_Common.InterfaceElements
@@ -12,7 +11,6 @@ namespace InDoOut_UI_Common.InterfaceElements
         void Add(FrameworkElement element, Point position, int zIndex = 0);
         void Remove(FrameworkElement element);
         void SetPosition(FrameworkElement element, Point position);
-        bool Remove(IDeletable deletable);
 
         Point GetMousePosition();
         Point GetPosition(FrameworkElement element);

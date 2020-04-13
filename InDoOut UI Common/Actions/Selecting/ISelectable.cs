@@ -4,9 +4,9 @@ namespace InDoOut_UI_Common.Actions.Selecting
 {
     public interface ISelectable
     {
-        public void SelectionStarted(IElementDisplay view);
-        public void SelectionEnded(IElementDisplay view);
+        public void SelectionStarted(ICommonDisplay display);
+        public void SelectionEnded(ICommonDisplay display);
 
-        public bool CanSelect(IElementDisplay view);
+        public bool CanSelect(ICommonDisplay display);
     }
 }

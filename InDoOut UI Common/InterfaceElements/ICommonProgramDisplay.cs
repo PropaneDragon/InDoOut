@@ -1,7 +1,4 @@
 ﻿using InDoOut_Executable_Core.Programs;
-using InDoOut_UI_Common.Actions;
-using InDoOut_UI_Common.Actions.Selecting;
-using System.Windows;
 
 namespace InDoOut_UI_Common.InterfaceElements
 {
@@ -11,17 +8,8 @@ namespace InDoOut_UI_Common.InterfaceElements
         Variables
     }
 
-    public interface ICommonProgramDisplay : IProgramDisplay, IElementDisplay, IFunctionDisplay, IConnectionDisplay
+    public interface ICommonProgramDisplay : ICommonDisplay, IProgramDisplay, IFunctionDisplay, IConnectionDisplay
     {
         ProgramViewMode CurrentViewMode { get; set; }
-        ISelectionManager<ISelectable> SelectionManager { get; }
-        IActionHandler ActionHandler { get; }
-
-        Size TotalSize { get; }
-        Size ViewSize { get; }
-
-        Point TopLeftViewCoordinate { get; }
-        Point BottomRightViewCoordinate { get; }
-        Point CentreViewCoordinate { get; }
     }
 }

@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Actions\Scaling\**" />
+    <EmbeddedResource Remove="Actions\Scaling\**" />
+    <None Remove="Actions\Scaling\**" />
+    <Page Remove="Actions\Scaling\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\InDoOut Display Core\InDoOut Display Core.csproj" />
     <ProjectReference Include="..\InDoOut Display Plugins\InDoOut Display Plugins.csproj" />
     <ProjectReference Include="..\InDoOut Executable Core\InDoOut Executable Core.csproj" />
@@ -15,10 +22,6 @@
     <ProjectReference Include="..\InDoOut Json Storage\InDoOut Json Storage.csproj" />
     <ProjectReference Include="..\InDoOut Plugins\InDoOut Plugins Core.csproj" />
     <ProjectReference Include="..\InDoOut UI Common\InDoOut UI Common.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Actions\Scaling\" />
   </ItemGroup>
 
 </Project>

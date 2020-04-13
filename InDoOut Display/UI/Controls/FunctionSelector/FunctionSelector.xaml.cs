@@ -120,7 +120,7 @@ namespace InDoOut_Display.UI.Controls.FunctionSelector
                 var newFunctionInstance = _functionBuilder.BuildInstance(selectedFunction.GetType());
                 if (newFunctionInstance != null && _programDisplay != null)
                 {
-                    _ = _programDisplay.Create(newFunctionInstance);
+                    _ = _programDisplay?.FunctionCreator?.Create(newFunctionInstance);
 
                     if (CloseWindowOnSelection)
                     {

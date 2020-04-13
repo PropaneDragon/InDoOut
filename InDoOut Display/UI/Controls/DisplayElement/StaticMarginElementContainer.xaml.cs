@@ -28,21 +28,21 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
         public virtual bool AutoScale { get; set; } = false;
         public virtual double Scale { get; set; } = 1d;
 
-        public virtual bool CanDrag(IElementDisplay view) => false;
+        public virtual bool CanDrag(ICommonDisplay view) => false;
 
         public virtual bool CanResize(IScreen screen) => false;
 
         public virtual bool CanScale(IScreen screen) => false;
 
-        public virtual bool CanSelect(IElementDisplay view) => false;
+        public virtual bool CanSelect(ICommonDisplay view) => false;
 
         public virtual bool CloseToEdge(IScreen screen, Point point, double distance = 5) => false;
 
-        public virtual void DragEnded(IElementDisplay view) { }
+        public virtual void DragEnded(ICommonDisplay view) { }
 
-        public virtual void DragMoved(IElementDisplay view, Point delta) { }
+        public virtual void DragMoved(ICommonDisplay view, Point delta) { }
 
-        public virtual void DragStarted(IElementDisplay view) { }
+        public virtual void DragStarted(ICommonDisplay view) { }
 
         public virtual ResizeEdge GetCloseEdge(IScreen screen, Point point, double distance = 5) => ResizeEdge.None;
 
@@ -54,9 +54,9 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
 
         public virtual void ScaleChanged(IScreen screen) { }
 
-        public virtual void SelectionEnded(IElementDisplay view) { }
+        public virtual void SelectionEnded(ICommonDisplay view) { }
 
-        public virtual void SelectionStarted(IElementDisplay view) { }
+        public virtual void SelectionStarted(ICommonDisplay view) { }
 
         private void SetMarginPercentages(Thickness thickness)
         {

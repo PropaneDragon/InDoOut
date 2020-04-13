@@ -52,7 +52,7 @@ namespace InDoOut_Display_Core.Screens
     /// <summary>
     /// Represents a screen that is capable of hosting <see cref="IDisplayElement"/> items.
     /// </summary>
-    public interface IScreen : IElementDisplay, IDisplayElementDisplay
+    public interface IScreen : ICommonDisplay, IDisplayElementDisplay
     {
         /// <summary>
         /// The current view mode of this display.
@@ -63,16 +63,6 @@ namespace InDoOut_Display_Core.Screens
         /// The program associated with this display.
         /// </summary>
         IProgram AssociatedProgram { get; set; }
-
-        /// <summary>
-        /// The <see cref="ISelectionManager{SelectableType}"/> handling selections on this display.
-        /// </summary>
-        ISelectionManager<ISelectable> SelectionManager { get; }
-
-        /// <summary>
-        /// The size of this display.
-        /// </summary>
-        Size Size { get; }
 
         /// <summary>
         /// Returns the closest edge to the element. If no edge is close, <see cref="ScreenEdge.None"/> is returned.

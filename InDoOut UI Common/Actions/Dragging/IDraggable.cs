@@ -5,10 +5,10 @@ namespace InDoOut_UI_Common.Actions.Dragging
 {
     public interface IDraggable
     {
-        void DragStarted(IElementDisplay view);
-        void DragMoved(IElementDisplay view, Point delta);
-        void DragEnded(IElementDisplay view);
+        void DragStarted(ICommonDisplay display);
+        void DragMoved(ICommonDisplay display, Point delta);
+        void DragEnded(ICommonDisplay display);
 
-        bool CanDrag(IElementDisplay view);
+        bool CanDrag(ICommonDisplay display);
     }
 }

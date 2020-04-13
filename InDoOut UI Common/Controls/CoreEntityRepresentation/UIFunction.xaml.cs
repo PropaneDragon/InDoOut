@@ -1,7 +1,6 @@
 ﻿using InDoOut_Core.Entities.Functions;
 using InDoOut_Core.Functions;
 using InDoOut_Core.Logging;
-using InDoOut_Executable_Core.Programs;
 using InDoOut_UI_Common.Actions.Copying;
 using InDoOut_UI_Common.InterfaceElements;
 using System;
@@ -46,18 +45,18 @@ namespace InDoOut_UI_Common.Controls.CoreEntityRepresentation
             AssociatedFunction = function;
         }
 
-        public bool CanSelect(IElementDisplay view) => true;
-        public bool CanDrag(IElementDisplay view) => true;
-        public bool CanCopy(IElementDisplay view) => true;
-        public bool CanDelete(IElementDisplay view) => true;
+        public bool CanSelect(ICommonDisplay display) => true;
+        public bool CanDrag(ICommonDisplay display) => true;
+        public bool CanCopy(ICommonDisplay display) => true;
+        public bool CanDelete(ICommonDisplay display) => true;
 
-        public void Deleted(IElementDisplay view)
+        public void Deleted(ICommonDisplay display)
         {
-            if (view != null && view is IProgramDisplay programDisplay && (programDisplay.AssociatedProgram?.RemoveFunction(AssociatedFunction) ?? false))
+            if (display != null && display is ICommonProgramDisplay programDisplay && (programDisplay.AssociatedProgram?.RemoveFunction(AssociatedFunction) ?? false))
             {
                 _function?.PolitelyStop();
 
-                if (!RemoveAllConnections(view))
+                if (!RemoveAllConnections(display))
                 {
                     Log.Instance.Error($"Couldn't remove all connections from {this}");
                 }
@@ -69,37 +68,37 @@ namespace InDoOut_UI_Common.Controls.CoreEntityRepresentation
             return other != null;
         }
 
-        public ICopyable CreateCopy(IElementDisplay view)
+        public ICopyable CreateCopy(ICommonDisplay display)
         {
-            if (view != null && view is IFunctionDisplay functionDisplay && _function != null)
+            if (display != null && display is IFunctionDisplay functionDisplay && _function != null)
             {
                 var functionBuilder = new FunctionBuilder();
                 var functionInstance = functionBuilder.BuildInstance(_function.GetType());
 
                 if (functionInstance != null)
                 {
-                    return functionDisplay.Create(functionInstance);
+                    return functionDisplay?.FunctionCreator?.Create(functionInstance);
                 }
             }
 
             return null;
         }
 
-        public void SelectionStarted(IElementDisplay view)
+        public void SelectionStarted(ICommonDisplay display)
         {
             Rectangle_Selected.Visibility = Visibility.Visible;
         }
 
-        public void SelectionEnded(IElementDisplay view)
+        public void SelectionEnded(ICommonDisplay display)
         {
             Rectangle_Selected.Visibility = Visibility.Hidden;
         }
 
-        public void DragStarted(IElementDisplay view)
+        public void DragStarted(ICommonDisplay display)
         {
             _cachedVisualConnections.Clear();
 
-            if (view != null && view is IConnectionDisplay connectionDisplay)
+            if (display != null && display is IConnectionDisplay connectionDisplay)
             {
                 _cachedVisualConnections.AddRange(connectionDisplay.FindConnections(Inputs.Cast<IUIConnectionEnd>().ToList()));
                 _cachedVisualConnections.AddRange(connectionDisplay.FindConnections(Outputs.Cast<IUIConnectionStart>().ToList()));
@@ -108,11 +107,11 @@ namespace InDoOut_UI_Common.Controls.CoreEntityRepresentation
             }
         }
 
-        public void DragMoved(IElementDisplay view, Point delta)
+        public void DragMoved(ICommonDisplay display, Point delta)
         {
             if (AssociatedFunction != null)
             {
-                var position = view.GetPosition(this);
+                var position = display.GetPosition(this);
 
                 AssociatedFunction.Metadata["x"] = position.X.ToString();
                 AssociatedFunction.Metadata["y"] = position.Y.ToString();
@@ -120,11 +119,11 @@ namespace InDoOut_UI_Common.Controls.CoreEntityRepresentation
 
             foreach (var cachedVisualConnection in _cachedVisualConnections)
             {
-                cachedVisualConnection.UpdatePositionFromInputOutput(view);
+                cachedVisualConnection.UpdatePositionFromInputOutput(display);
             }
         }
 
-        public void DragEnded(IElementDisplay view)
+        public void DragEnded(ICommonDisplay display)
         {
             _cachedVisualConnections.Clear();
         }
@@ -264,34 +263,28 @@ namespace InDoOut_UI_Common.Controls.CoreEntityRepresentation
             _displayMode = displayMode;
         }
 
-        private bool RemoveAllConnections(IElementDisplay view)
+        private bool RemoveAllConnections(ICommonDisplay display)
         {
             var allDeleted = true;
-            allDeleted = RemoveEndConnections(Inputs, view) && allDeleted;
-            allDeleted = RemoveEndConnections(Properties, view) && allDeleted;
-            allDeleted = RemoveStartConnections(Outputs, view) && allDeleted;
-            allDeleted = RemoveStartConnections(Results, view) && allDeleted;
+            allDeleted = RemoveEndConnections(Inputs, display) && allDeleted;
+            allDeleted = RemoveEndConnections(Properties, display) && allDeleted;
+            allDeleted = RemoveStartConnections(Outputs, display) && allDeleted;
+            allDeleted = RemoveStartConnections(Results, display) && allDeleted;
 
             return allDeleted;
         }
 
-        private bool RemoveStartConnections<StartType>(List<StartType> start, IElementDisplay elementDisplay) where StartType : IUIConnectionStart
-        {
-            return elementDisplay is IConnectionDisplay connectionDisplay ? RemoveConnections(connectionDisplay.FindConnections(start.Cast<IUIConnectionStart>().ToList()), elementDisplay) : false;
-        }
+        private bool RemoveStartConnections<StartType>(List<StartType> start, ICommonDisplay display) where StartType : IUIConnectionStart => display is IConnectionDisplay connectionDisplay ? RemoveConnections(connectionDisplay.FindConnections(start.Cast<IUIConnectionStart>().ToList()), display) : false;
 
-        private bool RemoveEndConnections<EndType>(List<EndType> end, IElementDisplay elementDisplay) where EndType : IUIConnectionEnd
-        {
-            return elementDisplay is IConnectionDisplay connectionDisplay ? RemoveConnections(connectionDisplay.FindConnections(end.Cast<IUIConnectionEnd>().ToList()), elementDisplay) : false;
-        }
+        private bool RemoveEndConnections<EndType>(List<EndType> end, ICommonDisplay display) where EndType : IUIConnectionEnd => display is IConnectionDisplay connectionDisplay ? RemoveConnections(connectionDisplay.FindConnections(end.Cast<IUIConnectionEnd>().ToList()), display) : false;
 
-        private bool RemoveConnections(List<IUIConnection> connections, IElementDisplay elementDisplay)
+        private bool RemoveConnections(List<IUIConnection> connections, ICommonDisplay display)
         {
             var allDeleted = true;
 
             foreach (var connection in connections)
             {
-                allDeleted = connection.CanDelete(elementDisplay) && (elementDisplay?.Remove(connection) ?? false);
+                allDeleted = connection.CanDelete(display) && (display?.DeletableRemover?.Remove(connection) ?? false);
             }
 
             return allDeleted;

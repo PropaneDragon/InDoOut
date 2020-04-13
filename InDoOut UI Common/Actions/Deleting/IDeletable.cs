@@ -4,8 +4,8 @@ namespace InDoOut_UI_Common.Actions.Deleting
 {
     public interface IDeletable
     {
-        void Deleted(IElementDisplay view);
+        void Deleted(ICommonDisplay display);
 
-        bool CanDelete(IElementDisplay view);
+        bool CanDelete(ICommonDisplay display);
     }
 }

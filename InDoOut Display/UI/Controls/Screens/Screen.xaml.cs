@@ -5,9 +5,9 @@ using InDoOut_Display.UI.Controls.DisplayElement;
 using InDoOut_Display_Core.Elements;
 using InDoOut_Display_Core.Screens;
 using InDoOut_UI_Common.Actions;
-using InDoOut_UI_Common.Actions.Deleting;
 using InDoOut_UI_Common.Actions.Selecting;
 using InDoOut_UI_Common.InterfaceElements;
+using InDoOut_UI_Common.Removal;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -19,23 +19,26 @@ namespace InDoOut_Display.UI.Controls.Screens
 {
     public partial class Screen : UserControl, IScreen
     {
-        private readonly ActionHandler _actionHandler = null;
-        private readonly ScreenSelectionManager _selectionManager = null;
-
         private ProgramViewMode _currentViewMode = ProgramViewMode.IO;
 
-        public Size Size => new Size(Width, Height);
+        public Size TotalSize => new Size(Width, Height);
+        public Size ViewSize => TotalSize;
+        public Point TopLeftViewCoordinate => new Point(0, 0);
+        public Point BottomRightViewCoordinate => new Point(TotalSize.Width, TotalSize.Height);
+        public Point CentreViewCoordinate => new Point(BottomRightViewCoordinate.X / 2d, BottomRightViewCoordinate.Y / 2d);
         public ProgramViewMode CurrentViewMode { get => _currentViewMode; set => ChangeMode(value); }
         public IProgram AssociatedProgram { get; set; } = null;
-        public ISelectionManager<ISelectable> SelectionManager => _selectionManager;
+        public IDeletableRemover DeletableRemover { get; private set; } = null;
+        public IActionHandler ActionHandler { get; private set; } = null;
+        public ISelectionManager<ISelectable> SelectionManager { get; private set; } = null;
         public List<FrameworkElement> Elements => Grid_Elements.Children.Cast<FrameworkElement>().ToList();
 
         public Screen()
         {
             InitializeComponent();
 
-            _actionHandler = new ActionHandler(new ScreenRestingAction(this));
-            _selectionManager = new ScreenSelectionManager(this);
+            ActionHandler = new ActionHandler(new ScreenRestingAction(this));
+            SelectionManager = new ScreenSelectionManager(this);
         }
 
         public bool AddDisplayElement(IDisplayElement displayElement)
@@ -96,18 +99,6 @@ namespace InDoOut_Display.UI.Controls.Screens
         {
             /* We do nothing. The containers position themselves as they're 
              * set as percentages as part of their movement/resize methods. */
-        }
-
-        public bool Remove(IDeletable deletable)
-        {
-            if (deletable != null && deletable.CanDelete(this))
-            {
-                Remove(deletable as FrameworkElement);
-
-                return true;
-            }
-
-            return false;
         }
 
         public Point GetPosition(FrameworkElement element)
@@ -278,14 +269,14 @@ namespace InDoOut_Display.UI.Controls.Screens
 
         private void UserControl_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            _ = _actionHandler?.MouseLeftDown(e.GetPosition(sender as IInputElement)) ?? false;
+            _ = ActionHandler?.MouseLeftDown(e.GetPosition(sender as IInputElement)) ?? false;
 
             e.Handled = false;
         }
 
         private void UserControl_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            _ = _actionHandler?.MouseLeftUp(e.GetPosition(sender as IInputElement)) ?? false;
+            _ = ActionHandler?.MouseLeftUp(e.GetPosition(sender as IInputElement)) ?? false;
 
             e.Handled = false;
         }
@@ -294,17 +285,17 @@ namespace InDoOut_Display.UI.Controls.Screens
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                _ = _actionHandler?.MouseLeftMove(e.GetPosition(sender as IInputElement)) ?? false;
+                _ = ActionHandler?.MouseLeftMove(e.GetPosition(sender as IInputElement)) ?? false;
             }
 #pragma warning disable IDE0045 // Convert to conditional expression
             else if (e.RightButton == MouseButtonState.Pressed)
 #pragma warning restore IDE0045 // Convert to conditional expression
             {
-                _ = _actionHandler?.MouseRightMove(e.GetPosition(sender as IInputElement)) ?? false;
+                _ = ActionHandler?.MouseRightMove(e.GetPosition(sender as IInputElement)) ?? false;
             }
             else
             {
-                _ = _actionHandler?.MouseNoMove(e.GetPosition(sender as IInputElement)) ?? false;
+                _ = ActionHandler?.MouseNoMove(e.GetPosition(sender as IInputElement)) ?? false;
             }
 
             e.Handled = false;
@@ -312,35 +303,35 @@ namespace InDoOut_Display.UI.Controls.Screens
 
         private void UserControl_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
-            _ = _actionHandler?.MouseRightDown(e.GetPosition(sender as IInputElement)) ?? false;
+            _ = ActionHandler?.MouseRightDown(e.GetPosition(sender as IInputElement)) ?? false;
 
             e.Handled = false;
         }
 
         private void UserControl_PreviewMouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
-            _ = _actionHandler?.MouseRightUp(e.GetPosition(sender as IInputElement)) ?? false;
+            _ = ActionHandler?.MouseRightUp(e.GetPosition(sender as IInputElement)) ?? false;
 
             e.Handled = false;
         }
 
         private void UserControl_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            _ = _actionHandler?.MouseDoubleClick(e.GetPosition(sender as IInputElement)) ?? false;
+            _ = ActionHandler?.MouseDoubleClick(e.GetPosition(sender as IInputElement)) ?? false;
 
             e.Handled = false;
         }
 
         private void UserControl_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            _ = _actionHandler?.KeyDown(e.Key) ?? false;
+            _ = ActionHandler?.KeyDown(e.Key) ?? false;
 
             e.Handled = false;
         }
 
         private void UserControl_PreviewKeyUp(object sender, KeyEventArgs e)
         {
-            _ = _actionHandler?.KeyUp(e.Key) ?? false;
+            _ = ActionHandler?.KeyUp(e.Key) ?? false;
 
             e.Handled = false;
         }

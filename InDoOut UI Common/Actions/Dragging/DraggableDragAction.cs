@@ -8,9 +8,9 @@ namespace InDoOut_UI_Common.Actions.Dragging
     public class DraggableDragAction : DragAction
     {
         private readonly Dictionary<IDraggable, Point> _initialPositions = new Dictionary<IDraggable, Point>();
-        private readonly IElementDisplay _display = null;
+        private readonly ICommonDisplay _display = null;
 
-        public DraggableDragAction(IElementDisplay display, IEnumerable<IDraggable> draggables, Point mousePosition)
+        public DraggableDragAction(ICommonDisplay display, IEnumerable<IDraggable> draggables, Point mousePosition)
         {
             _ = base.MouseLeftDown(mousePosition);
 

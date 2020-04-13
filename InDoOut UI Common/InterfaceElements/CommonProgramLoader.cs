@@ -47,7 +47,7 @@ namespace InDoOut_UI_Common.InterfaceElements
 
                 foreach (var function in program.Functions)
                 {
-                    var uiFunction = _display.Create(function);
+                    var uiFunction = _display?.FunctionCreator?.Create(function);
                     if (uiFunction != null)
                     {
                         functionToUIFunctionMap.Add(function, uiFunction);
@@ -130,7 +130,7 @@ namespace InDoOut_UI_Common.InterfaceElements
         {
             if (uiStart != null && uiEnd != null && start != null && end != null)
             {
-                var connection = _display.Create(uiStart, uiEnd);
+                var connection = _display?.ConnectionCreator?.Create(uiStart, uiEnd);
 
                 if (ExtractRectFromMetadata(start, out var startArea) && ExtractRectFromMetadata(end, out var endArea))
                 {
@@ -142,7 +142,7 @@ namespace InDoOut_UI_Common.InterfaceElements
                 }
                 else
                 {
-                    _display.Remove(connection);
+                    _display?.DeletableRemover?.Remove(connection);
                 }
             }
         }

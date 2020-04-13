@@ -39,7 +39,7 @@ namespace InDoOut_Display.UI.Controls.Screens
         {
             InitializeComponent();
 
-            FunctionFactory = new ExtendedFunctionCreator(this);
+            FunctionCreator = new ExtendedFunctionCreator(this);
             SelectionManager = new ScreenConnectionsSelectionManager(this);
             ActionHandler = new ActionHandler(new ScreenConnectionsRestingAction(this));
             ProgramHandler = null; //Todo

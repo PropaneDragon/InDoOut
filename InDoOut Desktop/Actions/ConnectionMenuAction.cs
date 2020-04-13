@@ -40,7 +40,7 @@ namespace InDoOut_Desktop.Actions
             {
                 if (output.AssociatedOutput.Disconnect(input.AssociatedInput))
                 {
-                    _blockView.Remove(_connection);
+                    _blockView?.DeletableRemover?.Remove(_connection);
                 }
                 else
                 {

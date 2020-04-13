@@ -5,8 +5,8 @@ namespace InDoOut_UI_Common.Actions.Copying
     public interface ICopyable
     {
         bool CopyTo(ICopyable other);
-        bool CanCopy(IElementDisplay view);
+        bool CanCopy(ICommonDisplay display);
 
-        ICopyable CreateCopy(IElementDisplay view);
+        ICopyable CreateCopy(ICommonDisplay display);
     }
 }

@@ -1,20 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using InDoOut_UI_Common.Creation;
+using System.Collections.Generic;
 using System.Windows;
 
 namespace InDoOut_UI_Common.InterfaceElements
 {
     public interface IConnectionDisplay
     {
-        List<IUIConnection> UIConnections { get; }
+        IConnectionCreator ConnectionCreator { get; }
 
-        void Remove(IUIConnection connection);
+        List<IUIConnection> UIConnections { get; }
 
         Point GetBestSide(Rect rectangle, Point point);
         Point GetBestSide(FrameworkElement element, Point point);
         Point GetBestSide(FrameworkElement element, FrameworkElement otherElement);
 
-        IUIConnection Create(IUIConnectionStart start, Point end);
-        IUIConnection Create(IUIConnectionStart start, IUIConnectionEnd end);
         IUIConnection FindConnection(IUIConnectionStart start, IUIConnectionEnd end);
 
         List<IUIConnection> FindConnections(IUIConnectionStart start);

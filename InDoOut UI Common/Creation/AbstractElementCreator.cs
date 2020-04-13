@@ -3,7 +3,7 @@ using System.Windows;
 
 namespace InDoOut_UI_Common.Creation
 {
-    public abstract class AbstractElementCreator
+    public abstract class AbstractElementCreator : IElementCreator
     {
         protected bool ExtractPointFromMetadata(IStored stored, out Point location)
         {

@@ -55,26 +55,26 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
 
         public bool CanScale(IScreen screen) => true;
 
-        public bool CanSelect(IElementDisplay view) => true;
+        public bool CanSelect(ICommonDisplay display) => true;
 
-        public bool CanDrag(IElementDisplay view) => view.GetElementsUnderMouse().Any(element => element == Border_DragArea);
+        public bool CanDrag(ICommonDisplay display) => display.GetElementsUnderMouse().Any(element => element == Border_DragArea);
 
-        public bool CanCopy(IElementDisplay view) => false;
+        public bool CanCopy(ICommonDisplay display) => false;
 
-        public bool CanDelete(IElementDisplay view) => false;
+        public bool CanDelete(ICommonDisplay display) => false;
 
         public void ScaleChanged(IScreen screen)
         {
             UpdateFunctionMetadata();
         }
 
-        public void SelectionStarted(IElementDisplay view)
+        public void SelectionStarted(ICommonDisplay view)
         {
             _selected = true;
             UpdateChildElementVisibility();
         }
 
-        public void SelectionEnded(IElementDisplay view)
+        public void SelectionEnded(ICommonDisplay view)
         {
             _selected = false;
             UpdateChildElementVisibility();
@@ -96,7 +96,7 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
             UpdateFunctionMetadata();
         }
 
-        public void DragStarted(IElementDisplay view)
+        public void DragStarted(ICommonDisplay view)
         {
             _moving = true;
             _originalMargins = MarginPercentages;
@@ -104,7 +104,7 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
             CacheConnections(view);
         }
 
-        public void DragEnded(IElementDisplay view)
+        public void DragEnded(ICommonDisplay view)
         {
             _moving = false;
             UpdateChildElementVisibility();
@@ -116,12 +116,12 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
             return false;
         }
 
-        public ICopyable CreateCopy(IElementDisplay view)
+        public ICopyable CreateCopy(ICommonDisplay view)
         {
             return null;
         }
 
-        public void Deleted(IElementDisplay view)
+        public void Deleted(ICommonDisplay view)
         {
         }
 
@@ -160,7 +160,7 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
             return ResizeEdge.None;
         }
 
-        public void DragMoved(IElementDisplay view, Point delta)
+        public void DragMoved(ICommonDisplay view, Point delta)
         {
             if (view != null)
             {

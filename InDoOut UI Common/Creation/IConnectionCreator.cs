@@ -3,7 +3,7 @@ using System.Windows;
 
 namespace InDoOut_UI_Common.Creation
 {
-    public interface IConnectionCreator
+    public interface IConnectionCreator : IElementCreator
     {
         IUIConnection Create(IUIConnectionStart start, Point end);
 

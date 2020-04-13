@@ -5,6 +5,7 @@ using InDoOut_UI_Common.Actions;
 using InDoOut_UI_Common.Actions.Deleting;
 using InDoOut_UI_Common.Actions.Selecting;
 using InDoOut_UI_Common.Creation;
+using InDoOut_UI_Common.Removal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,10 +22,11 @@ namespace InDoOut_UI_Common.InterfaceElements
         private ProgramViewMode _currentViewMode = ProgramViewMode.IO;
 
         protected ICommonProgramLoader CommonProgramLoader { get; set; } = null;
-        protected IFunctionCreator FunctionFactory { get; set; }
-        protected IConnectionCreator ConnectionFactory { get; set; }
 
         public IProgram AssociatedProgram { get => _currentProgram; set => ChangeProgram(value); }
+        public IFunctionCreator FunctionCreator { get; protected set; }
+        public IConnectionCreator ConnectionCreator { get; protected set; }
+        public IDeletableRemover DeletableRemover { get; protected set; }
         public ProgramViewMode CurrentViewMode { get => _currentViewMode; set => ChangeViewMode(value); }
         public List<IUIFunction> UIFunctions => FindCanvasChild<IUIFunction>();
         public List<IUIConnection> UIConnections => FindCanvasChild<IUIConnection>();
@@ -45,40 +47,11 @@ namespace InDoOut_UI_Common.InterfaceElements
         public CommonProgramDisplay()
         {
             CommonProgramLoader = new CommonProgramLoader(this);
-            FunctionFactory = new BasicFunctionCreator(this);
-            ConnectionFactory = new BasicConnectionCreator(this);
+            FunctionCreator = new BasicFunctionCreator(this);
+            ConnectionCreator = new BasicConnectionCreator(this);
+            DeletableRemover = new BasicDeletableRemover(this);
 
             ChangeViewMode(CurrentViewMode);
-        }
-
-        public bool Remove(IDeletable deletable)
-        {
-            if (deletable?.CanDelete(this) ?? false)
-            {
-                var deleted = false;
-
-                if (deletable is IUIConnection connection)
-                {
-                    Remove(connection);
-
-                    deleted = true;
-                }
-                else if (deletable is FrameworkElement element)
-                {
-                    Remove(element);
-
-                    deleted = true;
-                }
-
-                if (deleted)
-                {
-                    deletable?.Deleted(this);
-
-                    return true;
-                }
-            }
-
-            return false;
         }
 
         public void Add(FrameworkElement element)
@@ -169,10 +142,6 @@ namespace InDoOut_UI_Common.InterfaceElements
             return point.X < centre.X ? new Point(topLeft.X, centre.Y) : new Point(topLeft.X + size.Width, centre.Y);
         }
 
-        public IUIFunction Create(IFunction function) => FunctionFactory?.Create(function);
-        public IUIConnection Create(IUIConnectionStart start, Point end) => ConnectionFactory?.Create(start, end);
-        public IUIConnection Create(IUIConnectionStart start, IUIConnectionEnd end) => ConnectionFactory?.Create(start, end);
-        public void Remove(IUIConnection output) => Remove(output as FrameworkElement);
         public IUIConnection FindConnection(IUIConnectionStart start, IUIConnectionEnd end) => FindCanvasChild<IUIConnection>(uiConnection => uiConnection.AssociatedEnd == end && uiConnection.AssociatedStart == start).FirstOrDefault();
         public List<IUIConnection> FindConnections(IUIConnectionStart start) => FindConnections(new List<IUIConnectionStart>() { start });
         public List<IUIConnection> FindConnections(IUIConnectionEnd end) => FindConnections(new List<IUIConnectionEnd>() { end });

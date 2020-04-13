@@ -104,7 +104,7 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
 
                 if (function != null)
                 {
-                    var uiFunction = FunctionView.Create(function);
+                    var uiFunction = FunctionView?.FunctionCreator?.Create(function);
                     if (uiFunction == null)
                     {
                         Log.Instance.Error("UI Function for ", function, " couldn't be created on the interface");
