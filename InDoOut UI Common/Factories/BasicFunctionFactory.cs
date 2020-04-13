@@ -1,10 +1,11 @@
 ﻿using InDoOut_Core.Entities.Functions;
 using InDoOut_UI_Common.Controls.CoreEntityRepresentation;
+using InDoOut_UI_Common.InterfaceElements;
 using System.Windows;
 
-namespace InDoOut_UI_Common.InterfaceElements
+namespace InDoOut_UI_Common.Factories
 {
-    public class BasicFunctionCreator : AbstractCreator, IFunctionCreator
+    public class BasicFunctionFactory : AbstractElementFactory, IFunctionFactory
     {
         public virtual IUIFunction Create(ICommonProgramDisplay display, IFunction function, bool setPositionFromMetadata = true)
         {

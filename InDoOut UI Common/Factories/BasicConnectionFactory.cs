@@ -1,9 +1,10 @@
 ﻿using InDoOut_UI_Common.Controls.CoreEntityRepresentation;
+using InDoOut_UI_Common.InterfaceElements;
 using System.Windows;
 
-namespace InDoOut_UI_Common.InterfaceElements
+namespace InDoOut_UI_Common.Factories
 {
-    public class BasicConnectionCreator : AbstractCreator, IConnectionCreator
+    public class BasicConnectionFactory : AbstractElementFactory, IConnectionFactory
     {
         public virtual IUIConnection Create(ICommonProgramDisplay display, IUIConnectionStart start, IUIConnectionEnd end)
         {

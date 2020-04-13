@@ -2,12 +2,13 @@
 using InDoOut_Display.UI.Controls.DisplayElement;
 using InDoOut_Display_Core.Functions;
 using InDoOut_Display_Core.Screens;
+using InDoOut_UI_Common.Factories;
 using InDoOut_UI_Common.InterfaceElements;
 using System.Windows;
 
-namespace InDoOut_Display.InterfaceElements
+namespace InDoOut_Display.Factories
 {
-    internal class ExtendedFunctionCreator : BasicFunctionCreator
+    internal class ExtendedFunctionFactory : BasicFunctionFactory
     {
         protected override IUIFunction AddFunctionToDisplay(IFunction function, ICommonProgramDisplay display, bool setPositionFromMetadata = true)
         {

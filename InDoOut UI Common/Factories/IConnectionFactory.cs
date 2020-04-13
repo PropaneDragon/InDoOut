@@ -1,8 +1,9 @@
-﻿using System.Windows;
+﻿using InDoOut_UI_Common.InterfaceElements;
+using System.Windows;
 
-namespace InDoOut_UI_Common.InterfaceElements
+namespace InDoOut_UI_Common.Factories
 {
-    public interface IConnectionCreator
+    public interface IConnectionFactory
     {
         IUIConnection Create(ICommonProgramDisplay display, IUIConnectionStart start, Point end);
 

@@ -4,6 +4,7 @@ using InDoOut_Executable_Core.Programs;
 using InDoOut_UI_Common.Actions;
 using InDoOut_UI_Common.Actions.Deleting;
 using InDoOut_UI_Common.Actions.Selecting;
+using InDoOut_UI_Common.Factories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,8 +21,8 @@ namespace InDoOut_UI_Common.InterfaceElements
         private ProgramViewMode _currentViewMode = ProgramViewMode.IO;
 
         protected ICommonProgramLoader CommonProgramLoader { get; set; } = null;
-        protected IFunctionCreator FunctionCreator { get; set; } = new BasicFunctionCreator();
-        protected IConnectionCreator ConnectionCreator { get; set; } = new BasicConnectionCreator();
+        protected IFunctionFactory FunctionCreator { get; set; } = new BasicFunctionFactory();
+        protected IConnectionFactory ConnectionCreator { get; set; } = new BasicConnectionFactory();
 
         public IProgram AssociatedProgram { get => _currentProgram; set => ChangeProgram(value); }
         public ProgramViewMode CurrentViewMode { get => _currentViewMode; set => ChangeViewMode(value); }
