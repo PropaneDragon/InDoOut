@@ -3,7 +3,7 @@ using InDoOut_UI_Common.Controls.CoreEntityRepresentation;
 using InDoOut_UI_Common.InterfaceElements;
 using System.Windows;
 
-namespace InDoOut_UI_Common.Creators
+namespace InDoOut_UI_Common.Creation
 {
     public class BasicFunctionCreator : AbstractElementCreator, IFunctionCreator
     {

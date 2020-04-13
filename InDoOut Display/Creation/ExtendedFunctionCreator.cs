@@ -2,11 +2,11 @@
 using InDoOut_Display.UI.Controls.DisplayElement;
 using InDoOut_Display_Core.Functions;
 using InDoOut_Display_Core.Screens;
-using InDoOut_UI_Common.Creators;
+using InDoOut_UI_Common.Creation;
 using InDoOut_UI_Common.InterfaceElements;
 using System.Windows;
 
-namespace InDoOut_Display.Creators
+namespace InDoOut_Display.Creation
 {
     internal class ExtendedFunctionCreator : BasicFunctionCreator
     {

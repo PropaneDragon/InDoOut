@@ -1,7 +1,7 @@
 ﻿using InDoOut_Core.Basic;
 using System.Windows;
 
-namespace InDoOut_UI_Common.Creators
+namespace InDoOut_UI_Common.Creation
 {
     public abstract class AbstractElementCreator
     {
