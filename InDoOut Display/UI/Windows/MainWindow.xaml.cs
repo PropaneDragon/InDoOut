@@ -2,6 +2,7 @@
 using InDoOut_Display.Programs;
 using InDoOut_Executable_Core.Location;
 using InDoOut_Executable_Core.Logging;
+using InDoOut_UI_Common.Controls.Screens;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -33,12 +34,16 @@ namespace InDoOut_Display.UI.Windows
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            var loadingTask = new MainWindowLoadingTask();
-            var loadedSuccessfully = await loadingTask.RunAsync();
-            if (loadedSuccessfully)
+            var splash = Splash_Overlay as ISplashScreen;
+            if (splash != null)
             {
-                await FinishLoading();
-                return;
+                _ = Activate();
+
+                if (await splash.RunTaskAsync(new MainWindowLoadingTask()))
+                {
+                    await FinishLoading();
+                    return;
+                }
             }
 
             Close();

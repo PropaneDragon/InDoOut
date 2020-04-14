@@ -16,7 +16,6 @@
             <background:BackgroundImage Opacity="0.01"/>
         </Grid>
         <taskManager:TaskView x:Name="TaskView_Main" />
-        <!--<blockview:BlockView x:Name="BlockView_Main" />-->
         <core:TitleBar x:Name="TitleBar_Main" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
         <sidebar:Sidebar x:Name="Sidebar_Main" Width="500" HorizontalAlignment="Left" />
         <splash:SplashOverlay x:Name="Splash_Overlay" Visibility="Collapsed" />

@@ -7,7 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 
-namespace InDoOut_Desktop.UI.Controls.Splash
+namespace InDoOut_Display.UI.Controls.Splash
 {
     public partial class SplashOverlay : UserControl, ISplashScreen
     {

@@ -8,6 +8,7 @@ using InDoOut_Desktop.UI.Threading;
 using InDoOut_Executable_Core.Location;
 using InDoOut_Executable_Core.Logging;
 using InDoOut_Executable_Core.Messaging;
+using InDoOut_UI_Common.Controls.Screens;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -69,7 +70,7 @@ namespace InDoOut_Desktop.UI.Windows
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            var splash = OLD_SPLASH ? new SplashWindow() { Owner = this } : (ISplashScreen)Splash_Overlay;
+            var splash = OLD_SPLASH ? new SplashWindow() { Owner = this } : Splash_Overlay as ISplashScreen;
             if (splash != null)
             {
                 _ = Activate();

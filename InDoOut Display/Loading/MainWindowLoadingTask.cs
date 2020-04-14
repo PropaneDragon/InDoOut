@@ -19,14 +19,16 @@ namespace InDoOut_Display.Loading
 
             if (LoadedPlugins.Instance.Plugins.Count <= 0)
             {
-                await LoadPlugins(new ElementPluginLoader());
-                await LoadPlugins(new FunctionPluginLoader());
+                var allPluginsLoaded = true;
+
+                allPluginsLoaded = await LoadPlugins(new ElementPluginLoader()) && allPluginsLoaded;
+                allPluginsLoaded = await LoadPlugins(new FunctionPluginLoader()) && allPluginsLoaded;
 
                 Name = "Plugins loaded.";
 
                 Log.Instance.Header($"PLUGIN LOADING DONE");
 
-                return true;
+                return allPluginsLoaded;
             }
 
             Name = "Plugin load failed.";

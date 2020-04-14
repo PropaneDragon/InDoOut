@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InDoOut_Display"
-        xmlns:screens="clr-namespace:InDoOut_Display.UI.Controls.Screens"
+        xmlns:splash="clr-namespace:InDoOut_Display.UI.Controls.Splash"
         xmlns:core="clr-namespace:InDoOut_UI_Common.Controls.Core;assembly=InDoOutUICommon"
         xmlns:sidebar="clr-namespace:InDoOut_Display.UI.Controls.Sidebar"
         xmlns:taskManager="clr-namespace:InDoOut_UI_Common.Controls.TaskManager;assembly=InDoOutUICommon"
@@ -14,5 +14,6 @@
         <taskManager:TaskView x:Name="TaskView_Main" />
         <core:TitleBar x:Name="TitleBar_Main" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
         <sidebar:Sidebar x:Name="Sidebar_Main" HorizontalAlignment="Left" />
+        <splash:SplashOverlay x:Name="Splash_Overlay" Visibility="Collapsed" />
     </Grid>
 </Window>
