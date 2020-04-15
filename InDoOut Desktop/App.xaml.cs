@@ -7,7 +7,7 @@ namespace InDoOut_Desktop
 {
     public partial class App : Application
     {
-        public App()
+        private void Application_Startup(object sender, StartupEventArgs e)
         {
             Log.Instance.Header("Desktop application started");
 
@@ -16,7 +16,9 @@ namespace InDoOut_Desktop
 
         private void Current_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
-
+            Log.Instance.Header("Crashed!");
+            Log.Instance.Error(e.Exception.Message);
+            Log.Instance.Error(e.Exception.StackTrace);
         }
     }
 }

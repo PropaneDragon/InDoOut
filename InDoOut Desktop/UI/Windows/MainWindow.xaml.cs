@@ -2,7 +2,6 @@
 using InDoOut_Desktop.Loading;
 using InDoOut_Desktop.Options;
 using InDoOut_Desktop.Programs;
-using InDoOut_Desktop.UI.Interfaces;
 using InDoOut_Desktop.UI.Messaging;
 using InDoOut_Desktop.UI.Threading;
 using InDoOut_Executable_Core.Location;
