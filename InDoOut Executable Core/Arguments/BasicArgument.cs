@@ -4,7 +4,7 @@ namespace InDoOut_Executable_Core.Arguments
 {
     public class BasicArgument : Argument
     {
-        protected Action<IArgumentHandler> TriggerAction { get; set; }
+        protected Action<IArgumentHandler, string> TriggerAction { get; set; }
 
         private BasicArgument(string key, string description = "", bool allowsValue = false, bool hidden = false) : base(key, description, allowsValue, hidden)
         {
@@ -14,19 +14,19 @@ namespace InDoOut_Executable_Core.Arguments
         {
         }
 
-        public BasicArgument(string key, string description = "", bool allowsValue = false, bool hidden = false, Action<IArgumentHandler> triggerAction = null) : this(key, description, allowsValue, hidden)
+        public BasicArgument(string key, string description = "", bool allowsValue = false, bool hidden = false, Action<IArgumentHandler, string> triggerAction = null) : this(key, description, allowsValue, hidden)
         {
             TriggerAction = triggerAction;
         }
 
-        public BasicArgument(string key, string description = "", string defaultValue = "", bool hidden = false, Action<IArgumentHandler> triggerAction = null) : this(key, description, defaultValue, hidden)
+        public BasicArgument(string key, string description = "", string defaultValue = "", bool hidden = false, Action<IArgumentHandler, string> triggerAction = null) : this(key, description, defaultValue, hidden)
         {
             TriggerAction = triggerAction;
         }
 
         public override void Trigger(IArgumentHandler handler)
         {
-            TriggerAction?.Invoke(handler);
+            TriggerAction?.Invoke(handler, Value);
         }
     }
 }

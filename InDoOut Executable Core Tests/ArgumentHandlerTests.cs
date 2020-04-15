@@ -244,10 +244,10 @@ namespace InDoOut_Executable_Core_Tests
             var bTriggered = false;
             var cTriggered = false;
             var dTriggered = false;
-            var argumentA = new BasicArgument("A", "Description", "", false, (handler) => { aTriggered = true; });
-            var argumentB = new BasicArgument("B", "Description", "", false, (handler) => { bTriggered = true; });
-            var argumentC = new BasicArgument("C", "Description", "", false, (handler) => { cTriggered = true; });
-            var argumentD = new BasicArgument("D", "Description", "", false, (handler) => { dTriggered = true; });
+            var argumentA = new BasicArgument("A", "Description", "", false, (handler, value) => aTriggered = true);
+            var argumentB = new BasicArgument("B", "Description", "", false, (handler, value) => bTriggered = true);
+            var argumentC = new BasicArgument("C", "Description", "", false, (handler, value) => cTriggered = true);
+            var argumentD = new BasicArgument("D", "Description", "", false, (handler, value) => dTriggered = true);
 
             Assert.IsTrue(argumentHandler.AddArgument(argumentA));
             Assert.IsTrue(argumentHandler.AddArgument(argumentB));

@@ -1,4 +1,5 @@
-﻿using InDoOut_Console.Display;
+﻿using InDoOut_Console.Arguments;
+using InDoOut_Console.Display;
 using InDoOut_Console.Messaging;
 using InDoOut_Console.ProgramView;
 using InDoOut_Core.Entities.Programs;
@@ -23,37 +24,53 @@ namespace InDoOut_Console
 {
     class Start
     {
+        private static string _fileToOpen = null;
         private static LogFileSaver _logFileSaver = null;
 
         static void Main(string[] args)
         {
-            ProcessArguments(args);
-
-            Log.Instance.Header("Console application started");
-
-            SetUp();
-            WriteHeader();
-            LoadPlugins();
-
-            if (args.Length > 0)
+            if (ProcessArguments(args))
             {
-                var programToStart = args[0];
+                Log.Instance.Header("Console application started");
 
-                LoadProgram(programToStart);
-            }
-            else
-            {
-                ColourConsole.WriteErrorLine("No program to load.");
+                SetUp();
+                WriteHeader();
+                LoadPlugins();
+
+                if (!string.IsNullOrEmpty(_fileToOpen))
+                {
+                    LoadProgram(_fileToOpen);
+                }
+                else
+                {
+                    ColourConsole.WriteErrorLine("No program to load.");
+                }
             }
 
             WaitToComplete();
 
-            _ = _logFileSaver.SaveLog();
+            _ = _logFileSaver?.SaveLog();
         }
 
-        private static void ProcessArguments(string[] args)
+        private static bool ProcessArguments(string[] args)
         {
+            var helpArgument = new ConsoleHelpArgument();
+            var programArgument = new BasicArgument("program", "The path to the program to start.", "", false, (handler, value) => _fileToOpen = value);
 
+            _ = ArgumentHandler.Instance.AddArgument(helpArgument);
+            _ = ArgumentHandler.Instance.AddArgument(programArgument);
+
+            ArgumentHandler.Instance.Process(args);
+
+            return !helpArgument.HelpShown;
+        }
+
+        private static void SetUp()
+        {
+            UserMessageSystemHolder.Instance.CurrentUserMessageSystem = new ConsoleUserMessageSystem();
+
+            _logFileSaver = new LogFileSaver(StandardLocations.Instance);
+            _logFileSaver.BeginAutoSave();
         }
 
         private static void WaitToComplete()
@@ -204,14 +221,6 @@ namespace InDoOut_Console
 
             Console.WriteLine();
             Console.BackgroundColor = originalBackgroundColour;
-        }
-
-        private static void SetUp()
-        {
-            UserMessageSystemHolder.Instance.CurrentUserMessageSystem = new ConsoleUserMessageSystem();
-
-            _logFileSaver = new LogFileSaver(StandardLocations.Instance);
-            _logFileSaver.BeginAutoSave();
         }
     }
 }
