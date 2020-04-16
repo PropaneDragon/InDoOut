@@ -2,6 +2,7 @@
 using InDoOut_Console.Display;
 using InDoOut_Console.Messaging;
 using InDoOut_Console.ProgramView;
+using InDoOut_Core.Entities.Functions;
 using InDoOut_Core.Entities.Programs;
 using InDoOut_Core.Functions;
 using InDoOut_Core.Logging;
@@ -25,6 +26,8 @@ namespace InDoOut_Console
     class Start
     {
         private static string _fileToOpen = null;
+        private static List<string> _programArguments = new List<string>();
+
         private static LogFileSaver _logFileSaver = null;
 
         static void Main(string[] args)
@@ -56,11 +59,24 @@ namespace InDoOut_Console
         {
             var helpArgument = new ConsoleHelpArgument();
             var programArgument = new BasicArgument("program", "The path to the program to start.", "", false, (handler, value) => _fileToOpen = value);
+            var programRunArguments = new List<ConsoleProgramRunArgument>();
 
             _ = ArgumentHandler.Instance.AddArgument(helpArgument);
             _ = ArgumentHandler.Instance.AddArgument(programArgument);
 
+            for (var id = 1; id <= StartFunction.TOTAL_OUTPUTS; ++id)
+            {
+                var runArgument = new ConsoleProgramRunArgument(id);
+                programRunArguments.Add(runArgument);
+                _ = ArgumentHandler.Instance.AddArgument(runArgument);
+            }
+
             ArgumentHandler.Instance.Process(args);
+
+            foreach (var runArgument in programRunArguments)
+            {
+                _programArguments.Add(runArgument.Value);
+            }
 
             return !helpArgument.HelpShown;
         }
@@ -93,7 +109,7 @@ namespace InDoOut_Console
 
                 _logFileSaver.LogFileName = $"IDO-{Path.GetFileNameWithoutExtension(programToStart)}.log";
 
-                var program = new Program();
+                var program = new Program(_programArguments.ToArray());
                 var storage = new ProgramJsonStorer(new FunctionBuilder(), LoadedPlugins.Instance, programToStart);
 
                 LoadProgram(program, storage);
