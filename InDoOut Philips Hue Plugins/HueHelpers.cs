@@ -20,6 +20,9 @@ namespace InDoOut_Philips_Hue_Plugins
         public static Group GetGroup(HueClient client, IProperty<string> id) => GetGroup(client, id.FullValue);
         public static Group GetGroup(HueClient client, string id) => client != null && !string.IsNullOrEmpty(id) ? TryGet.ValueOrDefault(() => client.GetGroupAsync(id).Result, null) : null;
 
+        public static Scene GetScene(HueClient client, IProperty<string> id) => GetScene(client, id.FullValue);
+        public static Scene GetScene(HueClient client, string id) => client != null && !string.IsNullOrEmpty(id) ? TryGet.ValueOrDefault(() => client.GetSceneAsync(id).Result, null) : null;
+
         public static Light GetLight(HueClient client, IProperty<string> id) => GetLight(client, id.FullValue);
         public static Light GetLight(HueClient client, string id) => client != null ? TryGet.ValueOrDefault(() => client.GetLightAsync(id).Result, null) : null;
 
@@ -41,27 +44,36 @@ namespace InDoOut_Philips_Hue_Plugins
             return new List<Group>();
         }
 
-        public static List<Light> GetLights(HueClient client, IProperty<string> name, bool allowPartialMatches = false) => GetLights(client, name.FullValue, allowPartialMatches);
-        public static List<Light> GetLights(HueClient client, string name, bool allowPartialMatches = false) => GetLights(client, null, name, allowPartialMatches);
-        public static List<Light> GetLights(HueClient client, Group group, IProperty<string> name, bool allowPartialMatches = false) => GetLights(client, group, name.FullValue, allowPartialMatches);
-        public static List<Light> GetLights(HueClient client, Group group = null, string name = null, bool allowPartialMatches = false)
+        public static List<Scene> GetScenes(HueClient client, Group group, IProperty<string> name, bool allowPartialMatches) => GetScenes(client, group, name.FullValue, allowPartialMatches);
+        public static List<Scene> GetScenes(HueClient client, Group group, string name, bool allowPartialMatches) => GetScenes(client, name, allowPartialMatches).Where(scene => scene.Group == group?.Id).ToList();
+        public static List<Scene> GetScenes(HueClient client, IProperty<string> name = null, bool allowPartialMatches = false) => GetScenes(client, name.FullValue, allowPartialMatches);
+        public static List<Scene> GetScenes(HueClient client, string name, bool allowPartialMatches)
         {
             if (client != null)
             {
-                var validLights = TryGet.ValueOrDefault(() => client.GetLightsAsync().Result, null);
-                if (validLights != null)
+                var scenes = TryGet.ValueOrDefault(() => client.GetScenesAsync().Result, null);
+                if (scenes != null)
                 {
-                    if (group != null)
-                    {
-                        validLights = validLights.Where(light => group?.Lights != null && group.Lights.Contains(light.Id));
-                    }
+                    return string.IsNullOrEmpty(name) ? scenes.ToList() : scenes.Where(scene => StringMatches(scene.Name, name, allowPartialMatches)).ToList();
+                }
+            }
 
-                    if (!string.IsNullOrEmpty(name))
-                    {
-                        validLights = validLights.Where(light => StringMatches(light.Name, name, allowPartialMatches));
-                    }
+            return new List<Scene>();
+        }
 
-                    return validLights.ToList();
+        public static List<Light> GetLights(HueClient client, Group group, IProperty<string> name, bool allowPartialMatches = false) => GetLights(client, group, name.FullValue, allowPartialMatches);
+        public static List<Light> GetLights(HueClient client, Group group, string name = null, bool allowPartialMatches = false) => GetLights(client, name, allowPartialMatches).Where(light => group?.Lights.Contains(light.Id) ?? false).ToList();
+        public static List<Light> GetLights(HueClient client, Scene scene, IProperty<string> name, bool allowPartialMatches = false) => GetLights(client, scene, name.FullValue, allowPartialMatches);
+        public static List<Light> GetLights(HueClient client, Scene scene, string name = null, bool allowPartialMatches = false) => GetLights(client, name, allowPartialMatches).Where(light => scene?.Lights.Contains(light.Id) ?? false).ToList();
+        public static List<Light> GetLights(HueClient client, IProperty<string> name, bool allowPartialMatches = false) => GetLights(client, name.FullValue, allowPartialMatches);
+        public static List<Light> GetLights(HueClient client, string name = null, bool allowPartialMatches = false)
+        {
+            if (client != null)
+            {
+                var allLights = TryGet.ValueOrDefault(() => client.GetLightsAsync().Result, null);
+                if (allLights != null)
+                {
+                    return string.IsNullOrEmpty(name) ? allLights.ToList() : allLights.Where(light => StringMatches(light.Name, name, allowPartialMatches)).ToList();
                 }
             }
 
