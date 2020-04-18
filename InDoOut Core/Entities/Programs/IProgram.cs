@@ -18,6 +18,14 @@ namespace InDoOut_Core.Entities.Programs
         bool Stopping { get; }
 
         /// <summary>
+        /// The return code of this program after execution. If there are any
+        /// <see cref="IEndFunction"/>s present as part of this program and they have
+        /// executed with a value in the <see cref="IEndFunction.ReturnCode"/> then that
+        /// will be represented in the return code of this program.
+        /// </summary>
+        string ReturnCode { get; }
+
+        /// <summary>
         /// All <see cref="IFunction"/>s that are contained within this program.
         /// </summary>
         List<IFunction> Functions { get; }
@@ -27,6 +35,12 @@ namespace InDoOut_Core.Entities.Programs
         /// program is started.
         /// </summary>
         List<IStartFunction> StartFunctions { get; }
+
+        /// <summary>
+        /// All <see cref="IEndFunction"/>s that are the potential end results of this
+        /// program.
+        /// </summary>
+        List<IEndFunction> EndFunctions { get; }
 
         /// <summary>
         /// Values to pass into all <see cref="StartFunctions"/> when the program is started.

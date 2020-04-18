@@ -23,6 +23,8 @@ namespace InDoOut_Application_Plugins.Self
 
         private IProgram _currentProgram = null;
 
+        public ILoadedPlugins PluginsToUse { get; set; } = LoadedPlugins.Instance;
+
         public override IOutput TriggerOnFailure => _failed;
 
         public override string Description => "Runs an IDO program internally, allowing for programs to be used as self-contained functions.";
@@ -45,7 +47,7 @@ namespace InDoOut_Application_Plugins.Self
             _programPath = AddProperty(new Property<string>("Path", "The full path to the IDO program.", true));
             _reloadEachTime = AddProperty(new Property<bool>("Reload each time", "When this is true, it reads the program from the disk every time it is called. When false, it will only read it once.", false, false));
 
-            _result = AddResult(new Result("Result", "The result value from the program."));
+            _result = AddResult(new Result("Result", "The result value from the program.", "0"));
 
             for (var count = 1; count <= StartFunction.TOTAL_OUTPUTS; ++count)
             {
@@ -57,15 +59,14 @@ namespace InDoOut_Application_Plugins.Self
         {
             if (!string.IsNullOrEmpty(_programPath?.FullValue) && File.Exists(_programPath.FullValue))
             {
-                var plugins = LoadedPlugins.Instance;
                 var builder = new FunctionBuilder();
 
-                if (plugins != null)
+                if (PluginsToUse != null)
                 {
                     if (_reloadEachTime.FullValue || _currentProgram == null)
                     {
                         var loadedProgram = new Program(_inputValues.Select(value => value.FullValue).ToArray());
-                        var loader = new ProgramJsonStorer(builder, plugins, _programPath.FullValue);
+                        var loader = new ProgramJsonStorer(builder, PluginsToUse, _programPath.FullValue);
                         var loadResult = loader.Load(loadedProgram);
                         if (loadResult.Count == 0)
                         {
@@ -97,7 +98,7 @@ namespace InDoOut_Application_Plugins.Self
                             Thread.Sleep(TimeSpan.FromMilliseconds(10));
                         }
 
-                        _result.RawValue = ""; //Todo: Add result from program when implemented.
+                        _result.RawValue = _currentProgram?.ReturnCode ?? "0";
 
                         _currentProgram.Stop();
                         _currentProgram = null;

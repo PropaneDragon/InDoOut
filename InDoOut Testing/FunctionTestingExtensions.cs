@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 
 namespace InDoOut_Testing
 {
@@ -19,9 +20,9 @@ namespace InDoOut_Testing
         /// </summary>
         /// <param name="triggerable">The triggerable to wait for.</param>
         /// <param name="waitForStart">Whether to wait for the function to start first.</param>
-        public static void WaitForCompletion(this ITriggerable triggerable, bool waitForStart = false)
+        public static void WaitForCompletion(this ITriggerable triggerable, bool waitForStart = false, int sensitivity = 5)
         {
-            _ = WaitForCompletion(triggerable, TimeSpan.FromMinutes(1), waitForStart);
+            _ = WaitForCompletion(triggerable, TimeSpan.FromMinutes(1), waitForStart, sensitivity);
         }
 
         /// <summary>
@@ -31,8 +32,9 @@ namespace InDoOut_Testing
         /// <param name="triggerable">The triggerable to wait for.</param>
         /// <param name="timeout">The amount of time to wait for the triggerable to complete.</param>
         /// <param name="waitForStart">Whether to wait for the triggerable to start first.</param>
+        /// <param name="sensitivity">The sensitivity of the wait timer. This is the amount of milliseconds to wait and check if the <paramref name="triggerable"/> is reporting it's not running anymore (due to it switching functions internally for example).</param>
         /// <returns>Whether the triggerable completed in time or not.</returns>
-        public static bool WaitForCompletion(this ITriggerable triggerable, TimeSpan timeout, bool waitForStart = false)
+        public static bool WaitForCompletion(this ITriggerable triggerable, TimeSpan timeout, bool waitForStart = false, int sensitivity = 5)
         {
             if (triggerable != null)
             {
@@ -50,8 +52,16 @@ namespace InDoOut_Testing
                     }
                 }
 
-                while (triggerable.Running && stopwatch.Elapsed < timeout)
+                var notRunningCount = 0;
+
+                while ((triggerable.Running || notRunningCount++ < sensitivity) && stopwatch.Elapsed < timeout)
                 {
+                    if (triggerable.Running)
+                    {
+                        notRunningCount = 0;
+                    }
+
+                    Thread.Sleep(1);
                 }
 
                 return stopwatch.Elapsed >= timeout ? false : !triggerable.Running;

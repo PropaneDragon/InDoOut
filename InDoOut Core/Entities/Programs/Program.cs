@@ -34,6 +34,13 @@ namespace InDoOut_Core.Entities.Programs
         public List<IStartFunction> StartFunctions => Functions.Where(function => typeof(IStartFunction).IsAssignableFrom(function.GetType())).Cast<IStartFunction>().ToList();
 
         /// <summary>
+        /// All <see cref="IEndFunction"/>s within this program.
+        /// If one of these are called then this means the program has potentially ended, and the
+        /// resulting program <see cref="ReturnCode"/> will reflect the <see cref="IEndFunction"/> that was called.
+        /// </summary>
+        public List<IEndFunction> EndFunctions => Functions.Where(function => typeof(IEndFunction).IsAssignableFrom(function.GetType())).Cast<IEndFunction>().ToList();
+
+        /// <summary>
         /// Values to pass into <see cref="StartFunctions"/> when the program is started.
         /// </summary>
         public List<string> PassthroughValues { get; private set; } = new List<string>();
@@ -52,6 +59,17 @@ namespace InDoOut_Core.Entities.Programs
         /// Whether any of the functions within this program are still stopping.
         /// </summary>
         public bool Stopping => Functions.Any(function => function.State == State.Stopping && function.Running);
+
+        /// <summary>
+        /// The return code of this program after execution. If there are any
+        /// <see cref="IEndFunction"/>s present as part of this program and they have
+        /// executed with a value in the <see cref="IEndFunction.ReturnCode"/> then that
+        /// will be represented in the return code of this program.
+        /// <para/>
+        /// Note: If multiple <see cref="IEndFunction"/>s have been triggered as part of program
+        /// execution, the first one to be found will be returned. By default this return code will be "0".
+        /// </summary>
+        public string ReturnCode => EndFunctions?.FirstOrDefault(function => function.HasCompletedSince(LastTriggerTime))?.ReturnCode ?? "0";
 
         /// <summary>
         /// The name of this program.

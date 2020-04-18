@@ -225,8 +225,8 @@ namespace InDoOut_Core_Plugins_Tests
         private void TriggerFunctionAndCheckOutput(IFunction function, IOutput output, TestableInput connectedInput, int expectedCount)
         {
             function.Trigger(null);
-            function.WaitForCompletion(true);
-            connectedInput.WaitForCompletion(true);
+            function.WaitForCompletion();
+            connectedInput.WaitForCompletion();
 
             Assert.AreEqual(output, connectedInput.LastTriggeredBy);
             Assert.AreEqual(expectedCount, connectedInput.TriggeredCount);
