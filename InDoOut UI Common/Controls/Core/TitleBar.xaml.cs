@@ -174,15 +174,13 @@ namespace InDoOut_UI_Common.Controls.Core
         private void UserControl_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             ToggleWindowState();
+
+            e.Handled = true;
         }
 
         private void Text_Title_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-        }
-
-        private void Text_Title_PreviewMouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed && _attachedWindow != null)
+            if (_attachedWindow != null)
             {
                 if (_attachedWindow.WindowState == WindowState.Maximized)
                 {
@@ -205,6 +203,10 @@ namespace InDoOut_UI_Common.Controls.Core
                 }
                 catch { }
             }
+        }
+
+        private void Text_Title_PreviewMouseMove(object sender, MouseEventArgs e)
+        {            
         }
 
         private void AttachedWindow_StateChanged(object sender, EventArgs e)
