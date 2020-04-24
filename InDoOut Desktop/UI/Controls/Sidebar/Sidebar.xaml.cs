@@ -7,6 +7,7 @@ using InDoOut_Plugins.Loaders;
 using InDoOut_UI_Common.Events;
 using InDoOut_UI_Common.InterfaceElements;
 using InDoOut_UI_Common.SaveLoad;
+using InDoOut_UI_Common.Windows;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -223,7 +224,7 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
         {
             Log.Instance.Header("Settings button clicked");
 
-            var settingsWindow = new SettingsWindow()
+            var settingsWindow = new SettingsWindow(new OptionsJsonStorer())
             {
                 Owner = Window.GetWindow(this)
             };

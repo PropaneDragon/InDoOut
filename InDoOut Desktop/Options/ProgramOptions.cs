@@ -1,50 +1,25 @@
 ﻿using InDoOut_Core.Basic;
-using InDoOut_Core.Instancing;
 using InDoOut_Core.Logging;
-using InDoOut_Core.Options;
 using InDoOut_Core.Options.Types;
 using InDoOut_Executable_Core.Location;
 using InDoOut_Executable_Core.Messaging;
+using InDoOut_Executable_Core.Options;
 using Microsoft.Win32;
-using System.Linq;
 
 namespace InDoOut_Desktop.Options
 {
-    internal class ProgramSettings : Singleton<ProgramSettings>
+    internal class ProgramOptions : AbstractProgramOptions
     {
         //public CheckableOption StartWithComputerAll { get; } = new CheckableOption("Start with computer (All users)", "Starts IDO when the computer starts. This sets the program to start for all users, so regardless of what user logs on the program will start.", true);
         public CheckableOption StartWithComputerCurrent { get; } = new CheckableOption("Start with computer (current user)", "Starts IDO when the computer starts. This sets the program to start for only you. Other users of this machine are unaffected.", false);
         public CheckableOption StartInBackground { get; } = new CheckableOption("Start in the background", "Starts IDO minimised.", false);
         public CheckableOption AllowLogging { get; } = new CheckableOption("Logging", "Allows IDO to log all events to a file for debugging.", true);
 
-        public IOptionHolder OptionHolder { get; } = new OptionHolder();
-        
-        public ProgramSettings()
+        public ProgramOptions() : base()
         {
         }
 
-        public void RegisterOptions()
-        {
-            Log.Instance.Header("Automatically registering options for program settings.");
-
-            var validProperties = GetType().GetProperties().Where(property => typeof(IOption).IsAssignableFrom(property.PropertyType));
-            foreach (var validProperty in validProperties)
-            {
-                var getterMethod = validProperty.GetGetMethod(true);
-                if (getterMethod != null)
-                {
-                    var potentialOption = getterMethod.Invoke(this, null);
-                    if (potentialOption is IOption option)
-                    {
-                        _ = OptionHolder.RegisterOption(option);
-                    }
-                }
-            }
-
-            HookOptions();
-        }
-
-        private void HookOptions()
+        protected override void HookOptions()
         {
             //StartWithComputerAll.OnValueChanged += StartWithComputer_OnValueChanged;
             StartWithComputerCurrent.OnValueChanged += StartWithComputer_OnValueChanged;

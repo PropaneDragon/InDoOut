@@ -1,11 +1,8 @@
 ﻿using InDoOut_Core.Options;
 using System.Windows.Controls;
 
-namespace InDoOut_Desktop.UI.Controls.Options.Types
+namespace InDoOut_UI_Common.Controls.Options.Types
 {
-    /// <summary>
-    /// Interaction logic for CheckableOptionInterface.xaml
-    /// </summary>
     public partial class CheckableOptionInterface : UserControl, ILinkedInterfaceOption
     {
         public CheckableOptionInterface()

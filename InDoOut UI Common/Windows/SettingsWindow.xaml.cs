@@ -1,14 +1,18 @@
-﻿using InDoOut_Desktop.Options;
-using InDoOut_Desktop.UI.Controls.Options;
-using InDoOut_Core.Options;
+﻿using InDoOut_Core.Options;
 using System.Collections.Generic;
 using System.Windows;
 using InDoOut_Plugins.Loaders;
+using InDoOut_UI_Common.Controls.Options;
+using InDoOut_Executable_Core.Options;
+using InDoOut_Executable_Core.Storage;
+using InDoOut_UI_Common.SaveLoad;
 
-namespace InDoOut_Desktop.UI.Windows
+namespace InDoOut_UI_Common.Windows
 {
     public partial class SettingsWindow : Window
     {
+        IOptionsStorer OptionsStorer { get; set; } = null;
+
         public SettingsWindow()
         {
             InitializeComponent();
@@ -17,9 +21,14 @@ namespace InDoOut_Desktop.UI.Windows
             AddPluginOptions();
         }
 
+        public SettingsWindow(IOptionsStorer optionsStorer) : this()
+        {
+            OptionsStorer = optionsStorer;
+        }
+
         private void AddProgramOptions()
         {
-            AddOptions("Program options", ProgramSettings.Instance.OptionHolder.Options);
+            AddOptions("Program options", ProgramOptionHolder.Instance.ProgramOptions?.OptionHolder?.Options);
         }
 
         private void AddPluginOptions()
@@ -70,7 +79,7 @@ namespace InDoOut_Desktop.UI.Windows
                 }
             }
 
-            _ = await OptionsSaveLoad.Instance.SaveAllOptionsAsync(this);
+            _ = await OptionsSaveLoad.Instance.SaveAllOptionsAsync(OptionsStorer, this);
 
             Button_Apply.IsEnabled = true;
         }

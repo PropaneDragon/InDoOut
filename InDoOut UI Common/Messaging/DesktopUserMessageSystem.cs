@@ -1,9 +1,9 @@
 ﻿using InDoOut_Executable_Core.Messaging;
 using System.Windows;
 
-namespace InDoOut_Desktop.UI.Messaging
+namespace InDoOut_UI_Common.Messaging
 {
-    internal class DesktopUserMessageSystem : AbstractUserMessageSystem
+    public class DesktopUserMessageSystem : AbstractUserMessageSystem
     {
         public override void ShowError(string title, string message)
         {

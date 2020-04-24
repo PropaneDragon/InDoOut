@@ -1,17 +1,15 @@
-﻿<Window x:Class="InDoOut_Desktop.UI.Windows.SettingsWindow"
+﻿<Window x:Class="InDoOut_UI_Common.Windows.SettingsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:InDoOut_Desktop.UI.Windows"
-        xmlns:core="clr-namespace:InDoOut_UI_Common.Controls.Core;assembly=InDoOutUICommon"
-        xmlns:background="clr-namespace:InDoOut_Desktop.UI.Controls.Background"
-        xmlns:options="clr-namespace:InDoOut_Desktop.UI.Controls.Options"
+        xmlns:local="InDoOut_UI_Common.Windows"
+        xmlns:core="clr-namespace:InDoOut_UI_Common.Controls.Core"
         mc:Ignorable="d"
         Title="Settings" Height="1080" Width="450" WindowState="Normal" Background="#111" Foreground="White" MinWidth="450" MinHeight="500" WindowStartupLocation="CenterOwner" ShowActivated="True">
     <Grid>
         <Grid>
-            <background:BackgroundImage Opacity="0.01"/>
+            <!--<background:BackgroundImage Opacity="0.01"/>-->
             <DockPanel>
                 <Border DockPanel.Dock="Bottom" Padding="10">
                     <DockPanel LastChildFill="False">

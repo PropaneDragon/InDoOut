@@ -2,12 +2,13 @@
 using InDoOut_Desktop.Loading;
 using InDoOut_Desktop.Options;
 using InDoOut_Desktop.Programs;
-using InDoOut_Desktop.UI.Messaging;
 using InDoOut_Desktop.UI.Threading;
 using InDoOut_Executable_Core.Location;
 using InDoOut_Executable_Core.Logging;
 using InDoOut_Executable_Core.Messaging;
+using InDoOut_Executable_Core.Options;
 using InDoOut_UI_Common.Controls.Screens;
+using InDoOut_UI_Common.Messaging;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,7 +29,7 @@ namespace InDoOut_Desktop.UI.Windows
             InitializeComponent();
 
             Application.Current.DispatcherUnhandledException += Application_DispatcherUnhandledException;
-            ProgramSettings.Instance.RegisterOptions();
+            ProgramOptionHolder.Instance.ProgramOptions = new ProgramOptions();
             UIThread.Instance.SetCurrentThreadAsUIThread();
             UserMessageSystemHolder.Instance.CurrentUserMessageSystem = new DesktopUserMessageSystem();
 
@@ -57,7 +58,7 @@ namespace InDoOut_Desktop.UI.Windows
                 sidebar.TaskView = taskView;
             }
 
-            if (ProgramSettings.Instance.StartInBackground.Value)
+            if (ProgramOptionHolder.Instance.Get<ProgramOptions>()?.StartInBackground.Value ?? false)
             {
                 WindowState = WindowState.Minimized;
             }

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using InDoOut_Core.Options;
 
-namespace InDoOut_Desktop.UI.Controls.Options
+namespace InDoOut_UI_Common.Controls.Options
 {
     public interface IOptionsDisplay
     {

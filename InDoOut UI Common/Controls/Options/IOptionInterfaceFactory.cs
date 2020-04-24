@@ -1,8 +1,8 @@
 ﻿using System;
-using InDoOut_Desktop.UI.Controls.Options.Types;
 using InDoOut_Core.Options;
+using InDoOut_UI_Common.Controls.Options.Types;
 
-namespace InDoOut_Desktop.UI.Controls.Options
+namespace InDoOut_UI_Common.Controls.Options
 {
     public interface IOptionInterfaceFactory
     {

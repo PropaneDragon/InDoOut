@@ -2,6 +2,7 @@
 using InDoOut_Core.Instancing;
 using InDoOut_Core.Reporting;
 using InDoOut_Executable_Core.Location;
+using InDoOut_Executable_Core.Messaging;
 using InDoOut_Executable_Core.Programs;
 using InDoOut_Executable_Core.Storage;
 using Microsoft.Win32;
@@ -77,12 +78,12 @@ namespace InDoOut_UI_Common.SaveLoad
                 var resultStrings = failureReports.Select(report => report.Summary);
                 var canContinue = !failureReports.Any(report => report.Critical);
 
-                _ = MessageBox.Show(parent, $"The following errors occurred trying to load the program:\n\n{string.Join("\n- ", resultStrings)}");
+                UserMessageSystemHolder.Instance.CurrentUserMessageSystem?.ShowWarning("", $"The following errors occurred trying to load the program:\n\n{string.Join("\n- ", resultStrings)}");
 
                 if (canContinue)
                 {
-                    var result = MessageBox.Show(parent, "As there are no critical errors, do you wish to load anyway?\n\nPlease note that there may be missing elements or other features if you choose to load.", "Load anyway?", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
-                    if (result == MessageBoxResult.Yes)
+                    var result = UserMessageSystemHolder.Instance.CurrentUserMessageSystem?.ShowQuestion("Load anyway?", "As there are no critical errors, do you wish to load anyway?\n\nPlease note that there may be missing elements or other features if you choose to load.") ?? UserResponse.Yes;
+                    if (result == UserResponse.Yes)
                     {
                         return program;
                     }
@@ -156,7 +157,7 @@ namespace InDoOut_UI_Common.SaveLoad
             {
                 var resultStrings = failureReports.Select(report => report.Summary);
 
-                _ = MessageBox.Show(parent, $"The program couldn't be loaded due to the following errors:\n\n{string.Join("\n- ", resultStrings)}");
+                UserMessageSystemHolder.Instance.CurrentUserMessageSystem?.ShowWarning("", $"The program couldn't be loaded due to the following errors:\n\n{string.Join("\n- ", resultStrings)}");
             }
             else if (program != null)
             {

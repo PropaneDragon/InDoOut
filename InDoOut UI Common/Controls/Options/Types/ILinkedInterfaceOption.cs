@@ -1,6 +1,6 @@
 ﻿using InDoOut_Core.Options;
 
-namespace InDoOut_Desktop.UI.Controls.Options.Types
+namespace InDoOut_UI_Common.Controls.Options.Types
 {
     public interface ILinkedInterfaceOption
     {

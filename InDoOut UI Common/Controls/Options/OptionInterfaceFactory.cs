@@ -1,12 +1,12 @@
 ﻿using InDoOut_Core.Instancing;
-using InDoOut_Desktop.UI.Controls.Options.Types;
 using InDoOut_Core.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using InDoOut_UI_Common.Controls.Options.Types;
 
-namespace InDoOut_Desktop.UI.Controls.Options
+namespace InDoOut_UI_Common.Controls.Options
 {
     public class OptionInterfaceFactory : Singleton<OptionInterfaceFactory>, IOptionInterfaceFactory
     {

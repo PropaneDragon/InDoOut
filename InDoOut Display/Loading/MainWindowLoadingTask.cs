@@ -5,7 +5,9 @@ using InDoOut_Display_Plugins.Loaders;
 using InDoOut_Executable_Core.Loading;
 using InDoOut_Executable_Core.Location;
 using InDoOut_Function_Plugins.Loaders;
+using InDoOut_Json_Storage;
 using InDoOut_Plugins.Loaders;
+using InDoOut_UI_Common.SaveLoad;
 
 namespace InDoOut_Display.Loading
 {
@@ -27,6 +29,12 @@ namespace InDoOut_Display.Loading
                 Name = "Plugins loaded.";
 
                 Log.Instance.Header($"PLUGIN LOADING DONE");
+
+                Name = "Loading options.";
+
+                _ = await OptionsSaveLoad.Instance.LoadAllOptionsAsync(new OptionsJsonStorer());
+
+                Name = "Options loaded.";
 
                 return allPluginsLoaded;
             }

@@ -44,4 +44,8 @@
     <Resource Include="Resources\IDO_Splash_Logo.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="UI\Messaging\" />
+  </ItemGroup>
+
 </Project>

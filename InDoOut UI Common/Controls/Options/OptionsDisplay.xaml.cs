@@ -1,11 +1,11 @@
-﻿using InDoOut_Desktop.UI.Controls.Options.Types;
-using InDoOut_Core.Options;
+﻿using InDoOut_Core.Options;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using InDoOut_UI_Common.Controls.Options.Types;
 
-namespace InDoOut_Desktop.UI.Controls.Options
+namespace InDoOut_UI_Common.Controls.Options
 {
     public partial class OptionsDisplay : UserControl, IOptionsDisplay
     {

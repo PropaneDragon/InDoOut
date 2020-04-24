@@ -7,6 +7,7 @@ using InDoOut_Json_Storage;
 using InDoOut_Plugins.Loaders;
 using InDoOut_UI_Common.InterfaceElements;
 using InDoOut_UI_Common.SaveLoad;
+using InDoOut_UI_Common.Windows;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -118,7 +119,14 @@ namespace InDoOut_Display.UI.Controls.Sidebar
 
         private void Button_Settings_Click(object sender, RoutedEventArgs e)
         {
+            Log.Instance.Header("Settings button clicked");
 
+            var settingsWindow = new SettingsWindow(new OptionsJsonStorer())
+            {
+                Owner = Window.GetWindow(this)
+            };
+
+            settingsWindow.Show();
         }
     }
 }
