@@ -24,7 +24,7 @@ namespace InDoOut_Display.Creation
                 var associatedScreen = screenConnections?.CurrentScreen;
                 if (associatedScreen != null)
                 {
-                    associatedScreen?.DisplayElementCreator?.Create(function, setPositionFromMetadata);
+                    return associatedScreen?.DisplayElementCreator?.Create(function, setPositionFromMetadata);
                 }
             }
 

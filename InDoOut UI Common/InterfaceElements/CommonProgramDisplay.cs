@@ -191,12 +191,12 @@ namespace InDoOut_UI_Common.InterfaceElements
 
                 _currentProgram = program;
 
+                ProgramChanged(program);
+
                 if (_currentProgram != null)
                 {
                     _ = CommonProgramLoader?.DisplayProgram(_currentProgram);
                 }
-
-                ProgramChanged(program);
             }
         }
 
