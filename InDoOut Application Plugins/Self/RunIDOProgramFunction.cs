@@ -1,6 +1,7 @@
 ﻿using InDoOut_Core.Entities.Functions;
 using InDoOut_Core.Entities.Programs;
 using InDoOut_Core.Functions;
+using InDoOut_Executable_Core.Location;
 using InDoOut_Json_Storage;
 using InDoOut_Plugins.Loaders;
 using System;
@@ -57,7 +58,9 @@ namespace InDoOut_Application_Plugins.Self
 
         protected override IOutput Started(IInput triggeredBy)
         {
-            if (!string.IsNullOrEmpty(_programPath?.FullValue) && File.Exists(_programPath.FullValue))
+            var finalPath = ConstructProgramPathFromLocations(_programPath.FullValue);
+
+            if (!string.IsNullOrEmpty(finalPath) && File.Exists(finalPath))
             {
                 var builder = new FunctionBuilder();
 
@@ -66,7 +69,7 @@ namespace InDoOut_Application_Plugins.Self
                     if (_reloadEachTime.FullValue || _currentProgram == null)
                     {
                         var loadedProgram = new Program(_inputValues.Select(value => value.FullValue).ToArray());
-                        var loader = new ProgramJsonStorer(builder, PluginsToUse, _programPath.FullValue);
+                        var loader = new ProgramJsonStorer(builder, PluginsToUse, finalPath);
                         var loadResult = loader.Load(loadedProgram);
                         if (loadResult.Count == 0)
                         {
@@ -111,6 +114,58 @@ namespace InDoOut_Application_Plugins.Self
             }
 
             return _failed;
+        }
+
+        private string ConstructProgramPathFromLocations(string path)
+        {
+            if (!string.IsNullOrEmpty(path) && !File.Exists(path) && !Path.IsPathFullyQualified(path))
+            {
+                var fileName = Path.GetFileName(path);
+                var sanitisedPath = path.TrimStart(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+
+                if (!string.IsNullOrEmpty(fileName))
+                {
+                    var pathsToTry = new[]
+                    {
+                        "",
+                        FormatPath(StandardLocations.Instance.GetPathTo(Location.ApplicationDirectory)),
+                        FormatPath(Path.GetDirectoryName(StandardLocations.Instance.GetPathTo(Location.SaveFile)))
+                    };
+
+                    foreach (var pathToTry in pathsToTry)
+                    {
+                        if (pathToTry != null)
+                        {
+                            var potentialPaths = new[]
+                            {
+                                pathToTry + fileName,
+                                pathToTry + sanitisedPath
+                            };
+
+                            foreach (var potentialPath in potentialPaths)
+                            {
+                                if (!string.IsNullOrEmpty(potentialPath) && File.Exists(potentialPath))
+                                {
+                                    return potentialPath;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return path;
+        }
+        
+        private string FormatPath(string path)
+        {
+            if (!string.IsNullOrEmpty(path))
+            {
+                path = Path.TrimEndingDirectorySeparator(path);
+                path += Path.DirectorySeparatorChar;
+            }
+
+            return path;
         }
     }
 }
