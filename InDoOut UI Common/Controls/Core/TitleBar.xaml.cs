@@ -47,6 +47,7 @@ namespace InDoOut_UI_Common.Controls.Core
             }
 
             UpdateTooltipText();
+            UpdateWindowBorders();
         }
 
         private void ToggleWindowState()
@@ -86,8 +87,13 @@ namespace InDoOut_UI_Common.Controls.Core
 
         private void UpdateWindowBorders()
         {
-            _attachedWindow.BorderThickness = (_attachedWindow?.WindowState ?? WindowState.Maximized) == WindowState.Maximized ? new Thickness(8) : new Thickness(1);
+            var maximisedThickness = AddThickness(SystemParameters.WindowNonClientFrameThickness, SystemParameters.WindowResizeBorderThickness);
+            maximisedThickness.Top -= SystemParameters.CaptionHeight;
+
+            _attachedWindow.BorderThickness = (_attachedWindow?.WindowState ?? WindowState.Maximized) == WindowState.Maximized ? maximisedThickness : new Thickness(1);
         }
+
+        private Thickness AddThickness(Thickness first, Thickness second) => new Thickness(first.Left + second.Left, first.Top + second.Top, first.Right + second.Right, first.Bottom + second.Bottom);
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
