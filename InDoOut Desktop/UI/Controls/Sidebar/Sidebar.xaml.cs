@@ -1,6 +1,7 @@
 ﻿using InDoOut_Core.Functions;
 using InDoOut_Core.Logging;
 using InDoOut_Desktop.UI.Windows;
+using InDoOut_Executable_Core.Location;
 using InDoOut_Executable_Core.Programs;
 using InDoOut_Json_Storage;
 using InDoOut_Plugins.Loaders;
@@ -178,6 +179,7 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
 
             if (_programDisplay != null)
             {
+                _ = StandardLocations.Instance.SetPathTo(Location.SaveFile, null);
                 _ = ProgramHolder.Instance.RemoveProgram(_programDisplay?.AssociatedProgram);
                 _programDisplay.AssociatedProgram = ProgramHolder.Instance.NewProgram();
             }

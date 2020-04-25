@@ -2,6 +2,7 @@
 using InDoOut_Core.Logging;
 using InDoOut_Display.UI.Windows;
 using InDoOut_Display_Json_Storage;
+using InDoOut_Executable_Core.Location;
 using InDoOut_Executable_Core.Programs;
 using InDoOut_Json_Storage;
 using InDoOut_Plugins.Loaders;
@@ -78,7 +79,9 @@ namespace InDoOut_Display.UI.Controls.Sidebar
 
             if (AssociatedTaskView?.CurrentProgramDisplay != null)
             {
+                _ = StandardLocations.Instance.SetPathTo(Location.SaveFile, null);
                 _ = ProgramHolder.Instance.RemoveProgram(AssociatedTaskView?.CurrentProgramDisplay?.AssociatedProgram);
+
                 AssociatedTaskView.CurrentProgramDisplay.AssociatedProgram = ProgramHolder.Instance.NewProgram();
             }
         }
