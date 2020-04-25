@@ -29,7 +29,7 @@ namespace InDoOut_Desktop.UI.Windows
             InitializeComponent();
 
             Application.Current.DispatcherUnhandledException += Application_DispatcherUnhandledException;
-            ProgramOptionHolder.Instance.ProgramOptions = new ProgramOptions();
+            ProgramOptionsHolder.Instance.ProgramOptions = new ProgramOptions();
             UIThread.Instance.SetCurrentThreadAsUIThread();
             UserMessageSystemHolder.Instance.CurrentUserMessageSystem = new DesktopUserMessageSystem();
 
@@ -58,7 +58,7 @@ namespace InDoOut_Desktop.UI.Windows
                 sidebar.TaskView = taskView;
             }
 
-            if (ProgramOptionHolder.Instance.Get<ProgramOptions>()?.StartInBackground.Value ?? false)
+            if (ProgramOptionsHolder.Instance.Get<ProgramOptions>()?.StartInBackground.Value ?? false)
             {
                 WindowState = WindowState.Minimized;
             }

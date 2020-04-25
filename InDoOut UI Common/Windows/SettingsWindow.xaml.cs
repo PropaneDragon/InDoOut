@@ -28,7 +28,7 @@ namespace InDoOut_UI_Common.Windows
 
         private void AddProgramOptions()
         {
-            AddOptions("Program options", ProgramOptionHolder.Instance.ProgramOptions?.OptionHolder?.Options);
+            AddOptions("Program options", ProgramOptionsHolder.Instance.ProgramOptions?.OptionHolder?.Options);
         }
 
         private void AddPluginOptions()

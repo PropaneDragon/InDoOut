@@ -2,7 +2,7 @@
 
 namespace InDoOut_Executable_Core.Options
 {
-    public class ProgramOptionHolder : Singleton<ProgramOptionHolder>
+    public class ProgramOptionsHolder : Singleton<ProgramOptionsHolder>
     {
         public IAbstractProgramOptions ProgramOptions { get; set; } = null;
 

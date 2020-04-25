@@ -10,12 +10,16 @@
   <ItemGroup>
     <Compile Remove="Display\**" />
     <Compile Remove="UI\Controls\Core\**" />
+    <Compile Remove="UI\Messaging\**" />
     <EmbeddedResource Remove="Display\**" />
     <EmbeddedResource Remove="UI\Controls\Core\**" />
+    <EmbeddedResource Remove="UI\Messaging\**" />
     <None Remove="Display\**" />
     <None Remove="UI\Controls\Core\**" />
+    <None Remove="UI\Messaging\**" />
     <Page Remove="Display\**" />
     <Page Remove="UI\Controls\Core\**" />
+    <Page Remove="UI\Messaging\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -42,10 +46,6 @@
   <ItemGroup>
     <Resource Include="Resources\IDO_Main_BackgroundLogo.png" />
     <Resource Include="Resources\IDO_Splash_Logo.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="UI\Messaging\" />
   </ItemGroup>
 
 </Project>

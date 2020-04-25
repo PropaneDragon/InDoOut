@@ -1,5 +1,6 @@
 ﻿using InDoOut_Core.Functions;
 using InDoOut_Core.Logging;
+using InDoOut_Desktop.Options;
 using InDoOut_Desktop.UI.Windows;
 using InDoOut_Executable_Core.Location;
 using InDoOut_Executable_Core.Programs;
@@ -226,7 +227,7 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
         {
             Log.Instance.Header("Settings button clicked");
 
-            var settingsWindow = new SettingsWindow(new OptionsJsonStorer())
+            var settingsWindow = new SettingsWindow(CommonOptionsSaveLoad.Instance.OptionsStorer)
             {
                 Owner = Window.GetWindow(this)
             };

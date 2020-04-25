@@ -36,7 +36,7 @@ namespace InDoOut_UI_Common.SaveLoad
 
         public async Task<bool> LoadProgramOptionsAsync(IOptionsStorer optionsStorer, Window parent = null)
         {
-            return await LoadOptionsAsync(GetProgramFileName(optionsStorer), ProgramOptionHolder.Instance.ProgramOptions?.OptionHolder, optionsStorer, parent);
+            return await LoadOptionsAsync(GetProgramFileName(optionsStorer), ProgramOptionsHolder.Instance.ProgramOptions?.OptionHolder, optionsStorer, parent);
         }
 
         public async Task<bool> LoadPluginOptionsAsync(IOptionsStorer optionsStorer, Window parent = null)
@@ -61,7 +61,7 @@ namespace InDoOut_UI_Common.SaveLoad
 
         public async Task<bool> SaveProgramOptionsAsync(IOptionsStorer optionsStorer, Window parent = null)
         {
-            return await SaveOptionsAsync(GetProgramFileName(optionsStorer), ProgramOptionHolder.Instance.ProgramOptions?.OptionHolder, optionsStorer, parent);
+            return await SaveOptionsAsync(GetProgramFileName(optionsStorer), ProgramOptionsHolder.Instance.ProgramOptions?.OptionHolder, optionsStorer, parent);
         }
 
         public async Task<bool> SavePluginOptionsAsync(IOptionsStorer optionsStorer, Window parent = null)

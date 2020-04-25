@@ -1,10 +1,10 @@
 ﻿using InDoOut_Core.Functions;
 using InDoOut_Core.Logging;
+using InDoOut_Display.Options;
 using InDoOut_Display.UI.Windows;
 using InDoOut_Display_Json_Storage;
 using InDoOut_Executable_Core.Location;
 using InDoOut_Executable_Core.Programs;
-using InDoOut_Json_Storage;
 using InDoOut_Plugins.Loaders;
 using InDoOut_UI_Common.InterfaceElements;
 using InDoOut_UI_Common.SaveLoad;
@@ -124,7 +124,7 @@ namespace InDoOut_Display.UI.Controls.Sidebar
         {
             Log.Instance.Header("Settings button clicked");
 
-            var settingsWindow = new SettingsWindow(new OptionsJsonStorer())
+            var settingsWindow = new SettingsWindow(CommonOptionsSaveLoad.Instance.OptionsStorer)
             {
                 Owner = Window.GetWindow(this)
             };

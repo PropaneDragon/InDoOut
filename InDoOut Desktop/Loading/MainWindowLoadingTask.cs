@@ -1,4 +1,5 @@
 ﻿using InDoOut_Core.Logging;
+using InDoOut_Desktop.Options;
 using InDoOut_Executable_Core.Loading;
 using InDoOut_Executable_Core.Location;
 using InDoOut_Function_Plugins.Loaders;
@@ -46,7 +47,7 @@ namespace InDoOut_Desktop.Loading
 
                 Name = "Loading options.";
 
-                _ = await OptionsSaveLoad.Instance.LoadAllOptionsAsync(new OptionsJsonStorer());
+                _ = await CommonOptionsSaveLoad.Instance.LoadAllOptionsAsync();
 
                 Name = "Options loaded.";
 

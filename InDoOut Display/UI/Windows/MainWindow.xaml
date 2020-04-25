@@ -9,7 +9,7 @@
         xmlns:sidebar="clr-namespace:InDoOut_Display.UI.Controls.Sidebar"
         xmlns:taskManager="clr-namespace:InDoOut_UI_Common.Controls.TaskManager;assembly=InDoOutUICommon"
         mc:Ignorable="d"
-        Title="Designer" Height="1080" Width="1920" Background="#111" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+        Title="Designer" Height="1080" Width="1920" Background="#111" WindowStartupLocation="CenterScreen" WindowState="Maximized" Loaded="Window_Loaded" SizeChanged="Window_SizeChanged" StateChanged="Window_StateChanged">
     <Grid>
         <taskManager:TaskView x:Name="TaskView_Main" />
         <core:TitleBar x:Name="TitleBar_Main" HorizontalAlignment="Stretch" VerticalAlignment="Top" />

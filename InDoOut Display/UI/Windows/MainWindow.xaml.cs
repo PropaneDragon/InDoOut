@@ -18,6 +18,10 @@ namespace InDoOut_Display.UI.Windows
     {
         private readonly LogFileSaver _logSaver = new LogFileSaver(StandardLocations.Instance);
         private readonly DispatcherTimer _titleTimer = new DispatcherTimer(DispatcherPriority.Background);
+        private readonly DispatcherTimer _windowStateSaveTimer = new DispatcherTimer(DispatcherPriority.Background);
+
+        private bool _windowStateSavingEnabled = false;
+        private bool _windowStateChanged = false;
 
         public MainWindow()
         {
@@ -25,12 +29,16 @@ namespace InDoOut_Display.UI.Windows
 
             _logSaver.BeginAutoSave();
 
-            ProgramOptionHolder.Instance.ProgramOptions = new ProgramOptions();
+            ProgramOptionsHolder.Instance.ProgramOptions = new ProgramOptions();
             UserMessageSystemHolder.Instance.CurrentUserMessageSystem = new DesktopUserMessageSystem();
 
             _titleTimer.Interval = TimeSpan.FromMilliseconds(300);
             _titleTimer.Start();
-            _titleTimer.Tick += UpdateTimer_Tick;
+            _titleTimer.Tick += TitleTimer_Tick;
+
+            _windowStateSaveTimer.Interval = TimeSpan.FromMilliseconds(300);
+            _windowStateSaveTimer.Start();
+            _windowStateSaveTimer.Tick += WindowStateSaveTimer_Tick;
 
             Sidebar_Main.AssociatedTaskView = TaskView_Main;
         }
@@ -44,12 +52,45 @@ namespace InDoOut_Display.UI.Windows
                 taskView.ProgramDisplayCreator = new ProgramDisplayCreator();
                 taskView.CreateNewTask(true);
             }
+
+            SetWindowFromOptions();
+
+            _windowStateChanged = false;
+            _windowStateSavingEnabled = true;
+        }
+
+        private void SetWindowFromOptions()
+        {
+            var programOptions = ProgramOptionsHolder.Instance.Get<ProgramOptions>();
+            if (programOptions != null)
+            {
+                Left = programOptions.LastWindowX?.ValueAs(0d) ?? 0d;
+                Top = programOptions.LastWindowY?.ValueAs(0d) ?? 0d;
+                Width = programOptions.LastWindowWidth?.ValueAs(100d) ?? 100d;
+                Height = programOptions.LastWindowHeight?.ValueAs(100d) ?? 100d;
+                WindowState = (programOptions.LastWindowMaximised?.ValueAs(true) ?? true) ? WindowState.Maximized : WindowState.Normal;
+            }
+        }
+
+        private void SetOptionsFromWindow()
+        {
+            if (_windowStateSavingEnabled)
+            {
+                var programOptions = ProgramOptionsHolder.Instance.Get<ProgramOptions>();
+                if (programOptions != null)
+                {
+                    _ = programOptions.LastWindowX?.ValueFrom(Left);
+                    _ = programOptions.LastWindowY?.ValueFrom(Top);
+                    _ = programOptions.LastWindowWidth?.ValueFrom(Width);
+                    _ = programOptions.LastWindowHeight?.ValueFrom(Height);
+                    _ = programOptions.LastWindowMaximised?.ValueFrom(WindowState == WindowState.Maximized);
+                }
+            }
         }
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            var splash = Splash_Overlay as ISplashScreen;
-            if (splash != null)
+            if (Splash_Overlay is ISplashScreen splash)
             {
                 _ = Activate();
 
@@ -63,7 +104,21 @@ namespace InDoOut_Display.UI.Windows
             Close();
         }
 
-        private void UpdateTimer_Tick(object sender, EventArgs e)
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            SetOptionsFromWindow();
+
+            _windowStateChanged = true;
+        }
+
+        private void Window_StateChanged(object sender, EventArgs e)
+        {
+            SetOptionsFromWindow();
+
+            _windowStateChanged = true;
+        }
+
+        private void TitleTimer_Tick(object sender, EventArgs e)
         {
             var programName = "No program";
             var program = TaskView_Main.CurrentProgramDisplay?.AssociatedProgram;
@@ -74,6 +129,20 @@ namespace InDoOut_Display.UI.Windows
             }
 
             Title = $"{programName}";
+        }
+
+        private async void WindowStateSaveTimer_Tick(object sender, EventArgs e)
+        {
+            _windowStateSaveTimer.Stop();
+
+            if (_windowStateSavingEnabled && _windowStateChanged)
+            {
+                _windowStateChanged = false;
+
+                _ = await CommonOptionsSaveLoad.Instance.SaveProgramOptionsAsync(this);
+            }
+
+            _windowStateSaveTimer.Start();
         }
     }
 }
