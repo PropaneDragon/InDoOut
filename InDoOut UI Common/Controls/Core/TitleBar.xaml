@@ -9,6 +9,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/InDoOutUICommon;component/Style/TitleBarStyle.xaml" />
+                <ResourceDictionary Source="/InDoOutUICommon;component/Icons/Logos.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -27,7 +28,10 @@
                     <Button Template="{DynamicResource Template_Buttons_Control}" x:Name="Button_Close" ToolTip="Close" Content="" Click="Button_Close_Click" Padding="0,0,16,0"/>
                 </StackPanel>
             </ContentControl>
-            <TextBlock Padding="16" x:Name="Text_Title" DockPanel.Dock="Left" FontSize="24" Text="ido" TextAlignment="Center" PreviewMouseMove="Text_Title_PreviewMouseMove" PreviewMouseLeftButtonDown="Text_Title_PreviewMouseLeftButtonDown" />
+            <StackPanel DockPanel.Dock="Left" PreviewMouseMove="Text_Title_PreviewMouseMove" PreviewMouseLeftButtonDown="Text_Title_PreviewMouseLeftButtonDown" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Image Source="{StaticResource Logo}" Stretch="UniformToFill" StretchDirection="Both" Width="20" Height="20" Margin="0,0,0,0" />
+                <TextBlock Padding="16" x:Name="Text_Title" DockPanel.Dock="Left" FontSize="24" Text="ido" TextAlignment="Center" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TextTrimming="CharacterEllipsis" />
+            </StackPanel>
         </DockPanel>
     </Border>
 </UserControl>

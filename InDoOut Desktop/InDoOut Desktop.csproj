@@ -5,6 +5,9 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>InDoOut_Desktop</RootNamespace>
     <UseWPF>true</UseWPF>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
+    <StartupObject>InDoOut_Desktop.App</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,7 +30,6 @@
     <None Remove="Resources\IDO_Splash_Logo.png" />
     <None Remove="SplashWindow.xaml" />
     <None Remove="Style\MainStyle.xaml" />
-    <None Remove="UI\Controls\Background\BackgroundImage.xaml" />
     <None Remove="UI\Controls\BlockView\BlockView.xaml" />
     <None Remove="UI\Controls\BlockView\Overview.xaml" />
     <None Remove="UI\Controls\Sidebar\ItemList.xaml" />
@@ -44,8 +46,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Resources\IDO_Main_BackgroundLogo.png" />
-    <Resource Include="Resources\IDO_Splash_Logo.png" />
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

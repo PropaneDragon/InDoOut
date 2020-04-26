@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InDoOut_Core.Threading.Safety;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -87,10 +88,13 @@ namespace InDoOut_UI_Common.Controls.Core
 
         private void UpdateWindowBorders()
         {
-            var maximisedThickness = AddThickness(SystemParameters.WindowNonClientFrameThickness, SystemParameters.WindowResizeBorderThickness);
-            maximisedThickness.Top -= SystemParameters.CaptionHeight;
+            if (_attachedWindow != null)
+            {
+                var maximisedThickness = TryGet.ValueOrDefault(() => AddThickness(SystemParameters.WindowNonClientFrameThickness, SystemParameters.WindowResizeBorderThickness), new Thickness(8));
+                maximisedThickness.Top -= TryGet.ValueOrDefault(() => SystemParameters.CaptionHeight, 0);
 
-            _attachedWindow.BorderThickness = (_attachedWindow?.WindowState ?? WindowState.Maximized) == WindowState.Maximized ? maximisedThickness : new Thickness(1);
+                _attachedWindow.BorderThickness = (_attachedWindow?.WindowState ?? WindowState.Maximized) == WindowState.Maximized ? maximisedThickness : new Thickness(1);
+            }
         }
 
         private Thickness AddThickness(Thickness first, Thickness second) => new Thickness(first.Left + second.Left, first.Top + second.Top, first.Right + second.Right, first.Bottom + second.Bottom);
@@ -135,7 +139,7 @@ namespace InDoOut_UI_Common.Controls.Core
         {
             if (_attachedWindow != null)
             {
-                var windowTitle = $"{_attachedWindow.Title} > ido";
+                var windowTitle = $"{_attachedWindow.Title}";
 
                 if (_lastTitle == null || _lastTitle != windowTitle)
                 {

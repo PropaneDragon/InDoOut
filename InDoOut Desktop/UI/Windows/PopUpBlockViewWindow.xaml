@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:InDoOut_Desktop.UI.Windows"
         xmlns:core="clr-namespace:InDoOut_UI_Common.Controls.Core;assembly=InDoOutUICommon"
         xmlns:blockview="clr-namespace:InDoOut_Desktop.UI.Controls.BlockView"
-        xmlns:background="clr-namespace:InDoOut_Desktop.UI.Controls.Background"
+        xmlns:background="clr-namespace:InDoOut_UI_Common.Controls.Background;assembly=InDoOutUICommon"
         mc:Ignorable="d"
         Title="Untitled > ido" Height="1080" Width="1920" Loaded="Window_Loaded" Closed="Window_Closed" WindowState="Normal" Background="#111" Foreground="White" MinWidth="500" MinHeight="500" WindowStartupLocation="CenterOwner" ShowActivated="True">
     <Grid>

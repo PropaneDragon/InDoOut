@@ -10,6 +10,7 @@
                 <ResourceDictionary Source="pack://application:,,,/InDoOutUICommon;component/Style/CommonStyle.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/InDoOutUICommon;component/Style/ScrollBarStyle.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/InDoOutUICommon;component/Style/ButtonStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/InDoOutUICommon;component/Icons/Logos.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

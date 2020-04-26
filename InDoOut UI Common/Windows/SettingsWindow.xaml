@@ -5,11 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="InDoOut_UI_Common.Windows"
         xmlns:core="clr-namespace:InDoOut_UI_Common.Controls.Core"
+        xmlns:background="clr-namespace:InDoOut_UI_Common.Controls.Background"
         mc:Ignorable="d"
         Title="Settings" Height="1080" Width="450" WindowState="Normal" Background="#111" Foreground="White" MinWidth="450" MinHeight="500" WindowStartupLocation="CenterOwner" ShowActivated="True">
     <Grid>
         <Grid>
-            <!--<background:BackgroundImage Opacity="0.01"/>-->
+            <background:BackgroundImage Opacity="0.01"/>
             <DockPanel>
                 <Border DockPanel.Dock="Bottom" Padding="10">
                     <DockPanel LastChildFill="False">
