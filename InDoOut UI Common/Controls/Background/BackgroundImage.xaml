@@ -24,6 +24,10 @@
             <RowDefinition Height="6*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-        <Image Source="{StaticResource Logo}" Grid.Row="1" Grid.Column="1" />
+        <Grid x:Name="Grid_Images" Grid.Row="1" Grid.Column="1">
+            <Image x:Name="Image_Light" Source="{StaticResource Logo_Light}" Visibility="Visible" />
+            <Image x:Name="Image_Dark" Source="{StaticResource Logo_Dark}" Visibility="Collapsed" />
+            <Image x:Name="Image_Colour" Source="{StaticResource Logo_Colour}" Visibility="Collapsed" />
+        </Grid>
     </Grid>
 </UserControl>
