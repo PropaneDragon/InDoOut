@@ -7,7 +7,6 @@ using InDoOut_Executable_Core.Location;
 using InDoOut_Executable_Core.Logging;
 using InDoOut_Executable_Core.Messaging;
 using InDoOut_Executable_Core.Options;
-using InDoOut_UI_Common.Controls.Screens;
 using InDoOut_UI_Common.Messaging;
 using System;
 using System.Threading;
@@ -19,8 +18,6 @@ namespace InDoOut_Desktop.UI.Windows
 {
     public partial class MainWindow : Window
     {
-        private static readonly bool OLD_SPLASH = false;
-
         private readonly DispatcherTimer _titleTimer = new DispatcherTimer(DispatcherPriority.Background);
         private readonly LogFileSaver _logSaver = new LogFileSaver(StandardLocations.Instance);
 
@@ -70,19 +67,13 @@ namespace InDoOut_Desktop.UI.Windows
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            var splash = OLD_SPLASH ? new SplashWindow() { Owner = this } : Splash_Overlay as ISplashScreen;
-            if (splash != null)
+            _ = Activate();
+
+            if (await Splash_Overlay.RunTaskAsync(new MainWindowLoadingTask()))
             {
-                _ = Activate();
-
-                if (await splash.RunTaskAsync(new MainWindowLoadingTask()))
-                {
-                    await FinishLoading();
-                    return;
-                }
+                await FinishLoading();
+                return;
             }
-
-            Close();
         }
 
         private void Window_Closed(object sender, EventArgs e)

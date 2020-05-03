@@ -5,11 +5,18 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InDoOut_UI_Common.Controls.Search"
              mc:Ignorable="d" 
-             d:DesignHeight="50" d:DesignWidth="400" Foreground="White" FontFamily="Segoe UI Light" FontSize="24">
+             d:DesignHeight="50" d:DesignWidth="400" Foreground="{StaticResource Brush.Text.Main.Foreground}" FontSize="24">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/InDoOutUICommon;component/Style/CommonStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Border>
         <DockPanel>
-            <Button DockPanel.Dock="Right" FontFamily="Material Icons" Content="" FontSize="32" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="4" Margin="0,0,8,0" Template="{DynamicResource Template_Buttons_Transparent}" Click="Button_Click" />
-            <TextBox x:Name="TextBox_Query" DockPanel.Dock="Left" Background="{x:Null}" BorderBrush="{x:Null}" Text="Search here" Foreground="White" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" CaretBrush="White" IsUndoEnabled="True" MaxLines="1" GotFocus="TextBox_Query_GotFocus" LostFocus="TextBox_Query_LostFocus" KeyUp="TextBox_Query_KeyUp"/>
+            <Button DockPanel.Dock="Right" Content="" FontSize="32" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="4" Margin="0,0,8,0" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Click="Button_Click" />
+            <TextBox x:Name="TextBox_Query" DockPanel.Dock="Left" Background="{x:Null}" BorderBrush="{x:Null}" Text="Search here" Foreground="{StaticResource Brush.Text.Main.Foreground}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" CaretBrush="White" IsUndoEnabled="True" MaxLines="1" GotFocus="TextBox_Query_GotFocus" LostFocus="TextBox_Query_LostFocus" KeyUp="TextBox_Query_KeyUp"/>
         </DockPanel>
     </Border>
 </UserControl>

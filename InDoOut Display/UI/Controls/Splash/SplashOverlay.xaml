@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:InDoOut_Display.UI.Controls.Splash"
              xmlns:background="clr-namespace:InDoOut_UI_Common.Controls.Background;assembly=InDoOutUICommon"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Background="#111" Foreground="#fff" FontFamily="Segoe UI Light" FontSize="26">
+             d:DesignHeight="450" d:DesignWidth="800" Background="#111" Foreground="#fff" FontSize="26">
     <Grid>
         <background:BackgroundImage Opacity="0.1" ImageStyle="Colour" />
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Stretch">

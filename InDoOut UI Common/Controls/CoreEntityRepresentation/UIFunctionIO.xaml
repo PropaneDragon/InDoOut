@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InDoOut_UI_Common.Controls.CoreEntityRepresentation"
              mc:Ignorable="d" 
-             Width="180" MaxWidth="180" Foreground="White" Background="#3b77e4" FontFamily="Segoe UI Light" FontSize="14">
+             Width="180" MaxWidth="180" Foreground="White" Background="#3b77e4" FontSize="14">
     <Border Padding="6">
         <Grid>
             <StackPanel>

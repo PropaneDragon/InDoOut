@@ -10,7 +10,7 @@
         xmlns:background="clr-namespace:InDoOut_UI_Common.Controls.Background;assembly=InDoOutUICommon"
         xmlns:splash="clr-namespace:InDoOut_Desktop.UI.Controls.Splash"
         mc:Ignorable="d"
-        Title="Untitled" Height="1080" Width="1920" Loaded="Window_Loaded" Closed="Window_Closed" WindowState="Maximized" Background="#111" Foreground="White" WindowStartupLocation="CenterScreen" ShowActivated="True">
+        Title="Untitled" Height="1080" Width="1920" Loaded="Window_Loaded" Closed="Window_Closed" WindowState="Maximized" WindowStartupLocation="CenterScreen" ShowActivated="True">
     <Grid>
         <Grid>
             <background:BackgroundImage Opacity="0.01"/>

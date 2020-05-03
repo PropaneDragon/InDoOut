@@ -22,7 +22,7 @@
                 </Border.Background>
             </Border>
         </Grid>
-        <Grid x:Name="Grid_CollapsibleContent" Background="#3b77e4">
+        <Grid x:Name="Grid_CollapsibleContent" Background="{StaticResource Brush.Sidebar.Main.Background}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition x:Name="ColumnDefinition_Extended" Width="64" />
@@ -33,14 +33,7 @@
                         <RowDefinition Height="70" />
                         <RowDefinition />
                     </Grid.RowDefinitions>
-                    <Border Grid.Row="0" Background="#33FFFFFF" BorderThickness="0,0,0,0">
-                        <Border.BorderBrush>
-                            <LinearGradientBrush EndPoint="1,0" StartPoint="0,0" MappingMode="RelativeToBoundingBox" SpreadMethod="Pad">
-                                <GradientStop Color="Transparent"/>
-                                <GradientStop Color="White" Offset="0.5"/>
-                                <GradientStop Color="Transparent" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Border.BorderBrush>
+                    <Border Grid.Row="0" Background="{StaticResource Brush.Sidebar.Search.Background}" BorderThickness="0">
                         <search:SearchBar SearchRequested="SearchBar_SearchRequested" />
                     </Border>
                     <Border Grid.Row="1">
@@ -48,11 +41,11 @@
                     </Border>
                 </Grid>
             </Border>
-            <Border Grid.Column="1" Background="#33000000">
+            <Border Grid.Column="1" Background="{StaticResource Brush.Sidebar.ButtonColumn.Background}">
                 <Grid>
                     <StackPanel x:Name="Stack_ButtonsBottom" VerticalAlignment="Bottom" Margin="0,0,0,20">
-                        <Button x:Name="Button_TaskViewer" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Material Icons" FontSize="30" Content="" ToolTip="Task viewer" Template="{DynamicResource Template_Buttons_Transparent}" Click="Button_TaskViewer_Click" Margin="0,8,0,0" Padding="1" />
-                        <Button x:Name="Button_Settings" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Material Icons" FontSize="30" Content="" ToolTip="Settings" Template="{DynamicResource Template_Buttons_Transparent}" Click="Button_Settings_Click" Margin="0,8,0,0" Padding="1" />
+                        <Button x:Name="Button_TaskViewer" VerticalAlignment="Top" HorizontalAlignment="Center" Content="" ToolTip="Task viewer" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Click="Button_TaskViewer_Click" Margin="0,8,0,0" Padding="1" />
+                        <Button x:Name="Button_Settings" VerticalAlignment="Top" HorizontalAlignment="Center" Content="" ToolTip="Settings" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Click="Button_Settings_Click" Margin="0,8,0,0" Padding="1" />
                     </StackPanel>
                 </Grid>
             </Border>
@@ -64,17 +57,17 @@
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="1">
                 <StackPanel x:Name="Stack_ButtonsTop" Grid.Column="1" VerticalAlignment="Top" Margin="0,16,0,0">
-                    <Button x:Name="Button_Collapse" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Material Icons" FontSize="30" Content="" ToolTip="Sidebar" Template="{DynamicResource Template_Buttons_Transparent}" Click="Button_Collapse_Click" Padding="1,1,1,1" />
-                    <Button x:Name="Button_SwitchMode" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Material Icons" FontSize="30" Content="" ToolTip="Switch viewing mode" Template="{DynamicResource Template_Buttons_Transparent}" Click="Button_SwitchMode_Click" Padding="1,1,1,1" Margin="0,32,0,0" />
+                    <Button x:Name="Button_Collapse" VerticalAlignment="Top" HorizontalAlignment="Center" Content="" ToolTip="Sidebar" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Click="Button_Collapse_Click" Padding="1,1,1,1" />
+                    <Button x:Name="Button_SwitchMode" VerticalAlignment="Top" HorizontalAlignment="Center" Content="" ToolTip="Switch viewing mode" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Click="Button_SwitchMode_Click" Padding="1,1,1,1" Margin="0,32,0,0" />
                     <Grid VerticalAlignment="Top" HorizontalAlignment="Center">
-                        <Button x:Name="Button_RunProgram" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Material Icons" FontSize="30" Content="" ToolTip="Run program" Template="{DynamicResource Template_Buttons_Transparent}" Click="Button_RunProgram_Click" Padding="1,1,1,1" Margin="0,8,0,0" />
-                        <Button x:Name="Button_StopProgram" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Material Icons" FontSize="30" Content="" ToolTip="Stop program" Template="{DynamicResource Template_Buttons_Transparent}" Click="Button_StopProgram_Click" Padding="1,1,1,1" Margin="0,8,0,0" />
-                        <Button x:Name="Button_ProgramStopping" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Material Icons" FontSize="30" Content="" ToolTip="Program stopping" Template="{DynamicResource Template_Buttons_Transparent}" Click="Button_StopProgram_Click" Padding="1,1,1,1" Margin="0,8,0,0" />
+                        <Button x:Name="Button_RunProgram" VerticalAlignment="Top" HorizontalAlignment="Center" Content="" ToolTip="Run program" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Click="Button_RunProgram_Click" Padding="1,1,1,1" Margin="0,8,0,0" />
+                        <Button x:Name="Button_StopProgram" VerticalAlignment="Top" HorizontalAlignment="Center" Content="" ToolTip="Stop program" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Click="Button_StopProgram_Click" Padding="1,1,1,1" Margin="0,8,0,0" />
+                        <Button x:Name="Button_ProgramStopping" VerticalAlignment="Top" HorizontalAlignment="Center" Content="" ToolTip="Program stopping" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Click="Button_StopProgram_Click" Padding="1,1,1,1" Margin="0,8,0,0" />
                     </Grid>
-                    <Button x:Name="Button_NewProgram" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Material Icons" FontSize="30" Content="" ToolTip="New program" Template="{DynamicResource Template_Buttons_Transparent}" Click="Button_NewProgram_Click" Padding="1,1,1,1" Margin="0,32,0,0" />
-                    <Button x:Name="Button_OpenProgram" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Material Icons" FontSize="30" Content="" ToolTip="Open program" Template="{DynamicResource Template_Buttons_Transparent}" Click="Button_OpenProgram_Click" Padding="1,1,1,1" Margin="0,8,0,0" />
-                    <Button x:Name="Button_SaveProgram" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Material Icons" FontSize="30" Content="" ToolTip="Save program" Template="{DynamicResource Template_Buttons_Transparent}" Click="Button_SaveProgram_Click" Padding="1,1,1,1" Margin="0,8,0,0" />
-                    <Button x:Name="Button_SaveProgramAs" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Material Icons" FontSize="30" Content="" ToolTip="Save program as..." Template="{DynamicResource Template_Buttons_Transparent}" Click="Button_SaveProgramAs_Click" Padding="1,1,1,1" Margin="0,8,0,0" />
+                    <Button x:Name="Button_NewProgram" VerticalAlignment="Top" HorizontalAlignment="Center" Content="" ToolTip="New program" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Click="Button_NewProgram_Click" Padding="1,1,1,1" Margin="0,32,0,0" />
+                    <Button x:Name="Button_OpenProgram" VerticalAlignment="Top" HorizontalAlignment="Center" Content="" ToolTip="Open program" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Click="Button_OpenProgram_Click" Padding="1,1,1,1" Margin="0,8,0,0" />
+                    <Button x:Name="Button_SaveProgram" VerticalAlignment="Top" HorizontalAlignment="Center" Content="" ToolTip="Save program" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Click="Button_SaveProgram_Click" Padding="1,1,1,1" Margin="0,8,0,0" />
+                    <Button x:Name="Button_SaveProgramAs" VerticalAlignment="Top" HorizontalAlignment="Center" Content="" ToolTip="Save program as..." Style="{StaticResource Style.Button.Transparent.Material.Animated}" Click="Button_SaveProgramAs_Click" Padding="1,1,1,1" Margin="0,8,0,0" />
                 </StackPanel>
             </Grid>
         </Grid>

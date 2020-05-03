@@ -1,18 +1,29 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    
-    <Style TargetType="{x:Type Control}">
-        <Setter Property="FontFamily" Value="Segoe UI Light" />
-        <Setter Property="Foreground" Value="White" />
-    </Style>
-    
-    <Style TargetType="{x:Type UserControl}">
-        <Setter Property="FontFamily" Value="Segoe UI Light" />
-        <Setter Property="Foreground" Value="White" />
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/InDoOutUICommon;component/Style/ButtonStyle.xaml" />
+        <ResourceDictionary Source="/InDoOutUICommon;component/Style/ScrollBarStyle.xaml" />
+        <ResourceDictionary Source="/InDoOutUICommon;component/Style/CommonColours.xaml" />
+        <ResourceDictionary Source="/InDoOutUICommon;component/Style/CommonFonts.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key="Style.Control" TargetType="{x:Type Control}">
+        <Setter Property="FontFamily" Value="{StaticResource Font.Generic}" />
+        <Setter Property="Foreground" Value="{StaticResource Brush.Text.Main.Foreground}" />
     </Style>
 
-    <Style TargetType="{x:Type Window}">
-        <Setter Property="FontFamily" Value="Segoe UI Light" />
-        <Setter Property="Foreground" Value="White" />
+    <Style TargetType="{x:Type Control}" BasedOn="{StaticResource Style.Control}">
+    </Style>
+
+    <Style TargetType="{x:Type ToolTip}"  BasedOn="{StaticResource Style.Control}">
+        <Setter Property="Background" Value="{StaticResource Brush.Window.Background}" />
+    </Style>
+
+    <Style TargetType="{x:Type ContextMenu}" BasedOn="{StaticResource Style.Control}">
+        <Setter Property="Background" Value="{StaticResource Brush.Window.Background}" />
+    </Style>
+
+    <Style TargetType="{x:Type Window}" BasedOn="{StaticResource Style.Control}">
+        <Setter Property="Background" Value="{StaticResource Brush.Window.Background}" />
     </Style>
 </ResourceDictionary>

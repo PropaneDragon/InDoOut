@@ -7,7 +7,7 @@
         xmlns:core="clr-namespace:InDoOut_UI_Common.Controls.Core;assembly=InDoOutUICommon"
         xmlns:elementSelector="clr-namespace:InDoOut_Display.UI.Controls.ElementSelector"
         mc:Ignorable="d"
-        Title="Elements" Height="600" Width="1000" Background="#111" WindowStartupLocation="CenterOwner">
+        Title="Elements" Height="600" Width="1000" WindowStartupLocation="CenterOwner">
     <Grid>
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <elementSelector:ElementSelector x:Name="ElementSelector_Main" Margin="0,80,0,0" />

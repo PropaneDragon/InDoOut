@@ -6,12 +6,19 @@
              xmlns:local="clr-namespace:InDoOut_UI_Common.Controls.TaskManager"
              mc:Ignorable="d" 
              d:DesignHeight="850" d:DesignWidth="1920">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/InDoOutUICommon;component/Style/CommonStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Border>
         <Grid>
             <Grid x:Name="Grid_Tasks">
                 <ScrollViewer x:Name="Scroll_Tasks" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled">
                     <StackPanel Margin="100,100,100,0">
-                        <Button x:Name="Button_NewTask" FontFamily="Material Icons" FontSize="50" Content="" ToolTip="New task" Template="{DynamicResource Template_Buttons_Transparent}" VerticalAlignment="Stretch" HorizontalAlignment="Center" Click="Button_NewTask_Click" Padding="10" />
+                        <Button x:Name="Button_NewTask" FontSize="50" Content="" ToolTip="New task" Style="{StaticResource Style.Button.Transparent.Material.Animated}" VerticalAlignment="Stretch" HorizontalAlignment="Center" Click="Button_NewTask_Click" Padding="10" />
                         <WrapPanel x:Name="Wrap_Tasks" HorizontalAlignment="Center" />
                     </StackPanel>
                 </ScrollViewer>

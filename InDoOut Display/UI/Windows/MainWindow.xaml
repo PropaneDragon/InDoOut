@@ -10,7 +10,7 @@
         xmlns:taskManager="clr-namespace:InDoOut_UI_Common.Controls.TaskManager;assembly=InDoOutUICommon"
         xmlns:background="clr-namespace:InDoOut_UI_Common.Controls.Background;assembly=InDoOutUICommon"
         mc:Ignorable="d"
-        Title="Designer" Height="1080" Width="1920" Background="#111" WindowStartupLocation="CenterScreen" WindowState="Maximized" Loaded="Window_Loaded" SizeChanged="Window_SizeChanged" StateChanged="Window_StateChanged">
+        Title="Designer" Height="1080" Width="1920" WindowStartupLocation="CenterScreen" WindowState="Maximized" Loaded="Window_Loaded" SizeChanged="Window_SizeChanged" StateChanged="Window_StateChanged">
     <Grid>
         <background:BackgroundImage Opacity="0.01" />
         <taskManager:TaskView x:Name="TaskView_Main" />

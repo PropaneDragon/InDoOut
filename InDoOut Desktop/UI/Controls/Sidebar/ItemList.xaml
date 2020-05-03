@@ -12,7 +12,7 @@
         </Style>
     </UserControl.Resources>
     <Border>
-        <ListView x:Name="List_Items" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" Foreground="White" FontFamily="Segoe UI Light" FontSize="24" SelectionMode="Single" MouseDoubleClick="List_Items_MouseDoubleClick">
+        <ListView x:Name="List_Items" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" Foreground="White" FontSize="24" SelectionMode="Single" MouseDoubleClick="List_Items_MouseDoubleClick">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Name" Width="{Binding Width, ElementName=List_Items}" DisplayMemberBinding="{Binding SafeName}" />

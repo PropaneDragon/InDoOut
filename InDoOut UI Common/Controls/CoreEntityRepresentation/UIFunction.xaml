@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InDoOut_UI_Common.Controls.CoreEntityRepresentation"
              mc:Ignorable="d" 
-             FontFamily="Segoe UI Light" FontSize="18" Foreground="White" Width="200" MaxWidth="200" Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded" MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave" PreviewMouseDoubleClick="UserControl_PreviewMouseDoubleClick" RenderTransformOrigin="0.5,0.5" Initialized="UserControl_Initialized">
+             FontSize="18" Foreground="White" Width="200" MaxWidth="200" Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded" MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave" PreviewMouseDoubleClick="UserControl_PreviewMouseDoubleClick" RenderTransformOrigin="0.5,0.5" Initialized="UserControl_Initialized">
     <UserControl.RenderTransform>
         <TransformGroup>
             <ScaleTransform x:Name="Scale_Main" ScaleX="1" ScaleY="1"/>
@@ -48,7 +48,7 @@
             <Rectangle x:Name="Rectangle_Selected" Visibility="Hidden" Margin="-2" Stroke="#990097FF" StrokeThickness="2" SnapsToDevicePixels="True"/>
             <Border Background="#373737" Padding="10">
                 <DockPanel>
-                    <Button x:Name="Button_Run" DockPanel.Dock="Right" Visibility="Hidden" FontFamily="Material Icons" Content="" FontSize="14" Padding="0" Template="{DynamicResource Template_Buttons_Transparent}" HorizontalAlignment="Right" VerticalAlignment="Stretch" HorizontalContentAlignment="Right" Click="Button_Run_Click"/>
+                    <Button x:Name="Button_Run" DockPanel.Dock="Right" Visibility="Hidden" Content="" FontSize="14" Padding="0" Style="{StaticResource Style.Button.Transparent.Material.Animated}" HorizontalAlignment="Right" VerticalAlignment="Stretch" HorizontalContentAlignment="Right" Click="Button_Run_Click"/>
                     <TextBlock x:Name="Text_Processing" DockPanel.Dock="Left" Visibility="Hidden" FontFamily="Material Icons" Text="" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center" />
                     <TextBlock x:Name="Text_FunctionName" Text="Function" TextAlignment="Center" TextTrimming="CharacterEllipsis" TextWrapping="WrapWithOverflow" />
                 </DockPanel>

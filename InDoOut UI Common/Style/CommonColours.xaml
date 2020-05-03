@@ -1,0 +1,72 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:InDoOut_UI_Common.Style">
+    <Color x:Key="Colour.Theme.Background">#111111</Color>
+    <Color x:Key="Colour.Theme.Background.Contrast.First">#1a1a1a</Color>
+    <Color x:Key="Colour.Theme.Background.Contrast.Second">#222222</Color>
+    
+    <Color x:Key="Colour.Theme.Basic.Light">#e6e6e6</Color>
+    <Color x:Key="Colour.Theme.Basic.Dark">#4d4d4d</Color>
+    <Color x:Key="Colour.Theme.Basic.SemiTransparent.Light">#11ffffff</Color>
+    <Color x:Key="Colour.Theme.Basic.SemiTransparent.Dark">#11000000</Color>
+    
+    <Color x:Key="Colour.Theme.Primary">#ffffff</Color>
+    <Color x:Key="Colour.Theme.Secondary">#b3b3b3</Color>
+    <Color x:Key="Colour.Theme.Tertiary">#808080</Color>
+    <Color x:Key="Colour.Theme.Quaternary">#4d4d4d</Color>
+    
+    <Color x:Key="Colour.Theme.Accent.Primary">#e9006a</Color>
+    <Color x:Key="Colour.Theme.Accent.Secondary">#8a006a</Color>
+    <Color x:Key="Colour.Theme.Accent.Tertiary">#49006b</Color>
+    <Color x:Key="Colour.Theme.Accent.Primary.Light">#f9218B</Color>
+    <Color x:Key="Colour.Theme.Accent.Secondary.Light">#ba00a1</Color>
+    <Color x:Key="Colour.Theme.Accent.Tertiary.Light">#741287</Color>
+
+    <SolidColorBrush x:Key="Brush.Text.Main.Foreground" Color="{StaticResource Colour.Theme.Primary}" />
+    <SolidColorBrush x:Key="Brush.Text.Header.Foreground" Color="{StaticResource Colour.Theme.Primary}" />
+    <SolidColorBrush x:Key="Brush.Text.Subheader.Foreground" Color="{StaticResource Colour.Theme.Secondary}" />
+
+    <SolidColorBrush x:Key="Brush.Window.Background" Color="{StaticResource Colour.Theme.Background}" />
+
+    <SolidColorBrush x:Key="Brush.Control.Foreground" Color="{StaticResource Colour.Theme.Primary}" />
+    <SolidColorBrush x:Key="Brush.Control.Background" Color="{StaticResource Colour.Theme.Basic.SemiTransparent.Light}" />
+
+    <SolidColorBrush x:Key="Brush.Button.Foreground" Color="{StaticResource Colour.Theme.Primary}" />
+    <SolidColorBrush x:Key="Brush.Button.Background" Color="{StaticResource Colour.Theme.Basic.SemiTransparent.Light}" />
+    <SolidColorBrush x:Key="Brush.Button.Foreground.Hover" Color="{StaticResource Colour.Theme.Primary}" />
+    <SolidColorBrush x:Key="Brush.Button.Background.Hover" Color="{StaticResource Colour.Theme.Accent.Primary.Light}" />
+    <SolidColorBrush x:Key="Brush.Button.Foreground.Click" Color="{StaticResource Colour.Theme.Primary}" />
+    <SolidColorBrush x:Key="Brush.Button.Background.Click" Color="{StaticResource Colour.Theme.Accent.Primary}" />
+    
+    <SolidColorBrush x:Key="Brush.Button.Primary.Foreground" Color="{StaticResource Colour.Theme.Primary}" />
+    <SolidColorBrush x:Key="Brush.Button.Primary.Background" Color="{StaticResource Colour.Theme.Accent.Primary}" />
+    <SolidColorBrush x:Key="Brush.Button.Primary.Foreground.Hover" Color="{StaticResource Colour.Theme.Primary}" />
+    <SolidColorBrush x:Key="Brush.Button.Primary.Background.Hover" Color="{StaticResource Colour.Theme.Accent.Secondary.Light}" />
+    <SolidColorBrush x:Key="Brush.Button.Primary.Foreground.Click" Color="{StaticResource Colour.Theme.Primary}" />
+    <SolidColorBrush x:Key="Brush.Button.Primary.Background.Click" Color="{StaticResource Colour.Theme.Accent.Secondary}" />
+
+    <SolidColorBrush x:Key="Brush.Button.Transparent.Foreground" Color="{StaticResource Colour.Theme.Primary}" />
+    <SolidColorBrush x:Key="Brush.Button.Transparent.Background" Color="#00ffffff" />
+    <SolidColorBrush x:Key="Brush.Button.Transparent.Foreground.Hover" Color="{StaticResource Colour.Theme.Accent.Primary.Light}" />
+    <SolidColorBrush x:Key="Brush.Button.Transparent.Background.Hover" Color="#00ffffff" />
+    <SolidColorBrush x:Key="Brush.Button.Transparent.Foreground.Click" Color="{StaticResource Colour.Theme.Accent.Primary}" />
+    <SolidColorBrush x:Key="Brush.Button.Transparent.Background.Click" Color="#00ffffff" />
+
+    <SolidColorBrush x:Key="Brush.Button.Transparent.Primary.Foreground" Color="{StaticResource Colour.Theme.Accent.Primary}" />
+    <SolidColorBrush x:Key="Brush.Button.Transparent.Primary.Background" Color="#00ffffff" />
+    <SolidColorBrush x:Key="Brush.Button.Transparent.Primary.Foreground.Hover" Color="{StaticResource Colour.Theme.Accent.Secondary.Light}" />
+    <SolidColorBrush x:Key="Brush.Button.Transparent.Primary.Background.Hover" Color="#00ffffff" />
+    <SolidColorBrush x:Key="Brush.Button.Transparent.Primary.Foreground.Click" Color="{StaticResource Colour.Theme.Accent.Secondary}" />
+    <SolidColorBrush x:Key="Brush.Button.Transparent.Primary.Background.Click" Color="#00ffffff" />
+
+    <SolidColorBrush x:Key="Brush.TaskItem.Border" Color="{StaticResource Colour.Theme.Accent.Primary}" />
+    <SolidColorBrush x:Key="Brush.TaskItem.Background" Color="{StaticResource Colour.Theme.Background}" />
+
+    <SolidColorBrush x:Key="Brush.ElementItem.Border" Color="{StaticResource Colour.Theme.Accent.Primary}" />
+    <SolidColorBrush x:Key="Brush.ElementItem.Border.Hover" Color="{StaticResource Colour.Theme.Accent.Secondary.Light}" />
+    <SolidColorBrush x:Key="Brush.ElementItem.Background" Color="{StaticResource Colour.Theme.Background}" />
+
+    <SolidColorBrush x:Key="Brush.Sidebar.Main.Background" Color="{StaticResource Colour.Theme.Background.Contrast.First}" />
+    <SolidColorBrush x:Key="Brush.Sidebar.Search.Background" Color="{StaticResource Colour.Theme.Basic.SemiTransparent.Light}" />
+    <SolidColorBrush x:Key="Brush.Sidebar.ButtonColumn.Background" Color="{StaticResource Colour.Theme.Background.Contrast.Second}" />
+</ResourceDictionary>
