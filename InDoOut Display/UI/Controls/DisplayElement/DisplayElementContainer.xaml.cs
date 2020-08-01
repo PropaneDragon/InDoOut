@@ -23,7 +23,6 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
 
         private bool _selected = false;
         private bool _resizing = false;
-        private bool _moving = false;
         private Thickness _originalMargins = new Thickness();
         private UIFunctionDisplayMode _displayMode = UIFunctionDisplayMode.IO;
 
@@ -96,14 +95,12 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
 
         public void DragStarted(ICommonDisplay view)
         {
-            _moving = true;
             _originalMargins = MarginPercentages;
             UpdateChildElementVisibility();
         }
 
         public void DragEnded(ICommonDisplay view)
         {
-            _moving = false;
             UpdateChildElementVisibility();
         }
 

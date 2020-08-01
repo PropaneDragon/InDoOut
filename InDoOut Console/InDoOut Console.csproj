@@ -6,6 +6,7 @@
     <RootNamespace>InDoOut_Console</RootNamespace>
     <StartupObject></StartupObject>
     <LangVersion>default</LangVersion>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>
