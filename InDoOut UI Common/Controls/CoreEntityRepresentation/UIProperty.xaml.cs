@@ -1,4 +1,5 @@
 ﻿using InDoOut_Core.Entities.Functions;
+using InDoOut_UI_Common.Actions.Copying;
 using InDoOut_UI_Common.InterfaceElements;
 using System;
 using System.Threading.Tasks;
@@ -37,6 +38,27 @@ namespace InDoOut_UI_Common.Controls.CoreEntityRepresentation
                 AssociatedProperty.Metadata["h"] = ActualHeight.ToString();
             }
         }
+
+        public bool CopyTo(ICopyable other)
+        {
+            if (other != null && other is UIProperty otherProperty)
+            {
+                var otherAssociatedProperty = otherProperty.AssociatedProperty;
+                if (otherAssociatedProperty != null && AssociatedProperty != null)
+                {
+                    otherAssociatedProperty.AssociatedVariable = AssociatedProperty.AssociatedVariable;
+                    otherAssociatedProperty.RawValue = AssociatedProperty.RawValue;
+
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public bool CanCopy(ICommonDisplay display) => true;
+
+        public ICopyable CreateCopy(ICommonDisplay display) => null;
 
         private void SetProperty(IProperty property)
         {

@@ -65,7 +65,23 @@ namespace InDoOut_UI_Common.Controls.CoreEntityRepresentation
 
         public bool CopyTo(ICopyable other)
         {
-            return other != null;
+            if (other != null && other is UIFunction otherFunction)
+            {
+                var copiedEverything = true;
+
+                foreach (var property in Properties)
+                {
+                    var otherProperty = otherFunction.Properties.Find(foundProperty => property?.AssociatedProperty?.Name == foundProperty?.AssociatedProperty?.Name);
+                    if (otherProperty != null)
+                    {
+                        copiedEverything = property.CopyTo(otherProperty) && copiedEverything;
+                    }
+                }
+
+                return copiedEverything;
+            }
+
+            return false;
         }
 
         public ICopyable CreateCopy(ICommonDisplay display)
