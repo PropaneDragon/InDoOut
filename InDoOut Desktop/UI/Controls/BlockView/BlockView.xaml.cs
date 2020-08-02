@@ -80,6 +80,7 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            MoveToCentre();
         }
 
         private void Scroll_Content_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -149,11 +150,6 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
             _ = ActionHandler?.KeyUp(e.Key);
 
             e.Handled = false;
-        }
-
-        private void UserControl_Initialized(object sender, EventArgs e)
-        {
-            //MoveToCentre(); Todo
         }
     }
 }
