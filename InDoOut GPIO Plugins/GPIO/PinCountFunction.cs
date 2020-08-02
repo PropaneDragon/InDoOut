@@ -1,6 +1,6 @@
 ﻿using InDoOut_Core.Entities.Functions;
 
-#if (!_WINDOWS)
+#if !_WINDOWS
 using System.Device.Gpio;
 #endif
 
@@ -28,7 +28,7 @@ namespace InDoOut_GPIO_Plugins.GPIO
 
         protected override IOutput Started(IInput triggeredBy)
         {
-#if (_WINDOWS)
+#if _WINDOWS
             _ = _resultCount.ValueFrom(0);
 #else
             using (var controller = new GpioController())
