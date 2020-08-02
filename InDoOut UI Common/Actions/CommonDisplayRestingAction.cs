@@ -29,16 +29,13 @@ namespace InDoOut_UI_Common.Actions
             {
                 var elementsUnderMouse = Display.GetElementsUnderMouse();
                 var selectionManager = Display.SelectionManager;
-                var elementsSelected = selectionManager.Selection;
 
                 elementsUnderMouse.Reverse();
 
                 if (elementsUnderMouse.Count > 0 && Display.GetFirstElementOfType<ISelectable>(elementsUnderMouse) is ISelectable selectable && selectable.CanSelect(Display) && !selectionManager.Contains(selectable))
                 {
-                    _ = selectionManager.Set(selectable);
+                    _ = Keyboard.Modifiers.HasFlag(ModifierKeys.Control) ? Display.SelectionManager.Add(selectable, true) : Display.SelectionManager.Set(selectable, false);
                 }
-
-                elementsSelected = selectionManager.Selection;
 
                 if (elementsUnderMouse.Count > 0)
                 {
@@ -46,30 +43,42 @@ namespace InDoOut_UI_Common.Actions
                     {
                         return false;
                     }
-                    else if (Display.GetFirstElementOfType<IUIConnectionStart>(elementsUnderMouse) is IUIConnectionStart start)
-                    {
-                        Finish(new CommonWireDragAction(start, Display));
-
-                        return true;
-                    }
-                    else if (Display.GetFirstElementOfType<IDraggable>(elementsUnderMouse) != null && elementsSelected.Any(element => element is IDraggable draggable && draggable.CanDrag(Display)))
-                    {
-                        var draggables = elementsSelected.Where(element => element is IDraggable draggable && draggable.CanDrag(Display)).Cast<IDraggable>();
-
-                        Finish(new DraggableDragAction(Display, draggables, mousePosition));
-
-                        return true;
-                    }
-                    else if (Display.GetFirstElementOfType<IScrollable>(elementsUnderMouse) is IScrollable scrollable)
-                    {
-                        Finish(new ScrollableDragAction(scrollable, mousePosition));
-
-                        return true;
-                    }
                 }
             }
 
             return base.MouseLeftDown(mousePosition);
+        }
+
+        public override bool MouseLeftMove(Point mousePosition)
+        {
+            var elementsUnderMouse = Display.GetElementsUnderMouse();
+            var selectionManager = Display.SelectionManager;
+            var elementsSelected = selectionManager.Selection;
+
+            elementsUnderMouse.Reverse();
+
+            if (Display.GetFirstElementOfType<IUIConnectionStart>(elementsUnderMouse) is IUIConnectionStart start)
+            {
+                Finish(new CommonWireDragAction(start, Display));
+
+                return true;
+            }
+            else if (Display.GetFirstElementOfType<IDraggable>(elementsUnderMouse) != null && elementsSelected.Any(element => element is IDraggable draggable && draggable.CanDrag(Display)))
+            {
+                var draggables = elementsSelected.Where(element => element is IDraggable draggable && draggable.CanDrag(Display)).Cast<IDraggable>();
+
+                Finish(new DraggableDragAction(Display, draggables, mousePosition));
+
+                return true;
+            }
+            else if (Display.GetFirstElementOfType<IScrollable>(elementsUnderMouse) is IScrollable scrollable)
+            {
+                Finish(new ScrollableDragAction(scrollable, mousePosition));
+
+                return true;
+            }
+
+            return base.MouseLeftMove(mousePosition);
         }
 
         public override bool MouseLeftUp(Point mousePosition)
@@ -79,13 +88,9 @@ namespace InDoOut_UI_Common.Actions
                 var elementsUnderMouse = Display.GetElementsUnderMouse();
                 elementsUnderMouse.Reverse();
 
-                if (elementsUnderMouse.Count > 0)
+                if (elementsUnderMouse.Count > 0 && Display.GetFirstElementOfType<ISelectable>(elementsUnderMouse) == null)
                 {
-                    if (Display.GetFirstElementOfType<ISelectable>(elementsUnderMouse) is ISelectable selectable && selectable.CanSelect(Display))
-                    {
-                        _ = Keyboard.Modifiers.HasFlag(ModifierKeys.Control) ? Display.SelectionManager.Add(selectable, true) : Display.SelectionManager.Set(selectable, false);
-                    }
-                    else if (!Keyboard.Modifiers.HasFlag(ModifierKeys.Control))
+                    if (!Keyboard.Modifiers.HasFlag(ModifierKeys.Control))
                     {
                         Display.SelectionManager.Clear();
                     }
