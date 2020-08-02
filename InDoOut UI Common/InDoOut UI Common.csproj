@@ -6,6 +6,7 @@
     <UseWPF>true</UseWPF>
     <AssemblyName>InDoOutUICommon</AssemblyName>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors></WarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>

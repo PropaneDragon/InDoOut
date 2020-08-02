@@ -10,6 +10,7 @@
     <StartupObject>InDoOut_Display.App</StartupObject>
     <NoWarn>1701;1702;1998</NoWarn>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors></WarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>

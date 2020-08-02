@@ -15,6 +15,7 @@
     <PackageProjectUrl>http://idoapp.net</PackageProjectUrl>
     <AssemblyName>InDoOut Core</AssemblyName>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors></WarningsAsErrors>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

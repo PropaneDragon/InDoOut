@@ -6,6 +6,7 @@
     <UseWPF>true</UseWPF>
     <AssemblyName>InDoOutDisplayCore</AssemblyName>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors></WarningsAsErrors>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

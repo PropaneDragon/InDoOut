@@ -1,0 +1,15 @@
+<Project>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile>InDoOut Core Key DO NOT UPLOAD.pfx</AssemblyOriginatorKeyFile>
+    <DelaySign>false</DelaySign>
+    <AssemblyVersion>0.1</AssemblyVersion>
+    <FileVersion>0.1</FileVersion>
+    <Version>0.1</Version>
+    <Authors>IDO</Authors>
+    <Copyright>IDO 2019 to current year</Copyright>
+    <PackageProjectUrl>http://idoapp.net</PackageProjectUrl>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors></WarningsAsErrors>
+  </PropertyGroup>
+</Project>

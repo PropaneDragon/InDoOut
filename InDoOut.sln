@@ -102,6 +102,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InDoOut Display Json Storag
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InDoOut Application Plugins Tests", "InDoOut Application Plugins Tests\InDoOut Application Plugins Tests.csproj", "{E052D25F-D45B-4CC1-A6E8-673CDB4C9DBA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D4FFA084-4C94-40FC-8E73-8A8FFCA94985}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
