@@ -57,25 +57,32 @@ namespace InDoOut_UI_Common.Actions
 
             elementsUnderMouse.Reverse();
 
-            if (Display.GetFirstElementOfType<IUIConnectionStart>(elementsUnderMouse) is IUIConnectionStart start)
+            if (elementsUnderMouse.Count > 0)
             {
-                Finish(new CommonWireDragAction(start, Display));
+                if (Display.GetFirstElementOfType<TextBox>(elementsUnderMouse) is TextBox)
+                {
+                    return false;
+                }
+                else if (Display.GetFirstElementOfType<IUIConnectionStart>(elementsUnderMouse) is IUIConnectionStart start)
+                {
+                    Finish(new CommonWireDragAction(start, Display));
 
-                return true;
-            }
-            else if (Display.GetFirstElementOfType<IDraggable>(elementsUnderMouse) != null && elementsSelected.Any(element => element is IDraggable draggable && draggable.CanDrag(Display)))
-            {
-                var draggables = elementsSelected.Where(element => element is IDraggable draggable && draggable.CanDrag(Display)).Cast<IDraggable>();
+                    return true;
+                }
+                else if (Display.GetFirstElementOfType<IDraggable>(elementsUnderMouse) != null && elementsSelected.Any(element => element is IDraggable draggable && draggable.CanDrag(Display)))
+                {
+                    var draggables = elementsSelected.Where(element => element is IDraggable draggable && draggable.CanDrag(Display)).Cast<IDraggable>();
 
-                Finish(new DraggableDragAction(Display, draggables, mousePosition));
+                    Finish(new DraggableDragAction(Display, draggables, mousePosition));
 
-                return true;
-            }
-            else if (Display.GetFirstElementOfType<IScrollable>(elementsUnderMouse) is IScrollable scrollable)
-            {
-                Finish(new ScrollableDragAction(scrollable, mousePosition));
+                    return true;
+                }
+                else if (Display.GetFirstElementOfType<IScrollable>(elementsUnderMouse) is IScrollable scrollable)
+                {
+                    Finish(new ScrollableDragAction(scrollable, mousePosition));
 
-                return true;
+                    return true;
+                }
             }
 
             return base.MouseLeftMove(mousePosition);
