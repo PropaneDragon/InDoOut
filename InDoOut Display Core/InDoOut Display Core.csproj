@@ -5,6 +5,7 @@
     <RootNamespace>InDoOut_Display_Core</RootNamespace>
     <UseWPF>true</UseWPF>
     <AssemblyName>InDoOutDisplayCore</AssemblyName>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

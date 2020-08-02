@@ -5,6 +5,7 @@
     <RootNamespace>InDoOut_UI_Common</RootNamespace>
     <UseWPF>true</UseWPF>
     <AssemblyName>InDoOutUICommon</AssemblyName>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>

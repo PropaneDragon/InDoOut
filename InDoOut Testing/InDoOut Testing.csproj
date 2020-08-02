@@ -6,6 +6,7 @@
     <RootNamespace>InDoOut_Testing</RootNamespace>
     <ApplicationIcon />
     <StartupObject />
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
