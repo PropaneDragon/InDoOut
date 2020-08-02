@@ -49,7 +49,7 @@ namespace InDoOut_UI_Common.Actions.Selecting
 
                 Clear();
 
-                return !stayCleared ? Add(selectable) : true;
+                return stayCleared || Add(selectable);
             }
 
             return false;
