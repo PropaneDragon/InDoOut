@@ -59,7 +59,7 @@
         <Setter Property="Template" Value="{StaticResource Template.Button.Basic}" />        
     </Style>
 
-    <Style x:Key="Style.Button.Animated" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource Style.Button.Basic}">
+    <Style x:Key="Style.Button.Animated" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource Style.Button}">
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="true">
                 <Trigger.EnterActions>
