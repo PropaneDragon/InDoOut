@@ -57,7 +57,7 @@ namespace InDoOut_Display.UI.Controls.Sidebar
                 elementWindow.WindowStartupLocation = WindowStartupLocation.Manual;
                 elementWindow.Top = windowPosition.Y + 100;
                 elementWindow.Left = windowPosition.X + 200;
-                elementWindow.Height = Math.Max(window.Height - 200, 100);
+                elementWindow.Height = Math.Max(window.ActualHeight - 200, 100);
             }
 
             elementWindow.Show();
