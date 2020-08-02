@@ -9,6 +9,7 @@ using InDoOut_Plugins.Loaders;
 using InDoOut_UI_Common.InterfaceElements;
 using InDoOut_UI_Common.SaveLoad;
 using InDoOut_UI_Common.Windows;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -33,8 +34,8 @@ namespace InDoOut_Display.UI.Controls.Sidebar
 
             if (window != null)
             {
-                elementWindow.Width = window.Width - 200;
-                elementWindow.Height = window.Height - 200;
+                elementWindow.Width = Math.Max(window.ActualWidth - 200, 200);
+                elementWindow.Height = Math.Max(window.ActualHeight - 200, 200);
             }
 
             elementWindow.Show();
@@ -56,7 +57,7 @@ namespace InDoOut_Display.UI.Controls.Sidebar
                 elementWindow.WindowStartupLocation = WindowStartupLocation.Manual;
                 elementWindow.Top = windowPosition.Y + 100;
                 elementWindow.Left = windowPosition.X + 200;
-                elementWindow.Height = window.Height - 200;
+                elementWindow.Height = Math.Max(window.Height - 200, 100);
             }
 
             elementWindow.Show();
