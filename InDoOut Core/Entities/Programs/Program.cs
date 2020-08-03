@@ -2,7 +2,6 @@
 using InDoOut_Core.Entities.Functions;
 using InDoOut_Core.Logging;
 using InDoOut_Core.Threading.Safety;
-using InDoOut_Core.Variables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -87,12 +86,6 @@ namespace InDoOut_Core.Entities.Programs
         public DateTime LastCompletionTime { get { lock (_lastCompletionTimeLock) return _lastCompletionTime; } }
 
         /// <summary>
-        /// The current variable store for all program variables.
-        /// </summary>
-        /// <seealso cref="VariableStore"/>
-        public IVariableStore VariableStore { get; protected set; } = new VariableStore();
-
-        /// <summary>
         /// Creates a program with optional passthrough values.
         /// </summary>
         /// <param name="passthroughValues">Values to pass into the <see cref="IStartFunction"/>s when triggered.</param>
@@ -115,8 +108,6 @@ namespace InDoOut_Core.Entities.Programs
 
             if (function != null && !Functions.Contains(function))
             {
-                function.VariableStore = VariableStore;
-
                 Functions.Add(function);
 
                 Log.Instance.Info("Added ", function, $" to {this}");

@@ -1,7 +1,6 @@
 ﻿using InDoOut_Core.Entities.Core;
 using InDoOut_Core.Logging;
 using InDoOut_Core.Threading.Safety;
-using InDoOut_Core.Variables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,11 +41,6 @@ namespace InDoOut_Core.Entities.Functions
             get { lock (_stateLock) return _state; }
             private set { lock (_stateLock) _state = value; }
         }
-
-        /// <summary>
-        /// The current variable store.
-        /// </summary>
-        public IVariableStore VariableStore { get; set; } = null;
 
         /// <summary>
         /// The inputs that belong to this function.

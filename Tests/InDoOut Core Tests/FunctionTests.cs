@@ -223,11 +223,9 @@ namespace InDoOut_Core_Tests
             var middle = new DateTime(2);
             var end = new DateTime(1);
 
-            var variableStore = new TestVariableStore();
-
-            var startFunction = new TestFunction(() => start = DateTime.UtcNow) { VariableStore = variableStore };
-            var middleFunction = new TestFunction(() => middle = DateTime.UtcNow) { VariableStore = variableStore };
-            var endFunction = new TestFunction(() => end = DateTime.UtcNow) { VariableStore = variableStore };
+            var startFunction = new TestFunction(() => start = DateTime.UtcNow);
+            var middleFunction = new TestFunction(() => middle = DateTime.UtcNow);
+            var endFunction = new TestFunction(() => end = DateTime.UtcNow);
 
             Assert.IsTrue(end < middle && middle < start);
 
@@ -260,24 +258,17 @@ namespace InDoOut_Core_Tests
 
             Assert.IsTrue(start < middle && middle < end);
             Assert.AreEqual(100, f.FullValue);
-            Assert.IsNotNull(variableStore.GetVariable(variableName));
-            Assert.AreEqual("100", variableStore.GetVariableValue(variableName));
         }
 
         [TestMethod]
         public void InputToOutputWithProperties()
         {
-            var variableStore = new TestVariableStore();
-            var fullFunction = new TestFullFunction
-            {
-                VariableStore = variableStore
-            };
+            var fullFunction = new TestFullFunction();
 
             Assert.AreEqual("", fullFunction.IntegerResult.RawValue);
             Assert.AreEqual("", fullFunction.DoubleResult.RawValue);
             Assert.AreEqual("", fullFunction.FloatResult.RawValue);
             Assert.AreEqual("", fullFunction.StringResult.RawValue);
-            Assert.AreEqual(0, variableStore.PublicVariables.Count);
 
             fullFunction.IntegerProperty.BasicValue = 1234;
             fullFunction.DoubleProperty.BasicValue = 456.78901d;
@@ -293,7 +284,6 @@ namespace InDoOut_Core_Tests
             Assert.AreEqual("", fullFunction.DoubleResult.RawValue);
             Assert.AreEqual("", fullFunction.FloatResult.RawValue);
             Assert.AreEqual("", fullFunction.StringResult.RawValue);
-            Assert.AreEqual(0, variableStore.PublicVariables.Count);
 
             fullFunction.Trigger(null);
 
@@ -308,12 +298,6 @@ namespace InDoOut_Core_Tests
             Assert.AreEqual("", fullFunction.FloatResult.RawValue);
             Assert.AreEqual("", fullFunction.StringResult.RawValue);
 
-            Assert.AreEqual(7, variableStore.PublicVariables.Count);
-            Assert.AreEqual("", variableStore.GetVariableValue("Int"));
-            Assert.AreEqual("", variableStore.GetVariableValue("Double"));
-            Assert.AreEqual("", variableStore.GetVariableValue("Float"));
-            Assert.AreEqual("", variableStore.GetVariableValue("String"));
-
             fullFunction.StringProperty.BasicValue = "A non-null string";
             fullFunction.Trigger(null);
 
@@ -327,12 +311,6 @@ namespace InDoOut_Core_Tests
             Assert.AreEqual("456.78901", fullFunction.DoubleResult.RawValue);
             Assert.AreEqual("789.01", fullFunction.FloatResult.RawValue);
             Assert.AreEqual("A non-null string", fullFunction.StringResult.RawValue);
-
-            Assert.AreEqual(8, variableStore.PublicVariables.Count);
-            Assert.AreEqual("1234", variableStore.GetVariableValue("Int"));
-            Assert.AreEqual("456.78901", variableStore.GetVariableValue("Double"));
-            Assert.AreEqual("789.01", variableStore.GetVariableValue("Float"));
-            Assert.AreEqual("A non-null string", variableStore.GetVariableValue("String"));
         }
 
         [TestMethod]
@@ -587,28 +565,6 @@ namespace InDoOut_Core_Tests
             Assert.AreEqual(State.InError, function.State);
             Assert.IsTrue(testTriggerFunction.HasRun);
             Assert.AreEqual(exceptionInput, testTriggerFunction.LastInput);
-        }
-
-        [TestMethod]
-        public void ResultsToVariables()
-        {
-            var store = new TestVariableStore();
-            var function = new TestFunction()
-            {
-                VariableStore = store
-            };
-            var result = function.AddResultPublic(new Result("A result", "A description", "variable value!"));
-
-            result.VariableName = "A set variable";
-
-            Assert.AreEqual("variable value!", result.RawValue);
-            Assert.AreNotEqual("variable value!", store.GetVariableValue("A set variable"));
-
-            function.Trigger(null);
-
-            Thread.Sleep(TimeSpan.FromMilliseconds(10));
-
-            Assert.AreEqual("variable value!", store.GetVariableValue("A set variable"));
         }
     }
 }

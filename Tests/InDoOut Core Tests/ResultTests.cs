@@ -1,5 +1,4 @@
 ﻿using InDoOut_Core.Entities.Functions;
-using InDoOut_Core.Variables;
 using InDoOut_Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -35,7 +34,7 @@ namespace InDoOut_Core_Tests
             var propertyA = new Property<string>("Property A", "", false, "Property A Basic");
             var propertyB = new Property<string>("Property B", "", false, "Property B Basic");
 
-            var function = new TestFunction(() => Thread.Sleep(TimeSpan.FromMilliseconds(10))) { VariableStore = new TestVariableStore() };
+            var function = new TestFunction(() => Thread.Sleep(TimeSpan.FromMilliseconds(10)));
             _ = function.AddResultPublic(resultA);
             _ = function.AddResultPublic(resultB);
             _ = function.AddPropertyPublic(propertyA);
@@ -94,61 +93,6 @@ namespace InDoOut_Core_Tests
             Assert.IsTrue(resultA.WaitForCompletion(TimeSpan.FromMilliseconds(100), false));
             Assert.AreEqual("Value A", propertyA.FullValue);
             Assert.AreEqual("Value B", propertyB.FullValue);
-        }
-
-        [TestMethod]
-        public void SetVariableStore()
-        {
-            var result = new Result("name", "description", "nothing");
-            var variableStore = new TestVariableStore();
-
-            result.VariableName = null;
-
-            Assert.IsFalse(result.SetVariable(variableStore));
-            Assert.AreEqual(0, variableStore.PublicVariables.Count);
-
-            result.VariableName = "a variable name";
-
-            Assert.IsTrue(result.SetVariable(variableStore));
-            Assert.AreEqual(1, variableStore.PublicVariables.Count);
-            Assert.AreEqual("nothing", variableStore.GetVariableValue(result.VariableName));
-
-            result.VariableName = "a different name";
-            result.RawValue = "something";
-
-            Assert.IsTrue(result.SetVariable(variableStore));
-            Assert.AreEqual(2, variableStore.PublicVariables.Count);
-            Assert.AreEqual("something", variableStore.GetVariableValue(result.VariableName));
-
-            result.VariableName = "a variable name";
-
-            Assert.IsTrue(result.SetVariable(variableStore));
-            Assert.AreEqual(2, variableStore.PublicVariables.Count);
-            Assert.AreEqual("something", variableStore.GetVariableValue(result.VariableName));
-        }
-
-        [TestMethod]
-        public void SetVariable()
-        {
-            var result = new Result("name", "description", "nothing");
-            var variable = new Variable("variable name");
-
-            result.VariableName = "a different variable name";
-
-            Assert.AreNotEqual(result.RawValue, variable.RawValue);
-            Assert.AreNotEqual(result.VariableName, variable.Name);
-
-            _ = result.SetVariable(variable);
-
-            Assert.AreEqual(result.RawValue, variable.RawValue);
-            Assert.AreNotEqual(result.VariableName, variable.Name);
-
-            result.RawValue = "something else";
-
-            _ = result.SetVariable(variable);
-
-            Assert.AreEqual(result.RawValue, variable.RawValue);
-            Assert.AreNotEqual(result.VariableName, variable.Name);
         }
     }
 }

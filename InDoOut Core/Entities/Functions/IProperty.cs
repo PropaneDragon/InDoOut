@@ -1,6 +1,5 @@
 ﻿using InDoOut_Core.Basic;
 using InDoOut_Core.Entities.Core;
-using InDoOut_Core.Variables;
 
 namespace InDoOut_Core.Entities.Functions
 {
@@ -34,17 +33,17 @@ namespace InDoOut_Core.Entities.Functions
         string SafeDescription { get; }
 
         /// <summary>
-        /// Computes the value based off of whether <see cref="AssociatedVariable"/> is set or
-        /// not. If it is set, it will use the <see cref="AssociatedVariable"/> for the value,
+        /// Computes the value based off of whether <see cref="LastSetValue"/> is set or
+        /// not. If it is set, it will use the <see cref="LastSetValue"/> for the value,
         /// or otherwise it just uses <see cref="IValue.RawValue"/>.
         /// </summary>
         string RawComputedValue { get; }
 
         /// <summary>
-        /// A variable that is associated with this property. This automatically sets
-        /// the value of the property to that of the variable when the value is requested.
+        /// The last value that was set on this property. This could be from an input value that was just activated, or
+        /// the default value given by the basic value.
         /// </summary>
-        IVariable AssociatedVariable { get; set; }
+        string LastSetValue { get; set; }
 
         /// <summary>
         /// The parent of this input.
@@ -70,8 +69,8 @@ namespace InDoOut_Core.Entities.Functions
         T BasicValue { get; set; }
 
         /// <summary>
-        /// Computes the value based off of whether <see cref="IProperty.AssociatedVariable"/> is set or
-        /// not. If it is set, it will use the <see cref="IProperty.AssociatedVariable"/> for the value,
+        /// Computes the value based off of whether <see cref="IProperty.LastSetValue"/> is set or
+        /// not. If it is set, it will use the <see cref="IProperty.LastSetValue"/> for the value,
         /// or otherwise it just uses <see cref="BasicValue"/>.
         /// </summary>
         T FullValue { get; }

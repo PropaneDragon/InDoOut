@@ -1,5 +1,4 @@
 ﻿using InDoOut_Core.Entities.Functions;
-using InDoOut_Core.Variables;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace InDoOut_Core_Tests
@@ -56,7 +55,6 @@ namespace InDoOut_Core_Tests
         public void Value()
         {
             var property = new Property<int>("test", "This is a description", false, 42);
-            var variable = new Variable("test", "567");
 
             Assert.AreEqual(42, property.BasicValue);
             Assert.AreEqual(42, property.FullValue);
@@ -82,19 +80,19 @@ namespace InDoOut_Core_Tests
             Assert.AreEqual("melon", property.RawComputedValue);
 
             property.RawValue = "-51656";
-            property.AssociatedVariable = variable;
+            property.LastSetValue = "567";
             Assert.AreEqual(-51656, property.BasicValue);
             Assert.AreEqual(567, property.FullValue);
             Assert.AreEqual("-51656", property.RawValue);
             Assert.AreEqual("567", property.RawComputedValue);
 
-            variable.RawValue = "lemon";
+            property.LastSetValue = "lemon";
             Assert.AreEqual(-51656, property.BasicValue);
             Assert.AreEqual(default, property.FullValue);
             Assert.AreEqual("-51656", property.RawValue);
             Assert.AreEqual("lemon", property.RawComputedValue);
 
-            property.AssociatedVariable = null;
+            property.LastSetValue = null;
             Assert.AreEqual(-51656, property.BasicValue);
             Assert.AreEqual(-51656, property.FullValue);
             Assert.AreEqual("-51656", property.RawValue);

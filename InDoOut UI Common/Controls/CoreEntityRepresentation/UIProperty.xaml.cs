@@ -46,7 +46,7 @@ namespace InDoOut_UI_Common.Controls.CoreEntityRepresentation
                 var otherAssociatedProperty = otherProperty.AssociatedProperty;
                 if (otherAssociatedProperty != null && AssociatedProperty != null)
                 {
-                    otherAssociatedProperty.AssociatedVariable = AssociatedProperty.AssociatedVariable;
+                    otherAssociatedProperty.LastSetValue = AssociatedProperty.LastSetValue;
                     otherAssociatedProperty.RawValue = AssociatedProperty.RawValue;
 
                     return true;

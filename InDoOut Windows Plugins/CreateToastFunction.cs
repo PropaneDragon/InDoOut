@@ -11,8 +11,8 @@ namespace InDoOut_Philips_Hue_Plugins
         private readonly IOutput _userDismissed, _timedOut, _appHidden, _activated, _error;
         private readonly IProperty<string> _title, _content;
         private readonly IProperty<double> _timeout;
+        private readonly object _outputLock = new object();
 
-        private object _outputLock = new object();
         private IOutput _activatedOutput;
 
         private IOutput ActivatedOutput

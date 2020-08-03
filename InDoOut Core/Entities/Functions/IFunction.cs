@@ -1,6 +1,5 @@
 ﻿using InDoOut_Core.Basic;
 using InDoOut_Core.Entities.Core;
-using InDoOut_Core.Variables;
 using System.Collections.Generic;
 
 namespace InDoOut_Core.Entities.Functions
@@ -125,12 +124,6 @@ namespace InDoOut_Core.Entities.Functions
         /// If an output should not be triggered on failure, it should be null.
         /// </summary>
         IOutput TriggerOnFailure { get; }
-
-        /// <summary>
-        /// A shared variable store between multiple functions.
-        /// </summary>
-        /// <seealso cref="IVariableStore"/>
-        IVariableStore VariableStore { get; set; }
 
         /// <summary>
         /// Politely asks for the function to be stopped, and waits for the user code to

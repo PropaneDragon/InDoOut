@@ -4,13 +4,12 @@ using InDoOut_Core.Basic;
 using InDoOut_Core.Entities.Core;
 using InDoOut_Core.Logging;
 using InDoOut_Core.Threading.Safety;
-using InDoOut_Core.Variables;
 
 namespace InDoOut_Core.Entities.Functions
 {
     /// <summary>
     /// Properties are values that change how a <see cref="Function"/> operates, or passes information into a
-    /// function to be calculated. These can be set by the user, or automatically set by the <see cref="AssociatedVariable"/>.
+    /// function to be calculated. These can be set by the user, or automatically set by an input with a value.
     /// </summary>
     public class Property<T> : InteractiveEntity<IFunction, IResult>, IProperty<T>
     {
@@ -29,21 +28,15 @@ namespace InDoOut_Core.Entities.Functions
         public string SafeDescription => TryGet.ValueOrDefault(() => Description);
 
         /// <summary>
-        /// The variable associated with this property. If set to anything other than null it will use the
-        /// value of the variable as the <see cref="RawComputedValue"/>, rather than using <see cref="RawValue"/>.
-        /// </summary>
-        public IVariable AssociatedVariable { get; set; } = null;
-
-        /// <summary>
         /// The parent this property belongs to.
         /// </summary>
         public IFunction Parent => Connections.FirstOrDefault();
 
         /// <summary>
-        /// The full computed value of the property. If <see cref="AssociatedVariable"/> is set it will use the
+        /// The full computed value of the property. If <see cref="LastSetValue"/> is set it will use the
         /// value assigned to the variable, rather than <see cref="RawValue"/>.
         /// </summary>
-        public string RawComputedValue => TryGet.ValueOrDefault(() => AssociatedVariable?.RawValue ?? _value.RawValue);
+        public string RawComputedValue => TryGet.ValueOrDefault(() => LastSetValue ?? _value.RawValue);
 
         /// <summary>
         /// Whether or not this is a required value for the function to operate.
@@ -66,7 +59,7 @@ namespace InDoOut_Core.Entities.Functions
         public T BasicValue { get => TryGet.ValueOrDefault(() => _value.ConvertFromString<T>(RawValue)); set => RawValue = TryGet.ValueOrDefault(() => _value.ConvertToString(value)); }
 
         /// <summary>
-        /// The full computed value of the property as type <typeparamref name="T"/>. If <see cref="AssociatedVariable"/> is set it will use the
+        /// The full computed value of the property as type <typeparamref name="T"/>. If <see cref="LastSetValue"/> is set it will use the
         /// value assigned to the variable, rather than <see cref="BasicValue"/>.
         /// </summary>
         public T FullValue => TryGet.ValueOrDefault(() => _value.ConvertFromString<T>(RawComputedValue));
@@ -84,6 +77,11 @@ namespace InDoOut_Core.Entities.Functions
         /// as those will include values from any connected <see cref="IResult"/>s whereas this won't, which could cause unintended side effects.
         /// </summary>
         public string RawValue { get => _value.RawValue; set => _value.RawValue = value; }
+
+        /// <summary>
+        /// The last set value. This is automatically set by any incoming input.
+        /// </summary>
+        public string LastSetValue { get; set; } = null;
 
         /// <summary>
         /// The property name.
@@ -159,8 +157,7 @@ namespace InDoOut_Core.Entities.Functions
 
             if (triggeredBy != null && !string.IsNullOrEmpty(triggeredBy.VariableName))
             {
-                var variable = Connections.Select(function => function?.VariableStore?.GetVariable(triggeredBy.VariableName)).Where(variable => variable != null).FirstOrDefault();
-                AssociatedVariable = variable;
+                LastSetValue = triggeredBy.ValueOrDefault(null);
 
                 Log.Instance.Info($"Applying variable from ", triggeredBy, $" to {this}");
             }

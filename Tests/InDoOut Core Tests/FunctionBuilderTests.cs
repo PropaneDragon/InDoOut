@@ -24,7 +24,6 @@ namespace InDoOut_Core_Tests
             Assert.AreEqual(typeof(TestStartFunction), instanceFromStartFunction.GetType());
 
             Assert.IsNull(functionBuilder.BuildInstance(null));
-            Assert.IsNull(functionBuilder.BuildInstance(typeof(TestVariableStore)));
         }
     }
 }

@@ -209,7 +209,7 @@ namespace InDoOut_Core.Entities.Core
             {
                 Log.Instance.Info($"Connection removed: {this} ---------- ", connection);
 
-                return connection != null && _connections.Contains(connection) ? _connections.Remove(connection) : false;
+                return connection != null && _connections.Contains(connection) && _connections.Remove(connection);
             }
         }
 

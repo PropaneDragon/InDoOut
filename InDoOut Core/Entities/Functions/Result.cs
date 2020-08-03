@@ -1,7 +1,6 @@
 ﻿using InDoOut_Core.Basic;
 using InDoOut_Core.Entities.Core;
 using InDoOut_Core.Logging;
-using InDoOut_Core.Variables;
 using System;
 using System.Linq;
 using System.Threading;
@@ -10,9 +9,7 @@ namespace InDoOut_Core.Entities.Functions
 {
     /// <summary>
     /// Results are values that are set when a <see cref="Function"/> is run. These values
-    /// can be named and will set a <see cref="IVariable"/> of that name when
-    /// the function is finished. Those values can then be used on <see cref="IProperty"/>
-    /// values.
+    /// can be named and will set any connected <see cref="IProperty"/> values.
     /// </summary>
     public class Result : InteractiveEntity<IProperty, IFunction>, IResult
     {
@@ -30,8 +27,7 @@ namespace InDoOut_Core.Entities.Functions
         public event EventHandler<ValueChangedEvent> OnValueChanged;
 
         /// <summary>
-        /// Whether this result contains a valid value, in order to set a corrisponding
-        /// <see cref="IVariable"/>.
+        /// Whether this result contains a valid value.
         /// </summary>
         public bool IsSet => !string.IsNullOrEmpty(_value.RawValue);
 
@@ -101,36 +97,6 @@ namespace InDoOut_Core.Entities.Functions
         }
 
         /// <summary>
-        /// Sets a variable with a name of the given <see cref="VariableName"/> and value of
-        /// <see cref="RawValue"/> inside the given <paramref name="variableStore"/>.
-        /// </summary>
-        /// <param name="variableStore">A variable store to create/update the variable.</param>
-        /// <returns>Whether the variable was set or not.</returns>
-        public bool SetVariable(IVariableStore variableStore)
-        {
-            return variableStore != null ? variableStore.SetVariable(VariableName, _value.RawValue) : false;
-        }
-
-        /// <summary>
-        /// Sets a variable's value directly from the <see cref="RawValue"/> without
-        /// accounting for the variable name. It is recommended to use <see cref="SetVariable(IVariableStore)"/>
-        /// instead, as it takes care of creating/updating the correct variable.
-        /// </summary>
-        /// <param name="variable">The variable to set.</param>
-        /// <returns>Whether the variable was set or not.</returns>
-        public bool SetVariable(IVariable variable)
-        {
-            if (variable != null)
-            {
-                variable.RawValue = _value.RawValue;
-
-                return true;
-            }
-
-            return false;
-        }
-
-        /// <summary>
         /// Sets the value from the given <paramref name="value"/> of type <typeparamref name="T"/>.
         /// </summary>
         /// <typeparam name="T">The type to convert from.</typeparam>
@@ -169,15 +135,6 @@ namespace InDoOut_Core.Entities.Functions
         protected override void Process(IFunction triggeredBy)
         {
             Log.Instance.Info($"Processing {this}");
-
-            if (SetVariable(triggeredBy?.VariableStore))
-            {
-                Log.Instance.Info($"Applied variable value: {this}");
-            }
-            else
-            {
-                Log.Instance.Error($"Failed to apply variable value for {this}");
-            }
 
             foreach (var connection in Connections)
             {

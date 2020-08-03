@@ -252,13 +252,13 @@ namespace InDoOut_Json_Storage
                             failures.AddRange(LinkPropertyResult(connection, startFunction, endFunction, outputName, inputName));
                             break;
                         default:
-                            failures.Add(new FailureReport((int)FailureIds.UnknownConnectionType, $"Couldn't create a connection, as the connection type \"{connectionType.ToString()}\" is unknown to the linker."));
+                            failures.Add(new FailureReport((int)FailureIds.UnknownConnectionType, $"Couldn't create a connection, as the connection type \"{connectionType}\" is unknown to the linker."));
                             break;
                     }
                 }
                 else
                 {
-                    failures.Add(new FailureReport((int)FailureIds.InvalidConnection, $"Couldn't create a connection as either the output name ({outputName ?? "null name"}), input name ({inputName ?? "null name"}) or the connection type \"{connectionType.ToString()}\" is unknown."));
+                    failures.Add(new FailureReport((int)FailureIds.InvalidConnection, $"Couldn't create a connection as either the output name ({outputName ?? "null name"}), input name ({inputName ?? "null name"}) or the connection type \"{connectionType}\" is unknown."));
                 }
             }
             else

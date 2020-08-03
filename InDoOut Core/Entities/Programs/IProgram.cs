@@ -1,7 +1,6 @@
 ﻿using InDoOut_Core.Basic;
 using InDoOut_Core.Entities.Core;
 using InDoOut_Core.Entities.Functions;
-using InDoOut_Core.Variables;
 using System.Collections.Generic;
 
 namespace InDoOut_Core.Entities.Programs
@@ -46,12 +45,6 @@ namespace InDoOut_Core.Entities.Programs
         /// Values to pass into all <see cref="StartFunctions"/> when the program is started.
         /// </summary>
         List<string> PassthroughValues { get; }
-
-        /// <summary>
-        /// The variable store for this program. This is where <see cref="IVariable"/>s are
-        /// held for functions.
-        /// </summary>
-        IVariableStore VariableStore { get; }
 
         /// <summary>
         /// Sends a request to all functions in the program to stop running. This is controlled by
