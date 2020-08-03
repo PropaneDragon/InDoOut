@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace InDoOut_Json_Storage
 {
@@ -63,6 +64,13 @@ namespace InDoOut_Json_Storage
             /// A connection could not be made.
             /// </summary>
             ConnectionFailed
+        }
+
+        private enum MatchType
+        {
+            Exact,
+            VersionAbove,
+            VersionBelow
         }
 
         /// <summary>
@@ -343,14 +351,61 @@ namespace InDoOut_Json_Storage
         private IFunction CreateFunction(JsonFunction functionItem, IProgram program, IFunctionBuilder builder, ILoadedPlugins loadedPlugins)
         {
             var availableFunctionTypes = loadedPlugins.Plugins.Where(pluginContainer => pluginContainer is IFunctionPluginContainer).Cast<IFunctionPluginContainer>().SelectMany(pluginContainer => pluginContainer.FunctionTypes);
+            var findOrder = new List<MatchType> { MatchType.Exact, MatchType.VersionAbove, MatchType.VersionBelow };
 
-            var foundFunctionType = availableFunctionTypes.FirstOrDefault(functionType => functionType.AssemblyQualifiedName == functionItem.FunctionClass);
+            Type foundFunctionType = null;
+
+            foreach (var matchType in findOrder)
+            {
+                var matchedType = FindFunctionType(availableFunctionTypes, functionItem.FunctionClass, matchType);
+                if (matchedType != null)
+                {
+                    foundFunctionType = matchedType;
+                    break;
+                }
+            }
+
             if (foundFunctionType != null)
             {
                 var functionInstance = builder.BuildInstance(foundFunctionType);
                 if (functionInstance != null && functionItem.Set(functionInstance) && program.AddFunction(functionInstance))
                 {
                     return functionInstance;
+                }
+            }
+
+            return null;
+        }
+
+        private Type FindFunctionType(IEnumerable<Type> typeList, string fullQualifiedName, MatchType matchType)
+        {
+            var detailExtractingRegex = new Regex(@"(?<function>.*?), *(?<library>.*?),.*(?<versionFull>Version=(?<version>\d+\.\d+\.\d+\.\d+)),");
+            var nameMatch = detailExtractingRegex.Match(fullQualifiedName);
+
+            if (nameMatch.Success)
+            {
+                var groups = nameMatch.Groups;
+                if (groups.ContainsKey("function") && groups.ContainsKey("library") && groups.ContainsKey("version"))
+                {
+                    var function = groups["function"]?.Value;
+                    var library = groups["library"]?.Value;
+                    var version = groups["version"]?.Value;
+
+                    foreach (var type in typeList)
+                    {
+                        var typeFunction = type?.FullName;
+                        var typeLibrary = type?.Assembly?.GetName()?.Name;
+                        var typeVersion = type?.Assembly?.GetName()?.Version;
+
+                        if (function == typeFunction && library == typeLibrary && Version.TryParse(version, out var parsedVersion))
+                        {
+                            var versionMatches = (matchType == MatchType.Exact && parsedVersion == typeVersion) || (matchType == MatchType.VersionAbove && typeVersion > parsedVersion) || (matchType == MatchType.VersionBelow && typeVersion < parsedVersion);
+                            if (versionMatches)
+                            {
+                                return type;
+                            }
+                        }
+                    }
                 }
             }
 
