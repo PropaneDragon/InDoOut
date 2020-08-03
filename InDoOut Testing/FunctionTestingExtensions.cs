@@ -21,7 +21,7 @@ namespace InDoOut_Testing
         /// <param name="triggerable">The triggerable to wait for.</param>
         /// <param name="waitForStart">Whether to wait for the function to start first.</param>
         /// <param name="sensitivity">The sensitivity of the wait timer. This is the amount of milliseconds to wait and check if the <paramref name="triggerable"/> is reporting it's not running anymore (due to it switching functions internally for example).</param>
-        public static void WaitForCompletion(this ITriggerable triggerable, bool waitForStart = false, int sensitivity = 5)
+        public static void WaitForCompletion(this ITriggerable triggerable, bool waitForStart = false, int sensitivity = 1)
         {
             _ = WaitForCompletion(triggerable, TimeSpan.FromMinutes(1), waitForStart, sensitivity);
         }
@@ -35,8 +35,13 @@ namespace InDoOut_Testing
         /// <param name="waitForStart">Whether to wait for the triggerable to start first.</param>
         /// <param name="sensitivity">The sensitivity of the wait timer. This is the amount of milliseconds to wait and check if the <paramref name="triggerable"/> is reporting it's not running anymore (due to it switching functions internally for example).</param>
         /// <returns>Whether the triggerable completed in time or not.</returns>
-        public static bool WaitForCompletion(this ITriggerable triggerable, TimeSpan timeout, bool waitForStart = false, int sensitivity = 5)
+        public static bool WaitForCompletion(this ITriggerable triggerable, TimeSpan timeout, bool waitForStart = false, int sensitivity = 1)
         {
+            if (sensitivity < 1)
+            {
+                sensitivity = 1;
+            }
+
             if (triggerable != null)
             {
                 var stopwatch = Stopwatch.StartNew();
@@ -65,7 +70,7 @@ namespace InDoOut_Testing
                     Thread.Sleep(1);
                 }
 
-                return stopwatch.Elapsed >= timeout ? false : !triggerable.Running;
+                return stopwatch.Elapsed < timeout && !triggerable.Running;
             }
 
             return false;

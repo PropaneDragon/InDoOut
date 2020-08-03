@@ -127,8 +127,8 @@ namespace InDoOut_Core_Tests
 
             program.Trigger(null);
 
-            Assert.IsTrue(startFunction.WaitForCompletion(TimeSpan.FromMilliseconds(100), true));
-            Assert.IsTrue(function.WaitForCompletion(TimeSpan.FromMilliseconds(100), true));
+            Assert.IsTrue(startFunction.WaitForCompletion(TimeSpan.FromMilliseconds(150)));
+            Assert.IsTrue(function.WaitForCompletion(TimeSpan.FromMilliseconds(150)));
             Assert.IsTrue(startFunction.HasRun);
             Assert.IsTrue(function.HasRun);
         }

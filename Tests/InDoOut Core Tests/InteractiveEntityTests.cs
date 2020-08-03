@@ -175,17 +175,17 @@ namespace InDoOut_Core_Tests
 
             interactiveEntity.Trigger(null);
 
-            Assert.IsTrue(interactiveEntity.WaitForCompletion(TimeSpan.FromMilliseconds(50), false));
+            Assert.IsTrue(interactiveEntity.WaitForCompletion(TimeSpan.FromMilliseconds(100), false));
 
             Assert.IsFalse(interactiveEntity.HasBeenTriggeredSince(DateTime.Now));
             Assert.IsFalse(interactiveEntity.HasBeenTriggeredSince(DateTime.Now - TimeSpan.FromMilliseconds(10)));
-            Assert.IsTrue(interactiveEntity.HasBeenTriggeredSince(DateTime.Now - TimeSpan.FromMilliseconds(40)));
+            Assert.IsTrue(interactiveEntity.HasBeenTriggeredSince(DateTime.Now - TimeSpan.FromMilliseconds(150)));
             Assert.IsTrue(interactiveEntity.HasBeenTriggeredSince(DateTime.Now - TimeSpan.FromSeconds(1)));
             Assert.IsTrue(interactiveEntity.HasBeenTriggeredSince(DateTime.Now - TimeSpan.FromDays(1)));
 
             Assert.IsFalse(interactiveEntity.HasBeenTriggeredWithin(TimeSpan.FromMilliseconds(1)));
             Assert.IsFalse(interactiveEntity.HasBeenTriggeredWithin(TimeSpan.FromMilliseconds(10)));
-            Assert.IsTrue(interactiveEntity.HasBeenTriggeredWithin(TimeSpan.FromMilliseconds(30)));
+            Assert.IsTrue(interactiveEntity.HasBeenTriggeredWithin(TimeSpan.FromMilliseconds(150)));
             Assert.IsTrue(interactiveEntity.HasBeenTriggeredWithin(TimeSpan.FromMilliseconds(200)));
             Assert.IsTrue(interactiveEntity.HasBeenTriggeredWithin(TimeSpan.FromSeconds(20)));
             Assert.IsTrue(interactiveEntity.HasBeenTriggeredWithin(TimeSpan.FromDays(20)));

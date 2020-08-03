@@ -22,11 +22,11 @@ namespace InDoOut_Testing_Tests
 
             var stopwatch = Stopwatch.StartNew();
 
-            Assert.IsTrue(function.WaitForCompletion(TimeSpan.FromMilliseconds(80)));
+            Assert.IsTrue(function.WaitForCompletion(TimeSpan.FromMilliseconds(100)));
 
             var waitTime = stopwatch.Elapsed;
 
-            Assert.AreEqual(50, waitTime.TotalMilliseconds, 20, $"Total time: {waitTime.TotalMilliseconds}ms");
+            Assert.AreEqual(50, waitTime.TotalMilliseconds, 50, $"Total time: {waitTime.TotalMilliseconds}ms");
 
             function = new TestFunction(() => Thread.Sleep(TimeSpan.FromSeconds(2)));
             function.Trigger(null);
@@ -37,7 +37,7 @@ namespace InDoOut_Testing_Tests
             
             waitTime = stopwatch.Elapsed;
 
-            Assert.AreEqual(60, waitTime.TotalMilliseconds, 20, $"Total time: {waitTime.TotalMilliseconds}ms");
+            Assert.AreEqual(60, waitTime.TotalMilliseconds, 50, $"Total time: {waitTime.TotalMilliseconds}ms");
 
             function = new TestFunction(() => Thread.Sleep(TimeSpan.FromMilliseconds(10)));
             function.Trigger(null);
@@ -48,7 +48,7 @@ namespace InDoOut_Testing_Tests
 
             waitTime = stopwatch.Elapsed;
 
-            Assert.AreEqual(10, waitTime.TotalMilliseconds, 20, $"Total time: {waitTime.TotalMilliseconds}ms");
+            Assert.AreEqual(10, waitTime.TotalMilliseconds, 50, $"Total time: {waitTime.TotalMilliseconds}ms");
 
             Log.Instance.Enabled = true;
         }
@@ -75,7 +75,7 @@ namespace InDoOut_Testing_Tests
 
             var waitTime = DateTime.UtcNow - startTime;
 
-            Assert.AreEqual(100, waitTime.TotalMilliseconds, 40, $"Total time: {waitTime.TotalMilliseconds}");
+            Assert.AreEqual(100, waitTime.TotalMilliseconds, 100, $"Total time: {waitTime.TotalMilliseconds}");
 
             Log.Instance.Enabled = true;
         }

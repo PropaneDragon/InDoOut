@@ -33,22 +33,22 @@ namespace InDoOut_Json_Storage_Tests
                 {
                     new JsonFunction()
                     {
-                        FunctionClass = "InDoOut_Desktop_API_Tests.External_Plugin_Testing.TestImportableFunctionA, InDoOut Desktop API Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                        FunctionClass = "InDoOut_Desktop_API_Tests.External_Plugin_Testing.TestImportableFunctionA, InDoOut Desktop API Tests, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null",
                         Id = new Guid("12345678-1111-1111-1111-123456789abc")
                     },
                     new JsonFunction()
                     {
-                        FunctionClass = "InDoOut_Desktop_API_Tests.External_Plugin_Testing.TestImportableFunctionB, InDoOut Desktop API Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                        FunctionClass = "InDoOut_Desktop_API_Tests.External_Plugin_Testing.TestImportableFunctionB, InDoOut Desktop API Tests, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null",
                         Id = new Guid("12345678-2222-2222-2222-123456789abc")
                     },
                     new JsonFunction()
                     {
-                        FunctionClass = "InDoOut_Desktop_API_Tests.External_Plugin_Testing.TestImportableFunctionB, InDoOut Desktop API Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                        FunctionClass = "InDoOut_Desktop_API_Tests.External_Plugin_Testing.TestImportableFunctionB, InDoOut Desktop API Tests, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null",
                         Id = new Guid("12345678-3333-3333-3333-123456789abc")
                     },
                     new JsonFunction()
                     {
-                        FunctionClass = "InDoOut_Desktop_API_Tests.External_Plugin_Testing.TestImportableFunctionA, InDoOut Desktop API Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                        FunctionClass = "InDoOut_Desktop_API_Tests.External_Plugin_Testing.TestImportableFunctionA, InDoOut Desktop API Tests, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null",
                         Id = new Guid("12345678-4444-4444-4444-123456789abc")
                     },
                 },

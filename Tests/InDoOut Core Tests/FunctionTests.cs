@@ -213,7 +213,7 @@ namespace InDoOut_Core_Tests
 
             var totalDuration = DateTime.UtcNow - startTime;
 
-            Assert.AreEqual(duration.TotalMilliseconds, totalDuration.TotalMilliseconds, 20);
+            Assert.AreEqual(duration.TotalMilliseconds, totalDuration.TotalMilliseconds, 50);
         }
 
         [TestMethod]
