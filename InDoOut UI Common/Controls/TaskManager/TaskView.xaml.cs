@@ -2,6 +2,7 @@
 using InDoOut_Executable_Core.Programs;
 using InDoOut_UI_Common.Events;
 using InDoOut_UI_Common.InterfaceElements;
+using InDoOut_UI_Common.SaveLoad;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -27,6 +28,15 @@ namespace InDoOut_UI_Common.Controls.TaskManager
         public void CreateNewTask(bool bringToFront = false)
         {
             CreateNewTask(ProgramHolder.Instance.NewProgram(), bringToFront);
+        }
+
+        public async void CreateNewTask(string path, bool bringToFront = false)
+        {
+            var program = await CommonProgramSaveLoad.Instance.LoadProgramAsync(path);
+            if (program != null && ProgramHolder.Instance.AddProgram(program))
+            {
+                CreateNewTask(program, bringToFront);
+            }
         }
 
         public void CreateNewTask(IProgram program, bool bringToFront = false)

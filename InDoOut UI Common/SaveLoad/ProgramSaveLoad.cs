@@ -32,14 +32,14 @@ namespace InDoOut_UI_Common.SaveLoad
 
                 if (openDialog.ShowDialog(parent) ?? false)
                 {
-                    return await LoadProgramAsync(openDialog.FileName, programHolder, programStorer, parent);
+                    return await LoadProgramAsync(openDialog.FileName, programHolder, programStorer);
                 }
             }
 
             return null;
         }
 
-        public async Task<IProgram> LoadProgramAsync(string filePath, IProgramHolder programHolder, IProgramStorer programStorer, Window parent = null)
+        public async Task<IProgram> LoadProgramAsync(string filePath, IProgramHolder programHolder, IProgramStorer programStorer)
         {
             var failureReports = new List<IFailureReport>();
 
@@ -118,7 +118,7 @@ namespace InDoOut_UI_Common.SaveLoad
 
                 if (saveDialog.ShowDialog(parent) ?? false)
                 {
-                    return await SaveProgramAsync(saveDialog.FileName, program, programStorer, parent);
+                    return await SaveProgramAsync(saveDialog.FileName, program, programStorer);
                 }
             }
 
@@ -128,11 +128,11 @@ namespace InDoOut_UI_Common.SaveLoad
         public async Task<bool> TrySaveProgramFromMetadataAsync(IProgram program, IProgramStorer programStorer, Window parent = null)
         {
             return program != null && program.Metadata.ContainsKey(ProgramStorer.PROGRAM_METADATA_LAST_LOADED_FROM)
-                ? await SaveProgramAsync(program.Metadata[ProgramStorer.PROGRAM_METADATA_LAST_LOADED_FROM], program, programStorer, parent)
+                ? await SaveProgramAsync(program.Metadata[ProgramStorer.PROGRAM_METADATA_LAST_LOADED_FROM], program, programStorer)
                 : await SaveProgramDialogAsync(program, programStorer, parent);
         }
 
-        public async Task<bool> SaveProgramAsync(string filePath, IProgram program, IProgramStorer programStorer, Window parent = null)
+        public async Task<bool> SaveProgramAsync(string filePath, IProgram program, IProgramStorer programStorer)
         {
             var failureReports = new List<IFailureReport>();
 

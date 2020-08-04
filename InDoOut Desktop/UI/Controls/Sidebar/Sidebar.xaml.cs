@@ -190,7 +190,7 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
 
             if (_programDisplay != null)
             {
-                var program = await ProgramSaveLoad.Instance.LoadProgramDialogAsync(ProgramHolder.Instance, new ProgramJsonStorer(new FunctionBuilder(), LoadedPlugins.Instance), Window.GetWindow(this));
+                var program = await CommonProgramSaveLoad.Instance.LoadProgramDialogAsync(Window.GetWindow(this));
                 if (program != null)
                 {
                     _ = ProgramHolder.Instance.RemoveProgram(_programDisplay?.AssociatedProgram);
@@ -203,14 +203,14 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
         {
             Log.Instance.Header("Save button clicked");
 
-            _ = await ProgramSaveLoad.Instance.TrySaveProgramFromMetadataAsync(_programDisplay?.AssociatedProgram, new ProgramJsonStorer(new FunctionBuilder(), LoadedPlugins.Instance), Window.GetWindow(this));
+            _ = await CommonProgramSaveLoad.Instance.TrySaveProgramFromMetadataAsync(_programDisplay?.AssociatedProgram, Window.GetWindow(this));
         }
 
         private async void Button_SaveProgramAs_Click(object sender, RoutedEventArgs e)
         {
             Log.Instance.Header("Save as button clicked");
 
-            _ = await ProgramSaveLoad.Instance.SaveProgramDialogAsync(_programDisplay?.AssociatedProgram, new ProgramJsonStorer(new FunctionBuilder(), LoadedPlugins.Instance), Window.GetWindow(this));
+            _ = await CommonProgramSaveLoad.Instance.SaveProgramDialogAsync(_programDisplay?.AssociatedProgram, Window.GetWindow(this));
         }
 
         private void Button_TaskViewer_Click(object sender, RoutedEventArgs e)
