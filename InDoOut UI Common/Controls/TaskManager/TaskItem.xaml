@@ -27,7 +27,8 @@
                     <Button x:Name="Button_StopTask" DockPanel.Dock="Left" FontSize="24" Content="" ToolTip="Stop program" Style="{StaticResource Style.Button.Transparent.Material.Animated}" VerticalAlignment="Stretch" HorizontalAlignment="Right" Padding="2" Click="Button_StopTask_Click" />
                     <Button x:Name="Button_StoppingTask" DockPanel.Dock="Left" FontSize="24" Content="" ToolTip="Program stopping" Style="{StaticResource Style.Button.Transparent.Material.Animated}" VerticalAlignment="Stretch" HorizontalAlignment="Right" Padding="2" />
                     <Button x:Name="Button_RemoveTask" DockPanel.Dock="Right" FontSize="24" Content="" ToolTip="Remove program" Style="{StaticResource Style.Button.Transparent.Material.Animated}" VerticalAlignment="Stretch" HorizontalAlignment="Right" Padding="2" Click="Button_RemoveTask_Click" />
-                    <Button x:Name="Button_StartWithProgram" DockPanel.Dock="Right" FontSize="24" Content="" ToolTip="Start with IDO" Style="{StaticResource Style.Button.Transparent.Material.Animated}" VerticalAlignment="Stretch" HorizontalAlignment="Right" Padding="2" Click="Button_StartWithProgram_Click" />
+                    <Button x:Name="Button_AddStartWithProgram" DockPanel.Dock="Right" FontSize="24" Content="" ToolTip="Start with IDO" Style="{StaticResource Style.Button.Transparent.Material.Animated}" VerticalAlignment="Stretch" HorizontalAlignment="Right" Padding="2" Click="Button_StartWithProgram_Click" />
+                    <Button x:Name="Button_RemoveStartWithProgram" DockPanel.Dock="Right" FontSize="24" Content="" ToolTip="Remove from start with IDO" Style="{StaticResource Style.Button.Transparent.Material.Animated}" VerticalAlignment="Stretch" HorizontalAlignment="Right" Padding="2" Click="Button_StartWithProgram_Click" />
                 </DockPanel>
             </Grid>
             <Grid VerticalAlignment="Bottom">

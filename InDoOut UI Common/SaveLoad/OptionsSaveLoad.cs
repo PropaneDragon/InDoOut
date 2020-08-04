@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace InDoOut_UI_Common.SaveLoad
 {
@@ -18,28 +17,28 @@ namespace InDoOut_UI_Common.SaveLoad
     {
         private static readonly string PROGRAM_OPTIONS_SAVE_FILENAME = "IDO";
 
-        public async Task<bool> LoadAllOptionsAsync(IOptionsStorer optionsStorer, Window parent = null)
+        public async Task<bool> LoadAllOptionsAsync(IOptionsStorer optionsStorer)
         {
-            var allSucceded = await LoadProgramOptionsAsync(optionsStorer, parent);
-            allSucceded = await LoadPluginOptionsAsync(optionsStorer, parent) && allSucceded;
+            var allSucceded = await LoadProgramOptionsAsync(optionsStorer);
+            allSucceded = await LoadPluginOptionsAsync(optionsStorer) && allSucceded;
 
             return allSucceded;
         }
 
-        public async Task<bool> SaveAllOptionsAsync(IOptionsStorer optionsStorer, Window parent = null)
+        public async Task<bool> SaveAllOptionsAsync(IOptionsStorer optionsStorer)
         {
-            var allSucceded = await SaveProgramOptionsAsync(optionsStorer, parent);
-            allSucceded = await SavePluginOptionsAsync(optionsStorer, parent) && allSucceded;
+            var allSucceded = await SaveProgramOptionsAsync(optionsStorer);
+            allSucceded = await SavePluginOptionsAsync(optionsStorer) && allSucceded;
 
             return allSucceded;
         }
 
-        public async Task<bool> LoadProgramOptionsAsync(IOptionsStorer optionsStorer, Window parent = null)
+        public async Task<bool> LoadProgramOptionsAsync(IOptionsStorer optionsStorer)
         {
-            return await LoadOptionsAsync(GetProgramFileName(optionsStorer), ProgramOptionsHolder.Instance.ProgramOptions?.OptionHolder, optionsStorer, parent);
+            return await LoadOptionsAsync(GetProgramFileName(optionsStorer), ProgramOptionsHolder.Instance.ProgramOptions?.OptionHolder, optionsStorer);
         }
 
-        public async Task<bool> LoadPluginOptionsAsync(IOptionsStorer optionsStorer, Window parent = null)
+        public async Task<bool> LoadPluginOptionsAsync(IOptionsStorer optionsStorer)
         {
             var allSucceeded = true;
 
@@ -47,24 +46,24 @@ namespace InDoOut_UI_Common.SaveLoad
             {
                 if (pluginContainer.Plugin != null)
                 {
-                    allSucceeded = await LoadPluginOptionsAsync(pluginContainer.Plugin, optionsStorer, parent) && allSucceeded;
+                    allSucceeded = await LoadPluginOptionsAsync(pluginContainer.Plugin, optionsStorer) && allSucceeded;
                 }
             }
 
             return allSucceeded;
         }
 
-        public async Task<bool> LoadPluginOptionsAsync(IPlugin plugin, IOptionsStorer optionsStorer, Window parent = null)
+        public async Task<bool> LoadPluginOptionsAsync(IPlugin plugin, IOptionsStorer optionsStorer)
         {
-            return plugin != null ? await LoadOptionsAsync(GetPluginFileName(plugin, optionsStorer), plugin?.OptionHolder, optionsStorer, parent) : false;
+            return plugin != null && await LoadOptionsAsync(GetPluginFileName(plugin, optionsStorer), plugin?.OptionHolder, optionsStorer);
         }
 
-        public async Task<bool> SaveProgramOptionsAsync(IOptionsStorer optionsStorer, Window parent = null)
+        public async Task<bool> SaveProgramOptionsAsync(IOptionsStorer optionsStorer)
         {
-            return await SaveOptionsAsync(GetProgramFileName(optionsStorer), ProgramOptionsHolder.Instance.ProgramOptions?.OptionHolder, optionsStorer, parent);
+            return await SaveOptionsAsync(GetProgramFileName(optionsStorer), ProgramOptionsHolder.Instance.ProgramOptions?.OptionHolder, optionsStorer);
         }
 
-        public async Task<bool> SavePluginOptionsAsync(IOptionsStorer optionsStorer, Window parent = null)
+        public async Task<bool> SavePluginOptionsAsync(IOptionsStorer optionsStorer)
         {
             var allSucceeded = true;
 
@@ -72,19 +71,19 @@ namespace InDoOut_UI_Common.SaveLoad
             {
                 if (pluginContainer.Plugin != null)
                 {
-                    allSucceeded = await SavePluginOptionsAsync(pluginContainer.Plugin, optionsStorer, parent) && allSucceeded;
+                    allSucceeded = await SavePluginOptionsAsync(pluginContainer.Plugin, optionsStorer) && allSucceeded;
                 }
             }
 
             return allSucceeded;
         }
 
-        public async Task<bool> SavePluginOptionsAsync(IPlugin plugin, IOptionsStorer optionsStorer, Window parent = null)
+        public async Task<bool> SavePluginOptionsAsync(IPlugin plugin, IOptionsStorer optionsStorer)
         {
-            return plugin != null ? await SaveOptionsAsync(GetPluginFileName(plugin, optionsStorer), plugin?.OptionHolder, optionsStorer, parent) : false;
+            return plugin != null && await SaveOptionsAsync(GetPluginFileName(plugin, optionsStorer), plugin?.OptionHolder, optionsStorer);
         }
 
-        public async Task<bool> LoadOptionsAsync(string filePath, IOptionHolder optionHolder, IOptionsStorer optionStorer, Window parent = null)
+        public async Task<bool> LoadOptionsAsync(string filePath, IOptionHolder optionHolder, IOptionsStorer optionStorer)
         {
             var failureReports = new List<IFailureReport>();
 
@@ -116,7 +115,7 @@ namespace InDoOut_UI_Common.SaveLoad
             return failureReports.Count == 0;
         }
 
-        public async Task<bool> SaveOptionsAsync(string filePath, IOptionHolder optionHolder, IOptionsStorer optionsStorer, Window parent = null)
+        public async Task<bool> SaveOptionsAsync(string filePath, IOptionHolder optionHolder, IOptionsStorer optionsStorer)
         {
             var failureReports = new List<IFailureReport>();
 

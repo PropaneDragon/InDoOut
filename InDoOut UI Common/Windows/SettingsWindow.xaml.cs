@@ -79,7 +79,7 @@ namespace InDoOut_UI_Common.Windows
                 }
             }
 
-            _ = await OptionsSaveLoad.Instance.SaveAllOptionsAsync(OptionsStorer, this);
+            _ = await OptionsSaveLoad.Instance.SaveAllOptionsAsync(OptionsStorer);
 
             Button_Apply.IsEnabled = true;
         }

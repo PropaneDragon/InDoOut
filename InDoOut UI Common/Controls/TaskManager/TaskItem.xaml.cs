@@ -1,5 +1,11 @@
-﻿using InDoOut_UI_Common.InterfaceElements;
+﻿using InDoOut_Core.Options.Types;
+using InDoOut_Executable_Core.Messaging;
+using InDoOut_Executable_Core.Options;
+using InDoOut_Executable_Core.Storage;
+using InDoOut_UI_Common.InterfaceElements;
+using InDoOut_UI_Common.SaveLoad;
 using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -11,7 +17,11 @@ namespace InDoOut_UI_Common.Controls.TaskManager
 {
     public partial class TaskItem : UserControl, ITaskItem
     {
+        public static readonly string TASK_STARTUP_PROGRAM_OPTION_NAME = "Startup programs";
+
         private DispatcherTimer _updateTimer = null;
+
+        private bool AssociatedProgramIsStartupProgram => GetStartupProgramsOption()?.ListValue?.Contains(GetAssociatedProgramLocation() ?? "") ?? false;
 
         public ICommonProgramDisplay ProgramDisplay { get; private set; } = null;
         public ITaskView TaskView { get; private set; } = null;
@@ -84,6 +94,33 @@ namespace InDoOut_UI_Common.Controls.TaskManager
             Button_RunTask.Visibility = (program != null && !program.Running && !program.Stopping) ? Visibility.Visible : Visibility.Collapsed;
             Button_StopTask.Visibility = (program != null && program.Running && !program.Stopping) ? Visibility.Visible : Visibility.Collapsed;
             Button_StoppingTask.Visibility = (program != null && !program.Running && program.Stopping) ? Visibility.Visible : Visibility.Collapsed;
+            Button_AddStartWithProgram.Visibility = !AssociatedProgramIsStartupProgram ? Visibility.Visible : Visibility.Collapsed;
+            Button_RemoveStartWithProgram.Visibility = AssociatedProgramIsStartupProgram ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private HiddenListOption GetStartupProgramsOption()
+        {
+            var optionHolder = ProgramOptionsHolder.Instance?.ProgramOptions?.OptionHolder;
+            var options = optionHolder?.Options;
+
+            if (options != null)
+            {
+                var foundOption = options.Find(option => option.Name == TASK_STARTUP_PROGRAM_OPTION_NAME);
+
+                if (foundOption is HiddenListOption listOption)
+                {
+                    return listOption;
+                }
+            }
+
+            return null;
+        }
+
+        private string GetAssociatedProgramLocation()
+        {
+            var metadata = ProgramDisplay?.AssociatedProgram?.Metadata;
+
+            return metadata != null && metadata.TryGetValue(ProgramStorer.PROGRAM_METADATA_LAST_LOADED_FROM, out var programLocation) ? programLocation : null;
         }
 
         private void UpdateTimer_Tick(object sender, EventArgs e)
@@ -149,7 +186,39 @@ namespace InDoOut_UI_Common.Controls.TaskManager
 
         private void Button_StartWithProgram_Click(object sender, RoutedEventArgs e)
         {
+            var programLocation = GetAssociatedProgramLocation();
+            var startupOption = GetStartupProgramsOption();
 
+            if (startupOption != null)
+            {
+                if (!string.IsNullOrEmpty(programLocation))
+                {
+                    var list = startupOption.ListValue;
+
+                    if (AssociatedProgramIsStartupProgram)
+                    {
+                        _ = list.RemoveAll(value => value == programLocation);
+                    }
+                    else
+                    {
+                        list.Add(programLocation);
+                    }
+
+                    startupOption.ListValue = list;
+                }
+                else
+                {
+                    UserMessageSystemHolder.Instance.CurrentUserMessageSystem?.ShowError("Can't add an unsaved program", "The program needs to be saved first in order to be added to the startup list.");
+                }
+            }
+            else
+            {
+                UserMessageSystemHolder.Instance.CurrentUserMessageSystem?.ShowError("Program couldn't be added to startup list", "There appears to be an issue with the options, and the program couldn't be added to the options.");
+            }
+
+            UpdateProgramState();
+
+            _ = Task.Run(async () => await CommonOptionsSaveLoad.Instance.SaveProgramOptionsAsync());
         }
 
         private void Button_RunTask_Click(object sender, RoutedEventArgs e)
