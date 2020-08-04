@@ -1,7 +1,5 @@
 ﻿using InDoOut_Core.Functions;
 using InDoOut_Core.Logging;
-using InDoOut_Desktop.Options;
-using InDoOut_Desktop.UI.Windows;
 using InDoOut_Executable_Core.Location;
 using InDoOut_Executable_Core.Programs;
 using InDoOut_Json_Storage;

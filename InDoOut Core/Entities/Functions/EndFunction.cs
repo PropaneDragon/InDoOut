@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace InDoOut_Core.Entities.Functions
+﻿namespace InDoOut_Core.Entities.Functions
 {
     /// <summary>
     /// A self contained block that can do processing independently of any other function. <see cref="EndFunction"/>s are

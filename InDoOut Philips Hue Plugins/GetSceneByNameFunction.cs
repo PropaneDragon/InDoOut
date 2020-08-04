@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using InDoOut_Core.Entities.Functions;
-using Q42.HueApi;
 
 namespace InDoOut_Philips_Hue_Plugins
 {

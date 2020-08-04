@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace InDoOut_UI_Common.Removal
+﻿namespace InDoOut_UI_Common.Removal
 {
     public abstract class AbstractElementRemover<Element> : IElementRemover<Element> where Element : class
     {

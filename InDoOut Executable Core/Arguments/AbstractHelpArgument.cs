@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace InDoOut_Executable_Core.Arguments
+﻿namespace InDoOut_Executable_Core.Arguments
 {
     public abstract class AbstractHelpArgument : Argument
     {

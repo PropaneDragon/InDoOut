@@ -6,7 +6,6 @@ using InDoOut_Executable_Core.Programs;
 using InDoOut_UI_Common.Actions;
 using InDoOut_UI_Common.Actions.Selecting;
 using InDoOut_UI_Common.InterfaceElements;
-using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;

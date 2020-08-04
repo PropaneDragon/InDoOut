@@ -1,5 +1,4 @@
 ﻿using InDoOut_Core.Logging;
-using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;

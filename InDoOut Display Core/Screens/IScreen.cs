@@ -1,6 +1,5 @@
 ﻿using InDoOut_Core.Entities.Programs;
 using InDoOut_Display_Core.Elements;
-using InDoOut_UI_Common.Actions.Selecting;
 using InDoOut_UI_Common.InterfaceElements;
 using System.Windows;
 
