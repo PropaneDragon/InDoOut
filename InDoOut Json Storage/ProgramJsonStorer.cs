@@ -1,6 +1,7 @@
 ﻿using InDoOut_Core.Entities.Programs;
 using InDoOut_Core.Functions;
 using InDoOut_Core.Reporting;
+using InDoOut_Executable_Core.Localisation;
 using InDoOut_Executable_Core.Storage;
 using InDoOut_Plugins.Loaders;
 using System;
@@ -19,7 +20,7 @@ namespace InDoOut_Json_Storage
         /// <summary>
         /// The name of the file extension that will be readable by the user.
         /// </summary>
-        public override string FileReadableName => "ido Program";
+        public override string FileReadableName => $"{Branding.Instance.AppNameShort} Program";
 
         /// <summary>
         /// The extension of the generated files.

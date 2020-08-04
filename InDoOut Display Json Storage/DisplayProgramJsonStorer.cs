@@ -1,4 +1,5 @@
 ﻿using InDoOut_Core.Functions;
+using InDoOut_Executable_Core.Localisation;
 using InDoOut_Json_Storage;
 using InDoOut_Plugins.Loaders;
 
@@ -13,7 +14,7 @@ namespace InDoOut_Display_Json_Storage
         /// <summary>
         /// The name of the file extension that will be readable by the user.
         /// </summary>
-        public override string FileReadableName => "ido Display interface";
+        public override string FileReadableName => $"{Branding.Instance.AppNameShort} Display interface";
 
         /// <summary>
         /// The extension of the generated files.
