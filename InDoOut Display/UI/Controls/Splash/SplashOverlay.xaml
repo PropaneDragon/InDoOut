@@ -18,7 +18,7 @@
                 </Grid.ColumnDefinitions>
                 <Viewbox Grid.Column="1" Margin="0,0,0,30">
                     <StackPanel>
-                        <TextBlock Text="in > do > out" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center"/>
+                        <TextBlock x:Name="Text_AppName" Text="in > do > out" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center"/>
                         <TextBlock Text="display" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" FontStretch="Normal" Opacity="0.7"/>
                     </StackPanel>
                 </Viewbox>
@@ -26,6 +26,6 @@
             <TextBlock x:Name="Text_Version" Text="Version unknown" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="WrapWithOverflow" TextTrimming="CharacterEllipsis" Opacity="0.8" />
             <TextBlock x:Name="Text_Loading" Text="Loading..." FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="WrapWithOverflow" TextTrimming="CharacterEllipsis" Opacity="0.8" />
         </StackPanel>
-        <TextBlock Text="idoapp.net" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,16" Opacity="0.7" />
+        <TextBlock x:Name="Text_Website" Text="idoapp.net" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,16" Opacity="0.7" />
     </Grid>
 </UserControl>

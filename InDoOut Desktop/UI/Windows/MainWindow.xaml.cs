@@ -3,6 +3,7 @@ using InDoOut_Desktop.Loading;
 using InDoOut_Desktop.Options;
 using InDoOut_Desktop.Programs;
 using InDoOut_Desktop.UI.Threading;
+using InDoOut_Executable_Core.Localisation;
 using InDoOut_Executable_Core.Location;
 using InDoOut_Executable_Core.Logging;
 using InDoOut_Executable_Core.Messaging;
@@ -113,7 +114,7 @@ namespace InDoOut_Desktop.UI.Windows
                 programName = string.IsNullOrEmpty(program.Name) ? "Untitled" : program.Name;
             }
 
-            Title = $"{programName}";
+            Title = $"{programName} - {Branding.Instance.AppNameShort}";
         }
     }
 }

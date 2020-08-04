@@ -1,4 +1,5 @@
 ﻿using InDoOut_Executable_Core.Loading;
+using InDoOut_Executable_Core.Localisation;
 using InDoOut_UI_Common.Controls.Screens;
 using System;
 using System.Reflection;
@@ -24,6 +25,9 @@ namespace InDoOut_Desktop.UI.Controls.Splash
             _uiUpdateTimer.Start();
 
             UpdateVersion();
+
+            Text_AppName.Text = Branding.Instance.AppNameArrows;
+            Text_Website.Text = Branding.Instance.WebsiteShort;
         }
 
         public async Task<bool> RunTaskAsync(ILoadingTask task)
