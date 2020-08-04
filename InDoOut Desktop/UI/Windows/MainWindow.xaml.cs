@@ -37,9 +37,7 @@ namespace InDoOut_Desktop.UI.Windows
             _logSaver.BeginAutoSave();
         }
 
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         private async Task FinishLoading()
-#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             var sidebar = Sidebar_Main;
             var taskView = TaskView_Main;
@@ -47,6 +45,9 @@ namespace InDoOut_Desktop.UI.Windows
             if (taskView != null)
             {
                 taskView.ProgramDisplayCreator = new ProgramDisplayCreator();
+
+                _ = await taskView.LoadStoredOptionTasks(true);
+
                 taskView.CreateNewTask(true);
             }
 

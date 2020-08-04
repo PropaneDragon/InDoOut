@@ -17,8 +17,6 @@ namespace InDoOut_UI_Common.Controls.TaskManager
 {
     public partial class TaskItem : UserControl, ITaskItem
     {
-        public static readonly string TASK_STARTUP_PROGRAM_OPTION_NAME = "Startup programs";
-
         private DispatcherTimer _updateTimer = null;
 
         private bool AssociatedProgramIsStartupProgram => GetStartupProgramsOption()?.ListValue?.Contains(GetAssociatedProgramLocation() ?? "") ?? false;
@@ -105,7 +103,7 @@ namespace InDoOut_UI_Common.Controls.TaskManager
 
             if (options != null)
             {
-                var foundOption = options.Find(option => option.Name == TASK_STARTUP_PROGRAM_OPTION_NAME);
+                var foundOption = options.Find(option => option.Name == TaskManager.TaskView.TASK_STARTUP_PROGRAM_OPTION_NAME);
 
                 if (foundOption is HiddenListOption listOption)
                 {

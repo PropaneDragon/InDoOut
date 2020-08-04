@@ -1,9 +1,12 @@
 ﻿using InDoOut_Core.Entities.Programs;
+using InDoOut_Core.Options.Types;
+using InDoOut_Executable_Core.Options;
 using InDoOut_Executable_Core.Programs;
 using InDoOut_UI_Common.Events;
 using InDoOut_UI_Common.InterfaceElements;
 using InDoOut_UI_Common.SaveLoad;
 using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -13,6 +16,8 @@ namespace InDoOut_UI_Common.Controls.TaskManager
 {
     public partial class TaskView : UserControl, ITaskView
     {
+        public static readonly string TASK_STARTUP_PROGRAM_OPTION_NAME = "Startup programs";
+
         private ICommonProgramDisplay _programDisplay = null;
 
         public IProgramDisplayCreator ProgramDisplayCreator { get; set; } = new NullProgramDisplayCreator();
@@ -30,13 +35,22 @@ namespace InDoOut_UI_Common.Controls.TaskManager
             CreateNewTask(ProgramHolder.Instance.NewProgram(), bringToFront);
         }
 
-        public async void CreateNewTask(string path, bool bringToFront = false)
+        public async Task<bool> CreateNewTask(string path, bool runAutomatically = false, bool bringToFront = false)
         {
             var program = await CommonProgramSaveLoad.Instance.LoadProgramAsync(path);
-            if (program != null && ProgramHolder.Instance.AddProgram(program))
+            if (program != null && ProgramHolder.Instance.ProgramExists(program))
             {
+                if (runAutomatically)
+                {
+                    program.Trigger(null);
+                }
+
                 CreateNewTask(program, bringToFront);
+
+                return true;
             }
+
+            return false;
         }
 
         public void CreateNewTask(IProgram program, bool bringToFront = false)
@@ -151,6 +165,28 @@ namespace InDoOut_UI_Common.Controls.TaskManager
             }
 
             return false;
+        }
+
+        public async Task<bool> LoadStoredOptionTasks(bool runAutomatically = true)
+        {
+            var optionHolder = ProgramOptionsHolder.Instance?.ProgramOptions?.OptionHolder;
+            var options = optionHolder?.Options;
+            var allLoaded = true;
+
+            if (options != null)
+            {
+                var foundOption = options.Find(option => option.Name == TASK_STARTUP_PROGRAM_OPTION_NAME);
+
+                if (foundOption is HiddenListOption listOption && (listOption?.ListValue?.Count ?? 0) > 0)
+                {
+                    foreach (var item in listOption.ListValue)
+                    {
+                        allLoaded = await CreateNewTask(item, runAutomatically, false) && allLoaded;
+                    }
+                }
+            }
+
+            return allLoaded;
         }
 
         private void ProgramDisplayChanged(ICommonProgramDisplay programDisplay)

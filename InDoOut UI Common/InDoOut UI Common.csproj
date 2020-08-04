@@ -10,6 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Properties\**" />
+    <EmbeddedResource Remove="Properties\**" />
+    <None Remove="Properties\**" />
+    <Page Remove="Properties\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\InDoOut Core\InDoOut Core.csproj" />
     <ProjectReference Include="..\InDoOut Executable Core\InDoOut Executable Core.csproj" />
     <ProjectReference Include="..\InDoOut Json Storage\InDoOut Json Storage.csproj" />
@@ -23,10 +30,6 @@
     <Page Update="Style\TitleBarStyle.xaml">
       <SubType>Designer</SubType>
     </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Properties\" />
   </ItemGroup>
 
 </Project>
