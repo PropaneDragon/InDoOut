@@ -233,5 +233,18 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
             settingsWindow.Show();
             Collapse();
         }
+
+        private void Button_Plugins_Click(object sender, RoutedEventArgs e)
+        {
+            Log.Instance.Header("Plugins button clicked");
+
+            var pluginsWindow = new PluginsWindow()
+            {
+                Owner = Window.GetWindow(this)
+            };
+
+            pluginsWindow.Show();
+            Collapse();
+        }
     }
 }
