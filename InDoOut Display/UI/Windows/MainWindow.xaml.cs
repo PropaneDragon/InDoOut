@@ -7,6 +7,7 @@ using InDoOut_Executable_Core.Messaging;
 using InDoOut_Executable_Core.Options;
 using InDoOut_UI_Common.Controls.Screens;
 using InDoOut_UI_Common.Messaging;
+using InDoOut_UI_Common.SaveLoad;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
@@ -50,6 +51,9 @@ namespace InDoOut_Display.UI.Windows
             if (taskView != null)
             {
                 taskView.ProgramDisplayCreator = new ProgramDisplayCreator();
+
+                _ = await taskView.LoadStoredOptionTasks(true);
+
                 taskView.CreateNewTask(true);
             }
 
@@ -139,7 +143,7 @@ namespace InDoOut_Display.UI.Windows
             {
                 _windowStateChanged = false;
 
-                _ = await CommonOptionsSaveLoad.Instance.SaveProgramOptionsAsync(this);
+                _ = await CommonOptionsSaveLoad.Instance.SaveProgramOptionsAsync();
             }
 
             _windowStateSaveTimer.Start();
