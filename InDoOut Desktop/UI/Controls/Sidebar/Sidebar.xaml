@@ -37,7 +37,7 @@
                         <search:SearchBar SearchRequested="SearchBar_SearchRequested" />
                     </Border>
                     <Border Grid.Row="1">
-                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch">
                             <local:ItemList x:Name="ItemList_Functions" />
                         </ScrollViewer>
                     </Border>
