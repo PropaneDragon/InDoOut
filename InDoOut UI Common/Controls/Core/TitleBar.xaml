@@ -15,12 +15,28 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Border>
-        <Border.Background>
-            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="#4111" Offset="0.6"/>
-                <GradientStop Color="#0111" Offset="1"/>
-            </LinearGradientBrush>
-        </Border.Background>
+        <Border.Style>
+            <Style TargetType="{x:Type Border}">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#4111" Offset="0.6"/>
+                            <GradientStop Color="#0111" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Trigger.EnterActions>
+                            <BeginStoryboard Storyboard="{StaticResource Storyboard.TitleBar.Hover}" />
+                        </Trigger.EnterActions>
+                        <Trigger.ExitActions>
+                            <BeginStoryboard Storyboard="{StaticResource Storyboard.TitleBar.Exit}" />
+                        </Trigger.ExitActions>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </Border.Style>
         <DockPanel>
             <ContentControl DockPanel.Dock="Right">
                 <StackPanel Orientation="Horizontal">

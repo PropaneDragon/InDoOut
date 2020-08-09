@@ -1,9 +1,25 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:animation="clr-namespace:InDoOut_UI_Common.Animation">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/InDoOutUICommon;component/Style/CommonColours.xaml" />
         <ResourceDictionary Source="/InDoOutUICommon;component/Style/ButtonStyle.xaml" />
     </ResourceDictionary.MergedDictionaries>
+
+    <Storyboard x:Key="Storyboard.TitleBar.Exit">
+        <animation:BrushAnimation Duration="0:0:0.2" Storyboard.TargetProperty="Background" />
+    </Storyboard>
+
+    <Storyboard x:Key="Storyboard.TitleBar.Hover">
+        <animation:BrushAnimation Duration="0:0:0.2" Storyboard.TargetProperty="Background">
+            <animation:BrushAnimation.To>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#c111" Offset="0.6"/>
+                    <GradientStop Color="#0111" Offset="1"/>
+                </LinearGradientBrush>
+            </animation:BrushAnimation.To>
+        </animation:BrushAnimation>
+    </Storyboard>
 
     <Style x:Key="Style.Button.TitleBar" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource Style.Button.Transparent.Windows.Animated}">
         <Setter Property="Padding" Value="8,8" />
