@@ -11,7 +11,7 @@ namespace InDoOut_UI_Common.Windows
         private MessageBoxButton _buttons = MessageBoxButton.OK;
         private MessageBoxImage _image = MessageBoxImage.Information;
 
-        private Dictionary<Button, MessageBoxResult> _buttonAssociations = null;
+        private readonly Dictionary<Button, MessageBoxResult> _buttonAssociations = null;
 
         public string Message { get => Text_Description.Text; set => Text_Description.Text = value; }
 
@@ -87,24 +87,14 @@ namespace InDoOut_UI_Common.Windows
 
         private void SetTitle(MessageBoxImage image)
         {
-            switch (image)
+            Title = image switch
             {
-                case MessageBoxImage.Error:
-                    Title = "Error";
-                    break;
-                case MessageBoxImage.Question:
-                    Title = "Question";
-                    break;
-                case MessageBoxImage.Information:
-                    Title = "Information";
-                    break;
-                case MessageBoxImage.Warning:
-                    Title = "Warning";
-                    break;
-                default:
-                    Title = "Message";
-                    break;
-            }
+                MessageBoxImage.Error => "Error",
+                MessageBoxImage.Question => "Question",
+                MessageBoxImage.Information => "Information",
+                MessageBoxImage.Warning => "Warning",
+                _ => "Message"
+            };
         }
 
         private void SetMessageBoxButtons(MessageBoxButton button)
