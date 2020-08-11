@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace InDoOut_Json_Storage
 {
@@ -10,6 +11,8 @@ namespace InDoOut_Json_Storage
     /// </summary>
     public class JsonFunction
     {
+        private string _functionClass = null;
+
         /// <summary>
         /// Function Id
         /// </summary>
@@ -20,7 +23,25 @@ namespace InDoOut_Json_Storage
         /// Function associated class
         /// </summary>
         [JsonProperty("class")]
-        public string FunctionClass { get; set; } = null;
+        public string FunctionClass { get => _functionClass; set => FunctionClassUpdated(value); }
+
+        /// <summary>
+        /// The name of the function, taken from the <see cref="FunctionClass"/>.
+        /// </summary>
+        [JsonIgnore]
+        public string FunctionName { get; private set; } = null;
+
+        /// <summary>
+        /// The name of the library this function belongs to, taken from the <see cref="FunctionClass"/>.
+        /// </summary>
+        [JsonIgnore]
+        public string FunctionLibrary { get; private set; } = null;
+
+        /// <summary>
+        /// The version of the function, taken from the <see cref="FunctionClass"/>.
+        /// </summary>
+        [JsonIgnore]
+        public Version FunctionVersion { get; private set; } = null;
 
         /// <summary>
         /// Function metadata
@@ -71,6 +92,41 @@ namespace InDoOut_Json_Storage
             }
 
             return false;
+        }
+
+        private void FunctionClassUpdated(string functionClass)
+        {
+            _functionClass = functionClass;
+
+            ExtractDetailsFromFunctionClass();
+        }
+
+        private void ExtractDetailsFromFunctionClass()
+        {
+            if (!string.IsNullOrEmpty(FunctionClass))
+            {
+                var detailExtractingRegex = new Regex(@"(?<function>.*?), *(?<library>.*?),.*(?<versionFull>Version=(?<version>\d+\.\d+\.\d+\.\d+)),");
+                var detailsMatch = detailExtractingRegex.Match(FunctionClass);
+
+                if (detailsMatch.Success)
+                {
+                    var groups = detailsMatch.Groups;
+                    if (groups.ContainsKey("function") && groups.ContainsKey("library") && groups.ContainsKey("version"))
+                    {
+                        var version = groups["version"]?.Value;
+
+                        FunctionVersion = null;
+
+                        if (Version.TryParse(version, out var parsedVersion))
+                        {
+                            FunctionVersion = parsedVersion;
+                        }
+
+                        FunctionName = groups["function"]?.Value;
+                        FunctionLibrary = groups["library"]?.Value;
+                    }
+                }
+            }
         }
     }
 }

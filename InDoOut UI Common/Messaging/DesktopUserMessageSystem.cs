@@ -1,28 +1,29 @@
 ﻿using InDoOut_Executable_Core.Messaging;
+using InDoOut_UI_Common.Windows;
 using System.Windows;
 
 namespace InDoOut_UI_Common.Messaging
 {
     public class DesktopUserMessageSystem : AbstractUserMessageSystem
     {
-        public override void ShowError(string title, string message)
+        public override void ShowError(string title, string message, string details = null)
         {
-            _ = MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Error);
+            _ = MessageBoxWindow.Show(message, title, details, MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
-        public override void ShowWarning(string title, string message)
+        public override void ShowWarning(string title, string message, string details = null)
         {
-            _ = MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Warning);
+            _ = MessageBoxWindow.Show(message, title, details, MessageBoxButton.OK, MessageBoxImage.Warning);
         }
 
-        public override void ShowInformation(string title, string message)
+        public override void ShowInformation(string title, string message, string details = null)
         {
-            _ = MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Information);
+            _ = MessageBoxWindow.Show(message, title, details, MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         public override UserResponse? ShowQuestion(string title, string message)
         {
-            var result = MessageBox.Show(message, title, MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+            var result = MessageBoxWindow.Show(message, title, null, MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
 
             return result switch
             {
@@ -30,7 +31,7 @@ namespace InDoOut_UI_Common.Messaging
                 MessageBoxResult.No => UserResponse.No,
                 MessageBoxResult.Cancel => UserResponse.Cancel,
 
-                _ => (UserResponse?)null
+                _ => null
             };
         }
     }

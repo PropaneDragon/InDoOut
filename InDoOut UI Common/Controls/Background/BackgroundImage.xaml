@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InDoOut_UI_Common.Controls.Background"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             VerticalAlignment="Center" HorizontalAlignment="Center">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -13,21 +13,11 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="6*"/>
-            <ColumnDefinition Width="1*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="6*"/>
-            <RowDefinition Height="1*"/>
-        </Grid.RowDefinitions>
-        <Grid x:Name="Grid_Images" Grid.Row="1" Grid.Column="1">
-            <Image x:Name="Image_Light" Source="{StaticResource Logo_Light}" Visibility="Visible" />
-            <Image x:Name="Image_Dark" Source="{StaticResource Logo_Dark}" Visibility="Collapsed" />
-            <Image x:Name="Image_Colour" Source="{StaticResource Logo_Colour}" Visibility="Collapsed" />
+    <Viewbox VerticalAlignment="Center" HorizontalAlignment="Center">
+        <Grid Width="20" Height="20" Margin="5" x:Name="Grid_Images" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Image x:Name="Image_Light" Source="{StaticResource Logo_Light}" Visibility="Visible" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <Image x:Name="Image_Dark" Source="{StaticResource Logo_Dark}" Visibility="Collapsed" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            <Image x:Name="Image_Colour" Source="{StaticResource Logo_Colour}" Visibility="Collapsed" VerticalAlignment="Center" HorizontalAlignment="Center" />
         </Grid>
-    </Grid>
+    </Viewbox>
 </UserControl>

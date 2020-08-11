@@ -1,4 +1,6 @@
-﻿namespace InDoOut_Core.Reporting
+﻿using InDoOut_Core.Logging;
+
+namespace InDoOut_Core.Reporting
 {
     /// <summary>
     /// A failure report containing details about a failure that
@@ -41,6 +43,8 @@
             Id = id;
             Summary = summary;
             DetailedReport = detailedReport;
+
+            Log.Instance.Info("Generated a failure report: ID: ", id, ", summary: ", summary, ", details: ", detailedReport, ", critical: ", critical);
         }
 
         /// <summary>

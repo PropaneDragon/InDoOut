@@ -3,6 +3,7 @@ using InDoOut_Core.Entities.Core;
 using InDoOut_Core.Entities.Functions;
 using InDoOut_Core.Entities.Programs;
 using InDoOut_Core.Functions;
+using InDoOut_Core.Logging;
 using InDoOut_Core.Reporting;
 using InDoOut_Function_Plugins.Containers;
 using InDoOut_Plugins.Loaders;
@@ -183,7 +184,7 @@ namespace InDoOut_Json_Storage
                     }
                     else
                     {
-                        failures.Add(new FailureReport((int)FailureIds.FailedToCreateFunction, $"A function with the class \"{functionItem?.FunctionClass ?? "null function item"}\" couldn't be created. This could be due to a required plugin being unavailable."));
+                        failures.Add(new FailureReport((int)FailureIds.FailedToCreateFunction, $"The function \"{functionItem?.FunctionName ?? "unknown function"}\" couldn't be created from the plugin {functionItem?.FunctionLibrary ?? "unknown plugin"}."));
                     }
                 }
 
@@ -199,7 +200,9 @@ namespace InDoOut_Json_Storage
             }
             else
             {
-                failures.Add(new FailureReport((int)FailureIds.InvalidResources, $"Resources given are invalid. (Program: {program?.Name ?? "null program"}, builder: {builder?.GetHashCode().ToString() ?? "unknown builder"}, loaded plugins: {loadedPlugins?.Plugins?.Count.ToString() ?? "unknown plugins"}.", true));
+                Log.Instance.Error($"(Program: {program?.Name ?? "null program"}, builder: {builder?.GetHashCode().ToString() ?? "unknown builder"}, loaded plugins: {loadedPlugins?.Plugins?.Count.ToString() ?? "unknown plugins"}");
+
+                failures.Add(new FailureReport((int)FailureIds.InvalidResources, $"The program could not be built due to missing resources.", true));
             }
 
             return failures;
@@ -221,17 +224,17 @@ namespace InDoOut_Json_Storage
                     }
                     else
                     {
-                        failures.Add(new FailureReport((int)FailureIds.InvalidProperty, $"Failed to link a property \"{propertyValue?.Name ?? "null property"}\" to a function, as the function ID of \"{propertyValue?.Function.ToString() ?? "null property"}\" doesn't contain a property with that name."));
+                        failures.Add(new FailureReport((int)FailureIds.InvalidProperty, $"Failed to link the property \"{propertyValue?.Name ?? "null property"}\" to a function, as the function \"{foundFunction?.SafeName ?? "unknown ID"}\" doesn't contain a property with that name."));
                     }
                 }
                 else
                 {
-                    failures.Add(new FailureReport((int)FailureIds.InvalidFunction, $"Failed to link a property \"{propertyValue?.Name ?? "null property"}\" to a function, as the function ID of \"{propertyValue?.Function.ToString() ?? "null property"}\" doesn't contain a valid function."));
+                    failures.Add(new FailureReport((int)FailureIds.InvalidFunction, $"Failed to link the property \"{propertyValue?.Name ?? "null property"}\" to a function ID of \"{propertyValue?.Function.ToString() ?? "unknown ID"}\" doesn't exist."));
                 }
             }
             else
             {
-                failures.Add(new FailureReport((int)FailureIds.FunctionNotFound, $"Failed to link a property \"{propertyValue?.Name ?? "null property"}\" to a function, as the function ID of \"{propertyValue?.Function.ToString() ?? "null property"}\" could not be found."));
+                failures.Add(new FailureReport((int)FailureIds.FunctionNotFound, $"Failed to link the property \"{propertyValue?.Name ?? "null property"}\" to a function ID of \"{propertyValue?.Function.ToString() ?? "unknown ID"}\" as it could not be found."));
             }
 
             return failures;
@@ -266,12 +269,12 @@ namespace InDoOut_Json_Storage
                 }
                 else
                 {
-                    failures.Add(new FailureReport((int)FailureIds.InvalidConnection, $"Couldn't create a connection as either the output name ({outputName ?? "null name"}), input name ({inputName ?? "null name"}) or the connection type \"{connectionType}\" is unknown."));
+                    failures.Add(new FailureReport((int)FailureIds.InvalidConnection, $"Couldn't create a connection as either the output name ({outputName ?? "unknown name"}), input name ({inputName ?? "unknown name"}) or the connection type \"{connectionType}\" is unknown."));
                 }
             }
             else
             {
-                failures.Add(new FailureReport((int)FailureIds.FunctionNotFound, $"Failed to link a connection between \"{connection?.InputName ?? "null connection"}\" and \"{connection?.OutputName ?? "null connection"}\" to their respective functions as either function ID \"{connection?.StartFunctionId.ToString() ?? "null connection"}\" or \"{connection?.EndFunctionId.ToString() ?? "null connection"}\" doesn't exist."));
+                failures.Add(new FailureReport((int)FailureIds.FunctionNotFound, $"Failed to link a connection between \"{connection?.InputName ?? "unknown connection"}\" and \"{connection?.OutputName ?? "unknown connection"}\" to their respective functions as either function ID \"{connection?.StartFunctionId.ToString() ?? "unknown connection"}\" or \"{connection?.EndFunctionId.ToString() ?? "unknown connection"}\" doesn't exist."));
             }
 
             return failures;
@@ -357,7 +360,7 @@ namespace InDoOut_Json_Storage
 
             foreach (var matchType in findOrder)
             {
-                var matchedType = FindFunctionType(availableFunctionTypes, functionItem.FunctionClass, matchType);
+                var matchedType = FindFunctionType(availableFunctionTypes, functionItem, matchType);
                 if (matchedType != null)
                 {
                     foundFunctionType = matchedType;
@@ -377,35 +380,28 @@ namespace InDoOut_Json_Storage
             return null;
         }
 
-        private Type FindFunctionType(IEnumerable<Type> typeList, string fullQualifiedName, MatchType matchType)
+        private Type FindFunctionType(IEnumerable<Type> typeList, JsonFunction function, MatchType matchType)
         {
-            var detailExtractingRegex = new Regex(@"(?<function>.*?), *(?<library>.*?),.*(?<versionFull>Version=(?<version>\d+\.\d+\.\d+\.\d+)),");
-            var nameMatch = detailExtractingRegex.Match(fullQualifiedName);
+            var name = function?.FunctionName;
+            var library = function?.FunctionLibrary;
+            var version = function?.FunctionVersion;
 
-            if (nameMatch.Success)
+            if (name != null && library != null && version != null)
             {
-                var groups = nameMatch.Groups;
-                if (groups.ContainsKey("function") && groups.ContainsKey("library") && groups.ContainsKey("version"))
+                foreach (var type in typeList)
                 {
-                    var function = groups["function"]?.Value;
-                    var library = groups["library"]?.Value;
-                    var version = groups["version"]?.Value;
+                    var typeName = type?.FullName;
+                    var typeLibrary = type?.Assembly?.GetName()?.Name;
+                    var typeVersion = type?.Assembly?.GetName()?.Version;
 
-                    foreach (var type in typeList)
+                    if (name == typeName && library == typeLibrary)
                     {
-                        var typeFunction = type?.FullName;
-                        var typeLibrary = type?.Assembly?.GetName()?.Name;
-                        var typeVersion = type?.Assembly?.GetName()?.Version;
-
-                        if (function == typeFunction && library == typeLibrary && Version.TryParse(version, out var parsedVersion))
+                        var versionMatches = (matchType == MatchType.Exact && version == typeVersion) || (matchType == MatchType.VersionAbove && typeVersion > version) || (matchType == MatchType.VersionBelow && typeVersion < version);
+                        if (versionMatches)
                         {
-                            var versionMatches = (matchType == MatchType.Exact && parsedVersion == typeVersion) || (matchType == MatchType.VersionAbove && typeVersion > parsedVersion) || (matchType == MatchType.VersionBelow && typeVersion < parsedVersion);
-                            if (versionMatches)
-                            {
-                                return type;
-                            }
+                            return type;
                         }
-                    }
+                    }   
                 }
             }
 

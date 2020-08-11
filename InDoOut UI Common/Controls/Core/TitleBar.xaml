@@ -47,8 +47,8 @@
             </ContentControl>
             <Border Background="#00000000" PreviewMouseMove="Text_Title_PreviewMouseMove" PreviewMouseLeftButtonDown="Text_Title_PreviewMouseLeftButtonDown" >
                 <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Image Source="{StaticResource Logo_Colour}" Stretch="UniformToFill" StretchDirection="Both" Width="28" Height="28" Margin="0,0,0,0" />
-                    <TextBlock Padding="16" x:Name="Text_Title" DockPanel.Dock="Left" FontSize="24" Text="ido" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" TextTrimming="CharacterEllipsis" />
+                    <Image Source="{StaticResource Logo_Colour}" Stretch="UniformToFill" StretchDirection="Both" Width="{StaticResource Size.Double.Font.TitleBar}" Height="{StaticResource Size.Double.Font.TitleBar}" Margin="0,0,0,0" />
+                    <TextBlock Padding="16" x:Name="Text_Title" DockPanel.Dock="Left" FontSize="{StaticResource Size.Double.Font.TitleBar}" Text="ido" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" TextTrimming="CharacterEllipsis" />
                 </StackPanel>
             </Border>
         </DockPanel>

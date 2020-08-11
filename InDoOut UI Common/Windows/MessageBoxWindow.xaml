@@ -1,0 +1,52 @@
+﻿<Window x:Class="InDoOut_UI_Common.Windows.MessageBoxWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:InDoOut_UI_Common.Windows"
+        xmlns:core="clr-namespace:InDoOut_UI_Common.Controls.Core"
+        xmlns:background="clr-namespace:InDoOut_UI_Common.Controls.Background"
+        mc:Ignorable="d"
+        Title="" Width="600" WindowState="Normal" MinWidth="450" MinHeight="100" WindowStartupLocation="CenterScreen" ShowActivated="True" SizeToContent="Height" Topmost="True" ResizeMode="NoResize" VerticalContentAlignment="Top" HorizontalContentAlignment="Center">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/InDoOutUICommon;component/Style/CommonStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <Grid VerticalAlignment="Center">
+            <DockPanel>
+                <Border DockPanel.Dock="Bottom" Padding="10">
+                    <DockPanel LastChildFill="False" x:Name="Dock_Buttons">
+                        <Button x:Name="Button_Cancel" DockPanel.Dock="Right" Content="Cancel" Margin="12,0,0,0" IsCancel="True" Click="Button_Bottom_Click" />
+                        <Button x:Name="Button_No" DockPanel.Dock="Right" Content="No" Margin="12,0,0,0" Click="Button_Bottom_Click" />
+                        <Button x:Name="Button_Yes" DockPanel.Dock="Right" Content="Yes" Margin="12,0,0,0" IsDefault="True" Click="Button_Bottom_Click" />
+                        <Button x:Name="Button_Ok" DockPanel.Dock="Right" Content="OK" Margin="12,0,0,0" IsDefault="True" Click="Button_Bottom_Click" />
+                    </DockPanel>
+                </Border>
+                <Grid Margin="0,60,0,0" VerticalAlignment="Top">
+                    <DockPanel VerticalAlignment="Top">
+                        <Viewbox Margin="18,4" DockPanel.Dock="Left" MaxWidth="64" MaxHeight="64" HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <Grid x:Name="Grid_Icons">
+                                <TextBlock x:Name="Icon_Critical" FontFamily="{StaticResource Font.Icons.Material}" Text="" Visibility="Collapsed" />
+                                <TextBlock x:Name="Icon_Warning" FontFamily="{StaticResource Font.Icons.Material}" Text="" Visibility="Collapsed" />
+                                <TextBlock x:Name="Icon_Question" FontFamily="{StaticResource Font.Icons.Material}" Text="" Visibility="Visible" />
+                                <TextBlock x:Name="Icon_Info" FontFamily="{StaticResource Font.Icons.Material}" Text="" Visibility="Collapsed" />
+                            </Grid>
+                        </Viewbox>
+                        <StackPanel DockPanel.Dock="Right" VerticalAlignment="Center" Margin="0,0,24,0" >
+                            <TextBlock x:Name="Text_Title" FontSize="{StaticResource Size.Double.Font.Title.Primary}" Foreground="{StaticResource Brush.Text.Header.Foreground}" Padding="0,0,12,0" Text="Title" TextWrapping="WrapWithOverflow" TextTrimming="CharacterEllipsis" />
+                            <TextBlock x:Name="Text_Description" FontSize="{StaticResource Size.Double.Font.Common}" Padding="0,0,12,0" Text="This is the description." TextWrapping="WrapWithOverflow" TextTrimming="CharacterEllipsis" />
+                            <ScrollViewer x:Name="Scroll_Details" Margin="0,20,0,0" MinHeight="150" MaxHeight="300">
+                                <TextBlock x:Name="Text_Details" FontSize="{StaticResource Size.Double.Font.Common.Secondary}" Text="This is the detailed text." Padding="6" TextWrapping="Wrap" />
+                            </ScrollViewer>
+                        </StackPanel>
+                    </DockPanel>
+                </Grid>
+            </DockPanel>
+        </Grid>
+        <core:TitleBar x:Name="TitleBar_Main" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
+    </Grid>
+</Window>

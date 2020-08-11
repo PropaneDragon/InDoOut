@@ -1,0 +1,12 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:InDoOut_UI_Common.Style"
+                    xmlns:sys="clr-namespace:System;assembly=System.Runtime">
+
+    <sys:Double x:Key="Size.Double.Font.TitleBar">24</sys:Double>
+    <sys:Double x:Key="Size.Double.Font.Title.Primary">24</sys:Double>
+    <sys:Double x:Key="Size.Double.Font.Title.Secondary">20</sys:Double>
+    <sys:Double x:Key="Size.Double.Font.Common">18</sys:Double>
+    <sys:Double x:Key="Size.Double.Font.Common.Secondary">14</sys:Double>
+
+</ResourceDictionary>

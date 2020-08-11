@@ -31,10 +31,10 @@
                                 <DataTemplate>
                                     <DockPanel>
                                         <DockPanel DockPanel.Dock="Top">
-                                            <TextBlock DockPanel.Dock="Right" FontSize="16" Text="{Binding Plugin.SafeAuthor}" />
-                                            <TextBlock DockPanel.Dock="Left" FontSize="18" Text="{Binding Plugin.SafeName}" />
+                                            <TextBlock DockPanel.Dock="Right" Foreground="{StaticResource Brush.Text.Main.Secondary.Foreground}" FontSize="{StaticResource Size.Double.Font.Common}" Text="{Binding Plugin.SafeAuthor}" />
+                                            <TextBlock DockPanel.Dock="Left" FontSize="{StaticResource Size.Double.Font.Title.Secondary}" Text="{Binding Plugin.SafeName}" />
                                         </DockPanel>
-                                        <TextBlock DockPanel.Dock="Bottom" Margin="16,0,0,0" FontSize="14" Text="{Binding Plugin.SafeDescription}" />
+                                        <TextBlock DockPanel.Dock="Bottom" Margin="16,0,0,0" Foreground="{StaticResource Brush.Text.Main.Secondary.Foreground}" FontSize="{StaticResource Size.Double.Font.Common.Secondary}" Text="{Binding Plugin.SafeDescription}" />
                                     </DockPanel>
                                 </DataTemplate>
                             </ListView.ItemTemplate>

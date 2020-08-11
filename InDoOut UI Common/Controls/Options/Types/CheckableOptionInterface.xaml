@@ -17,10 +17,10 @@
         <Border Margin="10" Padding="10" Background="{StaticResource Brush.Control.Background}" Width="350" MinHeight="100" MaxWidth="350">
             <Grid>
                 <DockPanel>
-                    <ToggleButton x:Name="Button_Checked" DockPanel.Dock="Right" Margin="10,0,0,0" FontSize="24" Content="" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Click="Button_Checked_Click" />
+                    <ToggleButton x:Name="Button_Checked" DockPanel.Dock="Right" Margin="10,0,0,0" FontSize="{StaticResource Size.Double.Font.Title.Primary}" Content="" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Click="Button_Checked_Click" />
                     <StackPanel DockPanel.Dock="Left" VerticalAlignment="Center">
-                        <TextBlock x:Name="Text_Name" Foreground="{StaticResource Brush.Text.Header.Foreground}" Text="Option text" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Stretch" TextWrapping="WrapWithOverflow" TextTrimming="CharacterEllipsis" />
-                        <TextBlock x:Name="Text_Description" Foreground="{StaticResource Brush.Text.Subheader.Foreground}" Text="Option description" Opacity=".6" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Stretch" TextWrapping="WrapWithOverflow" TextTrimming="CharacterEllipsis" />
+                        <TextBlock x:Name="Text_Name" Text="Option text" FontSize="{StaticResource Size.Double.Font.Common}" VerticalAlignment="Center" HorizontalAlignment="Stretch" TextWrapping="WrapWithOverflow" TextTrimming="CharacterEllipsis" />
+                        <TextBlock x:Name="Text_Description" Foreground="{StaticResource Brush.Text.Main.Secondary.Foreground}" Text="Option description" Opacity=".6" FontSize="{StaticResource Size.Double.Font.Common.Secondary}" VerticalAlignment="Center" HorizontalAlignment="Stretch" TextWrapping="WrapWithOverflow" TextTrimming="CharacterEllipsis" />
                     </StackPanel>
                 </DockPanel>
             </Grid>

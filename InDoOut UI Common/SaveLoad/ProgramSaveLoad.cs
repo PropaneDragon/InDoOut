@@ -73,16 +73,18 @@ namespace InDoOut_UI_Common.SaveLoad
                 failureReports.Add(new FailureReport((int)SaveResult.InvalidFileName, $"The given location ({filePath}), holder ({(programStorer != null ? "is valid" : "null")}) or storer ({(programStorer != null ? "is valid" : "null")}) was invalid"));
             }
 
-            if (failureReports.Count > 0)
+            var totalReports = failureReports.Count;
+            if (totalReports > 0)
             {
+                var criticalReports = failureReports.Count(report => report.Critical);
                 var resultStrings = failureReports.Select(report => report.Summary);
-                var canContinue = !failureReports.Any(report => report.Critical);
+                var canContinue = criticalReports <= 0;
 
-                UserMessageSystemHolder.Instance.CurrentUserMessageSystem?.ShowWarning("", $"The following errors occurred trying to load the program:\n\n{string.Join("\n- ", resultStrings)}");
+                UserMessageSystemHolder.Instance.CurrentUserMessageSystem?.ShowWarning("Problems loading program", $"{totalReports} problem{(totalReports != 1 ? "s" : "")} occurred while trying to load. See below for details.", $"{string.Join("\n\n", resultStrings)}");
 
                 if (canContinue)
                 {
-                    var result = UserMessageSystemHolder.Instance.CurrentUserMessageSystem?.ShowQuestion("Load anyway?", "As there are no critical errors, do you wish to load anyway?\n\nPlease note that there may be missing elements or other features if you choose to load.") ?? UserResponse.Yes;
+                    var result = UserMessageSystemHolder.Instance.CurrentUserMessageSystem?.ShowQuestion("Continue loading?", "As there are no critical errors, do you wish to load anyway?\n\nPlease note that there may be missing elements or other features if you choose to load.") ?? UserResponse.Yes;
                     if (result == UserResponse.Yes)
                     {
                         return program;

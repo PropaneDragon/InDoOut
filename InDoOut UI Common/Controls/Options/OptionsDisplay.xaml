@@ -16,7 +16,7 @@
     <Grid>
         <DockPanel>
             <Border DockPanel.Dock="Top" Padding="16, 16, 16, 0">
-                <TextBlock x:Name="Text_Title" Text="Title" Foreground="{StaticResource Brush.Text.Subheader.Foreground}" FontSize="22" />
+                <TextBlock x:Name="Text_Title" Text="Title" Foreground="{StaticResource Brush.Text.Header.Foreground}" FontSize="{StaticResource Size.Double.Font.Title.Primary}" />
             </Border>
             <Border DockPanel.Dock="Top" Padding="10">
                 <WrapPanel x:Name="Wrap_Options" HorizontalAlignment="Center" />

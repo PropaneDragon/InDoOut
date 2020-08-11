@@ -10,10 +10,10 @@
     <Color x:Key="Colour.Theme.Basic.SemiTransparent.Light">#11ffffff</Color>
     <Color x:Key="Colour.Theme.Basic.SemiTransparent.Dark">#11000000</Color>
     
-    <Color x:Key="Colour.Theme.Primary">#ffffff</Color>
-    <Color x:Key="Colour.Theme.Secondary">#b3b3b3</Color>
-    <Color x:Key="Colour.Theme.Tertiary">#808080</Color>
-    <Color x:Key="Colour.Theme.Quaternary">#4d4d4d</Color>
+    <Color x:Key="Colour.Theme.Primary">#ffff</Color>
+    <Color x:Key="Colour.Theme.Secondary">#afff</Color>
+    <Color x:Key="Colour.Theme.Tertiary">#8fff</Color>
+    <Color x:Key="Colour.Theme.Quaternary">#5fff</Color>
     
     <Color x:Key="Colour.Theme.Accent.Primary">#e9006a</Color>
     <Color x:Key="Colour.Theme.Accent.Secondary">#8a006a</Color>
@@ -23,8 +23,9 @@
     <Color x:Key="Colour.Theme.Accent.Tertiary.Light">#741287</Color>
 
     <SolidColorBrush x:Key="Brush.Text.Main.Foreground" Color="{StaticResource Colour.Theme.Primary}" />
-    <SolidColorBrush x:Key="Brush.Text.Header.Foreground" Color="{StaticResource Colour.Theme.Primary}" />
-    <SolidColorBrush x:Key="Brush.Text.Subheader.Foreground" Color="{StaticResource Colour.Theme.Secondary}" />
+    <SolidColorBrush x:Key="Brush.Text.Main.Secondary.Foreground" Color="{StaticResource Colour.Theme.Tertiary}" />
+    <SolidColorBrush x:Key="Brush.Text.Header.Foreground" Color="{StaticResource Colour.Theme.Secondary}" />
+    <SolidColorBrush x:Key="Brush.Text.Subheader.Foreground" Color="{StaticResource Colour.Theme.Tertiary}" />
 
     <SolidColorBrush x:Key="Brush.Window.Background" Color="{StaticResource Colour.Theme.Background}" />
 
