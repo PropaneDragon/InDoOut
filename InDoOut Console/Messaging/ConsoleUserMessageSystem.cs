@@ -6,19 +6,19 @@ namespace InDoOut_Console.Messaging
 {
     internal class ConsoleUserMessageSystem : AbstractUserMessageSystem
     {
-        public override void ShowError(string title, string message)
+        public override void ShowError(string title, string message, string details = null)
         {
-            ColourConsole.WriteErrorLine($"{(string.IsNullOrEmpty(title) ? "" : $"{title}: ")}{message ?? ""}");
+            ColourConsole.WriteErrorLine($"{(string.IsNullOrEmpty(title) ? "" : $"{title}: ")}{message ?? ""} {details ?? ""}");
         }
 
-        public override void ShowInformation(string title, string message)
+        public override void ShowInformation(string title, string message, string details = null)
         {
-            ColourConsole.WriteInfoLine($"{(string.IsNullOrEmpty(title) ? "" : $"{title}: ")}{message ?? ""}");
+            ColourConsole.WriteInfoLine($"{(string.IsNullOrEmpty(title) ? "" : $"{title}: ")}{message ?? ""} {details ?? ""}");
         }
 
-        public override void ShowWarning(string title, string message)
+        public override void ShowWarning(string title, string message, string details = null)
         {
-            ColourConsole.WriteWarningLine($"{(string.IsNullOrEmpty(title) ? "" : $"{title}: ")}{message ?? ""}");
+            ColourConsole.WriteWarningLine($"{(string.IsNullOrEmpty(title) ? "" : $"{title}: ")}{message ?? ""} {details ?? ""}");
         }
 
         public override UserResponse? ShowQuestion(string title, string message)
