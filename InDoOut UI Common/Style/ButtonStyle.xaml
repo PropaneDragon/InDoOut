@@ -56,7 +56,13 @@
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="Padding" Value="12,6" />
         <Setter Property="FontSize" Value="{StaticResource Size.Double.Font.Common}" />
-        <Setter Property="Template" Value="{StaticResource Template.Button.Basic}" />        
+        <Setter Property="Template" Value="{StaticResource Template.Button.Basic}" />
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="Foreground" Value="{StaticResource Brush.Button.Foreground.Disabled}" />
+                <Setter Property="Background" Value="{StaticResource Brush.Button.Background.Disabled}" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <Style x:Key="Style.Button.Animated" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource Style.Button}">
@@ -84,6 +90,12 @@
         <Setter Property="Foreground" Value="{StaticResource Brush.Button.Primary.Foreground}" />
         <Setter Property="Background" Value="{StaticResource Brush.Button.Primary.Background}" />
         <Setter Property="Template" Value="{StaticResource Template.Button.Basic}" />
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="Foreground" Value="{StaticResource Brush.Button.Primary.Foreground.Disabled}" />
+                <Setter Property="Background" Value="{StaticResource Brush.Button.Primary.Background.Disabled}" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <Style x:Key="Style.Button.Primary.Animated" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource Style.Button.Primary}">
@@ -111,6 +123,13 @@
         <Setter Property="Foreground" Value="{StaticResource Brush.Button.Transparent.Foreground}" />
         <Setter Property="Background" Value="{StaticResource Brush.Button.Transparent.Background}" />
         <Setter Property="Template" Value="{StaticResource Template.Button.Basic}" />
+        <Setter Property="FontSize" Value="30" />
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="Foreground" Value="{StaticResource Brush.Button.Transparent.Foreground.Disabled}" />
+                <Setter Property="Background" Value="{StaticResource Brush.Button.Transparent.Background.Disabled}" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <Style x:Key="Style.Button.Transparent.Animated" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource Style.Button.Transparent}">
@@ -137,6 +156,12 @@
     <Style x:Key="Style.Button.Transparent.Material" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource Style.Button.Transparent}">
         <Setter Property="FontFamily" Value="{StaticResource Font.Icons.Material}" />
         <Setter Property="FontSize" Value="30" />
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="Foreground" Value="{StaticResource Brush.Button.Transparent.Foreground.Disabled}" />
+                <Setter Property="Background" Value="{StaticResource Brush.Button.Transparent.Background.Disabled}" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <Style x:Key="Style.Button.Transparent.Material.Animated" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource Style.Button.Transparent.Material}">
@@ -163,6 +188,12 @@
     <Style x:Key="Style.Button.Transparent.Windows" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource Style.Button.Transparent}">
         <Setter Property="FontFamily" Value="{StaticResource Font.Icons.Windows}" />
         <Setter Property="FontSize" Value="14" />
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="Foreground" Value="{StaticResource Brush.Button.Transparent.Foreground.Disabled}" />
+                <Setter Property="Background" Value="{StaticResource Brush.Button.Transparent.Background.Disabled}" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <Style x:Key="Style.Button.Transparent.Windows.Animated" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource Style.Button.Transparent.Windows}">

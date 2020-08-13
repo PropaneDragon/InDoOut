@@ -9,6 +9,7 @@
     <Color x:Key="Colour.Theme.Basic.Dark">#4d4d4d</Color>
     <Color x:Key="Colour.Theme.Basic.SemiTransparent.Light">#11ffffff</Color>
     <Color x:Key="Colour.Theme.Basic.SemiTransparent.Dark">#11000000</Color>
+    <Color x:Key="Colour.Theme.Basic.Disabled">#2fff</Color>
     
     <Color x:Key="Colour.Theme.Primary">#ffff</Color>
     <Color x:Key="Colour.Theme.Secondary">#afff</Color>
@@ -38,6 +39,8 @@
     <SolidColorBrush x:Key="Brush.Button.Background.Hover" Color="{StaticResource Colour.Theme.Accent.Primary.Light}" />
     <SolidColorBrush x:Key="Brush.Button.Foreground.Click" Color="{StaticResource Colour.Theme.Primary}" />
     <SolidColorBrush x:Key="Brush.Button.Background.Click" Color="{StaticResource Colour.Theme.Accent.Primary}" />
+    <SolidColorBrush x:Key="Brush.Button.Foreground.Disabled" Color="{StaticResource Colour.Theme.Basic.Disabled}" />
+    <SolidColorBrush x:Key="Brush.Button.Background.Disabled" Color="{StaticResource Colour.Theme.Basic.SemiTransparent.Light}" />
     
     <SolidColorBrush x:Key="Brush.Button.Primary.Foreground" Color="{StaticResource Colour.Theme.Primary}" />
     <SolidColorBrush x:Key="Brush.Button.Primary.Background" Color="{StaticResource Colour.Theme.Accent.Primary}" />
@@ -45,6 +48,8 @@
     <SolidColorBrush x:Key="Brush.Button.Primary.Background.Hover" Color="{StaticResource Colour.Theme.Accent.Secondary.Light}" />
     <SolidColorBrush x:Key="Brush.Button.Primary.Foreground.Click" Color="{StaticResource Colour.Theme.Primary}" />
     <SolidColorBrush x:Key="Brush.Button.Primary.Background.Click" Color="{StaticResource Colour.Theme.Accent.Secondary}" />
+    <SolidColorBrush x:Key="Brush.Button.Primary.Foreground.Disabled" Color="{StaticResource Colour.Theme.Basic.Disabled}" />
+    <SolidColorBrush x:Key="Brush.Button.Primary.Background.Disabled" Color="{StaticResource Colour.Theme.Basic.SemiTransparent.Light}" />
 
     <SolidColorBrush x:Key="Brush.Button.Transparent.Foreground" Color="{StaticResource Colour.Theme.Primary}" />
     <SolidColorBrush x:Key="Brush.Button.Transparent.Background" Color="#00ffffff" />
@@ -52,6 +57,8 @@
     <SolidColorBrush x:Key="Brush.Button.Transparent.Background.Hover" Color="#00ffffff" />
     <SolidColorBrush x:Key="Brush.Button.Transparent.Foreground.Click" Color="{StaticResource Colour.Theme.Accent.Primary}" />
     <SolidColorBrush x:Key="Brush.Button.Transparent.Background.Click" Color="#00ffffff" />
+    <SolidColorBrush x:Key="Brush.Button.Transparent.Foreground.Disabled" Color="{StaticResource Colour.Theme.Basic.Disabled}" />
+    <SolidColorBrush x:Key="Brush.Button.Transparent.Background.Disabled" Color="#00ffffff" />
 
     <SolidColorBrush x:Key="Brush.Button.Transparent.Primary.Foreground" Color="{StaticResource Colour.Theme.Accent.Primary}" />
     <SolidColorBrush x:Key="Brush.Button.Transparent.Primary.Background" Color="#00ffffff" />
@@ -59,6 +66,8 @@
     <SolidColorBrush x:Key="Brush.Button.Transparent.Primary.Background.Hover" Color="#00ffffff" />
     <SolidColorBrush x:Key="Brush.Button.Transparent.Primary.Foreground.Click" Color="{StaticResource Colour.Theme.Accent.Secondary}" />
     <SolidColorBrush x:Key="Brush.Button.Transparent.Primary.Background.Click" Color="#00ffffff" />
+    <SolidColorBrush x:Key="Brush.Button.Transparent.Primary.Foreground.Disabled" Color="{StaticResource Colour.Theme.Basic.Disabled}" />
+    <SolidColorBrush x:Key="Brush.Button.Transparent.Primary.Background.Disabled" Color="#00ffffff" />
 
     <SolidColorBrush x:Key="Brush.TaskItem.Border" Color="{StaticResource Colour.Theme.Accent.Primary}" />
     <SolidColorBrush x:Key="Brush.TaskItem.Background" Color="{StaticResource Colour.Theme.Background}" />

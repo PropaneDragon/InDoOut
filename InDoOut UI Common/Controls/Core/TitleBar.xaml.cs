@@ -17,6 +17,8 @@ namespace InDoOut_UI_Common.Controls.Core
         private Window _attachedWindow = null;
         private string _lastTitle = null;
 
+        private bool WindowCanResize => (_attachedWindow?.ResizeMode ?? ResizeMode.NoResize) != ResizeMode.NoResize;
+
         public TitleBar()
         {
             InitializeComponent();
@@ -49,11 +51,12 @@ namespace InDoOut_UI_Common.Controls.Core
 
             UpdateTooltipText();
             UpdateWindowBorders();
+            UpdateButtonStates();
         }
 
         private void ToggleWindowState()
         {
-            if (_attachedWindow != null)
+            if (_attachedWindow != null && WindowCanResize)
             {
                 var state = _attachedWindow.WindowState;
 
@@ -84,6 +87,11 @@ namespace InDoOut_UI_Common.Controls.Core
         private void UpdateTooltipText()
         {
             Button_Restore.ToolTip = (_attachedWindow?.WindowState ?? WindowState.Maximized) == WindowState.Maximized ? "Restore" : "Maximise";
+        }
+
+        private void UpdateButtonStates()
+        {
+            Button_Restore.IsEnabled = WindowCanResize;
         }
 
         private void UpdateWindowBorders()
@@ -223,6 +231,7 @@ namespace InDoOut_UI_Common.Controls.Core
         {
             UpdateTooltipText();
             UpdateWindowBorders();
+            UpdateButtonStates();
         }
     }
 }
