@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InDoOut_Display.UI.Controls.Sidebar"
              mc:Ignorable="d" 
-             d:DesignHeight="650">
+             d:DesignHeight="550" MinHeight="550">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -24,14 +24,14 @@
             <StackPanel DockPanel.Dock="Top" Margin="0,30,0,0">
                 <Button x:Name="Button_Add_Display" VerticalAlignment="Top" HorizontalAlignment="Center" Content="" ToolTip="Add element" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Padding="1,1,1,1" Click="Button_Add_Display_Click" />
                 <Button x:Name="Button_Add_Functions" VerticalAlignment="Top" HorizontalAlignment="Center" Content="" ToolTip="Add function" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Padding="1,1,1,1" Click="Button_Add_Functions_Click" />
+                <Button x:Name="Button_TaskViewer" VerticalAlignment="Top" HorizontalAlignment="Center" Content="" ToolTip="Task viewer" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Click="Button_TaskViewer_Click" Margin="0,32,0,0" Padding="1" />
                 <Button x:Name="Button_SwitchMode" VerticalAlignment="Top" HorizontalAlignment="Center" Content="" ToolTip="Switch viewing mode" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Click="Button_SwitchMode_Click" Padding="1,1,1,1" Margin="0,32,0,0" />
                 <Button x:Name="Button_New" VerticalAlignment="Top" HorizontalAlignment="Center" Content="" ToolTip="New" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Click="Button_New_Click" Padding="1,1,1,1" Margin="0,32,0,0" />
-                <Button x:Name="Button_Open" VerticalAlignment="Top" HorizontalAlignment="Center" Content="" ToolTip="Open" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Click="Button_Open_Click" Padding="1,1,1,1" Margin="0,8,0,0" />
-                <Button x:Name="Button_Save" VerticalAlignment="Top" HorizontalAlignment="Center" Content="" ToolTip="Save" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Click="Button_Save_Click" Padding="1,1,1,1" Margin="0,8,0,0" />
+                <Button x:Name="Button_Open" VerticalAlignment="Top" HorizontalAlignment="Center" Content="" ToolTip="Open" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Click="Button_Open_Click" Padding="1,1,1,1" Margin="0,8,0,0" />
+                <Button x:Name="Button_Save" VerticalAlignment="Top" HorizontalAlignment="Center" Content="" ToolTip="Save" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Click="Button_Save_Click" Padding="1,1,1,1" Margin="0,8,0,0" />
                 <Button x:Name="Button_SaveAs" VerticalAlignment="Top" HorizontalAlignment="Center" Content="" ToolTip="Save as..." Style="{StaticResource Style.Button.Transparent.Material.Animated}" Click="Button_SaveAs_Click" Padding="1,1,1,1" Margin="0,8,0,0" />
             </StackPanel>
             <StackPanel DockPanel.Dock="Bottom" VerticalAlignment="Bottom" Margin="0,0,0,20">
-                <Button x:Name="Button_TaskViewer" VerticalAlignment="Top" HorizontalAlignment="Center" Content="" ToolTip="Task viewer" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Click="Button_TaskViewer_Click" Margin="0,8,0,0" Padding="1" />
                 <Button x:Name="Button_Settings" VerticalAlignment="Top" HorizontalAlignment="Center" Content="" ToolTip="Settings" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Click="Button_Settings_Click" Margin="0,8,0,0" Padding="1" />
             </StackPanel>
         </DockPanel>

@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:InDoOut_Desktop.UI.Controls.Sidebar"
              xmlns:search="clr-namespace:InDoOut_UI_Common.Controls.Search;assembly=InDoOutUICommon"
              mc:Ignorable="d" 
-             d:DesignHeight="650" d:DesignWidth="500" Background="Transparent" Loaded="UserControl_Loaded">
+             d:DesignHeight="550" d:DesignWidth="500" MinHeight="550" MinWidth="500" Background="Transparent" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -53,7 +53,6 @@
             <Border Grid.Column="1" Background="{StaticResource Brush.Sidebar.ButtonColumn.Background}">
                 <Grid>
                     <StackPanel x:Name="Stack_ButtonsBottom" VerticalAlignment="Bottom" Margin="0,0,0,20">
-                        <Button x:Name="Button_TaskViewer" VerticalAlignment="Top" HorizontalAlignment="Center" Content="" ToolTip="Task viewer" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Click="Button_TaskViewer_Click" Margin="0,8,0,0" Padding="1" />
                         <Button x:Name="Button_Settings" VerticalAlignment="Top" HorizontalAlignment="Center" Content="" ToolTip="Settings" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Click="Button_Settings_Click" Margin="0,8,0,0" Padding="1" />
                         <Button x:Name="Button_Plugins" VerticalAlignment="Top" HorizontalAlignment="Center" Content="" ToolTip="Plugins" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Click="Button_Plugins_Click" Margin="0,8,0,0" Padding="1" />
                     </StackPanel>
@@ -68,6 +67,7 @@
             <Grid Grid.Column="1">
                 <StackPanel x:Name="Stack_ButtonsTop" Grid.Column="1" VerticalAlignment="Top" Margin="0,16,0,0">
                     <Button x:Name="Button_Collapse" VerticalAlignment="Top" HorizontalAlignment="Center" Content="" ToolTip="Sidebar" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Click="Button_Collapse_Click" Padding="1,1,1,1" />
+                    <Button x:Name="Button_TaskViewer" VerticalAlignment="Top" HorizontalAlignment="Center" Content="" ToolTip="Task viewer" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Click="Button_TaskViewer_Click" Margin="0,32,0,0" Padding="1" />
                     <Button x:Name="Button_SwitchMode" VerticalAlignment="Top" HorizontalAlignment="Center" Content="" ToolTip="Switch viewing mode" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Click="Button_SwitchMode_Click" Padding="1,1,1,1" Margin="0,32,0,0" />
                     <Grid VerticalAlignment="Top" HorizontalAlignment="Center">
                         <Button x:Name="Button_RunProgram" VerticalAlignment="Top" HorizontalAlignment="Center" Content="" ToolTip="Run program" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Click="Button_RunProgram_Click" Padding="1,1,1,1" Margin="0,8,0,0" />
@@ -75,8 +75,8 @@
                         <Button x:Name="Button_ProgramStopping" VerticalAlignment="Top" HorizontalAlignment="Center" Content="" ToolTip="Program stopping" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Click="Button_StopProgram_Click" Padding="1,1,1,1" Margin="0,8,0,0" />
                     </Grid>
                     <Button x:Name="Button_NewProgram" VerticalAlignment="Top" HorizontalAlignment="Center" Content="" ToolTip="New program" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Click="Button_NewProgram_Click" Padding="1,1,1,1" Margin="0,32,0,0" />
-                    <Button x:Name="Button_OpenProgram" VerticalAlignment="Top" HorizontalAlignment="Center" Content="" ToolTip="Open program" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Click="Button_OpenProgram_Click" Padding="1,1,1,1" Margin="0,8,0,0" />
-                    <Button x:Name="Button_SaveProgram" VerticalAlignment="Top" HorizontalAlignment="Center" Content="" ToolTip="Save program" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Click="Button_SaveProgram_Click" Padding="1,1,1,1" Margin="0,8,0,0" />
+                    <Button x:Name="Button_OpenProgram" VerticalAlignment="Top" HorizontalAlignment="Center" Content="" ToolTip="Open program" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Click="Button_OpenProgram_Click" Padding="1,1,1,1" Margin="0,8,0,0" />
+                    <Button x:Name="Button_SaveProgram" VerticalAlignment="Top" HorizontalAlignment="Center" Content="" ToolTip="Save program" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Click="Button_SaveProgram_Click" Padding="1,1,1,1" Margin="0,8,0,0" />
                     <Button x:Name="Button_SaveProgramAs" VerticalAlignment="Top" HorizontalAlignment="Center" Content="" ToolTip="Save program as..." Style="{StaticResource Style.Button.Transparent.Material.Animated}" Click="Button_SaveProgramAs_Click" Padding="1,1,1,1" Margin="0,8,0,0" />
                 </StackPanel>
             </Grid>

@@ -21,14 +21,14 @@
                         <ScaleTransform x:Name="Image_ScaleTransform" ScaleX="1" ScaleY="1"/>
                     </TransformGroup>
                 </Grid.RenderTransform>
-                <Image x:Name="Image_Preview" Stretch="UniformToFill" MaxWidth="800" MaxHeight="400" MinWidth="800" MinHeight="400" StretchDirection="Both" Opacity="1" />
+                <Image x:Name="Image_Preview" Stretch="UniformToFill" MaxWidth="800" MaxHeight="400" MinWidth="800" MinHeight="400" StretchDirection="Both" Opacity="1" VerticalAlignment="Stretch" />
                 <DockPanel x:Name="Dock_HiddenContent" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="8">
                     <Button x:Name="Button_RunTask" DockPanel.Dock="Left" FontSize="24" Content="" ToolTip="Run program" Style="{StaticResource Style.Button.Transparent.Material.Animated}" VerticalAlignment="Stretch" HorizontalAlignment="Right" Padding="2" Click="Button_RunTask_Click" />
                     <Button x:Name="Button_StopTask" DockPanel.Dock="Left" FontSize="24" Content="" ToolTip="Stop program" Style="{StaticResource Style.Button.Transparent.Material.Animated}" VerticalAlignment="Stretch" HorizontalAlignment="Right" Padding="2" Click="Button_StopTask_Click" />
                     <Button x:Name="Button_StoppingTask" DockPanel.Dock="Left" FontSize="24" Content="" ToolTip="Program stopping" Style="{StaticResource Style.Button.Transparent.Material.Animated}" VerticalAlignment="Stretch" HorizontalAlignment="Right" Padding="2" />
                     <Button x:Name="Button_RemoveTask" DockPanel.Dock="Right" FontSize="24" Content="" ToolTip="Remove program" Style="{StaticResource Style.Button.Transparent.Material.Animated}" VerticalAlignment="Stretch" HorizontalAlignment="Right" Padding="2" Click="Button_RemoveTask_Click" />
-                    <Button x:Name="Button_AddStartWithProgram" DockPanel.Dock="Right" FontSize="24" Content="" ToolTip="Load automatically on startup" Style="{StaticResource Style.Button.Transparent.Material.Animated}" VerticalAlignment="Stretch" HorizontalAlignment="Right" Padding="2" Click="Button_StartWithProgram_Click" />
-                    <Button x:Name="Button_RemoveStartWithProgram" DockPanel.Dock="Right" FontSize="24" Content="" ToolTip="Stop automatically loading" Style="{StaticResource Style.Button.Transparent.Material.Animated}" VerticalAlignment="Stretch" HorizontalAlignment="Right" Padding="2" Click="Button_StartWithProgram_Click" />
+                    <Button x:Name="Button_AddStartWithProgram" DockPanel.Dock="Right" FontSize="24" Content="" ToolTip="Load automatically on startup" Style="{StaticResource Style.Button.Transparent.Material.Animated}" VerticalAlignment="Stretch" HorizontalAlignment="Right" Padding="2" Click="Button_StartWithProgram_Click" />
+                    <Button x:Name="Button_RemoveStartWithProgram" DockPanel.Dock="Right" FontSize="24" Content="" ToolTip="Stop automatically loading" Style="{StaticResource Style.Button.Transparent.Material.Animated}" VerticalAlignment="Stretch" HorizontalAlignment="Right" Padding="2" Click="Button_StartWithProgram_Click" />
                 </DockPanel>
             </Grid>
             <Grid VerticalAlignment="Bottom">
