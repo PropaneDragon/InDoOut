@@ -1,4 +1,5 @@
 ﻿using InDoOut_Core.Entities.Functions;
+using InDoOut_Executable_Core.History;
 using InDoOut_UI_Common.Controls.CoreEntityRepresentation;
 using InDoOut_UI_Common.InterfaceElements;
 using System.Windows;
@@ -7,7 +8,7 @@ namespace InDoOut_UI_Common.Creation
 {
     public class BasicFunctionCreator : AbstractElementCreator, IFunctionCreator
     {
-        protected ICommonProgramDisplay Display { get; private set; } = null;
+        public ICommonProgramDisplay Display { get; private set; } = null;
 
         private BasicFunctionCreator()
         {
@@ -25,7 +26,13 @@ namespace InDoOut_UI_Common.Creation
             {
                 if (program.Functions.Contains(function) || program.AddFunction(function))
                 {
-                    return AddFunctionToDisplay(function, setPositionFromMetadata);
+                    var uiFunction = AddFunctionToDisplay(function, setPositionFromMetadata);
+                    if (uiFunction != null)
+                    {
+                        _ = History.Instance.AddHistory("Added function to project", () => AddFunctionToDisplay(function, setPositionFromMetadata), () => Display?.DeletableRemover.TryRemove(uiFunction), false);
+
+                        return uiFunction;
+                    }
                 }
             }
 
