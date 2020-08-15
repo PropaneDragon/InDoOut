@@ -16,7 +16,7 @@
     <Border>
         <Grid>
             <Grid x:Name="Grid_Tasks">
-                <ScrollViewer x:Name="Scroll_Tasks" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled">
+                <ScrollViewer x:Name="Scroll_Tasks" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                     <StackPanel Margin="100,100,100,0">
                         <Button x:Name="Button_NewTask" FontSize="50" Content="" ToolTip="New task" Style="{StaticResource Style.Button.Transparent.Material.Animated}" VerticalAlignment="Stretch" HorizontalAlignment="Center" Click="Button_NewTask_Click" Padding="10" />
                         <WrapPanel x:Name="Wrap_Tasks" HorizontalAlignment="Center" />
