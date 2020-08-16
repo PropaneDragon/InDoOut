@@ -27,6 +27,7 @@ namespace InDoOut_UI_Common.Actions
         public bool MouseRightMove(Point mousePosition) => CurrentAction?.MouseRightMove(mousePosition) ?? false;
         public bool MouseRightUp(Point mousePosition) => CurrentAction?.MouseRightUp(mousePosition) ?? false;
         public bool MouseDoubleClick(Point mousePosition) => CurrentAction?.MouseDoubleClick(mousePosition) ?? false;
+        public bool MouseWheel(int delta) => CurrentAction?.MouseWheel(delta) ?? false;
         public bool KeyDown(Key key) => CurrentAction?.KeyDown(key) ?? false;
         public bool KeyUp(Key key) => CurrentAction?.KeyUp(key) ?? false;
 

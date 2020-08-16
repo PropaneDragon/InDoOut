@@ -27,6 +27,11 @@ namespace InDoOut_UI_Common.Actions
             return base.MouseLeftUp(mousePosition);
         }
 
+        public override bool MouseWheel(int delta)
+        {
+            return base.MouseWheel(delta);
+        }
+
         public override bool KeyUp(Key key)
         {
             return base.KeyUp(key);

@@ -16,6 +16,7 @@ namespace InDoOut_UI_Common.Actions
         bool MouseRightDown(Point mousePosition);
         bool MouseRightUp(Point mousePosition);
         bool MouseDoubleClick(Point mousePosition);
+        bool MouseWheel(int delta);
         bool KeyDown(Key key);
         bool KeyUp(Key key);
     }

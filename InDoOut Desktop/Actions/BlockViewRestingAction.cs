@@ -103,6 +103,11 @@ namespace InDoOut_Desktop.Actions
             return _commonDisplayActions?.MouseLeftUp(mousePosition) ?? false;
         }
 
+        public override bool MouseWheel(int delta)
+        {
+            return _commonDisplayActions?.MouseWheel(delta) ?? false;
+        }
+
         public override bool KeyUp(Key key)
         {
             return _commonDisplayActions?.KeyUp(key) ?? false;

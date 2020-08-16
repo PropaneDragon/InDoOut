@@ -141,5 +141,10 @@ namespace InDoOut_UI_Common.Actions
 
             return base.KeyUp(key);
         }
+
+        public override bool MouseWheel(int delta)
+        {
+            return base.MouseWheel(delta);
+        }
     }
 }

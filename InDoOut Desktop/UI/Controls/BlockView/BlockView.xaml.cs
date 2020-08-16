@@ -137,6 +137,13 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
             e.Handled = false;
         }
 
+        private void Scroll_Content_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            _ = ActionHandler?.MouseWheel(e.Delta);
+
+            e.Handled = false;
+        }
+
         private void Scroll_Content_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             _ = ActionHandler?.KeyDown(e.Key);
