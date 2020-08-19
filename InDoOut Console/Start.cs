@@ -25,8 +25,9 @@ namespace InDoOut_Console
 {
     class Start
     {
+        private static readonly List<string> _programArguments = new List<string>();
+
         private static string _fileToOpen = null;
-        private static List<string> _programArguments = new List<string>();
 
         private static LogFileSaver _logFileSaver = null;
 

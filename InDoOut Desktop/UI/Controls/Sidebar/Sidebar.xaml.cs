@@ -22,7 +22,7 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
         private ITaskView _taskView = null;
         private ICommonProgramDisplay _programDisplay = null;
 
-        public bool Collapsed { get => _collapsed; set { if (value) Collapse(); else Expand(); } }
+        public bool Collapsed { get => _collapsed; set { if (value) { Collapse(); } else { Expand(); } } }
         public ITaskView TaskView { get => _taskView; set => TaskViewChanged(value); }
         public ICommonProgramDisplay ProgramDisplay { get => _programDisplay; set => ProgramDisplayChanged(value); }
 

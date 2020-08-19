@@ -116,10 +116,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InDoOut Display Json Storag
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InDoOut Application Plugins Tests", "InDoOut Application Plugins Tests\InDoOut Application Plugins Tests.csproj", "{E052D25F-D45B-4CC1-A6E8-673CDB4C9DBA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InDoOut Windows Plugins", "InDoOut Windows Plugins\InDoOut Windows Plugins.csproj", "{F477804F-D826-4EDA-B64E-63D271221D2E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InDoOut Windows Plugins", "InDoOut Windows Plugins\InDoOut Windows Plugins.csproj", "{F477804F-D826-4EDA-B64E-63D271221D2E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D4FFA084-4C94-40FC-8E73-8A8FFCA94985}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		Directory.Build.props = Directory.Build.props
 	EndProjectSection
 EndProject

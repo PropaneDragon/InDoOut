@@ -13,9 +13,6 @@ namespace InDoOut_Core_Tests
 
         public override string[] Keywords => throw new Exception();
 
-        protected override IOutput Started(IInput triggeredBy)
-        {
-            throw new Exception();
-        }
+        protected override IOutput Started(IInput triggeredBy) => throw new Exception();
     }
 }
