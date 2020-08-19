@@ -59,35 +59,5 @@ namespace InDoOut_Executable_Core_Tests
 
             broadcaster.End();
         }
-
-        [TestMethod]
-        public async Task BroadcasterSendReceiveUTF8()
-        {
-            var broadcaster = new Broadcaster();
-            Assert.IsTrue(await broadcaster.Begin(IPAddress.Broadcast, 9001));
-            Assert.IsTrue(broadcaster.Connected);
-
-            var testTextFiles = Directory.GetFiles(".", "*.txt");
-            Assert.AreEqual(5, testTextFiles.Length);
-
-            foreach (var testTextFile in testTextFiles)
-            {
-                var text = File.ReadAllText(testTextFile, Encoding.UTF8);
-
-                Assert.IsFalse(string.IsNullOrEmpty(text));
-
-                var delayTask = Task.Delay(TimeSpan.FromSeconds(1));
-                var receiveTask = broadcaster.Listen();
-
-                Assert.IsTrue(await broadcaster.Send(text));
-
-                var completedTask = await Task.WhenAny(receiveTask, delayTask);
-
-                Assert.AreEqual(receiveTask, completedTask);
-                Assert.AreEqual(text, receiveTask.Result);
-            }
-
-            broadcaster.End();
-        }
     }
 }

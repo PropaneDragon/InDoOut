@@ -279,7 +279,8 @@ namespace InDoOut_Executable_Core.Networking
 
             foreach (var client in clients)
             {
-                _ = Task.Run(async () => await Send("", client));
+                var sendTask = Task.Run(async () => await Send("\u0001\u0001\u0003", client));
+                _ = sendTask.Result;
 
                 if (!ClientIsValid(client))
                 {
