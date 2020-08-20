@@ -3,7 +3,7 @@ using System.Net.Sockets;
 
 namespace InDoOut_Executable_Core_Tests
 {
-    internal class TestServer : Server
+    internal class TestServer : AbstractServer
     {
         public TestServer(int port = 0) : base(port)
         {

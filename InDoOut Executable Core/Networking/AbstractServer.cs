@@ -9,9 +9,7 @@ using System.Threading.Tasks;
 
 namespace InDoOut_Executable_Core.Networking
 {
-    //http://zetcode.com/csharp/tcpclient/
-
-    public abstract class Server
+    public abstract class AbstractServer : IServer
     {
         private static readonly SemaphoreSlim _writingSemaphore = new SemaphoreSlim(1, 1);
 
@@ -28,12 +26,12 @@ namespace InDoOut_Executable_Core.Networking
         public TimeSpan ClientPollInterval { get; set; } = TimeSpan.FromSeconds(5);
         public IPAddress IPAddress => (_listener?.LocalEndpoint as IPEndPoint)?.Address;
 
-        private Server()
+        private AbstractServer()
         {
 
         }
-        
-        public Server(int port = 0) : this()
+
+        public AbstractServer(int port = 0) : this()
         {
             _listener = new TcpListener(IPAddress.Any, port);
             _listener.Server.NoDelay = true;
@@ -103,47 +101,21 @@ namespace InDoOut_Executable_Core.Networking
             });
         }
 
-        public async Task<bool> SendAll(string message)
+        public async Task<bool> SendMessageAll(string message)
         {
             var clients = Clients;
             var success = true;
 
             foreach (var client in clients)
             {
-                success = await Send(message, client) && success;
+                success = await SendMessage(client, message) && success;
             }
 
             return success;
         }
 
-        public async Task<bool> Send(string message, TcpClient client)
-        {
-            var wrote = false;
-
-            if (ClientIsValid(client) && !string.IsNullOrEmpty(message))
-            {
-                await _writingSemaphore.WaitAsync();
-
-                try
-                {
-                    var stream = client.GetStream();
-                    var streamHandler = GetStreamHandlerForClient(client);
-
-                    if (streamHandler != null)
-                    {
-                        wrote = await streamHandler.SendMessage(stream, message);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Log.Instance.Error("Couldn't send a message to a client from a server due to an error: ", ex.Message);
-                }
-
-                _ = _writingSemaphore.Release();
-            }
-
-            return wrote;
-        }
+        public async Task<bool> SendMessage(TcpClient client, string message) => await SendSafe(() => SendUnsafe(client, message));
+        public async Task<bool> Ping(TcpClient client) => await SendSafe(() => PingUnsafe(client));
 
         private void StartListening()
         {
@@ -227,7 +199,7 @@ namespace InDoOut_Executable_Core.Networking
                     _ = _clients.Remove(client);
                 }
             }
-            
+
             lock (_streamHandlersLock)
             {
                 if (_streamHandlers.ContainsKey(client))
@@ -279,7 +251,7 @@ namespace InDoOut_Executable_Core.Networking
 
             foreach (var client in clients)
             {
-                var sendTask = Task.Run(async () => await Send("\u0001\u0001\u0003", client));
+                var sendTask = Task.Run(async () => await Ping(client));
                 _ = sendTask.Result;
 
                 if (!ClientIsValid(client))
@@ -307,6 +279,30 @@ namespace InDoOut_Executable_Core.Networking
             return null;
         }
 
+        private async Task<bool> SendSafe(Func<Task<bool>> safeFunction)
+        {
+            var taskReturn = false;
+
+            await _writingSemaphore.WaitAsync();
+
+            try
+            {
+                taskReturn = await safeFunction?.Invoke();
+            }
+            catch (Exception ex)
+            {
+                Log.Instance.Error("Couldn't send a message to a client from a server due to an error: ", ex.Message);
+            }
+
+            _ = _writingSemaphore.Release();
+
+            return taskReturn;
+        }
+
+        private async Task<bool> SendUnsafe(TcpClient client, string message) => CanSendMessage(client, message) && await (GetStreamHandlerForClient(client)?.SendMessage(client.GetStream(), message) ?? Task.FromResult(false));
+        private async Task<bool> PingUnsafe(TcpClient client) => await (GetStreamHandlerForClient(client)?.SendPing(client.GetStream()) ?? Task.FromResult(false));
+
+        private bool CanSendMessage(TcpClient client, string message) => ClientIsValid(client) && !string.IsNullOrEmpty(message);
         private bool ClientIsValid(TcpClient client) => client?.Connected ?? false;
 
         protected abstract bool CanAcceptClient(TcpClient client);

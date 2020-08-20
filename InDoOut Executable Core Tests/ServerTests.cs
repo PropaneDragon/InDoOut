@@ -197,7 +197,7 @@ namespace InDoOut_Executable_Core_Tests
             var clientB = new TestClient();
 
             Assert.IsTrue(await server.Start());
-            Assert.IsTrue(await server.SendAll("This is a test and shouldn't be received by anyone!"));
+            Assert.IsTrue(await server.SendMessageAll("This is a test and shouldn't be received by anyone!"));
             Assert.IsFalse(await clientA.Send("This is a test and shouldn't be received by anyone!"));
             Assert.IsFalse(await clientB.Send("This is a test and shouldn't be received by anyone!"));
 
@@ -255,7 +255,7 @@ namespace InDoOut_Executable_Core_Tests
             Assert.IsNull(clientA.LastMessageReceived);
             Assert.IsNull(clientB.LastMessageReceived);
 
-            Assert.IsTrue(await server.Send("Hello client A", server.Clients.ElementAt(0)));
+            Assert.IsTrue(await server.SendMessage(server.Clients.ElementAt(0), "Hello client A"));
 
             await Task.Delay(TimeSpan.FromMilliseconds(100));
 
@@ -263,7 +263,7 @@ namespace InDoOut_Executable_Core_Tests
             Assert.AreEqual("Hello client A", clientA.LastMessageReceived);
             Assert.IsNull(clientB.LastMessageReceived);
 
-            Assert.IsTrue(await server.Send("Hello client B", server.Clients.ElementAt(1)));
+            Assert.IsTrue(await server.SendMessage(server.Clients.ElementAt(1), "Hello client B"));
 
             await Task.Delay(TimeSpan.FromMilliseconds(100));
 
@@ -271,13 +271,17 @@ namespace InDoOut_Executable_Core_Tests
             Assert.AreEqual("Hello client A", clientA.LastMessageReceived);
             Assert.AreEqual("Hello client B", clientB.LastMessageReceived);
 
-            Assert.IsTrue(await server.SendAll("Hello all clients!"));
+            Assert.IsTrue(await server.SendMessageAll("Hello all clients!"));
 
             await Task.Delay(TimeSpan.FromMilliseconds(100));
 
             Assert.AreEqual("This is client B again!", server.LastMessageReceived);
             Assert.AreEqual("Hello all clients!", clientA.LastMessageReceived);
             Assert.AreEqual("Hello all clients!", clientB.LastMessageReceived);
+
+            Assert.IsFalse(await server.SendMessageAll(null));
+            Assert.IsFalse(await server.SendMessageAll(""));
+            Assert.IsFalse(await server.SendMessage(null, "Hello null client"));
 
             Assert.IsTrue(await server.Stop());
         }
@@ -299,7 +303,7 @@ namespace InDoOut_Executable_Core_Tests
                 var text = File.ReadAllText(testTextFile, Encoding.UTF8).Replace("\r\n", "\n");
 
                 Assert.IsFalse(string.IsNullOrEmpty(text));
-                Assert.IsTrue(await server.SendAll(text));
+                Assert.IsTrue(await server.SendMessageAll(text));
 
                 var messageTask = Task.Run(async () =>
                 {

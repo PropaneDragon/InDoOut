@@ -6,6 +6,7 @@
         <ResourceDictionary Source="/InDoOutUICommon;component/Style/CommonFonts.xaml" />
         <ResourceDictionary Source="/InDoOutUICommon;component/Style/ButtonStyle.xaml" />
         <ResourceDictionary Source="/InDoOutUICommon;component/Style/ScrollBarStyle.xaml" />
+        <ResourceDictionary Source="/InDoOutUICommon;component/Style/TextBoxStyle.xaml" />
         <ResourceDictionary Source="/InDoOutUICommon;component/Style/ListStyle.xaml" />
     </ResourceDictionary.MergedDictionaries>
 

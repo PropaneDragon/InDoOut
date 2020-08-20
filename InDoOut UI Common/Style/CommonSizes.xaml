@@ -9,4 +9,6 @@
     <sys:Double x:Key="Size.Double.Font.Common">18</sys:Double>
     <sys:Double x:Key="Size.Double.Font.Common.Secondary">14</sys:Double>
 
+    <sys:Double x:Key="Size.Double.Font.Icon.Primary">50</sys:Double>
+
 </ResourceDictionary>

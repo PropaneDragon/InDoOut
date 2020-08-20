@@ -8,8 +8,11 @@ namespace InDoOut_Executable_Core.Networking
 {
     public class NetworkStreamHandler
     {
+        public static readonly string MESSAGE_ALIVE_CHECK = "\u0001\u0001\u0003";
+
         public string MessageBeginIdentifier { get; set; } = "\u0001\u0002\u0003";
         public string MessageEndIdentifier { get; set; } = "\u0003\u0002\u0001";
+
         public Encoding Encoding { get; set; } = Encoding.UTF8;
 
         public NetworkStreamHandler()
@@ -62,10 +65,14 @@ namespace InDoOut_Executable_Core.Networking
                 beginningLocation = beginningLocation >= 0 ? beginningLocation + MessageBeginIdentifier.Length : 0;
                 endingLocation = endingLocation >= 0 ? endingLocation : fullMessage.Length;
 
-                return fullMessage[beginningLocation..endingLocation];
+                return SanitiseMessage(fullMessage[beginningLocation..endingLocation]);
             }
 
             return null;
         }
+
+        public async Task<bool> SendPing(NetworkStream stream) => await SendMessage(stream, MESSAGE_ALIVE_CHECK);
+
+        protected virtual string SanitiseMessage(string message) => !string.IsNullOrEmpty(message) && message != MESSAGE_ALIVE_CHECK ? message : null;
     }
 }

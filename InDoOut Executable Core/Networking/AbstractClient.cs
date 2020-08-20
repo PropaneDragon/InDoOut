@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace InDoOut_Executable_Core.Networking
 {
-    public abstract class Client
+    public abstract class AbstractClient : IClient
     {
         private static readonly SemaphoreSlim _writingSemaphore = new SemaphoreSlim(1, 1);
 
@@ -17,7 +17,7 @@ namespace InDoOut_Executable_Core.Networking
 
         public bool Connected => _client?.Connected ?? false;
 
-        public Client()
+        public AbstractClient()
         {
         }
 
@@ -76,7 +76,7 @@ namespace InDoOut_Executable_Core.Networking
                 try
                 {
                     var stream = _client.GetStream();
-                    
+
                     wrote = await _streamHandler.SendMessage(stream, message);
                 }
                 catch (Exception ex)
@@ -90,6 +90,8 @@ namespace InDoOut_Executable_Core.Networking
             return wrote;
         }
 
+        protected abstract void MessageReceived(string message);
+
         private void AwaitMessages()
         {
             _ = Task.Run(async () =>
@@ -101,7 +103,7 @@ namespace InDoOut_Executable_Core.Networking
                         var stream = _client.GetStream();
                         var message = await _streamHandler.ReadMessage(stream);
 
-                        if (!string.IsNullOrEmpty(message))
+                        if (MessageIsValid(message))
                         {
                             MessageReceived(message);
                         }
@@ -114,6 +116,6 @@ namespace InDoOut_Executable_Core.Networking
             });
         }
 
-        protected abstract void MessageReceived(string message);
+        private bool MessageIsValid(string message) => !string.IsNullOrEmpty(message);
     }
 }
