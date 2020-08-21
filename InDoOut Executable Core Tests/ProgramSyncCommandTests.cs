@@ -1,5 +1,7 @@
 ﻿using InDoOut_Executable_Core.Networking;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.IO;
+using System.Text;
 
 namespace InDoOut_Executable_Core_Tests
 {
@@ -62,6 +64,32 @@ namespace InDoOut_Executable_Core_Tests
 
             testCommand = ProgramSyncCommand.ExtractFromCommandString(null);
             Assert.IsNull(testCommand);
+        }
+
+        [TestMethod]
+        public void UTF8()
+        {
+            var testTextFiles = Directory.GetFiles(".", "*.txt");
+            Assert.AreEqual(5, testTextFiles.Length);
+
+            foreach (var testTextFile in testTextFiles)
+            {
+                var text = File.ReadAllText(testTextFile, Encoding.UTF8).Replace("\r\n", "\n");
+                var testCommand = ProgramSyncCommand.ExtractFromCommandString($"{text}{EXPECTED_SEPARATOR}");
+
+                Assert.AreEqual(testCommand.Command, text);
+                Assert.AreEqual(testCommand.Data, "");
+                Assert.IsTrue(testCommand.Valid);
+
+                testCommand = ProgramSyncCommand.ExtractFromCommandString($"{text}{EXPECTED_SEPARATOR}{text}");
+
+                Assert.AreEqual(testCommand.Command, text);
+                Assert.AreEqual(testCommand.Data, text);
+                Assert.IsTrue(testCommand.Valid);
+
+                Assert.AreEqual($"{text}{EXPECTED_SEPARATOR}", new ProgramSyncCommand(text).FullCommandString);
+                Assert.AreEqual($"{text}{EXPECTED_SEPARATOR}{text}", new ProgramSyncCommand(text, text).FullCommandString);
+            }
         }
     }
 }

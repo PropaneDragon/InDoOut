@@ -10,7 +10,7 @@ namespace InDoOut_Executable_Core_Tests
         }
 
         public bool CanAcceptClients { get; set; } = true;
-        public string LastMessageReceived { get; private set; } = null;
+        public string LastMessageReceived { get; set; } = null;
         public TcpClient LastClientConnected { get; private set; } = null;
         public TcpClient LastClientDisconnected { get; private set; } = null;
         public TcpClient LastClientReceived { get; private set; } = null;
