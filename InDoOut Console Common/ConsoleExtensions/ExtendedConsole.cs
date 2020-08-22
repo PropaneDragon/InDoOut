@@ -7,6 +7,9 @@ namespace InDoOut_Console_Common.ConsoleExtensions
 {
     public static class ExtendedConsole
     {
+        private static readonly object _writingLock = new object();
+        private static readonly object _writingLineLock = new object();
+
         [Flags]
         public enum ConsoleTextStyle
         {
@@ -62,43 +65,49 @@ namespace InDoOut_Console_Common.ConsoleExtensions
 
         public static void Write(params object[] items)
         {
-            _lastObject = null;
-
-            foreach (var item in items)
+            lock (_writingLock)
             {
-                if (item != null)
+                _lastObject = null;
+
+                foreach (var item in items)
                 {
-                    if (item is ConsoleTextStyle textStyle)
+                    if (item != null)
                     {
-                        WriteStyleTag(textStyle);
-                    }
-                    else if (item is Color colour)
-                    {
-                        if (colour != Color.Transparent)
+                        if (item is ConsoleTextStyle textStyle)
                         {
-                            WriteColourTag(colour, _lastObject is ConsoleColourArea area ? area : ConsoleColourArea.Foreground);
+                            WriteStyleTag(textStyle);
+                        }
+                        else if (item is Color colour)
+                        {
+                            if (colour != Color.Transparent)
+                            {
+                                WriteColourTag(colour, _lastObject is ConsoleColourArea area ? area : ConsoleColourArea.Foreground);
+                            }
+                        }
+                        else if (item is ConsoleColor consoleColour)
+                        {
+                            WriteColourTag(consoleColour, _lastObject is ConsoleColourArea area ? area : ConsoleColourArea.Foreground);
+                        }
+                        else if (!(item is ConsoleColourArea))
+                        {
+                            Console.Write(item);
                         }
                     }
-                    else if (item is ConsoleColor consoleColour)
-                    {
-                        WriteColourTag(consoleColour, _lastObject is ConsoleColourArea area ? area : ConsoleColourArea.Foreground);
-                    }
-                    else if (!(item is ConsoleColourArea))
-                    {
-                        Console.Write(item);
-                    } 
+
+                    _lastObject = item;
                 }
 
-                _lastObject = item;
+                WriteLineFormattingReset();
             }
-
-            WriteLineFormattingReset();
         }
 
         public static void WriteLine(params object[] items)
         {
-            Write(items);
-            Console.WriteLine();
+            lock (_writingLineLock)
+            {
+                Write(items);
+                Console.WriteLine();
+            }
         }
 
         private static void WriteStyleTag(ConsoleTextStyle style)
