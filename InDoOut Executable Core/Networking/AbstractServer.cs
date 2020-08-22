@@ -1,4 +1,5 @@
 ﻿using InDoOut_Core.Logging;
+using InDoOut_Executable_Core.Networking.ServerEventArgs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,13 @@ namespace InDoOut_Executable_Core.Networking
         public TimeSpan ClientPollInterval { get; set; } = TimeSpan.FromSeconds(5);
         public IPAddress IPAddress => (_listener?.LocalEndpoint as IPEndPoint)?.Address;
 
+        public event EventHandler<ServerConnectionEventArgs> OnServerStarted;
+        public event EventHandler<ServerConnectionEventArgs> OnServerStopped;
+        public event EventHandler<ClientConnectionEventArgs> OnClientConnected;
+        public event EventHandler<ClientConnectionEventArgs> OnClientDisconnected;
+        public event EventHandler<ClientMessageEventArgs> OnClientMessageReceived;
+        public event EventHandler<ClientMessageEventArgs> OnClientMessageSent;
+
         private AbstractServer()
         {
 
@@ -36,7 +44,7 @@ namespace InDoOut_Executable_Core.Networking
             _listener = new TcpListener(IPAddress.Any, port);
             _listener.Server.NoDelay = true;
 
-            Log.Instance.Header("Started server. IP: ", IPAddress, ", port: ", Port);
+            Log.Instance.Header("Created server. IP: ", IPAddress, ", port: ", Port);
         }
 
         public async Task<bool> Start()
@@ -48,6 +56,10 @@ namespace InDoOut_Executable_Core.Networking
                 try
                 {
                     _listener.Start();
+
+                    OnServerStarted?.Invoke(this, new ServerConnectionEventArgs());
+
+                    Log.Instance.Header("Started server. IP: ", IPAddress, ", port: ", Port);
 
                     return true;
                 }
@@ -90,6 +102,10 @@ namespace InDoOut_Executable_Core.Networking
                 {
                     _listener?.Stop();
 
+                    OnServerStopped?.Invoke(this, new ServerConnectionEventArgs());
+
+                    Log.Instance.Header("Stopped server. IP: ", IPAddress, ", port: ", Port);
+
                     return true;
                 }
                 catch (Exception ex)
@@ -131,6 +147,8 @@ namespace InDoOut_Executable_Core.Networking
                             if (CanAcceptClient(client) && AttachClient(client))
                             {
                                 ClientConnected(client);
+
+                                OnClientConnected?.Invoke(this, new ClientConnectionEventArgs(client));
                             }
                             else
                             {
@@ -181,6 +199,10 @@ namespace InDoOut_Executable_Core.Networking
 
         private bool DetachClient(TcpClient client)
         {
+            ClientDisconnected(client);
+
+            OnClientDisconnected?.Invoke(this, new ClientConnectionEventArgs(client));
+
             try
             {
                 client?.Close();
@@ -189,8 +211,6 @@ namespace InDoOut_Executable_Core.Networking
             {
                 Log.Instance.Error("Couldn't stop client due to an error: ", ex?.Message);
             }
-
-            ClientDisconnected(client);
 
             lock (_clientsLock)
             {
@@ -229,6 +249,8 @@ namespace InDoOut_Executable_Core.Networking
                             if (!string.IsNullOrEmpty(message))
                             {
                                 ClientMessageReceived(client, message);
+
+                                OnClientMessageReceived?.Invoke(this, new ClientMessageEventArgs(client, message));
                             }
                         }
                     }
@@ -299,7 +321,18 @@ namespace InDoOut_Executable_Core.Networking
             return taskReturn;
         }
 
-        private async Task<bool> SendUnsafe(TcpClient client, string message) => CanSendMessage(client, message) && await (GetStreamHandlerForClient(client)?.SendMessage(client.GetStream(), message) ?? Task.FromResult(false));
+        private async Task<bool> SendUnsafe(TcpClient client, string message)
+        {
+            if (CanSendMessage(client, message) && await (GetStreamHandlerForClient(client)?.SendMessage(client.GetStream(), message) ?? Task.FromResult(false)))
+            {
+                OnClientMessageSent(this, new ClientMessageEventArgs(client, message));
+
+                return true;
+            }
+
+            return false;
+        }
+
         private async Task<bool> PingUnsafe(TcpClient client) => await (GetStreamHandlerForClient(client)?.SendPing(client.GetStream()) ?? Task.FromResult(false));
 
         private bool CanSendMessage(TcpClient client, string message) => ClientIsValid(client) && !string.IsNullOrEmpty(message);

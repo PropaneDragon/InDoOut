@@ -1,0 +1,1 @@
+dotnet publish "InDoOut Server.csproj" --runtime linux-arm --configuration Release --framework netcoreapp3.1 --self-contained --output "bin\Publish\Linux\ARM"

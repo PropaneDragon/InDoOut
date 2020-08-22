@@ -2,9 +2,9 @@
 using InDoOut_Executable_Core.Messaging;
 using System;
 
-namespace InDoOut_Console.Messaging
+namespace InDoOut_Console_Common.Messaging
 {
-    internal class ConsoleUserMessageSystem : AbstractUserMessageSystem
+    public class ConsoleUserMessageSystem : AbstractUserMessageSystem
     {
         public override void ShowError(string title, string message, string details = null)
         {

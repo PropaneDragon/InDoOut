@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace InDoOut_Executable_Core.Networking
 {
-    public class ProgramSyncClient : AbstractClient
+    public class ProgramSyncClient : AbstractClient, IProgramSyncClient
     {
         private readonly ProgramSyncProgramCommandTracker _commandTracker = new ProgramSyncProgramCommandTracker();
 
@@ -19,7 +19,7 @@ namespace InDoOut_Executable_Core.Networking
         public async Task<List<string>> RequestAvailablePrograms(CancellationToken cancellationToken)
         {
             var response = await SendCommandAndWait("REQUEST_PROGRAMS", cancellationToken);
-            
+
             return response?.Split("\n", StringSplitOptions.RemoveEmptyEntries)?.ToList();
         }
 
@@ -35,7 +35,7 @@ namespace InDoOut_Executable_Core.Networking
                 else
                 {
                     Log.Instance.Warning("A command seems to have fallen through while attempting to process it as it wasn't valid.");
-                } 
+                }
             }
             else
             {
@@ -57,7 +57,7 @@ namespace InDoOut_Executable_Core.Networking
             else
             {
                 _ = _commandTracker.RemoveFromResponseQueue(uniqueName);
-            } 
+            }
 
             return null;
         }

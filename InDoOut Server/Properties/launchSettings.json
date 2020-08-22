@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "InDoOut Server": {
+      "commandName": "Project",
+      "commandLineArgs": "-port 9001"
+    }
+  }
+}

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InDoOut_Executable_Core.Networking.ServerEventArgs;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
@@ -13,6 +14,13 @@ namespace InDoOut_Executable_Core.Networking
         IReadOnlyCollection<TcpClient> Clients { get; }
         TimeSpan ClientPollInterval { get; set; }
         IPAddress IPAddress { get; }
+
+        event EventHandler<ServerConnectionEventArgs> OnServerStarted;
+        event EventHandler<ServerConnectionEventArgs> OnServerStopped;
+        event EventHandler<ClientConnectionEventArgs> OnClientConnected;
+        event EventHandler<ClientConnectionEventArgs> OnClientDisconnected;
+        event EventHandler<ClientMessageEventArgs> OnClientMessageReceived;
+        event EventHandler<ClientMessageEventArgs> OnClientMessageSent;
 
         Task<bool> Start();
         Task<bool> Stop();

@@ -1,0 +1,1 @@
+dotnet publish "InDoOut Server.csproj" --runtime win-x64 --configuration Release --framework netcoreapp3.1 --self-contained --output "bin\Publish\Windows\x64"

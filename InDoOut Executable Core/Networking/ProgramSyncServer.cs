@@ -1,4 +1,5 @@
 ﻿using InDoOut_Core.Logging;
+using InDoOut_Executable_Core.Networking.ServerEventArgs;
 using InDoOut_Executable_Core.Programs;
 using System;
 using System.Collections.Generic;
@@ -169,8 +170,9 @@ namespace InDoOut_Executable_Core.Networking
             return null;
         }
 
-        protected override bool CanAcceptClient(TcpClient client) => true; //Todo: Identify the client
         protected override void ClientConnected(TcpClient client) { }
         protected override void ClientDisconnected(TcpClient client) { }
+
+        protected override bool CanAcceptClient(TcpClient client) => true; //Todo: Identify the client
     }
 }
