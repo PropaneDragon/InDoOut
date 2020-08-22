@@ -11,6 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\InDoOut Console Common\InDoOut Console Common.csproj" />
     <ProjectReference Include="..\InDoOut Core\InDoOut Core.csproj" />
     <ProjectReference Include="..\InDoOut Json Storage\InDoOut Json Storage.csproj" />
   </ItemGroup>

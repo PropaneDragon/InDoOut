@@ -1,6 +1,6 @@
 ﻿using InDoOut_Executable_Core.Arguments;
 
-namespace InDoOut_Console.Arguments
+namespace InDoOut_Console_Common.Arguments
 {
     public class ConsoleProgramRunArgument : Argument
     {

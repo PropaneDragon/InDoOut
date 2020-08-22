@@ -79,7 +79,6 @@ namespace InDoOut_Executable_Core.Networking
                     try
                     {
                         var response = methodForCommand.Invoke(command);
-
                         if (response?.Valid ?? false)
                         {
                             _ = Task.Run(async () => _ = await SendMessage(client, response.FullCommandString));

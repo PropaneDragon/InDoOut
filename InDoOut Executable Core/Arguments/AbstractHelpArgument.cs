@@ -2,15 +2,24 @@
 {
     public abstract class AbstractHelpArgument : Argument
     {
-        public AbstractHelpArgument() : base("?", "Shows all available help.", false)
+        public bool ShouldShowHelp { get; private set; } = false;
+        public bool ShowHelpWhenTriggered = true;
+
+        public AbstractHelpArgument(bool showHelpWhenTriggered = true) : base("?", "Shows this help section.", false)
         {
+            ShowHelpWhenTriggered = showHelpWhenTriggered;
         }
 
         public override void Trigger(IArgumentHandler handler)
         {
-            ShowHelp(handler);
+            ShouldShowHelp = true;
+
+            if (ShowHelpWhenTriggered)
+            {
+                ShowHelp(handler);
+            }
         }
 
-        protected abstract void ShowHelp(IArgumentHandler handler);
+        public abstract void ShowHelp(IArgumentHandler handler);
     }
 }

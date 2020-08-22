@@ -1,4 +1,4 @@
-﻿using InDoOut_Console.Display;
+﻿using InDoOut_Console_Common.ConsoleExtensions;
 using InDoOut_Executable_Core.Messaging;
 using System;
 
@@ -8,24 +8,24 @@ namespace InDoOut_Console.Messaging
     {
         public override void ShowError(string title, string message, string details = null)
         {
-            ColourConsole.WriteErrorLine($"{(string.IsNullOrEmpty(title) ? "" : $"{title}: ")}{message ?? ""} {details ?? ""}");
+            ConsoleFormatter.DrawErrorMessageLine($"{(string.IsNullOrEmpty(title) ? "" : $"{title}: ")}{message ?? ""} {details ?? ""}");
         }
 
         public override void ShowInformation(string title, string message, string details = null)
         {
-            ColourConsole.WriteInfoLine($"{(string.IsNullOrEmpty(title) ? "" : $"{title}: ")}{message ?? ""} {details ?? ""}");
+            ConsoleFormatter.DrawInfoMessageLine($"{(string.IsNullOrEmpty(title) ? "" : $"{title}: ")}{message ?? ""} {details ?? ""}");
         }
 
         public override void ShowWarning(string title, string message, string details = null)
         {
-            ColourConsole.WriteWarningLine($"{(string.IsNullOrEmpty(title) ? "" : $"{title}: ")}{message ?? ""} {details ?? ""}");
+            ConsoleFormatter.DrawWarningMessageLine($"{(string.IsNullOrEmpty(title) ? "" : $"{title}: ")}{message ?? ""} {details ?? ""}");
         }
 
         public override UserResponse? ShowQuestion(string title, string message)
         {
-            ColourConsole.WriteInfoLine($"QUESTION:");
-            ColourConsole.WriteInfoLine($"{(string.IsNullOrEmpty(title) ? "" : $"{title}: ")}{message ?? ""}");
-            ColourConsole.WriteInfoLine($"Yes: y, No: n, Cancel: c");
+            ConsoleFormatter.DrawInfoMessageLine($"QUESTION:");
+            ConsoleFormatter.DrawInfoMessageLine($"{(string.IsNullOrEmpty(title) ? "" : $"{title}: ")}{message ?? ""}");
+            ConsoleFormatter.DrawInfoMessageLine($"Yes: y, No: n, Cancel: c");
 
             try
             {
