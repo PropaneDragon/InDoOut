@@ -14,10 +14,7 @@ namespace InDoOut_Core.Instancing
         /// </summary>
         /// <param name="type">The type to build.</param>
         /// <returns>The requested type <paramref name="type"/> as type <typeparamref name="T"/>, or null if it has failed.</returns>
-        public T BuildInstance(Type type)
-        {
-            return BuildInstance(type, new object[] { });
-        }
+        public T BuildInstance(Type type) => BuildInstance(type, new object[] { });
 
         /// <summary>
         /// Builds an instance of the given type with additional parameters. The type has to be inherited from <typeparamref name="T"/>.
@@ -49,10 +46,7 @@ namespace InDoOut_Core.Instancing
         /// </summary>
         /// <typeparam name="InstanceOf">The type to build.</typeparam>
         /// <returns>The requested type <typeparamref name="InstanceOf"/> as <typeparamref name="T"/>, or null if it has failed.</returns>
-        public T BuildInstance<InstanceOf>() where InstanceOf : class, T
-        {
-            return BuildInstance(typeof(InstanceOf));
-        }
+        public T BuildInstance<InstanceOf>() where InstanceOf : class, T => BuildInstance(typeof(InstanceOf));
 
         /// <summary>
         /// Builds an instance of the given type with additional parameters. The type has to be inherited from <typeparamref name="T"/>.
@@ -60,9 +54,6 @@ namespace InDoOut_Core.Instancing
         /// <typeparam name="InstanceOf">The type to build.</typeparam>
         /// <param name="parameters">Additional parameters to pass to the constructor.</param>
         /// <returns>The requested type <typeparamref name="InstanceOf"/> as <typeparamref name="T"/>, or null if it has failed.</returns>
-        public T BuildInstance<InstanceOf>(params object[] parameters) where InstanceOf : class, T
-        {
-            return BuildInstance(typeof(InstanceOf), parameters);
-        }
+        public T BuildInstance<InstanceOf>(params object[] parameters) where InstanceOf : class, T => BuildInstance(typeof(InstanceOf), parameters);
     }
 }

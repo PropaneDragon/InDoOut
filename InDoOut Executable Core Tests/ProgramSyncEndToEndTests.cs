@@ -1,4 +1,5 @@
 ﻿using InDoOut_Executable_Core.Networking;
+using InDoOut_Executable_Core.Networking.Commands;
 using InDoOut_Executable_Core.Programs;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -15,13 +16,17 @@ namespace InDoOut_Executable_Core_Tests
         public async Task AvailablePrograms()
         {
             var programHolder = new ProgramHolder();
-            var server = new ProgramSyncServer(programHolder, 9001);
-            var client = new ProgramSyncClient();
+            var server = new Server(9001);
+            var client = new Client();
+            var programRequestClient = new RequestProgramsClientCommand(client);
+            var programRequestServer = new RequestProgramsServerCommand(server, programHolder);
+
+            Assert.IsTrue(server.AddCommandListener(programRequestServer));
 
             Assert.IsTrue(await server.Start());
             Assert.IsTrue(await client.Connect(IPAddress.Loopback, 9001));
 
-            var programs = await client.RequestAvailablePrograms(new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token);
+            var programs = await programRequestClient.RequestAvailablePrograms(new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token);
 
             Assert.IsNotNull(programs);
             Assert.AreEqual(0, programs.Count);
@@ -31,7 +36,7 @@ namespace InDoOut_Executable_Core_Tests
 
             Assert.AreEqual(1, programHolder.Programs.Count);
 
-            programs = await client.RequestAvailablePrograms(new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token);
+            programs = await programRequestClient.RequestAvailablePrograms(new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token);
 
             Assert.IsNotNull(programs);
             Assert.AreEqual(1, programs.Count);
@@ -42,7 +47,7 @@ namespace InDoOut_Executable_Core_Tests
 
             Assert.AreEqual(2, programHolder.Programs.Count);
 
-            programs = await client.RequestAvailablePrograms(new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token);
+            programs = await programRequestClient.RequestAvailablePrograms(new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token);
 
             Assert.IsNotNull(programs);
             Assert.AreEqual(2, programs.Count);

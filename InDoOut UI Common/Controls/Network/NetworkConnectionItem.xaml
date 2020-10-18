@@ -26,7 +26,7 @@
                 <Grid VerticalAlignment="Bottom">
                     <Border Background="{StaticResource Brush.TaskItem.Border}" Padding="10">
                         <StackPanel VerticalAlignment="Center">
-                            <TextBlock x:Name="Text_Name" Text="Address" TextAlignment="Center" FontSize="18" TextWrapping="WrapWithOverflow" TextTrimming="CharacterEllipsis" />
+                            <TextBlock x:Name="Text_Address" Text="Address" TextAlignment="Center" FontSize="18" TextWrapping="WrapWithOverflow" TextTrimming="CharacterEllipsis" />
                         </StackPanel>
                     </Border>
                 </Grid>

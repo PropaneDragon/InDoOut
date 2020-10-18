@@ -1,28 +1,41 @@
 ﻿using InDoOut_Executable_Core.Networking;
+using InDoOut_Executable_Core.Networking.ServerEventArgs;
 using System.Net.Sockets;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace InDoOut_Executable_Core_Tests
 {
-    internal class TestServer : AbstractServer
+    internal class TestServer : Server
     {
         public TestServer(int port = 0) : base(port)
         {
+            OnClientConnected += TestServer_OnClientConnected;
+            OnClientDisconnected += TestServer_OnClientDisconnected;
+            OnClientMessageReceived += TestServer_OnClientMessageReceived;
         }
 
         public bool CanAcceptClients { get; set; } = true;
-        public string LastMessageReceived { get; set; } = null;
+        public string LastRawMessageReceived { get; set; } = null;
+        public INetworkMessage LastMessageReceived { get; set; } = null;
         public TcpClient LastClientConnected { get; private set; } = null;
         public TcpClient LastClientDisconnected { get; private set; } = null;
         public TcpClient LastClientReceived { get; private set; } = null;
 
-        protected override void ClientMessageReceived(TcpClient client, string message)
+        protected override Task<INetworkMessage> ProcessMessage(INetworkMessage message, CancellationToken cancellationToken)
         {
             LastMessageReceived = message;
-            LastClientReceived = client;
+
+            return base.ProcessMessage(message, cancellationToken);
         }
 
-        protected override bool CanAcceptClient(TcpClient client) => CanAcceptClients;
-        protected override void ClientConnected(TcpClient client) => LastClientConnected = client;
-        protected override void ClientDisconnected(TcpClient client) => LastClientDisconnected = client;
+        private void TestServer_OnClientMessageReceived(object sender, ClientMessageEventArgs e)
+        {
+            LastRawMessageReceived = e.Message;
+            LastClientReceived = e.Client;
+        }
+
+        private void TestServer_OnClientDisconnected(object sender, ClientConnectionEventArgs e) => LastClientDisconnected = e.Client;
+        private void TestServer_OnClientConnected(object sender, ClientConnectionEventArgs e) => LastClientConnected = e.Client;
     }
 }

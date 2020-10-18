@@ -1,8 +1,9 @@
 ﻿using InDoOut_Core.Logging;
-using InDoOut_Executable_Core.Networking.ServerEventArgs;
+using InDoOut_Executable_Core.Location;
 using InDoOut_Executable_Core.Programs;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Reflection;
@@ -16,7 +17,9 @@ namespace InDoOut_Executable_Core.Networking
         private readonly object _cachedCommandMethodsLock = new object();
 
         private readonly ProgramSyncProgramCommandTracker _commandTracker = new ProgramSyncProgramCommandTracker();
-        private readonly Dictionary<string, Func<ProgramSyncCommand, ProgramSyncCommand>> _cachedCommandMethods = new Dictionary<string, Func<ProgramSyncCommand, ProgramSyncCommand>>();
+        private readonly Dictionary<string, Func<ClientServerCommand, ClientServerCommand>> _cachedCommandMethods = new Dictionary<string, Func<ClientServerCommand, ClientServerCommand>>();
+
+        public string StoredProgramsLocation { get; set; } = $"{StandardLocations.Instance.GetPathTo(Location.Location.ApplicationDirectory)}{Path.DirectorySeparatorChar}Programs{Path.DirectorySeparatorChar}Synced";
 
         public IProgramHolder AssociatedProgramHolder { get; set; } = null;
 
@@ -29,7 +32,7 @@ namespace InDoOut_Executable_Core.Networking
 
         protected override void ClientMessageReceived(TcpClient client, string message)
         {
-            var command = ProgramSyncCommand.ExtractFromCommandString(message);
+            var command = ClientServerCommand.FromCommandString(message);
             if (command?.Valid ?? false)
             {
                 if (_commandTracker.CanBeProcessed(command))
@@ -54,7 +57,7 @@ namespace InDoOut_Executable_Core.Networking
         }
 
         [CommandResponse("REQUEST_PROGRAMS")]
-        protected ProgramSyncCommand GetAvailablePrograms(ProgramSyncCommand originalCommand)
+        protected ClientServerCommand GetAvailablePrograms(ClientServerCommand originalCommand)
         {
             _ = originalCommand.Data;
 
@@ -63,14 +66,59 @@ namespace InDoOut_Executable_Core.Networking
                 var programs = string.Join('\n', AssociatedProgramHolder.Programs?.Select(program => program?.Name ?? ""));
                 if (programs != null)
                 {
-                    return new ProgramSyncCommand(originalCommand.Command, programs);
+                    return new ClientServerCommand(originalCommand.Name, programs);
                 }
             }
 
             return null;
         }
 
-        private void ProcessCommand(TcpClient client, ProgramSyncCommand command)
+        [CommandResponse("UPLOAD_PROGRAM")]
+        protected ClientServerCommand UploadProgram(ClientServerCommand originalCommand)
+        {
+            var fullData = originalCommand?.Data?.Split(NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER);
+            if (fullData != null && fullData.Length == 2)
+            {
+                var programName = fullData[0];
+                var programData = fullData[1];
+
+                if (!string.IsNullOrWhiteSpace(programName) && !string.IsNullOrWhiteSpace(programData) && !programName.Any(character => Path.GetInvalidFileNameChars().Contains(character)))
+                {
+                    try
+                    {
+                        if (!Directory.Exists(StoredProgramsLocation))
+                        {
+                            _ = Directory.CreateDirectory(StoredProgramsLocation);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        return ClientServerCommand.CreateErrorReply(originalCommand, $"Couldn't create a directory to store the given file. {ex.Message}");
+                    }
+
+                    try
+                    {
+                        File.WriteAllText($"{StoredProgramsLocation}{Path.DirectorySeparatorChar}{programName}.ido", programData);
+
+                        return ClientServerCommand.CreateSuccessReply(originalCommand);
+                    }
+                    catch (Exception ex)
+                    {
+                        return ClientServerCommand.CreateErrorReply(originalCommand, $"Couldn't create a file in the save directory. {ex.Message}");
+                    }
+                }
+                else
+                {
+                    return ClientServerCommand.CreateErrorReply(originalCommand, $"The sent data didn't have the correct information present to construct a program.");
+                }
+            }
+            else
+            {
+                return ClientServerCommand.CreateErrorReply(originalCommand, $"Sent data wasn't the expected length.");
+            }
+        }
+
+        private void ProcessCommand(TcpClient client, ClientServerCommand command)
         {
             if (client != null && command.Valid)
             {
@@ -105,14 +153,14 @@ namespace InDoOut_Executable_Core.Networking
             foreach (var method in methods)
             {
                 var commandResponseAttribute = method.GetCustomAttribute<CommandResponseAttribute>();
-                if (!string.IsNullOrWhiteSpace(commandResponseAttribute?.AssociatedCommandName) && method.ReturnType == typeof(ProgramSyncCommand))
+                if (!string.IsNullOrWhiteSpace(commandResponseAttribute?.AssociatedCommandName) && method.ReturnType == typeof(ClientServerCommand))
                 {
                     var methodParameters = method.GetParameters();
-                    if (methodParameters.Length == 0 || (methodParameters.Length == 1 && methodParameters[0].ParameterType == typeof(ProgramSyncCommand)))
+                    if (methodParameters.Length == 0 || (methodParameters.Length == 1 && methodParameters[0].ParameterType == typeof(ClientServerCommand)))
                     {
                         Log.Instance.Info("Cached method for command length: ", commandResponseAttribute?.AssociatedCommandName);
 
-                        _cachedCommandMethods.Add(commandResponseAttribute.AssociatedCommandName, (command) => method.Invoke(this, new[] { command }) as ProgramSyncCommand);
+                        _cachedCommandMethods.Add(commandResponseAttribute.AssociatedCommandName, (command) => method.Invoke(this, new[] { command }) as ClientServerCommand);
                     }
                     else
                     {
@@ -126,7 +174,7 @@ namespace InDoOut_Executable_Core.Networking
             }
         }
 
-        private Func<ProgramSyncCommand, ProgramSyncCommand> GetMethodForCommand(ProgramSyncCommand command)
+        private Func<ClientServerCommand, ClientServerCommand> GetMethodForCommand(ClientServerCommand command)
         {
             var rawCommandName = _commandTracker.GetCommandWithoutIdentifier(command);
             if (!string.IsNullOrWhiteSpace(rawCommandName))

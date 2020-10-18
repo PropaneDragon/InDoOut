@@ -26,12 +26,7 @@ namespace InDoOut_Display.Creation
         public IDisplayElementContainer Create(IElementFunction elementFunction, bool setSizeFromMetadata = true)
         {
             var displayElement = TryGet.ValueOrDefault(() => elementFunction?.CreateAssociatedUIElement());
-            if (displayElement != null)
-            {
-                return Create(displayElement, setSizeFromMetadata);
-            }
-
-            return null;
+            return displayElement != null ? Create(displayElement, setSizeFromMetadata) : null;
         }
 
         public IDisplayElementContainer Create(IDisplayElement displayElement, bool setSizeFromMetadata = true)

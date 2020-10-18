@@ -2,7 +2,6 @@
 using InDoOut_Executable_Core.Networking;
 using InDoOut_Executable_Core.Networking.ServerEventArgs;
 using InDoOut_Executable_Core.Programs;
-using System;
 using System.Net;
 
 namespace InDoOut_Server.ServerNetworking
@@ -10,11 +9,11 @@ namespace InDoOut_Server.ServerNetworking
     public class ConsoleServerManager
     {
         private readonly ProgramHolder _programHolder = new ProgramHolder();
-        private readonly ProgramSyncServer _server = null;
+        private readonly Server _server = null;
 
         public ConsoleServerManager(int port = 0)
         {
-            _server = new ProgramSyncServer(_programHolder, port);
+            _server = new Server(port);
 
             HookServerEvents(_server);
         }

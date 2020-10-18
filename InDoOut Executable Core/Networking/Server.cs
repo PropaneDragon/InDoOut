@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace InDoOut_Executable_Core.Networking
 {
-    public abstract class AbstractServer : IServer
+    public class Server : AbstractInteractiveNetworkEntity, IServer
     {
         private static readonly SemaphoreSlim _writingSemaphore = new SemaphoreSlim(1, 1);
 
@@ -34,12 +34,12 @@ namespace InDoOut_Executable_Core.Networking
         public event EventHandler<ClientMessageEventArgs> OnClientMessageReceived;
         public event EventHandler<ClientMessageEventArgs> OnClientMessageSent;
 
-        private AbstractServer()
+        private Server()
         {
 
         }
 
-        public AbstractServer(int port = 0) : this()
+        public Server(int port = 0) : this()
         {
             _listener = new TcpListener(IPAddress.Any, port);
             _listener.Server.NoDelay = true;
@@ -132,6 +132,27 @@ namespace InDoOut_Executable_Core.Networking
 
         public async Task<bool> SendMessage(TcpClient client, string message) => await SendSafe(() => SendUnsafe(client, message));
         public async Task<bool> Ping(TcpClient client) => await SendSafe(() => PingUnsafe(client));
+
+        public override async Task<bool> SendMessage(INetworkMessage command, CancellationToken cancellationToken) => command?.Context is TcpClient client && await SendMessage(client, command.ToString());
+
+        protected async Task ClientMessageReceived(TcpClient client, string message)
+        {
+            var command = NetworkMessage.FromString(message);
+            if (command != null && command.Valid)
+            {
+                command.Context = client;
+
+                var response = await ProcessMessage(command, CancellationToken.None);
+                if (response?.Valid ?? false)
+                {
+                    _ = await SendMessage(response, CancellationToken.None);
+                }
+            }
+        }
+
+        protected bool CanAcceptClient(TcpClient _) => true;
+        protected void ClientConnected(TcpClient _) { }
+        protected void ClientDisconnected(TcpClient _) { }
 
         private void StartListening()
         {
@@ -248,7 +269,7 @@ namespace InDoOut_Executable_Core.Networking
 
                             if (!string.IsNullOrEmpty(message))
                             {
-                                ClientMessageReceived(client, message);
+                                await ClientMessageReceived(client, message);
 
                                 OnClientMessageReceived?.Invoke(this, new ClientMessageEventArgs(client, message));
                             }
@@ -325,7 +346,7 @@ namespace InDoOut_Executable_Core.Networking
         {
             if (CanSendMessage(client, message) && await (GetStreamHandlerForClient(client)?.SendMessage(client.GetStream(), message) ?? Task.FromResult(false)))
             {
-                OnClientMessageSent(this, new ClientMessageEventArgs(client, message));
+                OnClientMessageSent?.Invoke(this, new ClientMessageEventArgs(client, message));
 
                 return true;
             }
@@ -334,13 +355,7 @@ namespace InDoOut_Executable_Core.Networking
         }
 
         private async Task<bool> PingUnsafe(TcpClient client) => await (GetStreamHandlerForClient(client)?.SendPing(client.GetStream()) ?? Task.FromResult(false));
-
         private bool CanSendMessage(TcpClient client, string message) => ClientIsValid(client) && !string.IsNullOrEmpty(message);
         private bool ClientIsValid(TcpClient client) => client?.Connected ?? false;
-
-        protected abstract bool CanAcceptClient(TcpClient client);
-        protected abstract void ClientConnected(TcpClient client);
-        protected abstract void ClientDisconnected(TcpClient client);
-        protected abstract void ClientMessageReceived(TcpClient client, string message);
     }
 }

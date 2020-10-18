@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace InDoOut_Executable_Core.Networking
 {
-    public abstract class AbstractClient : IClient
+    public class Client : AbstractInteractiveNetworkEntity, IClient
     {
         private static readonly SemaphoreSlim _writingSemaphore = new SemaphoreSlim(1, 1);
 
@@ -17,7 +17,11 @@ namespace InDoOut_Executable_Core.Networking
 
         public bool Connected => _client?.Connected ?? false;
 
-        public AbstractClient()
+        public int ServerPort => Connected ? ((_client?.Client?.RemoteEndPoint as IPEndPoint)?.Port) ?? 0 : 0;
+
+        public IPAddress ServerAddress => Connected ? ((_client?.Client?.RemoteEndPoint as IPEndPoint)?.Address) ?? IPAddress.Any : IPAddress.Any;
+
+        public Client()
         {
         }
 
@@ -90,7 +94,20 @@ namespace InDoOut_Executable_Core.Networking
             return wrote;
         }
 
-        protected abstract void MessageReceived(string message);
+        public override async Task<bool> SendMessage(INetworkMessage command, CancellationToken cancellationToken) => (command?.Valid ?? false) && await Send(command.ToString());
+
+        protected virtual async Task MessageReceived(string message)
+        {
+            var command = NetworkMessage.FromString(message);
+            if (command != null && command.Valid)
+            {
+                var response = await ProcessMessage(command, CancellationToken.None);
+                if (response?.Valid ?? false)
+                {
+                    _ = await SendMessage(response, CancellationToken.None);
+                }
+            }
+        }
 
         private void AwaitMessages()
         {
@@ -105,7 +122,7 @@ namespace InDoOut_Executable_Core.Networking
 
                         if (MessageIsValid(message))
                         {
-                            MessageReceived(message);
+                            await MessageReceived(message);
                         }
                     }
                     catch (Exception ex)

@@ -248,12 +248,16 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
         {
             Log.Instance.Header("Connect to program button clicked");
 
-            var networkConnectWindow = new NetworkConnectWindow()
+            var networkConnectWindow = new NetworkConnectWindow(_programDisplay)
             {
                 Owner = Window.GetWindow(this)
             };
 
-            _ = networkConnectWindow.ShowDialog();
+            if (networkConnectWindow.ShowDialog() ?? false)
+            {
+
+            } 
+
             Collapse();
         }
     }

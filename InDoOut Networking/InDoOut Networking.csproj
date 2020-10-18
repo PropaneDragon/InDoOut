@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>InDoOut_Networking</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Client\" />
+    <Folder Include="Entities\" />
+    <Folder Include="Server\" />
+  </ItemGroup>
+
+</Project>

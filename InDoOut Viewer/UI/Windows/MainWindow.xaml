@@ -1,0 +1,17 @@
+﻿<Window x:Class="InDoOut_Viewer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:InDoOut_Viewer"
+        xmlns:core="clr-namespace:InDoOut_UI_Common.Controls.Core;assembly=InDoOutUICommon"
+        xmlns:background="clr-namespace:InDoOut_UI_Common.Controls.Background;assembly=InDoOutUICommon"
+        xmlns:sidebar="clr-namespace:InDoOut_Viewer.UI.Controls.Sidebar"
+        mc:Ignorable="d"
+        Title="Viewer" Height="1080" Width="1920" MinWidth="700" MinHeight="550" Loaded="Window_Loaded" Closed="Window_Closed" WindowState="Maximized" WindowStartupLocation="CenterScreen" ShowActivated="True">
+    <Grid>
+        <background:BackgroundImage Opacity="0.01"/>
+            <core:TitleBar x:Name="TitleBar_Main" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
+        <sidebar:Sidebar x:Name="Sidebar_Main" HorizontalAlignment="Left" />
+    </Grid>
+</Window>

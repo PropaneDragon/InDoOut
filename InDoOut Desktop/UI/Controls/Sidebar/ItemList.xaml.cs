@@ -108,13 +108,13 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
                     if (uiFunction == null)
                     {
                         Log.Instance.Error("UI Function for ", function, " couldn't be created on the interface");
-                        UserMessageSystemHolder.Instance.CurrentUserMessageSystem?.ShowError("Unable to create function", "The function couldn't be placed in the program due to an unknown reason.");
+                        UserMessageSystemHolder.Instance.CurrentUserMessageSystem?.ShowError("Unable to create function", "The selected function doesn't appear to be able to be placed in the current program.");
                     }
                 }
                 else
                 {
                     Log.Instance.Error("Couldn't build a function for ", functionType, " to place on the interface");
-                    UserMessageSystemHolder.Instance.CurrentUserMessageSystem?.ShowError("Unable to create function", "The function couldn't be created due to an unknown reason.");
+                    UserMessageSystemHolder.Instance.CurrentUserMessageSystem?.ShowError("Unable to create function", "The selected function couldn't be created and can't be placed in the current program.");
                 }
             }
         }

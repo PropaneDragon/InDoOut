@@ -78,7 +78,6 @@
                     <Button x:Name="Button_OpenProgram" VerticalAlignment="Top" HorizontalAlignment="Center" Content="" ToolTip="Open program" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Click="Button_OpenProgram_Click" Padding="1,1,1,1" Margin="0,8,0,0" />
                     <Button x:Name="Button_SaveProgramAs" VerticalAlignment="Top" HorizontalAlignment="Center" Content="" ToolTip="Save program as..." Style="{StaticResource Style.Button.Transparent.Material.Animated}" Click="Button_SaveProgramAs_Click" Padding="1,1,1,1" Margin="0,8,0,0" />
                     <Button x:Name="Button_SaveProgram" VerticalAlignment="Top" HorizontalAlignment="Center" Content="" ToolTip="Save program" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Click="Button_SaveProgram_Click" Padding="1,1,1,1" Margin="0,8,0,0" />
-                    <Button x:Name="Button_ConnectProgram" VerticalAlignment="Top" HorizontalAlignment="Center" Content="" ToolTip="Connect to device..." Style="{StaticResource Style.Button.Transparent.Material.Animated}" Click="Button_ConnectProgram_Click"  Padding="1,1,1,1" Margin="0,8,0,0" />
                 </StackPanel>
             </Grid>
         </Grid>

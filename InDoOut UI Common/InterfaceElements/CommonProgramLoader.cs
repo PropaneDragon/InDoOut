@@ -142,7 +142,7 @@ namespace InDoOut_UI_Common.InterfaceElements
                 }
                 else
                 {
-                    _display?.DeletableRemover?.Remove(connection);
+                    _ = (_display?.DeletableRemover?.Remove(connection));
                 }
             }
         }

@@ -17,32 +17,10 @@ namespace InDoOut_Core.Entities.Programs
         private readonly object _lastTriggerTimeLock = new object();
         private readonly object _lastCompletionTimeLock = new object();
 
+        private readonly DateTime _lastCompletionTime = DateTime.MinValue;
+
+        private string _name = null;
         private DateTime _lastTriggerTime = DateTime.MinValue;
-        private DateTime _lastCompletionTime = DateTime.MinValue;
-
-        /// <summary>
-        /// All functions within this program.
-        /// </summary>
-        public List<IFunction> Functions { get; protected set; } = new List<IFunction>();
-
-        /// <summary>
-        /// All <see cref="IStartFunction"/>s within this program.
-        /// These are triggered when the program is triggered, and the program will not
-        /// start without at least one.
-        /// </summary>
-        public List<IStartFunction> StartFunctions => Functions.Where(function => typeof(IStartFunction).IsAssignableFrom(function.GetType())).Cast<IStartFunction>().ToList();
-
-        /// <summary>
-        /// All <see cref="IEndFunction"/>s within this program.
-        /// If one of these are called then this means the program has potentially ended, and the
-        /// resulting program <see cref="ReturnCode"/> will reflect the <see cref="IEndFunction"/> that was called.
-        /// </summary>
-        public List<IEndFunction> EndFunctions => Functions.Where(function => typeof(IEndFunction).IsAssignableFrom(function.GetType())).Cast<IEndFunction>().ToList();
-
-        /// <summary>
-        /// Values to pass into <see cref="StartFunctions"/> when the program is started.
-        /// </summary>
-        public List<string> PassthroughValues { get; private set; } = new List<string>();
 
         /// <summary>
         /// Whether any of the functions within this program are running.
@@ -71,19 +49,43 @@ namespace InDoOut_Core.Entities.Programs
         public string ReturnCode => EndFunctions?.FirstOrDefault(function => function.HasCompletedSince(LastTriggerTime))?.ReturnCode ?? "0";
 
         /// <summary>
-        /// The name of this program.
-        /// </summary>
-        public string Name { get; protected set; } = null;
-
-        /// <summary>
         /// The last time this program was triggered.
         /// </summary>
-        public DateTime LastTriggerTime { get { lock (_lastTriggerTimeLock) return _lastTriggerTime; } }
+        public DateTime LastTriggerTime { get { lock (_lastTriggerTimeLock) { return _lastTriggerTime; } } }
 
         /// <summary>
         /// The time this program last completed a run (successfully or unsuccessfully).
         /// </summary>
-        public DateTime LastCompletionTime { get { lock (_lastCompletionTimeLock) return _lastCompletionTime; } }
+        public DateTime LastCompletionTime { get { lock (_lastCompletionTimeLock) { return _lastCompletionTime; } } }
+
+        /// <summary>
+        /// Values to pass into <see cref="StartFunctions"/> when the program is started.
+        /// </summary>
+        public List<string> PassthroughValues { get; private set; } = new List<string>();
+
+        /// <summary>
+        /// All functions within this program.
+        /// </summary>
+        public List<IFunction> Functions { get; protected set; } = new List<IFunction>();
+
+        /// <summary>
+        /// All <see cref="IStartFunction"/>s within this program.
+        /// These are triggered when the program is triggered, and the program will not
+        /// start without at least one.
+        /// </summary>
+        public List<IStartFunction> StartFunctions => Functions.Where(function => typeof(IStartFunction).IsAssignableFrom(function.GetType())).Cast<IStartFunction>().ToList();
+
+        /// <summary>
+        /// All <see cref="IEndFunction"/>s within this program.
+        /// If one of these are called then this means the program has potentially ended, and the
+        /// resulting program <see cref="ReturnCode"/> will reflect the <see cref="IEndFunction"/> that was called.
+        /// </summary>
+        public List<IEndFunction> EndFunctions => Functions.Where(function => typeof(IEndFunction).IsAssignableFrom(function.GetType())).Cast<IEndFunction>().ToList();
+
+        /// <summary>
+        /// The name of this program.
+        /// </summary>
+        public virtual string Name { get => _name ?? "Untitled"; protected set => _name = value; }
 
         /// <summary>
         /// Creates a program with optional passthrough values.
@@ -102,7 +104,7 @@ namespace InDoOut_Core.Entities.Programs
         /// </summary>
         /// <param name="function">The function to add.</param>
         /// <returns>Whether the function was added.</returns>
-        public bool AddFunction(IFunction function)
+        public virtual bool AddFunction(IFunction function)
         {
             Log.Instance.Info($"Attempting to add ", function, $" to: {this}");
 
@@ -123,7 +125,7 @@ namespace InDoOut_Core.Entities.Programs
         /// </summary>
         /// <param name="function">The function to remove.</param>
         /// <returns>Whether the function was found and removed.</returns>
-        public bool RemoveFunction(IFunction function)
+        public virtual bool RemoveFunction(IFunction function)
         {
             if (function != null && Functions.Contains(function))
             {
@@ -142,16 +144,13 @@ namespace InDoOut_Core.Entities.Programs
         /// </summary>
         /// <param name="entity">The entity to check.</param>
         /// <returns>Whether this program can be triggered by the entity.</returns>
-        public bool CanBeTriggered(IEntity entity)
-        {
-            return false;
-        }
+        public virtual bool CanBeTriggered(IEntity entity) => false;
 
         /// <summary>
         /// Trigger this program. This will start all available <see cref="StartFunctions"/>.
         /// </summary>
         /// <param name="triggeredBy">The <see cref="IEntity"/> that triggered this.</param>
-        public void Trigger(IEntity triggeredBy)
+        public virtual void Trigger(IEntity triggeredBy)
         {
             Log.Instance.Header($"Triggered {this}");
 
@@ -186,7 +185,7 @@ namespace InDoOut_Core.Entities.Programs
         /// to every function in the program. It's up to the function to stop cleanly, so it might take some
         /// time to fully stop. See <see cref="Stopping"/> to see the state of this procedure.
         /// </summary>
-        public void Stop()
+        public virtual void Stop()
         {
             Log.Instance.Header($"Stopping {this}");
 
@@ -200,20 +199,14 @@ namespace InDoOut_Core.Entities.Programs
         /// Sets the program name to the given value.
         /// </summary>
         /// <param name="name">The program name to set.</param>
-        public void SetName(string name)
-        {
-            Name = name;
-        }
+        public void SetName(string name) => Name = name;
 
         /// <summary>
         /// Checks whether the program has been triggered since the given <paramref name="time"/>.
         /// </summary>
         /// <param name="time">The time to check.</param>
         /// <returns>Whether the program has been triggered since the given time.</returns>
-        public bool HasBeenTriggeredSince(DateTime time)
-        {
-            return LastTriggerTime >= time;
-        }
+        public bool HasBeenTriggeredSince(DateTime time) => LastTriggerTime >= time;
 
         /// <summary>
         /// Checks whether the program has been triggered within the given <paramref name="time"/>. Passing a time
@@ -221,20 +214,14 @@ namespace InDoOut_Core.Entities.Programs
         /// </summary>
         /// <param name="time">The time to check.</param>
         /// <returns>Whether the program has been triggered within the given time.</returns>
-        public bool HasBeenTriggeredWithin(TimeSpan time)
-        {
-            return LastTriggerTime >= DateTime.Now - time;
-        }
+        public bool HasBeenTriggeredWithin(TimeSpan time) => LastTriggerTime >= DateTime.Now - time;
 
         /// <summary>
         /// Checks whether the program has completed a run (successfully or unsuccessfully) since the given <paramref name="time"/>.
         /// </summary>
         /// <param name="time">The time to check.</param>
         /// <returns>Whether the program has completed since the given time.</returns>
-        public bool HasCompletedSince(DateTime time)
-        {
-            return LastCompletionTime >= time;
-        }
+        public bool HasCompletedSince(DateTime time) => LastCompletionTime >= time;
 
         /// <summary>
         /// Checks whether the program has completed a run (successfully or unsuccessfully) within the given <paramref name="time"/>. Passing a time
@@ -242,18 +229,12 @@ namespace InDoOut_Core.Entities.Programs
         /// </summary>
         /// <param name="time">The time to check.</param>
         /// <returns>Whether the program has completed within the given time.</returns>
-        public bool HasCompletedWithin(TimeSpan time)
-        {
-            return LastCompletionTime >= DateTime.Now - time;
-        }
+        public bool HasCompletedWithin(TimeSpan time) => LastCompletionTime >= DateTime.Now - time;
 
         /// <summary>
         /// Returns a string representation of a program.
         /// </summary>
         /// <returns>A string representation of the program.</returns>
-        public override string ToString()
-        {
-            return $"[PROGRAM {base.ToString()} [Name: {Name}] [Running: {Running}]]";
-        }
+        public override string ToString() => $"[PROGRAM {base.ToString()} [Name: {Name}] [Running: {Running}]]";
     }
 }

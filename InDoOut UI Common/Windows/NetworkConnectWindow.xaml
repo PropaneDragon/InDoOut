@@ -28,7 +28,7 @@
                 <ScrollViewer DockPanel.Dock="Top" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                     <StackPanel Margin="50,60,50,0">
                         <Button x:Name="Button_NewConnection" FontSize="{StaticResource Size.Double.Font.Icon.Primary}" Content="" ToolTip="New connection" Style="{StaticResource Style.Button.Transparent.Material.Animated}" VerticalAlignment="Stretch" HorizontalAlignment="Center" Click="Button_NewConnection_Click" Padding="10" />
-                        <WrapPanel x:Name="Wrap_Tasks" HorizontalAlignment="Center" />
+                        <WrapPanel x:Name="Wrap_Connections" HorizontalAlignment="Center" />
                     </StackPanel>
                 </ScrollViewer>
             </DockPanel>

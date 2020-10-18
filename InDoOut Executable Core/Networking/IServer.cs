@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace InDoOut_Executable_Core.Networking
 {
-    public interface IServer
+    public interface IServer : IInteractiveNetworkEntity
     {
         bool Started { get; }
         int Port { get; }

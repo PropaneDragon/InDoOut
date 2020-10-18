@@ -8,32 +8,30 @@ namespace InDoOut_Executable_Core.Networking
 {
     public class ProgramSyncProgramCommandTracker
     {
-        public static readonly string SPLIT_IDENTIFIER_STRING = "\u0004\u0002\u0004";
-
         private readonly object _responseQueueLock = new object();
-        private readonly Dictionary<string, ProgramSyncCommand> _responseQueue = new Dictionary<string, ProgramSyncCommand>();
+        private readonly Dictionary<string, ClientServerCommand> _responseQueue = new Dictionary<string, ClientServerCommand>();
 
-        public bool CanBeProcessed(ProgramSyncCommand command) => command.Valid && command.Command.Contains(SPLIT_IDENTIFIER_STRING);
+        public bool CanBeProcessed(ClientServerCommand command) => command.Valid && command.Name.Contains(NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER);
 
-        public string GetIdentifierFromCommand(ProgramSyncCommand command)
+        public string GetIdentifierFromCommand(ClientServerCommand command)
         {
-            var splitCommand = command.Command.Split(SPLIT_IDENTIFIER_STRING);
+            var splitCommand = command.Name.Split(NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER);
 
             return splitCommand.Length > 1 ? splitCommand[0] : null;
         }
 
-        public string GetCommandWithoutIdentifier(ProgramSyncCommand command)
+        public string GetCommandWithoutIdentifier(ClientServerCommand command)
         {
-            var splitCommand = command.Command.Split(SPLIT_IDENTIFIER_STRING);
+            var splitCommand = command.Name.Split(NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER);
 
             return splitCommand.Length > 1 ? string.Join("", splitCommand[1..]) : null;
         }
 
-        public bool RespondToAnyQueuedMessages(ProgramSyncCommand command)
+        public bool RespondToAnyQueuedMessages(ClientServerCommand command)
         {
             if (CanBeProcessed(command))
             {
-                var splitCommand = command.Command.Split(SPLIT_IDENTIFIER_STRING);
+                var splitCommand = command.Name.Split(NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER);
                 if (splitCommand.Length > 1)
                 {
                     var id = splitCommand[0];
@@ -68,12 +66,12 @@ namespace InDoOut_Executable_Core.Networking
             return false;
         }
 
-        public ProgramSyncCommand CreateAndQueueCommand(string name, out string uniqueName) => CreateAndQueueCommand(name, null, out uniqueName);
-        public ProgramSyncCommand CreateAndQueueCommand(string name, string data, out string uniqueName)
+        public ClientServerCommand CreateAndQueueCommand(string name, out string uniqueName) => CreateAndQueueCommand(name, null, out uniqueName);
+        public ClientServerCommand CreateAndQueueCommand(string name, string data, out string uniqueName)
         {
             uniqueName = Guid.NewGuid().ToString();
 
-            var fullCommand = new ProgramSyncCommand($"{uniqueName}{SPLIT_IDENTIFIER_STRING}{name}", data);
+            var fullCommand = new ClientServerCommand($"{uniqueName}{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}{name}", data);
 
             if (fullCommand.Valid)
             {
@@ -100,7 +98,7 @@ namespace InDoOut_Executable_Core.Networking
             return false;
         }
 
-        public async Task<ProgramSyncCommand> AwaitCommandResponse(string uniqueName, CancellationToken cancellationToken)
+        public async Task<ClientServerCommand> AwaitCommandResponse(string uniqueName, CancellationToken cancellationToken)
         {
             return await Task.Run(async () =>
             {

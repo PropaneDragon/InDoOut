@@ -3,7 +3,6 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,7 +19,7 @@ namespace InDoOut_Executable_Core_Tests
             Assert.IsNull(server.LastClientConnected);
             Assert.IsNull(server.LastClientDisconnected);
             Assert.IsNull(server.LastClientReceived);
-            Assert.IsNull(server.LastMessageReceived);
+            Assert.IsNull(server.LastRawMessageReceived);
 
             Assert.IsTrue(server.CanAcceptClients);
             Assert.IsFalse(server.Started);
@@ -34,7 +33,7 @@ namespace InDoOut_Executable_Core_Tests
             Assert.IsNull(server.LastClientConnected);
             Assert.IsNull(server.LastClientDisconnected);
             Assert.IsNull(server.LastClientReceived);
-            Assert.IsNull(server.LastMessageReceived);
+            Assert.IsNull(server.LastRawMessageReceived);
 
             Assert.IsTrue(server.CanAcceptClients);
             Assert.IsTrue(server.Started);
@@ -48,7 +47,7 @@ namespace InDoOut_Executable_Core_Tests
             Assert.IsNull(server.LastClientConnected);
             Assert.IsNull(server.LastClientDisconnected);
             Assert.IsNull(server.LastClientReceived);
-            Assert.IsNull(server.LastMessageReceived);
+            Assert.IsNull(server.LastRawMessageReceived);
 
             Assert.IsTrue(server.CanAcceptClients);
             Assert.IsFalse(server.Started);
@@ -63,7 +62,7 @@ namespace InDoOut_Executable_Core_Tests
             Assert.IsNull(server.LastClientConnected);
             Assert.IsNull(server.LastClientDisconnected);
             Assert.IsNull(server.LastClientReceived);
-            Assert.IsNull(server.LastMessageReceived);
+            Assert.IsNull(server.LastRawMessageReceived);
 
             Assert.IsTrue(server.CanAcceptClients);
             Assert.IsTrue(server.Started);
@@ -77,7 +76,7 @@ namespace InDoOut_Executable_Core_Tests
             Assert.IsNull(server.LastClientConnected);
             Assert.IsNull(server.LastClientDisconnected);
             Assert.IsNull(server.LastClientReceived);
-            Assert.IsNull(server.LastMessageReceived);
+            Assert.IsNull(server.LastRawMessageReceived);
 
             Assert.IsTrue(server.CanAcceptClients);
             Assert.IsFalse(server.Started);
@@ -99,15 +98,15 @@ namespace InDoOut_Executable_Core_Tests
             Assert.IsNull(server.LastClientConnected);
             Assert.IsNull(server.LastClientDisconnected);
             Assert.IsNull(server.LastClientReceived);
-            Assert.IsNull(server.LastMessageReceived);
+            Assert.IsNull(server.LastRawMessageReceived);
 
             Assert.IsTrue(server.CanAcceptClients);
             Assert.IsTrue(server.Started);
 
             Assert.AreEqual(0, server.Clients.Count);
 
-            Assert.IsNull(clientA.LastMessageReceived);
-            Assert.IsNull(clientB.LastMessageReceived);
+            Assert.IsNull(clientA.LastRawMessageReceived);
+            Assert.IsNull(clientB.LastRawMessageReceived);
 
             Assert.IsFalse(clientA.Connected);
             Assert.IsFalse(clientB.Connected);
@@ -115,8 +114,8 @@ namespace InDoOut_Executable_Core_Tests
             Assert.IsFalse(await clientA.Connect(IPAddress.Loopback, -1));
             Assert.IsFalse(await clientA.Connect(IPAddress.Loopback, -5));
             Assert.IsFalse(await clientA.Connect(IPAddress.Loopback, 0));
-            Assert.IsFalse(await clientA.Connect(IPAddress.Loopback, 9001));
-            Assert.IsFalse(await clientA.Connect(IPAddress.Loopback, 9002));
+            Assert.IsFalse(await clientA.Connect(IPAddress.Loopback, 5615));
+            Assert.IsFalse(await clientA.Connect(IPAddress.Loopback, 80));
             Assert.IsFalse(await clientA.Connect(IPAddress.Loopback, 9004));
             Assert.IsTrue(await clientA.Connect(IPAddress.Loopback, 9003));
 
@@ -126,8 +125,8 @@ namespace InDoOut_Executable_Core_Tests
             Assert.IsNotNull(server.LastClientConnected);
             Assert.IsNull(server.LastClientDisconnected);
 
-            Assert.IsNull(clientA.LastMessageReceived);
-            Assert.IsNull(clientB.LastMessageReceived);
+            Assert.IsNull(clientA.LastRawMessageReceived);
+            Assert.IsNull(clientB.LastRawMessageReceived);
 
             Assert.IsTrue(clientA.Connected);
             Assert.IsFalse(clientB.Connected);
@@ -143,8 +142,8 @@ namespace InDoOut_Executable_Core_Tests
             Assert.IsNotNull(server.LastClientConnected);
             Assert.IsNotNull(server.LastClientDisconnected);
 
-            Assert.IsNull(clientA.LastMessageReceived);
-            Assert.IsNull(clientB.LastMessageReceived);
+            Assert.IsNull(clientA.LastRawMessageReceived);
+            Assert.IsNull(clientB.LastRawMessageReceived);
 
             Assert.IsTrue(await clientA.Connect(IPAddress.Loopback, 9003));
 
@@ -152,8 +151,8 @@ namespace InDoOut_Executable_Core_Tests
 
             Assert.AreEqual(1, server.Clients.Count);
 
-            Assert.IsNull(clientA.LastMessageReceived);
-            Assert.IsNull(clientB.LastMessageReceived);
+            Assert.IsNull(clientA.LastRawMessageReceived);
+            Assert.IsNull(clientB.LastRawMessageReceived);
 
             Assert.IsTrue(clientA.Connected);
             Assert.IsFalse(clientB.Connected);
@@ -164,8 +163,8 @@ namespace InDoOut_Executable_Core_Tests
 
             Assert.AreEqual(2, server.Clients.Count);
 
-            Assert.IsNull(clientA.LastMessageReceived);
-            Assert.IsNull(clientB.LastMessageReceived);
+            Assert.IsNull(clientA.LastRawMessageReceived);
+            Assert.IsNull(clientB.LastRawMessageReceived);
 
             Assert.IsTrue(clientA.Connected);
             Assert.IsTrue(clientB.Connected);
@@ -176,8 +175,8 @@ namespace InDoOut_Executable_Core_Tests
 
             Assert.AreEqual(1, server.Clients.Count);
 
-            Assert.IsNull(clientA.LastMessageReceived);
-            Assert.IsNull(clientB.LastMessageReceived);
+            Assert.IsNull(clientA.LastRawMessageReceived);
+            Assert.IsNull(clientB.LastRawMessageReceived);
 
             Assert.IsFalse(clientA.Connected);
             Assert.IsTrue(clientB.Connected);
@@ -211,73 +210,73 @@ namespace InDoOut_Executable_Core_Tests
             Assert.IsTrue(clientA.Connected);
             Assert.IsTrue(clientB.Connected);
 
-            Assert.IsNull(server.LastMessageReceived);
-            Assert.IsNull(clientA.LastMessageReceived);
-            Assert.IsNull(clientB.LastMessageReceived);
+            Assert.IsNull(server.LastRawMessageReceived);
+            Assert.IsNull(clientA.LastRawMessageReceived);
+            Assert.IsNull(clientB.LastRawMessageReceived);
 
             Assert.IsTrue(await clientA.Send("This is client A!"));
 
             await Task.Delay(TimeSpan.FromMilliseconds(100));
 
-            Assert.AreEqual("This is client A!", server.LastMessageReceived);
-            Assert.IsNull(clientA.LastMessageReceived);
-            Assert.IsNull(clientB.LastMessageReceived);
+            Assert.AreEqual("This is client A!", server.LastRawMessageReceived);
+            Assert.IsNull(clientA.LastRawMessageReceived);
+            Assert.IsNull(clientB.LastRawMessageReceived);
 
             Assert.IsTrue(await clientB.Send("This is client B!"));
 
             await Task.Delay(TimeSpan.FromMilliseconds(100));
 
-            Assert.AreEqual("This is client B!", server.LastMessageReceived);
-            Assert.IsNull(clientA.LastMessageReceived);
-            Assert.IsNull(clientB.LastMessageReceived);
+            Assert.AreEqual("This is client B!", server.LastRawMessageReceived);
+            Assert.IsNull(clientA.LastRawMessageReceived);
+            Assert.IsNull(clientB.LastRawMessageReceived);
 
             Assert.IsTrue(await clientA.Send("This is client A again!"));
 
             await Task.Delay(TimeSpan.FromMilliseconds(100));
 
-            Assert.AreEqual("This is client A again!", server.LastMessageReceived);
-            Assert.IsNull(clientA.LastMessageReceived);
-            Assert.IsNull(clientB.LastMessageReceived);
+            Assert.AreEqual("This is client A again!", server.LastRawMessageReceived);
+            Assert.IsNull(clientA.LastRawMessageReceived);
+            Assert.IsNull(clientB.LastRawMessageReceived);
 
             Assert.IsTrue(await clientA.Send("This is client A again again!"));
 
             await Task.Delay(TimeSpan.FromMilliseconds(100));
 
-            Assert.AreEqual("This is client A again again!", server.LastMessageReceived);
-            Assert.IsNull(clientA.LastMessageReceived);
-            Assert.IsNull(clientB.LastMessageReceived);
+            Assert.AreEqual("This is client A again again!", server.LastRawMessageReceived);
+            Assert.IsNull(clientA.LastRawMessageReceived);
+            Assert.IsNull(clientB.LastRawMessageReceived);
 
             Assert.IsTrue(await clientB.Send("This is client B again!"));
 
             await Task.Delay(TimeSpan.FromMilliseconds(100));
 
-            Assert.AreEqual("This is client B again!", server.LastMessageReceived);
-            Assert.IsNull(clientA.LastMessageReceived);
-            Assert.IsNull(clientB.LastMessageReceived);
+            Assert.AreEqual("This is client B again!", server.LastRawMessageReceived);
+            Assert.IsNull(clientA.LastRawMessageReceived);
+            Assert.IsNull(clientB.LastRawMessageReceived);
 
             Assert.IsTrue(await server.SendMessage(server.Clients.ElementAt(0), "Hello client A"));
 
             await Task.Delay(TimeSpan.FromMilliseconds(100));
 
-            Assert.AreEqual("This is client B again!", server.LastMessageReceived);
-            Assert.AreEqual("Hello client A", clientA.LastMessageReceived);
-            Assert.IsNull(clientB.LastMessageReceived);
+            Assert.AreEqual("This is client B again!", server.LastRawMessageReceived);
+            Assert.AreEqual("Hello client A", clientA.LastRawMessageReceived);
+            Assert.IsNull(clientB.LastRawMessageReceived);
 
             Assert.IsTrue(await server.SendMessage(server.Clients.ElementAt(1), "Hello client B"));
 
             await Task.Delay(TimeSpan.FromMilliseconds(100));
 
-            Assert.AreEqual("This is client B again!", server.LastMessageReceived);
-            Assert.AreEqual("Hello client A", clientA.LastMessageReceived);
-            Assert.AreEqual("Hello client B", clientB.LastMessageReceived);
+            Assert.AreEqual("This is client B again!", server.LastRawMessageReceived);
+            Assert.AreEqual("Hello client A", clientA.LastRawMessageReceived);
+            Assert.AreEqual("Hello client B", clientB.LastRawMessageReceived);
 
             Assert.IsTrue(await server.SendMessageAll("Hello all clients!"));
 
             await Task.Delay(TimeSpan.FromMilliseconds(100));
 
-            Assert.AreEqual("This is client B again!", server.LastMessageReceived);
-            Assert.AreEqual("Hello all clients!", clientA.LastMessageReceived);
-            Assert.AreEqual("Hello all clients!", clientB.LastMessageReceived);
+            Assert.AreEqual("This is client B again!", server.LastRawMessageReceived);
+            Assert.AreEqual("Hello all clients!", clientA.LastRawMessageReceived);
+            Assert.AreEqual("Hello all clients!", clientB.LastRawMessageReceived);
 
             Assert.IsFalse(await server.SendMessageAll(null));
             Assert.IsFalse(await server.SendMessageAll(""));
@@ -307,7 +306,7 @@ namespace InDoOut_Executable_Core_Tests
 
                 var messageTask = Task.Run(async () =>
                 {
-                    while (text != clientA.LastMessageReceived)
+                    while (text != clientA.LastRawMessageReceived)
                     {
                         await Task.Delay(TimeSpan.FromMilliseconds(100));
                     }
@@ -315,8 +314,10 @@ namespace InDoOut_Executable_Core_Tests
 
                 _ = await Task.WhenAny(messageTask, Task.Delay(TimeSpan.FromSeconds(5)));
 
-                Assert.AreEqual(text, clientA.LastMessageReceived);
+                Assert.AreEqual(text, clientA.LastRawMessageReceived);
             }
+
+            Assert.IsTrue(await server.Stop());
         }
     }
 }

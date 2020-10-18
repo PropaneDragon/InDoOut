@@ -8,6 +8,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Networking\ClientServerCommand.cs" />
+    <Compile Remove="Networking\CommandResponseAttribute.cs" />
+    <Compile Remove="Networking\IProgramSyncClient.cs" />
+    <Compile Remove="Networking\ProgramSyncClient.cs" />
+    <Compile Remove="Networking\ProgramSyncProgramCommandTracker.cs" />
+    <Compile Remove="Networking\ProgramSyncServer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\InDoOut Core\InDoOut Core.csproj" />
   </ItemGroup>
 
