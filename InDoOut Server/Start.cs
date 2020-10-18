@@ -14,6 +14,7 @@ namespace InDoOut_Server
     class Start
     {
         private static LogFileSaver _logFileSaver = null;
+        private static ConsoleServerManager _serverManager = null;
 
         static void Main(string[] args)
         {
@@ -21,23 +22,10 @@ namespace InDoOut_Server
 
             SetUp();
 
-            var applicationArguments = new ApplicationArguments();
-            var processedArguments = false;
-
-            try
+            var arguments = ProcessArguments(args);
+            if (arguments != null)
             {
-                processedArguments = applicationArguments.ProcessArguments(args);
-            }
-            catch (InvalidArgumentException ex)
-            {
-                ExtendedConsole.HighColourMode = false;
-
-                ConsoleFormatter.DrawErrorMessageLine(ex.Message);
-            }
-
-            if (processedArguments)
-            {
-                ExtendedConsole.HighColourMode = !applicationArguments.LegacyConsoleMode;
+                ExtendedConsole.HighColourMode = !arguments.LegacyConsoleMode;
 
                 ConsoleFormatter.DrawTitle("in > do > out");
                 ConsoleFormatter.DrawSubtitle("Server");
@@ -46,8 +34,11 @@ namespace InDoOut_Server
 
                 ConsoleFormatter.DrawSubtitle("Starting server");
 
-                var serverManager = new ConsoleServerManager(applicationArguments.ChosenPort);
-                serverManager.Start();
+                _serverManager = new ConsoleServerManager(arguments.ChosenPort);
+                if (_serverManager.Start())
+                {
+                    ConsoleFormatter.DrawSubtitle("Server started");
+                }
 
                 Thread.Sleep(TimeSpan.FromSeconds(1000));
             }
@@ -66,6 +57,27 @@ namespace InDoOut_Server
         private static void TearDown()
         {
             _ = _logFileSaver?.SaveLog();
+        }
+
+        private static ApplicationArguments ProcessArguments(string[] args)
+        {
+            var applicationArguments = new ApplicationArguments();
+
+            try
+            {
+                if (applicationArguments.ProcessArguments(args))
+                {
+                    return applicationArguments;
+                }
+            }
+            catch (InvalidArgumentException ex)
+            {
+                ExtendedConsole.HighColourMode = false;
+
+                ConsoleFormatter.DrawErrorMessageLine(ex.Message);
+            }
+
+            return null;
         }
     }
 }

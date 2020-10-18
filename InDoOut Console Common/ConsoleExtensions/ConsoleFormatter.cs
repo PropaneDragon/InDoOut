@@ -24,6 +24,7 @@ namespace InDoOut_Console_Common.ConsoleExtensions
         public static Color Secondary { get; set; } = Color.FromArgb(150, 150, 150);
         public static Color AccentPrimary { get; set; } = Color.FromArgb(233, 0, 106);
         public static Color AccentSecondary { get; set; } = Color.FromArgb(138, 0, 106);
+        public static Color AccentTertiary { get; set; } = PurplePastel;
 
         public static Color Highlight { get; set; } = Color.FromArgb(255, 255, 255);
 

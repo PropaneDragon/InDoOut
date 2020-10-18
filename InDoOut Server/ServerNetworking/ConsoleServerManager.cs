@@ -1,7 +1,10 @@
 ﻿using InDoOut_Console_Common.ConsoleExtensions;
 using InDoOut_Executable_Core.Networking;
+using InDoOut_Executable_Core.Networking.Commands;
 using InDoOut_Executable_Core.Networking.ServerEventArgs;
 using InDoOut_Executable_Core.Programs;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 
 namespace InDoOut_Server.ServerNetworking
@@ -13,26 +16,114 @@ namespace InDoOut_Server.ServerNetworking
 
         public ConsoleServerManager(int port = 0)
         {
+            ConsoleFormatter.DrawInfoMessageLine("Starting up the manager...");
+
             _server = new Server(port);
 
+            ExtendedConsole.WriteLine();
+            ConsoleFormatter.DrawInfoMessageLine("Registering server commands...");
+
+            var results = new List<bool>
+            {
+                AddCommandListener(new RequestProgramsServerCommand(_server, _programHolder)),
+                AddCommandListener(new UploadProgramServerCommand(_server))
+            };
+
+            var totalCommands = results.Count;
+            var successfulCommands = results.Count(result => result);
+            var unsuccessfulCommands = totalCommands - successfulCommands;
+
+            ConsoleFormatter.DrawInfoMessageLine("Registered ", ConsoleFormatter.AccentTertiary, results.Count(result => result), ConsoleFormatter.Primary, " of ", ConsoleFormatter.AccentTertiary, results.Count, ConsoleFormatter.Primary, " commands.");
+
+            if (unsuccessfulCommands > 0)
+            {
+                ConsoleFormatter.DrawErrorMessageLine(ConsoleFormatter.AccentTertiary, unsuccessfulCommands, ConsoleFormatter.Negative, $" command{(unsuccessfulCommands != 1 ? "s" : "")} failed to register. Some functionality may not work!");
+            }
+
+            ExtendedConsole.WriteLine();
+
             HookServerEvents(_server);
+
+            ConsoleFormatter.DrawInfoMessageLine(ConsoleFormatter.Positive, "Manager started");
         }
 
-        public void Start()
+        public bool Start()
         {
+            ConsoleFormatter.DrawInfoMessageLine("Manager starting the server...");
+
             if (_server != null)
             {
                 var started = _server.Start().Result;
 
                 if (started)
                 {
-                    ConsoleFormatter.DrawInfoMessageLine(ConsoleFormatter.GreenPastel, "Started.");
+                    ConsoleFormatter.DrawInfoMessageLine(ConsoleFormatter.Positive, "Manager started server.");
                 }
                 else
                 {
-                    ConsoleFormatter.DrawErrorMessageLine(ConsoleFormatter.GreenPastel, "Failed to start!");
-                } 
-            } 
+                    ConsoleFormatter.DrawErrorMessageLine(ConsoleFormatter.Negative, "Manager couldn't start the server!");
+                }
+
+                return started;
+            }
+
+            return false;
+        }
+
+        public bool Stop()
+        {
+            ConsoleFormatter.DrawInfoMessageLine("Manager stopping the server...");
+
+            if (_server != null)
+            {
+                var stopped = _server.Stop().Result;
+
+                if (stopped)
+                {
+                    ConsoleFormatter.DrawInfoMessageLine(ConsoleFormatter.Positive, "Manager stopped server.");
+                }
+                else
+                {
+                    ConsoleFormatter.DrawErrorMessageLine(ConsoleFormatter.Negative, "Manager couldn't stop the server!");
+                }
+
+                return stopped;
+            }
+
+            return false;
+        }
+
+        private bool AddCommandListener(ICommandListener listener)
+        {
+            if (_server != null)
+            {
+                if (listener != null)
+                {
+                    ConsoleFormatter.DrawInfoMessage(ConsoleFormatter.AccentTertiary, "  > ", ConsoleFormatter.Primary, "Registering ", ConsoleFormatter.AccentTertiary, listener.CommandName, ConsoleFormatter.Primary, " command... ");
+
+                    var added = _server.AddCommandListener(listener);
+                    if (added)
+                    {
+                        ExtendedConsole.WriteLine(ConsoleFormatter.Positive, "Success.");
+                    }
+                    else
+                    {
+                        ExtendedConsole.WriteLine(ConsoleFormatter.Negative, "Failed!");
+                    }
+
+                    return added;
+                }
+                else
+                {
+                    ConsoleFormatter.DrawInfoMessageLine(ConsoleFormatter.Negative, "Attempted to add an invalid command listener to the server!");
+                }
+            }
+            else
+            {
+                ConsoleFormatter.DrawInfoMessageLine(ConsoleFormatter.Negative, "Attempted to add a listener to a non-existant server!");
+            }
+
+            return false;
         }
 
         private void HookServerEvents(IServer server)
@@ -61,11 +152,11 @@ namespace InDoOut_Server.ServerNetworking
             }
         }
 
-        private void Server_OnServerStopped(object sender, ServerConnectionEventArgs e) => ConsoleFormatter.DrawInfoMessageLine("Server stopped.");
-        private void Server_OnServerStarted(object sender, ServerConnectionEventArgs e) => ConsoleFormatter.DrawInfoMessageLine("Server started. IP: ", ConsoleFormatter.PurplePastel, (sender as IServer)?.IPAddress?.ToString() ?? "unknown", ConsoleFormatter.Primary, ", Port: ", ConsoleFormatter.PurplePastel, (sender as IServer)?.Port.ToString() ?? "Unknown");
+        private void Server_OnServerStopped(object sender, ServerConnectionEventArgs e) => ConsoleFormatter.DrawInfoMessageLine(ConsoleFormatter.Negative, "Server stopped.");
+        private void Server_OnServerStarted(object sender, ServerConnectionEventArgs e) => ConsoleFormatter.DrawInfoMessageLine(ConsoleFormatter.Positive, "Server started.", ConsoleFormatter.Primary, " IP: ", ConsoleFormatter.AccentTertiary, (sender as IServer)?.IPAddress?.ToString() ?? "unknown", ConsoleFormatter.Primary, ", Port: ", ConsoleFormatter.AccentTertiary, (sender as IServer)?.Port.ToString() ?? "Unknown");
         private void Server_OnClientMessageSent(object sender, ClientMessageEventArgs e) { }
         private void Server_OnClientMessageReceived(object sender, ClientMessageEventArgs e) { }
-        private void Server_OnClientDisconnected(object sender, ClientConnectionEventArgs e) => ConsoleFormatter.DrawInfoMessageLine("Client at IP ", ConsoleFormatter.PurplePastel, (e?.Client?.Client?.RemoteEndPoint as IPEndPoint)?.Address?.ToString() ?? "unknown", ConsoleFormatter.RedPastel, " disconnected.");
-        private void Server_OnClientConnected(object sender, ClientConnectionEventArgs e) => ConsoleFormatter.DrawInfoMessageLine("Client at IP ", ConsoleFormatter.PurplePastel, (e?.Client?.Client?.RemoteEndPoint as IPEndPoint)?.Address?.ToString() ?? "unknown", ConsoleFormatter.GreenPastel, " connected.");
+        private void Server_OnClientDisconnected(object sender, ClientConnectionEventArgs e) => ConsoleFormatter.DrawInfoMessageLine("Client at IP ", ConsoleFormatter.AccentTertiary, (e?.Client?.Client?.RemoteEndPoint as IPEndPoint)?.Address?.ToString() ?? "unknown", ConsoleFormatter.Negative, " disconnected.");
+        private void Server_OnClientConnected(object sender, ClientConnectionEventArgs e) => ConsoleFormatter.DrawInfoMessageLine("Client at IP ", ConsoleFormatter.AccentTertiary, (e?.Client?.Client?.RemoteEndPoint as IPEndPoint)?.Address?.ToString() ?? "unknown", ConsoleFormatter.Positive, " connected.");
     }
 }
