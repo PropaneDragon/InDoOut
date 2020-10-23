@@ -43,7 +43,7 @@ namespace InDoOut_UI_Common.InterfaceElements
         public abstract Point BottomRightViewCoordinate { get; }
         public abstract Point CentreViewCoordinate { get; }
 
-        public CommonProgramDisplay()
+        public CommonProgramDisplay() : base()
         {
             CommonProgramLoader = new CommonProgramLoader(this);
             FunctionCreator = new BasicFunctionCreator(this);

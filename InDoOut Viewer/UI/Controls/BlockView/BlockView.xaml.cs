@@ -1,14 +1,11 @@
-﻿using InDoOut_Desktop.Actions;
-using InDoOut_Desktop.Actions.Selecting;
-using InDoOut_Desktop.UI.Interfaces;
-using InDoOut_UI_Common.Actions;
+﻿using InDoOut_UI_Common.Actions;
 using InDoOut_UI_Common.Actions.Selecting;
 using InDoOut_UI_Common.InterfaceElements;
 using System.Windows.Controls;
 
-namespace InDoOut_Desktop.UI.Controls.BlockView
+namespace InDoOut_Viewer.UI.Controls.BlockView
 {
-    public partial class BlockView : CommonBlockDisplay, IBlockView
+    public partial class BlockView : CommonBlockDisplay
     {
         protected override ScrollViewer ScrollViewer => Scroll_Content;
         protected override Canvas ElementCanvas => Canvas_Content;
@@ -21,10 +18,8 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
             InitializeComponent();
 
             AssociatedProgram = ProgramHandler.NewProgram();
-            SelectionManager = new SelectionManager(this);
-            ActionHandler = new ActionHandler(new BlockViewRestingAction(this));
-
-            BlockView_Overview.AssociatedBlockView = this;
+            /*SelectionManager = new SelectionManager(this);
+            ActionHandler = new ActionHandler(new BlockViewRestingAction(this));*/
         }
     }
 }

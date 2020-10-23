@@ -3,7 +3,7 @@
 namespace InDoOut_Desktop.UI.Interfaces
 {
 
-    public interface IBlockView : ICommonProgramDisplay, IScrollable
+    public interface IBlockView : ICommonBlockDisplay
     {
     }
 }

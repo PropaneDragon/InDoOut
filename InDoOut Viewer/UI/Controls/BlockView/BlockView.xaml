@@ -1,9 +1,9 @@
-﻿<interfaceElements:CommonBlockDisplay x:Class="InDoOut_Desktop.UI.Controls.BlockView.BlockView"
+﻿<interfaceElements:CommonBlockDisplay x:Class="InDoOut_Viewer.UI.Controls.BlockView.BlockView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:InDoOut_Desktop.UI.Controls.BlockView"
+             xmlns:local="clr-namespace:InDoOut_Viewer.UI.Controls.BlockView"
              xmlns:entities="clr-namespace:InDoOut_UI_Common.Controls.CoreEntityRepresentation;assembly=InDoOutUICommon"
              xmlns:interfaceElements="clr-namespace:InDoOut_UI_Common.InterfaceElements;assembly=InDoOutUICommon"
              mc:Ignorable="d" 
@@ -17,7 +17,6 @@
                     </Canvas>
                 </Viewbox>
             </ScrollViewer>
-            <local:Overview x:Name="BlockView_Overview" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="200" Height="150" Margin="20" />
         </Grid>
     </Border>
 </interfaceElements:CommonBlockDisplay>

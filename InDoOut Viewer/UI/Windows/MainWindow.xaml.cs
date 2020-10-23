@@ -1,4 +1,5 @@
 ﻿using InDoOut_UI_Common.Windows;
+using InDoOut_Viewer.Programs;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,13 +15,21 @@ namespace InDoOut_Viewer
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            await Task.Delay(TimeSpan.FromMilliseconds(1));
+            await Task.CompletedTask;
 
-            var networkConnectionWindow = new NewNetworkConnectionWindow();
-            if (networkConnectionWindow.ShowDialog() ?? false)
+            var taskView = TaskView_Main;
+            var sidebar = Sidebar_Main;
+
+            if (taskView != null)
             {
-
+                taskView.ProgramDisplayCreator = new ProgramDisplayCreator();
+                taskView.CreateNewTask(true);
             }
+
+            if (sidebar != null)
+            {
+                sidebar.AssociatedTaskView = taskView;
+            } 
         }
 
         private void Window_Closed(object sender, EventArgs e)

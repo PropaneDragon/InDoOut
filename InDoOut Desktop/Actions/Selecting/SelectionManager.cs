@@ -12,14 +12,8 @@ namespace InDoOut_Desktop.Actions.Selecting
             _associatedBlockView = blockView;
         }
 
-        protected override void NotifySelectableEnded(ISelectable selectable)
-        {
-            selectable.SelectionEnded(_associatedBlockView);
-        }
+        protected override void NotifySelectableEnded(ISelectable selectable) => selectable.SelectionEnded(_associatedBlockView);
 
-        protected override void NotifySelectableStarted(ISelectable selectable)
-        {
-            selectable.SelectionStarted(_associatedBlockView);
-        }
+        protected override void NotifySelectableStarted(ISelectable selectable) => selectable.SelectionStarted(_associatedBlockView);
     }
 }
