@@ -1,11 +1,12 @@
 ﻿using InDoOut_Core.Logging;
+using InDoOut_Executable_Core.Networking;
 using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace InDoOut_Executable_Core.Networking
+namespace InDoOut_Networking.Client
 {
     public class Client : AbstractInteractiveNetworkEntity, IClient
     {

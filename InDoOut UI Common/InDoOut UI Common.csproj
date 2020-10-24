@@ -20,6 +20,7 @@
     <ProjectReference Include="..\InDoOut Core\InDoOut Core.csproj" />
     <ProjectReference Include="..\InDoOut Executable Core\InDoOut Executable Core.csproj" />
     <ProjectReference Include="..\InDoOut Json Storage\InDoOut Json Storage.csproj" />
+    <ProjectReference Include="..\InDoOut Networking\InDoOut Networking.csproj" />
     <ProjectReference Include="..\InDoOut Plugins\InDoOut Plugins Core.csproj" />
   </ItemGroup>
 

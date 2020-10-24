@@ -1,5 +1,5 @@
 ﻿using InDoOut_Executable_Core.Messaging;
-using InDoOut_Executable_Core.Networking;
+using InDoOut_Networking.Client;
 using InDoOut_UI_Common.Controls.Network;
 using InDoOut_UI_Common.Events;
 using System;

@@ -1,9 +1,11 @@
-﻿using InDoOut_Executable_Core.Programs;
+﻿using InDoOut_Executable_Core.Networking;
+using InDoOut_Executable_Core.Networking.Commands;
+using InDoOut_Executable_Core.Programs;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace InDoOut_Executable_Core.Networking.Commands
+namespace InDoOut_Networking.Server.Commands
 {
     public class RequestProgramsServerCommand : CommandListener<IServer>
     {

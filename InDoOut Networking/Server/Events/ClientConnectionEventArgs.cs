@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net.Sockets;
 
-namespace InDoOut_Executable_Core.Networking.ServerEventArgs
+namespace InDoOut_Networking.Server.Events
 {
     public class ClientConnectionEventArgs : EventArgs
     {

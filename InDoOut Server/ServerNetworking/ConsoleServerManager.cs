@@ -1,8 +1,9 @@
 ﻿using InDoOut_Console_Common.ConsoleExtensions;
-using InDoOut_Executable_Core.Networking;
 using InDoOut_Executable_Core.Networking.Commands;
-using InDoOut_Executable_Core.Networking.ServerEventArgs;
 using InDoOut_Executable_Core.Programs;
+using InDoOut_Networking.Server;
+using InDoOut_Networking.Server.Commands;
+using InDoOut_Networking.Server.Events;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;

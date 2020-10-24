@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace InDoOut_Executable_Core.Networking.ServerEventArgs
+namespace InDoOut_Networking.Server.Events
 {
     public class ServerConnectionEventArgs : EventArgs
     {

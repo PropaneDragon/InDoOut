@@ -19,22 +19,4 @@
     <ProjectReference Include="..\InDoOut Json Storage\InDoOut Json Storage.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="emoji-test.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="UTF-8 test file 1.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="UTF-8 test file 2.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="UTF-8 test file 3.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="UTF-8 test file 4.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 </Project>

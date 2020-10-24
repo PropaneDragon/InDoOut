@@ -1,7 +1,8 @@
 ﻿using InDoOut_Core.Entities.Programs;
+using InDoOut_Networking.Client;
 using System.Threading.Tasks;
 
-namespace InDoOut_Executable_Core.Networking.Entities
+namespace InDoOut_Networking.Entities
 {
     public interface INetworkedProgram : IProgram
     {

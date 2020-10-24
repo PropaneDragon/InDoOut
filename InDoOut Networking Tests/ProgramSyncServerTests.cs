@@ -1,7 +1,8 @@
 ﻿using InDoOut_Executable_Core.Location;
 using InDoOut_Executable_Core.Networking;
-using InDoOut_Executable_Core.Networking.Commands;
 using InDoOut_Executable_Core.Programs;
+using InDoOut_Networking.Server;
+using InDoOut_Networking.Server.Commands;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;

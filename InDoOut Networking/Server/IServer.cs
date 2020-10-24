@@ -1,11 +1,12 @@
-﻿using InDoOut_Executable_Core.Networking.ServerEventArgs;
+﻿using InDoOut_Executable_Core.Networking;
+using InDoOut_Networking.Server.Events;
 using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 
-namespace InDoOut_Executable_Core.Networking
+namespace InDoOut_Networking.Server
 {
     public interface IServer : IInteractiveNetworkEntity
     {

@@ -1,4 +1,5 @@
 ﻿using InDoOut_Executable_Core.Networking;
+using InDoOut_Networking.Client;
 using System.Threading;
 using System.Threading.Tasks;
 

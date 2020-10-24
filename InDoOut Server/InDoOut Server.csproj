@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\InDoOut Console Common\InDoOut Console Common.csproj" />
+    <ProjectReference Include="..\InDoOut Networking\InDoOut Networking.csproj" />
   </ItemGroup>
 
 </Project>

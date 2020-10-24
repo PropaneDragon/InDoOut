@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using InDoOut_Executable_Core.Networking.Commands;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace InDoOut_Executable_Core.Networking.Commands
+namespace InDoOut_Networking.Client.Commands
 {
     public class RequestProgramsClientCommand : Command<IClient>
     {
@@ -16,7 +17,7 @@ namespace InDoOut_Executable_Core.Networking.Commands
         public async Task<List<string>> RequestAvailablePrograms(CancellationToken cancellationToken)
         {
             var response = await SendMessageAwaitResponse(cancellationToken);
-            
+
             return response != null ? response.Data?.Where(item => !string.IsNullOrWhiteSpace(item))?.ToList() ?? new List<string>() : null;
         }
     }

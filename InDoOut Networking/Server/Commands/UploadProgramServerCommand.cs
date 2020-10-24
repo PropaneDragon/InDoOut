@@ -1,17 +1,19 @@
 ﻿using InDoOut_Executable_Core.Location;
+using InDoOut_Executable_Core.Networking;
+using InDoOut_Executable_Core.Networking.Commands;
 using System;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace InDoOut_Executable_Core.Networking.Commands
+namespace InDoOut_Networking.Server.Commands
 {
     public class UploadProgramServerCommand : CommandListener<IServer>
     {
         public override string CommandName => "UPLOAD_PROGRAM";
 
-        public string StoredProgramsLocation { get; set; } = $"{StandardLocations.Instance.GetPathTo(Location.Location.ApplicationDirectory)}{Path.DirectorySeparatorChar}Programs{Path.DirectorySeparatorChar}Synced";
+        public string StoredProgramsLocation { get; set; } = $"{StandardLocations.Instance.GetPathTo(Location.ApplicationDirectory)}{Path.DirectorySeparatorChar}Programs{Path.DirectorySeparatorChar}Synced";
 
 
         public UploadProgramServerCommand(IServer server) : base(server)

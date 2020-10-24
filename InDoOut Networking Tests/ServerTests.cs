@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using InDoOut_Executable_Core_Tests;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InDoOut_Executable_Core_Tests
+namespace InDoOut_Networking_Tests
 {
     [TestClass]
     public class ServerTests

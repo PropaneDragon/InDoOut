@@ -1,8 +1,10 @@
 ﻿using InDoOut_Core.Entities.Programs;
 using InDoOut_Core.Functions;
 using InDoOut_Executable_Core.Networking;
-using InDoOut_Executable_Core.Networking.Commands;
+using InDoOut_Executable_Core_Tests;
 using InDoOut_Json_Storage;
+using InDoOut_Networking.Client;
+using InDoOut_Networking.Client.Commands;
 using InDoOut_Plugins.Loaders;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -11,7 +13,7 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace InDoOut_Executable_Core_Tests
+namespace InDoOut_Networking_Tests
 {
     [TestClass]
     public class ProgramSyncClientTests
@@ -136,7 +138,7 @@ namespace InDoOut_Executable_Core_Tests
             _ = Directory.CreateDirectory(TemporarySaveLocation);
 
             var storer = new ProgramJsonStorer(new FunctionBuilder(), new LoadedPlugins(), programLocation);
-            
+
             Assert.AreEqual(0, storer.Save(program).Count);
 
             var sendTask = programUploadCommand.SendProgram(program, new CancellationTokenSource(TimeSpan.FromMilliseconds(80000)).Token);

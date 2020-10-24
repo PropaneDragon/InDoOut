@@ -1,7 +1,7 @@
 ﻿using InDoOut_Core.Entities.Functions;
 using System;
 
-namespace InDoOut_Executable_Core_Tests
+namespace InDoOut_Networking_Tests
 {
     internal class TestFunction : Function
     {

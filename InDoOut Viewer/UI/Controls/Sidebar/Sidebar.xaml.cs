@@ -1,4 +1,4 @@
-﻿using InDoOut_Executable_Core.Networking.Entities;
+﻿using InDoOut_Networking.Entities;
 using InDoOut_UI_Common.InterfaceElements;
 using InDoOut_UI_Common.Windows;
 using System;

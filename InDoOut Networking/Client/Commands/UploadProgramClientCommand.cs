@@ -1,10 +1,11 @@
 ﻿using InDoOut_Core.Entities.Programs;
+using InDoOut_Executable_Core.Networking.Commands;
 using InDoOut_Executable_Core.Storage;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace InDoOut_Executable_Core.Networking.Commands
+namespace InDoOut_Networking.Client.Commands
 {
     public class UploadProgramClientCommand : Command<IClient>
     {

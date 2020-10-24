@@ -1,5 +1,6 @@
 ﻿using InDoOut_Executable_Core.Networking;
-using InDoOut_Executable_Core.Networking.ServerEventArgs;
+using InDoOut_Networking.Server;
+using InDoOut_Networking.Server.Events;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;

@@ -1,7 +1,8 @@
-﻿using System.Net;
+﻿using InDoOut_Executable_Core.Networking;
+using System.Net;
 using System.Threading.Tasks;
 
-namespace InDoOut_Executable_Core.Networking
+namespace InDoOut_Networking.Client
 {
     public interface IClient : IInteractiveNetworkEntity
     {
