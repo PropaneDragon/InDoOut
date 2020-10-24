@@ -14,15 +14,11 @@ namespace InDoOut_UI_Common.Windows
         private readonly Dictionary<Button, MessageBoxResult> _buttonAssociations = null;
 
         public string Message { get => Text_Description.Text; set => Text_Description.Text = value; }
-
-        public string Caption { get => Text_Title.Text; set => SetTitle(value); }
-
+        public string Caption { get => Text_Title.Text; set => Text_Title.Text = value; }
         public string Details { get => Text_Details.Text; set => SetDetails(value); }
 
         public MessageBoxButton Buttons { get => _buttons; set => SetMessageBoxButtons(value); }
-
         public MessageBoxResult Result { get; private set; } = MessageBoxResult.None;
-
         public MessageBoxImage Image { get => _image; set => SetMessageBoxImage(value); }
 
         private MessageBoxWindow()
@@ -78,11 +74,6 @@ namespace InDoOut_UI_Common.Windows
             _ = messageBox.ShowDialog();
 
             return messageBox;
-        }
-
-        private void SetTitle(string title)
-        {
-            Text_Title.Text = title;
         }
 
         private void SetTitle(MessageBoxImage image)

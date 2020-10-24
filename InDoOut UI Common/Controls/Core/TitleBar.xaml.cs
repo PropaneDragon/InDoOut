@@ -19,9 +19,40 @@ namespace InDoOut_UI_Common.Controls.Core
 
         private bool WindowCanResize => (_attachedWindow?.ResizeMode ?? ResizeMode.NoResize) != ResizeMode.NoResize;
 
+        public enum TitleBarButton
+        {
+            Minimise,
+            Restore,
+            Close
+        };
+
+        public TitleBarButton VisibleButtons { get; }
+
         public TitleBar()
         {
             InitializeComponent();
+        }
+
+        public void SetButtonVisibility(Visibility visibility, params TitleBarButton[] titleBarButtons)
+        {
+            foreach (var titleBarButton in titleBarButtons)
+            {
+                if (GetButton(titleBarButton) is Button physicalButton)
+                {
+                    physicalButton.Visibility = visibility;
+                }
+            }
+        }
+
+        public void SetButtonEnabled(bool enabled, params TitleBarButton[] titleBarButtons)
+        {
+            foreach (var titleBarButton in titleBarButtons)
+            {
+                if (GetButton(titleBarButton) is Button physicalButton)
+                {
+                    physicalButton.IsEnabled = enabled;
+                }
+            }
         }
 
         private void AttachToWindow()
@@ -84,14 +115,16 @@ namespace InDoOut_UI_Common.Controls.Core
             return IntPtr.Zero;
         }
 
-        private void UpdateTooltipText()
+        private Button GetButton(TitleBarButton button)
         {
-            Button_Restore.ToolTip = (_attachedWindow?.WindowState ?? WindowState.Maximized) == WindowState.Maximized ? "Restore" : "Maximise";
-        }
+            return button switch
+            {
+                TitleBarButton.Close => Button_Close,
+                TitleBarButton.Minimise => Button_Minimise,
+                TitleBarButton.Restore => Button_Restore,
 
-        private void UpdateButtonStates()
-        {
-            Button_Restore.IsEnabled = WindowCanResize;
+                _ => null
+            };
         }
 
         private void UpdateWindowBorders()
@@ -104,6 +137,10 @@ namespace InDoOut_UI_Common.Controls.Core
                 _attachedWindow.BorderThickness = (_attachedWindow?.WindowState ?? WindowState.Maximized) == WindowState.Maximized ? maximisedThickness : new Thickness(1);
             }
         }
+
+        private void UpdateTooltipText() => Button_Restore.ToolTip = (_attachedWindow?.WindowState ?? WindowState.Maximized) == WindowState.Maximized ? "Restore" : "Maximise";
+
+        private void UpdateButtonStates() => Button_Restore.IsEnabled = WindowCanResize;
 
         private Thickness AddThickness(Thickness first, Thickness second) => new Thickness(first.Left + second.Left, first.Top + second.Top, first.Right + second.Right, first.Bottom + second.Bottom);
 

@@ -82,6 +82,10 @@
     <SolidColorBrush x:Key="Brush.TextBox.Foreground.Disabled" Color="{StaticResource Colour.Theme.Basic.Disabled}" />
     <SolidColorBrush x:Key="Brush.TextBox.Background.Disabled" Color="{StaticResource Colour.Theme.Basic.SemiTransparent.Light}" />
 
+    <SolidColorBrush x:Key="Brush.ProgressBar.Border" Color="{StaticResource Colour.Theme.Basic.SemiTransparent.Light}" />
+    <SolidColorBrush x:Key="Brush.ProgressBar.Foreground" Color="{StaticResource Colour.Theme.Accent.Primary}" />
+    <SolidColorBrush x:Key="Brush.ProgressBar.Background" Color="{StaticResource Colour.Theme.Basic.SemiTransparent.Light}" />
+
     <SolidColorBrush x:Key="Brush.TaskItem.Border" Color="{StaticResource Colour.Theme.Accent.Primary}" />
     <SolidColorBrush x:Key="Brush.TaskItem.Background" Color="{StaticResource Colour.Theme.Background}" />
 

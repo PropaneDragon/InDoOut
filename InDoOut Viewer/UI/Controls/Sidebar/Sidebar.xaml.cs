@@ -66,17 +66,33 @@ namespace InDoOut_Viewer.UI.Controls.Sidebar
         {
             if (AssociatedTaskView?.CurrentProgramDisplay != null)
             {
-                var connectWindow = new NetworkConnectWindow(AssociatedTaskView.CurrentProgramDisplay) { Owner = Window.GetWindow(this) };
-                if (connectWindow.ShowDialog() ?? false)
+                var networkConnectWindow = new NetworkConnectWindow()
                 {
+                    Owner = Window.GetWindow(this)
+                };
 
+                var client = networkConnectWindow.GetClient();
+                if (client != null)
+                {
+                    AssociatedTaskView.CurrentProgramDisplay.AssociatedProgram = new NetworkedProgram(client);
                 }
             } 
         }
 
-        private void Button_DisconnectFromRemote_Click(object sender, RoutedEventArgs e)
+        private async void Button_DisconnectFromRemote_Click(object sender, RoutedEventArgs e)
         {
+            if (sender is Button senderButton && AssociatedTaskView?.CurrentProgramDisplay?.AssociatedProgram is NetworkedProgram program)
+            {
+                senderButton.IsEnabled = false;
 
+                try
+                {
+                    _ = await program.Disconnect();
+                }
+                catch { }
+
+                senderButton.IsEnabled = true;
+            }
         }
     }
 }

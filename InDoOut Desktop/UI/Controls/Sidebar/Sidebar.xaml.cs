@@ -243,22 +243,5 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
             pluginsWindow.Show();
             Collapse();
         }
-
-        private void Button_ConnectProgram_Click(object sender, RoutedEventArgs e)
-        {
-            Log.Instance.Header("Connect to program button clicked");
-
-            var networkConnectWindow = new NetworkConnectWindow(_programDisplay)
-            {
-                Owner = Window.GetWindow(this)
-            };
-
-            if (networkConnectWindow.ShowDialog() ?? false)
-            {
-
-            } 
-
-            Collapse();
-        }
     }
 }

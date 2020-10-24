@@ -8,6 +8,7 @@
         <ResourceDictionary Source="/InDoOutUICommon;component/Style/ScrollBarStyle.xaml" />
         <ResourceDictionary Source="/InDoOutUICommon;component/Style/TextBoxStyle.xaml" />
         <ResourceDictionary Source="/InDoOutUICommon;component/Style/ListStyle.xaml" />
+        <ResourceDictionary Source="/InDoOutUICommon;component/Style/ProgressBarStyle.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="Style.Control" TargetType="{x:Type Control}">

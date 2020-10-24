@@ -12,6 +12,7 @@ namespace InDoOut_Executable_Core.Networking
         private static readonly SemaphoreSlim _writingSemaphore = new SemaphoreSlim(1, 1);
 
         private readonly NetworkStreamHandler _streamHandler = new NetworkStreamHandler();
+        private readonly TimeSpan _timeout = TimeSpan.FromSeconds(5);
 
         private TcpClient _client = null;
 
@@ -29,9 +30,11 @@ namespace InDoOut_Executable_Core.Networking
         {
             _ = await Disconnect();
 
+            var timeout = (int)Math.Round(_timeout.TotalMilliseconds);
+
             try
             {
-                _client = new TcpClient() { NoDelay = true };
+                _client = new TcpClient() { NoDelay = true, ReceiveTimeout = timeout, SendTimeout = timeout };
 
                 await _client.ConnectAsync(address, port);
 

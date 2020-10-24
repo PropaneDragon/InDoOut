@@ -1,8 +1,7 @@
 ﻿using InDoOut_Executable_Core.Messaging;
 using InDoOut_Executable_Core.Networking;
-using InDoOut_Executable_Core.Networking.Entities;
 using InDoOut_UI_Common.Controls.Network;
-using InDoOut_UI_Common.InterfaceElements;
+using InDoOut_UI_Common.Events;
 using System;
 using System.Linq;
 using System.Net;
@@ -13,47 +12,44 @@ namespace InDoOut_UI_Common.Windows
 {
     public partial class NetworkConnectWindow : Window
     {
-        public ICommonProgramDisplay ProgramDisplay { get; set; } = null;
+        public IClient NetworkClient { get; private set; } = null;
 
         public NetworkConnectWindow()
         {
             InitializeComponent();
         }
 
-        public NetworkConnectWindow(ICommonProgramDisplay display) : this()
+        public async Task<IClient> Connect(string address, int port)
         {
-            ProgramDisplay = display;
-        }
-
-        public async Task<bool> AcceptConnection(string address, int port)
-        {
-            var connected = false;
-
             if (!string.IsNullOrEmpty(address) && port > 0)
             {
-                var client = new Client(); //Todo
-                var program = new NetworkedProgram(client);
-                var connectContent = Button_Connect.Content;
-
                 Button_Cancel.IsEnabled = false;
-                Button_Connect.IsEnabled = false;
-                Button_Connect.Content = "Connecting...";
 
                 try
                 {
                     var ipAddresses = await Dns.GetHostAddressesAsync(address);
                     if (ipAddresses.Length > 0)
                     {
-                        connected = await client.Connect(ipAddresses.First(), port);
+                        var progressWindow = new TaskProgressWindow("Connecting", $"Connecting to {address}:{port}. Please wait...");
+                        progressWindow.TaskStarted();
 
-                        if (connected && ProgramDisplay != null)
+                        var client = new Client();
+                        var connected = await client.Connect(ipAddresses.First(), port);
+
+                        progressWindow.TaskFinished();
+
+                        if (connected)
                         {
-                            ProgramDisplay.AssociatedProgram = program;
+                            return client;
+                        }
+                        else
+                        { 
+                            UserMessageSystemHolder.Instance.CurrentUserMessageSystem.ShowError("Failed to connect", $"A connection couldn't be established to \"{address}\".");
                         }
                     }
                     else
                     {
-                        UserMessageSystemHolder.Instance.CurrentUserMessageSystem.ShowError("Failed to connect", "The IP address could't be resolved from the given address.");
+                        UserMessageSystemHolder.Instance.CurrentUserMessageSystem.ShowError("Failed to connect", $"The IP address could't be resolved from the address \"{address}\".");
                     }
                 }
                 catch (Exception ex)
@@ -62,12 +58,12 @@ namespace InDoOut_UI_Common.Windows
                 }
 
                 Button_Cancel.IsEnabled = true;
-                Button_Connect.IsEnabled = true;
-                Button_Connect.Content = connectContent;
             }
 
-            return connected;
+            return null;
         }
+
+        public IClient GetClient() => ShowDialog() ?? false ? NetworkClient : null;
 
         private void CreateConnectionItem(string address, int port)
         {
@@ -75,14 +71,33 @@ namespace InDoOut_UI_Common.Windows
             {
                 var networkConnectionItem = new NetworkConnectionItem(address, port);
 
+                AttachNetworkConnectionItemEvents(networkConnectionItem);
+
                 _ = Wrap_Connections.Children.Add(networkConnectionItem);
             }
         }
 
-        private void Button_Connect_Click(object sender, RoutedEventArgs e)
+        private void AttachNetworkConnectionItemEvents(NetworkConnectionItem connectionItem)
         {
-
+            if (connectionItem != null)
+            {
+                connectionItem.OnConnectButtonClicked += ConnectionItem_OnConnectButtonClicked;
+                connectionItem.OnRemoveButtonClicked += ConnectionItem_OnRemoveButtonClicked;
+            }
         }
+
+        private async void ConnectionItem_OnConnectButtonClicked(object sender, NetworkConnectionEventArgs e)
+        {
+            NetworkClient = await Connect(e.Address, e.Port);
+
+            if (NetworkClient != null)
+            {
+                DialogResult = true;
+                Close();
+            }
+        }
+
+        private void ConnectionItem_OnRemoveButtonClicked(object sender, EventArgs e) => throw new NotImplementedException();
 
         private void Button_Cancel_Click(object sender, RoutedEventArgs e)
         {
