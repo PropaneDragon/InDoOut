@@ -165,5 +165,62 @@ namespace InDoOut_Networking_Tests
 
             Assert.IsTrue(await server.Stop());
         }
+
+        [TestMethod]
+        public async Task DownloadProgram()
+        {
+            var server = new TestServer(9001);
+            Assert.IsTrue(await server.Start());
+
+            var client = new Client();
+            Assert.IsTrue(await client.Connect(IPAddress.Loopback, 9001));
+
+            var programDownloadCommand = new DownloadProgramClientCommand(client);
+            var downloadTask = programDownloadCommand.RequestDataForProgram("example-program", new CancellationTokenSource(TimeSpan.FromMilliseconds(800)).Token);
+
+            await Task.Delay(TimeSpan.FromMilliseconds(200));
+
+            var lastServerMessage = server.LastMessageReceived;
+            server.LastMessageReceived = null;
+
+            Assert.IsNotNull(lastServerMessage);
+            Assert.IsNotNull(Guid.Parse(lastServerMessage.Id));
+            Assert.AreEqual("DOWNLOAD_PROGRAM", lastServerMessage.Name);
+            Assert.AreEqual(1, lastServerMessage.Data.Length);
+            Assert.AreEqual("example-program", lastServerMessage.Data[0]);
+
+            var programData = File.ReadAllText("example-program.ido");
+
+            Assert.IsTrue(await server.SendMessageAll($"{lastServerMessage.Id}{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}DOWNLOAD_PROGRAM{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}{programData}"));
+            Assert.IsNotNull(downloadTask.Result);
+            Assert.AreEqual(downloadTask.Result, programData.Replace("\r", ""));
+
+
+            downloadTask = programDownloadCommand.RequestDataForProgram("example-program", new CancellationTokenSource(TimeSpan.FromMilliseconds(800)).Token);
+
+            await Task.Delay(TimeSpan.FromMilliseconds(200));
+
+            lastServerMessage = server.LastMessageReceived;
+            server.LastMessageReceived = null;
+
+            Assert.IsNotNull(lastServerMessage);
+            Assert.IsTrue(await server.SendMessageAll($"{lastServerMessage.Id}{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}DOWNLOAD_PROGRAM{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}"));
+            Assert.IsNull(downloadTask.Result);
+
+
+            downloadTask = programDownloadCommand.RequestDataForProgram("example-program", new CancellationTokenSource(TimeSpan.FromMilliseconds(800)).Token);
+
+            await Task.Delay(TimeSpan.FromMilliseconds(200));
+
+            lastServerMessage = server.LastMessageReceived;
+            server.LastMessageReceived = null;
+
+            Assert.IsNotNull(lastServerMessage);
+            Assert.IsTrue(await server.SendMessageAll($"{lastServerMessage.Id}{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}DOWNLOAD_PROGRAM{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}data{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}more data"));
+            Assert.IsNull(downloadTask.Result);
+
+
+            Assert.IsTrue(await server.Stop());
+        }
     }
 }

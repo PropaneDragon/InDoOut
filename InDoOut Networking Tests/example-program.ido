@@ -1,0 +1,2588 @@
+﻿{
+  "id": "10fad528-5fa3-484c-8c0a-f354272c8379",
+  "functions": [
+    {
+      "id": "0c869365-6617-4a61-a257-88f9cac87bbc",
+      "class": "InDoOut_Core_Plugins.Start.GenericStartFunction, InDoOut Core Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "metadata": {
+        "x": "1430",
+        "y": "2821.5"
+      }
+    },
+    {
+      "id": "625bf025-6a0e-4dc4-973c-8f07b4b6ed73",
+      "class": "InDoOut_Philips_Hue_Plugins.ConnectToBridgeFunction, InDoOut Philips Hue Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "metadata": {
+        "x": "1247",
+        "y": "2188.5"
+      }
+    },
+    {
+      "id": "9681e854-f208-48d8-ab71-62da17aab154",
+      "class": "InDoOut_Core_Plugins.Time.WaitFunction, InDoOut Core Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "metadata": {
+        "x": "931",
+        "y": "2036.5"
+      }
+    },
+    {
+      "id": "bbaed71a-993f-47cc-af53-8f325ed643a4",
+      "class": "InDoOut_Philips_Hue_Plugins.GetSensorPresenceFunction, InDoOut Philips Hue Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "metadata": {
+        "x": "2697",
+        "y": "2075.5"
+      }
+    },
+    {
+      "id": "3e94df7f-0b63-4765-8e45-d9bd0efd1f4c",
+      "class": "InDoOut_Philips_Hue_Plugins.GetGroupByNameFunction, InDoOut Philips Hue Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "metadata": {
+        "x": "3051",
+        "y": "2202.5"
+      }
+    },
+    {
+      "id": "0c8a6e83-f657-483e-9b0f-0904c6972ec6",
+      "class": "InDoOut_Core_Plugins.Maths.AddFunction, InDoOut Core Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "metadata": {
+        "x": "2305",
+        "y": "2447.5"
+      }
+    },
+    {
+      "id": "c0a7d15a-e08e-4b59-b326-a0993ac1cfbc",
+      "class": "InDoOut_Core_Plugins.Time.WaitFunction, InDoOut Core Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "metadata": {
+        "x": "1847",
+        "y": "2149.5"
+      }
+    },
+    {
+      "id": "124d1a57-ab34-420f-86b6-79c99de5d493",
+      "class": "InDoOut_Philips_Hue_Plugins.ForEachLightFunction, InDoOut Philips Hue Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "metadata": {
+        "x": "3590",
+        "y": "2226.5"
+      }
+    },
+    {
+      "id": "58f75d91-d770-426b-ac47-08d08859e88f",
+      "class": "InDoOut_Philips_Hue_Plugins.IsLightOnFunction, InDoOut Philips Hue Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "metadata": {
+        "x": "3942",
+        "y": "1914.5"
+      }
+    },
+    {
+      "id": "25ab0da4-e5e3-45c3-86f7-f71773a928e7",
+      "class": "InDoOut_Core_Plugins.Variables.SetValueFunction, InDoOut Core Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "metadata": {
+        "x": "3301",
+        "y": "1986.5"
+      }
+    },
+    {
+      "id": "5beab4d5-4cac-4579-8b78-9a14bdc89c4f",
+      "class": "InDoOut_Core_Plugins.Maths.AddFunction, InDoOut Core Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "metadata": {
+        "x": "4271",
+        "y": "2009.5"
+      }
+    },
+    {
+      "id": "64e5a3e2-9e55-4e23-afe5-b90bd124c3c0",
+      "class": "InDoOut_Core_Plugins.Numeric.GreaterThanFunction, InDoOut Core Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "metadata": {
+        "x": "3916",
+        "y": "2447.5"
+      }
+    },
+    {
+      "id": "d7eeff07-9e27-41e5-b149-bc5a5083840c",
+      "class": "InDoOut_Philips_Hue_Plugins.GetSensorBrightnessFunction, InDoOut Philips Hue Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "metadata": {
+        "x": "4266",
+        "y": "2297.5"
+      }
+    },
+    {
+      "id": "1197bd17-aa95-4e9f-a16f-7774a70fec27",
+      "class": "InDoOut_Philips_Hue_Plugins.GetGroupByNameFunction, InDoOut Philips Hue Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "metadata": {
+        "x": "5313",
+        "y": "2945.5"
+      }
+    },
+    {
+      "id": "bab9d4a3-5a4c-41b1-acf8-2142258fb3d4",
+      "class": "InDoOut_Core_Plugins.Variables.SetValueFunction, InDoOut Core Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "metadata": {
+        "x": "5711",
+        "y": "2663.5"
+      }
+    },
+    {
+      "id": "3d765964-abf4-4d95-8a2a-060f5962ec99",
+      "class": "InDoOut_Philips_Hue_Plugins.ForEachLightFunction, InDoOut Philips Hue Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "metadata": {
+        "x": "6140",
+        "y": "2794.5"
+      }
+    },
+    {
+      "id": "6d953923-3997-4286-ac90-5dc1c6f45593",
+      "class": "InDoOut_Philips_Hue_Plugins.TurnLightOnFunction, InDoOut Philips Hue Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "metadata": {
+        "x": "6486",
+        "y": "2576.5"
+      }
+    },
+    {
+      "id": "4ac3d7a1-f9f5-4697-9749-bca3f0fa0f03",
+      "class": "InDoOut_Core_Plugins.Numeric.EqualToFunction, InDoOut Core Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "metadata": {
+        "x": "3165",
+        "y": "3166.5"
+      }
+    },
+    {
+      "id": "e86cac12-8475-4cba-928b-8e381f8b83f5",
+      "class": "InDoOut_Philips_Hue_Plugins.GetGroupByNameFunction, InDoOut Philips Hue Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "metadata": {
+        "x": "3501",
+        "y": "3392.5"
+      }
+    },
+    {
+      "id": "adfde312-a343-41bf-b02f-dbe25c779e41",
+      "class": "InDoOut_Philips_Hue_Plugins.ForEachLightFunction, InDoOut Philips Hue Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "metadata": {
+        "x": "3802",
+        "y": "3585.5"
+      }
+    },
+    {
+      "id": "4a8f58f0-aafb-4d13-94ee-4643de2b2fca",
+      "class": "InDoOut_Philips_Hue_Plugins.LightOffFunction, InDoOut Philips Hue Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "metadata": {
+        "x": "4088",
+        "y": "3583.5"
+      }
+    },
+    {
+      "id": "aec1eb88-6a82-4cd4-9149-cacfe901a376",
+      "class": "InDoOut_Philips_Hue_Plugins.GetSensorByNameFunction, InDoOut Philips Hue Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "metadata": {
+        "x": "2387",
+        "y": "1966.5"
+      }
+    },
+    {
+      "id": "88738885-d209-4a39-83dc-840b3c72d996",
+      "class": "InDoOut_Core_Plugins.Maths.SubtractFunction, InDoOut Core Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "metadata": {
+        "x": "4610",
+        "y": "2382.5"
+      }
+    },
+    {
+      "id": "777991c9-bf15-4530-b680-055299b542cb",
+      "class": "InDoOut_Core_Plugins.Numeric.GreaterThanFunction, InDoOut Core Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "metadata": {
+        "x": "4903",
+        "y": "2387.5"
+      }
+    },
+    {
+      "id": "f097b00c-5275-4a4a-b6fa-69a1955ba726",
+      "class": "InDoOut_Core_Plugins.Maths.DivideFunction, InDoOut Core Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "metadata": {
+        "x": "5185",
+        "y": "2402.5"
+      }
+    },
+    {
+      "id": "77566dee-2737-42ab-a1c7-8ac095b98cca",
+      "class": "InDoOut_Core_Plugins.Maths.MultiplyFunction, InDoOut Core Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "metadata": {
+        "x": "5464",
+        "y": "2448.5"
+      }
+    },
+    {
+      "id": "c6c482ea-a2f7-4a31-994b-8af781c855cc",
+      "class": "InDoOut_Core_Plugins.Miscellaneous.RelayFunction, InDoOut Core Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "metadata": {
+        "x": "3891",
+        "y": "2881.5"
+      }
+    },
+    {
+      "id": "2da95c18-5cff-4b1c-b530-afcdcc23e53f",
+      "class": "InDoOut_Core_Plugins.Miscellaneous.RelayFunction, InDoOut Core Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "metadata": {
+        "x": "2901",
+        "y": "3563.5"
+      }
+    },
+    {
+      "id": "92663a60-0e61-4db2-8d05-6c589521bd81",
+      "class": "InDoOut_Core_Plugins.Variables.SetValueFunction, InDoOut Core Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "metadata": {
+        "x": "1756",
+        "y": "2769.5"
+      }
+    },
+    {
+      "id": "fa697b21-92d1-4cee-ae6e-cc6c097d7cdd",
+      "class": "InDoOut_Core_Plugins.Variables.SetValueFunction, InDoOut Core Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "metadata": {
+        "x": "2299",
+        "y": "2794.5"
+      }
+    },
+    {
+      "id": "213d6464-ba62-4c27-9b37-ce916fe8840d",
+      "class": "InDoOut_Core_Plugins.Variables.SetValueFunction, InDoOut Core Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "metadata": {
+        "x": "4265",
+        "y": "2985.5"
+      }
+    },
+    {
+      "id": "b2b0602a-b4ff-41df-9fcf-3517c56efd91",
+      "class": "InDoOut_Core_Plugins.Numeric.EqualToFunction, InDoOut Core Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "metadata": {
+        "x": "3484",
+        "y": "2954.5"
+      }
+    }
+  ],
+  "connections": [
+    {
+      "type": 1,
+      "output": "Program started",
+      "input": "Set",
+      "startId": "0c869365-6617-4a61-a257-88f9cac87bbc",
+      "endId": "92663a60-0e61-4db2-8d05-6c589521bd81",
+      "inputMetadata": {
+        "x": "1766",
+        "y": "2782.8",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "1440",
+        "y": "2865.44",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Connected",
+      "input": "Find sensor",
+      "startId": "625bf025-6a0e-4dc4-973c-8f07b4b6ed73",
+      "endId": "aec1eb88-6a82-4cd4-9149-cacfe901a376",
+      "inputMetadata": {
+        "x": "2397",
+        "y": "2067.64",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "1257",
+        "y": "2276.36",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Connection failed",
+      "input": "Start waiting",
+      "startId": "625bf025-6a0e-4dc4-973c-8f07b4b6ed73",
+      "endId": "9681e854-f208-48d8-ab71-62da17aab154",
+      "inputMetadata": {
+        "x": "941",
+        "y": "2225.48",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "1257",
+        "y": "2306.98",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Press sync button",
+      "input": "Start waiting",
+      "startId": "625bf025-6a0e-4dc4-973c-8f07b4b6ed73",
+      "endId": "9681e854-f208-48d8-ab71-62da17aab154",
+      "inputMetadata": {
+        "x": "941",
+        "y": "2225.48",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "1257",
+        "y": "2337.6",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 2,
+      "output": "Bridge IP *",
+      "input": "Bridge IP",
+      "startId": "625bf025-6a0e-4dc4-973c-8f07b4b6ed73",
+      "endId": "aec1eb88-6a82-4cd4-9149-cacfe901a376",
+      "inputMetadata": {
+        "x": "2397",
+        "y": "1966.5",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "1257",
+        "y": "2276.36",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 2,
+      "output": "User ID",
+      "input": "User ID",
+      "startId": "625bf025-6a0e-4dc4-973c-8f07b4b6ed73",
+      "endId": "aec1eb88-6a82-4cd4-9149-cacfe901a376",
+      "inputMetadata": {
+        "x": "2397",
+        "y": "2010.42",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "1257",
+        "y": "2320.28",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Wait complete",
+      "input": "Connect",
+      "startId": "9681e854-f208-48d8-ab71-62da17aab154",
+      "endId": "625bf025-6a0e-4dc4-973c-8f07b4b6ed73",
+      "inputMetadata": {
+        "x": "1257",
+        "y": "2201.8",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "941",
+        "y": "2300.04",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Someone present",
+      "input": "Find group",
+      "startId": "bbaed71a-993f-47cc-af53-8f325ed643a4",
+      "endId": "3e94df7f-0b63-4765-8e45-d9bd0efd1f4c",
+      "inputMetadata": {
+        "x": "3061",
+        "y": "2303.64",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "2707",
+        "y": "2275.14",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 1,
+      "output": "No one present",
+      "input": "Compare",
+      "startId": "bbaed71a-993f-47cc-af53-8f325ed643a4",
+      "endId": "b2b0602a-b4ff-41df-9fcf-3517c56efd91",
+      "inputMetadata": {
+        "x": "3494",
+        "y": "3011.72",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "2707",
+        "y": "2305.76",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Sensor error",
+      "input": "Start waiting",
+      "startId": "bbaed71a-993f-47cc-af53-8f325ed643a4",
+      "endId": "c0a7d15a-e08e-4b59-b326-a0993ac1cfbc",
+      "inputMetadata": {
+        "x": "1857",
+        "y": "2338.48",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "2707",
+        "y": "2336.38",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 2,
+      "output": "Bridge IP *",
+      "input": "Bridge IP",
+      "startId": "bbaed71a-993f-47cc-af53-8f325ed643a4",
+      "endId": "3e94df7f-0b63-4765-8e45-d9bd0efd1f4c",
+      "inputMetadata": {
+        "x": "3061",
+        "y": "2202.5",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "2707",
+        "y": "2275.14",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 2,
+      "output": "Bridge IP *",
+      "input": "Bridge IP",
+      "startId": "bbaed71a-993f-47cc-af53-8f325ed643a4",
+      "endId": "e86cac12-8475-4cba-928b-8e381f8b83f5",
+      "inputMetadata": {
+        "x": "3511",
+        "y": "3392.5",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "2707",
+        "y": "2275.14",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 2,
+      "output": "User ID *",
+      "input": "User ID",
+      "startId": "bbaed71a-993f-47cc-af53-8f325ed643a4",
+      "endId": "3e94df7f-0b63-4765-8e45-d9bd0efd1f4c",
+      "inputMetadata": {
+        "x": "3061",
+        "y": "2246.42",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "2707",
+        "y": "2319.06",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 2,
+      "output": "User ID *",
+      "input": "User ID",
+      "startId": "bbaed71a-993f-47cc-af53-8f325ed643a4",
+      "endId": "e86cac12-8475-4cba-928b-8e381f8b83f5",
+      "inputMetadata": {
+        "x": "3511",
+        "y": "3436.42",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "2707",
+        "y": "2319.06",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 2,
+      "output": "Sensor ID *",
+      "input": "Sensor ID",
+      "startId": "bbaed71a-993f-47cc-af53-8f325ed643a4",
+      "endId": "d7eeff07-9e27-41e5-b149-bc5a5083840c",
+      "inputMetadata": {
+        "x": "4276",
+        "y": "2385.34",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "2707",
+        "y": "2362.98",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Group found",
+      "input": "Set",
+      "startId": "3e94df7f-0b63-4765-8e45-d9bd0efd1f4c",
+      "endId": "25ab0da4-e5e3-45c3-86f7-f71773a928e7",
+      "inputMetadata": {
+        "x": "3311",
+        "y": "1999.8",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "3061",
+        "y": "2402.14",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Group invalid",
+      "input": "Start waiting",
+      "startId": "3e94df7f-0b63-4765-8e45-d9bd0efd1f4c",
+      "endId": "c0a7d15a-e08e-4b59-b326-a0993ac1cfbc",
+      "inputMetadata": {
+        "x": "1857",
+        "y": "2338.48",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "3061",
+        "y": "2432.76",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 2,
+      "output": "Bridge IP *",
+      "input": "Bridge IP",
+      "startId": "3e94df7f-0b63-4765-8e45-d9bd0efd1f4c",
+      "endId": "124d1a57-ab34-420f-86b6-79c99de5d493",
+      "inputMetadata": {
+        "x": "3600",
+        "y": "2226.5",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "3061",
+        "y": "2402.14",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 2,
+      "output": "User ID *",
+      "input": "User ID",
+      "startId": "3e94df7f-0b63-4765-8e45-d9bd0efd1f4c",
+      "endId": "124d1a57-ab34-420f-86b6-79c99de5d493",
+      "inputMetadata": {
+        "x": "3600",
+        "y": "2270.42",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "3061",
+        "y": "2446.06",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 2,
+      "output": "Group name *",
+      "input": "Group name",
+      "startId": "3e94df7f-0b63-4765-8e45-d9bd0efd1f4c",
+      "endId": "1197bd17-aa95-4e9f-a16f-7774a70fec27",
+      "inputMetadata": {
+        "x": "5323",
+        "y": "3033.34",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "3061",
+        "y": "2489.98",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 2,
+      "output": "Group ID",
+      "input": "Group ID",
+      "startId": "3e94df7f-0b63-4765-8e45-d9bd0efd1f4c",
+      "endId": "124d1a57-ab34-420f-86b6-79c99de5d493",
+      "inputMetadata": {
+        "x": "3600",
+        "y": "2314.34",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "3061",
+        "y": "2533.9",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Calculated",
+      "input": "Start waiting",
+      "startId": "0c8a6e83-f657-483e-9b0f-0904c6972ec6",
+      "endId": "c0a7d15a-e08e-4b59-b326-a0993ac1cfbc",
+      "inputMetadata": {
+        "x": "1857",
+        "y": "2338.48",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "2315",
+        "y": "2579.28",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Calculation failed",
+      "input": "Start waiting",
+      "startId": "0c8a6e83-f657-483e-9b0f-0904c6972ec6",
+      "endId": "c0a7d15a-e08e-4b59-b326-a0993ac1cfbc",
+      "inputMetadata": {
+        "x": "1857",
+        "y": "2338.48",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "2315",
+        "y": "2609.9",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 2,
+      "output": "Result value",
+      "input": "Second number",
+      "startId": "0c8a6e83-f657-483e-9b0f-0904c6972ec6",
+      "endId": "0c8a6e83-f657-483e-9b0f-0904c6972ec6",
+      "inputMetadata": {
+        "x": "2315",
+        "y": "2491.42",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "2315",
+        "y": "2667.12",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 2,
+      "output": "Result value",
+      "input": "First number",
+      "startId": "0c8a6e83-f657-483e-9b0f-0904c6972ec6",
+      "endId": "4ac3d7a1-f9f5-4697-9749-bca3f0fa0f03",
+      "inputMetadata": {
+        "x": "3175",
+        "y": "3166.5",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "2315",
+        "y": "2667.12",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 2,
+      "output": "Result value",
+      "input": "First number",
+      "startId": "0c8a6e83-f657-483e-9b0f-0904c6972ec6",
+      "endId": "b2b0602a-b4ff-41df-9fcf-3517c56efd91",
+      "inputMetadata": {
+        "x": "3494",
+        "y": "2954.5",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "2315",
+        "y": "2667.12",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Wait complete",
+      "input": "Find sensor",
+      "startId": "c0a7d15a-e08e-4b59-b326-a0993ac1cfbc",
+      "endId": "aec1eb88-6a82-4cd4-9149-cacfe901a376",
+      "inputMetadata": {
+        "x": "2397",
+        "y": "2067.64",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "1857",
+        "y": "2413.04",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 1,
+      "output": "New item",
+      "input": "Check light",
+      "startId": "124d1a57-ab34-420f-86b6-79c99de5d493",
+      "endId": "58f75d91-d770-426b-ac47-08d08859e88f",
+      "inputMetadata": {
+        "x": "3952",
+        "y": "2015.6399999999999",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "3600",
+        "y": "2446.12",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Complete",
+      "input": "Compare",
+      "startId": "124d1a57-ab34-420f-86b6-79c99de5d493",
+      "endId": "64e5a3e2-9e55-4e23-afe5-b90bd124c3c0",
+      "inputMetadata": {
+        "x": "3926",
+        "y": "2504.72",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "3600",
+        "y": "2476.74",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 2,
+      "output": "Bridge IP *",
+      "input": "Bridge IP",
+      "startId": "124d1a57-ab34-420f-86b6-79c99de5d493",
+      "endId": "58f75d91-d770-426b-ac47-08d08859e88f",
+      "inputMetadata": {
+        "x": "3952",
+        "y": "1914.5",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "3600",
+        "y": "2490.04",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 2,
+      "output": "Bridge IP *",
+      "input": "Bridge IP",
+      "startId": "124d1a57-ab34-420f-86b6-79c99de5d493",
+      "endId": "d7eeff07-9e27-41e5-b149-bc5a5083840c",
+      "inputMetadata": {
+        "x": "4276",
+        "y": "2297.5",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "3600",
+        "y": "2490.04",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 2,
+      "output": "User ID *",
+      "input": "User ID",
+      "startId": "124d1a57-ab34-420f-86b6-79c99de5d493",
+      "endId": "58f75d91-d770-426b-ac47-08d08859e88f",
+      "inputMetadata": {
+        "x": "3952",
+        "y": "1958.42",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "3600",
+        "y": "2533.96",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 2,
+      "output": "User ID *",
+      "input": "User ID",
+      "startId": "124d1a57-ab34-420f-86b6-79c99de5d493",
+      "endId": "d7eeff07-9e27-41e5-b149-bc5a5083840c",
+      "inputMetadata": {
+        "x": "4276",
+        "y": "2341.42",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "3600",
+        "y": "2533.96",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 2,
+      "output": "Light ID",
+      "input": "Light ID",
+      "startId": "124d1a57-ab34-420f-86b6-79c99de5d493",
+      "endId": "58f75d91-d770-426b-ac47-08d08859e88f",
+      "inputMetadata": {
+        "x": "3952",
+        "y": "2002.34",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "3600",
+        "y": "2665.7200000000003",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Light is on",
+      "input": "Calculate",
+      "startId": "58f75d91-d770-426b-ac47-08d08859e88f",
+      "endId": "5beab4d5-4cac-4579-8b78-9a14bdc89c4f",
+      "inputMetadata": {
+        "x": "4281",
+        "y": "2066.72",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "3952",
+        "y": "2090.2",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Light is off",
+      "input": "Next item",
+      "startId": "58f75d91-d770-426b-ac47-08d08859e88f",
+      "endId": "124d1a57-ab34-420f-86b6-79c99de5d493",
+      "inputMetadata": {
+        "x": "3600",
+        "y": "2371.56",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "3952",
+        "y": "2120.82",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Light error",
+      "input": "Next item",
+      "startId": "58f75d91-d770-426b-ac47-08d08859e88f",
+      "endId": "124d1a57-ab34-420f-86b6-79c99de5d493",
+      "inputMetadata": {
+        "x": "3600",
+        "y": "2371.56",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "3952",
+        "y": "2151.44",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Value is set",
+      "input": "First item",
+      "startId": "25ab0da4-e5e3-45c3-86f7-f71773a928e7",
+      "endId": "124d1a57-ab34-420f-86b6-79c99de5d493",
+      "inputMetadata": {
+        "x": "3600",
+        "y": "2340.94",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "3311",
+        "y": "2074.36",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 2,
+      "output": "Value out",
+      "input": "Second number",
+      "startId": "25ab0da4-e5e3-45c3-86f7-f71773a928e7",
+      "endId": "5beab4d5-4cac-4579-8b78-9a14bdc89c4f",
+      "inputMetadata": {
+        "x": "4281",
+        "y": "2053.42",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "3311",
+        "y": "2074.36",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 2,
+      "output": "Value out",
+      "input": "First number",
+      "startId": "25ab0da4-e5e3-45c3-86f7-f71773a928e7",
+      "endId": "64e5a3e2-9e55-4e23-afe5-b90bd124c3c0",
+      "inputMetadata": {
+        "x": "3926",
+        "y": "2447.5",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "3311",
+        "y": "2074.36",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 2,
+      "output": "Value out",
+      "input": "Second number",
+      "startId": "25ab0da4-e5e3-45c3-86f7-f71773a928e7",
+      "endId": "0c8a6e83-f657-483e-9b0f-0904c6972ec6",
+      "inputMetadata": {
+        "x": "2315",
+        "y": "2491.42",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "3311",
+        "y": "2074.36",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Calculated",
+      "input": "Next item",
+      "startId": "5beab4d5-4cac-4579-8b78-9a14bdc89c4f",
+      "endId": "124d1a57-ab34-420f-86b6-79c99de5d493",
+      "inputMetadata": {
+        "x": "3600",
+        "y": "2371.56",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "4281",
+        "y": "2141.28",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Calculation failed",
+      "input": "Next item",
+      "startId": "5beab4d5-4cac-4579-8b78-9a14bdc89c4f",
+      "endId": "124d1a57-ab34-420f-86b6-79c99de5d493",
+      "inputMetadata": {
+        "x": "3600",
+        "y": "2371.56",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "4281",
+        "y": "2171.9",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 2,
+      "output": "Result value",
+      "input": "Second number",
+      "startId": "5beab4d5-4cac-4579-8b78-9a14bdc89c4f",
+      "endId": "5beab4d5-4cac-4579-8b78-9a14bdc89c4f",
+      "inputMetadata": {
+        "x": "4281",
+        "y": "2053.42",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "4281",
+        "y": "2229.12",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 2,
+      "output": "Result value",
+      "input": "First number",
+      "startId": "5beab4d5-4cac-4579-8b78-9a14bdc89c4f",
+      "endId": "64e5a3e2-9e55-4e23-afe5-b90bd124c3c0",
+      "inputMetadata": {
+        "x": "3926",
+        "y": "2447.5",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "4281",
+        "y": "2229.12",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 1,
+      "output": "First number is more",
+      "input": "Calculate",
+      "startId": "64e5a3e2-9e55-4e23-afe5-b90bd124c3c0",
+      "endId": "0c8a6e83-f657-483e-9b0f-0904c6972ec6",
+      "inputMetadata": {
+        "x": "2315",
+        "y": "2504.72",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "3926",
+        "y": "2579.28",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 1,
+      "output": "First number not more",
+      "input": "Check room brightness",
+      "startId": "64e5a3e2-9e55-4e23-afe5-b90bd124c3c0",
+      "endId": "d7eeff07-9e27-41e5-b149-bc5a5083840c",
+      "inputMetadata": {
+        "x": "4276",
+        "y": "2398.64",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "3926",
+        "y": "2609.9",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Room is light",
+      "input": "Input",
+      "startId": "d7eeff07-9e27-41e5-b149-bc5a5083840c",
+      "endId": "c6c482ea-a2f7-4a31-994b-8af781c855cc",
+      "inputMetadata": {
+        "x": "3901",
+        "y": "2881.5",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "4276",
+        "y": "2497.14",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Room is dark",
+      "input": "Calculate",
+      "startId": "d7eeff07-9e27-41e5-b149-bc5a5083840c",
+      "endId": "88738885-d209-4a39-83dc-840b3c72d996",
+      "inputMetadata": {
+        "x": "4620",
+        "y": "2439.72",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "4276",
+        "y": "2527.76",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Sensor error",
+      "input": "Input",
+      "startId": "d7eeff07-9e27-41e5-b149-bc5a5083840c",
+      "endId": "c6c482ea-a2f7-4a31-994b-8af781c855cc",
+      "inputMetadata": {
+        "x": "3901",
+        "y": "2881.5",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "4276",
+        "y": "2558.38",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 2,
+      "output": "Bridge IP *",
+      "input": "Bridge IP",
+      "startId": "d7eeff07-9e27-41e5-b149-bc5a5083840c",
+      "endId": "1197bd17-aa95-4e9f-a16f-7774a70fec27",
+      "inputMetadata": {
+        "x": "5323",
+        "y": "2945.5",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "4276",
+        "y": "2497.14",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 2,
+      "output": "User ID *",
+      "input": "User ID",
+      "startId": "d7eeff07-9e27-41e5-b149-bc5a5083840c",
+      "endId": "1197bd17-aa95-4e9f-a16f-7774a70fec27",
+      "inputMetadata": {
+        "x": "5323",
+        "y": "2989.42",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "4276",
+        "y": "2541.06",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 2,
+      "output": "Light level (lux)",
+      "input": "Second number",
+      "startId": "d7eeff07-9e27-41e5-b149-bc5a5083840c",
+      "endId": "88738885-d209-4a39-83dc-840b3c72d996",
+      "inputMetadata": {
+        "x": "4620",
+        "y": "2426.42",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "4276",
+        "y": "2628.9",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Group found",
+      "input": "First item",
+      "startId": "1197bd17-aa95-4e9f-a16f-7774a70fec27",
+      "endId": "3d765964-abf4-4d95-8a2a-060f5962ec99",
+      "inputMetadata": {
+        "x": "6150",
+        "y": "2908.94",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "5323",
+        "y": "3145.14",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Group invalid",
+      "input": "Input",
+      "startId": "1197bd17-aa95-4e9f-a16f-7774a70fec27",
+      "endId": "c6c482ea-a2f7-4a31-994b-8af781c855cc",
+      "inputMetadata": {
+        "x": "3901",
+        "y": "2881.5",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "5323",
+        "y": "3175.76",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 2,
+      "output": "Bridge IP *",
+      "input": "Bridge IP",
+      "startId": "1197bd17-aa95-4e9f-a16f-7774a70fec27",
+      "endId": "3d765964-abf4-4d95-8a2a-060f5962ec99",
+      "inputMetadata": {
+        "x": "6150",
+        "y": "2794.5",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "5323",
+        "y": "3145.14",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 2,
+      "output": "User ID *",
+      "input": "User ID",
+      "startId": "1197bd17-aa95-4e9f-a16f-7774a70fec27",
+      "endId": "3d765964-abf4-4d95-8a2a-060f5962ec99",
+      "inputMetadata": {
+        "x": "6150",
+        "y": "2838.42",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "5323",
+        "y": "3189.06",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 2,
+      "output": "Group ID",
+      "input": "Group ID",
+      "startId": "1197bd17-aa95-4e9f-a16f-7774a70fec27",
+      "endId": "3d765964-abf4-4d95-8a2a-060f5962ec99",
+      "inputMetadata": {
+        "x": "6150",
+        "y": "2882.34",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "5323",
+        "y": "3276.9",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Value is set",
+      "input": "Find group",
+      "startId": "bab9d4a3-5a4c-41b1-acf8-2142258fb3d4",
+      "endId": "1197bd17-aa95-4e9f-a16f-7774a70fec27",
+      "inputMetadata": {
+        "x": "5323",
+        "y": "3046.64",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "5721",
+        "y": "2751.36",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 2,
+      "output": "Value out",
+      "input": "Brightness (%)",
+      "startId": "bab9d4a3-5a4c-41b1-acf8-2142258fb3d4",
+      "endId": "6d953923-3997-4286-ac90-5dc1c6f45593",
+      "inputMetadata": {
+        "x": "6496",
+        "y": "2752.18",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "5721",
+        "y": "2751.36",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 1,
+      "output": "New item",
+      "input": "Turn light on",
+      "startId": "3d765964-abf4-4d95-8a2a-060f5962ec99",
+      "endId": "6d953923-3997-4286-ac90-5dc1c6f45593",
+      "inputMetadata": {
+        "x": "6496",
+        "y": "2765.48",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "6150",
+        "y": "3014.12",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Complete",
+      "input": "Input",
+      "startId": "3d765964-abf4-4d95-8a2a-060f5962ec99",
+      "endId": "c6c482ea-a2f7-4a31-994b-8af781c855cc",
+      "inputMetadata": {
+        "x": "3901",
+        "y": "2881.5",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "6150",
+        "y": "3044.74",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 2,
+      "output": "Bridge IP *",
+      "input": "Bridge IP",
+      "startId": "3d765964-abf4-4d95-8a2a-060f5962ec99",
+      "endId": "6d953923-3997-4286-ac90-5dc1c6f45593",
+      "inputMetadata": {
+        "x": "6496",
+        "y": "2576.5",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "6150",
+        "y": "3058.04",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 2,
+      "output": "User ID *",
+      "input": "User ID",
+      "startId": "3d765964-abf4-4d95-8a2a-060f5962ec99",
+      "endId": "6d953923-3997-4286-ac90-5dc1c6f45593",
+      "inputMetadata": {
+        "x": "6496",
+        "y": "2620.42",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "6150",
+        "y": "3101.96",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 2,
+      "output": "Light ID",
+      "input": "Light ID",
+      "startId": "3d765964-abf4-4d95-8a2a-060f5962ec99",
+      "endId": "6d953923-3997-4286-ac90-5dc1c6f45593",
+      "inputMetadata": {
+        "x": "6496",
+        "y": "2664.34",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "6150",
+        "y": "3233.7200000000003",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Light turned on",
+      "input": "Next item",
+      "startId": "6d953923-3997-4286-ac90-5dc1c6f45593",
+      "endId": "3d765964-abf4-4d95-8a2a-060f5962ec99",
+      "inputMetadata": {
+        "x": "6150",
+        "y": "2939.56",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "6496",
+        "y": "2840.04",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Light error",
+      "input": "Next item",
+      "startId": "6d953923-3997-4286-ac90-5dc1c6f45593",
+      "endId": "3d765964-abf4-4d95-8a2a-060f5962ec99",
+      "inputMetadata": {
+        "x": "6150",
+        "y": "2939.56",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "6496",
+        "y": "2870.66",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Numbers are equal",
+      "input": "Find group",
+      "startId": "4ac3d7a1-f9f5-4697-9749-bca3f0fa0f03",
+      "endId": "e86cac12-8475-4cba-928b-8e381f8b83f5",
+      "inputMetadata": {
+        "x": "3511",
+        "y": "3493.64",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "3175",
+        "y": "3298.28",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Numbers are different",
+      "input": "Input",
+      "startId": "4ac3d7a1-f9f5-4697-9749-bca3f0fa0f03",
+      "endId": "2da95c18-5cff-4b1c-b530-afcdcc23e53f",
+      "inputMetadata": {
+        "x": "2911",
+        "y": "3563.5",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "3175",
+        "y": "3328.9",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Group found",
+      "input": "First item",
+      "startId": "e86cac12-8475-4cba-928b-8e381f8b83f5",
+      "endId": "adfde312-a343-41bf-b02f-dbe25c779e41",
+      "inputMetadata": {
+        "x": "3812",
+        "y": "3699.94",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "3511",
+        "y": "3592.14",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Group invalid",
+      "input": "Input",
+      "startId": "e86cac12-8475-4cba-928b-8e381f8b83f5",
+      "endId": "2da95c18-5cff-4b1c-b530-afcdcc23e53f",
+      "inputMetadata": {
+        "x": "2911",
+        "y": "3563.5",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "3511",
+        "y": "3622.76",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 2,
+      "output": "Bridge IP *",
+      "input": "Bridge IP",
+      "startId": "e86cac12-8475-4cba-928b-8e381f8b83f5",
+      "endId": "adfde312-a343-41bf-b02f-dbe25c779e41",
+      "inputMetadata": {
+        "x": "3812",
+        "y": "3585.5",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "3511",
+        "y": "3592.14",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 2,
+      "output": "Bridge IP *",
+      "input": "Bridge IP",
+      "startId": "e86cac12-8475-4cba-928b-8e381f8b83f5",
+      "endId": "1197bd17-aa95-4e9f-a16f-7774a70fec27",
+      "inputMetadata": {
+        "x": "5323",
+        "y": "2945.5",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "3511",
+        "y": "3592.14",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 2,
+      "output": "User ID *",
+      "input": "User ID",
+      "startId": "e86cac12-8475-4cba-928b-8e381f8b83f5",
+      "endId": "adfde312-a343-41bf-b02f-dbe25c779e41",
+      "inputMetadata": {
+        "x": "3812",
+        "y": "3629.42",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "3511",
+        "y": "3636.06",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 2,
+      "output": "User ID *",
+      "input": "User ID",
+      "startId": "e86cac12-8475-4cba-928b-8e381f8b83f5",
+      "endId": "1197bd17-aa95-4e9f-a16f-7774a70fec27",
+      "inputMetadata": {
+        "x": "5323",
+        "y": "2989.42",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "3511",
+        "y": "3636.06",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 2,
+      "output": "Group ID",
+      "input": "Group ID",
+      "startId": "e86cac12-8475-4cba-928b-8e381f8b83f5",
+      "endId": "adfde312-a343-41bf-b02f-dbe25c779e41",
+      "inputMetadata": {
+        "x": "3812",
+        "y": "3673.34",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "3511",
+        "y": "3723.9",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 1,
+      "output": "New item",
+      "input": "Turn light off",
+      "startId": "adfde312-a343-41bf-b02f-dbe25c779e41",
+      "endId": "4a8f58f0-aafb-4d13-94ee-4643de2b2fca",
+      "inputMetadata": {
+        "x": "4098",
+        "y": "3728.56",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "3812",
+        "y": "3805.12",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Complete",
+      "input": "Input",
+      "startId": "adfde312-a343-41bf-b02f-dbe25c779e41",
+      "endId": "2da95c18-5cff-4b1c-b530-afcdcc23e53f",
+      "inputMetadata": {
+        "x": "2911",
+        "y": "3563.5",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "3812",
+        "y": "3835.74",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 2,
+      "output": "Bridge IP *",
+      "input": "Bridge IP",
+      "startId": "adfde312-a343-41bf-b02f-dbe25c779e41",
+      "endId": "4a8f58f0-aafb-4d13-94ee-4643de2b2fca",
+      "inputMetadata": {
+        "x": "4098",
+        "y": "3583.5",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "3812",
+        "y": "3849.04",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 2,
+      "output": "User ID *",
+      "input": "User ID",
+      "startId": "adfde312-a343-41bf-b02f-dbe25c779e41",
+      "endId": "4a8f58f0-aafb-4d13-94ee-4643de2b2fca",
+      "inputMetadata": {
+        "x": "4098",
+        "y": "3627.42",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "3812",
+        "y": "3892.96",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 2,
+      "output": "Light ID",
+      "input": "Light ID",
+      "startId": "adfde312-a343-41bf-b02f-dbe25c779e41",
+      "endId": "4a8f58f0-aafb-4d13-94ee-4643de2b2fca",
+      "inputMetadata": {
+        "x": "4098",
+        "y": "3671.34",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "3812",
+        "y": "4024.7200000000003",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Light turned off",
+      "input": "Next item",
+      "startId": "4a8f58f0-aafb-4d13-94ee-4643de2b2fca",
+      "endId": "adfde312-a343-41bf-b02f-dbe25c779e41",
+      "inputMetadata": {
+        "x": "3812",
+        "y": "3730.56",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "4098",
+        "y": "3803.12",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Light error",
+      "input": "Next item",
+      "startId": "4a8f58f0-aafb-4d13-94ee-4643de2b2fca",
+      "endId": "adfde312-a343-41bf-b02f-dbe25c779e41",
+      "inputMetadata": {
+        "x": "3812",
+        "y": "3730.56",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "4098",
+        "y": "3833.74",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Sensor found",
+      "input": "Check for presence",
+      "startId": "aec1eb88-6a82-4cd4-9149-cacfe901a376",
+      "endId": "bbaed71a-993f-47cc-af53-8f325ed643a4",
+      "inputMetadata": {
+        "x": "2707",
+        "y": "2176.64",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "2397",
+        "y": "2166.14",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Sensor invalid",
+      "input": "Start waiting",
+      "startId": "aec1eb88-6a82-4cd4-9149-cacfe901a376",
+      "endId": "c0a7d15a-e08e-4b59-b326-a0993ac1cfbc",
+      "inputMetadata": {
+        "x": "1857",
+        "y": "2338.48",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "2397",
+        "y": "2196.76",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 2,
+      "output": "Bridge IP *",
+      "input": "Bridge IP",
+      "startId": "aec1eb88-6a82-4cd4-9149-cacfe901a376",
+      "endId": "bbaed71a-993f-47cc-af53-8f325ed643a4",
+      "inputMetadata": {
+        "x": "2707",
+        "y": "2075.5",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "2397",
+        "y": "2166.14",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 2,
+      "output": "User ID *",
+      "input": "User ID",
+      "startId": "aec1eb88-6a82-4cd4-9149-cacfe901a376",
+      "endId": "bbaed71a-993f-47cc-af53-8f325ed643a4",
+      "inputMetadata": {
+        "x": "2707",
+        "y": "2119.42",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "2397",
+        "y": "2210.06",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 2,
+      "output": "Sensor ID",
+      "input": "Sensor ID",
+      "startId": "aec1eb88-6a82-4cd4-9149-cacfe901a376",
+      "endId": "bbaed71a-993f-47cc-af53-8f325ed643a4",
+      "inputMetadata": {
+        "x": "2707",
+        "y": "2163.34",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "2397",
+        "y": "2297.9",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Calculated",
+      "input": "Compare",
+      "startId": "88738885-d209-4a39-83dc-840b3c72d996",
+      "endId": "777991c9-bf15-4530-b680-055299b542cb",
+      "inputMetadata": {
+        "x": "4913",
+        "y": "2444.72",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "4620",
+        "y": "2514.28",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Calculation failed",
+      "input": "Input",
+      "startId": "88738885-d209-4a39-83dc-840b3c72d996",
+      "endId": "c6c482ea-a2f7-4a31-994b-8af781c855cc",
+      "inputMetadata": {
+        "x": "3901",
+        "y": "2881.5",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "4620",
+        "y": "2544.9",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 2,
+      "output": "Result value",
+      "input": "First number",
+      "startId": "88738885-d209-4a39-83dc-840b3c72d996",
+      "endId": "777991c9-bf15-4530-b680-055299b542cb",
+      "inputMetadata": {
+        "x": "4913",
+        "y": "2387.5",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "4620",
+        "y": "2602.12",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 2,
+      "output": "Result value",
+      "input": "First number",
+      "startId": "88738885-d209-4a39-83dc-840b3c72d996",
+      "endId": "f097b00c-5275-4a4a-b6fa-69a1955ba726",
+      "inputMetadata": {
+        "x": "5195",
+        "y": "2402.5",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "4620",
+        "y": "2602.12",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 1,
+      "output": "First number is more",
+      "input": "Calculate",
+      "startId": "777991c9-bf15-4530-b680-055299b542cb",
+      "endId": "f097b00c-5275-4a4a-b6fa-69a1955ba726",
+      "inputMetadata": {
+        "x": "5195",
+        "y": "2459.72",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "4913",
+        "y": "2519.28",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 1,
+      "output": "First number not more",
+      "input": "Input",
+      "startId": "777991c9-bf15-4530-b680-055299b542cb",
+      "endId": "c6c482ea-a2f7-4a31-994b-8af781c855cc",
+      "inputMetadata": {
+        "x": "3901",
+        "y": "2881.5",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "4913",
+        "y": "2549.9",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Calculated",
+      "input": "Calculate",
+      "startId": "f097b00c-5275-4a4a-b6fa-69a1955ba726",
+      "endId": "77566dee-2737-42ab-a1c7-8ac095b98cca",
+      "inputMetadata": {
+        "x": "5474",
+        "y": "2505.72",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "5195",
+        "y": "2534.28",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Calculation failed",
+      "input": "Input",
+      "startId": "f097b00c-5275-4a4a-b6fa-69a1955ba726",
+      "endId": "c6c482ea-a2f7-4a31-994b-8af781c855cc",
+      "inputMetadata": {
+        "x": "3901",
+        "y": "2881.5",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "5195",
+        "y": "2564.9",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 2,
+      "output": "Result value",
+      "input": "First number",
+      "startId": "f097b00c-5275-4a4a-b6fa-69a1955ba726",
+      "endId": "77566dee-2737-42ab-a1c7-8ac095b98cca",
+      "inputMetadata": {
+        "x": "5474",
+        "y": "2448.5",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "5195",
+        "y": "2622.12",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Calculated",
+      "input": "Set",
+      "startId": "77566dee-2737-42ab-a1c7-8ac095b98cca",
+      "endId": "bab9d4a3-5a4c-41b1-acf8-2142258fb3d4",
+      "inputMetadata": {
+        "x": "5721",
+        "y": "2676.8",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "5474",
+        "y": "2580.28",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Calculation failed",
+      "input": "Input",
+      "startId": "77566dee-2737-42ab-a1c7-8ac095b98cca",
+      "endId": "c6c482ea-a2f7-4a31-994b-8af781c855cc",
+      "inputMetadata": {
+        "x": "3901",
+        "y": "2881.5",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "5474",
+        "y": "2610.9",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 2,
+      "output": "Result value",
+      "input": "Value to set",
+      "startId": "77566dee-2737-42ab-a1c7-8ac095b98cca",
+      "endId": "bab9d4a3-5a4c-41b1-acf8-2142258fb3d4",
+      "inputMetadata": {
+        "x": "5721",
+        "y": "2663.5",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "5474",
+        "y": "2668.12",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Output",
+      "input": "Calculate",
+      "startId": "c6c482ea-a2f7-4a31-994b-8af781c855cc",
+      "endId": "0c8a6e83-f657-483e-9b0f-0904c6972ec6",
+      "inputMetadata": {
+        "x": "2315",
+        "y": "2504.72",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "3901",
+        "y": "2956.06",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Output",
+      "input": "Calculate",
+      "startId": "2da95c18-5cff-4b1c-b530-afcdcc23e53f",
+      "endId": "0c8a6e83-f657-483e-9b0f-0904c6972ec6",
+      "inputMetadata": {
+        "x": "2315",
+        "y": "2504.72",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "2911",
+        "y": "3638.06",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Value is set",
+      "input": "Set",
+      "startId": "92663a60-0e61-4db2-8d05-6c589521bd81",
+      "endId": "fa697b21-92d1-4cee-ae6e-cc6c097d7cdd",
+      "inputMetadata": {
+        "x": "2309",
+        "y": "2807.8",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "1766",
+        "y": "2857.36",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 2,
+      "output": "Value out",
+      "input": "Sensor name",
+      "startId": "92663a60-0e61-4db2-8d05-6c589521bd81",
+      "endId": "aec1eb88-6a82-4cd4-9149-cacfe901a376",
+      "inputMetadata": {
+        "x": "2397",
+        "y": "2054.34",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "1766",
+        "y": "2857.36",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Value is set",
+      "input": "Connect",
+      "startId": "fa697b21-92d1-4cee-ae6e-cc6c097d7cdd",
+      "endId": "625bf025-6a0e-4dc4-973c-8f07b4b6ed73",
+      "inputMetadata": {
+        "x": "1257",
+        "y": "2201.8",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "2309",
+        "y": "2882.36",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 2,
+      "output": "Value out",
+      "input": "Group name",
+      "startId": "fa697b21-92d1-4cee-ae6e-cc6c097d7cdd",
+      "endId": "3e94df7f-0b63-4765-8e45-d9bd0efd1f4c",
+      "inputMetadata": {
+        "x": "3061",
+        "y": "2290.34",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "2309",
+        "y": "2882.36",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 2,
+      "output": "Value out",
+      "input": "Group name",
+      "startId": "fa697b21-92d1-4cee-ae6e-cc6c097d7cdd",
+      "endId": "e86cac12-8475-4cba-928b-8e381f8b83f5",
+      "inputMetadata": {
+        "x": "3511",
+        "y": "3480.34",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "2309",
+        "y": "2882.36",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Value is set",
+      "input": "Set",
+      "startId": "213d6464-ba62-4c27-9b37-ce916fe8840d",
+      "endId": "bab9d4a3-5a4c-41b1-acf8-2142258fb3d4",
+      "inputMetadata": {
+        "x": "5721",
+        "y": "2676.8",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "4275",
+        "y": "3073.36",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 2,
+      "output": "Value out",
+      "input": "Value to set",
+      "startId": "213d6464-ba62-4c27-9b37-ce916fe8840d",
+      "endId": "bab9d4a3-5a4c-41b1-acf8-2142258fb3d4",
+      "inputMetadata": {
+        "x": "5721",
+        "y": "2663.5",
+        "w": "180",
+        "h": "43.92"
+      },
+      "outputMetadata": {
+        "x": "4275",
+        "y": "3073.36",
+        "w": "180",
+        "h": "43.92"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Numbers are equal",
+      "input": "Set",
+      "startId": "b2b0602a-b4ff-41df-9fcf-3517c56efd91",
+      "endId": "213d6464-ba62-4c27-9b37-ce916fe8840d",
+      "inputMetadata": {
+        "x": "4275",
+        "y": "2998.8",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "3494",
+        "y": "3086.28",
+        "w": "180",
+        "h": "30.62"
+      }
+    },
+    {
+      "type": 1,
+      "output": "Numbers are different",
+      "input": "Compare",
+      "startId": "b2b0602a-b4ff-41df-9fcf-3517c56efd91",
+      "endId": "4ac3d7a1-f9f5-4697-9749-bca3f0fa0f03",
+      "inputMetadata": {
+        "x": "3175",
+        "y": "3223.72",
+        "w": "180",
+        "h": "30.62"
+      },
+      "outputMetadata": {
+        "x": "3494",
+        "y": "3116.9",
+        "w": "180",
+        "h": "30.62"
+      }
+    }
+  ],
+  "propertyValues": [
+    {
+      "value": "192.168.1.99",
+      "name": "Bridge IP",
+      "function": "625bf025-6a0e-4dc4-973c-8f07b4b6ed73"
+    },
+    {
+      "value": "0",
+      "name": "Milliseconds",
+      "function": "9681e854-f208-48d8-ab71-62da17aab154"
+    },
+    {
+      "value": "1",
+      "name": "Seconds",
+      "function": "9681e854-f208-48d8-ab71-62da17aab154"
+    },
+    {
+      "value": "0",
+      "name": "Minutes",
+      "function": "9681e854-f208-48d8-ab71-62da17aab154"
+    },
+    {
+      "value": "0",
+      "name": "Hours",
+      "function": "9681e854-f208-48d8-ab71-62da17aab154"
+    },
+    {
+      "value": "0",
+      "name": "Days",
+      "function": "9681e854-f208-48d8-ab71-62da17aab154"
+    },
+    {
+      "value": "35",
+      "name": "Sensor ID",
+      "function": "bbaed71a-993f-47cc-af53-8f325ed643a4"
+    },
+    {
+      "value": "Hall",
+      "name": "Group name",
+      "function": "3e94df7f-0b63-4765-8e45-d9bd0efd1f4c"
+    },
+    {
+      "value": "1",
+      "name": "First number",
+      "function": "0c8a6e83-f657-483e-9b0f-0904c6972ec6"
+    },
+    {
+      "value": "0",
+      "name": "Second number",
+      "function": "0c8a6e83-f657-483e-9b0f-0904c6972ec6"
+    },
+    {
+      "value": "300",
+      "name": "Milliseconds",
+      "function": "c0a7d15a-e08e-4b59-b326-a0993ac1cfbc"
+    },
+    {
+      "value": "0",
+      "name": "Seconds",
+      "function": "c0a7d15a-e08e-4b59-b326-a0993ac1cfbc"
+    },
+    {
+      "value": "0",
+      "name": "Minutes",
+      "function": "c0a7d15a-e08e-4b59-b326-a0993ac1cfbc"
+    },
+    {
+      "value": "0",
+      "name": "Hours",
+      "function": "c0a7d15a-e08e-4b59-b326-a0993ac1cfbc"
+    },
+    {
+      "value": "0",
+      "name": "Days",
+      "function": "c0a7d15a-e08e-4b59-b326-a0993ac1cfbc"
+    },
+    {
+      "value": "0",
+      "name": "Value to set",
+      "function": "25ab0da4-e5e3-45c3-86f7-f71773a928e7"
+    },
+    {
+      "value": "0",
+      "name": "First number",
+      "function": "5beab4d5-4cac-4579-8b78-9a14bdc89c4f"
+    },
+    {
+      "value": "0",
+      "name": "Second number",
+      "function": "5beab4d5-4cac-4579-8b78-9a14bdc89c4f"
+    },
+    {
+      "value": "0",
+      "name": "First number",
+      "function": "64e5a3e2-9e55-4e23-afe5-b90bd124c3c0"
+    },
+    {
+      "value": "0",
+      "name": "Second number",
+      "function": "64e5a3e2-9e55-4e23-afe5-b90bd124c3c0"
+    },
+    {
+      "value": "35",
+      "name": "Sensor ID",
+      "function": "d7eeff07-9e27-41e5-b149-bc5a5083840c"
+    },
+    {
+      "value": "Landing",
+      "name": "Group name",
+      "function": "1197bd17-aa95-4e9f-a16f-7774a70fec27"
+    },
+    {
+      "value": "1000",
+      "name": "Fade speed (ms)",
+      "function": "6d953923-3997-4286-ac90-5dc1c6f45593"
+    },
+    {
+      "value": "100",
+      "name": "Brightness (%)",
+      "function": "6d953923-3997-4286-ac90-5dc1c6f45593"
+    },
+    {
+      "value": "0",
+      "name": "First number",
+      "function": "4ac3d7a1-f9f5-4697-9749-bca3f0fa0f03"
+    },
+    {
+      "value": "10",
+      "name": "Second number",
+      "function": "4ac3d7a1-f9f5-4697-9749-bca3f0fa0f03"
+    },
+    {
+      "value": "Hall",
+      "name": "Group name",
+      "function": "e86cac12-8475-4cba-928b-8e381f8b83f5"
+    },
+    {
+      "value": "2000",
+      "name": "Fade speed (ms)",
+      "function": "4a8f58f0-aafb-4d13-94ee-4643de2b2fca"
+    },
+    {
+      "value": "Hall sensor - Bottom",
+      "name": "Sensor name",
+      "function": "aec1eb88-6a82-4cd4-9149-cacfe901a376"
+    },
+    {
+      "value": "100",
+      "name": "First number",
+      "function": "88738885-d209-4a39-83dc-840b3c72d996"
+    },
+    {
+      "value": "0",
+      "name": "Second number",
+      "function": "88738885-d209-4a39-83dc-840b3c72d996"
+    },
+    {
+      "value": "0",
+      "name": "First number",
+      "function": "777991c9-bf15-4530-b680-055299b542cb"
+    },
+    {
+      "value": "0",
+      "name": "Second number",
+      "function": "777991c9-bf15-4530-b680-055299b542cb"
+    },
+    {
+      "value": "0",
+      "name": "First number",
+      "function": "f097b00c-5275-4a4a-b6fa-69a1955ba726"
+    },
+    {
+      "value": "100",
+      "name": "Second number",
+      "function": "f097b00c-5275-4a4a-b6fa-69a1955ba726"
+    },
+    {
+      "value": "0",
+      "name": "First number",
+      "function": "77566dee-2737-42ab-a1c7-8ac095b98cca"
+    },
+    {
+      "value": "100",
+      "name": "Second number",
+      "function": "77566dee-2737-42ab-a1c7-8ac095b98cca"
+    },
+    {
+      "value": "Hall sensor - Top",
+      "name": "Value to set",
+      "function": "92663a60-0e61-4db2-8d05-6c589521bd81"
+    },
+    {
+      "value": "Landing",
+      "name": "Value to set",
+      "function": "fa697b21-92d1-4cee-ae6e-cc6c097d7cdd"
+    },
+    {
+      "value": "10",
+      "name": "Value to set",
+      "function": "213d6464-ba62-4c27-9b37-ce916fe8840d"
+    },
+    {
+      "value": "0",
+      "name": "First number",
+      "function": "b2b0602a-b4ff-41df-9fcf-3517c56efd91"
+    },
+    {
+      "value": "3",
+      "name": "Second number",
+      "function": "b2b0602a-b4ff-41df-9fcf-3517c56efd91"
+    }
+  ],
+  "metadata": {
+    "x": "2094",
+    "y": "2449.5"
+  }
+}
