@@ -6,7 +6,7 @@ using System.Text;
 namespace InDoOut_Executable_Core_Tests
 {
     [TestClass]
-    public class ProgramSyncCommandTests
+    public class CommandTests
     {
         [TestMethod]
         public void CreateStringFromCommand()

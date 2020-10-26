@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace InDoOut_Executable_Core_Tests
 {
     [TestClass]
-    public class ProgramSyncEndToEndTests
+    public class ClientServerEndToEndTests
     {
         [TestMethod]
         public async Task AvailablePrograms()

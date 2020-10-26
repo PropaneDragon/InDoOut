@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 namespace InDoOut_Networking_Tests
 {
     [TestClass]
-    public class ProgramSyncClientTests
+    public class ClientCommandTests
     {
         private static readonly string TemporarySaveLocation = $"{Path.DirectorySeparatorChar}Temp";
 
@@ -129,8 +129,6 @@ namespace InDoOut_Networking_Tests
             Assert.IsTrue(program.AddFunction(new TestFunction()));
             Assert.IsTrue(program.AddFunction(new TestFunction()));
 
-            var programUploadCommand = new UploadProgramClientCommand(client);
-
             Assert.AreEqual(3, program.Functions.Count);
 
             var programLocation = $"{TemporarySaveLocation}{Path.DirectorySeparatorChar}program.ido";
@@ -141,7 +139,8 @@ namespace InDoOut_Networking_Tests
 
             Assert.AreEqual(0, storer.Save(program).Count);
 
-            var sendTask = programUploadCommand.SendProgram(program, new CancellationTokenSource(TimeSpan.FromMilliseconds(80000)).Token);
+            var programUploadCommand = new UploadProgramClientCommand(client);
+            var sendTask = programUploadCommand.SendProgram(program, new CancellationTokenSource(TimeSpan.FromMilliseconds(800)).Token);
 
             await Task.Delay(TimeSpan.FromMilliseconds(200));
 
@@ -156,6 +155,8 @@ namespace InDoOut_Networking_Tests
             Assert.IsTrue(sendTask.Result);
 
             var programContents = File.ReadAllText(programLocation);
+
+            File.Delete(programLocation);
 
             Assert.IsNotNull(programContents);
             Assert.AreEqual(lastServerMessage.Data.Length, 2);

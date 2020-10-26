@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace InDoOut_Executable_Core_Tests
 {
     [TestClass]
-    public class ProgramSyncServerTests
+    public class ServerCommandTests
     {
         [TestCleanup]
         public void Cleanup()
