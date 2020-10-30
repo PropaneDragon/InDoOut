@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using System.Text;
 
-namespace InDoOut_Executable_Core_Tests
+namespace InDoOut_Networking_Tests
 {
     [TestClass]
     public class CommandTests

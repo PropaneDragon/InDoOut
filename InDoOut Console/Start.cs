@@ -1,7 +1,7 @@
 ﻿using InDoOut_Console.Arguments;
 using InDoOut_Console.Display;
-using InDoOut_Console.Loading;
 using InDoOut_Console_Common.ConsoleExtensions;
+using InDoOut_Console_Common.Loading;
 using InDoOut_Console_Common.Messaging;
 using InDoOut_Core.Logging;
 using InDoOut_Executable_Core.Arguments;
@@ -59,7 +59,6 @@ namespace InDoOut_Console
                 else
                 {
                     var pluginLoader = new ConsolePluginLoader();
-
                     if (pluginLoader.LoadPlugins())
                     {
                         if (!string.IsNullOrEmpty(applicationArguments.ProgramToLoad))

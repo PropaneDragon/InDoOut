@@ -132,7 +132,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InDoOut Viewer", "InDoOut V
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InDoOut Networking", "InDoOut Networking\InDoOut Networking.csproj", "{232ABAF7-076E-4146-9F38-D1DAC7BA3CF6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InDoOut Networking Tests", "InDoOut Networking Tests\InDoOut Networking Tests.csproj", "{2F007F44-16F6-4D0E-9A62-705183745EEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InDoOut Networking Tests", "InDoOut Networking Tests\InDoOut Networking Tests.csproj", "{2F007F44-16F6-4D0E-9A62-705183745EEF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0A96C991-0BF5-4425-A5B9-84FDC7C8F419} = {0A96C991-0BF5-4425-A5B9-84FDC7C8F419}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

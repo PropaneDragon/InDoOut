@@ -1,9 +1,11 @@
 ﻿using InDoOut_Console_Common.ConsoleExtensions;
+using InDoOut_Core.Functions;
 using InDoOut_Executable_Core.Networking.Commands;
 using InDoOut_Executable_Core.Programs;
 using InDoOut_Networking.Server;
 using InDoOut_Networking.Server.Commands;
 using InDoOut_Networking.Server.Events;
+using InDoOut_Plugins.Loaders;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -27,7 +29,7 @@ namespace InDoOut_Server.ServerNetworking
             var results = new List<bool>
             {
                 AddCommandListener(new RequestProgramsServerCommand(_server, _programHolder)),
-                AddCommandListener(new UploadProgramServerCommand(_server))
+                AddCommandListener(new UploadProgramServerCommand(_server, ProgramHolder.Instance, LoadedPlugins.Instance, new FunctionBuilder()))
             };
 
             var totalCommands = results.Count;

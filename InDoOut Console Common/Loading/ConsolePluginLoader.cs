@@ -3,7 +3,7 @@ using InDoOut_Executable_Core.Location;
 using InDoOut_Function_Plugins.Loaders;
 using InDoOut_Plugins.Loaders;
 
-namespace InDoOut_Console.Loading
+namespace InDoOut_Console_Common.Loading
 {
     public class ConsolePluginLoader
     {

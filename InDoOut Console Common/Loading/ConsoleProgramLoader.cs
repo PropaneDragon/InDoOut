@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace InDoOut_Console.Loading
+namespace InDoOut_Console_Common.Loading
 {
     public class ConsoleProgramLoader
     {
@@ -36,7 +36,7 @@ namespace InDoOut_Console.Loading
                     var program = new Program(arguments);
                     var storage = new ProgramJsonStorer(new FunctionBuilder(), LoadedPlugins.Instance, fileStream);
                     var hasLoaded = LoadProgram(program, storage);
-                    
+
                     if (hasLoaded)
                     {
                         _ = StandardLocations.Instance.SetPathTo(Location.SaveFile, programLocation);

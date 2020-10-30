@@ -7,7 +7,6 @@ using InDoOut_Executable_Core.Messaging;
 using InDoOut_Server.Arguments;
 using InDoOut_Server.ServerNetworking;
 using System;
-using System.Threading;
 
 namespace InDoOut_Server
 {
@@ -32,15 +31,22 @@ namespace InDoOut_Server
 
                 ExtendedConsole.WriteLine();
 
-                ConsoleFormatter.DrawSubtitle("Starting server");
-
-                _serverManager = new ConsoleServerManager(arguments.ChosenPort);
-                if (_serverManager.Start())
+                if (arguments.ShouldShowHelp)
                 {
-                    ConsoleFormatter.DrawSubtitle("Server started");
+                    arguments.DisplayHelp();
                 }
+                else
+                {
+                    ConsoleFormatter.DrawSubtitle("Starting server");
 
-                Thread.Sleep(TimeSpan.FromSeconds(1000));
+                    _serverManager = new ConsoleServerManager(arguments.ChosenPort);
+                    if (_serverManager.Start())
+                    {
+                        ConsoleFormatter.DrawSubtitle("Server started");
+                    }
+
+                    _ = Console.ReadKey();
+                }
             }
 
             TearDown();

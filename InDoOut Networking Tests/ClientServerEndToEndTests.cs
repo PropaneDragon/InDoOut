@@ -9,7 +9,7 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace InDoOut_Executable_Core_Tests
+namespace InDoOut_Networking_Tests
 {
     [TestClass]
     public class ClientServerEndToEndTests

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -7,6 +7,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\InDoOut Executable Core\InDoOut Executable Core.csproj" />
+    <ProjectReference Include="..\InDoOut Function Plugins\InDoOut Function Plugins.csproj" />
+    <ProjectReference Include="..\InDoOut Json Storage\InDoOut Json Storage.csproj" />
+    <ProjectReference Include="..\InDoOut Plugins\InDoOut Plugins Core.csproj" />
   </ItemGroup>
 
 </Project>

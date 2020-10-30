@@ -49,23 +49,20 @@ namespace InDoOut_Networking.Client.Commands
 
                 if (!string.IsNullOrWhiteSpace(programData))
                 {
-                    return await SendProgram(program.Name, programData, cancellationToken);
+                    return await SendProgram(programData, cancellationToken);
                 }
             }
 
             return false;
         }
 
-        public async Task<bool> SendProgram(string programName, string programData, CancellationToken cancellationToken)
+        public async Task<bool> SendProgram(string programData, CancellationToken cancellationToken)
         {
-            if (!string.IsNullOrEmpty(programName))
+            if (!string.IsNullOrWhiteSpace(programData))
             {
-                if (!string.IsNullOrWhiteSpace(programData))
-                {
-                    var response = await SendMessageAwaitResponse(cancellationToken, programName, programData);
+                var response = await SendMessageAwaitResponse(cancellationToken, programData);
 
-                    return response != null && response.Valid && response.SuccessMessage != null;
-                }
+                return response != null && response.Valid && response.SuccessMessage != null;
             }
 
             return false;

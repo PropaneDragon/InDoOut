@@ -9,6 +9,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
+/// <summary>
+/// Despite the name, this is actually uploading to the client, not downloading onto the server.
+/// </summary>
 namespace InDoOut_Networking.Server.Commands
 {
     class DownloadProgramServerCommand : CommandListener<IServer>

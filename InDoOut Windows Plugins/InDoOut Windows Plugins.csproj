@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="xcopy  /Y /F &quot;$(TargetDir)*.dll&quot;  &quot;$(SolutionDir)\InDoOut Desktop\$(OutDir)\Plugins\*&quot;&#xD;&#xA;xcopy  /Y /F &quot;$(TargetDir)*.dll&quot;  &quot;$(SolutionDir)\InDoOut Console\$(OutDir)\Plugins\*&quot;&#xD;&#xA;xcopy  /Y /F &quot;$(TargetDir)*.dll&quot;  &quot;$(SolutionDir)\InDoOut Display\$(OutDir)\Plugins\*&quot;" />
+    <Exec Command="xcopy  /Y /F &quot;$(TargetPath)&quot;  &quot;$(SolutionDir)\InDoOut Desktop\$(OutDir)\Plugins\*&quot;&#xD;&#xA;xcopy  /Y /F &quot;$(TargetPath)&quot;  &quot;$(SolutionDir)\InDoOut Console\$(OutDir)\Plugins\*&quot;&#xD;&#xA;xcopy  /Y /F &quot;$(TargetPath)&quot;  &quot;$(SolutionDir)\InDoOut Display\$(OutDir)\Plugins\*&quot;&#xD;&#xA;xcopy  /Y /F &quot;$(TargetPath)&quot;  &quot;$(SolutionDir)\InDoOut Server\$(OutDir)\Plugins\*&quot;" />
   </Target>
 
 </Project>

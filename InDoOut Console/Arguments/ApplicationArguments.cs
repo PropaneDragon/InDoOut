@@ -10,7 +10,7 @@ namespace InDoOut_Console.Arguments
         private readonly List<string> _loadedProgramArguments = new List<string>();
         private readonly ConsoleHelpArgument _helpArgument = new ConsoleHelpArgument(false);
 
-        public bool ShouldShowHelp { get; private set; } = false;
+        public bool ShouldShowHelp => _helpArgument?.ShouldShowHelp ?? false;
         public bool LegacyConsoleMode { get; private set; } = false;
         public bool AutoClose { get; private set; } = false;
         public string ProgramToLoad { get; private set; } = null;
@@ -42,8 +42,6 @@ namespace InDoOut_Console.Arguments
             {
                 _loadedProgramArguments.Add(runArgument.Value);
             }
-
-            ShouldShowHelp = _helpArgument.ShouldShowHelp;
 
             return true;
         }

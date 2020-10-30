@@ -3,7 +3,7 @@ using InDoOut_Networking.Client;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace InDoOut_Executable_Core_Tests
+namespace InDoOut_Networking_Tests
 {
     internal class TestClient : Client
     {

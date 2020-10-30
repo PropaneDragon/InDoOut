@@ -1,7 +1,6 @@
 ﻿using InDoOut_Core.Entities.Programs;
 using InDoOut_Core.Functions;
 using InDoOut_Executable_Core.Networking;
-using InDoOut_Executable_Core_Tests;
 using InDoOut_Json_Storage;
 using InDoOut_Networking.Client;
 using InDoOut_Networking.Client.Commands;
@@ -164,9 +163,8 @@ namespace InDoOut_Networking_Tests
             File.Delete(programLocation);
 
             Assert.IsNotNull(programContents);
-            Assert.AreEqual(lastServerMessage.Data.Length, 2);
-            Assert.AreEqual(lastServerMessage.Data[0], "UploadProgramTest");
-            Assert.AreEqual(programContents.Replace("\r\n", "\n"), lastServerMessage.Data[1]);
+            Assert.AreEqual(lastServerMessage.Data.Length, 1);
+            Assert.AreEqual(programContents.Replace("\r\n", "\n"), lastServerMessage.Data[0]);
 
             Assert.IsTrue(await server.Stop());
         }

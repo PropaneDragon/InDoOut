@@ -111,6 +111,11 @@ namespace InDoOut_Json_Storage
             {
                 try
                 {
+                    if (stream.CanSeek)
+                    {
+                        _ = stream.Seek(0, SeekOrigin.Begin);
+                    }
+
                     using var reader = new StreamReader(stream, leaveOpen: true);
                     var fileText = reader.ReadToEnd();
 

@@ -1,15 +1,18 @@
-﻿using InDoOut_Executable_Core.Location;
+﻿using InDoOut_Core.Functions;
+using InDoOut_Executable_Core.Location;
 using InDoOut_Executable_Core.Networking;
 using InDoOut_Executable_Core.Programs;
+using InDoOut_Function_Plugins.Loaders;
 using InDoOut_Networking.Server;
 using InDoOut_Networking.Server.Commands;
+using InDoOut_Plugins.Loaders;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace InDoOut_Executable_Core_Tests
+namespace InDoOut_Networking_Tests
 {
     [TestClass]
     public class ServerCommandTests
@@ -96,42 +99,57 @@ namespace InDoOut_Executable_Core_Tests
         {
             var server = new Server(9001);
             var client = new TestClient();
+            var programHolder = new ProgramHolder();
 
-            Assert.IsTrue(server.AddCommandListener(new UploadProgramServerCommand(server)));
+            Assert.IsTrue(StandardLocations.Instance.SetPathTo(Location.PluginsDirectory, StandardLocations.Instance.GetPathTo(Location.ApplicationDirectory)));
 
-            var expectedProgramDirectory = $"{StandardLocations.Instance.GetPathTo(Location.ApplicationDirectory)}{Path.DirectorySeparatorChar}Programs";
-            var expectedSyncDirectory = $"{expectedProgramDirectory}{Path.DirectorySeparatorChar}Synced";
+            var pluginLoader = new PluginDirectoryLoader(new FunctionPluginLoader(), StandardLocations.Instance);
+            var loadedPlugins = new LoadedPlugins
+            {
+                Plugins = await pluginLoader.LoadPlugins()
+            };
+
+            Assert.IsTrue(server.AddCommandListener(new UploadProgramServerCommand(server, programHolder, loadedPlugins, new FunctionBuilder())));
 
             Assert.IsTrue(await server.Start());
             Assert.IsTrue(await client.Connect(IPAddress.Loopback, 9001));
             Assert.IsNull(client.LastMessageReceived);
+            Assert.AreEqual(0, programHolder.Programs.Count);
 
-            Assert.IsTrue(await client.Send($"some ID{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}UPLOAD_PROGRAM{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}This is the program name{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}This is the program contents"));
+
+            Assert.IsTrue(await client.Send($"some ID{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}UPLOAD_PROGRAM{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}This is the program contents"));
 
             await Task.Delay(TimeSpan.FromMilliseconds(500));
 
             Assert.IsNotNull(client.LastMessageReceived);
-            Assert.IsTrue(client.LastMessageReceived.IsSuccessMessage);
+            Assert.IsTrue(client.LastMessageReceived.IsFailureMessage);
+            Assert.IsFalse(client.LastMessageReceived.IsSuccessMessage);
+            Assert.AreEqual(0, programHolder.Programs.Count);
 
             client.LastMessageReceived = null;
 
-            Assert.IsTrue(Directory.Exists(expectedProgramDirectory));
-            Assert.IsTrue(Directory.Exists(expectedSyncDirectory));
-
-            var files = Directory.GetFiles(expectedSyncDirectory);
-
-            Assert.AreEqual(1, files.Length);
-            Assert.AreEqual(Path.GetFileNameWithoutExtension(files[0]), "This is the program name");
-            Assert.AreEqual($"This is the program contents", File.ReadAllText(files[0]));
 
             Assert.IsTrue(await client.Send($"some ID{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}UPLOAD_PROGRAM{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}"));
 
             await Task.Delay(TimeSpan.FromMilliseconds(500));
 
             Assert.IsNotNull(client.LastMessageReceived);
-            Assert.IsFalse(client.LastMessageReceived.IsSuccessMessage);
             Assert.IsTrue(client.LastMessageReceived.IsFailureMessage);
-            Assert.AreEqual($"The program received appeared to be invalid and can't be parsed.", client.LastMessageReceived.FailureMessage);
+            Assert.IsFalse(client.LastMessageReceived.IsSuccessMessage);
+            Assert.AreEqual(0, programHolder.Programs.Count);
+
+            client.LastMessageReceived = null;
+
+            var programData = File.ReadAllText("example-program.ido");
+
+            Assert.IsNotNull(programData);
+            Assert.IsTrue(await client.Send($"some ID{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}UPLOAD_PROGRAM{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}{programData}"));
+
+            await Task.Delay(TimeSpan.FromMilliseconds(500));
+
+            Assert.IsNotNull(client.LastMessageReceived);
+
+            client.LastMessageReceived = null;
 
             Assert.IsTrue(await server.Stop());
         }

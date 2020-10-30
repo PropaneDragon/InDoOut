@@ -7,6 +7,7 @@ namespace InDoOut_Server.Arguments
     {
         private readonly ConsoleHelpArgument _helpArgument = new ConsoleHelpArgument(false);
 
+        public bool ShouldShowHelp => _helpArgument?.ShouldShowHelp ?? false;
         public bool LegacyConsoleMode { get; private set; } = false;
         public int ChosenPort { get; private set; } = 0;
 
