@@ -15,7 +15,7 @@
 
         object Context { get; set; }
 
-        INetworkMessage CreateResponseMessage(string[] data);
+        INetworkMessage CreateResponseMessage(params string[] data);
         INetworkMessage CreateSuccessResponse(string message = null);
         INetworkMessage CreateFailureResponse(string message = null);
     }

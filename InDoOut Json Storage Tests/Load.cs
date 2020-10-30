@@ -6,6 +6,7 @@ using InDoOut_Json_Storage;
 using InDoOut_Plugins.Loaders;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.IO;
 
 namespace InDoOut_Json_Storage_Tests
 {
@@ -174,7 +175,9 @@ namespace InDoOut_Json_Storage_Tests
             var loadedPlugins = new LoadedPlugins();
             loadedPlugins.Plugins.Add(loadedPlugin);
 
-            var storer = new ProgramJsonStorer(new FunctionBuilder(), loadedPlugins, "ExpectedJsonProgramFormat.json");
+            using var fileStream = new FileStream("ExpectedJsonProgramFormat.json", FileMode.Open, FileAccess.ReadWrite);
+
+            var storer = new ProgramJsonStorer(new FunctionBuilder(), loadedPlugins, fileStream);
             var program = new Program();
 
             Assert.AreNotEqual(new Guid("12345678-1234-1234-1234-123456789abc"), program.Id);

@@ -9,6 +9,7 @@ using Microsoft.Win32;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -52,11 +53,33 @@ namespace InDoOut_UI_Common.SaveLoad
                     program = programHolder.NewProgram();
                     if (program != null)
                     {
-                        programStorer.FilePath = filePath;
+                        try
+                        {
+                            using var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+                            programStorer.FileStream = stream;
 
-                        failureReports.AddRange(await Task.Run(() => programStorer.Load(program)));
+                            failureReports.AddRange(await Task.Run(() => programStorer.Load(program)));
 
-                        _ = StandardLocations.Instance.SetPathTo(Location.SaveFile, filePath);
+                            if (!failureReports.Any(FailureReport => FailureReport.Critical))
+                            {
+                                program.Metadata[ProgramStorer.PROGRAM_METADATA_LAST_LOADED_FROM] = filePath;
+                                program.SetName(Path.GetFileNameWithoutExtension(filePath));
+                            }
+
+                            _ = StandardLocations.Instance.SetPathTo(Location.SaveFile, filePath);
+                        }
+                        catch (SecurityException)
+                        {
+                            failureReports.Add(new FailureReport((int)LoadResult.InsufficientPermissions, "The program couldn't be loaded due to invalid security permissions.", true));
+                        }
+                        catch (IOException)
+                        {
+                            failureReports.Add(new FailureReport((int)LoadResult.InvalidLocation, "The program couldn't be loaded due to invalid file permissions.", true));
+                        }
+                        catch
+                        {
+                            failureReports.Add(new FailureReport((int)LoadResult.InvalidFile, "The program couldn't be loaded due to an invalid file.", true));
+                        }
                     }
                     else
                     {
@@ -142,8 +165,27 @@ namespace InDoOut_UI_Common.SaveLoad
             {
                 if (Path.GetExtension(filePath) == programStorer.FileExtension)
                 {
-                    programStorer.FilePath = filePath;
-                    failureReports.AddRange(await Task.Run(() => programStorer.Save(program)));
+                    try
+                    {
+                        var fileMode = File.Exists(filePath) ? FileMode.Truncate : FileMode.CreateNew;
+                        using var stream = new FileStream(filePath, fileMode, FileAccess.Write);
+
+                        programStorer.FileStream = stream;
+
+                        failureReports.AddRange(await Task.Run(() => programStorer.Save(program)));
+                    }
+                    catch (SecurityException)
+                    {
+                        failureReports.Add(new FailureReport((int)LoadResult.InsufficientPermissions, "The program couldn't be saved due to invalid security permissions.", true));
+                    }
+                    catch (IOException)
+                    {
+                        failureReports.Add(new FailureReport((int)LoadResult.InvalidLocation, "The program couldn't be saved due to invalid file permissions.", true));
+                    }
+                    catch
+                    {
+                        failureReports.Add(new FailureReport((int)LoadResult.InvalidFile, "The program couldn't be saved due to an invalid file.", true));
+                    }
                 }
                 else
                 {

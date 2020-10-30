@@ -125,6 +125,8 @@ namespace InDoOut_Networking_Tests
             Assert.IsTrue(await client.Connect(IPAddress.Loopback, 9001));
 
             var program = new Program();
+            program.SetName("UploadProgramTest");
+
             Assert.IsTrue(program.AddFunction(new TestFunction()));
             Assert.IsTrue(program.AddFunction(new TestFunction()));
             Assert.IsTrue(program.AddFunction(new TestFunction()));
@@ -135,9 +137,12 @@ namespace InDoOut_Networking_Tests
 
             _ = Directory.CreateDirectory(TemporarySaveLocation);
 
-            var storer = new ProgramJsonStorer(new FunctionBuilder(), new LoadedPlugins(), programLocation);
+            var fileStream = new FileStream(programLocation, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            var storer = new ProgramJsonStorer(new FunctionBuilder(), new LoadedPlugins(), fileStream);
 
             Assert.AreEqual(0, storer.Save(program).Count);
+
+            fileStream.Dispose();
 
             var programUploadCommand = new UploadProgramClientCommand(client);
             var sendTask = programUploadCommand.SendProgram(program, new CancellationTokenSource(TimeSpan.FromMilliseconds(800)).Token);
@@ -160,7 +165,7 @@ namespace InDoOut_Networking_Tests
 
             Assert.IsNotNull(programContents);
             Assert.AreEqual(lastServerMessage.Data.Length, 2);
-            Assert.AreEqual(lastServerMessage.Data[0], "program");
+            Assert.AreEqual(lastServerMessage.Data[0], "UploadProgramTest");
             Assert.AreEqual(programContents.Replace("\r\n", "\n"), lastServerMessage.Data[1]);
 
             Assert.IsTrue(await server.Stop());

@@ -8,6 +8,7 @@ using InDoOut_Json_Storage;
 using InDoOut_Plugins.Loaders;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace InDoOut_Console.Loading
@@ -28,10 +29,25 @@ namespace InDoOut_Console.Loading
             {
                 ConsoleFormatter.DrawInfoMessageLine("Attempting to load program from ", ConsoleFormatter.PurplePastel, programLocation, ConsoleFormatter.Primary, "...");
 
-                var program = new Program(arguments);
-                var storage = new ProgramJsonStorer(new FunctionBuilder(), LoadedPlugins.Instance, programLocation);
+                try
+                {
+                    using var fileStream = new FileStream(programLocation, FileMode.Open, FileAccess.Read);
 
-                return LoadProgram(program, storage) ? program : null;
+                    var program = new Program(arguments);
+                    var storage = new ProgramJsonStorer(new FunctionBuilder(), LoadedPlugins.Instance, fileStream);
+                    var hasLoaded = LoadProgram(program, storage);
+                    
+                    if (hasLoaded)
+                    {
+                        _ = StandardLocations.Instance.SetPathTo(Location.SaveFile, programLocation);
+
+                        return program;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ConsoleFormatter.DrawErrorMessageLine("Couldn't load program due to a file error: ", ex?.Message);
+                }
             }
             else
             {
@@ -60,8 +76,6 @@ namespace InDoOut_Console.Loading
                     }
 
                     ConsoleFormatter.DrawInfoMessageLine(ConsoleFormatter.GreenPastel, "Program loaded.");
-
-                    _ = StandardLocations.Instance.SetPathTo(Location.SaveFile, storage.FilePath);
 
                     if (program.StartFunctions.Count > 0)
                     {

@@ -71,7 +71,7 @@ namespace InDoOut_Executable_Core.Networking
 
         public INetworkMessage CreateSuccessResponse(string message) => CreateResponseMessage(new string[] { NetworkCodes.COMMAND_SUCCESS_IDENTIFIER, message ?? "" });
         public INetworkMessage CreateFailureResponse(string message) => CreateResponseMessage(new string[] { NetworkCodes.COMMAND_FAILURE_IDENTIFIER, message ?? "" });
-        public INetworkMessage CreateResponseMessage(string[] data) => new NetworkMessage(Name, data) { Id = Id, Context = Context };
+        public INetworkMessage CreateResponseMessage(params string[] data) => new NetworkMessage(Name, data) { Id = Id, Context = Context };
 
         public override string ToString() => Valid ? $"{Id}{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}{Name}{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}{CompressedData ?? ""}" : null;
 

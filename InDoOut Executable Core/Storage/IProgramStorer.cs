@@ -1,6 +1,7 @@
 ﻿using InDoOut_Core.Entities.Programs;
 using InDoOut_Core.Reporting;
 using System.Collections.Generic;
+using System.IO;
 
 namespace InDoOut_Executable_Core.Storage
 {
@@ -23,7 +24,7 @@ namespace InDoOut_Executable_Core.Storage
         /// <summary>
         /// The path of the file to load or save.
         /// </summary>
-        string FilePath { get; set; }
+        Stream FileStream { get; set; }
 
         /// <summary>
         /// Saves the <paramref name="program"/> to storage.

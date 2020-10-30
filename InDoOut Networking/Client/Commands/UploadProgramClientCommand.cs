@@ -1,6 +1,8 @@
 ﻿using InDoOut_Core.Entities.Programs;
+using InDoOut_Core.Functions;
 using InDoOut_Executable_Core.Networking.Commands;
-using InDoOut_Executable_Core.Storage;
+using InDoOut_Json_Storage;
+using InDoOut_Plugins.Loaders;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,15 +19,27 @@ namespace InDoOut_Networking.Client.Commands
 
         public async Task<bool> SendProgram(IProgram program, CancellationToken cancellationToken)
         {
-            if (program != null && program.Metadata.TryGetValue(ProgramStorer.PROGRAM_METADATA_LAST_LOADED_FROM, out var programLastLoadedFrom) && !string.IsNullOrEmpty(program.Name) && !string.IsNullOrEmpty(programLastLoadedFrom))
+            if (program != null && !string.IsNullOrEmpty(program.Name))
             {
                 var programData = "";
 
                 try
                 {
-                    if (File.Exists(programLastLoadedFrom))
+                    using var memoryStream = new MemoryStream();
+
+                    var storer = new ProgramJsonStorer(new FunctionBuilder(), LoadedPlugins.Instance, memoryStream);
+                    var failures = storer.Save(program);
+
+                    if (failures.Count == 0 && memoryStream.CanRead)
                     {
-                        programData = File.ReadAllText(programLastLoadedFrom);
+                        if (memoryStream.CanSeek)
+                        {
+                            _ = memoryStream.Seek(0, SeekOrigin.Begin);
+                        }
+
+                        using var reader = new StreamReader(memoryStream, leaveOpen: true);
+
+                        programData = reader.ReadToEnd();
                     }
                 }
                 catch

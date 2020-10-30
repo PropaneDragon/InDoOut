@@ -16,10 +16,7 @@ namespace InDoOut_Json_Storage_Tests
         private string _temporaryPath = null;
 
         [TestInitialize]
-        public void Initialise()
-        {
-            _temporaryPath = Path.GetTempFileName();
-        }
+        public void Initialise() => _temporaryPath = Path.GetTempFileName();
 
         [TestMethod]
         public void SaveFromJsonProgram()
@@ -272,8 +269,11 @@ namespace InDoOut_Json_Storage_Tests
             _ = program.AddFunction(thirdFunction);
             _ = program.AddFunction(fourthFunction);
 
-            var jsonStorer = new ProgramJsonStorer(new FunctionBuilder(), new LoadedPlugins(), _temporaryPath);
+            var fileStream = new FileStream(_temporaryPath, FileMode.Truncate, FileAccess.Write);
+            var jsonStorer = new ProgramJsonStorer(new FunctionBuilder(), new LoadedPlugins(), fileStream);
             var result = jsonStorer.Save(program);
+
+            fileStream.Dispose();
 
             Assert.AreEqual(0, result.Count);
 

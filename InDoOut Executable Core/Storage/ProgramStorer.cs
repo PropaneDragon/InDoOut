@@ -13,28 +13,25 @@ namespace InDoOut_Executable_Core.Storage
 
         public abstract string FileReadableName { get; }
         public abstract string FileExtension { get; }
-        public string FilePath { get; set; }
+        public Stream FileStream { get; set; }
 
         public ProgramStorer()
         {
         }
 
-        public ProgramStorer(string filePath) : this()
+        public ProgramStorer(Stream fileStream) : this()
         {
-            FilePath = filePath;
+            FileStream = fileStream;
         }
 
         public List<IFailureReport> Load(IProgram program)
         {
             Log.Instance.Header("Attempting to load");
-            Log.Instance.Info("Attempting to load ", program, " from ", FilePath);
+            Log.Instance.Info("Attempting to load ", program);
 
-            var reports = TryLoad(program, FilePath);
+            var reports = TryLoad(program, FileStream);
 
-            program.Metadata[PROGRAM_METADATA_LAST_LOADED_FROM] = FilePath;
-            program.SetName(Path.GetFileNameWithoutExtension(FilePath));
-
-            Log.Instance.Info($"Load {(reports.Any(report => report.Critical) ? "failed" : "completed")} from ", FilePath, $" with {reports.Count} issues, {reports.Where(report => report.Critical).Count()} of which are critical");
+            Log.Instance.Info($"Load {(reports.Any(report => report.Critical) ? "failed" : "completed")} with {reports.Count} issues, {reports.Where(report => report.Critical).Count()} of which are critical");
 
             foreach (var report in reports)
             {
@@ -49,16 +46,11 @@ namespace InDoOut_Executable_Core.Storage
         public List<IFailureReport> Save(IProgram program)
         {
             Log.Instance.Header("Attempting to save");
-            Log.Instance.Info("Attempting to save ", program, " to ", FilePath);
+            Log.Instance.Info("Attempting to save ", program);
 
-            var reports = TrySave(program, FilePath);
-            if (!reports.Any(report => report.Critical))
-            {
-                program.Metadata[PROGRAM_METADATA_LAST_LOADED_FROM] = FilePath;
-                program.SetName(Path.GetFileNameWithoutExtension(FilePath));
-            }
+            var reports = TrySave(program, FileStream);
 
-            Log.Instance.Info($"Save {(reports.Any(report => report.Critical) ? "failed" : "completed")} to ", FilePath, $" with {reports.Count} issues, {reports.Where(report => report.Critical).Count()} of which are critical");
+            Log.Instance.Info($"Save {(reports.Any(report => report.Critical) ? "failed" : "completed")} with {reports.Count} issues, {reports.Where(report => report.Critical).Count()} of which are critical");
 
             foreach (var report in reports)
             {
@@ -70,7 +62,7 @@ namespace InDoOut_Executable_Core.Storage
             return reports;
         }
 
-        protected abstract List<IFailureReport> TryLoad(IProgram program, string path);
-        protected abstract List<IFailureReport> TrySave(IProgram program, string path);
+        protected abstract List<IFailureReport> TryLoad(IProgram program, Stream stream);
+        protected abstract List<IFailureReport> TrySave(IProgram program, Stream stream);
     }
 }

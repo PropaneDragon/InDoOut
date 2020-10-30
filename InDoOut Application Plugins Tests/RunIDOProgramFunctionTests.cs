@@ -27,8 +27,10 @@ namespace InDoOut_Application_Plugins_Tests
             var end = new GenericEndFunction();
             var pluginLoader = new FunctionPluginLoader();
             var loadedPlugins = new LoadedPlugins();
-            var programName = "LoadProgramTest";
-            var storer = new ProgramJsonStorer(new FunctionBuilder(), loadedPlugins) { FilePath = programName };
+            var programName = "LoadProgramTest.ido";
+
+            var programStream = new FileStream(programName, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            var storer = new ProgramJsonStorer(new FunctionBuilder(), loadedPlugins) { FileStream = programStream };
 
             var pluginContainer = pluginLoader.LoadPlugin("InDoOut Core Plugins.dll");
             
@@ -59,6 +61,8 @@ namespace InDoOut_Application_Plugins_Tests
 
             Assert.AreEqual(0, storer.Save(program).Count);
             Assert.IsTrue(File.Exists(programName));
+
+            programStream.Dispose();
 
             var runProgramFunction = new RunIDOProgramFunction() { PluginsToUse = loadedPlugins };
             runProgramFunction.GetPropertyByName("Path").RawValue = programName;

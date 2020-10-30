@@ -18,7 +18,7 @@ namespace InDoOut_Networking.Server.Commands
             ProgramHolder = programHolder;
         }
 
-        public override async Task<INetworkMessage> CommandReceived(INetworkMessage command, CancellationToken cancellationToken)
+        public override async Task<INetworkMessage> CommandReceived(INetworkMessage message, CancellationToken cancellationToken)
         {
             await Task.CompletedTask;
 
@@ -27,7 +27,7 @@ namespace InDoOut_Networking.Server.Commands
                 var programs = ProgramHolder?.Programs?.Select(program => program?.Name ?? "").ToArray();
                 if (programs != null)
                 {
-                    return command.CreateResponseMessage(programs);
+                    return message.CreateResponseMessage(programs);
                 }
             }
 
