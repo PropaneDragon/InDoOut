@@ -11,13 +11,18 @@ namespace InDoOut_Networking.Client.Commands
 {
     public class UploadProgramClientCommand : Command<IClient>
     {
-        public UploadProgramClientCommand(IClient client) : base(client)
+        public ILoadedPlugins LoadedPlugins { get; set; } = null;
+        public IFunctionBuilder FunctionBuilder { get; set; } = null;
+
+        public UploadProgramClientCommand(IClient client, ILoadedPlugins loadedPlugins, IFunctionBuilder functionBuilder) : base(client)
         {
+            LoadedPlugins = loadedPlugins;
+            FunctionBuilder = functionBuilder;
         }
 
         public async Task<bool> SendProgram(IProgram program, CancellationToken cancellationToken)
         {
-            if (program != null && !string.IsNullOrEmpty(program.Name))
+            if (FunctionBuilder != null && LoadedPlugins != null && program != null && !string.IsNullOrEmpty(program.Name))
             {
                 var programData = "";
 
@@ -25,7 +30,7 @@ namespace InDoOut_Networking.Client.Commands
                 {
                     using var memoryStream = new MemoryStream();
 
-                    var storer = new ProgramJsonStorer(new FunctionBuilder(), LoadedPlugins.Instance);
+                    var storer = new ProgramJsonStorer(FunctionBuilder, LoadedPlugins);
                     var failures = storer.Save(program, memoryStream);
 
                     if (failures.Count == 0 && memoryStream.CanRead)

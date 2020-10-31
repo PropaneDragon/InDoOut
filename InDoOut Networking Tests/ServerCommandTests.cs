@@ -7,8 +7,11 @@ using InDoOut_Networking.Server;
 using InDoOut_Networking.Server.Commands;
 using InDoOut_Plugins.Loaders;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -221,7 +224,10 @@ namespace InDoOut_Networking_Tests
             var program2 = programHolder.NewProgram();
             program2.SetName("A program name 2 functions");
 
-            Assert.IsTrue(program2.AddFunction(new TestFunction()));
+            var functionWithMetadata = new TestFunction();
+            functionWithMetadata.Metadata["this is meta"] = "Yes";
+
+            Assert.IsTrue(program2.AddFunction(functionWithMetadata));
             Assert.IsTrue(program2.AddFunction(new TestFunction()));
 
             var program1 = programHolder.NewProgram();
@@ -242,6 +248,8 @@ namespace InDoOut_Networking_Tests
             Assert.IsTrue(client.LastMessageReceived.IsFailureMessage);
             Assert.AreEqual("The program with the name \"A program\" doesn't exist on the server.", client.LastMessageReceived.FailureMessage);
 
+            client.LastMessageReceived = null;
+
             Assert.IsTrue(await client.Send($"some ID{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}DownloadProgram{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}A program name 2 functions"));
 
             await Task.Delay(TimeSpan.FromMilliseconds(500));
@@ -249,8 +257,44 @@ namespace InDoOut_Networking_Tests
             Assert.IsNotNull(client.LastMessageReceived);
             Assert.IsFalse(client.LastMessageReceived.IsFailureMessage);
             Assert.IsFalse(client.LastMessageReceived.IsSuccessMessage);
+            Assert.AreEqual(1, client.LastMessageReceived.Data.Length);
 
-            
+            var parsed = JObject.Parse(client.LastMessageReceived.Data[0]);
+
+            Assert.AreEqual(2, parsed["functions"].Children().Count());
+            Assert.AreEqual("Yes", parsed["functions"].Children().First()["metadata"]["this is meta"].Value<string>());
+
+            client.LastMessageReceived = null;
+
+            Assert.IsTrue(await client.Send($"some ID{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}DownloadProgram{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}A program name 1 function"));
+
+            await Task.Delay(TimeSpan.FromMilliseconds(500));
+
+            Assert.IsNotNull(client.LastMessageReceived);
+            Assert.IsFalse(client.LastMessageReceived.IsFailureMessage);
+            Assert.IsFalse(client.LastMessageReceived.IsSuccessMessage);
+            Assert.AreEqual(1, client.LastMessageReceived.Data.Length);
+
+            parsed = JObject.Parse(client.LastMessageReceived.Data[0]);
+
+            Assert.AreEqual(1, parsed["functions"].Children().Count());
+
+            client.LastMessageReceived = null;
+
+            Assert.IsTrue(await client.Send($"some ID{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}DownloadProgram{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}0 functions"));
+
+            await Task.Delay(TimeSpan.FromMilliseconds(500));
+
+            Assert.IsNotNull(client.LastMessageReceived);
+            Assert.IsFalse(client.LastMessageReceived.IsFailureMessage);
+            Assert.IsFalse(client.LastMessageReceived.IsSuccessMessage);
+            Assert.AreEqual(1, client.LastMessageReceived.Data.Length);
+
+            parsed = JObject.Parse(client.LastMessageReceived.Data[0]);
+
+            Assert.AreEqual(0, parsed["functions"].Children().Count());
+
+            client.LastMessageReceived = null;
 
             Assert.IsTrue(await server.Stop());
         }

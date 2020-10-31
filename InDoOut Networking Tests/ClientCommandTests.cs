@@ -144,7 +144,7 @@ namespace InDoOut_Networking_Tests
 
             fileStream.Dispose();
 
-            var programUploadCommand = new UploadProgramClientCommand(client);
+            var programUploadCommand = new UploadProgramClientCommand(client, new LoadedPlugins(), new FunctionBuilder());
             var sendTask = programUploadCommand.SendProgram(program, new CancellationTokenSource(TimeSpan.FromMilliseconds(800)).Token);
 
             await Task.Delay(TimeSpan.FromMilliseconds(200));
