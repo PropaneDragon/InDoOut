@@ -27,7 +27,7 @@ namespace InDoOut_Networking.Server.Commands
         {
             await Task.CompletedTask;
 
-            if (ProgramHolder != null && message.Data.Length == 1)
+            if (ProgramHolder != null && (message?.Data?.Length ?? 0) == 1)
             {
                 var programToFind = message.Data[0];
                 if (!string.IsNullOrWhiteSpace(programToFind))
@@ -44,6 +44,11 @@ namespace InDoOut_Networking.Server.Commands
                         {
                             try
                             {
+                                if (memoryStream.CanSeek)
+                                {
+                                    _ = memoryStream.Seek(0, SeekOrigin.Begin);
+                                }
+
                                 using var reader = new StreamReader(memoryStream);
                                 var programData = reader.ReadToEnd();
 
@@ -59,10 +64,18 @@ namespace InDoOut_Networking.Server.Commands
                             return message.CreateFailureResponse("The program couldn't be written due to storage errors.");
                         }
                     }
+                    else
+                    {
+                        return message.CreateFailureResponse($"The program with the name \"{programToFind}\" doesn't exist on the server.");
+                    }
+                }
+                else
+                {
+                    return message.CreateFailureResponse($"The program name requested was empty.");
                 }
             }
-
-            return null;
+            
+            return message.CreateFailureResponse($"The request appears to be invalid and can't be accepted by the server.");
         }
     }
 }

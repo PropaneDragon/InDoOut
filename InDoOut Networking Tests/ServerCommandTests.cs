@@ -173,5 +173,86 @@ namespace InDoOut_Networking_Tests
 
             Assert.IsTrue(await server.Stop());
         }
+
+        [TestMethod]
+        public async Task DownloadProgram()
+        {
+            var server = new Server(9001);
+            var client = new TestClient();
+            var programHolder = new ProgramHolder();
+
+            Assert.IsTrue(server.AddCommandListener(new DownloadProgramServerCommand(server, programHolder)));
+
+            Assert.IsTrue(await server.Start());
+            Assert.IsTrue(await client.Connect(IPAddress.Loopback, 9001));
+            Assert.IsNull(client.LastMessageReceived);
+            Assert.AreEqual(0, programHolder.Programs.Count);
+
+            Assert.IsTrue(await client.Send($"some ID{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}DownloadProgram{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}A non existant program name"));
+
+            await Task.Delay(TimeSpan.FromMilliseconds(500));
+
+            Assert.IsNotNull(client.LastMessageReceived);
+            Assert.IsTrue(client.LastMessageReceived.IsFailureMessage);
+            Assert.AreEqual("The program with the name \"A non existant program name\" doesn't exist on the server.", client.LastMessageReceived.FailureMessage);
+
+            client.LastMessageReceived = null;
+
+            Assert.IsTrue(await client.Send($"some ID{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}DownloadProgram{NetworkCodes.COMMAND_NAME_DATA_SPLITTER} "));
+
+            await Task.Delay(TimeSpan.FromMilliseconds(500));
+
+            Assert.IsNotNull(client.LastMessageReceived);
+            Assert.IsTrue(client.LastMessageReceived.IsFailureMessage);
+            Assert.AreEqual("The program name requested was empty.", client.LastMessageReceived.FailureMessage);
+
+            client.LastMessageReceived = null;
+
+            Assert.IsTrue(await client.Send($"some ID{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}DownloadProgram{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}"));
+
+            await Task.Delay(TimeSpan.FromMilliseconds(500));
+
+            Assert.IsNotNull(client.LastMessageReceived);
+            Assert.IsTrue(client.LastMessageReceived.IsFailureMessage);
+            Assert.AreEqual("The request appears to be invalid and can't be accepted by the server.", client.LastMessageReceived.FailureMessage);
+
+            client.LastMessageReceived = null;
+
+            var program2 = programHolder.NewProgram();
+            program2.SetName("A program name 2 functions");
+
+            Assert.IsTrue(program2.AddFunction(new TestFunction()));
+            Assert.IsTrue(program2.AddFunction(new TestFunction()));
+
+            var program1 = programHolder.NewProgram();
+            program1.SetName("A program name 1 function");
+
+            Assert.IsTrue(program1.AddFunction(new TestFunction()));
+
+            var program0 = programHolder.NewProgram();
+            program0.SetName("0 functions");
+
+            Assert.AreEqual(3, programHolder.Programs.Count);
+
+            Assert.IsTrue(await client.Send($"some ID{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}DownloadProgram{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}A program"));
+
+            await Task.Delay(TimeSpan.FromMilliseconds(500));
+
+            Assert.IsNotNull(client.LastMessageReceived);
+            Assert.IsTrue(client.LastMessageReceived.IsFailureMessage);
+            Assert.AreEqual("The program with the name \"A program\" doesn't exist on the server.", client.LastMessageReceived.FailureMessage);
+
+            Assert.IsTrue(await client.Send($"some ID{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}DownloadProgram{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}A program name 2 functions"));
+
+            await Task.Delay(TimeSpan.FromMilliseconds(500));
+
+            Assert.IsNotNull(client.LastMessageReceived);
+            Assert.IsFalse(client.LastMessageReceived.IsFailureMessage);
+            Assert.IsFalse(client.LastMessageReceived.IsSuccessMessage);
+
+            
+
+            Assert.IsTrue(await server.Stop());
+        }
     }
 }

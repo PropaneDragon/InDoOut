@@ -6,8 +6,8 @@ namespace InDoOut_Executable_Core.Networking
     {
         public bool Valid => !string.IsNullOrWhiteSpace(Id) && !string.IsNullOrWhiteSpace(Name);
 
-        public bool IsFailureMessage => Data.Length > 0 && Data[0] == NetworkCodes.COMMAND_FAILURE_IDENTIFIER;
-        public bool IsSuccessMessage => Data.Length > 0 && Data[0] == NetworkCodes.COMMAND_SUCCESS_IDENTIFIER;
+        public bool IsFailureMessage => Data != null && Data.Length > 0 && Data[0] == NetworkCodes.COMMAND_FAILURE_IDENTIFIER;
+        public bool IsSuccessMessage => Data != null && Data.Length > 0 && Data[0] == NetworkCodes.COMMAND_SUCCESS_IDENTIFIER;
 
         public string Id { get; set; } = Guid.NewGuid().ToString();
         public string Name { get; set; } = null;
