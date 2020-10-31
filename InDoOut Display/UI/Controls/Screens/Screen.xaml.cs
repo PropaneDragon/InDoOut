@@ -87,30 +87,15 @@ namespace InDoOut_Display.UI.Controls.Screens
              * set as percentages as part of their movement/resize methods. */
         }
 
-        public Point GetPosition(FrameworkElement element)
-        {
-            return new Point();
-        }
+        public Point GetPosition(FrameworkElement element) => new Point();
 
-        public Point GetMousePosition()
-        {
-            return Mouse.GetPosition(this);
-        }
+        public Point GetMousePosition() => Mouse.GetPosition(this);
 
-        public FrameworkElement GetElementUnderMouse()
-        {
-            return GetElementAtPoint(GetMousePosition());
-        }
+        public FrameworkElement GetElementUnderMouse() => GetElementAtPoint(GetMousePosition());
 
-        public FrameworkElement GetElementAtPoint(Point point)
-        {
-            return GetElementsAtPoint(point).FirstOrDefault();
-        }
+        public FrameworkElement GetElementAtPoint(Point point) => GetElementsAtPoint(point).FirstOrDefault();
 
-        public List<FrameworkElement> GetElementsUnderMouse()
-        {
-            return GetElementsAtPoint(GetMousePosition());
-        }
+        public List<FrameworkElement> GetElementsUnderMouse() => GetElementsAtPoint(GetMousePosition());
 
         public List<FrameworkElement> GetElementsAtPoint(Point point)
         {
@@ -183,10 +168,7 @@ namespace InDoOut_Display.UI.Controls.Screens
             return ScreenEdge.None;
         }
 
-        public bool PointCloseToScreenItemEdge(Point point, double distance = 5d)
-        {
-            return GetCloseEdge(point, distance) != ScreenEdge.None;
-        }
+        public bool PointCloseToScreenItemEdge(Point point, double distance = 5d) => GetCloseEdge(point, distance) != ScreenEdge.None;
 
         private IStaticMarginElementContainer AttachToContainer(FrameworkElement element)
         {
@@ -223,10 +205,7 @@ namespace InDoOut_Display.UI.Controls.Screens
             return HitTestResultBehavior.Continue;
         }
 
-        private bool PointWithin(double point, double min, double max)
-        {
-            return point > min && point < max;
-        }
+        private bool PointWithin(double point, double min, double max) => point > min && point < max;
 
         private void ChangeMode(ProgramViewMode mode)
         {

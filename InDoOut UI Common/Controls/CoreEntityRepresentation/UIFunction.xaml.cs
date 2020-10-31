@@ -100,15 +100,9 @@ namespace InDoOut_UI_Common.Controls.CoreEntityRepresentation
             return null;
         }
 
-        public void SelectionStarted(ICommonDisplay display)
-        {
-            Rectangle_Selected.Visibility = Visibility.Visible;
-        }
+        public void SelectionStarted(ICommonDisplay display) => Rectangle_Selected.Visibility = Visibility.Visible;
 
-        public void SelectionEnded(ICommonDisplay display)
-        {
-            Rectangle_Selected.Visibility = Visibility.Hidden;
-        }
+        public void SelectionEnded(ICommonDisplay display) => Rectangle_Selected.Visibility = Visibility.Hidden;
 
         public void DragStarted(ICommonDisplay display)
         {
@@ -139,10 +133,7 @@ namespace InDoOut_UI_Common.Controls.CoreEntityRepresentation
             }
         }
 
-        public void DragEnded(ICommonDisplay display)
-        {
-            _cachedVisualConnections.Clear();
-        }
+        public void DragEnded(ICommonDisplay display) => _cachedVisualConnections.Clear();
 
         private void SetFunction(IFunction function)
         {
@@ -306,10 +297,7 @@ namespace InDoOut_UI_Common.Controls.CoreEntityRepresentation
             return allDeleted;
         }
 
-        private void UpdateTimer_Tick(object sender, EventArgs e)
-        {
-            UpdateFromFunction();
-        }
+        private void UpdateTimer_Tick(object sender, EventArgs e) => UpdateFromFunction();
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
@@ -357,10 +345,7 @@ namespace InDoOut_UI_Common.Controls.CoreEntityRepresentation
             Scale_Main.BeginAnimation(ScaleTransform.ScaleYProperty, scaleAnimation);
         }
 
-        private void Button_Run_Click(object sender, RoutedEventArgs e)
-        {
-            _function?.Trigger(null);
-        }
+        private void Button_Run_Click(object sender, RoutedEventArgs e) => _function?.Trigger(null);
 
         private void UserControl_PreviewMouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {

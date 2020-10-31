@@ -26,9 +26,6 @@ namespace InDoOut_Display_Basic_Plugins.Shapes
             _ = AddProperty(_colourPropertiesHelper.SaturationPercentageProperty);
         }
 
-        public override IDisplayElement CreateAssociatedUIElement()
-        {
-            return new RectangleUIElement(this);
-        }
+        public override IDisplayElement CreateAssociatedUIElement() => new RectangleUIElement(this);
     }
 }

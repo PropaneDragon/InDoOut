@@ -51,9 +51,6 @@ namespace InDoOut_Display.UI.Controls.ElementSelector
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            ElementSelected?.Invoke(this, e);
-        }
+        private void Button_Click(object sender, RoutedEventArgs e) => ElementSelected?.Invoke(this, e);
     }
 }

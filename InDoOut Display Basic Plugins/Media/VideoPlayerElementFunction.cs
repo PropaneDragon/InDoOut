@@ -28,9 +28,6 @@ namespace InDoOut_Display_Basic_Plugins.Media
             _volumePercentage = AddProperty(new Property<double>("Volume percentage (0 - 100)", "The volume of the media to be played", false, 100));
         }
 
-        public override IDisplayElement CreateAssociatedUIElement()
-        {
-            return new VideoPlayerUIElement(this);
-        }
+        public override IDisplayElement CreateAssociatedUIElement() => new VideoPlayerUIElement(this);
     }
 }

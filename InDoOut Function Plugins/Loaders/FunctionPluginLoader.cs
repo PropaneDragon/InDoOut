@@ -15,9 +15,6 @@ namespace InDoOut_Function_Plugins.Loaders
         /// </summary>
         /// <param name="plugin">The plugin to create a container for.</param>
         /// <returns>The generated container from the given plugin.</returns>
-        protected override IPluginContainer CreateContainer(IPlugin plugin)
-        {
-            return plugin != null ? new FunctionPluginContainer(plugin) : null;
-        }
+        protected override IPluginContainer CreateContainer(IPlugin plugin) => plugin != null ? new FunctionPluginContainer(plugin) : null;
     }
 }

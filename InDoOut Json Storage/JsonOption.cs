@@ -28,16 +28,11 @@ namespace InDoOut_Json_Storage
         /// <returns>A JSON representation of the given <paramref name="option"/>.</returns>
         public static JsonOption CreateFromOption(IOption option)
         {
-            if (option != null && !string.IsNullOrEmpty(option.Name))
+            return option != null && !string.IsNullOrEmpty(option.Name) ? new JsonOption()
             {
-                return new JsonOption()
-                {
-                    Value = option.RawValue,
-                    Name = option.Name
-                };
-            }
-
-            return null;
+                Value = option.RawValue,
+                Name = option.Name
+            } : null;
         }
 
         /// <summary>
@@ -48,9 +43,6 @@ namespace InDoOut_Json_Storage
         /// <param name="option">The option to set the value of.</param>
         /// <param name="failIfNameDifferent">Returns false if this is true and name of the <paramref name="option"/> and <see cref="Name"/> are different.</param>
         /// <returns>Whether or not the <see cref="Value"/> was applied to the <paramref name="option"/>.</returns>
-        public bool Set(IOption option, bool failIfNameDifferent = true)
-        {
-            return option != null && (option.Name == Name || !failIfNameDifferent) ? option.ValueFrom(Value) : false;
-        }
+        public bool Set(IOption option, bool failIfNameDifferent = true) => option != null && (option.Name == Name || !failIfNameDifferent) && option.ValueFrom(Value);
     }
 }

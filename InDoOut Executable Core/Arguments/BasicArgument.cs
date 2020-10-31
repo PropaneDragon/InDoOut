@@ -24,9 +24,6 @@ namespace InDoOut_Executable_Core.Arguments
             TriggerAction = triggerAction;
         }
 
-        public override void Trigger(IArgumentHandler handler)
-        {
-            TriggerAction?.Invoke(handler, Value);
-        }
+        public override void Trigger(IArgumentHandler handler) => TriggerAction?.Invoke(handler, Value);
     }
 }

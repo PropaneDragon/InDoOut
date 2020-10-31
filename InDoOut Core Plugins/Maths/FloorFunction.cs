@@ -16,9 +16,6 @@ namespace InDoOut_Core_Plugins.Maths
         {
         }
 
-        protected override double Calculate(double number)
-        {
-            return Math.Floor(number);
-        }
+        protected override double Calculate(double number) => Math.Floor(number);
     }
 }

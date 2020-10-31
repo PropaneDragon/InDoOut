@@ -88,10 +88,7 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
             }
         }
 
-        private void TaskView_OnProgramDisplayChanged(object sender, CurrentProgramDisplayEventArgs e)
-        {
-            ProgramDisplay = e.ProgramDisplay;
-        }
+        private void TaskView_OnProgramDisplayChanged(object sender, CurrentProgramDisplayEventArgs e) => ProgramDisplay = e.ProgramDisplay;
 
         private void ProgramDisplayChanged(ICommonProgramDisplay programDisplay)
         {
@@ -115,20 +112,11 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
             }
         }
 
-        private void UpdateTimer_Tick(object sender, EventArgs e)
-        {
-            UpdatePlayStopButtons();
-        }
+        private void UpdateTimer_Tick(object sender, EventArgs e) => UpdatePlayStopButtons();
 
-        private void Button_Collapse_Click(object sender, RoutedEventArgs e)
-        {
-            Collapsed = !Collapsed;
-        }
+        private void Button_Collapse_Click(object sender, RoutedEventArgs e) => Collapsed = !Collapsed;
 
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            Collapsed = true;
-        }
+        private void UserControl_Loaded(object sender, RoutedEventArgs e) => Collapsed = true;
 
         private void SearchBar_SearchRequested(object sender, InDoOut_UI_Common.Controls.Search.SearchArgs e)
         {

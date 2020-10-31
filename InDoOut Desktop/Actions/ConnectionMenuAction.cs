@@ -49,9 +49,6 @@ namespace InDoOut_Desktop.Actions
             }
         }
 
-        private void RightClickMenu_Closed(object sender, RoutedEventArgs e)
-        {
-            Finish(null);
-        }
+        private void RightClickMenu_Closed(object sender, RoutedEventArgs e) => Finish(null);
     }
 }

@@ -57,14 +57,8 @@ namespace InDoOut_UI_Common.Animation
             return Brushes.Transparent;
         }
 
-        public override object GetCurrentValue(object defaultOriginValue, object defaultDestinationValue, AnimationClock animationClock)
-        {
-            return GetCurrentValue(defaultOriginValue as Brush, defaultDestinationValue as Brush, animationClock);
-        }
+        public override object GetCurrentValue(object defaultOriginValue, object defaultDestinationValue, AnimationClock animationClock) => GetCurrentValue(defaultOriginValue as Brush, defaultDestinationValue as Brush, animationClock);
 
-        protected override Freezable CreateInstanceCore()
-        {
-            return new BrushAnimation();
-        }
+        protected override Freezable CreateInstanceCore() => new BrushAnimation();
     }
 }

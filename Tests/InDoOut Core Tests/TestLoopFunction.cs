@@ -16,19 +16,10 @@ namespace InDoOut_Core_Tests
 
         public override string[] Keywords => new[] { "" };
 
-        protected override void AllItemsComplete()
-        {
-            AllItemsCompleteCalled = true;
-        }
+        protected override void AllItemsComplete() => AllItemsCompleteCalled = true;
 
-        protected override bool PopulateItemDataForIndex(int index)
-        {
-            return index < ItemsToIterate;
-        }
+        protected override bool PopulateItemDataForIndex(int index) => index < ItemsToIterate;
 
-        protected override void PreprocessItems()
-        {
-            PreprocessCalled = true;
-        }
+        protected override void PreprocessItems() => PreprocessCalled = true;
     }
 }

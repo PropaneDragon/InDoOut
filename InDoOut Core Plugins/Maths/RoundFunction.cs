@@ -20,9 +20,6 @@ namespace InDoOut_Core_Plugins.Maths
             _ = AddProperty(_decimalPlaces);
         }
 
-        protected override double Calculate(double number)
-        {
-            return Math.Round(number, _decimalPlaces.FullValue);
-        }
+        protected override double Calculate(double number) => Math.Round(number, _decimalPlaces.FullValue);
     }
 }

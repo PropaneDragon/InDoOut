@@ -30,10 +30,7 @@ namespace InDoOut_UI_Common.Controls.TaskManager
             InitializeComponent();
         }
 
-        public void CreateNewTask(bool bringToFront = false)
-        {
-            CreateNewTask(ProgramHolder.Instance.NewProgram(), bringToFront);
-        }
+        public void CreateNewTask(bool bringToFront = false) => CreateNewTask(ProgramHolder.Instance.NewProgram(), bringToFront);
 
         public async Task<bool> CreateNewTask(string path, bool runAutomatically = false, bool bringToFront = false)
         {
@@ -204,9 +201,6 @@ namespace InDoOut_UI_Common.Controls.TaskManager
             }
         }
 
-        private void Button_NewTask_Click(object sender, RoutedEventArgs e)
-        {
-            CreateNewTask();
-        }
+        private void Button_NewTask_Click(object sender, RoutedEventArgs e) => CreateNewTask();
     }
 }

@@ -21,9 +21,6 @@ namespace InDoOut_Core_Plugins.Maths
             _maximum = AddProperty(new Property<double>("Maximum", "The inclusive maximum allowed number", true, 100));
         }
 
-        protected override double Calculate(double number)
-        {
-            return Math.Clamp(number, _minimum.FullValue, _maximum.FullValue);
-        }
+        protected override double Calculate(double number) => Math.Clamp(number, _minimum.FullValue, _maximum.FullValue);
     }
 }

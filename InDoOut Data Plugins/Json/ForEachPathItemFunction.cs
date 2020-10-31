@@ -29,10 +29,7 @@ namespace InDoOut_Data_Plugins.Json
             _jsonResult = AddResult(new Result("JSON result", "The result of the query on the incoming JSON."));
         }
 
-        protected override void AllItemsComplete()
-        {
-            _tokens = null;
-        }
+        protected override void AllItemsComplete() => _tokens = null;
 
         protected override bool PopulateItemDataForIndex(int index)
         {

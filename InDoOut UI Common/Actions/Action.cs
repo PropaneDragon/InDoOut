@@ -20,14 +20,8 @@ namespace InDoOut_UI_Common.Actions
         public virtual bool KeyDown(Key key) => false;
         public virtual bool KeyUp(Key key) => false;
 
-        protected void Finish(IAction nextAction)
-        {
-            ActionComplete?.Invoke(this, new ActionCompleteEventArgs(this, nextAction));
-        }
+        protected void Finish(IAction nextAction) => ActionComplete?.Invoke(this, new ActionCompleteEventArgs(this, nextAction));
 
-        protected void Abort()
-        {
-            Finish(null);
-        }
+        protected void Abort() => Finish(null);
     }
 }

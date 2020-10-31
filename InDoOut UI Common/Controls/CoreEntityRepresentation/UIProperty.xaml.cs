@@ -137,15 +137,9 @@ namespace InDoOut_UI_Common.Controls.CoreEntityRepresentation
             Button_Edit.BeginAnimation(OpacityProperty, fadeOutAnimation);
         }
 
-        private void Button_Edit_Click(object sender, RoutedEventArgs e)
-        {
-            ShowEditor();
-        }
+        private void Button_Edit_Click(object sender, RoutedEventArgs e) => ShowEditor();
 
-        private void IO_Main_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            ShowEditor();
-        }
+        private void IO_Main_MouseDoubleClick(object sender, MouseButtonEventArgs e) => ShowEditor();
 
         private void TextBox_ValueEdit_LostFocus(object sender, RoutedEventArgs e)
         {

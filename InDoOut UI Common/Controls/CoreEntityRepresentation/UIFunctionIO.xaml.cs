@@ -32,10 +32,7 @@ namespace InDoOut_UI_Common.Controls.CoreEntityRepresentation
         {
         }
 
-        private void SetIOType(IOType type)
-        {
-            ChangeColourForIOType(type);
-        }
+        private void SetIOType(IOType type) => ChangeColourForIOType(type);
 
         private void ChangeColourForIOType(IOType type)
         {

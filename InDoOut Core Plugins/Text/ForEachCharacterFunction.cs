@@ -23,10 +23,7 @@ namespace InDoOut_Core_Plugins.Text
             _character = AddResult(new Result("Character", "The current character from the text."));
         }
 
-        protected override void PreprocessItems()
-        {
-            _cachedString = _text.FullValue;
-        }
+        protected override void PreprocessItems() => _cachedString = _text.FullValue;
 
         protected override bool PopulateItemDataForIndex(int index)
         {
@@ -40,9 +37,6 @@ namespace InDoOut_Core_Plugins.Text
             return false;
         }
 
-        protected override void AllItemsComplete()
-        {
-            _cachedString = "";
-        }
+        protected override void AllItemsComplete() => _cachedString = "";
     }
 }

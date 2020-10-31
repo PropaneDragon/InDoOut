@@ -213,10 +213,7 @@ namespace InDoOut_UI_Common.Controls.Core
             }
         }
 
-        private void Button_Restore_Click(object sender, RoutedEventArgs e)
-        {
-            ToggleWindowState();
-        }
+        private void Button_Restore_Click(object sender, RoutedEventArgs e) => ToggleWindowState();
 
         private void Button_Minimise_Click(object sender, RoutedEventArgs e)
         {

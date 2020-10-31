@@ -73,49 +73,22 @@ namespace InDoOut_Desktop.Actions
             return _commonDisplayActions?.MouseDoubleClick(mousePosition) ?? false;
         }
 
-        public override bool MouseRightMove(Point mousePosition)
-        {
-            return _commonDisplayActions?.MouseRightMove(mousePosition) ?? false;
-        }
+        public override bool MouseRightMove(Point mousePosition) => _commonDisplayActions?.MouseRightMove(mousePosition) ?? false;
 
-        public override bool MouseRightDown(Point mousePosition)
-        {
-            return _commonDisplayActions?.MouseRightDown(mousePosition) ?? false;
-        }
+        public override bool MouseRightDown(Point mousePosition) => _commonDisplayActions?.MouseRightDown(mousePosition) ?? false;
 
-        public override bool MouseNoMove(Point mousePosition)
-        {
-            return _commonDisplayActions?.MouseNoMove(mousePosition) ?? false;
-        }
+        public override bool MouseNoMove(Point mousePosition) => _commonDisplayActions?.MouseNoMove(mousePosition) ?? false;
 
-        public override bool MouseLeftDown(Point mousePosition)
-        {
-            return _commonDisplayActions?.MouseLeftDown(mousePosition) ?? false;
-        }
+        public override bool MouseLeftDown(Point mousePosition) => _commonDisplayActions?.MouseLeftDown(mousePosition) ?? false;
 
-        public override bool MouseLeftMove(Point mousePosition)
-        {
-            return _commonDisplayActions?.MouseLeftMove(mousePosition) ?? false;
-        }
+        public override bool MouseLeftMove(Point mousePosition) => _commonDisplayActions?.MouseLeftMove(mousePosition) ?? false;
 
-        public override bool MouseLeftUp(Point mousePosition)
-        {
-            return _commonDisplayActions?.MouseLeftUp(mousePosition) ?? false;
-        }
+        public override bool MouseLeftUp(Point mousePosition) => _commonDisplayActions?.MouseLeftUp(mousePosition) ?? false;
 
-        public override bool MouseWheel(int delta)
-        {
-            return _commonDisplayActions?.MouseWheel(delta) ?? false;
-        }
+        public override bool MouseWheel(int delta) => _commonDisplayActions?.MouseWheel(delta) ?? false;
 
-        public override bool KeyUp(Key key)
-        {
-            return _commonDisplayActions?.KeyUp(key) ?? false;
-        }
+        public override bool KeyUp(Key key) => _commonDisplayActions?.KeyUp(key) ?? false;
 
-        public override bool KeyDown(Key key)
-        {
-            return _commonDisplayActions?.KeyDown(key) ?? false;
-        }
+        public override bool KeyDown(Key key) => _commonDisplayActions?.KeyDown(key) ?? false;
     }
 }

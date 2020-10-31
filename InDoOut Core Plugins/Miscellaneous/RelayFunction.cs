@@ -21,9 +21,6 @@ namespace InDoOut_Core_Plugins.Miscellaneous
             _output = CreateOutput();
         }
 
-        protected override IOutput Started(IInput triggeredBy)
-        {
-            return _output;
-        }
+        protected override IOutput Started(IInput triggeredBy) => _output;
     }
 }

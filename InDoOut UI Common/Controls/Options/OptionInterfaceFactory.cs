@@ -16,10 +16,7 @@ namespace InDoOut_UI_Common.Controls.Options
         {
         }
 
-        public ILinkedInterfaceOption GetInterfaceOptionFor<OptionType>() where OptionType : IOption
-        {
-            return GetInterfaceOptionFor(typeof(OptionType));
-        }
+        public ILinkedInterfaceOption GetInterfaceOptionFor<OptionType>() where OptionType : IOption => GetInterfaceOptionFor(typeof(OptionType));
 
         public ILinkedInterfaceOption GetInterfaceOptionFor(Type type)
         {

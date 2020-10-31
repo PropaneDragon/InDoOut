@@ -10,9 +10,6 @@
 
         protected override string Verb => "subtract";
 
-        protected override double Calculate(double first, double second)
-        {
-            return first - second;
-        }
+        protected override double Calculate(double first, double second) => first - second;
     }
 }

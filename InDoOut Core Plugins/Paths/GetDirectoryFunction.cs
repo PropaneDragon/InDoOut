@@ -31,9 +31,6 @@ namespace InDoOut_Core_Plugins.Paths
             _directoryPath = AddResult(new Result("Directory path", "The path of the directory from the given path."));
         }
 
-        protected override IOutput Started(IInput triggeredBy)
-        {
-            return _directoryPath.ValueFrom(Path.GetDirectoryName(_path.FullValue)) ? _output : _failed;
-        }
+        protected override IOutput Started(IInput triggeredBy) => _directoryPath.ValueFrom(Path.GetDirectoryName(_path.FullValue)) ? _output : _failed;
     }
 }

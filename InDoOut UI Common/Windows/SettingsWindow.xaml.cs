@@ -26,10 +26,7 @@ namespace InDoOut_UI_Common.Windows
             OptionsStorer = optionsStorer;
         }
 
-        private void AddProgramOptions()
-        {
-            AddOptions("Program options", ProgramOptionsHolder.Instance.ProgramOptions?.OptionHolder?.Options);
-        }
+        private void AddProgramOptions() => AddOptions("Program options", ProgramOptionsHolder.Instance.ProgramOptions?.OptionHolder?.Options);
 
         private void AddPluginOptions()
         {
@@ -84,9 +81,6 @@ namespace InDoOut_UI_Common.Windows
             Button_Apply.IsEnabled = true;
         }
 
-        private void Button_Cancel_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
+        private void Button_Cancel_Click(object sender, RoutedEventArgs e) => Close();
     }
 }

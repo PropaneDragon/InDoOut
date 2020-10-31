@@ -61,9 +61,6 @@ namespace InDoOut_Desktop.Loading
             return false;
         }
 
-        private void PluginLoader_OnPluginLoadSuccess(object sender, PluginLoadEventArgs e)
-        {
-            Name = $"Loaded {e.Path ?? "Unknown path"}";
-        }
+        private void PluginLoader_OnPluginLoadSuccess(object sender, PluginLoadEventArgs e) => Name = $"Loaded {e.Path ?? "Unknown path"}";
     }
 }

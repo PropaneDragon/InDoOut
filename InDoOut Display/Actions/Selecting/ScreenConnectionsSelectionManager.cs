@@ -12,14 +12,8 @@ namespace InDoOut_Display.Actions.Selecting
             _associatedScreen = screenConnections;
         }
 
-        protected override void NotifySelectableEnded(ISelectable selectable)
-        {
-            selectable.SelectionEnded(_associatedScreen);
-        }
+        protected override void NotifySelectableEnded(ISelectable selectable) => selectable.SelectionEnded(_associatedScreen);
 
-        protected override void NotifySelectableStarted(ISelectable selectable)
-        {
-            selectable.SelectionStarted(_associatedScreen);
-        }
+        protected override void NotifySelectableStarted(ISelectable selectable) => selectable.SelectionStarted(_associatedScreen);
     }
 }

@@ -21,10 +21,7 @@ namespace InDoOut_Testing
         /// <param name="triggerable">The triggerable to wait for.</param>
         /// <param name="waitForStart">Whether to wait for the function to start first.</param>
         /// <param name="sensitivity">The sensitivity of the wait timer. This is the amount of milliseconds to wait and check if the <paramref name="triggerable"/> is reporting it's not running anymore (due to it switching functions internally for example).</param>
-        public static void WaitForCompletion(this ITriggerable triggerable, bool waitForStart = false, int sensitivity = 1)
-        {
-            _ = WaitForCompletion(triggerable, TimeSpan.FromMinutes(1), waitForStart, sensitivity);
-        }
+        public static void WaitForCompletion(this ITriggerable triggerable, bool waitForStart = false, int sensitivity = 1) => _ = WaitForCompletion(triggerable, TimeSpan.FromMinutes(1), waitForStart, sensitivity);
 
         /// <summary>
         /// Waits for <paramref name="triggerable"/> to complete within the specified time given by <paramref name="timeout"/> and
@@ -171,9 +168,6 @@ namespace InDoOut_Testing
             return foundResult?.RawValue;
         }
 
-        private static T FindByName<T>(List<T> names, string name) where T : class, INamed
-        {
-            return names?.FirstOrDefault(named => named.Name == name);
-        }
+        private static T FindByName<T>(List<T> names, string name) where T : class, INamed => names?.FirstOrDefault(named => named.Name == name);
     }
 }

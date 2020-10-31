@@ -81,20 +81,14 @@ namespace InDoOut_Core.Entities.Functions
         /// </summary>
         /// <param name="property">The property to connect to.</param>
         /// <returns>Whether the connection was a success.</returns>
-        public bool Connect(IProperty property)
-        {
-            return AddConnection(property);
-        }
+        public bool Connect(IProperty property) => AddConnection(property);
 
         /// <summary>
         /// Disconnects this result from a <see cref="IProperty"/>.
         /// </summary>
         /// <param name="property">The property to disconnect from.</param>
         /// <returns>Whether the disconnection was a success.</returns>
-        public bool Disconnect(IProperty property)
-        {
-            return RemoveConnection(property);
-        }
+        public bool Disconnect(IProperty property) => RemoveConnection(property);
 
         /// <summary>
         /// Sets the value from the given <paramref name="value"/> of type <typeparamref name="T"/>.
@@ -123,10 +117,7 @@ namespace InDoOut_Core.Entities.Functions
         /// A string representation of this entity.
         /// </summary>
         /// <returns>A string representation of this entity.</returns>
-        public override string ToString()
-        {
-            return $"[RESULT {base.ToString()} [Name: {Name ?? "null"}] [Value: {RawValue ?? "null"}]]";
-        }
+        public override string ToString() => $"[RESULT {base.ToString()} [Name: {Name ?? "null"}] [Value: {RawValue ?? "null"}]]";
 
         /// <summary>
         /// Processes the result from the function that triggered it.
@@ -151,9 +142,6 @@ namespace InDoOut_Core.Entities.Functions
             Log.Instance.Info($"Processed {this}");
         }
 
-        private void Value_OnValueChanged(object sender, ValueChangedEvent e)
-        {
-            OnValueChanged?.Invoke(this, e);
-        }
+        private void Value_OnValueChanged(object sender, ValueChangedEvent e) => OnValueChanged?.Invoke(this, e);
     }
 }

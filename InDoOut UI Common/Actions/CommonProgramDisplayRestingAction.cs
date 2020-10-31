@@ -12,29 +12,14 @@ namespace InDoOut_UI_Common.Actions
         {
         }
 
-        public override bool MouseLeftDown(Point mousePosition)
-        {
-            return base.MouseLeftDown(mousePosition);
-        }
+        public override bool MouseLeftDown(Point mousePosition) => base.MouseLeftDown(mousePosition);
 
-        public override bool MouseLeftMove(Point mousePosition)
-        {
-            return base.MouseLeftMove(mousePosition);
-        }
+        public override bool MouseLeftMove(Point mousePosition) => base.MouseLeftMove(mousePosition);
 
-        public override bool MouseLeftUp(Point mousePosition)
-        {
-            return base.MouseLeftUp(mousePosition);
-        }
+        public override bool MouseLeftUp(Point mousePosition) => base.MouseLeftUp(mousePosition);
 
-        public override bool MouseWheel(int delta)
-        {
-            return base.MouseWheel(delta);
-        }
+        public override bool MouseWheel(int delta) => base.MouseWheel(delta);
 
-        public override bool KeyUp(Key key)
-        {
-            return base.KeyUp(key);
-        }
+        public override bool KeyUp(Key key) => base.KeyUp(key);
     }
 }

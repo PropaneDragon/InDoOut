@@ -84,25 +84,13 @@ namespace InDoOut_Core.Logging
         /// Converts the log message to a string.
         /// </summary>
         /// <returns>The log message in string form.</returns>
-        public override string ToString()
-        {
-            return $"[{FormatDate()}][{FormatAssembly()}]{FormatMessage()}";
-        }
+        public override string ToString() => $"[{FormatDate()}][{FormatAssembly()}]{FormatMessage()}";
 
-        private string FormatDate()
-        {
-            return Time.ToString("yyyy-MM-dd HH:mm:ss");
-        }
+        private string FormatDate() => Time.ToString("yyyy-MM-dd HH:mm:ss");
 
-        private string FormatAssembly()
-        {
-            return CallingAssembly?.GetName()?.Name ?? "";
-        }
+        private string FormatAssembly() => CallingAssembly?.GetName()?.Name ?? "";
 
-        private string ConcatenateMessageSafely()
-        {
-            return string.Concat(Message.Select(messageObject => messageObject?.ToString() ?? "null"));
-        }
+        private string ConcatenateMessageSafely() => string.Concat(Message.Select(messageObject => messageObject?.ToString() ?? "null"));
 
         private string FormatMessage()
         {

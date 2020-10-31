@@ -23,9 +23,6 @@ namespace InDoOut_Display_Basic_Plugins.Text
             _text = AddProperty(new Property<string>("Text", "The text to show", true, "Enter some text"));
         }
 
-        public override IDisplayElement CreateAssociatedUIElement()
-        {
-            return new TextBlockUIElement(this);
-        }
+        public override IDisplayElement CreateAssociatedUIElement() => new TextBlockUIElement(this);
     }
 }

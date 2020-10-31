@@ -35,14 +35,8 @@ namespace InDoOut_BlinkStick_Plugins
             _cachedLightIds = blinkSticks.Select(blinkStick => blinkStick.Meta.Serial);
         }
 
-        protected override bool PopulateItemDataForIndex(int index)
-        {
-            return _cachedLightIds != null && index < _cachedLightIds.Count() ? _lightId.ValueFrom(_cachedLightIds.ElementAt(index)) : false;
-        }
+        protected override bool PopulateItemDataForIndex(int index) => _cachedLightIds != null && index < _cachedLightIds.Count() ? _lightId.ValueFrom(_cachedLightIds.ElementAt(index)) : false;
 
-        protected override void AllItemsComplete()
-        {
-            _cachedLightIds = null;
-        }
+        protected override void AllItemsComplete() => _cachedLightIds = null;
     }
 }

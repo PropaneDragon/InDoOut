@@ -25,9 +25,6 @@ namespace InDoOut_Core_Plugins.Numeric
             _value = AddProperty(new Property<string>("Value", "The value to check"));
         }
 
-        protected override IOutput Started(IInput triggeredBy)
-        {
-            return !string.IsNullOrEmpty(_value.FullValue) && double.TryParse(_value.FullValue, out var number) && !double.IsNaN(number) ? _isNumber : _notNumber;
-        }
+        protected override IOutput Started(IInput triggeredBy) => !string.IsNullOrEmpty(_value.FullValue) && double.TryParse(_value.FullValue, out var number) && !double.IsNaN(number) ? _isNumber : _notNumber;
     }
 }

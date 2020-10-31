@@ -60,10 +60,7 @@ namespace InDoOut_Server
             _logFileSaver.BeginAutoSave();
         }
 
-        private static void TearDown()
-        {
-            _ = _logFileSaver?.SaveLog();
-        }
+        private static void TearDown() => _ = _logFileSaver?.SaveLog();
 
         private static ApplicationArguments ProcessArguments(string[] args)
         {

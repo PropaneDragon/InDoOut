@@ -12,10 +12,7 @@ namespace InDoOut_Display.Creation
         {
         }
 
-        protected override IUIFunction AddFunctionToDisplay(IFunction function, bool setPositionFromMetadata = true)
-        {
-            return function is IElementFunction elementFunction ? AddElementFunctionToDisplay(elementFunction, setPositionFromMetadata) : base.AddFunctionToDisplay(function, setPositionFromMetadata);
-        }
+        protected override IUIFunction AddFunctionToDisplay(IFunction function, bool setPositionFromMetadata = true) => function is IElementFunction elementFunction ? AddElementFunctionToDisplay(elementFunction, setPositionFromMetadata) : base.AddFunctionToDisplay(function, setPositionFromMetadata);
 
         protected IUIFunction AddElementFunctionToDisplay(IElementFunction function, bool setPositionFromMetadata = true)
         {

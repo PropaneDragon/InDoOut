@@ -33,10 +33,7 @@ namespace InDoOut_UI_Common.SaveLoad
             return allSucceded;
         }
 
-        public async Task<bool> LoadProgramOptionsAsync(IOptionsStorer optionsStorer)
-        {
-            return await LoadOptionsAsync(GetProgramFileName(optionsStorer), ProgramOptionsHolder.Instance.ProgramOptions?.OptionHolder, optionsStorer);
-        }
+        public async Task<bool> LoadProgramOptionsAsync(IOptionsStorer optionsStorer) => await LoadOptionsAsync(GetProgramFileName(optionsStorer), ProgramOptionsHolder.Instance.ProgramOptions?.OptionHolder, optionsStorer);
 
         public async Task<bool> LoadPluginOptionsAsync(IOptionsStorer optionsStorer)
         {
@@ -53,15 +50,9 @@ namespace InDoOut_UI_Common.SaveLoad
             return allSucceeded;
         }
 
-        public async Task<bool> LoadPluginOptionsAsync(IPlugin plugin, IOptionsStorer optionsStorer)
-        {
-            return plugin != null && await LoadOptionsAsync(GetPluginFileName(plugin, optionsStorer), plugin?.OptionHolder, optionsStorer);
-        }
+        public async Task<bool> LoadPluginOptionsAsync(IPlugin plugin, IOptionsStorer optionsStorer) => plugin != null && await LoadOptionsAsync(GetPluginFileName(plugin, optionsStorer), plugin?.OptionHolder, optionsStorer);
 
-        public async Task<bool> SaveProgramOptionsAsync(IOptionsStorer optionsStorer)
-        {
-            return await SaveOptionsAsync(GetProgramFileName(optionsStorer), ProgramOptionsHolder.Instance.ProgramOptions?.OptionHolder, optionsStorer);
-        }
+        public async Task<bool> SaveProgramOptionsAsync(IOptionsStorer optionsStorer) => await SaveOptionsAsync(GetProgramFileName(optionsStorer), ProgramOptionsHolder.Instance.ProgramOptions?.OptionHolder, optionsStorer);
 
         public async Task<bool> SavePluginOptionsAsync(IOptionsStorer optionsStorer)
         {
@@ -78,10 +69,7 @@ namespace InDoOut_UI_Common.SaveLoad
             return allSucceeded;
         }
 
-        public async Task<bool> SavePluginOptionsAsync(IPlugin plugin, IOptionsStorer optionsStorer)
-        {
-            return plugin != null && await SaveOptionsAsync(GetPluginFileName(plugin, optionsStorer), plugin?.OptionHolder, optionsStorer);
-        }
+        public async Task<bool> SavePluginOptionsAsync(IPlugin plugin, IOptionsStorer optionsStorer) => plugin != null && await SaveOptionsAsync(GetPluginFileName(plugin, optionsStorer), plugin?.OptionHolder, optionsStorer);
 
         public async Task<bool> LoadOptionsAsync(string filePath, IOptionHolder optionHolder, IOptionsStorer optionStorer)
         {

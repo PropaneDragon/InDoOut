@@ -22,20 +22,11 @@ namespace InDoOut_UI_Common.Controls.Options.Types
             return true;
         }
 
-        public bool UpdateOptionValue(IOption option)
-        {
-            return option.ValueFrom(Button_Checked.IsChecked ?? false);
-        }
+        public bool UpdateOptionValue(IOption option) => option.ValueFrom(Button_Checked.IsChecked ?? false);
 
-        private void UpdateButtonIcon()
-        {
-            Button_Checked.Content = (Button_Checked.IsChecked ?? false) ? "" : "";
-        }
+        private void UpdateButtonIcon() => Button_Checked.Content = (Button_Checked.IsChecked ?? false) ? "" : "";
 
-        private void Button_Checked_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            UpdateButtonIcon();
-        }
+        private void Button_Checked_Click(object sender, System.Windows.RoutedEventArgs e) => UpdateButtonIcon();
 
         private void UserControl_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {

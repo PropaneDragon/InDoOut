@@ -23,9 +23,6 @@ namespace InDoOut_Core.Entities.Core
         /// Gets the string representation of this entity.
         /// </summary>
         /// <returns>The string representation of this entity.</returns>
-        public override string ToString()
-        {
-            return $"[Type: {GetType()}] [Id: {Id}]";
-        }
+        public override string ToString() => $"[Type: {GetType()}] [Id: {Id}]";
     }
 }

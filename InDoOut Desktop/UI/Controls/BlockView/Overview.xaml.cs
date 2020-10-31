@@ -94,25 +94,13 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
             }
         }
 
-        private Point AdjustByRatio(Point point, Vector ratio)
-        {
-            return new Point(point.X * ratio.X, point.Y * ratio.Y);
-        }
+        private Point AdjustByRatio(Point point, Vector ratio) => new Point(point.X * ratio.X, point.Y * ratio.Y);
 
-        private Size AdjustByRatio(Size size, Vector ratio)
-        {
-            return new Size(size.Width * ratio.X, size.Height * ratio.Y);
-        }
+        private Size AdjustByRatio(Size size, Vector ratio) => new Size(size.Width * ratio.X, size.Height * ratio.Y);
 
-        private Rect AdjustByRatio(Rect rect, Vector ratio)
-        {
-            return new Rect(AdjustByRatio(rect.Location, ratio), AdjustByRatio(rect.Size, ratio));
-        }
+        private Rect AdjustByRatio(Rect rect, Vector ratio) => new Rect(AdjustByRatio(rect.Location, ratio), AdjustByRatio(rect.Size, ratio));
 
-        private void UpdateTimer_Tick(object sender, EventArgs e)
-        {
-            UpdatePositions();
-        }
+        private void UpdateTimer_Tick(object sender, EventArgs e) => UpdatePositions();
 
         private void UserControl_PreviewMouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {

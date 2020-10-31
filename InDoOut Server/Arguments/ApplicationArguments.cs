@@ -25,9 +25,6 @@ namespace InDoOut_Server.Arguments
             return true;
         }
 
-        public void DisplayHelp()
-        {
-            _helpArgument.ShowHelp(ArgumentHandler.Instance);
-        }
+        public void DisplayHelp() => _helpArgument.ShowHelp(ArgumentHandler.Instance);
     }
 }

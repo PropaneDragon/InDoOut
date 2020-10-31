@@ -219,14 +219,8 @@ namespace InDoOut_UI_Common.Controls.TaskManager
             _ = Task.Run(async () => await CommonOptionsSaveLoad.Instance.SaveProgramOptionsAsync());
         }
 
-        private void Button_RunTask_Click(object sender, RoutedEventArgs e)
-        {
-            ProgramDisplay?.AssociatedProgram?.Trigger(null);
-        }
+        private void Button_RunTask_Click(object sender, RoutedEventArgs e) => ProgramDisplay?.AssociatedProgram?.Trigger(null);
 
-        private void Button_StopTask_Click(object sender, RoutedEventArgs e)
-        {
-            ProgramDisplay?.AssociatedProgram?.Stop();
-        }
+        private void Button_StopTask_Click(object sender, RoutedEventArgs e) => ProgramDisplay?.AssociatedProgram?.Stop();
     }
 }

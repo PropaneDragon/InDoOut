@@ -10,14 +10,8 @@ namespace InDoOut_UI_Common.Windows
             InitializeComponent();
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            ListView_Plugins.ItemsSource = LoadedPlugins.Instance.Plugins;
-        }
+        private void Window_Loaded(object sender, RoutedEventArgs e) => ListView_Plugins.ItemsSource = LoadedPlugins.Instance.Plugins;
 
-        private void Button_Close_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
+        private void Button_Close_Click(object sender, RoutedEventArgs e) => Close();
     }
 }

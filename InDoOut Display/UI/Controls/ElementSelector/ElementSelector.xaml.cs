@@ -115,20 +115,11 @@ namespace InDoOut_Display.UI.Controls.ElementSelector
             }
         }
 
-        private void Instance_PluginsChanged(object sender, EventArgs e)
-        {
-            LoadElements();
-        }
+        private void Instance_PluginsChanged(object sender, EventArgs e) => LoadElements();
 
-        private void UserControl_Initialized(object sender, EventArgs e)
-        {
-            LoadElements();
-        }
+        private void UserControl_Initialized(object sender, EventArgs e) => LoadElements();
 
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            LoadedPlugins.Instance.PluginsChanged += Instance_PluginsChanged;
-        }
+        private void UserControl_Loaded(object sender, RoutedEventArgs e) => LoadedPlugins.Instance.PluginsChanged += Instance_PluginsChanged;
 
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {

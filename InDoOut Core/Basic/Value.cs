@@ -64,10 +64,7 @@ namespace InDoOut_Core.Basic
         /// <typeparam name="T">The type to convert to.</typeparam>
         /// <param name="value">The value to convert to the type <typeparamref name="T"/>.</param>
         /// <returns>The value of the string as the type <typeparamref name="T"/>.</returns>
-        public T ConvertFromString<T>(string value)
-        {
-            return (T)TypeDescriptor.GetConverter(typeof(T)).ConvertFromString(value);
-        }
+        public T ConvertFromString<T>(string value) => (T)TypeDescriptor.GetConverter(typeof(T)).ConvertFromString(value);
 
         /// <summary>
         /// Converts a value of type <typeparamref name="T"/> to a string.
@@ -89,10 +86,7 @@ namespace InDoOut_Core.Basic
         /// Gets the string representation of this value.
         /// </summary>
         /// <returns>The string representation of this value.</returns>
-        public override string ToString()
-        {
-            return $"[Valid: {ValidValue}] [Value: {RawValue}]";
-        }
+        public override string ToString() => $"[Valid: {ValidValue}] [Value: {RawValue}]";
 
         private void UpdateRawValueAndAnnounce(string value)
         {

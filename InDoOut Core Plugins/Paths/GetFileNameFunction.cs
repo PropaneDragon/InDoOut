@@ -31,9 +31,6 @@ namespace InDoOut_Core_Plugins.Paths
             _fileName = AddResult(new Result("File name", "The name of the file from the given path."));
         }
 
-        protected override IOutput Started(IInput triggeredBy)
-        {
-            return _fileName.ValueFrom(Path.GetFileName(_path.FullValue)) ? _output : _failed;
-        }
+        protected override IOutput Started(IInput triggeredBy) => _fileName.ValueFrom(Path.GetFileName(_path.FullValue)) ? _output : _failed;
     }
 }

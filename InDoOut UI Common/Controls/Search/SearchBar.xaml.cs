@@ -17,10 +17,7 @@ namespace InDoOut_UI_Common.Controls.Search
             _slogan = TextBox_Query.Text;
         }
 
-        private void PerformSearch()
-        {
-            PerformSearch(TextBox_Query.Text);
-        }
+        private void PerformSearch() => PerformSearch(TextBox_Query.Text);
 
         private void PerformSearch(string query)
         {
@@ -30,10 +27,7 @@ namespace InDoOut_UI_Common.Controls.Search
             }
         }
 
-        private void TextBox_Query_GotFocus(object sender, System.Windows.RoutedEventArgs e)
-        {
-            TextBox_Query.Text = "";
-        }
+        private void TextBox_Query_GotFocus(object sender, System.Windows.RoutedEventArgs e) => TextBox_Query.Text = "";
 
         private void TextBox_Query_LostFocus(object sender, System.Windows.RoutedEventArgs e)
         {
@@ -43,10 +37,7 @@ namespace InDoOut_UI_Common.Controls.Search
             }
         }
 
-        private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            PerformSearch();
-        }
+        private void Button_Click(object sender, System.Windows.RoutedEventArgs e) => PerformSearch();
 
         private void TextBox_Query_KeyUp(object sender, KeyEventArgs e)
         {

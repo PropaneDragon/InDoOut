@@ -6,20 +6,11 @@ namespace InDoOut_Console_Common.Messaging
 {
     public class ConsoleUserMessageSystem : AbstractUserMessageSystem
     {
-        public override void ShowError(string title, string message, string details = null)
-        {
-            ConsoleFormatter.DrawErrorMessageLine($"{(string.IsNullOrEmpty(title) ? "" : $"{title}: ")}{message ?? ""} {details ?? ""}");
-        }
+        public override void ShowError(string title, string message, string details = null) => ConsoleFormatter.DrawErrorMessageLine($"{(string.IsNullOrEmpty(title) ? "" : $"{title}: ")}{message ?? ""} {details ?? ""}");
 
-        public override void ShowInformation(string title, string message, string details = null)
-        {
-            ConsoleFormatter.DrawInfoMessageLine($"{(string.IsNullOrEmpty(title) ? "" : $"{title}: ")}{message ?? ""} {details ?? ""}");
-        }
+        public override void ShowInformation(string title, string message, string details = null) => ConsoleFormatter.DrawInfoMessageLine($"{(string.IsNullOrEmpty(title) ? "" : $"{title}: ")}{message ?? ""} {details ?? ""}");
 
-        public override void ShowWarning(string title, string message, string details = null)
-        {
-            ConsoleFormatter.DrawWarningMessageLine($"{(string.IsNullOrEmpty(title) ? "" : $"{title}: ")}{message ?? ""} {details ?? ""}");
-        }
+        public override void ShowWarning(string title, string message, string details = null) => ConsoleFormatter.DrawWarningMessageLine($"{(string.IsNullOrEmpty(title) ? "" : $"{title}: ")}{message ?? ""} {details ?? ""}");
 
         public override UserResponse? ShowQuestion(string title, string message)
         {

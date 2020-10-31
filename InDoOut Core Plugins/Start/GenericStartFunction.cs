@@ -15,9 +15,6 @@ namespace InDoOut_Core_Plugins.Start
 
         }
 
-        protected override IOutput Started(IInput triggeredBy)
-        {
-            return OutputStart;
-        }
+        protected override IOutput Started(IInput triggeredBy) => OutputStart;
     }
 }

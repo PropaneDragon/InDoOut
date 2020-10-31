@@ -46,10 +46,7 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
             }
         }
 
-        public void ClearFilter()
-        {
-            Filter("");
-        }
+        public void ClearFilter() => Filter("");
 
         private void SetFunctions(List<IFunction> functions, bool temporary = false)
         {

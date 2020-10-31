@@ -62,10 +62,7 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
 
         public bool CanDelete(ICommonDisplay display) => true;
 
-        public void ScaleChanged(IScreen screen)
-        {
-            UpdateFunctionMetadata();
-        }
+        public void ScaleChanged(IScreen screen) => UpdateFunctionMetadata();
 
         public void SelectionStarted(ICommonDisplay view)
         {
@@ -99,20 +96,11 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
             UpdateChildElementVisibility();
         }
 
-        public void DragEnded(ICommonDisplay view)
-        {
-            UpdateChildElementVisibility();
-        }
+        public void DragEnded(ICommonDisplay view) => UpdateChildElementVisibility();
 
-        public bool CopyTo(ICopyable other)
-        {
-            return false;
-        }
+        public bool CopyTo(ICopyable other) => false;
 
-        public ICopyable CreateCopy(ICommonDisplay view)
-        {
-            return null;
-        }
+        public ICopyable CreateCopy(ICommonDisplay view) => null;
 
         public void Deleted(ICommonDisplay view)
         {
@@ -391,10 +379,7 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
             Border_Presenter.Margin = NegateThickness(thickness);
         }
 
-        private void UpdateName()
-        {
-            Grid_Name.Visibility = _selected || _resizing ? Visibility.Visible : Visibility.Collapsed;
-        }
+        private void UpdateName() => Grid_Name.Visibility = _selected || _resizing ? Visibility.Visible : Visibility.Collapsed;
 
         private void SetMarginPercentages(Thickness thickness)
         {

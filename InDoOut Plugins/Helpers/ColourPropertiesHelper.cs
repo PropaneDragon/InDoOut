@@ -70,10 +70,7 @@ namespace InDoOut_Plugins.Helpers
             BrightnessPercentageProperty = new Property<double>(BrightnessTitle, BrightnessDescription, false, 100);
         }
 
-        private Color CalculateColour()
-        {
-            return ColorFromHSV(Math.Clamp(HuePercentageProperty.FullValue, 0d, 100d) * 3.6, Math.Clamp(SaturationPercentageProperty.FullValue, 0d, 100d) / 100d, Math.Clamp(BrightnessPercentageProperty.FullValue, 0d, 100d) / 100d);
-        }
+        private Color CalculateColour() => ColorFromHSV(Math.Clamp(HuePercentageProperty.FullValue, 0d, 100d) * 3.6, Math.Clamp(SaturationPercentageProperty.FullValue, 0d, 100d) / 100d, Math.Clamp(BrightnessPercentageProperty.FullValue, 0d, 100d) / 100d);
 
         private static Color ColorFromHSV(double hue, double saturation, double value)
         {

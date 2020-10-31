@@ -26,9 +26,6 @@ namespace InDoOut_Display_Basic_Plugins.Shapes
             _ = AddProperty(_colourPropertiesHelper.SaturationPercentageProperty);
         }
 
-        public override IDisplayElement CreateAssociatedUIElement()
-        {
-            return new EllipseUIElement(this);
-        }
+        public override IDisplayElement CreateAssociatedUIElement() => new EllipseUIElement(this);
     }
 }

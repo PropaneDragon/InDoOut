@@ -80,10 +80,7 @@ namespace InDoOut_Desktop.UI.Controls.Splash
             }
         }
 
-        private void TaskToRun_OnNameChanged(object sender, LoadingTaskEventArgs e)
-        {
-            _textUpdateNeeded = true;
-        }
+        private void TaskToRun_OnNameChanged(object sender, LoadingTaskEventArgs e) => _textUpdateNeeded = true;
 
         private void UIUpdateTimer_Tick(object sender, EventArgs e)
         {

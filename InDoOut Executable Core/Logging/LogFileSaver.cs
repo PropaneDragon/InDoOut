@@ -26,15 +26,9 @@ namespace InDoOut_Executable_Core.Logging
             _ = ClearLog();
         }
 
-        public void BeginAutoSave()
-        {
-            _timer.Start();
-        }
+        public void BeginAutoSave() => _timer.Start();
 
-        public void StopAutoSave()
-        {
-            _timer.Stop();
-        }
+        public void StopAutoSave() => _timer.Stop();
 
         public bool ClearLog()
         {

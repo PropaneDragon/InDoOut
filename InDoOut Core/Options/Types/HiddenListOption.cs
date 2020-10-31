@@ -32,14 +32,8 @@ namespace InDoOut_Core.Options.Types
             ListValue = defaultValue;
         }
 
-        private void ConvertToValue(List<string> list)
-        {
-            Value = string.Join(_delimiter, list ?? new List<string>());
-        }
+        private void ConvertToValue(List<string> list) => Value = string.Join(_delimiter, list ?? new List<string>());
 
-        private List<string> ConvertFromValue()
-        {
-            return Value?.Split(_delimiter, System.StringSplitOptions.RemoveEmptyEntries)?.ToList() ?? new List<string>();
-        }
+        private List<string> ConvertFromValue() => Value?.Split(_delimiter, System.StringSplitOptions.RemoveEmptyEntries)?.ToList() ?? new List<string>();
     }
 }

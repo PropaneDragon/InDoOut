@@ -26,9 +26,6 @@ namespace InDoOut_Core_Plugins.Files
             _fileLocation = AddProperty(new Property<string>("File location", "The location and file name of the file to find.", true));
         }
 
-        protected override IOutput Started(IInput triggeredBy)
-        {
-            return (!string.IsNullOrEmpty(_fileLocation.FullValue) && File.Exists(_fileLocation.FullValue)) ? _exists : _doesntExist;
-        }
+        protected override IOutput Started(IInput triggeredBy) => (!string.IsNullOrEmpty(_fileLocation.FullValue) && File.Exists(_fileLocation.FullValue)) ? _exists : _doesntExist;
     }
 }

@@ -42,15 +42,9 @@ namespace InDoOut_Executable_Core.Location
             return null;
         }
 
-        public bool IsPathEditable(Location location)
-        {
-            return _editablePaths.Contains(location);
-        }
+        public bool IsPathEditable(Location location) => _editablePaths.Contains(location);
 
-        public bool IsPathSet(Location location)
-        {
-            return !string.IsNullOrEmpty(GetPathTo(location));
-        }
+        public bool IsPathSet(Location location) => !string.IsNullOrEmpty(GetPathTo(location));
 
         public bool SetPathTo(Location location, string path)
         {
@@ -72,9 +66,6 @@ namespace InDoOut_Executable_Core.Location
             ForcePathTo(Location.SettingsFile, Path.Combine(GetPathTo(Location.ApplicationDirectory), "Settings.xml"));
         }
 
-        protected void ForcePathTo(Location location, string path)
-        {
-            _paths[location] = path;
-        }
+        protected void ForcePathTo(Location location, string path) => _paths[location] = path;
     }
 }

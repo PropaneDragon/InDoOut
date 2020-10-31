@@ -53,10 +53,7 @@ namespace InDoOut_UI_Common.InterfaceElements
             ChangeViewMode(CurrentViewMode);
         }
 
-        public void Add(FrameworkElement element)
-        {
-            Add(element, CentreViewCoordinate);
-        }
+        public void Add(FrameworkElement element) => Add(element, CentreViewCoordinate);
 
         public void Add(FrameworkElement element, Point position, int zIndex = 0)
         {
@@ -88,10 +85,7 @@ namespace InDoOut_UI_Common.InterfaceElements
             }
         }
 
-        public List<FrameworkElement> GetElementsUnderMouse()
-        {
-            return GetElementsAtPoint(GetMousePosition());
-        }
+        public List<FrameworkElement> GetElementsUnderMouse() => GetElementsAtPoint(GetMousePosition());
 
         public List<FrameworkElement> GetElementsAtPoint(Point point)
         {

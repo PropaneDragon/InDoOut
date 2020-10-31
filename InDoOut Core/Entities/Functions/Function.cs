@@ -159,10 +159,7 @@ namespace InDoOut_Core.Entities.Functions
         /// A string representation of this entity.
         /// </summary>
         /// <returns>A string representation of this entity.</returns>
-        public override string ToString()
-        {
-            return $"[FUNCTION {base.ToString()} [Name: {SafeName ?? "null"}] [State: {State}]]";
-        }
+        public override string ToString() => $"[FUNCTION {base.ToString()} [Name: {SafeName ?? "null"}] [State: {State}]]";
 
         /// <summary>
         /// Creates an input for this function.
@@ -282,10 +279,7 @@ namespace InDoOut_Core.Entities.Functions
         /// </summary>
         /// <param name="name">The name of the input.</param>
         /// <returns>A new input for a given name.</returns>
-        protected virtual IInput BuildInput(string name)
-        {
-            return new Input(this, name);
-        }
+        protected virtual IInput BuildInput(string name) => new Input(this, name);
 
         /// <summary>
         /// A builder for creating an <see cref="IOutput"/> entity

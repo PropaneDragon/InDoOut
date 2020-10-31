@@ -17,15 +17,9 @@ namespace InDoOut_Display.UI.Controls.Screens
             InitializeComponent();
         }
 
-        private void Scroll_Content_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            e.Handled = _actionHandler?.MouseLeftDown(e.GetPosition(sender as IInputElement)) ?? false;
-        }
+        private void Scroll_Content_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e) => e.Handled = _actionHandler?.MouseLeftDown(e.GetPosition(sender as IInputElement)) ?? false;
 
-        private void Scroll_Content_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            e.Handled = _actionHandler?.MouseLeftUp(e.GetPosition(sender as IInputElement)) ?? false;
-        }
+        private void Scroll_Content_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e) => e.Handled = _actionHandler?.MouseLeftUp(e.GetPosition(sender as IInputElement)) ?? false;
 
         private void Scroll_Content_PreviewMouseMove(object sender, MouseEventArgs e)
         {
@@ -49,29 +43,14 @@ namespace InDoOut_Display.UI.Controls.Screens
             e.Handled = handled;
         }
 
-        private void Scroll_Content_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            e.Handled = _actionHandler?.MouseRightDown(e.GetPosition(sender as IInputElement)) ?? false;
-        }
+        private void Scroll_Content_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e) => e.Handled = _actionHandler?.MouseRightDown(e.GetPosition(sender as IInputElement)) ?? false;
 
-        private void Scroll_Content_PreviewMouseRightButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            e.Handled = _actionHandler?.MouseRightUp(e.GetPosition(sender as IInputElement)) ?? false;
-        }
+        private void Scroll_Content_PreviewMouseRightButtonUp(object sender, MouseButtonEventArgs e) => e.Handled = _actionHandler?.MouseRightUp(e.GetPosition(sender as IInputElement)) ?? false;
 
-        private void Scroll_Content_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            e.Handled = _actionHandler?.MouseDoubleClick(e.GetPosition(sender as IInputElement)) ?? false;
-        }
+        private void Scroll_Content_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e) => e.Handled = _actionHandler?.MouseDoubleClick(e.GetPosition(sender as IInputElement)) ?? false;
 
-        private void Scroll_Content_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            e.Handled = _actionHandler?.KeyDown(e.Key) ?? false;
-        }
+        private void Scroll_Content_PreviewKeyDown(object sender, KeyEventArgs e) => e.Handled = _actionHandler?.KeyDown(e.Key) ?? false;
 
-        private void Scroll_Content_PreviewKeyUp(object sender, KeyEventArgs e)
-        {
-            e.Handled = _actionHandler?.KeyUp(e.Key) ?? false;
-        }
+        private void Scroll_Content_PreviewKeyUp(object sender, KeyEventArgs e) => e.Handled = _actionHandler?.KeyUp(e.Key) ?? false;
     }
 }

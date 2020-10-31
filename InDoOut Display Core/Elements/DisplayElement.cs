@@ -73,10 +73,7 @@ namespace InDoOut_Display_Core.Elements
             }
         }
 
-        private void UpdateTimer_Tick(object sender, EventArgs e)
-        {
-            TryUpdateFromFunction();
-        }
+        private void UpdateTimer_Tick(object sender, EventArgs e) => TryUpdateFromFunction();
 
         private void UIElement_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {

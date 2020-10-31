@@ -27,10 +27,7 @@ namespace InDoOut_Executable_Core.Programs
             return AddProgram(program) ? program : null;
         }
 
-        public bool ProgramExists(IProgram program)
-        {
-            return program != null && Programs.Contains(program);
-        }
+        public bool ProgramExists(IProgram program) => program != null && Programs.Contains(program);
 
         public bool RemoveProgram(IProgram program)
         {

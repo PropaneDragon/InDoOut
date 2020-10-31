@@ -26,9 +26,6 @@ namespace InDoOut_Core_Plugins.Numeric
             _secondNumber = AddProperty(new Property<double>("Second number", "The second number to check."));
         }
 
-        protected override IOutput Started(IInput triggeredBy)
-        {
-            return _firstNumber.FullValue == _secondNumber.FullValue ? _equal : _different;
-        }
+        protected override IOutput Started(IInput triggeredBy) => _firstNumber.FullValue == _secondNumber.FullValue ? _equal : _different;
     }
 }

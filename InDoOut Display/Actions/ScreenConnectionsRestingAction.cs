@@ -46,45 +46,21 @@ namespace InDoOut_Display.Actions
             return base.MouseLeftDown(mousePosition);
         }
 
-        public override bool MouseDoubleClick(Point mousePosition)
-        {
-            return base.MouseDoubleClick(mousePosition);
-        }
+        public override bool MouseDoubleClick(Point mousePosition) => base.MouseDoubleClick(mousePosition);
 
-        public override bool MouseLeftMove(Point mousePosition)
-        {
-            return base.MouseLeftMove(mousePosition);
-        }
+        public override bool MouseLeftMove(Point mousePosition) => base.MouseLeftMove(mousePosition);
 
-        public override bool MouseLeftUp(Point mousePosition)
-        {
-            return base.MouseLeftUp(mousePosition);
-        }
+        public override bool MouseLeftUp(Point mousePosition) => base.MouseLeftUp(mousePosition);
 
-        public override bool MouseRightDown(Point mousePosition)
-        {
-            return base.MouseRightDown(mousePosition);
-        }
+        public override bool MouseRightDown(Point mousePosition) => base.MouseRightDown(mousePosition);
 
-        public override bool MouseRightMove(Point mousePosition)
-        {
-            return base.MouseRightMove(mousePosition);
-        }
+        public override bool MouseRightMove(Point mousePosition) => base.MouseRightMove(mousePosition);
 
-        public override bool MouseRightUp(Point mousePosition)
-        {
-            return base.MouseRightUp(mousePosition);
-        }
+        public override bool MouseRightUp(Point mousePosition) => base.MouseRightUp(mousePosition);
 
-        public override bool KeyDown(Key key)
-        {
-            return base.KeyDown(key);
-        }
+        public override bool KeyDown(Key key) => base.KeyDown(key);
 
-        public override bool KeyUp(Key key)
-        {
-            return base.KeyUp(key);
-        }
+        public override bool KeyUp(Key key) => base.KeyUp(key);
 
         private Cursor GetCursorForEdge(ScreenEdge edge)
         {

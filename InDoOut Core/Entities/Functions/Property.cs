@@ -110,10 +110,7 @@ namespace InDoOut_Core.Entities.Functions
         /// </summary>
         /// <param name="function">The function to connect to.</param>
         /// <returns>Whether the connection was successful.</returns>
-        public bool Connect(IFunction function)
-        {
-            return AddConnection(function);
-        }
+        public bool Connect(IFunction function) => AddConnection(function);
 
         /// <summary>
         /// Sets the current value from the type <typeparamref name="T"/>.
@@ -142,10 +139,7 @@ namespace InDoOut_Core.Entities.Functions
         /// A string representation of this entity.
         /// </summary>
         /// <returns>A string representation of this entity.</returns>
-        public override string ToString()
-        {
-            return $"[PROPERTY {base.ToString()} [Name: {Name ?? "null"}] [Computed value: {RawComputedValue ?? "null"}] [Raw value: {RawValue ?? "null"}]]";
-        }
+        public override string ToString() => $"[PROPERTY {base.ToString()} [Name: {Name ?? "null"}] [Computed value: {RawComputedValue ?? "null"}] [Raw value: {RawValue ?? "null"}]]";
 
         /// <summary>
         /// Processes the property fro the <see cref="IResult"/> that triggered it.
@@ -165,9 +159,6 @@ namespace InDoOut_Core.Entities.Functions
             Log.Instance.Info($"Processed {this}");
         }
 
-        private void Value_OnValueChanged(object sender, ValueChangedEvent e)
-        {
-            OnValueChanged?.Invoke(this, e);
-        }
+        private void Value_OnValueChanged(object sender, ValueChangedEvent e) => OnValueChanged?.Invoke(this, e);
     }
 }

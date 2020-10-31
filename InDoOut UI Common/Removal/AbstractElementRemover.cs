@@ -4,10 +4,7 @@
     {
         public bool CanRemove(object @object) => (@object as Element) != null;
 
-        public bool TryRemove(object @object)
-        {
-            return CanRemove(@object) && @object is Element element ? Remove(element) : false;
-        }
+        public bool TryRemove(object @object) => CanRemove(@object) && @object is Element element ? Remove(element) : false;
 
         public abstract bool Remove(Element element);
     }

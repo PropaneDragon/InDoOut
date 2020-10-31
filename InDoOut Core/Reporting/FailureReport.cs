@@ -61,9 +61,6 @@ namespace InDoOut_Core.Reporting
         /// Converts the failure report to a string representation.
         /// </summary>
         /// <returns>A string representation of a failure report.</returns>
-        public override string ToString()
-        {
-            return $"{(Critical ? "Critical" : "Warning")}: {Summary}";
-        }
+        public override string ToString() => $"{(Critical ? "Critical" : "Warning")}: {Summary}";
     }
 }

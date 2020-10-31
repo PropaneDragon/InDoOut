@@ -28,10 +28,7 @@ namespace InDoOut_Desktop.Options
             AllowLogging.OnValueChanged += AllowLogging_OnValueChanged;
         }
 
-        private void AllowLogging_OnValueChanged(object sender, ValueChangedEvent e)
-        {
-            Log.Instance.Enabled = e.Value.ValueAs(true);
-        }
+        private void AllowLogging_OnValueChanged(object sender, ValueChangedEvent e) => Log.Instance.Enabled = e.Value.ValueAs(true);
 
         private void StartWithComputer_OnValueChanged(object sender, ValueChangedEvent e)
         {

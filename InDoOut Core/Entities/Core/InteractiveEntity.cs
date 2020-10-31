@@ -91,30 +91,21 @@ namespace InDoOut_Core.Entities.Core
         /// </summary>
         /// <param name="entity">The entity to check.</param>
         /// <returns>Whether the given <see cref="IEntity"/> can trigger this.</returns>
-        public bool CanBeTriggered(IEntity entity)
-        {
-            return CanAcceptConnection(entity) && (!Running || Finishing);
-        }
+        public bool CanBeTriggered(IEntity entity) => CanAcceptConnection(entity) && (!Running || Finishing);
 
         /// <summary>
         /// Checks whether a given <see cref="IEntity"/> can connect to this.
         /// </summary>
         /// <param name="entity">The entity to check.</param>
         /// <returns>Whether the given <see cref="IEntity"/> can trigger this.</returns>
-        public bool CanAcceptConnection(IEntity entity)
-        {
-            return entity != null && entity != this && typeof(ConnectsFromType).IsAssignableFrom(entity.GetType());
-        }
+        public bool CanAcceptConnection(IEntity entity) => entity != null && entity != this && typeof(ConnectsFromType).IsAssignableFrom(entity.GetType());
 
         /// <summary>
         /// Checks whether the entity has been triggered since the given <paramref name="time"/>.
         /// </summary>
         /// <param name="time">The time to check.</param>
         /// <returns>Whether the entity has been triggered since the given time.</returns>
-        public bool HasBeenTriggeredSince(DateTime time)
-        {
-            return LastTriggerTime >= time;
-        }
+        public bool HasBeenTriggeredSince(DateTime time) => LastTriggerTime >= time;
 
         /// <summary>
         /// Checks whether the entity has been triggered within the given <paramref name="time"/>. Passing a time
@@ -122,20 +113,14 @@ namespace InDoOut_Core.Entities.Core
         /// </summary>
         /// <param name="time">The time to check.</param>
         /// <returns>Whether the entity has been triggered within the given time.</returns>
-        public bool HasBeenTriggeredWithin(TimeSpan time)
-        {
-            return LastTriggerTime >= DateTime.Now - time;
-        }
+        public bool HasBeenTriggeredWithin(TimeSpan time) => LastTriggerTime >= DateTime.Now - time;
 
         /// <summary>
         /// Checks whether the entity has completed a run (successfully or unsuccessfully) since the given <paramref name="time"/>.
         /// </summary>
         /// <param name="time">The time to check.</param>
         /// <returns>Whether the entity has completed since the given time.</returns>
-        public bool HasCompletedSince(DateTime time)
-        {
-            return LastTriggerTime >= time;
-        }
+        public bool HasCompletedSince(DateTime time) => LastTriggerTime >= time;
 
         /// <summary>
         /// Checks whether the entity has completed a run (successfully or unsuccessfully) within the given <paramref name="time"/>. Passing a time
@@ -143,19 +128,13 @@ namespace InDoOut_Core.Entities.Core
         /// </summary>
         /// <param name="time">The time to check.</param>
         /// <returns>Whether the entity has completed within the given time.</returns>
-        public bool HasCompletedWithin(TimeSpan time)
-        {
-            return LastTriggerTime >= DateTime.Now - time;
-        }
+        public bool HasCompletedWithin(TimeSpan time) => LastTriggerTime >= DateTime.Now - time;
 
         /// <summary>
         /// A string representation of this entity.
         /// </summary>
         /// <returns>A string representation of this entity.</returns>
-        public override string ToString()
-        {
-            return $"{base.ToString()} [Running: {Running}] [Connections: {Connections.Count}]";
-        }
+        public override string ToString() => $"{base.ToString()} [Running: {Running}] [Connections: {Connections.Count}]";
 
         /// <summary>
         /// Adds a connection to the entity.
@@ -250,10 +229,7 @@ namespace InDoOut_Core.Entities.Core
         /// </summary>
         /// <param name="connections">The connections to set.</param>
         /// <returns>Whether the connections were set.</returns>
-        protected bool SetConnection(params ConnectsToType[] connections)
-        {
-            return RemoveAllConnections() && AddConnections(connections);
-        }
+        protected bool SetConnection(params ConnectsToType[] connections) => RemoveAllConnections() && AddConnections(connections);
 
         /// <summary>
         /// Begins processing after being triggered by a connected entity.

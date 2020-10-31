@@ -62,10 +62,7 @@ namespace InDoOut_Display.Actions
             return base.MouseLeftMove(mousePosition);
         }
 
-        public override bool MouseLeftUp(Point mousePosition)
-        {
-            return base.MouseLeftUp(mousePosition);
-        }
+        public override bool MouseLeftUp(Point mousePosition) => base.MouseLeftUp(mousePosition);
 
         private Cursor GetCursorForEdge(ResizeEdge edge)
         {

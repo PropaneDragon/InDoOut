@@ -15,9 +15,6 @@ namespace InDoOut_Display_Plugins.Loaders
         /// </summary>
         /// <param name="plugin">The plugin to create a container for.</param>
         /// <returns>The container generated from the given plugin.</returns>
-        protected override IPluginContainer CreateContainer(IPlugin plugin)
-        {
-            return plugin != null ? new ElementPluginContainer(plugin) : null;
-        }
+        protected override IPluginContainer CreateContainer(IPlugin plugin) => plugin != null ? new ElementPluginContainer(plugin) : null;
     }
 }

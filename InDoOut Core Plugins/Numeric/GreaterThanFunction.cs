@@ -26,9 +26,6 @@ namespace InDoOut_Core_Plugins.Numeric
             _secondNumber = AddProperty(new Property<double>("Second number", "The number to compare against."));
         }
 
-        protected override IOutput Started(IInput triggeredBy)
-        {
-            return _firstNumber.FullValue > _secondNumber.FullValue ? _more : _less;
-        }
+        protected override IOutput Started(IInput triggeredBy) => _firstNumber.FullValue > _secondNumber.FullValue ? _more : _less;
     }
 }

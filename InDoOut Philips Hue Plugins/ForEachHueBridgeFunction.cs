@@ -44,9 +44,6 @@ namespace InDoOut_Philips_Hue_Plugins
             return false;
         }
 
-        protected override void AllItemsComplete()
-        {
-            _bridges = null;
-        }
+        protected override void AllItemsComplete() => _bridges = null;
     }
 }

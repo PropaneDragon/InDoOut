@@ -112,10 +112,7 @@ namespace InDoOut_Display.UI.Controls.Sidebar
             _ = await CommonProgramSaveLoad.Instance.SaveProgramDialogAsync(AssociatedTaskView?.CurrentProgramDisplay?.AssociatedProgram, Window.GetWindow(this));
         }
 
-        private void Button_TaskViewer_Click(object sender, RoutedEventArgs e)
-        {
-            AssociatedTaskView?.ShowTasks();
-        }
+        private void Button_TaskViewer_Click(object sender, RoutedEventArgs e) => AssociatedTaskView?.ShowTasks();
 
         private void Button_Settings_Click(object sender, RoutedEventArgs e)
         {

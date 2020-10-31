@@ -69,10 +69,7 @@ namespace InDoOut_UI_Common.Actions.Selecting
             return false;
         }
 
-        public bool Contains(SelectableType selectable)
-        {
-            return selectable != null && _selection.Contains(selectable);
-        }
+        public bool Contains(SelectableType selectable) => selectable != null && _selection.Contains(selectable);
 
         protected abstract void NotifySelectableStarted(SelectableType selectable);
         protected abstract void NotifySelectableEnded(SelectableType selectable);

@@ -31,10 +31,7 @@ namespace InDoOut_Display_Core.Functions
         /// Should be called when an update on the UI has taken place, in order to
         /// reset <see cref="ShouldDisplayUpdate"/>.
         /// </summary>
-        public void PerformedUIUpdate()
-        {
-            _lastUIUpdate = DateTime.Now;
-        }
+        public void PerformedUIUpdate() => _lastUIUpdate = DateTime.Now;
 
         /// <summary>
         /// Creats a <see cref="IDisplayElement"/> which can be associated with this function.
@@ -47,11 +44,9 @@ namespace InDoOut_Display_Core.Functions
         /// </summary>
         /// <param name="triggeredBy">The input that triggered this function.</param>
         /// <returns>The output to call after this function completes.</returns>
-        protected override IOutput Started(IInput triggeredBy)
-        {
+        protected override IOutput Started(IInput triggeredBy) =>
             //Todo: This might need some functionality
 
-            return _updated;
-        }
+            _updated;
     }
 }

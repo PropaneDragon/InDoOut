@@ -14,10 +14,7 @@ namespace InDoOut_Core_Tests
 
         public bool Finishing => false;
 
-        public bool CanBeTriggered(IEntity entity)
-        {
-            return Triggerable;
-        }
+        public bool CanBeTriggered(IEntity entity) => Triggerable;
 
         public void Trigger(IEntity triggeredBy)
         {
@@ -26,24 +23,12 @@ namespace InDoOut_Core_Tests
             Triggered = true;
         }
 
-        public bool HasBeenTriggeredSince(DateTime time)
-        {
-            return LastTriggerTime >= time;
-        }
+        public bool HasBeenTriggeredSince(DateTime time) => LastTriggerTime >= time;
 
-        public bool HasBeenTriggeredWithin(TimeSpan time)
-        {
-            return LastTriggerTime >= DateTime.Now - time;
-        }
+        public bool HasBeenTriggeredWithin(TimeSpan time) => LastTriggerTime >= DateTime.Now - time;
 
-        public bool HasCompletedSince(DateTime time)
-        {
-            return LastCompletionTime >= time;
-        }
+        public bool HasCompletedSince(DateTime time) => LastCompletionTime >= time;
 
-        public bool HasCompletedWithin(TimeSpan time)
-        {
-            return LastCompletionTime >= DateTime.Now - time;
-        }
+        public bool HasCompletedWithin(TimeSpan time) => LastCompletionTime >= DateTime.Now - time;
     }
 }

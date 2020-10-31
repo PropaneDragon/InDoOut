@@ -50,14 +50,8 @@ namespace InDoOut_Core_Tests
             return OutputToTrigger;
         }
 
-        protected override IInput BuildInput(string name)
-        {
-            return InputToBuild ?? base.BuildInput(name);
-        }
+        protected override IInput BuildInput(string name) => InputToBuild ?? base.BuildInput(name);
 
-        protected override IOutput BuildOutput(string name, OutputType outputType)
-        {
-            return OutputToBuild ?? base.BuildOutput(name, outputType);
-        }
+        protected override IOutput BuildOutput(string name, OutputType outputType) => OutputToBuild ?? base.BuildOutput(name, outputType);
     }
 }

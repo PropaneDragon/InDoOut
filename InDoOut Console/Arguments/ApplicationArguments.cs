@@ -46,9 +46,6 @@ namespace InDoOut_Console.Arguments
             return true;
         }
 
-        public void DisplayHelp()
-        {
-            _helpArgument.ShowHelp(ArgumentHandler.Instance);
-        }
+        public void DisplayHelp() => _helpArgument.ShowHelp(ArgumentHandler.Instance);
     }
 }

@@ -48,9 +48,6 @@ namespace InDoOut_Core_Plugins.Files
             return false;
         }
 
-        protected override void AllItemsComplete()
-        {
-            _directories.Clear();
-        }
+        protected override void AllItemsComplete() => _directories.Clear();
     }
 }

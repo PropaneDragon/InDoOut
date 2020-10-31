@@ -44,29 +44,20 @@ namespace InDoOut_Core.Entities.Functions
         /// A string representation of this entity.
         /// </summary>
         /// <returns>A string representation of this entity.</returns>
-        public override string ToString()
-        {
-            return $"[INPUT {base.ToString()} [Name: {Name ?? "null"}]]";
-        }
+        public override string ToString() => $"[INPUT {base.ToString()} [Name: {Name ?? "null"}]]";
 
         /// <summary>
         /// Checks whether an input is equal to another input.
         /// </summary>
         /// <param name="obj">The other object to compare.</param>
         /// <returns>Whether a given object is equal to this input.</returns>
-        public override bool Equals(object obj)
-        {
-            return obj is Input input && Name == input.Name && Connections.Count == input.Connections.Count && Connections.All(connection => input.Connections.Contains(connection));
-        }
+        public override bool Equals(object obj) => obj is Input input && Name == input.Name && Connections.Count == input.Connections.Count && Connections.All(connection => input.Connections.Contains(connection));
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
+        public override int GetHashCode() => base.GetHashCode();
 
         /// <summary>
         /// Begins processing this input. This calls the <see cref="Parent"/> it is connected to.

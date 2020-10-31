@@ -84,20 +84,14 @@ namespace InDoOut_Conversion_Plugins.Storage
         /// Returns a formatted string of a file size to the nearest <see cref="SizeType"/> to 2 decimal places.
         /// </summary>
         /// <returns>A formatted size string</returns>
-        public override string ToString()
-        {
-            return ToString(RecommendedSizeType());
-        }
+        public override string ToString() => ToString(RecommendedSizeType());
 
         /// <summary>
         /// Returns a formatted string of a file size to the nearest <see cref="SizeType"/> to the given number of decimal places.
         /// </summary>
         /// <param name="decimals">The number of decimal places to round to</param>
         /// <returns>A formatted size string</returns>
-        public string ToString(int decimals)
-        {
-            return ToString(RecommendedSizeType(), decimals);
-        }
+        public string ToString(int decimals) => ToString(RecommendedSizeType(), decimals);
 
         /// <summary>
         /// Returns a formatted string of a file size of the given <see cref="SizeType"/> to the given number of decimal places. 
@@ -105,10 +99,7 @@ namespace InDoOut_Conversion_Plugins.Storage
         /// <param name="size">The size to output</param>
         /// <param name="decimals">The number of decimal places to round to</param>
         /// <returns>A formatted size string</returns>
-        public string ToString(SizeType size, int decimals = 2)
-        {
-            return $"{Math.Round(ConvertBetween(_bytes, SizeType.Byte, size), decimals)} {SizeTypeToString(size, _bytes)}";
-        }
+        public string ToString(SizeType size, int decimals = 2) => $"{Math.Round(ConvertBetween(_bytes, SizeType.Byte, size), decimals)} {SizeTypeToString(size, _bytes)}";
 
         public override bool Equals(object obj)
         {
@@ -121,10 +112,7 @@ namespace InDoOut_Conversion_Plugins.Storage
             return base.Equals(obj);
         }
 
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
+        public override int GetHashCode() => base.GetHashCode();
 
         private SizeType RecommendedSizeType()
         {

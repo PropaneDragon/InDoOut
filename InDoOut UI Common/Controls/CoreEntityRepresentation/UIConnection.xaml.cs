@@ -53,15 +53,9 @@ namespace InDoOut_UI_Common.Controls.CoreEntityRepresentation
             }
         }
 
-        public void SelectionStarted(ICommonDisplay display)
-        {
-            Stroke_Highlight.Visibility = Visibility.Visible;
-        }
+        public void SelectionStarted(ICommonDisplay display) => Stroke_Highlight.Visibility = Visibility.Visible;
 
-        public void SelectionEnded(ICommonDisplay display)
-        {
-            Stroke_Highlight.Visibility = Visibility.Hidden;
-        }
+        public void SelectionEnded(ICommonDisplay display) => Stroke_Highlight.Visibility = Visibility.Hidden;
 
         public void UpdatePositionFromInputOutput(IElementDisplay display)
         {
@@ -86,15 +80,9 @@ namespace InDoOut_UI_Common.Controls.CoreEntityRepresentation
             }
         }
 
-        private void SetEnd(IUIConnectionEnd input)
-        {
-            _end = input;
-        }
+        private void SetEnd(IUIConnectionEnd input) => _end = input;
 
-        private void SetStart(IUIConnectionStart output)
-        {
-            _start = output;
-        }
+        private void SetStart(IUIConnectionStart output) => _start = output;
 
         private void SetEnd(Point point)
         {

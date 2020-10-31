@@ -73,10 +73,7 @@ namespace InDoOut_Display.UI.Controls.FunctionSelector
             collectionView.GroupDescriptions.Add(new PropertyGroupDescription("SafeGroup"));
         }
 
-        private void UpdateProgramDisplay(ICommonProgramDisplay programDisplay)
-        {
-            _programDisplay = programDisplay;
-        }
+        private void UpdateProgramDisplay(ICommonProgramDisplay programDisplay) => _programDisplay = programDisplay;
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
@@ -103,15 +100,9 @@ namespace InDoOut_Display.UI.Controls.FunctionSelector
             await RefreshPlugins();
         }
 
-        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
-        {
-            LoadedPlugins.Instance.PluginsChanged -= Instance_PluginsChanged;
-        }
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e) => LoadedPlugins.Instance.PluginsChanged -= Instance_PluginsChanged;
 
-        private async void Instance_PluginsChanged(object sender, EventArgs e)
-        {
-            await RefreshPlugins();
-        }
+        private async void Instance_PluginsChanged(object sender, EventArgs e) => await RefreshPlugins();
 
         private void List_Items_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
