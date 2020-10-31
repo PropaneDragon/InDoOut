@@ -22,22 +22,19 @@ namespace InDoOut_Executable_Core.Storage
         string FileExtension { get; }
 
         /// <summary>
-        /// The path of the file to load or save.
-        /// </summary>
-        Stream FileStream { get; set; }
-
-        /// <summary>
         /// Saves the <paramref name="program"/> to storage.
         /// </summary>
         /// <param name="program">The program to save.</param>
+        /// <param name="stream">The stream to save to.</param>
         /// <returns>Failure reports if saving has failed, or an empty list if succeeded.</returns>
-        List<IFailureReport> Save(IProgram program);
+        List<IFailureReport> Save(IProgram program, Stream stream);
 
         /// <summary>
         /// Loads data into a program from storage.
         /// </summary>
         /// <param name="program">The program to load data into.</param>
+        /// <param name="stream">The stream to load data from.</param>
         /// <returns>Failure reports if loading has failed, or an empty list if succeeded.</returns>
-        List<IFailureReport> Load(IProgram program);
+        List<IFailureReport> Load(IProgram program, Stream stream);
     }
 }

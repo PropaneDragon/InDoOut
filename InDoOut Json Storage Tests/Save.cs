@@ -270,8 +270,8 @@ namespace InDoOut_Json_Storage_Tests
             _ = program.AddFunction(fourthFunction);
 
             var fileStream = new FileStream(_temporaryPath, FileMode.Truncate, FileAccess.Write);
-            var jsonStorer = new ProgramJsonStorer(new FunctionBuilder(), new LoadedPlugins(), fileStream);
-            var result = jsonStorer.Save(program);
+            var jsonStorer = new ProgramJsonStorer(new FunctionBuilder(), new LoadedPlugins());
+            var result = jsonStorer.Save(program, fileStream);
 
             fileStream.Dispose();
 

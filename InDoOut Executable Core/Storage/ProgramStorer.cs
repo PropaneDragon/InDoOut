@@ -13,23 +13,17 @@ namespace InDoOut_Executable_Core.Storage
 
         public abstract string FileReadableName { get; }
         public abstract string FileExtension { get; }
-        public Stream FileStream { get; set; }
 
         public ProgramStorer()
         {
         }
 
-        public ProgramStorer(Stream fileStream) : this()
-        {
-            FileStream = fileStream;
-        }
-
-        public List<IFailureReport> Load(IProgram program)
+        public List<IFailureReport> Load(IProgram program, Stream stream)
         {
             Log.Instance.Header("Attempting to load");
             Log.Instance.Info("Attempting to load ", program);
 
-            var reports = TryLoad(program, FileStream);
+            var reports = TryLoad(program, stream);
 
             Log.Instance.Info($"Load {(reports.Any(report => report.Critical) ? "failed" : "completed")} with {reports.Count} issues, {reports.Where(report => report.Critical).Count()} of which are critical");
 
@@ -43,12 +37,12 @@ namespace InDoOut_Executable_Core.Storage
             return reports;
         }
 
-        public List<IFailureReport> Save(IProgram program)
+        public List<IFailureReport> Save(IProgram program, Stream stream)
         {
             Log.Instance.Header("Attempting to save");
             Log.Instance.Info("Attempting to save ", program);
 
-            var reports = TrySave(program, FileStream);
+            var reports = TrySave(program, stream);
 
             Log.Instance.Info($"Save {(reports.Any(report => report.Critical) ? "failed" : "completed")} with {reports.Count} issues, {reports.Where(report => report.Critical).Count()} of which are critical");
 

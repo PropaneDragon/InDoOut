@@ -2,6 +2,7 @@
 using InDoOut_Executable_Core.Networking;
 using InDoOut_Executable_Core.Networking.Commands;
 using InDoOut_Executable_Core.Programs;
+using InDoOut_Executable_Core.Storage;
 using InDoOut_Json_Storage;
 using InDoOut_Plugins.Loaders;
 using System.IO;
@@ -47,8 +48,8 @@ namespace InDoOut_Networking.Server.Commands
                             writer.Write(programData);
                             writer.Flush();
 
-                            var storer = new ProgramJsonStorer(FunctionBuilder, LoadedPlugins, memoryStream);
-                            var failures = storer.Load(program);
+                            var storer = new ProgramJsonStorer(FunctionBuilder, LoadedPlugins);
+                            var failures = storer.Load(program, memoryStream);
 
                             if (failures.Count == 0 && memoryStream.CanRead)
                             {

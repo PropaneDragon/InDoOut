@@ -34,8 +34,8 @@ namespace InDoOut_Console_Common.Loading
                     using var fileStream = new FileStream(programLocation, FileMode.Open, FileAccess.Read);
 
                     var program = new Program(arguments);
-                    var storage = new ProgramJsonStorer(new FunctionBuilder(), LoadedPlugins.Instance, fileStream);
-                    var hasLoaded = LoadProgram(program, storage);
+                    var storage = new ProgramJsonStorer(new FunctionBuilder(), LoadedPlugins.Instance);
+                    var hasLoaded = LoadProgram(program, storage, fileStream);
 
                     if (hasLoaded)
                     {
@@ -57,11 +57,11 @@ namespace InDoOut_Console_Common.Loading
             return null;
         }
 
-        private bool LoadProgram(IProgram program, IProgramStorer storage)
+        private bool LoadProgram(IProgram program, IProgramStorer storage, Stream stream)
         {
             if (program != null && storage != null)
             {
-                var failureReports = storage.Load(program);
+                var failureReports = storage.Load(program, stream);
 
                 PrintFailures(failureReports);
 

@@ -56,9 +56,8 @@ namespace InDoOut_UI_Common.SaveLoad
                         try
                         {
                             using var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-                            programStorer.FileStream = stream;
 
-                            failureReports.AddRange(await Task.Run(() => programStorer.Load(program)));
+                            failureReports.AddRange(await Task.Run(() => programStorer.Load(program, stream)));
 
                             if (!failureReports.Any(FailureReport => FailureReport.Critical))
                             {
@@ -170,9 +169,7 @@ namespace InDoOut_UI_Common.SaveLoad
                         var fileMode = File.Exists(filePath) ? FileMode.Truncate : FileMode.CreateNew;
                         using var stream = new FileStream(filePath, fileMode, FileAccess.Write);
 
-                        programStorer.FileStream = stream;
-
-                        failureReports.AddRange(await Task.Run(() => programStorer.Save(program)));
+                        failureReports.AddRange(await Task.Run(() => programStorer.Save(program, stream)));
                     }
                     catch (SecurityException)
                     {

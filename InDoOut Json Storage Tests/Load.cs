@@ -177,11 +177,11 @@ namespace InDoOut_Json_Storage_Tests
 
             using var fileStream = new FileStream("ExpectedJsonProgramFormat.json", FileMode.Open, FileAccess.ReadWrite);
 
-            var storer = new ProgramJsonStorer(new FunctionBuilder(), loadedPlugins, fileStream);
+            var storer = new ProgramJsonStorer(new FunctionBuilder(), loadedPlugins);
             var program = new Program();
 
             Assert.AreNotEqual(new Guid("12345678-1234-1234-1234-123456789abc"), program.Id);
-            Assert.AreEqual(0, storer.Load(program).Count);
+            Assert.AreEqual(0, storer.Load(program, fileStream).Count);
             Assert.AreEqual(new Guid("12345678-1234-1234-1234-123456789abc"), program.Id);
 
             Assert.AreEqual("second", program.Metadata["first"]);

@@ -73,8 +73,8 @@ namespace InDoOut_Application_Plugins.Self
                             using var fileStream = new FileStream(finalPath, FileMode.Open);
 
                             var loadedProgram = new Program(_inputValues.Select(value => value.FullValue).ToArray());
-                            var loader = new ProgramJsonStorer(builder, PluginsToUse, fileStream);
-                            var loadResult = loader.Load(loadedProgram);
+                            var loader = new ProgramJsonStorer(builder, PluginsToUse);
+                            var loadResult = loader.Load(loadedProgram, fileStream);
 
                             if (loadResult.Count == 0)
                             {

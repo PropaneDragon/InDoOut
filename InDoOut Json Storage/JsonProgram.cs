@@ -167,6 +167,8 @@ namespace InDoOut_Json_Storage
             {
                 var functionIdMap = new Dictionary<Guid, IFunction>();
 
+                ClearProgram(program);
+
                 program.Id = Id;
                 program.Metadata.Clear();
 
@@ -206,6 +208,19 @@ namespace InDoOut_Json_Storage
             }
 
             return failures;
+        }
+
+        private void ClearProgram(IProgram program)
+        {
+            if (program != null)
+            {
+                program.Stop();
+                
+                foreach (var function in program.Functions)
+                {
+                    _ = program.RemoveFunction(function);
+                }
+            }
         }
 
         private List<IFailureReport> LinkPropertyValue(JsonPropertyValue propertyValue, Dictionary<Guid, IFunction> functionIdMap)

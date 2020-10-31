@@ -27,8 +27,8 @@ namespace InDoOut_Networking.Client.Commands
                 {
                     using var memoryStream = new MemoryStream();
 
-                    var storer = new ProgramJsonStorer(new FunctionBuilder(), LoadedPlugins.Instance, memoryStream);
-                    var failures = storer.Save(program);
+                    var storer = new ProgramJsonStorer(new FunctionBuilder(), LoadedPlugins.Instance);
+                    var failures = storer.Save(program, memoryStream);
 
                     if (failures.Count == 0 && memoryStream.CanRead)
                     {

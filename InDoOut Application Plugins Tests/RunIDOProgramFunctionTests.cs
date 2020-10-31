@@ -30,7 +30,7 @@ namespace InDoOut_Application_Plugins_Tests
             var programName = "LoadProgramTest.ido";
 
             var programStream = new FileStream(programName, FileMode.OpenOrCreate, FileAccess.ReadWrite);
-            var storer = new ProgramJsonStorer(new FunctionBuilder(), loadedPlugins) { FileStream = programStream };
+            var storer = new ProgramJsonStorer(new FunctionBuilder(), loadedPlugins);
 
             var pluginContainer = pluginLoader.LoadPlugin("InDoOut Core Plugins.dll");
             
@@ -59,7 +59,7 @@ namespace InDoOut_Application_Plugins_Tests
 
             Assert.AreEqual("7", program.ReturnCode);
 
-            Assert.AreEqual(0, storer.Save(program).Count);
+            Assert.AreEqual(0, storer.Save(program, programStream).Count);
             Assert.IsTrue(File.Exists(programName));
 
             programStream.Dispose();

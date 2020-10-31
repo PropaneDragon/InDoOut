@@ -15,7 +15,7 @@ namespace InDoOut_Json_Storage
     /// <summary>
     /// Stores a program in the JSON format.
     /// </summary>
-    public class ProgramJsonStorer : ProgramStorer, IDisposable
+    public class ProgramJsonStorer : ProgramStorer
     {
         /// <summary>
         /// The name of the file extension that will be readable by the user.
@@ -34,10 +34,9 @@ namespace InDoOut_Json_Storage
         /// <summary>
         /// Creates an instance of the JSON storer.
         /// </summary>
-        /// <param name="stream">The path to save to and load from.</param>
         /// <param name="builder">A function builder that can load functions with the program.</param>
         /// <param name="loadedPlugins">Available plugins that can be loaded.</param>
-        public ProgramJsonStorer(IFunctionBuilder builder, ILoadedPlugins loadedPlugins, Stream stream = null) : base(stream)
+        public ProgramJsonStorer(IFunctionBuilder builder, ILoadedPlugins loadedPlugins) : base()
         {
             FunctionBuilder = builder;
             LoadedPlugins = loadedPlugins;
@@ -64,20 +63,16 @@ namespace InDoOut_Json_Storage
                     }
                     else
                     {
-                        failures.Add(new FailureReport((int)LoadResult.InvalidFile, $"The program could not be loaded from the given path.", true));
+                        failures.Add(new FailureReport((int)LoadResult.InvalidFile, $"The program contents could not be loaded.", true));
                     }
-                }
-                catch (Exception ex) when (ex is PathTooLongException || ex is DirectoryNotFoundException)
-                {
-                    failures.Add(new FailureReport((int)LoadResult.InvalidLocation, $"The location given is invalid.", true));
                 }
                 catch (IOException)
                 {
-                    failures.Add(new FailureReport((int)LoadResult.InvalidFile, $"The given file doesn't appear to be valid.", true));
+                    failures.Add(new FailureReport((int)LoadResult.InvalidFile, $"The data couldn't be loaded.", true));
                 }
                 catch (UnauthorizedAccessException)
                 {
-                    failures.Add(new FailureReport((int)LoadResult.InsufficientPermissions, $"You don't have access to the file path given.", true));
+                    failures.Add(new FailureReport((int)LoadResult.InsufficientPermissions, $"Access couldn't be given to load the program.", true));
                 }
                 catch
                 {
@@ -86,7 +81,7 @@ namespace InDoOut_Json_Storage
             }
             else
             {
-                failures.Add(new FailureReport((int)LoadResult.InvalidLocation, $"Invalid file location given ({stream}).", true));
+                failures.Add(new FailureReport((int)LoadResult.InvalidLocation, $"There was no program present to load into.", true));
             }
 
             return failures;
@@ -103,10 +98,5 @@ namespace InDoOut_Json_Storage
             var jsonProgram = JsonProgram.CreateFromProgram(program);
             return GenericJsonStorer.Save(jsonProgram, stream);
         }
-
-        /// <summary>
-        /// Deletes the <see cref="FileStream"/> associated with this storage.
-        /// </summary>
-        public void Dispose() => FileStream?.Dispose();
     }
 }

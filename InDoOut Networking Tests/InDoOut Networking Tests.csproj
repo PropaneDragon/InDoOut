@@ -23,6 +23,9 @@
     <None Update="emoji-test.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="empty.ido">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="example-program.ido">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

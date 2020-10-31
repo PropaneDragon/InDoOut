@@ -124,6 +124,7 @@ namespace InDoOut_Networking_Tests
             Assert.IsNotNull(client.LastMessageReceived);
             Assert.IsTrue(client.LastMessageReceived.IsFailureMessage);
             Assert.IsFalse(client.LastMessageReceived.IsSuccessMessage);
+            Assert.AreEqual("The program couldn't be loaded onto the server with the following failures:\n\n- Critical: The program contents could not be loaded.", client.LastMessageReceived.FailureMessage);
             Assert.AreEqual(0, programHolder.Programs.Count);
 
             client.LastMessageReceived = null;
@@ -136,9 +137,11 @@ namespace InDoOut_Networking_Tests
             Assert.IsNotNull(client.LastMessageReceived);
             Assert.IsTrue(client.LastMessageReceived.IsFailureMessage);
             Assert.IsFalse(client.LastMessageReceived.IsSuccessMessage);
+            Assert.AreEqual("The program received appeared to be invalid and can't be parsed.", client.LastMessageReceived.FailureMessage);
             Assert.AreEqual(0, programHolder.Programs.Count);
 
             client.LastMessageReceived = null;
+
 
             var programData = File.ReadAllText("example-program.ido");
 
@@ -148,8 +151,25 @@ namespace InDoOut_Networking_Tests
             await Task.Delay(TimeSpan.FromMilliseconds(500));
 
             Assert.IsNotNull(client.LastMessageReceived);
+            Assert.IsTrue(client.LastMessageReceived.IsFailureMessage);
+            Assert.IsFalse(client.LastMessageReceived.IsSuccessMessage);
+            Assert.AreEqual(35214, client.LastMessageReceived.FailureMessage.Length);
+            Assert.AreEqual(0, programHolder.Programs.Count);
 
             client.LastMessageReceived = null;
+
+
+            programData = File.ReadAllText("empty.ido");
+
+            Assert.IsNotNull(programData);
+            Assert.IsTrue(await client.Send($"some ID{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}UPLOAD_PROGRAM{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}{programData}"));
+
+            await Task.Delay(TimeSpan.FromMilliseconds(500));
+
+            Assert.IsNotNull(client.LastMessageReceived);
+            Assert.IsFalse(client.LastMessageReceived.IsFailureMessage);
+            Assert.IsTrue(client.LastMessageReceived.IsSuccessMessage);
+            Assert.AreEqual(1, programHolder.Programs.Count);
 
             Assert.IsTrue(await server.Stop());
         }
