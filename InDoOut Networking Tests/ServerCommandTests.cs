@@ -41,12 +41,12 @@ namespace InDoOut_Networking_Tests
             Assert.IsTrue(await client.Connect(IPAddress.Loopback, 9001));
             Assert.IsNull(client.LastMessageReceived);
 
-            Assert.IsTrue(await client.Send($"some ID{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}REQUEST_PROGRAMS{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}"));
+            Assert.IsTrue(await client.Send($"some ID{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}RequestPrograms{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}"));
 
             await Task.Delay(TimeSpan.FromMilliseconds(50));
 
             Assert.AreEqual("some ID", client.LastMessageReceived.Id);
-            Assert.AreEqual("REQUEST_PROGRAMS", client.LastMessageReceived.Name);
+            Assert.AreEqual("RequestPrograms", client.LastMessageReceived.Name);
             Assert.IsNull(client.LastMessageReceived.Data);
 
             client.LastMessageReceived = null;
@@ -56,23 +56,23 @@ namespace InDoOut_Networking_Tests
 
             Assert.AreEqual(1, programHolder.Programs.Count);
 
-            Assert.IsTrue(await client.Send($"some ID{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}REQUEST_PROGRAMS{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}"));
+            Assert.IsTrue(await client.Send($"some ID{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}RequestPrograms{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}"));
 
             await Task.Delay(TimeSpan.FromMilliseconds(50));
 
             Assert.AreEqual("some ID", client.LastMessageReceived.Id);
-            Assert.AreEqual("REQUEST_PROGRAMS", client.LastMessageReceived.Name);
+            Assert.AreEqual("RequestPrograms", client.LastMessageReceived.Name);
             Assert.AreEqual(1, client.LastMessageReceived.Data.Length);
             Assert.AreEqual("First test program", client.LastMessageReceived.Data[0]);
 
             client.LastMessageReceived = null;
 
-            Assert.IsTrue(await client.Send($"some ID{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}REQUEST_PROGRAMS{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}"));
+            Assert.IsTrue(await client.Send($"some ID{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}RequestPrograms{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}"));
 
             await Task.Delay(TimeSpan.FromMilliseconds(50));
 
             Assert.AreEqual("some ID", client.LastMessageReceived.Id);
-            Assert.AreEqual("REQUEST_PROGRAMS", client.LastMessageReceived.Name);
+            Assert.AreEqual("RequestPrograms", client.LastMessageReceived.Name);
             Assert.AreEqual(1, client.LastMessageReceived.Data.Length);
             Assert.AreEqual("First test program", client.LastMessageReceived.Data[0]);
 
@@ -81,12 +81,12 @@ namespace InDoOut_Networking_Tests
 
             client.LastMessageReceived = null;
 
-            Assert.IsTrue(await client.Send($"some ID{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}REQUEST_PROGRAMS{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}"));
+            Assert.IsTrue(await client.Send($"some ID{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}RequestPrograms{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}"));
 
             await Task.Delay(TimeSpan.FromMilliseconds(50));
 
             Assert.AreEqual("some ID", client.LastMessageReceived.Id);
-            Assert.AreEqual("REQUEST_PROGRAMS", client.LastMessageReceived.Name);
+            Assert.AreEqual("RequestPrograms", client.LastMessageReceived.Name);
             Assert.AreEqual(2, client.LastMessageReceived.Data.Length);
             Assert.AreEqual("First test program", client.LastMessageReceived.Data[0]);
             Assert.AreEqual("Second test program", client.LastMessageReceived.Data[1]);
@@ -117,7 +117,7 @@ namespace InDoOut_Networking_Tests
             Assert.AreEqual(0, programHolder.Programs.Count);
 
 
-            Assert.IsTrue(await client.Send($"some ID{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}UPLOAD_PROGRAM{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}This is the program contents"));
+            Assert.IsTrue(await client.Send($"some ID{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}UploadProgram{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}This is the program contents"));
 
             await Task.Delay(TimeSpan.FromMilliseconds(500));
 
@@ -130,7 +130,7 @@ namespace InDoOut_Networking_Tests
             client.LastMessageReceived = null;
 
 
-            Assert.IsTrue(await client.Send($"some ID{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}UPLOAD_PROGRAM{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}"));
+            Assert.IsTrue(await client.Send($"some ID{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}UploadProgram{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}"));
 
             await Task.Delay(TimeSpan.FromMilliseconds(500));
 
@@ -146,7 +146,7 @@ namespace InDoOut_Networking_Tests
             var programData = File.ReadAllText("example-program.ido");
 
             Assert.IsNotNull(programData);
-            Assert.IsTrue(await client.Send($"some ID{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}UPLOAD_PROGRAM{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}{programData}"));
+            Assert.IsTrue(await client.Send($"some ID{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}UploadProgram{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}{programData}"));
 
             await Task.Delay(TimeSpan.FromMilliseconds(500));
 
@@ -162,7 +162,7 @@ namespace InDoOut_Networking_Tests
             programData = File.ReadAllText("empty.ido");
 
             Assert.IsNotNull(programData);
-            Assert.IsTrue(await client.Send($"some ID{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}UPLOAD_PROGRAM{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}{programData}"));
+            Assert.IsTrue(await client.Send($"some ID{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}UploadProgram{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}{programData}"));
 
             await Task.Delay(TimeSpan.FromMilliseconds(500));
 

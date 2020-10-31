@@ -1,4 +1,4 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -6,6 +6,8 @@ namespace InDoOut_Executable_Core.Networking.Commands
 {
     public abstract class Command : ICommand
     {
+        private string _inferredCommandName = null;
+
         public IInteractiveNetworkEntity BaseNetworkEntity { get; protected set; } = null;
 
         private Command()
@@ -17,7 +19,7 @@ namespace InDoOut_Executable_Core.Networking.Commands
             BaseNetworkEntity = networkEntity;
         }
 
-        public abstract string CommandName { get; }
+        public virtual string CommandName => InferCommandNameUsingReflection();
 
         public override bool Equals(object obj) => obj is Command otherCommand ? otherCommand?.CommandName == CommandName : base.Equals(obj);
         public override int GetHashCode() => base.GetHashCode();
@@ -30,6 +32,17 @@ namespace InDoOut_Executable_Core.Networking.Commands
 
         protected NetworkMessage CreateMessage(params string[] data) => new NetworkMessage(CommandName, data);
         protected NetworkMessage CreateMessageWithContext(object context, params string[] data) => new NetworkMessage(CommandName, context, data);
+
+        private string InferCommandNameUsingReflection()
+        {
+            if (_inferredCommandName == null)
+            {
+                _inferredCommandName = GetType().Name;
+                _inferredCommandName = Regex.Replace(_inferredCommandName, @"([Ss]erver|[Cc]lient)[Cc]ommand", "");
+            }
+
+            return _inferredCommandName;
+        }
     }
 
     public abstract class Command<NetworkEntityType> : Command, ICommand<NetworkEntityType> where NetworkEntityType : class, IInteractiveNetworkEntity

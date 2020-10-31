@@ -47,7 +47,7 @@ namespace InDoOut_Networking_Tests
 
             Assert.IsNotNull(lastServerMessage);
             Assert.IsNotNull(Guid.Parse(lastServerMessage.Id));
-            Assert.AreEqual("REQUEST_PROGRAMS", lastServerMessage.Name);
+            Assert.AreEqual("RequestPrograms", lastServerMessage.Name);
 
             var requestTask = programRequestCommand.RequestAvailablePrograms(new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token);
 
@@ -58,7 +58,7 @@ namespace InDoOut_Networking_Tests
 
             Assert.IsNotNull(lastServerMessage);
             Assert.IsNotNull(Guid.Parse(lastServerMessage.Id));
-            Assert.IsTrue(await server.SendMessageAll($"{lastServerMessage.Id}{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}REQUEST_PROGRAMS{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}Program 1{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}Program 2{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}Another program{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}Last program"));
+            Assert.IsTrue(await server.SendMessageAll($"{lastServerMessage.Id}{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}RequestPrograms{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}Program 1{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}Program 2{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}Another program{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}Last program"));
 
             Assert.IsNotNull(requestTask.Result);
             Assert.AreEqual(4, requestTask.Result.Count);
@@ -76,7 +76,7 @@ namespace InDoOut_Networking_Tests
 
             Assert.IsNotNull(lastServerMessage);
             Assert.IsNotNull(Guid.Parse(lastServerMessage.Id));
-            Assert.IsTrue(await server.SendMessageAll($"{lastServerMessage.Id}{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}REQUEST_PROGRAMS{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}Only one program"));
+            Assert.IsTrue(await server.SendMessageAll($"{lastServerMessage.Id}{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}RequestPrograms{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}Only one program"));
 
             Assert.IsNotNull(requestTask.Result);
             Assert.AreEqual(1, requestTask.Result.Count);
@@ -91,7 +91,7 @@ namespace InDoOut_Networking_Tests
 
             Assert.IsNotNull(lastServerMessage);
             Assert.IsNotNull(Guid.Parse(lastServerMessage.Id));
-            Assert.IsTrue(await server.SendMessageAll($"{lastServerMessage.Id}{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}REQUEST_PROGRAMS{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}"));
+            Assert.IsTrue(await server.SendMessageAll($"{lastServerMessage.Id}{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}RequestPrograms{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}"));
 
             Assert.IsNotNull(requestTask.Result);
             Assert.AreEqual(0, requestTask.Result.Count);
@@ -105,7 +105,7 @@ namespace InDoOut_Networking_Tests
 
             Assert.IsNotNull(lastServerMessage);
             Assert.IsNotNull(Guid.Parse(lastServerMessage.Id));
-            Assert.IsTrue(await server.SendMessageAll($"{lastServerMessage.Id}{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}REQUEST_PROGRAMS{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}this is a program{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}this is another program"));
+            Assert.IsTrue(await server.SendMessageAll($"{lastServerMessage.Id}{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}RequestPrograms{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}this is a program{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}this is another program"));
 
             Assert.IsNotNull(requestTask.Result);
             Assert.AreEqual(2, requestTask.Result.Count);
@@ -155,7 +155,7 @@ namespace InDoOut_Networking_Tests
             Assert.IsNotNull(lastServerMessage);
             Assert.IsNotNull(Guid.Parse(lastServerMessage.Id));
 
-            Assert.IsTrue(await server.SendMessageAll($"{lastServerMessage.Id}{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}UPLOAD_PROGRAM{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}{NetworkCodes.COMMAND_SUCCESS_IDENTIFIER}{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}A message"));
+            Assert.IsTrue(await server.SendMessageAll($"{lastServerMessage.Id}{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}UploadProgram{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}{NetworkCodes.COMMAND_SUCCESS_IDENTIFIER}{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}A message"));
             Assert.IsNotNull(sendTask.Result);
             Assert.IsTrue(sendTask.Result);
 
@@ -192,13 +192,13 @@ namespace InDoOut_Networking_Tests
             Assert.IsNotNull(program);
             Assert.IsNotNull(lastServerMessage);
             Assert.IsNotNull(Guid.Parse(lastServerMessage.Id));
-            Assert.AreEqual("DOWNLOAD_PROGRAM", lastServerMessage.Name);
+            Assert.AreEqual("DownloadProgram", lastServerMessage.Name);
             Assert.AreEqual(1, lastServerMessage.Data.Length);
             Assert.AreEqual("example-program", lastServerMessage.Data[0]);
 
             var programData = File.ReadAllText("example-program.ido");
 
-            Assert.IsTrue(await server.SendMessageAll($"{lastServerMessage.Id}{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}DOWNLOAD_PROGRAM{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}{programData}"));
+            Assert.IsTrue(await server.SendMessageAll($"{lastServerMessage.Id}{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}DownloadProgram{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}{programData}"));
             Assert.IsNotNull(downloadDataTask.Result);
             Assert.AreEqual(downloadDataTask.Result, programData.Replace("\r", ""));
 
@@ -211,7 +211,7 @@ namespace InDoOut_Networking_Tests
             server.LastMessageReceived = null;
 
             Assert.IsNotNull(lastServerMessage);
-            Assert.IsTrue(await server.SendMessageAll($"{lastServerMessage.Id}{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}DOWNLOAD_PROGRAM{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}{programData}"));
+            Assert.IsTrue(await server.SendMessageAll($"{lastServerMessage.Id}{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}DownloadProgram{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}{programData}"));
             Assert.IsFalse(downloadProgramTask.Result);
             Assert.IsNotNull(program);
 
@@ -224,7 +224,7 @@ namespace InDoOut_Networking_Tests
             server.LastMessageReceived = null;
 
             Assert.IsNotNull(lastServerMessage);
-            Assert.IsTrue(await server.SendMessageAll($"{lastServerMessage.Id}{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}DOWNLOAD_PROGRAM{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}"));
+            Assert.IsTrue(await server.SendMessageAll($"{lastServerMessage.Id}{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}DownloadProgram{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}"));
             Assert.IsNull(downloadDataTask.Result);
 
 
@@ -236,7 +236,7 @@ namespace InDoOut_Networking_Tests
             server.LastMessageReceived = null;
 
             Assert.IsNotNull(lastServerMessage);
-            Assert.IsTrue(await server.SendMessageAll($"{lastServerMessage.Id}{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}DOWNLOAD_PROGRAM{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}"));
+            Assert.IsTrue(await server.SendMessageAll($"{lastServerMessage.Id}{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}DownloadProgram{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}"));
             Assert.IsFalse(downloadProgramTask.Result);
             Assert.IsNotNull(program);
 
@@ -249,7 +249,7 @@ namespace InDoOut_Networking_Tests
             server.LastMessageReceived = null;
 
             Assert.IsNotNull(lastServerMessage);
-            Assert.IsTrue(await server.SendMessageAll($"{lastServerMessage.Id}{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}DOWNLOAD_PROGRAM{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}data{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}more data"));
+            Assert.IsTrue(await server.SendMessageAll($"{lastServerMessage.Id}{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}DownloadProgram{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}data{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}more data"));
             Assert.IsNull(downloadDataTask.Result);
 
 
@@ -261,7 +261,7 @@ namespace InDoOut_Networking_Tests
             server.LastMessageReceived = null;
 
             Assert.IsNotNull(lastServerMessage);
-            Assert.IsTrue(await server.SendMessageAll($"{lastServerMessage.Id}{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}DOWNLOAD_PROGRAM{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}data{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}more data"));
+            Assert.IsTrue(await server.SendMessageAll($"{lastServerMessage.Id}{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}DownloadProgram{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}data{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}more data"));
             Assert.IsFalse(downloadProgramTask.Result);
             Assert.IsNotNull(program);
 
@@ -276,7 +276,7 @@ namespace InDoOut_Networking_Tests
             programData = File.ReadAllText("empty.ido");
 
             Assert.IsNotNull(lastServerMessage);
-            Assert.IsTrue(await server.SendMessageAll($"{lastServerMessage.Id}{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}DOWNLOAD_PROGRAM{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}{programData}"));
+            Assert.IsTrue(await server.SendMessageAll($"{lastServerMessage.Id}{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}DownloadProgram{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}{programData}"));
             Assert.IsTrue(downloadProgramTask.Result);
             Assert.IsNotNull(program);
 

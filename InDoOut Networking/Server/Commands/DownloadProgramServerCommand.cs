@@ -14,10 +14,8 @@ using System.Threading.Tasks;
 /// </summary>
 namespace InDoOut_Networking.Server.Commands
 {
-    class DownloadProgramServerCommand : CommandListener<IServer>
+    public class DownloadProgramServerCommand : CommandListener<IServer>
     {
-        public override string CommandName => "DOWNLOAD_PROGRAM";
-
         public IProgramHolder ProgramHolder { get; set; } = null;
 
         public DownloadProgramServerCommand(IServer server, IProgramHolder programHolder) : base(server)

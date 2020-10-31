@@ -12,8 +12,6 @@ namespace InDoOut_Networking.Client.Commands
         {
         }
 
-        public override string CommandName => "REQUEST_PROGRAMS";
-
         public async Task<List<string>> RequestAvailablePrograms(CancellationToken cancellationToken)
         {
             var response = await SendMessageAwaitResponse(cancellationToken);

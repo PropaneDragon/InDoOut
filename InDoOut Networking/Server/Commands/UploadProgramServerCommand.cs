@@ -2,7 +2,6 @@
 using InDoOut_Executable_Core.Networking;
 using InDoOut_Executable_Core.Networking.Commands;
 using InDoOut_Executable_Core.Programs;
-using InDoOut_Executable_Core.Storage;
 using InDoOut_Json_Storage;
 using InDoOut_Plugins.Loaders;
 using System.IO;
@@ -14,8 +13,6 @@ namespace InDoOut_Networking.Server.Commands
 {
     public class UploadProgramServerCommand : CommandListener<IServer>
     {
-        public override string CommandName => "UPLOAD_PROGRAM";
-
         public IProgramHolder ProgramHolder { get; set; } = null;
         public ILoadedPlugins LoadedPlugins { get; set; } = null;
         public IFunctionBuilder FunctionBuilder { get; set; } = null;

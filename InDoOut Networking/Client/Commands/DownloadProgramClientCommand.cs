@@ -20,8 +20,6 @@ namespace InDoOut_Networking.Client.Commands
             FunctionBuilder = functionBuilder;
         }
 
-        public override string CommandName => "DOWNLOAD_PROGRAM";
-
         public async Task<string> RequestDataForProgram(string programName, CancellationToken cancellationToken)
         {
             var response = await SendMessageAwaitResponse(cancellationToken, programName);

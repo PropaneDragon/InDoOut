@@ -11,8 +11,6 @@ namespace InDoOut_Networking.Client.Commands
 {
     public class UploadProgramClientCommand : Command<IClient>
     {
-        public override string CommandName => "UPLOAD_PROGRAM";
-
         public UploadProgramClientCommand(IClient client) : base(client)
         {
         }

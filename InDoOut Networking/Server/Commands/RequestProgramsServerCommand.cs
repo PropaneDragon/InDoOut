@@ -9,8 +9,6 @@ namespace InDoOut_Networking.Server.Commands
 {
     public class RequestProgramsServerCommand : CommandListener<IServer>
     {
-        public override string CommandName => "REQUEST_PROGRAMS";
-
         public IProgramHolder ProgramHolder { get; set; } = null;
 
         public RequestProgramsServerCommand(IServer server, IProgramHolder programHolder) : base(server)
