@@ -30,12 +30,12 @@ namespace InDoOut_Core.Entities.Core
         /// <summary>
         /// The last time this entity was triggered.
         /// </summary>
-        public DateTime LastTriggerTime { get { lock (_lastTriggerTimeLock) return _lastTriggerTime; } }
+        public DateTime LastTriggerTime { get { lock (_lastTriggerTimeLock) { return _lastTriggerTime; } } }
 
         /// <summary>
         /// The time this entity last completed a run (successfully or unsuccessfully).
         /// </summary>
-        public DateTime LastCompletionTime { get { lock (_lastCompletionTimeLock) return _lastCompletionTime; } }
+        public DateTime LastCompletionTime { get { lock (_lastCompletionTimeLock) { return _lastCompletionTime; } } }
 
         /// <summary>
         /// The connections that this entity has.
@@ -47,7 +47,7 @@ namespace InDoOut_Core.Entities.Core
         /// </summary>
         public List<ConnectsToType> Connections
         {
-            get { lock (_connectionsLock) return _connections; }
+            get { lock (_connectionsLock) { return _connections; } }
         }
 
         /// <summary>

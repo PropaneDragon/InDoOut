@@ -38,8 +38,8 @@ namespace InDoOut_Core.Entities.Functions
         /// <seealso cref="State"/>
         public State State
         {
-            get { lock (_stateLock) return _state; }
-            private set { lock (_stateLock) _state = value; }
+            get { lock (_stateLock) { return _state; } }
+            private set { lock (_stateLock) { _state = value; } }
         }
 
         /// <summary>
@@ -47,8 +47,8 @@ namespace InDoOut_Core.Entities.Functions
         /// </summary>
         public List<IInput> Inputs
         {
-            get { lock (_inputsLock) return _inputs; }
-            private set { lock (_inputsLock) _inputs = value; }
+            get { lock (_inputsLock) { return _inputs; } }
+            private set { lock (_inputsLock) { _inputs = value; } }
         }
 
         /// <summary>
@@ -56,8 +56,8 @@ namespace InDoOut_Core.Entities.Functions
         /// </summary>
         public List<IProperty> Properties
         {
-            get { lock (_propertiesLock) return _properties; }
-            protected set { lock (_propertiesLock) _properties = value; }
+            get { lock (_propertiesLock) { return _properties; } }
+            protected set { lock (_propertiesLock) { _properties = value; } }
         }
 
         /// <summary>
@@ -65,8 +65,8 @@ namespace InDoOut_Core.Entities.Functions
         /// </summary>
         public List<IResult> Results
         {
-            get { lock (_resultsLock) return _results; }
-            protected set { lock (_resultsLock) _results = value; }
+            get { lock (_resultsLock) { return _results; } }
+            protected set { lock (_resultsLock) { _results = value; } }
         }
 
         /// <summary>
