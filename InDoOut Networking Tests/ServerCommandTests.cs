@@ -7,7 +7,6 @@ using InDoOut_Networking.Server;
 using InDoOut_Networking.Server.Commands;
 using InDoOut_Plugins.Loaders;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.IO;

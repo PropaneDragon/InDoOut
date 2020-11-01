@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace InDoOut_Executable_Core.Networking.Commands
+﻿namespace InDoOut_Executable_Core.Networking.Commands
 {
     public interface ICommand
     {
