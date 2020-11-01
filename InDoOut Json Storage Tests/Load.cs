@@ -21,6 +21,7 @@ namespace InDoOut_Json_Storage_Tests
             Assert.IsNotNull(jsonProgram);
 
             Assert.AreEqual(new Guid("12345678-1234-1234-1234-123456789abc"), jsonProgram.Id);
+            Assert.AreEqual("Test program", jsonProgram.Name);
 
             Assert.AreEqual(4, jsonProgram.Functions.Count);
             Assert.AreEqual(new Guid("12345678-1111-1111-1111-123456789abc"), jsonProgram.Functions[0].Id);
@@ -181,8 +182,12 @@ namespace InDoOut_Json_Storage_Tests
             var program = new Program();
 
             Assert.AreNotEqual(new Guid("12345678-1234-1234-1234-123456789abc"), program.Id);
+            Assert.AreNotEqual("Test program", program.Name);
+
             Assert.AreEqual(0, storer.Load(program, fileStream).Count);
+
             Assert.AreEqual(new Guid("12345678-1234-1234-1234-123456789abc"), program.Id);
+            Assert.AreEqual("Test program", program.Name);
 
             Assert.AreEqual("second", program.Metadata["first"]);
             Assert.AreEqual("fourth", program.Metadata["third"]);

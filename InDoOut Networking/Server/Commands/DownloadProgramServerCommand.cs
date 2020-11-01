@@ -17,17 +17,21 @@ namespace InDoOut_Networking.Server.Commands
     public class DownloadProgramServerCommand : CommandListener<IServer>
     {
         public IProgramHolder ProgramHolder { get; set; } = null;
+        public ILoadedPlugins LoadedPlugins { get; set; } = null;
+        public IFunctionBuilder FunctionBuilder { get; set; } = null;
 
-        public DownloadProgramServerCommand(IServer server, IProgramHolder programHolder) : base(server)
+        public DownloadProgramServerCommand(IServer server, IProgramHolder programHolder, ILoadedPlugins loadedPlugins, IFunctionBuilder functionBuilder) : base(server)
         {
             ProgramHolder = programHolder;
+            LoadedPlugins = loadedPlugins;
+            FunctionBuilder = functionBuilder;
         }
 
         public override async Task<INetworkMessage> CommandReceived(INetworkMessage message, CancellationToken cancellationToken)
         {
             await Task.CompletedTask;
 
-            if (ProgramHolder != null && (message?.Data?.Length ?? 0) == 1)
+            if (ProgramHolder != null && LoadedPlugins != null && FunctionBuilder != null && (message?.Data?.Length ?? 0) == 1)
             {
                 var programToFind = message.Data[0];
                 if (!string.IsNullOrWhiteSpace(programToFind))
@@ -36,8 +40,7 @@ namespace InDoOut_Networking.Server.Commands
                     if (program != null)
                     {
                         using var memoryStream = new MemoryStream();
-                        var functionBuilder = new FunctionBuilder();
-                        var jsonStorer = new ProgramJsonStorer(functionBuilder, LoadedPlugins.Instance);
+                        var jsonStorer = new ProgramJsonStorer(FunctionBuilder, LoadedPlugins);
                         var failures = jsonStorer.Save(program, memoryStream);
 
                         if (failures.Count <= 0)

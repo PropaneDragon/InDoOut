@@ -25,6 +25,7 @@ namespace InDoOut_Json_Storage_Tests
 
             var jsonProgram = new JsonProgram()
             {
+                Name = "Test program",
                 Id = new Guid("12345678-1234-1234-1234-123456789abc"),
                 Functions = new List<JsonFunction>()
                 {
@@ -260,6 +261,8 @@ namespace InDoOut_Json_Storage_Tests
 
             fourthFunction.AProperty1.RawValue = "4";
             fourthFunction.AProperty2.RawValue = "Fourth Property 2";
+
+            program.SetName("Test program");
 
             program.Metadata["first"] = "second";
             program.Metadata["third"] = "fourth";

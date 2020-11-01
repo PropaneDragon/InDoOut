@@ -75,6 +75,12 @@ namespace InDoOut_Json_Storage
         }
 
         /// <summary>
+        /// The program name.
+        /// </summary>
+        [JsonProperty("name")]
+        public string Name { get; set; } = "Unnamed";
+
+        /// <summary>
         /// The version of the program saved.
         /// </summary>
         [JsonProperty("version")]
@@ -122,7 +128,8 @@ namespace InDoOut_Json_Storage
                 var jsonProgram = new JsonProgram()
                 {
                     Id = program.Id,
-                    Metadata = program.Metadata
+                    Metadata = program.Metadata,
+                    Name = program.Name
                 };
 
                 foreach (var function in program.Functions)
@@ -170,7 +177,7 @@ namespace InDoOut_Json_Storage
                 ClearProgram(program);
 
                 program.Id = Id;
-                program.Metadata.Clear();
+                program.SetName(Name);
 
                 foreach (var metadataItem in Metadata)
                 {
@@ -215,7 +222,9 @@ namespace InDoOut_Json_Storage
             if (program != null)
             {
                 program.Stop();
-                
+                program.SetName(null);
+                program.Metadata.Clear();
+
                 foreach (var function in program.Functions)
                 {
                     _ = program.RemoveFunction(function);
