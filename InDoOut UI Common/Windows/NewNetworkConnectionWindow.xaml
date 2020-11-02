@@ -7,7 +7,7 @@
         xmlns:core="clr-namespace:InDoOut_UI_Common.Controls.Core"
         xmlns:background="clr-namespace:InDoOut_UI_Common.Controls.Background"
         mc:Ignorable="d"
-        Title="New device" Width="900" WindowState="Normal" MinWidth="450" WindowStartupLocation="CenterOwner" ShowActivated="True" SizeToContent="Height">
+        Title="New device" Width="900" WindowState="Normal" MinWidth="450" WindowStartupLocation="CenterOwner" ShowActivated="True" SizeToContent="Height" FocusManager.FocusedElement="{Binding ElementName=TextBox_Address}">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -27,9 +27,9 @@
                 <ScrollViewer DockPanel.Dock="Top" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                     <StackPanel Margin="50,100,50,50" VerticalAlignment="Top">
                         <TextBlock Text="Address:" FontSize="{StaticResource Size.Double.Font.Title.Secondary}" Padding="0,10" />
-                        <TextBox x:Name="TextBox_Address" />
+                        <TextBox x:Name="TextBox_Address" TabIndex="1" />
                         <TextBlock Text="Port:" FontSize="{StaticResource Size.Double.Font.Title.Secondary}" Padding="0,30,0,10" />
-                        <TextBox x:Name="TextBox_Port" />
+                        <TextBox x:Name="TextBox_Port" TabIndex="2" />
                     </StackPanel>
                 </ScrollViewer>
             </DockPanel>
