@@ -29,7 +29,7 @@ namespace InDoOut_Server.ServerNetworking
             var results = new List<bool>
             {
                 AddCommandListener(new RequestProgramsServerCommand(_server, _programHolder)),
-                AddCommandListener(new UploadProgramServerCommand(_server, ProgramHolder.Instance, LoadedPlugins.Instance, new FunctionBuilder()))
+                AddCommandListener(new UploadProgramServerCommand(_server, _programHolder, LoadedPlugins.Instance, new FunctionBuilder()))
             };
 
             var totalCommands = results.Count;
