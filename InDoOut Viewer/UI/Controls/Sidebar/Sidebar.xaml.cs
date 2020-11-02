@@ -1,4 +1,5 @@
-﻿using InDoOut_Networking.Entities;
+﻿using InDoOut_Executable_Core.Messaging;
+using InDoOut_Networking.Entities;
 using InDoOut_UI_Common.InterfaceElements;
 using InDoOut_UI_Common.Windows;
 using System;
@@ -66,10 +67,7 @@ namespace InDoOut_Viewer.UI.Controls.Sidebar
         {
             if (AssociatedTaskView?.CurrentProgramDisplay != null)
             {
-                var networkConnectWindow = new NetworkConnectWindow()
-                {
-                    Owner = Window.GetWindow(this)
-                };
+                var networkConnectWindow = new NetworkConnectWindow() { Owner = Window.GetWindow(this) };
 
                 var client = networkConnectWindow.GetClient();
                 if (client != null)
@@ -90,6 +88,29 @@ namespace InDoOut_Viewer.UI.Controls.Sidebar
                     _ = await program.Disconnect();
                 }
                 catch { }
+
+                senderButton.IsEnabled = true;
+            }
+        }
+
+        private void Button_ViewProgram_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button senderButton && AssociatedTaskView?.CurrentProgramDisplay?.AssociatedProgram is NetworkedProgram program)
+            {
+                senderButton.IsEnabled = false;
+
+                if (program.Connected)
+                {
+                    var programSelectionWindow = new ServerProgramSelectionWindow(program.AssociatedClient) { Owner = Window.GetWindow(this) };
+                    if (programSelectionWindow.ShowDialog() ?? false)
+                    {
+                        UserMessageSystemHolder.Instance.CurrentUserMessageSystem.ShowInformation("Selected program", programSelectionWindow.SelectedProgramName ?? "null");
+                    } 
+                }
+                else
+                {
+                    UserMessageSystemHolder.Instance.CurrentUserMessageSystem.ShowError("Please connect to a server first", "A program can only be selected if connected to a server.");
+                } 
 
                 senderButton.IsEnabled = true;
             }
