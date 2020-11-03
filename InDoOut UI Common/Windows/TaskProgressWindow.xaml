@@ -7,7 +7,7 @@
         xmlns:core="clr-namespace:InDoOut_UI_Common.Controls.Core"
         xmlns:background="clr-namespace:InDoOut_UI_Common.Controls.Background"
         mc:Ignorable="d"
-        Title="" Width="600" WindowState="Normal" MinWidth="450" MinHeight="100" WindowStartupLocation="CenterScreen" ShowActivated="True" SizeToContent="Height" Topmost="True" ResizeMode="NoResize" VerticalContentAlignment="Top" HorizontalContentAlignment="Center" Closing="Window_Closing">
+        Title="Please wait" Width="600" WindowState="Normal" MinWidth="450" MinHeight="100" WindowStartupLocation="CenterScreen" ShowActivated="True" SizeToContent="Height" Topmost="True" ResizeMode="NoResize" VerticalContentAlignment="Top" HorizontalContentAlignment="Center" Closing="Window_Closing">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

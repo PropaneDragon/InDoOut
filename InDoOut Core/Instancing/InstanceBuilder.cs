@@ -22,7 +22,7 @@ namespace InDoOut_Core.Instancing
         /// <param name="type">The type to build.</param>
         /// <param name="parameters">Additional parameters to pass to the constructor.</param>
         /// <returns>The requested type <paramref name="type"/> as type <typeparamref name="T"/>, or null if it has failed.</returns>
-        public T BuildInstance(Type type, params object[] parameters)
+        public virtual T BuildInstance(Type type, params object[] parameters)
         {
             if (typeof(T).IsAssignableFrom(type) && !type.IsAbstract)
             {

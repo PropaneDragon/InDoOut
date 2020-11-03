@@ -1,8 +1,12 @@
-﻿using InDoOut_Executable_Core.Messaging;
+﻿using InDoOut_Core.Functions;
+using InDoOut_Executable_Core.Messaging;
+using InDoOut_Networking.Client.Commands;
 using InDoOut_Networking.Entities;
+using InDoOut_Plugins.Loaders;
 using InDoOut_UI_Common.InterfaceElements;
 using InDoOut_UI_Common.Windows;
 using System;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -93,7 +97,7 @@ namespace InDoOut_Viewer.UI.Controls.Sidebar
             }
         }
 
-        private void Button_ViewProgram_Click(object sender, RoutedEventArgs e)
+        private async void Button_ViewProgram_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button senderButton && AssociatedTaskView?.CurrentProgramDisplay?.AssociatedProgram is NetworkedProgram program)
             {
@@ -104,7 +108,26 @@ namespace InDoOut_Viewer.UI.Controls.Sidebar
                     var programSelectionWindow = new ServerProgramSelectionWindow(program.AssociatedClient) { Owner = Window.GetWindow(this) };
                     if (programSelectionWindow.ShowDialog() ?? false)
                     {
-                        UserMessageSystemHolder.Instance.CurrentUserMessageSystem.ShowInformation("Selected program", programSelectionWindow.SelectedProgramName ?? "null");
+                        var selectedProgram = programSelectionWindow.SelectedProgramName;
+
+                        if (!string.IsNullOrEmpty(selectedProgram))
+                        {
+                            var programDownloader = new DownloadProgramClientCommand(program.AssociatedClient, LoadedPlugins.Instance, new FunctionBuilder());
+                            var progressWindow = new TaskProgressWindow("Downloading program") { Owner = Window.GetWindow(this) };
+
+                            progressWindow.TaskStarted();
+                            var hasDownloaded = await programDownloader.RequestProgram(selectedProgram, program, new CancellationTokenSource(TimeSpan.FromSeconds(5)).Token);
+                            progressWindow.TaskFinished();
+
+                            if (hasDownloaded)
+                            {
+
+                            }
+                            else
+                            {
+                                UserMessageSystemHolder.Instance.CurrentUserMessageSystem.ShowError("Program couldn't be downloaded", "The chosen program couldn't be downloaded due to an error.");
+                            }
+                        }
                     } 
                 }
                 else
