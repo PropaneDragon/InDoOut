@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\InDoOut Json Storage\InDoOut Json Storage.csproj" />
     <ProjectReference Include="..\InDoOut Networking\InDoOut Networking.csproj" />
+    <ProjectReference Include="..\Tests\InDoOut Core Tests\InDoOut Core Tests.csproj" />
   </ItemGroup>
 
   <ItemGroup>

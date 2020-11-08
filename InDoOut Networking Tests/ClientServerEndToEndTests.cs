@@ -8,6 +8,7 @@ using InDoOut_Networking.Server.Commands;
 using InDoOut_Plugins.Loaders;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -248,6 +249,68 @@ namespace InDoOut_Networking_Tests
                     Assert.AreEqual(metadata.Value, downloadedProgram.Metadata[metadata.Key]);
                 }
             }
+
+            Assert.IsTrue(await server.Stop());
+        }
+
+        [TestMethod]
+        public async Task GetProgramStatus()
+        {
+            var programHolder = new ProgramHolder();
+            var server = new Server(9001);
+            var client = new Client();
+            var programStatusClient = new GetProgramStatusClientCommand(client);
+            var programStatusServer = new GetProgramStatusServerCommand(server, programHolder);
+
+            Assert.IsTrue(server.AddCommandListener(programStatusServer));
+
+            Assert.IsTrue(await server.Start());
+            Assert.IsTrue(await client.Connect(IPAddress.Loopback, 9001));
+
+            Assert.AreEqual(0, programHolder.Programs.Count);
+
+            var program = programHolder.NewProgram();
+            var functionToRun1 = new InDoOut_Core_Tests.TestFunction(() => Thread.Sleep(TimeSpan.FromSeconds(1)));
+            var functionToRun2 = new InDoOut_Core_Tests.TestFunction(() => Thread.Sleep(TimeSpan.FromSeconds(1)));
+
+            Assert.IsTrue(program.AddFunction(functionToRun1));
+            Assert.IsTrue(program.AddFunction(functionToRun2));
+
+            var programStatus = await programStatusClient.GetProgramStatusAsync(program.Id, new CancellationTokenSource(TimeSpan.FromSeconds(2)).Token);
+
+            Assert.IsNotNull(programStatus);
+            Assert.AreEqual(program.Id, programStatus.Id);
+            Assert.AreEqual(0, programStatus.ActiveFunctions.Count());
+            Assert.IsFalse(programStatus.Running);
+
+            functionToRun1.Trigger(null);
+
+            programStatus = await programStatusClient.GetProgramStatusAsync(program.Id, new CancellationTokenSource(TimeSpan.FromSeconds(2)).Token);
+
+            Assert.IsNotNull(programStatus);
+            Assert.AreEqual(program.Id, programStatus.Id);
+            Assert.AreEqual(1, programStatus.ActiveFunctions.Count());
+            Assert.AreEqual(functionToRun1.Id, programStatus.ActiveFunctions[0]);
+            Assert.IsTrue(programStatus.Running);
+
+            functionToRun2.Trigger(null);
+
+            programStatus = await programStatusClient.GetProgramStatusAsync(program.Id, new CancellationTokenSource(TimeSpan.FromSeconds(2)).Token);
+
+            Assert.IsNotNull(programStatus);
+            Assert.AreEqual(program.Id, programStatus.Id);
+            Assert.AreEqual(2, programStatus.ActiveFunctions.Count());
+            Assert.AreEqual(functionToRun1.Id, programStatus.ActiveFunctions[0]);
+            Assert.AreEqual(functionToRun2.Id, programStatus.ActiveFunctions[1]);
+            Assert.IsTrue(programStatus.Running);
+
+            programStatus = await programStatusClient.GetProgramStatusAsync(Guid.NewGuid(), new CancellationTokenSource(TimeSpan.FromSeconds(2)).Token);
+
+            Assert.IsNull(programStatus);
+
+            programStatus = await programStatusClient.GetProgramStatusAsync(Guid.Empty, new CancellationTokenSource(TimeSpan.FromSeconds(2)).Token);
+
+            Assert.IsNull(programStatus);
 
             Assert.IsTrue(await server.Stop());
         }
