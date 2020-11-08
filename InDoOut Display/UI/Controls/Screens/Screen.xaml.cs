@@ -243,7 +243,7 @@ namespace InDoOut_Display.UI.Controls.Screens
         {
             if (!IsKeyboardFocusWithin)
             {
-                Keyboard.Focus(this);
+                _ = Keyboard.Focus(this);
             } 
 
             if (e.LeftButton == MouseButtonState.Pressed)

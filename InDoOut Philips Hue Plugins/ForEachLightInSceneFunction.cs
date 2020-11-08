@@ -39,7 +39,7 @@ namespace InDoOut_Philips_Hue_Plugins
             }
         }
 
-        protected override bool PopulateItemDataForIndex(int index) => _cachedLightIds != null && index < _cachedLightIds.Count() ? _lightId.ValueFrom(_cachedLightIds.ElementAt(index)) : false;
+        protected override bool PopulateItemDataForIndex(int index) => _cachedLightIds != null && index < _cachedLightIds.Count() && _lightId.ValueFrom(_cachedLightIds.ElementAt(index));
 
         protected override void AllItemsComplete() => _cachedLightIds = null;
     }

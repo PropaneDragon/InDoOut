@@ -129,7 +129,7 @@ namespace InDoOut_Philips_Hue_Plugins
         public static List<Sensor> GetHumiditySensors(List<Sensor> sensors) => sensors?.Where(sensor => sensor?.State?.Humidity != null).ToList();
         public static List<Sensor> GetLightSensors(List<Sensor> sensors) => sensors?.Where(sensor => sensor?.State?.LightLevel != null).ToList();
 
-        private static bool StringMatches(string @string, string match, bool allowPartialMatches = false) => @string != null && match != null ? (allowPartialMatches ? @string.Contains(match) : @string == match) : false;
+        private static bool StringMatches(string @string, string match, bool allowPartialMatches = false) => @string != null && match != null && (allowPartialMatches ? @string.Contains(match) : @string == match);
 
         private static HueClient GenerateHueClient(string bridgeIp, string userId)
         {

@@ -7,8 +7,8 @@ namespace InDoOut_Display.Actions.Resizing
 {
     public class ScreenResizeAction : InDoOut_UI_Common.Actions.Dragging.DragAction
     {
+        private readonly ScreenEdge _initialEdge = ScreenEdge.None;
         private Size _initialSize = new Size();
-        private ScreenEdge _initialEdge = ScreenEdge.None;
 
         public IScreenConnections ScreenConnections { get; private set; } = null;
 

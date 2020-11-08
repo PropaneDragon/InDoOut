@@ -29,7 +29,7 @@ namespace InDoOut_Core_Plugins.SystemInfo
 
         protected override IOutput Started(IInput triggeredBy)
         {
-            _processorCount.ValueFrom(Environment.ProcessorCount);
+            _ = _processorCount.ValueFrom(Environment.ProcessorCount);
 
             return _output;
         }

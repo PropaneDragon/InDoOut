@@ -17,10 +17,14 @@ namespace InDoOut_Executable_Core.Loading
 
         public string Name
         {
-            get { lock (_nameLock) return _name; }
+            get { lock (_nameLock) { return _name; } }
             set
             {
-                lock (_nameLock) _name = value;
+                lock (_nameLock)
+                {
+                    _name = value;
+                }
+
                 NameChanged?.Invoke(this, new LoadingTaskEventArgs<LoadingTask>(this));
             }
         }

@@ -20,8 +20,6 @@ namespace InDoOut_Conversion_Plugins.Storage
 
         private static readonly bool _allowNegative = false;
 
-        private double _bytes = 0;
-
         /// <summary>
         /// Represents a storage size with convenience methods to handle basic arithmetic of sizes and
         /// conversions between different size types (MB -> KB) for example.
@@ -29,18 +27,18 @@ namespace InDoOut_Conversion_Plugins.Storage
         /// <param name="bytes">Initial bytes to create the storage with</param>
         public StorageSize(double bytes)
         {
-            _bytes = Math.Round(bytes);
+            Bytes = Math.Round(bytes);
         }
 
-        public double Bytes => _bytes;
-        public double KiB => ConvertBetween(_bytes, SizeType.Byte, SizeType.KiB);
-        public double MiB => ConvertBetween(_bytes, SizeType.Byte, SizeType.MiB);
-        public double GiB => ConvertBetween(_bytes, SizeType.Byte, SizeType.GiB);
-        public double TiB => ConvertBetween(_bytes, SizeType.Byte, SizeType.TiB);
-        public double PiB => ConvertBetween(_bytes, SizeType.Byte, SizeType.PiB);
-        public double EiB => ConvertBetween(_bytes, SizeType.Byte, SizeType.EiB);
-        public double ZiB => ConvertBetween(_bytes, SizeType.Byte, SizeType.ZiB);
-        public double YiB => ConvertBetween(_bytes, SizeType.Byte, SizeType.YiB);
+        public double Bytes { get; } = 0;
+        public double KiB => ConvertBetween(Bytes, SizeType.Byte, SizeType.KiB);
+        public double MiB => ConvertBetween(Bytes, SizeType.Byte, SizeType.MiB);
+        public double GiB => ConvertBetween(Bytes, SizeType.Byte, SizeType.GiB);
+        public double TiB => ConvertBetween(Bytes, SizeType.Byte, SizeType.TiB);
+        public double PiB => ConvertBetween(Bytes, SizeType.Byte, SizeType.PiB);
+        public double EiB => ConvertBetween(Bytes, SizeType.Byte, SizeType.EiB);
+        public double ZiB => ConvertBetween(Bytes, SizeType.Byte, SizeType.ZiB);
+        public double YiB => ConvertBetween(Bytes, SizeType.Byte, SizeType.YiB);
 
         public static StorageSize FromBytes(double bytes) => new StorageSize(bytes);
         public static StorageSize FromKiB(double size) => FromSize(SizeType.KiB, size);
@@ -99,7 +97,7 @@ namespace InDoOut_Conversion_Plugins.Storage
         /// <param name="size">The size to output</param>
         /// <param name="decimals">The number of decimal places to round to</param>
         /// <returns>A formatted size string</returns>
-        public string ToString(SizeType size, int decimals = 2) => $"{Math.Round(ConvertBetween(_bytes, SizeType.Byte, size), decimals)} {SizeTypeToString(size, _bytes)}";
+        public string ToString(SizeType size, int decimals = 2) => $"{Math.Round(ConvertBetween(Bytes, SizeType.Byte, size), decimals)} {SizeTypeToString(size, Bytes)}";
 
         public override bool Equals(object obj)
         {
@@ -139,7 +137,7 @@ namespace InDoOut_Conversion_Plugins.Storage
         {
             return sizeType switch
             {
-                SizeType.Byte => $"{sizeType.ToString()}{(value == 1 ? "" : "s")}",
+                SizeType.Byte => $"{sizeType}{(value == 1 ? "" : "s")}",
                 _ => sizeType.ToString(),
             };
         }

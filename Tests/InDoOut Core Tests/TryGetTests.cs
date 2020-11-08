@@ -32,7 +32,7 @@ namespace InDoOut_Core_Tests
         [TestMethod]
         public void ExecuteOrFail()
         {
-            int a = 0;
+            var a = 0;
 
             Assert.IsTrue(TryGet.ExecuteOrFail(() => a = 1));
             Assert.AreEqual(1, a);

@@ -7,8 +7,8 @@ namespace InDoOut_Display_Basic_Plugins.Media
 {
     public class VideoPlayerElementFunction : ElementFunction
     {
-        private IProperty<string> _mediaPath;
-        private IProperty<double> _volumePercentage;
+        private readonly IProperty<string> _mediaPath;
+        private readonly IProperty<double> _volumePercentage;
 
         public double MediaVolumePercentage => Math.Clamp(_volumePercentage?.FullValue ?? 100, 0, 100);
 

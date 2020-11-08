@@ -4,7 +4,7 @@ namespace InDoOut_UI_Common.Actions.Dragging
 {
     public class CommonWireDragAction : AbstractWireDragAction
     {
-        private IUIConnectionStart _start = null;
+        private readonly IUIConnectionStart _start = null;
 
         public CommonWireDragAction(IUIConnectionStart start, ICommonDisplay display) : base(start, display)
         {

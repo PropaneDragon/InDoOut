@@ -42,8 +42,8 @@ namespace InDoOut_Core.Entities.Functions
         /// </summary>
         public string VariableName
         {
-            get { lock (_variableNameLock) return _variableName; }
-            set { lock (_variableNameLock) _variableName = value; }
+            get { lock (_variableNameLock) { return _variableName; } }
+            set { lock (_variableNameLock) { _variableName = value; } }
         }
 
         /// <summary>

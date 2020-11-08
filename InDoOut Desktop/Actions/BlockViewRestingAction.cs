@@ -30,7 +30,7 @@ namespace InDoOut_Desktop.Actions
                 {
                     if (_blockView.GetFirstElementOfType<IUIConnection>(elementsUnderMouse) is IUIConnection connection)
                     {
-                        Finish(new ConnectionMenuAction(connection, _blockView, mousePosition));
+                        Finish(new ConnectionMenuAction(connection, _blockView));
 
                         return true;
                     }

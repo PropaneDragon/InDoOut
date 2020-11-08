@@ -281,9 +281,9 @@ namespace InDoOut_UI_Common.Controls.CoreEntityRepresentation
             return allDeleted;
         }
 
-        private bool RemoveStartConnections<StartType>(List<StartType> start, ICommonDisplay display) where StartType : IUIConnectionStart => display is IConnectionDisplay connectionDisplay ? RemoveConnections(connectionDisplay.FindConnections(start.Cast<IUIConnectionStart>().ToList()), display) : false;
+        private bool RemoveStartConnections<StartType>(List<StartType> start, ICommonDisplay display) where StartType : IUIConnectionStart => display is IConnectionDisplay connectionDisplay && RemoveConnections(connectionDisplay.FindConnections(start.Cast<IUIConnectionStart>().ToList()), display);
 
-        private bool RemoveEndConnections<EndType>(List<EndType> end, ICommonDisplay display) where EndType : IUIConnectionEnd => display is IConnectionDisplay connectionDisplay ? RemoveConnections(connectionDisplay.FindConnections(end.Cast<IUIConnectionEnd>().ToList()), display) : false;
+        private bool RemoveEndConnections<EndType>(List<EndType> end, ICommonDisplay display) where EndType : IUIConnectionEnd => display is IConnectionDisplay connectionDisplay && RemoveConnections(connectionDisplay.FindConnections(end.Cast<IUIConnectionEnd>().ToList()), display);
 
         private bool RemoveConnections(List<IUIConnection> connections, ICommonDisplay display)
         {

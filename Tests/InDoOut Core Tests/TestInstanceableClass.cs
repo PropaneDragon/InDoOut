@@ -20,7 +20,7 @@
             Instanced = true;
         }
 
-        public TestNoDefaultConstructorClass(bool notADefault)
+        public TestNoDefaultConstructorClass(bool _)
         {
 
         }

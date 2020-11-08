@@ -37,7 +37,7 @@ namespace InDoOut_Display.UI.Controls.ElementSelector
             var functionBuilder = new ElementFunctionBuilder();
             var functionInstance = functionBuilder.BuildInstance<T>();
 
-            return functionInstance != null ? LoadElementFromFunction(functionInstance) : false;
+            return functionInstance != null && LoadElementFromFunction(functionInstance);
         }
 
         private void ChangeDisplayElement(IDisplayElement element)

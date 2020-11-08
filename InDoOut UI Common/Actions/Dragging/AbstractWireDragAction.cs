@@ -82,7 +82,7 @@ namespace InDoOut_UI_Common.Actions.Dragging
         {
             if (_uiConnection != null)
             {
-                _display?.DeletableRemover?.Remove(_uiConnection);
+                _ = (_display?.DeletableRemover?.Remove(_uiConnection));
             }
 
             Abort();

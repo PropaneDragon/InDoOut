@@ -7,7 +7,7 @@ namespace InDoOut_Conversion_Plugins.Storage
     public abstract class AbstractStorageConversionFunction : Function
     {
         private readonly IOutput _output, _failed;
-        private IProperty<double> _value;
+        private readonly IProperty<double> _value;
         private Dictionary<StorageSize.SizeType, IResult> _results;
 
         public override string Description => $"Converts from {StorageSize.SizeTypeToString(AssociatedSizeType, 2)} to other sizes.";
@@ -39,7 +39,7 @@ namespace InDoOut_Conversion_Plugins.Storage
                 var storageType = result.Key;
                 var resultEntity = result.Value;
 
-                resultEntity.ValueFrom(StorageSize.ConvertBetween(_value.FullValue, AssociatedSizeType, storageType));
+                _ = resultEntity.ValueFrom(StorageSize.ConvertBetween(_value.FullValue, AssociatedSizeType, storageType));
             }
 
             return _output;

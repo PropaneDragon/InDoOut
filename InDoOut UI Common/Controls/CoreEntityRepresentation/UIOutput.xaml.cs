@@ -57,12 +57,6 @@ namespace InDoOut_UI_Common.Controls.CoreEntityRepresentation
             IO_Main.Type = ioType;
         }
 
-        private UIFunctionIO.IOType GetIOTypeForOutput()
-        {
-            if (AssociatedOutput is IOutputNegative) return UIFunctionIO.IOType.Negative;
-            if (AssociatedOutput is IOutputPositive) return UIFunctionIO.IOType.Positive;
-
-            return UIFunctionIO.IOType.Neutral;
-        }
+        private UIFunctionIO.IOType GetIOTypeForOutput() => AssociatedOutput is IOutputNegative ? UIFunctionIO.IOType.Negative : AssociatedOutput is IOutputPositive ? UIFunctionIO.IOType.Positive : UIFunctionIO.IOType.Neutral;
     }
 }

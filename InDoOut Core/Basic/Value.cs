@@ -72,15 +72,7 @@ namespace InDoOut_Core.Basic
         /// <typeparam name="T">The type to convert from.</typeparam>
         /// <param name="value">The value of the type to convert to a string.</param>
         /// <returns>A string representation of the value given.</returns>
-        public string ConvertToString<T>(T value)
-        {
-            if (value == null)
-            {
-                return default(T)?.ToString();
-            }
-
-            return TypeDescriptor.GetConverter(typeof(T)).ConvertToString(value);
-        }
+        public string ConvertToString<T>(T value) => value == null ? (default(T)?.ToString()) : TypeDescriptor.GetConverter(typeof(T)).ConvertToString(value);
 
         /// <summary>
         /// Gets the string representation of this value.

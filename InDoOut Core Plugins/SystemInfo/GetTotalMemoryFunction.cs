@@ -29,7 +29,7 @@ namespace InDoOut_Core_Plugins.SystemInfo
 
         protected override IOutput Started(IInput triggeredBy)
         {
-            _memoryBits.ValueFrom(Environment.WorkingSet);
+            _ = _memoryBits.ValueFrom(Environment.WorkingSet);
 
             return _output;
         }
