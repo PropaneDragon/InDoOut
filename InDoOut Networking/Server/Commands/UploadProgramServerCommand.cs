@@ -50,6 +50,8 @@ namespace InDoOut_Networking.Server.Commands
 
                             if (failures.Count == 0 && memoryStream.CanRead)
                             {
+                                program.Trigger(null);
+
                                 return command.CreateSuccessResponse();
                             }
                             else
