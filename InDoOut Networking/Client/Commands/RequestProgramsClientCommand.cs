@@ -12,7 +12,7 @@ namespace InDoOut_Networking.Client.Commands
         {
         }
 
-        public async Task<List<string>> RequestAvailablePrograms(CancellationToken cancellationToken)
+        public async Task<List<string>> RequestAvailableProgramsAsync(CancellationToken cancellationToken)
         {
             var response = await SendMessageAwaitResponse(cancellationToken);
 

@@ -20,7 +20,7 @@ namespace InDoOut_Networking.Client.Commands
             FunctionBuilder = functionBuilder;
         }
 
-        public async Task<bool> SendProgram(IProgram program, CancellationToken cancellationToken)
+        public async Task<bool> SendProgramAsync(IProgram program, CancellationToken cancellationToken)
         {
             if (FunctionBuilder != null && LoadedPlugins != null && program != null && !string.IsNullOrEmpty(program.Name))
             {
@@ -52,14 +52,14 @@ namespace InDoOut_Networking.Client.Commands
 
                 if (!string.IsNullOrWhiteSpace(programData))
                 {
-                    return await SendProgram(programData, cancellationToken);
+                    return await SendProgramAsync(programData, cancellationToken);
                 }
             }
 
             return false;
         }
 
-        public async Task<bool> SendProgram(string programData, CancellationToken cancellationToken)
+        public async Task<bool> SendProgramAsync(string programData, CancellationToken cancellationToken)
         {
             if (!string.IsNullOrWhiteSpace(programData))
             {

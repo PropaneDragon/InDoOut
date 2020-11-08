@@ -50,7 +50,7 @@ namespace InDoOut_UI_Common.Windows
 
                 try
                 {
-                    var availablePrograms = await command.RequestAvailablePrograms(cancellationToken.Token);
+                    var availablePrograms = await command.RequestAvailableProgramsAsync(cancellationToken.Token);
                     if (availablePrograms != null)
                     {
                         if (availablePrograms.Count > 0)

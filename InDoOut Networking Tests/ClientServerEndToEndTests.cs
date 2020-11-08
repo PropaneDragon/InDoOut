@@ -31,7 +31,7 @@ namespace InDoOut_Networking_Tests
             Assert.IsTrue(await server.Start());
             Assert.IsTrue(await client.Connect(IPAddress.Loopback, 9001));
 
-            var programs = await programRequestClient.RequestAvailablePrograms(new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token);
+            var programs = await programRequestClient.RequestAvailableProgramsAsync(new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token);
 
             Assert.IsNotNull(programs);
             Assert.AreEqual(0, programs.Count);
@@ -41,7 +41,7 @@ namespace InDoOut_Networking_Tests
 
             Assert.AreEqual(1, programHolder.Programs.Count);
 
-            programs = await programRequestClient.RequestAvailablePrograms(new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token);
+            programs = await programRequestClient.RequestAvailableProgramsAsync(new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token);
 
             Assert.IsNotNull(programs);
             Assert.AreEqual(1, programs.Count);
@@ -52,7 +52,7 @@ namespace InDoOut_Networking_Tests
 
             Assert.AreEqual(2, programHolder.Programs.Count);
 
-            programs = await programRequestClient.RequestAvailablePrograms(new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token);
+            programs = await programRequestClient.RequestAvailableProgramsAsync(new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token);
 
             Assert.IsNotNull(programs);
             Assert.AreEqual(2, programs.Count);
@@ -79,12 +79,12 @@ namespace InDoOut_Networking_Tests
 
             Assert.AreEqual(0, programHolder.Programs.Count);
 
-            var result = await uploadProgramClient.SendProgram((IProgram)null, new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token);
+            var result = await uploadProgramClient.SendProgramAsync((IProgram)null, new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token);
 
             Assert.IsFalse(result);
             Assert.AreEqual(0, programHolder.Programs.Count);
 
-            result = await uploadProgramClient.SendProgram((string)null, new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token);
+            result = await uploadProgramClient.SendProgramAsync((string)null, new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token);
 
             Assert.IsFalse(result);
             Assert.AreEqual(0, programHolder.Programs.Count);
@@ -95,7 +95,7 @@ namespace InDoOut_Networking_Tests
             program.Metadata["first metadata"] = "first";
             program.Metadata["second"] = "2";
 
-            result = await uploadProgramClient.SendProgram(program, new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token);
+            result = await uploadProgramClient.SendProgramAsync(program, new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token);
 
             Assert.IsTrue(result);
             Assert.AreEqual(1, programHolder.Programs.Count);
@@ -110,7 +110,7 @@ namespace InDoOut_Networking_Tests
             program.Metadata["second program"] = "yay";
             program.Metadata["another"] = "more metadata";
 
-            result = await uploadProgramClient.SendProgram(program, new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token);
+            result = await uploadProgramClient.SendProgramAsync(program, new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token);
 
             Assert.IsTrue(result);
             Assert.AreEqual(2, programHolder.Programs.Count);
@@ -155,27 +155,27 @@ namespace InDoOut_Networking_Tests
             Assert.AreEqual(0, comparisonProgram.Metadata.Count);
             Assert.AreEqual("Untitled", comparisonProgram.Name);
 
-            Assert.IsFalse(await downloadProgramClient.RequestProgram(null, comparisonProgram, new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token));
+            Assert.IsFalse(await downloadProgramClient.RequestProgramAsync(null, comparisonProgram, new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token));
 
             Assert.AreEqual(0, comparisonProgram.Metadata.Count);
             Assert.AreEqual("Untitled", comparisonProgram.Name);
 
-            Assert.IsFalse(await downloadProgramClient.RequestProgram("", comparisonProgram, new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token));
+            Assert.IsFalse(await downloadProgramClient.RequestProgramAsync("", comparisonProgram, new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token));
 
             Assert.AreEqual(0, comparisonProgram.Metadata.Count);
             Assert.AreEqual("Untitled", comparisonProgram.Name);
 
-            Assert.IsFalse(await downloadProgramClient.RequestProgram("      ", comparisonProgram, new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token));
+            Assert.IsFalse(await downloadProgramClient.RequestProgramAsync("      ", comparisonProgram, new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token));
 
             Assert.AreEqual(0, comparisonProgram.Metadata.Count);
             Assert.AreEqual("Untitled", comparisonProgram.Name);
 
-            Assert.IsFalse(await downloadProgramClient.RequestProgram("Doesn't exist", comparisonProgram, new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token));
+            Assert.IsFalse(await downloadProgramClient.RequestProgramAsync("Doesn't exist", comparisonProgram, new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token));
 
             Assert.AreEqual(0, comparisonProgram.Metadata.Count);
             Assert.AreEqual("Untitled", comparisonProgram.Name);
 
-            Assert.IsTrue(await downloadProgramClient.RequestProgram("A test program", comparisonProgram, new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token));
+            Assert.IsTrue(await downloadProgramClient.RequestProgramAsync("A test program", comparisonProgram, new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token));
 
             Assert.AreEqual(2, comparisonProgram.Metadata.Count);
             Assert.AreEqual("A test program", comparisonProgram.Name);
@@ -218,7 +218,7 @@ namespace InDoOut_Networking_Tests
                     baseProgram.Metadata[Guid.NewGuid().ToString()] = Guid.NewGuid().ToString();
                 }
 
-                Assert.IsTrue(await uploadProgramClient.SendProgram(baseProgram, new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token));
+                Assert.IsTrue(await uploadProgramClient.SendProgramAsync(baseProgram, new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token));
 
                 Assert.AreEqual(count + 1, programHolder.Programs.Count);
 
@@ -236,7 +236,7 @@ namespace InDoOut_Networking_Tests
 
                 var downloadedProgram = new Program();
 
-                Assert.IsTrue(await downloadProgramClient.RequestProgram(baseName, downloadedProgram, new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token));
+                Assert.IsTrue(await downloadProgramClient.RequestProgramAsync(baseName, downloadedProgram, new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token));
 
                 Assert.AreEqual(baseProgram.Name, downloadedProgram.Name);
                 Assert.AreEqual(baseProgram.Id, downloadedProgram.Id);

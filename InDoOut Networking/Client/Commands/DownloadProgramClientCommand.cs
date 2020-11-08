@@ -20,16 +20,16 @@ namespace InDoOut_Networking.Client.Commands
             FunctionBuilder = functionBuilder;
         }
 
-        public async Task<string> RequestDataForProgram(string programName, CancellationToken cancellationToken)
+        public async Task<string> RequestDataForProgramAsync(string programName, CancellationToken cancellationToken)
         {
             var response = await SendMessageAwaitResponse(cancellationToken, programName);
 
             return (response?.Data?.Length ?? 0) == 1 ? response.Data[0] : null;
         }
 
-        public async Task<bool> RequestProgram(string programName, IProgram programToLoadInto, CancellationToken cancellationToken)
+        public async Task<bool> RequestProgramAsync(string programName, IProgram programToLoadInto, CancellationToken cancellationToken)
         {
-            var data = await RequestDataForProgram(programName, cancellationToken);
+            var data = await RequestDataForProgramAsync(programName, cancellationToken);
             if (!string.IsNullOrEmpty(data))
             {
                 using var memoryStream = new MemoryStream();

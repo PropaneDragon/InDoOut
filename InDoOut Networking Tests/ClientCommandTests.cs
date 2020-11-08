@@ -39,7 +39,7 @@ namespace InDoOut_Networking_Tests
 
             Assert.IsTrue(await client.Connect(IPAddress.Loopback, 9001));
 
-            Assert.IsNull(await programRequestCommand.RequestAvailablePrograms(new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token));
+            Assert.IsNull(await programRequestCommand.RequestAvailableProgramsAsync(new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token));
 
             var lastServerMessage = server.LastMessageReceived;
             server.LastMessageReceived = null;
@@ -48,7 +48,7 @@ namespace InDoOut_Networking_Tests
             Assert.IsNotNull(Guid.Parse(lastServerMessage.Id));
             Assert.AreEqual("RequestPrograms", lastServerMessage.Name);
 
-            var requestTask = programRequestCommand.RequestAvailablePrograms(new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token);
+            var requestTask = programRequestCommand.RequestAvailableProgramsAsync(new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token);
 
             await Task.Delay(TimeSpan.FromMilliseconds(20));
 
@@ -66,7 +66,7 @@ namespace InDoOut_Networking_Tests
             Assert.AreEqual("Another program", requestTask.Result[2]);
             Assert.AreEqual("Last program", requestTask.Result[3]);
 
-            requestTask = programRequestCommand.RequestAvailablePrograms(new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token);
+            requestTask = programRequestCommand.RequestAvailableProgramsAsync(new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token);
 
             await Task.Delay(TimeSpan.FromMilliseconds(20));
 
@@ -81,7 +81,7 @@ namespace InDoOut_Networking_Tests
             Assert.AreEqual(1, requestTask.Result.Count);
             Assert.AreEqual("Only one program", requestTask.Result[0]);
 
-            requestTask = programRequestCommand.RequestAvailablePrograms(new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token);
+            requestTask = programRequestCommand.RequestAvailableProgramsAsync(new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token);
 
             await Task.Delay(TimeSpan.FromMilliseconds(20));
 
@@ -95,7 +95,7 @@ namespace InDoOut_Networking_Tests
             Assert.IsNotNull(requestTask.Result);
             Assert.AreEqual(0, requestTask.Result.Count);
 
-            requestTask = programRequestCommand.RequestAvailablePrograms(new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token);
+            requestTask = programRequestCommand.RequestAvailableProgramsAsync(new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token);
 
             await Task.Delay(TimeSpan.FromMilliseconds(20));
 
@@ -144,7 +144,7 @@ namespace InDoOut_Networking_Tests
             fileStream.Dispose();
 
             var programUploadCommand = new UploadProgramClientCommand(client, new LoadedPlugins(), new FunctionBuilder());
-            var sendTask = programUploadCommand.SendProgram(program, new CancellationTokenSource(TimeSpan.FromMilliseconds(800)).Token);
+            var sendTask = programUploadCommand.SendProgramAsync(program, new CancellationTokenSource(TimeSpan.FromMilliseconds(800)).Token);
 
             await Task.Delay(TimeSpan.FromMilliseconds(200));
 
@@ -181,7 +181,7 @@ namespace InDoOut_Networking_Tests
             var program = new Program();
 
             var programDownloadCommand = new DownloadProgramClientCommand(client, LoadedPlugins.Instance, new FunctionBuilder());
-            var downloadDataTask = programDownloadCommand.RequestDataForProgram("example-program", new CancellationTokenSource(TimeSpan.FromMilliseconds(800)).Token);
+            var downloadDataTask = programDownloadCommand.RequestDataForProgramAsync("example-program", new CancellationTokenSource(TimeSpan.FromMilliseconds(800)).Token);
 
             await Task.Delay(TimeSpan.FromMilliseconds(200));
 
@@ -202,7 +202,7 @@ namespace InDoOut_Networking_Tests
             Assert.AreEqual(downloadDataTask.Result, programData.Replace("\r", ""));
 
 
-            var downloadProgramTask = programDownloadCommand.RequestProgram("example-program", program, new CancellationTokenSource(TimeSpan.FromMilliseconds(800)).Token);
+            var downloadProgramTask = programDownloadCommand.RequestProgramAsync("example-program", program, new CancellationTokenSource(TimeSpan.FromMilliseconds(800)).Token);
 
             await Task.Delay(TimeSpan.FromMilliseconds(200));
 
@@ -215,7 +215,7 @@ namespace InDoOut_Networking_Tests
             Assert.IsNotNull(program);
 
 
-            downloadDataTask = programDownloadCommand.RequestDataForProgram("example-program", new CancellationTokenSource(TimeSpan.FromMilliseconds(800)).Token);
+            downloadDataTask = programDownloadCommand.RequestDataForProgramAsync("example-program", new CancellationTokenSource(TimeSpan.FromMilliseconds(800)).Token);
 
             await Task.Delay(TimeSpan.FromMilliseconds(200));
 
@@ -227,7 +227,7 @@ namespace InDoOut_Networking_Tests
             Assert.IsNull(downloadDataTask.Result);
 
 
-            downloadProgramTask = programDownloadCommand.RequestProgram("example-program", program, new CancellationTokenSource(TimeSpan.FromMilliseconds(800)).Token);
+            downloadProgramTask = programDownloadCommand.RequestProgramAsync("example-program", program, new CancellationTokenSource(TimeSpan.FromMilliseconds(800)).Token);
 
             await Task.Delay(TimeSpan.FromMilliseconds(200));
 
@@ -240,7 +240,7 @@ namespace InDoOut_Networking_Tests
             Assert.IsNotNull(program);
 
 
-            downloadDataTask = programDownloadCommand.RequestDataForProgram("example-program", new CancellationTokenSource(TimeSpan.FromMilliseconds(800)).Token);
+            downloadDataTask = programDownloadCommand.RequestDataForProgramAsync("example-program", new CancellationTokenSource(TimeSpan.FromMilliseconds(800)).Token);
 
             await Task.Delay(TimeSpan.FromMilliseconds(200));
 
@@ -252,7 +252,7 @@ namespace InDoOut_Networking_Tests
             Assert.IsNull(downloadDataTask.Result);
 
 
-            downloadProgramTask = programDownloadCommand.RequestProgram("example-program", program, new CancellationTokenSource(TimeSpan.FromMilliseconds(800)).Token);
+            downloadProgramTask = programDownloadCommand.RequestProgramAsync("example-program", program, new CancellationTokenSource(TimeSpan.FromMilliseconds(800)).Token);
 
             await Task.Delay(TimeSpan.FromMilliseconds(200));
 
@@ -265,7 +265,7 @@ namespace InDoOut_Networking_Tests
             Assert.IsNotNull(program);
 
 
-            downloadProgramTask = programDownloadCommand.RequestProgram("empty", program, new CancellationTokenSource(TimeSpan.FromMilliseconds(800)).Token);
+            downloadProgramTask = programDownloadCommand.RequestProgramAsync("empty", program, new CancellationTokenSource(TimeSpan.FromMilliseconds(800)).Token);
 
             await Task.Delay(TimeSpan.FromMilliseconds(200));
 
