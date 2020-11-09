@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InDoOut_UI_Common.Windows"
-        xmlns:core="clr-namespace:InDoOut_UI_Common.Controls.Core"
+        xmlns:common="clr-namespace:InDoOut_UI_Common.Controls.Common"
         xmlns:background="clr-namespace:InDoOut_UI_Common.Controls.Background"
         mc:Ignorable="d"
         Title="Please wait" Width="600" WindowState="Normal" MinWidth="450" MinHeight="100" WindowStartupLocation="CenterScreen" ShowActivated="True" SizeToContent="Height" Topmost="True" ResizeMode="NoResize" VerticalContentAlignment="Top" HorizontalContentAlignment="Center" Closing="Window_Closing">
@@ -26,15 +26,14 @@
                 <Grid Margin="0,60,0,0" VerticalAlignment="Top">
                     <DockPanel VerticalAlignment="Top">
                         <StackPanel DockPanel.Dock="Right" VerticalAlignment="Center" Margin="24,0" >
-                            <TextBlock x:Name="Text_Title" FontSize="{StaticResource Size.Double.Font.Title.Primary}" Foreground="{StaticResource Brush.Text.Header.Foreground}" Padding="0,0,12,0" Text="Title" TextWrapping="WrapWithOverflow" TextTrimming="CharacterEllipsis" />
-                            <TextBlock x:Name="Text_Description" FontSize="{StaticResource Size.Double.Font.Common}" Padding="0,0,12,0" Text="This is the description." TextWrapping="WrapWithOverflow" TextTrimming="CharacterEllipsis" />
+                            <common:Header x:Name="Header_Main" Title="Title" Subtitle="This is the description" />
                             <ProgressBar x:Name="ProgressBar_Status" Margin="0,8" IsIndeterminate="True" />
                         </StackPanel>
                     </DockPanel>
                 </Grid>
             </DockPanel>
         </Grid>
-        <core:TitleBar x:Name="TitleBar_Main" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
+        <common:TitleBar x:Name="TitleBar_Main" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
     </Grid>
 </Window>
 

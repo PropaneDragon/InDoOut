@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InDoOut_Viewer"
-        xmlns:core="clr-namespace:InDoOut_UI_Common.Controls.Core;assembly=InDoOutUICommon"
+        xmlns:common="clr-namespace:InDoOut_UI_Common.Controls.Common;assembly=InDoOutUICommon"
         xmlns:background="clr-namespace:InDoOut_UI_Common.Controls.Background;assembly=InDoOutUICommon"
         xmlns:taskManager="clr-namespace:InDoOut_UI_Common.Controls.TaskManager;assembly=InDoOutUICommon"
         xmlns:sidebar="clr-namespace:InDoOut_Viewer.UI.Controls.Sidebar"
@@ -13,7 +13,7 @@
     <Grid>
         <background:BackgroundImage Opacity="0.01"/>
         <taskManager:TaskView x:Name="TaskView_Main" />
-        <core:TitleBar x:Name="TitleBar_Main" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
+        <common:TitleBar x:Name="TitleBar_Main" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
         <sidebar:Sidebar x:Name="Sidebar_Main" HorizontalAlignment="Left" />
     </Grid>
 </Window>

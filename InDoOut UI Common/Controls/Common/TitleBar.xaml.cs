@@ -9,7 +9,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shell;
 using System.Windows.Threading;
 
-namespace InDoOut_UI_Common.Controls.Core
+namespace InDoOut_UI_Common.Controls.Common
 {
     public partial class TitleBar : UserControl
     {

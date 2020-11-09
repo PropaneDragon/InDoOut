@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using InDoOut_Executable_Core.Messaging;
+using System.Threading;
 using System.Windows;
 
 namespace InDoOut_UI_Common.Windows
@@ -9,8 +10,8 @@ namespace InDoOut_UI_Common.Windows
 
         private bool _canClose = false;
 
-        public string Caption { get => Text_Title.Text; set => Text_Title.Text = value; }
-        public string Message { get => Text_Description.Text; set => SetMessageText(value); }
+        public string Caption { get => Header_Main.Title; set => Header_Main.Title = value; }
+        public string Message { get => Header_Main.Subtitle; set => Header_Main.Subtitle = value; }
 
         private TaskProgressWindow()
         {
@@ -41,27 +42,28 @@ namespace InDoOut_UI_Common.Windows
             Close();
         }
 
-        private void SetMessageText(string text)
+        private void TryCancel()
         {
-            Text_Description.Text = text;
-            Text_Description.Visibility = string.IsNullOrEmpty(text) ? Visibility.Collapsed : Visibility.Visible;
-        }
-
-        private void CancelAndClose()
-        {
-            if ((!_cancellationTokenSource?.IsCancellationRequested) ?? false)
+            if (_cancellationTokenSource != null)
             {
-                Message = "Cancelling...";
+                if (!_cancellationTokenSource.IsCancellationRequested)
+                {
+                    Message = "Cancelling...";
 
-                _cancellationTokenSource.Cancel();
+                    _cancellationTokenSource?.Cancel();
+                }
+                else
+                {
+                    UserMessageSystemHolder.Instance.CurrentUserMessageSystem.ShowError("Can't cancel", "A cancellation request is currently ongoing.");
+                }
             }
-
-            _canClose = true;
-
-            Close();
+            else
+            {
+                UserMessageSystemHolder.Instance.CurrentUserMessageSystem.ShowError("Can't cancel", "This task doesn't appear to be able to be cancelled.");
+            }
         }
 
-        private void Button_Cancel_Click(object sender, RoutedEventArgs e) => CancelAndClose();
+        private void Button_Cancel_Click(object sender, RoutedEventArgs e) => TryCancel();
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -69,7 +71,7 @@ namespace InDoOut_UI_Common.Windows
 
             if (!_canClose)
             {
-                CancelAndClose();
+                TryCancel();
             }
         }
     }

@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InDoOut_Desktop.UI.Windows"
-        xmlns:core="clr-namespace:InDoOut_UI_Common.Controls.Core;assembly=InDoOutUICommon"
+        xmlns:common="clr-namespace:InDoOut_UI_Common.Controls.Common;assembly=InDoOutUICommon"
         xmlns:blockview="clr-namespace:InDoOut_Desktop.UI.Controls.BlockView"
         xmlns:background="clr-namespace:InDoOut_UI_Common.Controls.Background;assembly=InDoOutUICommon"
         mc:Ignorable="d"
@@ -14,6 +14,6 @@
             <background:BackgroundImage Opacity="0.01"/>
         </Grid>
         <blockview:BlockView x:Name="BlockView_Main" />
-        <core:TitleBar x:Name="TitleBar_Main" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
+        <common:TitleBar x:Name="TitleBar_Main" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
     </Grid>
 </Window>

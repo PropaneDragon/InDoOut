@@ -25,12 +25,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="Controls\Core\TitleBar.xaml">
+    <Page Update="Controls\Common\TitleBar.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Style\TitleBarStyle.xaml">
       <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controls\Core\" />
   </ItemGroup>
 
 </Project>

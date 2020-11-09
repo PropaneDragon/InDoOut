@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InDoOut_UI_Common.Windows"
-        xmlns:core="clr-namespace:InDoOut_UI_Common.Controls.Core"
+        xmlns:common="clr-namespace:InDoOut_UI_Common.Controls.Common"
         xmlns:background="clr-namespace:InDoOut_UI_Common.Controls.Background"
         mc:Ignorable="d"
         Title="Select a program" Height="600" Width="900" WindowState="Normal" MinWidth="450" MinHeight="500" WindowStartupLocation="CenterOwner" ShowActivated="True" Loaded="Window_Loaded">
@@ -29,10 +29,7 @@
                     <DockPanel>
                         <DockPanel DockPanel.Dock="Top">
                             <Button x:Name="Button_Refresh" DockPanel.Dock="Right" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Content="" VerticalAlignment="Center" HorizontalAlignment="Center" Click="Button_Refresh_Click" />
-                            <StackPanel DockPanel.Dock="Left" >
-                                <TextBlock FontSize="{StaticResource Size.Double.Font.Title.Primary}" Foreground="{StaticResource Brush.Text.Header.Foreground}" Padding="0,0,12,0" Text="Select a program" TextWrapping="WrapWithOverflow" TextTrimming="CharacterEllipsis" />
-                                <TextBlock FontSize="{StaticResource Size.Double.Font.Common}" Padding="0,0,12,0" Text="Select a program from the list below to connect to." TextWrapping="WrapWithOverflow" TextTrimming="CharacterEllipsis" />
-                            </StackPanel>
+                            <common:Header DockPanel.Dock="Left" Title="Select a program" Subtitle="Select a program from the list below to connect to" />
                         </DockPanel>
                         <ListView x:Name="List_Programs" DockPanel.Dock="Top" Margin="0,8" SelectionChanged="List_Programs_SelectionChanged">
                             <ListView.ItemTemplate>
@@ -47,6 +44,6 @@
                 </Grid>                
             </DockPanel>
         </Grid>
-        <core:TitleBar x:Name="TitleBar_Main" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
+        <common:TitleBar x:Name="TitleBar_Main" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
     </Grid>
 </Window>

@@ -13,8 +13,8 @@ namespace InDoOut_UI_Common.Windows
 
         private readonly Dictionary<Button, MessageBoxResult> _buttonAssociations = null;
 
-        public string Message { get => Text_Description.Text; set => Text_Description.Text = value; }
-        public string Caption { get => Text_Title.Text; set => Text_Title.Text = value; }
+        public string Message { get => Header_Main.Subtitle; set => Header_Main.Subtitle = value; }
+        public string Caption { get => Header_Main.Title; set => Header_Main.Title = value; }
         public string Details { get => Text_Details.Text; set => SetDetails(value); }
 
         public MessageBoxButton Buttons { get => _buttons; set => SetMessageBoxButtons(value); }

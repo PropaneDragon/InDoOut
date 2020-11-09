@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="InDoOut_UI_Common.Windows"
-        xmlns:core="clr-namespace:InDoOut_UI_Common.Controls.Core"
+        xmlns:common="clr-namespace:InDoOut_UI_Common.Controls.Common"
         xmlns:background="clr-namespace:InDoOut_UI_Common.Controls.Background"
         mc:Ignorable="d"
         Title="Settings" Height="1080" Width="450" WindowState="Normal" Background="#111" MinWidth="450" MinHeight="500" WindowStartupLocation="CenterOwner" ShowActivated="True">
@@ -32,6 +32,6 @@
                 </ScrollViewer>
             </DockPanel>
         </Grid>
-        <core:TitleBar x:Name="TitleBar_Main" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
+        <common:TitleBar x:Name="TitleBar_Main" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
     </Grid>
 </Window>

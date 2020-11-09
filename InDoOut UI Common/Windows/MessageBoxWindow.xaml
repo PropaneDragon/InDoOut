@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InDoOut_UI_Common.Windows"
-        xmlns:core="clr-namespace:InDoOut_UI_Common.Controls.Core"
+        xmlns:common="clr-namespace:InDoOut_UI_Common.Controls.Common"
         xmlns:background="clr-namespace:InDoOut_UI_Common.Controls.Background"
         mc:Ignorable="d"
         Title="" Width="600" WindowState="Normal" MinWidth="450" MinHeight="100" WindowStartupLocation="CenterScreen" ShowActivated="True" SizeToContent="Height" Topmost="True" ResizeMode="NoResize" VerticalContentAlignment="Top" HorizontalContentAlignment="Center">
@@ -37,8 +37,7 @@
                             </Grid>
                         </Viewbox>
                         <StackPanel DockPanel.Dock="Right" VerticalAlignment="Center" Margin="0,0,24,0" >
-                            <TextBlock x:Name="Text_Title" FontSize="{StaticResource Size.Double.Font.Title.Primary}" Foreground="{StaticResource Brush.Text.Header.Foreground}" Padding="0,0,12,0" Text="Title" TextWrapping="WrapWithOverflow" TextTrimming="CharacterEllipsis" />
-                            <TextBlock x:Name="Text_Description" FontSize="{StaticResource Size.Double.Font.Common}" Padding="0,0,12,0" Text="This is the description." TextWrapping="WrapWithOverflow" TextTrimming="CharacterEllipsis" />
+                            <common:Header x:Name="Header_Main" Title="Title" Subtitle="This is the description." />
                             <ScrollViewer x:Name="Scroll_Details" Margin="0,20,0,0" MinHeight="150" MaxHeight="300">
                                 <TextBlock x:Name="Text_Details" FontSize="{StaticResource Size.Double.Font.Common.Secondary}" Text="This is the detailed text." Padding="6" TextWrapping="Wrap" />
                             </ScrollViewer>
@@ -47,6 +46,6 @@
                 </Grid>
             </DockPanel>
         </Grid>
-        <core:TitleBar x:Name="TitleBar_Main" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
+        <common:TitleBar x:Name="TitleBar_Main" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
     </Grid>
 </Window>
