@@ -55,6 +55,7 @@ namespace InDoOut_Networking_Tests
 
             var program = programHolder.NewProgram();
             program.SetName("First test program");
+            var firstId = program.Id.ToString();
 
             Assert.AreEqual(1, programHolder.Programs.Count);
 
@@ -65,7 +66,7 @@ namespace InDoOut_Networking_Tests
             Assert.AreEqual("some ID", client.LastMessageReceived.Id);
             Assert.AreEqual("RequestPrograms", client.LastMessageReceived.Name);
             Assert.AreEqual(1, client.LastMessageReceived.Data.Length);
-            Assert.AreEqual("First test program", client.LastMessageReceived.Data[0]);
+            Assert.AreEqual(firstId, client.LastMessageReceived.Data[0]);
 
             client.LastMessageReceived = null;
 
@@ -76,7 +77,7 @@ namespace InDoOut_Networking_Tests
             Assert.AreEqual("some ID", client.LastMessageReceived.Id);
             Assert.AreEqual("RequestPrograms", client.LastMessageReceived.Name);
             Assert.AreEqual(1, client.LastMessageReceived.Data.Length);
-            Assert.AreEqual("First test program", client.LastMessageReceived.Data[0]);
+            Assert.AreEqual(firstId, client.LastMessageReceived.Data[0]);
 
             program = programHolder.NewProgram();
             program.SetName("Second test program");
@@ -90,8 +91,8 @@ namespace InDoOut_Networking_Tests
             Assert.AreEqual("some ID", client.LastMessageReceived.Id);
             Assert.AreEqual("RequestPrograms", client.LastMessageReceived.Name);
             Assert.AreEqual(2, client.LastMessageReceived.Data.Length);
-            Assert.AreEqual("First test program", client.LastMessageReceived.Data[0]);
-            Assert.AreEqual("Second test program", client.LastMessageReceived.Data[1]);
+            Assert.AreEqual(firstId, client.LastMessageReceived.Data[0]);
+            Assert.AreEqual(program.Id.ToString(), client.LastMessageReceived.Data[1]);
 
             Assert.IsTrue(await server.Stop());
         }

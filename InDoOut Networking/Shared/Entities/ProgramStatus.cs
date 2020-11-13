@@ -9,11 +9,14 @@ namespace InDoOut_Networking.Shared.Entities
     [JsonObject("programStatus")]
     public class ProgramStatus
     {
-        [JsonProperty("id")]
-        public Guid Id { get; set; } = Guid.Empty;
-
         [JsonProperty("running")]
         public bool Running { get; set; } = false;
+
+        [JsonProperty("name")]
+        public string Name { get; set; } = null;
+
+        [JsonProperty("id")]
+        public Guid Id { get; set; } = Guid.Empty;
 
         [JsonProperty("activeFunctions")]
         public Guid[] ActiveFunctions { get; set; } = null;
@@ -37,6 +40,7 @@ namespace InDoOut_Networking.Shared.Entities
             return new ProgramStatus()
             {
                 Id = program.Id,
+                Name = program.Name,
                 Running = program.Running,
                 ActiveFunctions = program.Functions.Where(function => function.Running || function.HasBeenTriggeredWithin(activeTimeInterval)).Select(function => function.Id).ToArray()
             };

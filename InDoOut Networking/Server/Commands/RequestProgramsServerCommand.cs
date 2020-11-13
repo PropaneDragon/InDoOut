@@ -22,7 +22,7 @@ namespace InDoOut_Networking.Server.Commands
 
             if (ProgramHolder != null)
             {
-                var programs = ProgramHolder?.Programs?.Select(program => program?.Name ?? "").ToArray();
+                var programs = ProgramHolder?.Programs?.Select(program => program?.Id.ToString() ?? "").ToArray();
                 if (programs != null)
                 {
                     return message.CreateResponseMessage(programs);

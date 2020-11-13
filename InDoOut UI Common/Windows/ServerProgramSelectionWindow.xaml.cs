@@ -2,6 +2,8 @@
 using InDoOut_Networking.Client;
 using InDoOut_Networking.Client.Commands;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -43,19 +45,24 @@ namespace InDoOut_UI_Common.Windows
             if (Client != null)
             {
                 var cancellationToken = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-                var command = new RequestProgramsClientCommand(Client);
+                var requestProgramsCommand = new RequestProgramsClientCommand(Client);
+                var programStatusCommand = new GetProgramStatusClientCommand(Client);
                 var progressWindow = new TaskProgressWindow("Loading programs", "The programs are being loaded from the server. Please wait...", cancellationToken) { Owner = this };
 
                 progressWindow.TaskStarted();
 
                 try
                 {
-                    var availablePrograms = await command.RequestAvailableProgramsAsync(cancellationToken.Token);
-                    if (availablePrograms != null)
+                    var availableProgramGuids = (await requestProgramsCommand.RequestAvailableProgramsAsync(cancellationToken.Token))?.Select(programId => Guid.TryParse(programId, out var programGuid) ? programGuid : Guid.Empty);
+                    if (availableProgramGuids != null)
                     {
-                        if (availablePrograms.Count > 0)
+                        if (availableProgramGuids.Count() > 0)
                         {
-                            List_Programs.ItemsSource = availablePrograms;
+                            var tasks = availableProgramGuids.Select(async programGuid => await programStatusCommand.GetProgramStatusAsync(programGuid, new CancellationTokenSource(TimeSpan.FromSeconds(5)).Token));
+                            var programStatuses = await Task.WhenAll(tasks);
+                            var programNames = programStatuses.Select(programStatus => programStatus?.Name).Where(programName => !string.IsNullOrEmpty(programName));
+
+                            List_Programs.ItemsSource = programNames;
                         }
                         else
                         {

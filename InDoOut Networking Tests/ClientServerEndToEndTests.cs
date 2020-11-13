@@ -39,6 +39,7 @@ namespace InDoOut_Networking_Tests
 
             var program = programHolder.NewProgram();
             program.SetName("First test program");
+            var firstId = program.Id.ToString();
 
             Assert.AreEqual(1, programHolder.Programs.Count);
 
@@ -46,7 +47,7 @@ namespace InDoOut_Networking_Tests
 
             Assert.IsNotNull(programs);
             Assert.AreEqual(1, programs.Count);
-            Assert.AreEqual("First test program", programs[0]);
+            Assert.AreEqual(firstId, programs[0]);
 
             program = programHolder.NewProgram();
             program.SetName("Another test program");
@@ -57,8 +58,8 @@ namespace InDoOut_Networking_Tests
 
             Assert.IsNotNull(programs);
             Assert.AreEqual(2, programs.Count);
-            Assert.AreEqual("First test program", programs[0]);
-            Assert.AreEqual("Another test program", programs[1]);
+            Assert.AreEqual(firstId, programs[0]);
+            Assert.AreEqual(program.Id.ToString(), programs[1]);
 
             Assert.IsTrue(await server.Stop());
         }
@@ -269,40 +270,59 @@ namespace InDoOut_Networking_Tests
 
             Assert.AreEqual(0, programHolder.Programs.Count);
 
-            var program = programHolder.NewProgram();
+            var program1 = programHolder.NewProgram();
             var functionToRun1 = new InDoOut_Core_Tests.TestFunction(() => Thread.Sleep(TimeSpan.FromSeconds(1)));
             var functionToRun2 = new InDoOut_Core_Tests.TestFunction(() => Thread.Sleep(TimeSpan.FromSeconds(1)));
 
-            Assert.IsTrue(program.AddFunction(functionToRun1));
-            Assert.IsTrue(program.AddFunction(functionToRun2));
+            var program2 = programHolder.NewProgram();
+            var functionToRun3 = new InDoOut_Core_Tests.TestFunction(() => Thread.Sleep(TimeSpan.FromSeconds(1)));
 
-            var programStatus = await programStatusClient.GetProgramStatusAsync(program.Id, new CancellationTokenSource(TimeSpan.FromSeconds(2)).Token);
+            program1.SetName("Test program");
+            program2.SetName("The other test program");
+
+            Assert.IsTrue(program1.AddFunction(functionToRun1));
+            Assert.IsTrue(program1.AddFunction(functionToRun2));
+
+            Assert.IsTrue(program2.AddFunction(functionToRun3));
+
+            var programStatus = await programStatusClient.GetProgramStatusAsync(program1.Id, new CancellationTokenSource(TimeSpan.FromSeconds(2)).Token);
 
             Assert.IsNotNull(programStatus);
-            Assert.AreEqual(program.Id, programStatus.Id);
+            Assert.AreEqual(program1.Id, programStatus.Id);
+            Assert.AreEqual("Test program", programStatus.Name);
             Assert.AreEqual(0, programStatus.ActiveFunctions.Count());
             Assert.IsFalse(programStatus.Running);
 
             functionToRun1.Trigger(null);
 
-            programStatus = await programStatusClient.GetProgramStatusAsync(program.Id, new CancellationTokenSource(TimeSpan.FromSeconds(2)).Token);
+            programStatus = await programStatusClient.GetProgramStatusAsync(program1.Id, new CancellationTokenSource(TimeSpan.FromSeconds(2)).Token);
 
             Assert.IsNotNull(programStatus);
-            Assert.AreEqual(program.Id, programStatus.Id);
+            Assert.AreEqual(program1.Id, programStatus.Id);
+            Assert.AreEqual("Test program", programStatus.Name);
             Assert.AreEqual(1, programStatus.ActiveFunctions.Count());
             Assert.AreEqual(functionToRun1.Id, programStatus.ActiveFunctions[0]);
             Assert.IsTrue(programStatus.Running);
 
             functionToRun2.Trigger(null);
 
-            programStatus = await programStatusClient.GetProgramStatusAsync(program.Id, new CancellationTokenSource(TimeSpan.FromSeconds(2)).Token);
+            programStatus = await programStatusClient.GetProgramStatusAsync(program1.Id, new CancellationTokenSource(TimeSpan.FromSeconds(2)).Token);
 
             Assert.IsNotNull(programStatus);
-            Assert.AreEqual(program.Id, programStatus.Id);
+            Assert.AreEqual(program1.Id, programStatus.Id);
+            Assert.AreEqual("Test program", programStatus.Name);
             Assert.AreEqual(2, programStatus.ActiveFunctions.Count());
             Assert.AreEqual(functionToRun1.Id, programStatus.ActiveFunctions[0]);
             Assert.AreEqual(functionToRun2.Id, programStatus.ActiveFunctions[1]);
             Assert.IsTrue(programStatus.Running);
+
+            programStatus = await programStatusClient.GetProgramStatusAsync(program2.Id, new CancellationTokenSource(TimeSpan.FromSeconds(2)).Token);
+
+            Assert.IsNotNull(programStatus);
+            Assert.AreEqual(program2.Id, programStatus.Id);
+            Assert.AreEqual("The other test program", programStatus.Name);
+            Assert.AreEqual(0, programStatus.ActiveFunctions.Count());
+            Assert.IsFalse(programStatus.Running);
 
             programStatus = await programStatusClient.GetProgramStatusAsync(Guid.NewGuid(), new CancellationTokenSource(TimeSpan.FromSeconds(2)).Token);
 

@@ -30,7 +30,8 @@ namespace InDoOut_Server.ServerNetworking
             {
                 AddCommandListener(new RequestProgramsServerCommand(_server, _programHolder)),
                 AddCommandListener(new UploadProgramServerCommand(_server, _programHolder, LoadedPlugins.Instance, new FunctionBuilder())),
-                AddCommandListener(new DownloadProgramServerCommand(_server, _programHolder, LoadedPlugins.Instance, new FunctionBuilder()))
+                AddCommandListener(new DownloadProgramServerCommand(_server, _programHolder, LoadedPlugins.Instance, new FunctionBuilder())),
+                AddCommandListener(new GetProgramStatusServerCommand(_server, _programHolder))
             };
 
             var totalCommands = results.Count;
@@ -51,14 +52,13 @@ namespace InDoOut_Server.ServerNetworking
             ConsoleFormatter.DrawInfoMessageLine(ConsoleFormatter.Positive, "Manager started");
 
 #if DEBUG
+
             var program = _programHolder.NewProgram();
-            program.SetName("Test");
+            program.SetName("Test program 1");
 
             program = _programHolder.NewProgram();
-            program.SetName("This is another program");
+            program.SetName("This is another program that is also a test!");
 
-            program = _programHolder.NewProgram();
-            program.SetName("This is a program with a really super actually really really REALLY long name which should test the width of interface elements to make sure they don't do anything stupid");
 #endif
         }
 
