@@ -138,5 +138,20 @@ namespace InDoOut_Viewer.UI.Controls.Sidebar
                 senderButton.IsEnabled = true;
             }
         }
+
+        private void Button_RunningPrograms_Click(object sender, RoutedEventArgs e)
+        {
+            if (AssociatedTaskView?.CurrentProgramDisplay != null)
+            {
+                var networkConnectWindow = new NetworkConnectWindow() { Owner = Window.GetWindow(this) };
+
+                var client = networkConnectWindow.GetClient();
+                if (client != null)
+                {
+                    var runningProgramsWindow = new ServerRunningProgramsWindow(client) { Owner = Window.GetWindow(this) };
+                    _ = runningProgramsWindow.ShowDialog();
+                }
+            }
+        }
     }
 }

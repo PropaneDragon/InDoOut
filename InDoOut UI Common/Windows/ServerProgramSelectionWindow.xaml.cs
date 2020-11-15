@@ -2,11 +2,11 @@
 using InDoOut_Networking.Client;
 using InDoOut_Networking.Client.Commands;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Threading;
 
 namespace InDoOut_UI_Common.Windows
@@ -53,7 +53,7 @@ namespace InDoOut_UI_Common.Windows
 
                 try
                 {
-                    var availableProgramGuids = (await requestProgramsCommand.RequestAvailableProgramsAsync(cancellationToken.Token))?.Select(programId => Guid.TryParse(programId, out var programGuid) ? programGuid : Guid.Empty);
+                    var availableProgramGuids = await requestProgramsCommand.RequestAvailableProgramsAsync(cancellationToken.Token);
                     if (availableProgramGuids != null)
                     {
                         if (availableProgramGuids.Count() > 0)
@@ -102,7 +102,17 @@ namespace InDoOut_UI_Common.Windows
             Button_Select.IsEnabled = !_populatingPrograms && List_Programs.SelectedItem is string programName && !string.IsNullOrEmpty(programName);
         }
 
-        private async void Button_Refresh_Click(object sender, RoutedEventArgs e) => _ = await PopulatePrograms();
+        private async void Button_Refresh_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button senderButton)
+            {
+                senderButton.IsEnabled = false;
+
+                _ = await PopulatePrograms();
+
+                senderButton.IsEnabled = true;
+            }
+        }
 
         private void List_Programs_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e) => UpdateCommonButtonVisibility();
 

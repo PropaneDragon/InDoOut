@@ -57,14 +57,14 @@ namespace InDoOut_Networking_Tests
 
             Assert.IsNotNull(lastServerMessage);
             Assert.IsNotNull(Guid.Parse(lastServerMessage.Id));
-            Assert.IsTrue(await server.SendMessageAll($"{lastServerMessage.Id}{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}RequestPrograms{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}Program 1{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}Program 2{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}Another program{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}Last program"));
+            Assert.IsTrue(await server.SendMessageAll($"{lastServerMessage.Id}{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}RequestPrograms{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}{{11111111-2222-3333-4444-555555555555}}{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}{{22222222-2222-3333-4444-555555555555}}{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}{{55555555-2222-3333-6666-888888888888}}{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}Last program"));
 
             Assert.IsNotNull(requestTask.Result);
             Assert.AreEqual(4, requestTask.Result.Count);
-            Assert.AreEqual("Program 1", requestTask.Result[0]);
-            Assert.AreEqual("Program 2", requestTask.Result[1]);
-            Assert.AreEqual("Another program", requestTask.Result[2]);
-            Assert.AreEqual("Last program", requestTask.Result[3]);
+            Assert.AreEqual(Guid.Parse("{11111111-2222-3333-4444-555555555555}"), requestTask.Result[0]);
+            Assert.AreEqual(Guid.Parse("{22222222-2222-3333-4444-555555555555}"), requestTask.Result[1]);
+            Assert.AreEqual(Guid.Parse("{55555555-2222-3333-6666-888888888888}"), requestTask.Result[2]);
+            Assert.AreEqual(Guid.Empty, requestTask.Result[3]);
 
             requestTask = programRequestCommand.RequestAvailableProgramsAsync(new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token);
 
@@ -75,11 +75,11 @@ namespace InDoOut_Networking_Tests
 
             Assert.IsNotNull(lastServerMessage);
             Assert.IsNotNull(Guid.Parse(lastServerMessage.Id));
-            Assert.IsTrue(await server.SendMessageAll($"{lastServerMessage.Id}{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}RequestPrograms{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}Only one program"));
+            Assert.IsTrue(await server.SendMessageAll($"{lastServerMessage.Id}{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}RequestPrograms{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}{{22222222-2222-3333-4444-555555555555}}"));
 
             Assert.IsNotNull(requestTask.Result);
             Assert.AreEqual(1, requestTask.Result.Count);
-            Assert.AreEqual("Only one program", requestTask.Result[0]);
+            Assert.AreEqual(Guid.Parse("{22222222-2222-3333-4444-555555555555}"), requestTask.Result[0]);
 
             requestTask = programRequestCommand.RequestAvailableProgramsAsync(new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token);
 
@@ -104,12 +104,12 @@ namespace InDoOut_Networking_Tests
 
             Assert.IsNotNull(lastServerMessage);
             Assert.IsNotNull(Guid.Parse(lastServerMessage.Id));
-            Assert.IsTrue(await server.SendMessageAll($"{lastServerMessage.Id}{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}RequestPrograms{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}this is a program{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}this is another program"));
+            Assert.IsTrue(await server.SendMessageAll($"{lastServerMessage.Id}{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}RequestPrograms{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}{{22222222-2222-3333-4444-555555555555}}{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}{{55555555-2222-3333-6666-888888888888}}"));
 
             Assert.IsNotNull(requestTask.Result);
             Assert.AreEqual(2, requestTask.Result.Count);
-            Assert.AreEqual("this is a program", requestTask.Result[0]);
-            Assert.AreEqual("this is another program", requestTask.Result[1]);
+            Assert.AreEqual(Guid.Parse("{22222222-2222-3333-4444-555555555555}"), requestTask.Result[0]);
+            Assert.AreEqual(Guid.Parse("{55555555-2222-3333-6666-888888888888}"), requestTask.Result[1]);
 
             Assert.IsTrue(await server.Stop());
         }

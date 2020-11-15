@@ -10,9 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controls\Core\**" />
     <Compile Remove="Properties\**" />
+    <EmbeddedResource Remove="Controls\Core\**" />
     <EmbeddedResource Remove="Properties\**" />
+    <None Remove="Controls\Core\**" />
     <None Remove="Properties\**" />
+    <Page Remove="Controls\Core\**" />
     <Page Remove="Properties\**" />
   </ItemGroup>
 
@@ -31,10 +35,6 @@
     <Page Update="Style\TitleBarStyle.xaml">
       <SubType>Designer</SubType>
     </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controls\Core\" />
   </ItemGroup>
 
 </Project>

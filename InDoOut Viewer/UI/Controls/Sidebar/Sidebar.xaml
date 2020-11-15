@@ -30,6 +30,7 @@
                 <Button x:Name="Button_Upload" VerticalAlignment="Top" HorizontalAlignment="Center" Content="" ToolTip="Upload program" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Padding="1,1,1,1" Margin="0,8,0,0" Click="Button_Upload_Click" />
             </StackPanel>
             <StackPanel DockPanel.Dock="Bottom" VerticalAlignment="Bottom" Margin="0,0,0,20">
+                <Button x:Name="Button_RunningPrograms" VerticalAlignment="Top" HorizontalAlignment="Center" Content="" ToolTip="Running programs" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Click="Button_RunningPrograms_Click"  Margin="0,8,0,0" Padding="1" />
                 <Button x:Name="Button_Settings" VerticalAlignment="Top" HorizontalAlignment="Center" Content="" ToolTip="Settings" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Click="Button_Settings_Click" Margin="0,8,0,0" Padding="1" />
             </StackPanel>
         </DockPanel>

@@ -39,7 +39,7 @@ namespace InDoOut_Networking_Tests
 
             var program = programHolder.NewProgram();
             program.SetName("First test program");
-            var firstId = program.Id.ToString();
+            var firstId = program.Id;
 
             Assert.AreEqual(1, programHolder.Programs.Count);
 
@@ -59,7 +59,7 @@ namespace InDoOut_Networking_Tests
             Assert.IsNotNull(programs);
             Assert.AreEqual(2, programs.Count);
             Assert.AreEqual(firstId, programs[0]);
-            Assert.AreEqual(program.Id.ToString(), programs[1]);
+            Assert.AreEqual(program.Id, programs[1]);
 
             Assert.IsTrue(await server.Stop());
         }

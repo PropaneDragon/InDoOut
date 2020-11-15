@@ -1,0 +1,51 @@
+﻿<Window x:Class="InDoOut_UI_Common.Windows.ServerRunningProgramsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:InDoOut_UI_Common.Windows"
+        xmlns:common="clr-namespace:InDoOut_UI_Common.Controls.Common"
+        xmlns:background="clr-namespace:InDoOut_UI_Common.Controls.Background"
+        mc:Ignorable="d"
+        Title="Running programs" Height="600" Width="900" WindowState="Normal" MinWidth="450" MinHeight="500" WindowStartupLocation="CenterOwner" ShowActivated="True" Loaded="Window_Loaded">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/InDoOutUICommon;component/Style/CommonStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <Grid>
+            <background:BackgroundImage Opacity="0.01"/>
+            <DockPanel>
+                <Border DockPanel.Dock="Bottom" Padding="10">
+                    <DockPanel LastChildFill="False" x:Name="Dock_Buttons">
+                        <Button x:Name="Button_Close" DockPanel.Dock="Right" Content="Close" Margin="12,0,0,0" IsDefault="True"/>
+                    </DockPanel>
+                </Border>
+                <Grid Margin="24,60,24,0">
+                    <DockPanel>
+                        <DockPanel DockPanel.Dock="Top">
+                            <Button x:Name="Button_Refresh" DockPanel.Dock="Right" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Content="" Width="78" Click="Button_Refresh_Click" />
+                            <StackPanel DockPanel.Dock="Left" >
+                                <TextBlock FontSize="{StaticResource Size.Double.Font.Title.Primary}" Foreground="{StaticResource Brush.Text.Header.Foreground}" Padding="0,0,12,0" Text="Running programs" TextWrapping="WrapWithOverflow" TextTrimming="CharacterEllipsis" />
+                            </StackPanel>
+                        </DockPanel>
+                        <ListView x:Name="List_Programs" DockPanel.Dock="Top" Margin="0,8" HorizontalContentAlignment="Stretch">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <DockPanel>
+                                        <TextBlock DockPanel.Dock="Right" Foreground="{StaticResource Brush.Text.Main.Secondary.Foreground}" FontSize="{StaticResource Size.Double.Font.Common}" Text="{Binding Running}" />
+                                        <TextBlock DockPanel.Dock="Left" Foreground="{StaticResource Brush.Text.Main.Secondary.Foreground}" FontSize="{StaticResource Size.Double.Font.Common}" Text="{Binding Name}" />
+                                    </DockPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </DockPanel>
+                </Grid>
+            </DockPanel>
+        </Grid>
+        <common:TitleBar x:Name="TitleBar_Main" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
+    </Grid>
+</Window>

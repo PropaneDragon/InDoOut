@@ -1,4 +1,5 @@
 ﻿using InDoOut_Executable_Core.Networking.Commands;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -12,11 +13,11 @@ namespace InDoOut_Networking.Client.Commands
         {
         }
 
-        public async Task<List<string>> RequestAvailableProgramsAsync(CancellationToken cancellationToken)
+        public async Task<List<Guid>> RequestAvailableProgramsAsync(CancellationToken cancellationToken)
         {
             var response = await SendMessageAwaitResponse(cancellationToken);
 
-            return response != null ? response.Data?.Where(item => !string.IsNullOrWhiteSpace(item))?.ToList() ?? new List<string>() : null;
+            return response != null ? response.Data?.Where(id => !string.IsNullOrWhiteSpace(id))?.Select(idString => Guid.TryParse(idString, out var id) ? id : Guid.Empty).ToList() ?? new List<Guid>() : null;
         }
     }
 }
