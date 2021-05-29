@@ -1,4 +1,5 @@
 ﻿using InDoOut_Console_Common.ConsoleExtensions;
+using InDoOut_Console_Common.Messaging;
 using InDoOut_Core.Functions;
 using InDoOut_Executable_Core.Networking.Commands;
 using InDoOut_Executable_Core.Programs;
@@ -6,6 +7,7 @@ using InDoOut_Networking.Server;
 using InDoOut_Networking.Server.Commands;
 using InDoOut_Networking.Server.Events;
 using InDoOut_Plugins.Loaders;
+using InDoOut_Server.ServerLogging;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -16,12 +18,15 @@ namespace InDoOut_Server.ServerNetworking
     {
         private readonly ProgramHolder _programHolder = new ProgramHolder();
         private readonly Server _server = null;
+        private readonly ConsoleLog _log = new ConsoleLog();
+        private readonly ConsoleLogger _logger = null;
 
         public ConsoleServerManager(int port = 0)
         {
             ConsoleFormatter.DrawInfoMessageLine("Starting up the manager...");
 
-            _server = new Server(port);
+            _server = new Server(_log, port);
+            _logger = new ConsoleLogger(_log);
 
             ExtendedConsole.WriteLine();
             ConsoleFormatter.DrawInfoMessageLine("Registering server commands...");
@@ -43,6 +48,17 @@ namespace InDoOut_Server.ServerNetworking
             if (unsuccessfulCommands > 0)
             {
                 ConsoleFormatter.DrawErrorMessageLine(ConsoleFormatter.AccentTertiary, unsuccessfulCommands, ConsoleFormatter.Negative, $" command{(unsuccessfulCommands != 1 ? "s" : "")} failed to register. Some functionality may not work!");
+            }
+
+            ConsoleFormatter.DrawInfoMessage("Starting console logger... ");
+
+            if (_logger.StartListening())
+            {
+                ExtendedConsole.WriteLine(ConsoleFormatter.Positive, "Success.");
+            }
+            else
+            {
+                ExtendedConsole.WriteLine(ConsoleFormatter.Negative, "Failed!");
             }
 
             ExtendedConsole.WriteLine();

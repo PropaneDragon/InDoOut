@@ -1,4 +1,5 @@
 ﻿using InDoOut_Core.Logging;
+using InDoOut_Executable_Core.Messaging;
 using InDoOut_Executable_Core.Networking;
 using InDoOut_Networking.Server.Events;
 using System;
@@ -24,6 +25,7 @@ namespace InDoOut_Networking.Server
 
         public bool Started => _listener?.Server?.IsBound ?? false;
         public int Port => (_listener?.LocalEndpoint as IPEndPoint)?.Port ?? 0;
+        public ILog DisplayLog { get; private set; } = new NullLog();
         public IReadOnlyCollection<TcpClient> Clients { get { lock (_clientsLock) { return _clients.ToList().AsReadOnly(); } } }
         public TimeSpan ClientPollInterval { get; set; } = TimeSpan.FromSeconds(5);
         public IPAddress IPAddress => (_listener?.LocalEndpoint as IPEndPoint)?.Address;
@@ -46,6 +48,11 @@ namespace InDoOut_Networking.Server
             _listener.Server.NoDelay = true;
 
             Log.Instance.Header("Created server. IP: ", IPAddress, ", port: ", Port);
+        }
+
+        public Server(ILog log, int port = 0) : this(port)
+        {
+            DisplayLog = log;
         }
 
         public async Task<bool> Start()
@@ -143,9 +150,15 @@ namespace InDoOut_Networking.Server
             {
                 command.Context = client;
 
+                var address = client?.Client?.RemoteEndPoint as IPEndPoint;
+
+                DisplayLog.Info(address?.Address, ": Received command - ", command?.Name);
+
                 var response = await ProcessMessage(command, CancellationToken.None);
                 if (response?.Valid ?? false)
                 {
+                    DisplayLog.Info(address?.Address, ": Sending response - ", response.Name);
+                    
                     _ = await SendMessage(response, CancellationToken.None);
                 }
             }

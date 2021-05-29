@@ -1,4 +1,5 @@
-﻿using InDoOut_Executable_Core.Networking;
+﻿using InDoOut_Core.Logging;
+using InDoOut_Executable_Core.Networking;
 using InDoOut_Networking.Server.Events;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace InDoOut_Networking.Server
     {
         bool Started { get; }
         int Port { get; }
+        ILog DisplayLog { get; }
         IReadOnlyCollection<TcpClient> Clients { get; }
         TimeSpan ClientPollInterval { get; set; }
         IPAddress IPAddress { get; }

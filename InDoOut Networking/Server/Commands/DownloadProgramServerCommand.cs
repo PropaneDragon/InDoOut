@@ -36,9 +36,13 @@ namespace InDoOut_Networking.Server.Commands
                 var programToFind = message.Data[0];
                 if (!string.IsNullOrWhiteSpace(programToFind))
                 {
+                    NetworkEntity?.DisplayLog?.Info(CommandName, ": Finding program ", programToFind, "...");
+
                     var program = ProgramHolder?.Programs?.FirstOrDefault(program => program.Name == programToFind);
                     if (program != null)
                     {
+                        NetworkEntity?.DisplayLog?.Info(CommandName, ": Program found. Saving program to send...");
+
                         using var memoryStream = new MemoryStream();
                         var jsonStorer = new ProgramJsonStorer(FunctionBuilder, LoadedPlugins);
                         var failures = jsonStorer.Save(program, memoryStream);
@@ -55,29 +59,36 @@ namespace InDoOut_Networking.Server.Commands
                                 using var reader = new StreamReader(memoryStream);
                                 var programData = reader.ReadToEnd();
 
+                                NetworkEntity?.DisplayLog?.Info(CommandName, ": Program saved.");
+
                                 return message.CreateResponseMessage(programData);
                             }
                             catch
                             {
+                                NetworkEntity?.DisplayLog?.Error(CommandName, ": Couldn't write out program data.");
                                 return message.CreateFailureResponse("Couldn't write out program data.");
                             }
                         }
                         else
                         {
+                            NetworkEntity?.DisplayLog?.Error(CommandName, ": The program couldn't be written due to storage errors.");
                             return message.CreateFailureResponse("The program couldn't be written due to storage errors.");
                         }
                     }
                     else
                     {
+                        NetworkEntity?.DisplayLog?.Error(CommandName, ": The program with the name \"", programToFind, "\" doesn't exist on the server.");
                         return message.CreateFailureResponse($"The program with the name \"{programToFind}\" doesn't exist on the server.");
                     }
                 }
                 else
                 {
+                    NetworkEntity?.DisplayLog?.Error(CommandName, ": The program name requested was empty.");
                     return message.CreateFailureResponse($"The program name requested was empty.");
                 }
             }
-            
+
+            NetworkEntity?.DisplayLog?.Error(CommandName, ": The request appears to be invalid and can't be accepted by the server.");
             return message.CreateFailureResponse($"The request appears to be invalid and can't be accepted by the server.");
         }
     }

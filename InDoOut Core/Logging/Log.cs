@@ -7,7 +7,7 @@ namespace InDoOut_Core.Logging
     /// <summary>
     /// Handles logs between all elements of IDO. Thread safe and can be called from anywhere.
     /// </summary>
-    public class Log : Singleton<Log>
+    public class Log : Singleton<Log>, ILog
     {
         private readonly object _logLock = new object();
         private readonly List<LogMessage> _logs = new List<LogMessage>();
