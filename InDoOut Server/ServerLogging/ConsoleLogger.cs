@@ -28,6 +28,7 @@ namespace InDoOut_Server.ServerLogging
             _listenerTask = Task.Run(() =>
             {
                 var lastLogTime = DateTime.Now;
+                var firstLog = false;
 
                 while (!_cancellationToken.IsCancellationRequested && Log != null)
                 {
@@ -35,10 +36,17 @@ namespace InDoOut_Server.ServerLogging
 
                     foreach (var newLog in newLogs)
                     {
+                        if (newLog.Time.DayOfYear != lastLogTime.DayOfYear || !firstLog)
+                        {
+                            LogDate(newLog.Time);
+
+                            firstLog = true;
+                        }
+
+                        lastLogTime = newLog.Time;
+
                         DisplayLog(newLog);
                     }
-
-                    lastLogTime = DateTime.Now;
 
                     Thread.Sleep(TimeSpan.FromMilliseconds(500));
                 }
@@ -81,10 +89,12 @@ namespace InDoOut_Server.ServerLogging
 
                 if (log.Level != LogMessage.LogLevel.Header)
                 {
-                    ExtendedConsole.Write(ConsoleFormatter.AccentPrimary, log.Time.ToString("[dd/MM/yy HH:mm:ss.ff] "), ConsoleFormatter.Primary);
+                    ExtendedConsole.Write(ConsoleFormatter.AccentPrimary, log.Time.ToString("[HH:mm:ss.ff] "), ConsoleFormatter.Primary);
                     ExtendedConsole.WriteLine(log.Message);
                 }
             }
         }
+
+        private void LogDate(DateTime time) => ConsoleFormatter.DrawTitle(time.ToString("dd/MM/yyyy"));
     }
 }

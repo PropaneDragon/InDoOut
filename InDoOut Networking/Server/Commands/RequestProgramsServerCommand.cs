@@ -33,12 +33,10 @@ namespace InDoOut_Networking.Server.Commands
                 }
                 else
                 {
-                    NetworkEntity?.EntityLog?.Error(CommandName, ": There was a problem finding programs on the server.");
                     return message.CreateFailureResponse($"There was a problem finding programs on the server.");
                 }
             }
 
-            NetworkEntity?.EntityLog?.Error(CommandName, ": The request appears to be invalid and can't be accepted by the server.");
             return message.CreateFailureResponse($"The request appears to be invalid and can't be accepted by the server.");
         }
     }

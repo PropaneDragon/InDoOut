@@ -65,30 +65,25 @@ namespace InDoOut_Networking.Server.Commands
                             }
                             catch
                             {
-                                NetworkEntity?.EntityLog?.Error(CommandName, ": Couldn't write out program data.");
                                 return message.CreateFailureResponse("Couldn't write out program data.");
                             }
                         }
                         else
                         {
-                            NetworkEntity?.EntityLog?.Error(CommandName, ": The program couldn't be written due to storage errors.");
                             return message.CreateFailureResponse("The program couldn't be written due to storage errors.");
                         }
                     }
                     else
                     {
-                        NetworkEntity?.EntityLog?.Error(CommandName, ": The program with the name \"", programToFind, "\" doesn't exist on the server.");
                         return message.CreateFailureResponse($"The program with the name \"{programToFind}\" doesn't exist on the server.");
                     }
                 }
                 else
                 {
-                    NetworkEntity?.EntityLog?.Error(CommandName, ": The program name requested was empty.");
                     return message.CreateFailureResponse($"The program name requested was empty.");
                 }
             }
 
-            NetworkEntity?.EntityLog?.Error(CommandName, ": The request appears to be invalid and can't be accepted by the server.");
             return message.CreateFailureResponse($"The request appears to be invalid and can't be accepted by the server.");
         }
     }

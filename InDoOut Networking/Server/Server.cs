@@ -139,7 +139,12 @@ namespace InDoOut_Networking.Server
         public async Task<bool> SendMessage(TcpClient client, string message) => await SendSafe(() => SendUnsafe(client, message));
         public async Task<bool> Ping(TcpClient client) => await SendSafe(() => PingUnsafe(client));
 
-        public override async Task<bool> SendMessage(INetworkMessage command, CancellationToken cancellationToken) => command?.Context is TcpClient client && await SendMessage(client, command.ToString());
+        public override async Task<bool> SendMessage(INetworkMessage command, CancellationToken cancellationToken)
+        {
+            EntityLogMessage(command);
+
+            return command?.Context is TcpClient client && await SendMessage(client, command.ToString());
+        }
 
         protected async Task ClientMessageReceived(TcpClient client, string message)
         {
@@ -364,6 +369,18 @@ namespace InDoOut_Networking.Server
             }
 
             return false;
+        }
+
+        private void EntityLogMessage(INetworkMessage message)
+        {
+            if (message.IsFailureMessage)
+            {
+                EntityLog.Error(message.Name, ": Failed with error - ", message.FailureMessage);
+            }
+            else if (message.IsSuccessMessage)
+            {
+                EntityLog.Info(message.Name, ": Succeded with message - ", message.SuccessMessage);
+            }
         }
 
         private async Task<bool> PingUnsafe(TcpClient client) => await (GetStreamHandlerForClient(client)?.SendPing(client.GetStream()) ?? Task.FromResult(false));

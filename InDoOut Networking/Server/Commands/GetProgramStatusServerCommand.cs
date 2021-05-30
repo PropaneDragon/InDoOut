@@ -40,18 +40,15 @@ namespace InDoOut_Networking.Server.Commands
                     }
                     else
                     {
-                        NetworkEntity?.EntityLog?.Info(CommandName, ": Couldn't get program status.");
                         return message.CreateFailureResponse("Couldn't get program status.");
                     }
                 }
                 else
                 {
-                    NetworkEntity?.EntityLog?.Info(CommandName, ": The program couldn't be found.");
                     return message.CreateFailureResponse("The program couldn't be found.");
                 }
             }
 
-            NetworkEntity?.EntityLog?.Error(CommandName, ": The request appears to be invalid and can't be accepted by the server.");
             return message.CreateFailureResponse($"The request appears to be invalid and can't be accepted by the server.");
         }
     }
