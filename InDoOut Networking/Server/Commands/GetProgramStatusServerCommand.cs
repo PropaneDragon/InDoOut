@@ -24,18 +24,35 @@ namespace InDoOut_Networking.Server.Commands
 
             if ((message?.Data?.Length ?? 0) == 1 && Guid.TryParse(message.Data[0], out var programId))
             {
+                NetworkEntity?.EntityLog?.Info(CommandName, ": Finding program with ID - \"", programId, "\"...");
+
                 var matchedProgram = ProgramHolder?.Programs?.FirstOrDefault(program => program.Id == programId);
                 if (matchedProgram != null)
                 {
+                    NetworkEntity?.EntityLog?.Info(CommandName, ": Program found. Generating status...");
+
                     var status = ProgramStatus.FromProgram(matchedProgram)?.ToJson();
                     if (status != null)
                     {
+                        NetworkEntity?.EntityLog?.Info(CommandName, ": Sending status.");
+
                         return message.CreateResponseMessage(status);
                     }
+                    else
+                    {
+                        NetworkEntity?.EntityLog?.Info(CommandName, ": Couldn't get program status.");
+                        return message.CreateFailureResponse("Couldn't get program status.");
+                    }
+                }
+                else
+                {
+                    NetworkEntity?.EntityLog?.Info(CommandName, ": The program couldn't be found.");
+                    return message.CreateFailureResponse("The program couldn't be found.");
                 }
             }
 
-            return message.CreateFailureResponse("The program ID was an invalid format and couldn't be parsed.");
+            NetworkEntity?.EntityLog?.Error(CommandName, ": The request appears to be invalid and can't be accepted by the server.");
+            return message.CreateFailureResponse($"The request appears to be invalid and can't be accepted by the server.");
         }
     }
 }

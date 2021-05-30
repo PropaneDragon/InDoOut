@@ -22,14 +22,24 @@ namespace InDoOut_Networking.Server.Commands
 
             if (ProgramHolder != null)
             {
+                NetworkEntity?.EntityLog?.Info(CommandName, ": Finding all stored programs...");
+
                 var programs = ProgramHolder?.Programs?.Select(program => program?.Id.ToString() ?? "").ToArray();
                 if (programs != null)
                 {
+                    NetworkEntity?.EntityLog?.Info(CommandName, ": Found ", programs?.Count(), " programs.");
+
                     return message.CreateResponseMessage(programs);
+                }
+                else
+                {
+                    NetworkEntity?.EntityLog?.Error(CommandName, ": There was a problem finding programs on the server.");
+                    return message.CreateFailureResponse($"There was a problem finding programs on the server.");
                 }
             }
 
-            return null;
+            NetworkEntity?.EntityLog?.Error(CommandName, ": The request appears to be invalid and can't be accepted by the server.");
+            return message.CreateFailureResponse($"The request appears to be invalid and can't be accepted by the server.");
         }
     }
 }

@@ -81,7 +81,7 @@ namespace InDoOut_Server.ServerLogging
 
                 if (log.Level != LogMessage.LogLevel.Header)
                 {
-                    ExtendedConsole.Write(ConsoleFormatter.AccentPrimary, log.Time.ToString("dd/MM/yy HH:mm:ss.ff"), " ", ConsoleFormatter.Primary);
+                    ExtendedConsole.Write(ConsoleFormatter.AccentPrimary, log.Time.ToString("[dd/MM/yy HH:mm:ss.ff] "), ConsoleFormatter.Primary);
                     ExtendedConsole.WriteLine(log.Message);
                 }
             }

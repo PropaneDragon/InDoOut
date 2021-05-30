@@ -58,25 +58,32 @@ namespace InDoOut_Networking.Server.Commands
                             {
                                 _ = ProgramHolder.RemoveProgram(program);
 
-                                return command.CreateFailureResponse($"The program couldn't be loaded onto the server with the following failures:\n\n{string.Join("\n", failures.Select(failure => $"- {failure}"))}");
+                                var failureString = string.Join("\n", failures.Select(failure => $"- {failure}"));
+
+                                NetworkEntity?.EntityLog?.Error(CommandName, ": The program couldn't be loaded onto the server with the following failures:\n\n", failureString);
+                                return command.CreateFailureResponse($"The program couldn't be loaded onto the server with the following failures:\n\n{failureString}");
                             }
                         }
                         catch
                         {
+                            NetworkEntity?.EntityLog?.Error(CommandName, ": The program couldn't be read into the server.");
                             return command.CreateFailureResponse("The program couldn't be read into the server.");
                         }
                     }
                     else
                     {
+                        NetworkEntity?.EntityLog?.Error(CommandName, ": The server has no way of holding the program to be run. This is an issue with the software itself.");
                         return command.CreateFailureResponse("The server has no way of holding the program to be run. This is an issue with the software itself.");
                     }
                 }
                 else
                 {
+                    NetworkEntity?.EntityLog?.Error(CommandName, ": The program contained no readable data and can't be constructed.");
                     return command.CreateFailureResponse("The program contained no readable data and can't be constructed.");
                 }
             }
 
+            NetworkEntity?.EntityLog?.Error(CommandName, ": The program received appeared to be invalid and can't be parsed.");
             return command.CreateFailureResponse("The program received appeared to be invalid and can't be parsed.");
         }
     }
