@@ -15,6 +15,8 @@
     <Color x:Key="Colour.Theme.Secondary">#afff</Color>
     <Color x:Key="Colour.Theme.Tertiary">#8fff</Color>
     <Color x:Key="Colour.Theme.Quaternary">#5fff</Color>
+
+    <Color x:Key="Colour.Theme.Highlight">#d19a2c</Color>
     
     <Color x:Key="Colour.Theme.Accent.Primary">#e9006a</Color>
     <Color x:Key="Colour.Theme.Accent.Secondary">#8a006a</Color>
@@ -22,6 +24,8 @@
     <Color x:Key="Colour.Theme.Accent.Primary.Light">#f9218B</Color>
     <Color x:Key="Colour.Theme.Accent.Secondary.Light">#ba00a1</Color>
     <Color x:Key="Colour.Theme.Accent.Tertiary.Light">#741287</Color>
+
+    <SolidColorBrush x:Key="Brush.General.Highlight" Color="{StaticResource Colour.Theme.Highlight}" />
 
     <SolidColorBrush x:Key="Brush.Text.Main.Foreground" Color="{StaticResource Colour.Theme.Primary}" />
     <SolidColorBrush x:Key="Brush.Text.Main.Secondary.Foreground" Color="{StaticResource Colour.Theme.Tertiary}" />

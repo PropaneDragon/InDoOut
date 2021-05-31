@@ -36,8 +36,8 @@ namespace InDoOut_Viewer.UI.Controls.Sidebar
                 if (child is ButtonBase button)
                 {
                     button.Visibility = Visibility.Collapsed;
-                } 
-            } 
+                }
+            }
 
             if (AssociatedTaskView?.CurrentProgramDisplay?.AssociatedProgram is INetworkedProgram program && program.Connected)
             {
@@ -46,15 +46,34 @@ namespace InDoOut_Viewer.UI.Controls.Sidebar
             else
             {
                 Button_ConnectToRemote.Visibility = Visibility.Visible;
-            } 
+            }
         }
 
-        private void UpdatePlayStopButtons() { }
+        private void UpdatePlayStopButtons()
+        {
+            var program = AssociatedTaskView?.CurrentProgramDisplay?.AssociatedProgram;
+            var programRunning = program?.Running ?? false;
+            var programStopping = program?.Stopping ?? false;
+
+            Button_RunProgram.Visibility = !programStopping && !programRunning ? Visibility.Visible : Visibility.Hidden;
+            Button_StopProgram.Visibility = !programStopping && programRunning ? Visibility.Visible : Visibility.Hidden;
+            Button_ProgramStopping.Visibility = programStopping ? Visibility.Visible : Visibility.Hidden;
+        }
+
+        private void UpdateConnectionOnlyButtons()
+        {
+            var connected = AssociatedTaskView?.CurrentProgramDisplay?.AssociatedProgram is INetworkedProgram program && program.Connected;
+
+            Button_ViewProgram.IsEnabled = connected;
+            Button_Upload.IsEnabled = connected;
+            Grid_ProgramControlButtons.IsEnabled = connected;
+        }
 
         private void UpdateTimer_Tick(object sender, EventArgs e)
         {
             UpdateConnectionButtons();
             UpdatePlayStopButtons();
+            UpdateConnectionOnlyButtons();
         }
 
         private void Button_Settings_Click(object sender, RoutedEventArgs e)
@@ -78,7 +97,7 @@ namespace InDoOut_Viewer.UI.Controls.Sidebar
                 {
                     AssociatedTaskView.CurrentProgramDisplay.AssociatedProgram = new NetworkedProgram(client);
                 }
-            } 
+            }
         }
 
         private async void Button_DisconnectFromRemote_Click(object sender, RoutedEventArgs e)
@@ -128,12 +147,12 @@ namespace InDoOut_Viewer.UI.Controls.Sidebar
                                 UserMessageSystemHolder.Instance.CurrentUserMessageSystem.ShowError("Program couldn't be downloaded", "The chosen program couldn't be downloaded due to an error.");
                             }
                         }
-                    } 
+                    }
                 }
                 else
                 {
                     UserMessageSystemHolder.Instance.CurrentUserMessageSystem.ShowError("Please connect to a server first", "A program can only be selected if connected to a server.");
-                } 
+                }
 
                 senderButton.IsEnabled = true;
             }
@@ -152,6 +171,21 @@ namespace InDoOut_Viewer.UI.Controls.Sidebar
                     _ = runningProgramsWindow.ShowDialog();
                 }
             }
+        }
+
+        private void Button_RunProgram_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_StopProgram_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_ProgramStopping_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

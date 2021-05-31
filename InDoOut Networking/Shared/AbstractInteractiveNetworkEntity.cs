@@ -32,7 +32,7 @@ namespace InDoOut_Executable_Core.Networking
                 else
                 {
                     _ = RemoveFromResponseQueue(message);
-                } 
+                }
             }
 
             return null;
