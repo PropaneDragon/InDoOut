@@ -2,7 +2,9 @@
 using InDoOut_Core.Entities.Functions;
 using InDoOut_Core.Entities.Programs;
 using InDoOut_Networking.Client;
+using InDoOut_Networking.Client.Commands;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace InDoOut_Networking.Entities
@@ -24,7 +26,7 @@ namespace InDoOut_Networking.Entities
             AssociatedClient = client;
         }
 
-        public async Task<bool> Reload()
+        public async Task<bool> Reload(CancellationToken cancellationToken)
         {
             await Task.CompletedTask;
 
@@ -40,7 +42,7 @@ namespace InDoOut_Networking.Entities
             return false;
         }
 
-        public async Task<bool> Synchronise()
+        public async Task<bool> Synchronise(CancellationToken cancellationToken)
         {
             await Task.CompletedTask;
 
@@ -48,7 +50,8 @@ namespace InDoOut_Networking.Entities
             {
                 try
                 {
-
+                    var programStatusCommand = new GetProgramStatusClientCommand(AssociatedClient);
+                    var status = programStatusCommand.GetProgramStatusAsync(Id, cancellationToken);
                 }
                 catch { }
             }
@@ -63,13 +66,5 @@ namespace InDoOut_Networking.Entities
         public override bool RemoveFunction(IFunction function) => false;
         public override void Stop() { }
         public override void Trigger(IEntity triggeredBy) { }
-
-        private void UpdateProgramId(Guid programId)
-        {
-            if (programId != Guid.Empty)
-            {
-
-            }
-        }
     }
 }

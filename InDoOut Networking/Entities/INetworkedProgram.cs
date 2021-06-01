@@ -1,5 +1,6 @@
 ﻿using InDoOut_Core.Entities.Programs;
 using InDoOut_Networking.Client;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace InDoOut_Networking.Entities
@@ -10,8 +11,8 @@ namespace InDoOut_Networking.Entities
 
         IClient AssociatedClient { get; }
 
-        Task<bool> Reload();
-        Task<bool> Synchronise();
+        Task<bool> Reload(CancellationToken cancellationToken);
+        Task<bool> Synchronise(CancellationToken cancellationToken);
         Task<bool> Disconnect();
     }
 }
