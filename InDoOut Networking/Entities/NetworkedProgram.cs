@@ -1,8 +1,10 @@
 ﻿using InDoOut_Core.Entities.Core;
 using InDoOut_Core.Entities.Functions;
 using InDoOut_Core.Entities.Programs;
+using InDoOut_Core.Logging;
 using InDoOut_Networking.Client;
 using InDoOut_Networking.Client.Commands;
+using InDoOut_Networking.Shared.Entities;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -51,7 +53,12 @@ namespace InDoOut_Networking.Entities
                 try
                 {
                     var programStatusCommand = new GetProgramStatusClientCommand(AssociatedClient);
-                    var status = programStatusCommand.GetProgramStatusAsync(Id, cancellationToken);
+                    var status = await programStatusCommand.GetProgramStatusAsync(Id, cancellationToken);
+
+                    if (status != null)
+                    {
+                        return UpdateFromProgramStatus(status);
+                    }
                 }
                 catch { }
             }
@@ -66,5 +73,36 @@ namespace InDoOut_Networking.Entities
         public override bool RemoveFunction(IFunction function) => false;
         public override void Stop() { }
         public override void Trigger(IEntity triggeredBy) { }
+
+        private bool UpdateFromProgramStatus(ProgramStatus status)
+        {
+            if (status != null && status.Id == Id)
+            {
+                foreach (var function in Functions)
+                {
+                    if (function is INetworkedFunction networkedFunction)
+                    {
+                        if (networkedFunction.UpdateFromStatus(status))
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            Log.Instance.Error("Failed to update function ", networkedFunction?.Id, " from given ProgramStatus. This possibly means we're out of sync.");
+                        }
+                    }
+                    else
+                    {
+                        Log.Instance.Error("The function ", function?.Id, " is not a NetworkedFunction and cannot be updated. This state shouldn't have happened and needs investigation.");
+                    }
+                }
+            }
+            else
+            {
+                Log.Instance.Error("The given status ", status?.Id, " doesn't match the ID of the program it has been run on (", Id, ") and can't be updated.");
+            }
+
+            return false;
+        }
     }
 }
