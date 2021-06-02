@@ -62,7 +62,7 @@ namespace InDoOut_UI_Common.InterfaceElements
                 ScrollViewer.PreviewMouseWheel += ScrollViewer_PreviewMouseWheel;
                 ScrollViewer.PreviewKeyDown += ScrollViewer_PreviewKeyDown;
                 ScrollViewer.PreviewKeyUp += ScrollViewer_PreviewKeyUp;
-            } 
+            }
         }
 
         private void AttachUserControlEvents() => Loaded += CommonBlockDisplay_Loaded;

@@ -5,7 +5,6 @@ using InDoOut_Core.Logging;
 using InDoOut_Networking.Client;
 using InDoOut_Networking.Client.Commands;
 using InDoOut_Networking.Shared.Entities;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 
