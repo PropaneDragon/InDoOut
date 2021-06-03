@@ -1,4 +1,5 @@
-﻿using InDoOut_Core.Entities.Programs;
+﻿using InDoOut_Core.Entities.Functions;
+using InDoOut_Core.Entities.Programs;
 using InDoOut_Core.Functions;
 using InDoOut_Executable_Core.Programs;
 using InDoOut_Networking.Client;
@@ -290,30 +291,45 @@ namespace InDoOut_Networking_Tests
             Assert.IsNotNull(programStatus);
             Assert.AreEqual(program1.Id, programStatus.Id);
             Assert.AreEqual("Test program", programStatus.Name);
-            Assert.AreEqual(0, programStatus.ActiveFunctions.Count());
+            Assert.AreEqual(2, programStatus.Functions.Count());
             Assert.IsFalse(programStatus.Running);
 
             functionToRun1.Trigger(null);
+            Thread.Sleep(TimeSpan.FromMilliseconds(30));
 
             programStatus = await programStatusClient.GetProgramStatusAsync(program1.Id, new CancellationTokenSource(TimeSpan.FromSeconds(2)).Token);
 
             Assert.IsNotNull(programStatus);
             Assert.AreEqual(program1.Id, programStatus.Id);
             Assert.AreEqual("Test program", programStatus.Name);
-            Assert.AreEqual(1, programStatus.ActiveFunctions.Count());
-            Assert.AreEqual(functionToRun1.Id, programStatus.ActiveFunctions[0]);
+            Assert.AreEqual(2, programStatus.Functions.Count());
+            Assert.AreEqual(functionToRun1.Id, programStatus.Functions[0].Id);
+            Assert.AreEqual(State.Processing, programStatus.Functions[0].State);
+            Assert.AreEqual(functionToRun1.LastTriggerTime, programStatus.Functions[0].LastTriggerTime);
+            Assert.AreEqual(functionToRun1.LastCompletionTime, programStatus.Functions[0].LastCompletionTime);
+            Assert.AreEqual(functionToRun2.Id, programStatus.Functions[1].Id);
+            Assert.AreEqual(State.Waiting, programStatus.Functions[1].State);
+            Assert.AreEqual(functionToRun2.LastTriggerTime, programStatus.Functions[1].LastTriggerTime);
+            Assert.AreEqual(functionToRun2.LastCompletionTime, programStatus.Functions[1].LastCompletionTime);
             Assert.IsTrue(programStatus.Running);
 
             functionToRun2.Trigger(null);
+            Thread.Sleep(TimeSpan.FromMilliseconds(30));
 
             programStatus = await programStatusClient.GetProgramStatusAsync(program1.Id, new CancellationTokenSource(TimeSpan.FromSeconds(2)).Token);
 
             Assert.IsNotNull(programStatus);
             Assert.AreEqual(program1.Id, programStatus.Id);
             Assert.AreEqual("Test program", programStatus.Name);
-            Assert.AreEqual(2, programStatus.ActiveFunctions.Count());
-            Assert.AreEqual(functionToRun1.Id, programStatus.ActiveFunctions[0]);
-            Assert.AreEqual(functionToRun2.Id, programStatus.ActiveFunctions[1]);
+            Assert.AreEqual(2, programStatus.Functions.Count());
+            Assert.AreEqual(functionToRun1.Id, programStatus.Functions[0].Id);
+            Assert.AreEqual(State.Processing, programStatus.Functions[0].State);
+            Assert.AreEqual(functionToRun1.LastTriggerTime, programStatus.Functions[0].LastTriggerTime);
+            Assert.AreEqual(functionToRun1.LastCompletionTime, programStatus.Functions[0].LastCompletionTime);
+            Assert.AreEqual(functionToRun2.Id, programStatus.Functions[1].Id);
+            Assert.AreEqual(State.Processing, programStatus.Functions[1].State);
+            Assert.AreEqual(functionToRun2.LastTriggerTime, programStatus.Functions[1].LastTriggerTime);
+            Assert.AreEqual(functionToRun2.LastCompletionTime, programStatus.Functions[1].LastCompletionTime);
             Assert.IsTrue(programStatus.Running);
 
             programStatus = await programStatusClient.GetProgramStatusAsync(program2.Id, new CancellationTokenSource(TimeSpan.FromSeconds(2)).Token);
@@ -321,7 +337,11 @@ namespace InDoOut_Networking_Tests
             Assert.IsNotNull(programStatus);
             Assert.AreEqual(program2.Id, programStatus.Id);
             Assert.AreEqual("The other test program", programStatus.Name);
-            Assert.AreEqual(0, programStatus.ActiveFunctions.Count());
+            Assert.AreEqual(1, programStatus.Functions.Count());
+            Assert.AreEqual(functionToRun3.Id, programStatus.Functions[0].Id);
+            Assert.AreEqual(State.Waiting, programStatus.Functions[0].State);
+            Assert.AreEqual(functionToRun3.LastTriggerTime, programStatus.Functions[0].LastTriggerTime);
+            Assert.AreEqual(functionToRun3.LastCompletionTime, programStatus.Functions[0].LastCompletionTime);
             Assert.IsFalse(programStatus.Running);
 
             programStatus = await programStatusClient.GetProgramStatusAsync(Guid.NewGuid(), new CancellationTokenSource(TimeSpan.FromSeconds(2)).Token);

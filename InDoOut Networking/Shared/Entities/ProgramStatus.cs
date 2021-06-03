@@ -18,8 +18,8 @@ namespace InDoOut_Networking.Shared.Entities
         [JsonProperty("id")]
         public Guid Id { get; set; } = Guid.Empty;
 
-        [JsonProperty("activeFunctions")]
-        public Guid[] ActiveFunctions { get; set; } = null;
+        [JsonProperty("functionStatus")]
+        public FunctionStatus[] Functions { get; set; } = null;
 
         public static ProgramStatus FromJson(string json)
         {
@@ -35,14 +35,14 @@ namespace InDoOut_Networking.Shared.Entities
 
         public static ProgramStatus FromProgram(IProgram program)
         {
-            var activeTimeInterval = TimeSpan.FromMilliseconds(500);
+            var functions = program.Functions.Select(function => FunctionStatus.FromFunction(function)).ToArray();
 
             return new ProgramStatus()
             {
                 Id = program.Id,
                 Name = program.Name,
                 Running = program.Running,
-                ActiveFunctions = program.Functions.Where(function => function.Running || function.HasBeenTriggeredWithin(activeTimeInterval)).Select(function => function.Id).ToArray()
+                Functions = functions
             };
         }
 
