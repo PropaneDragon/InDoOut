@@ -12,8 +12,8 @@ namespace InDoOut_Networking.Entities
         private readonly IFunction _internalReferenceFunction = null;
 
         public bool StopRequested => false; //Todo synchronisation?
-        public bool Running { get; private set; }
-        public bool Finishing { get; private set; }
+        public bool Running { get; private set; } = false;
+        public bool Finishing { get; private set; } = false;
 
         public string Name => _internalReferenceFunction.Name;
         public string Description => _internalReferenceFunction?.Description;
@@ -25,13 +25,13 @@ namespace InDoOut_Networking.Entities
         public string[] Keywords => _internalReferenceFunction?.Keywords;
         public string[] SafeKeywords => _internalReferenceFunction?.SafeKeywords;
 
-        public State State { get; private set; }
+        public State State { get; private set; } = State.Unknown;
         public IOutput TriggerOnFailure => null;
 
         public Guid Id { get => _internalReferenceFunction.Id; set => _internalReferenceFunction.Id = value; }
 
-        public DateTime LastTriggerTime { get; private set; }
-        public DateTime LastCompletionTime { get; private set; }
+        public DateTime LastTriggerTime { get; private set; } = DateTime.MinValue;
+        public DateTime LastCompletionTime { get; private set; } = DateTime.MinValue;
 
         public List<IInput> Inputs => _internalReferenceFunction.Inputs;
         public List<IOutput> Outputs => _internalReferenceFunction.Outputs;
