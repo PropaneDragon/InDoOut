@@ -1,4 +1,5 @@
-﻿using InDoOut_Core.Functions;
+﻿using InDoOut_Core.Entities.Programs;
+using InDoOut_Core.Functions;
 using InDoOut_Executable_Core.Messaging;
 using InDoOut_Networking.Client.Commands;
 using InDoOut_Networking.Entities;
@@ -133,14 +134,15 @@ namespace InDoOut_Viewer.UI.Controls.Sidebar
                         {
                             var programDownloader = new DownloadProgramClientCommand(program.AssociatedClient, LoadedPlugins.Instance, new FunctionBuilder());
                             var progressWindow = new TaskProgressWindow("Downloading program") { Owner = Window.GetWindow(this) };
+                            var temporaryProgram = new Program();
 
                             progressWindow.TaskStarted();
-                            var hasDownloaded = await programDownloader.RequestProgramAsync(selectedProgram, program, new CancellationTokenSource(TimeSpan.FromSeconds(5)).Token);
+                            var hasDownloaded = await programDownloader.RequestProgramAsync(selectedProgram, temporaryProgram, new CancellationTokenSource(TimeSpan.FromSeconds(5)).Token);
                             progressWindow.TaskFinished();
 
                             if (hasDownloaded)
                             {
-
+                                program.AssociatedProgram = temporaryProgram;
                             }
                             else
                             {

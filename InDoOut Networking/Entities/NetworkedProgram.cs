@@ -5,26 +5,52 @@ using InDoOut_Core.Logging;
 using InDoOut_Networking.Client;
 using InDoOut_Networking.Client.Commands;
 using InDoOut_Networking.Shared.Entities;
+using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace InDoOut_Networking.Entities
 {
-    public class NetworkedProgram : Program, INetworkedProgram
+    public class NetworkedProgram : INetworkedProgram
     {
-        public override string Name { get => base.Name != null ? $"{base.Name} [{(Connected ? "Connected" : "Disconnected")}]" : null; protected set => base.Name = value; }
+        private IProgram _internalProgram = new Program();
 
         public bool Connected => AssociatedClient?.Connected ?? false;
+        public bool Running { get; private set; }
+        public bool Stopping => false; //Todo - Synchronise with networked data.
+        public bool Finishing => false; //Todo - Synchronise with networked data.
+
+        public string Name => AssociatedProgram?.Name != null ? $"{AssociatedProgram?.Name} [{(Connected ? "Connected" : "Disconnected")}]" : null;
+        public string ReturnCode => AssociatedProgram?.ReturnCode;
 
         public IClient AssociatedClient { get; protected set; }
+        public IProgram AssociatedProgram { get => _internalProgram; set => PopulateFromProgram(value); }
 
-        private NetworkedProgram(params string[] passthroughValues) : base(passthroughValues)
+        public List<IFunction> Functions => AssociatedProgram?.Functions;
+        public List<IStartFunction> StartFunctions => AssociatedProgram?.StartFunctions;
+        public List<IEndFunction> EndFunctions => AssociatedProgram?.EndFunctions;
+        public List<string> PassthroughValues => AssociatedProgram?.PassthroughValues;
+
+        public DateTime LastTriggerTime => DateTime.Now; //Todo - Synchronise with networked data.
+        public DateTime LastCompletionTime => DateTime.Now; //Todo - Synchronise with networked data.
+
+        public Guid Id { get => AssociatedProgram?.Id ?? Guid.Empty; set => AssociatedProgram.Id = value; }
+
+        public Dictionary<string, string> Metadata => AssociatedProgram?.Metadata;
+
+        private NetworkedProgram(params string[] _)
         {
         }
 
         public NetworkedProgram(IClient client) : this()
         {
             AssociatedClient = client;
+        }
+
+        public NetworkedProgram(IClient client, IProgram program) : this(client)
+        {
+            AssociatedProgram = program;
         }
 
         public async Task<bool> Reload(CancellationToken cancellationToken)
@@ -67,11 +93,39 @@ namespace InDoOut_Networking.Entities
 
         public async Task<bool> Disconnect() => Connected && await AssociatedClient?.Disconnect();
 
-        public override bool AddFunction(IFunction function) => false;
-        public override bool CanBeTriggered(IEntity entity) => false;
-        public override bool RemoveFunction(IFunction function) => false;
-        public override void Stop() { }
-        public override void Trigger(IEntity triggeredBy) { }
+        public void Stop() { } //Todo - Send data to network
+
+        public void SetName(string name) => AssociatedProgram?.SetName(name);
+
+        public bool AddFunction(IFunction function) => false;
+
+        public bool RemoveFunction(IFunction function) => false;
+
+        public void Trigger(IEntity triggeredBy) { }
+
+        public bool CanBeTriggered(IEntity entity) => false;
+
+        public bool HasBeenTriggeredSince(DateTime time) => false; //Todo
+
+        public bool HasBeenTriggeredWithin(TimeSpan time) => false; //Todo
+
+        public bool HasCompletedSince(DateTime time) => false; //Todo
+
+        public bool HasCompletedWithin(TimeSpan time) => false; //Todo
+
+        private void PopulateFromProgram(IProgram program)
+        {
+            _internalProgram = program;
+
+            if (program != null && !(program is INetworkedProgram))
+            {
+                _ = UpdateFunctions(program);
+            }
+            else
+            {
+                Log.Instance.Error("Attempted to populate a networked program from ", program, ", which is invalid.");
+            }
+        }
 
         private bool UpdateFromProgramStatus(ProgramStatus status)
         {
@@ -102,6 +156,31 @@ namespace InDoOut_Networking.Entities
             }
 
             return false;
+        }
+
+        private bool UpdateFunctions(IProgram program)
+        {
+            var applied = true;
+
+            Functions.Clear();
+
+            foreach (var function in program.Functions)
+            {
+                if (!(function is INetworkedFunction))
+                {
+                    var networkedFunction = new NetworkedFunction(function);
+
+                    Functions.Add(networkedFunction);
+                }
+                else
+                {
+                    Log.Instance.Error("Attempted to update a function that was already a networked function. This indicates something has gone wrong internally.");
+
+                    applied = false;
+                }
+            }
+
+            return applied;
         }
     }
 }

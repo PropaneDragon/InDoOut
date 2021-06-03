@@ -50,7 +50,7 @@ namespace InDoOut_UI_Common.Creation
         protected bool ExtractMetadataValue(IStored stored, string key, out double value)
         {
             value = 0;
-            return !string.IsNullOrEmpty(key) && stored != null && stored.Metadata.ContainsKey(key) && double.TryParse(stored.Metadata[key], out value);
+            return !string.IsNullOrEmpty(key) && stored != null && (stored?.Metadata?.ContainsKey(key) ?? false) && double.TryParse(stored.Metadata[key], out value);
         }
     }
 }

@@ -11,6 +11,8 @@ namespace InDoOut_Networking.Entities
 
         IClient AssociatedClient { get; }
 
+        IProgram AssociatedProgram { get; set; }
+
         Task<bool> Reload(CancellationToken cancellationToken);
         Task<bool> Synchronise(CancellationToken cancellationToken);
         Task<bool> Disconnect();
