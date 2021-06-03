@@ -3,6 +3,7 @@ using InDoOut_Core.Entities.Functions;
 using InDoOut_Networking.Shared.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace InDoOut_Networking.Entities
 {
@@ -69,7 +70,15 @@ namespace InDoOut_Networking.Entities
         {
             if (status != null)
             {
-                //Todo - Change ProgramStatus to add more function data.
+                var foundFunction = status.Functions.FirstOrDefault(function => function.Id == Id);
+                if (foundFunction != null)
+                {
+                    LastTriggerTime = foundFunction.LastTriggerTime ?? DateTime.MinValue;
+                    LastCompletionTime = foundFunction.LastCompletionTime ?? DateTime.MinValue;
+                    State = foundFunction.State;
+
+                    return true;
+                }
             }
 
             return false;
