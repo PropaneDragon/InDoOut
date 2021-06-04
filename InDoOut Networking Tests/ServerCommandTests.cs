@@ -224,16 +224,16 @@ namespace InDoOut_Networking_Tests
             var program2 = programHolder.NewProgram();
             program2.SetName("A program name 2 functions");
 
-            var functionWithMetadata = new TestFunction();
+            var functionWithMetadata = new TestNetworkingFunction();
             functionWithMetadata.Metadata["this is meta"] = "Yes";
 
             Assert.IsTrue(program2.AddFunction(functionWithMetadata));
-            Assert.IsTrue(program2.AddFunction(new TestFunction()));
+            Assert.IsTrue(program2.AddFunction(new TestNetworkingFunction()));
 
             var program1 = programHolder.NewProgram();
             program1.SetName("A program name 1 function");
 
-            Assert.IsTrue(program1.AddFunction(new TestFunction()));
+            Assert.IsTrue(program1.AddFunction(new TestNetworkingFunction()));
 
             var program0 = programHolder.NewProgram();
             program0.SetName("0 functions");

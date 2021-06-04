@@ -126,9 +126,9 @@ namespace InDoOut_Networking_Tests
             var program = new Program();
             program.SetName("UploadProgramTest");
 
-            Assert.IsTrue(program.AddFunction(new TestFunction()));
-            Assert.IsTrue(program.AddFunction(new TestFunction()));
-            Assert.IsTrue(program.AddFunction(new TestFunction()));
+            Assert.IsTrue(program.AddFunction(new TestNetworkingFunction()));
+            Assert.IsTrue(program.AddFunction(new TestNetworkingFunction()));
+            Assert.IsTrue(program.AddFunction(new TestNetworkingFunction()));
 
             Assert.AreEqual(3, program.Functions.Count);
 

@@ -1,8 +1,11 @@
-﻿using InDoOut_Core.Entities.Programs;
+﻿using InDoOut_Core.Entities.Functions;
+using InDoOut_Core.Entities.Programs;
+using InDoOut_Core_Tests;
 using InDoOut_Networking.Entities;
 using InDoOut_Networking.Shared.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Threading;
 
 namespace InDoOut_Networking_Tests
 {
@@ -67,6 +70,130 @@ namespace InDoOut_Networking_Tests
 
             Assert.IsTrue(networkedProgram.UpdateFromProgramStatusPublic(status));
             Assert.IsFalse(networkedProgram.Running);
+
+            var function1 = new TestFunction(() => Thread.Sleep(TimeSpan.FromSeconds(1)));
+            var function2 = new TestFunction(() => Thread.Sleep(TimeSpan.FromSeconds(1)));
+
+            var program = new Program();
+
+            Assert.IsTrue(program.AddFunction(function1));
+            Assert.IsTrue(program.AddFunction(function2));
+
+            networkedProgram.AssociatedProgram = program;
+
+            Assert.AreEqual(2, networkedProgram.NetworkedFunctions.Count);
+
+            var currentFunction = networkedProgram.NetworkedFunctions[0];
+            Assert.AreEqual(function1.Id, currentFunction.Id);
+            Assert.IsFalse(currentFunction.Running);
+            Assert.AreEqual(State.Unknown, currentFunction.State);
+            Assert.AreEqual(DateTime.MinValue, currentFunction.LastTriggerTime);
+            Assert.AreEqual(DateTime.MinValue, currentFunction.LastCompletionTime);
+
+            currentFunction = networkedProgram.NetworkedFunctions[1];
+            Assert.AreEqual(function2.Id, currentFunction.Id);
+            Assert.IsFalse(currentFunction.Running);
+            Assert.AreEqual(State.Unknown, currentFunction.State);
+            Assert.AreEqual(DateTime.MinValue, currentFunction.LastTriggerTime);
+            Assert.AreEqual(DateTime.MinValue, currentFunction.LastCompletionTime);
+
+            var function1Status = new FunctionStatus() { Id = function1.Id, LastCompletionTime = DateTime.Today.AddDays(-1), LastTriggerTime = DateTime.Today.AddDays(-2), State = State.InError };
+            var function2Status = new FunctionStatus() { Id = function2.Id, LastCompletionTime = DateTime.Today, LastTriggerTime = DateTime.Today, State = State.Processing };
+
+            status.Id = program.Id;
+            status.Name = program.Name;
+            status.Functions = new FunctionStatus[]
+            {
+                new FunctionStatus() { Id = Guid.NewGuid(), LastCompletionTime = DateTime.Now, LastTriggerTime = DateTime.Now, State = State.Unknown },
+                function2Status
+            };
+
+            Assert.IsTrue(networkedProgram.UpdateFromProgramStatusPublic(status));
+
+            currentFunction = networkedProgram.NetworkedFunctions[0];
+            Assert.AreEqual(function1.Id, currentFunction.Id);
+            Assert.IsFalse(currentFunction.Running);
+            Assert.AreEqual(State.Unknown, currentFunction.State);
+            Assert.AreEqual(DateTime.MinValue, currentFunction.LastTriggerTime);
+            Assert.AreEqual(DateTime.MinValue, currentFunction.LastCompletionTime);
+
+            currentFunction = networkedProgram.NetworkedFunctions[1];
+            Assert.AreEqual(function2.Id, currentFunction.Id);
+            Assert.IsTrue(currentFunction.Running);
+            Assert.AreEqual(State.Processing, currentFunction.State);
+            Assert.AreEqual(DateTime.Today, currentFunction.LastTriggerTime);
+            Assert.AreEqual(DateTime.Today, currentFunction.LastCompletionTime);
+
+            status.Functions = new FunctionStatus[]
+            {
+                function1Status,
+                function2Status
+            };
+
+            Assert.IsTrue(networkedProgram.UpdateFromProgramStatusPublic(status));
+
+            currentFunction = networkedProgram.NetworkedFunctions[0];
+            Assert.AreEqual(function1.Id, currentFunction.Id);
+            Assert.IsFalse(currentFunction.Running);
+            Assert.AreEqual(State.InError, currentFunction.State);
+            Assert.AreEqual(DateTime.Today.AddDays(-2), currentFunction.LastTriggerTime);
+            Assert.AreEqual(DateTime.Today.AddDays(-1), currentFunction.LastCompletionTime);
+
+            currentFunction = networkedProgram.NetworkedFunctions[1];
+            Assert.AreEqual(function2.Id, currentFunction.Id);
+            Assert.IsTrue(currentFunction.Running);
+            Assert.AreEqual(State.Processing, currentFunction.State);
+            Assert.AreEqual(DateTime.Today, currentFunction.LastTriggerTime);
+            Assert.AreEqual(DateTime.Today, currentFunction.LastCompletionTime);
+
+            function1Status.State = State.Waiting;
+
+            status.Functions = new FunctionStatus[]
+            {
+                function1Status,
+                function2Status
+            };
+
+            Assert.IsTrue(networkedProgram.UpdateFromProgramStatusPublic(status));
+
+            currentFunction = networkedProgram.NetworkedFunctions[0];
+            Assert.AreEqual(function1.Id, currentFunction.Id);
+            Assert.IsFalse(currentFunction.Running);
+            Assert.AreEqual(State.Waiting, currentFunction.State);
+            Assert.AreEqual(DateTime.Today.AddDays(-2), currentFunction.LastTriggerTime);
+            Assert.AreEqual(DateTime.Today.AddDays(-1), currentFunction.LastCompletionTime);
+
+            currentFunction = networkedProgram.NetworkedFunctions[1];
+            Assert.AreEqual(function2.Id, currentFunction.Id);
+            Assert.IsTrue(currentFunction.Running);
+            Assert.AreEqual(State.Processing, currentFunction.State);
+            Assert.AreEqual(DateTime.Today, currentFunction.LastTriggerTime);
+            Assert.AreEqual(DateTime.Today, currentFunction.LastCompletionTime);
+
+            function1Status.State = State.Processing;
+            function2Status.State = State.Completing;
+
+            status.Functions = new FunctionStatus[]
+            {
+                function1Status,
+                function2Status
+            };
+
+            Assert.IsTrue(networkedProgram.UpdateFromProgramStatusPublic(status));
+
+            currentFunction = networkedProgram.NetworkedFunctions[0];
+            Assert.AreEqual(function1.Id, currentFunction.Id);
+            Assert.IsTrue(currentFunction.Running);
+            Assert.AreEqual(State.Processing, currentFunction.State);
+            Assert.AreEqual(DateTime.Today.AddDays(-2), currentFunction.LastTriggerTime);
+            Assert.AreEqual(DateTime.Today.AddDays(-1), currentFunction.LastCompletionTime);
+
+            currentFunction = networkedProgram.NetworkedFunctions[1];
+            Assert.AreEqual(function2.Id, currentFunction.Id);
+            Assert.IsFalse(currentFunction.Running);
+            Assert.AreEqual(State.Completing, currentFunction.State);
+            Assert.AreEqual(DateTime.Today, currentFunction.LastTriggerTime);
+            Assert.AreEqual(DateTime.Today, currentFunction.LastCompletionTime);
         }
     }
 }

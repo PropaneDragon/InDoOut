@@ -3,7 +3,7 @@ using System;
 
 namespace InDoOut_Networking_Tests
 {
-    internal class TestFunction : Function
+    internal class TestNetworkingFunction : Function
     {
         public override string Description => "ABCDEFGHIJKLMNOPQRSTUVWXYZ /0123456789" +
                                                "abcdefghijklmnopqrstuvwxyz £©µÀÆÖÞßéöÿ" +

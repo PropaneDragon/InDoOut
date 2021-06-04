@@ -12,7 +12,7 @@ namespace InDoOut_Networking.Entities
         private readonly IFunction _internalReferenceFunction = null;
 
         public bool StopRequested => false; //Todo synchronisation?
-        public bool Running { get; private set; } = false;
+        public bool Running => State == State.Processing;
         public bool Finishing { get; private set; } = false;
 
         public string Name => _internalReferenceFunction.Name;

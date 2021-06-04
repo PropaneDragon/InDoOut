@@ -146,11 +146,11 @@ namespace InDoOut_Networking.Entities
 
         protected bool UpdateFromProgramStatus(ProgramStatus status)
         {
-            var updatedAll = false;
+            var anythingUpdated = false;
 
             if (status != null && status.Id == Id)
             {
-                updatedAll = true;
+                anythingUpdated = true;
 
                 Running = status.Running;
 
@@ -158,10 +158,12 @@ namespace InDoOut_Networking.Entities
                 {
                     if (function is INetworkedFunction networkedFunction)
                     {
-                        if (!networkedFunction.UpdateFromStatus(status))
+                        if (networkedFunction.UpdateFromStatus(status))
                         {
-                            updatedAll = false;
-
+                            anythingUpdated = true;
+                        }
+                        else
+                        {
                             Log.Instance.Error("Failed to update function ", networkedFunction?.Id, " from given ProgramStatus. This possibly means we're out of sync.");
                         }
                     }
@@ -176,7 +178,7 @@ namespace InDoOut_Networking.Entities
                 Log.Instance.Error("The given status ", status?.Id, " doesn't match the ID of the program it has been run on (", Id, ") and can't be updated.");
             }
 
-            return updatedAll;
+            return anythingUpdated;
         }
     }
 }
