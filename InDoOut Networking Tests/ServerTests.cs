@@ -308,13 +308,21 @@ namespace InDoOut_Networking_Tests
                 {
                     while (text != clientA.LastRawMessageReceived)
                     {
-                        await Task.Delay(TimeSpan.FromMilliseconds(100));
+                        await Task.Delay(TimeSpan.FromMilliseconds(10));
                     }
                 });
 
-                _ = await Task.WhenAny(messageTask, Task.Delay(TimeSpan.FromSeconds(5)));
+                Assert.AreEqual(messageTask, await Task.WhenAny(messageTask, Task.Delay(TimeSpan.FromSeconds(10))));
 
-                Assert.AreEqual(text, clientA.LastRawMessageReceived);
+                var textSplit = text.Split('\n');
+                var messageSplit = clientA.LastRawMessageReceived.Split('\n');
+
+                Assert.AreEqual(textSplit.Length, messageSplit.Length);
+                
+                for (var line = 0; line < textSplit.Length; ++line)
+                {
+                    Assert.AreEqual(textSplit[line], messageSplit[line]);
+                }
             }
 
             Assert.IsTrue(await server.Stop());

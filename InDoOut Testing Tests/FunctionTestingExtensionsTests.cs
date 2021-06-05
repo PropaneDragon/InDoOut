@@ -20,6 +20,11 @@ namespace InDoOut_Testing_Tests
             var function = new TestFunction(() => Thread.Sleep(TimeSpan.FromMilliseconds(50)));
             function.Trigger(null);
 
+            while (!function.Running)
+            {
+                Thread.Sleep(1);
+            }
+
             var stopwatch = Stopwatch.StartNew();
 
             Assert.IsTrue(function.WaitForCompletion(TimeSpan.FromMilliseconds(100)));

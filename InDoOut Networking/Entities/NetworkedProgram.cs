@@ -20,8 +20,8 @@ namespace InDoOut_Networking.Entities
 
         public bool Connected => AssociatedClient?.Connected ?? false;
         public bool Running { get; private set; } = false;
-        public bool Stopping => false; //Todo - Synchronise with networked data.
-        public bool Finishing => false; //Todo - Synchronise with networked data.
+        public bool Stopping { get; private set; } = false;
+        public bool Finishing { get; private set; } = false;
 
         public string Name => AssociatedProgram?.Name != null ? $"{AssociatedProgram?.Name} [{(Connected ? "Connected" : "Disconnected")}]" : null;
         public string ReturnCode => AssociatedProgram?.ReturnCode;

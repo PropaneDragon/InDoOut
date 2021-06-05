@@ -12,6 +12,7 @@ namespace InDoOut_Networking.Shared.Entities
 
         [JsonProperty("lastTriggerTime")]
         public DateTime? LastTriggerTime { get; set; } = null;
+
         [JsonProperty("lastCompletionTime")]
         public DateTime? LastCompletionTime { get; set; } = null;
 
