@@ -4,6 +4,7 @@ using InDoOut_Executable_Core.Networking;
 using InDoOut_Json_Storage;
 using InDoOut_Networking.Client;
 using InDoOut_Networking.Client.Commands;
+using InDoOut_Networking.Shared;
 using InDoOut_Plugins.Loaders;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -31,13 +32,14 @@ namespace InDoOut_Networking_Tests
         [TestMethod]
         public async Task RequestAvailablePrograms()
         {
-            var server = new TestServer(9001);
+            var port = PortFinder.Find();
+            var server = new TestServer(port);
             Assert.IsTrue(await server.Start());
 
             var client = new Client();
             var programRequestCommand = new RequestProgramsClientCommand(client);
 
-            Assert.IsTrue(await client.Connect(IPAddress.Loopback, 9001));
+            Assert.IsTrue(await client.Connect(IPAddress.Loopback, port));
 
             Assert.IsNull(await programRequestCommand.RequestAvailableProgramsAsync(new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token));
 
@@ -117,11 +119,12 @@ namespace InDoOut_Networking_Tests
         [TestMethod]
         public async Task UploadProgram()
         {
-            var server = new TestServer(9001);
+            var port = PortFinder.Find();
+            var server = new TestServer(port);
             Assert.IsTrue(await server.Start());
 
             var client = new Client();
-            Assert.IsTrue(await client.Connect(IPAddress.Loopback, 9001));
+            Assert.IsTrue(await client.Connect(IPAddress.Loopback, port));
 
             var program = new Program();
             program.SetName("UploadProgramTest");
@@ -172,11 +175,12 @@ namespace InDoOut_Networking_Tests
         [TestMethod]
         public async Task DownloadProgram()
         {
-            var server = new TestServer(9001);
+            var port = PortFinder.Find();
+            var server = new TestServer(port);
             Assert.IsTrue(await server.Start());
 
             var client = new Client();
-            Assert.IsTrue(await client.Connect(IPAddress.Loopback, 9001));
+            Assert.IsTrue(await client.Connect(IPAddress.Loopback, port));
 
             var program = new Program();
 

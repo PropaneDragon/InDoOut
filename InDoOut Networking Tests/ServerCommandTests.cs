@@ -5,6 +5,7 @@ using InDoOut_Executable_Core.Programs;
 using InDoOut_Function_Plugins.Loaders;
 using InDoOut_Networking.Server;
 using InDoOut_Networking.Server.Commands;
+using InDoOut_Networking.Shared;
 using InDoOut_Plugins.Loaders;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
@@ -34,13 +35,14 @@ namespace InDoOut_Networking_Tests
         public async Task SendAvailablePrograms()
         {
             var programHolder = new ProgramHolder();
-            var server = new Server(9001);
+            var port = PortFinder.Find();
+            var server = new Server(port);
             var client = new TestClient();
 
             Assert.IsTrue(server.AddCommandListener(new RequestProgramsServerCommand(server, programHolder)));
 
             Assert.IsTrue(await server.Start());
-            Assert.IsTrue(await client.Connect(IPAddress.Loopback, 9001));
+            Assert.IsTrue(await client.Connect(IPAddress.Loopback, port));
             Assert.IsNull(client.LastMessageReceived);
 
             Assert.IsTrue(await client.Send($"some ID{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}RequestPrograms{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}"));
@@ -100,7 +102,8 @@ namespace InDoOut_Networking_Tests
         [TestMethod]
         public async Task UploadProgram()
         {
-            var server = new Server(9001);
+            var port = PortFinder.Find();
+            var server = new Server(port);
             var client = new TestClient();
             var programHolder = new ProgramHolder();
 
@@ -115,7 +118,7 @@ namespace InDoOut_Networking_Tests
             Assert.IsTrue(server.AddCommandListener(new UploadProgramServerCommand(server, programHolder, loadedPlugins, new FunctionBuilder())));
 
             Assert.IsTrue(await server.Start());
-            Assert.IsTrue(await client.Connect(IPAddress.Loopback, 9001));
+            Assert.IsTrue(await client.Connect(IPAddress.Loopback, port));
             Assert.IsNull(client.LastMessageReceived);
             Assert.AreEqual(0, programHolder.Programs.Count);
 
@@ -180,14 +183,15 @@ namespace InDoOut_Networking_Tests
         [TestMethod]
         public async Task DownloadProgram()
         {
-            var server = new Server(9001);
+            var port = PortFinder.Find();
+            var server = new Server(port);
             var client = new TestClient();
             var programHolder = new ProgramHolder();
 
             Assert.IsTrue(server.AddCommandListener(new DownloadProgramServerCommand(server, programHolder, new LoadedPlugins(), new FunctionBuilder())));
 
             Assert.IsTrue(await server.Start());
-            Assert.IsTrue(await client.Connect(IPAddress.Loopback, 9001));
+            Assert.IsTrue(await client.Connect(IPAddress.Loopback, port));
             Assert.IsNull(client.LastMessageReceived);
             Assert.AreEqual(0, programHolder.Programs.Count);
 

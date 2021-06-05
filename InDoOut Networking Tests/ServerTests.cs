@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using InDoOut_Networking.Shared;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
 using System.Linq;
@@ -14,7 +15,8 @@ namespace InDoOut_Networking_Tests
         [TestMethod]
         public async Task ServerStartStop()
         {
-            var server = new TestServer(9002);
+            var port = PortFinder.Find();
+            var server = new TestServer(port);
 
             Assert.IsNull(server.LastClientConnected);
             Assert.IsNull(server.LastClientDisconnected);
@@ -25,7 +27,7 @@ namespace InDoOut_Networking_Tests
             Assert.IsFalse(server.Started);
 
             Assert.AreEqual(IPAddress.Any, server.IPAddress);
-            Assert.AreEqual(9002, server.Port);
+            Assert.AreEqual(port, server.Port);
             Assert.AreEqual(0, server.Clients.Count);
 
             Assert.IsTrue(await server.Start());
@@ -39,7 +41,7 @@ namespace InDoOut_Networking_Tests
             Assert.IsTrue(server.Started);
 
             Assert.AreEqual(IPAddress.Any, server.IPAddress);
-            Assert.AreEqual(9002, server.Port);
+            Assert.AreEqual(port, server.Port);
             Assert.AreEqual(0, server.Clients.Count);
 
             Assert.IsTrue(await server.Stop());
@@ -53,7 +55,7 @@ namespace InDoOut_Networking_Tests
             Assert.IsFalse(server.Started);
 
             Assert.AreEqual(IPAddress.Any, server.IPAddress);
-            Assert.AreEqual(9002, server.Port);
+            Assert.AreEqual(port, server.Port);
             Assert.AreEqual(0, server.Clients.Count);
 
             Assert.IsTrue(await server.Start());
@@ -68,7 +70,7 @@ namespace InDoOut_Networking_Tests
             Assert.IsTrue(server.Started);
 
             Assert.AreEqual(IPAddress.Any, server.IPAddress);
-            Assert.AreEqual(9002, server.Port);
+            Assert.AreEqual(port, server.Port);
             Assert.AreEqual(0, server.Clients.Count);
 
             Assert.IsTrue(await server.Stop());
@@ -82,14 +84,15 @@ namespace InDoOut_Networking_Tests
             Assert.IsFalse(server.Started);
 
             Assert.AreEqual(IPAddress.Any, server.IPAddress);
-            Assert.AreEqual(9002, server.Port);
+            Assert.AreEqual(port, server.Port);
             Assert.AreEqual(0, server.Clients.Count);
         }
 
         [TestMethod]
         public async Task ClientConnectDisconnect()
         {
-            var server = new TestServer(9003) { ClientPollInterval = TimeSpan.FromMilliseconds(10) };
+            var port = PortFinder.Find();
+            var server = new TestServer(port) { ClientPollInterval = TimeSpan.FromMilliseconds(10) };
             var clientA = new TestClient();
             var clientB = new TestClient();
 
@@ -116,8 +119,9 @@ namespace InDoOut_Networking_Tests
             Assert.IsFalse(await clientA.Connect(IPAddress.Loopback, 0));
             Assert.IsFalse(await clientA.Connect(IPAddress.Loopback, 5615));
             Assert.IsFalse(await clientA.Connect(IPAddress.Loopback, 80));
-            Assert.IsFalse(await clientA.Connect(IPAddress.Loopback, 9004));
-            Assert.IsTrue(await clientA.Connect(IPAddress.Loopback, 9003));
+            Assert.IsFalse(await clientA.Connect(IPAddress.Loopback, port + 1));
+            Assert.IsFalse(await clientA.Connect(IPAddress.Loopback, port - 1));
+            Assert.IsTrue(await clientA.Connect(IPAddress.Loopback, port));
 
             await Task.Delay(TimeSpan.FromMilliseconds(100));
 
@@ -145,7 +149,7 @@ namespace InDoOut_Networking_Tests
             Assert.IsNull(clientA.LastRawMessageReceived);
             Assert.IsNull(clientB.LastRawMessageReceived);
 
-            Assert.IsTrue(await clientA.Connect(IPAddress.Loopback, 9003));
+            Assert.IsTrue(await clientA.Connect(IPAddress.Loopback, port));
 
             await Task.Delay(TimeSpan.FromMilliseconds(100));
 
@@ -157,7 +161,7 @@ namespace InDoOut_Networking_Tests
             Assert.IsTrue(clientA.Connected);
             Assert.IsFalse(clientB.Connected);
 
-            Assert.IsTrue(await clientB.Connect(IPAddress.Loopback, 9003));
+            Assert.IsTrue(await clientB.Connect(IPAddress.Loopback, port));
 
             await Task.Delay(TimeSpan.FromMilliseconds(100));
 
@@ -191,7 +195,8 @@ namespace InDoOut_Networking_Tests
         [TestMethod]
         public async Task ClientSendReceive()
         {
-            var server = new TestServer(9004) { ClientPollInterval = TimeSpan.FromMilliseconds(10) };
+            var port = PortFinder.Find();
+            var server = new TestServer(port) { ClientPollInterval = TimeSpan.FromMilliseconds(10) };
             var clientA = new TestClient();
             var clientB = new TestClient();
 
@@ -200,8 +205,8 @@ namespace InDoOut_Networking_Tests
             Assert.IsFalse(await clientA.Send("This is a test and shouldn't be received by anyone!"));
             Assert.IsFalse(await clientB.Send("This is a test and shouldn't be received by anyone!"));
 
-            Assert.IsTrue(await clientA.Connect(IPAddress.Loopback, 9004));
-            Assert.IsTrue(await clientB.Connect(IPAddress.Loopback, 9004));
+            Assert.IsTrue(await clientA.Connect(IPAddress.Loopback, port));
+            Assert.IsTrue(await clientB.Connect(IPAddress.Loopback, port));
 
             await Task.Delay(TimeSpan.FromMilliseconds(100));
 
@@ -288,11 +293,12 @@ namespace InDoOut_Networking_Tests
         [TestMethod]
         public async Task SendReceiveUTF8()
         {
-            var server = new TestServer(9005);
+            var port = PortFinder.Find();
+            var server = new TestServer(port);
             var clientA = new TestClient();
 
             Assert.IsTrue(await server.Start());
-            Assert.IsTrue(await clientA.Connect(IPAddress.Loopback, 9005));
+            Assert.IsTrue(await clientA.Connect(IPAddress.Loopback, port));
 
             var testTextFiles = Directory.GetFiles(".", "*.txt");
             Assert.AreEqual(5, testTextFiles.Length);
