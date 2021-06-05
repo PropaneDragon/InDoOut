@@ -205,7 +205,6 @@ namespace InDoOut_Networking_Tests
             Assert.IsNotNull(downloadDataTask.Result);
             Assert.AreEqual(downloadDataTask.Result, programData.Replace("\r", ""));
 
-
             var downloadProgramTask = programDownloadCommand.RequestProgramAsync("example-program", program, new CancellationTokenSource(TimeSpan.FromMilliseconds(800)).Token);
 
             await Task.Delay(TimeSpan.FromMilliseconds(200));
@@ -218,7 +217,6 @@ namespace InDoOut_Networking_Tests
             Assert.IsFalse(downloadProgramTask.Result);
             Assert.IsNotNull(program);
 
-
             downloadDataTask = programDownloadCommand.RequestDataForProgramAsync("example-program", new CancellationTokenSource(TimeSpan.FromMilliseconds(800)).Token);
 
             await Task.Delay(TimeSpan.FromMilliseconds(200));
@@ -229,7 +227,6 @@ namespace InDoOut_Networking_Tests
             Assert.IsNotNull(lastServerMessage);
             Assert.IsTrue(await server.SendMessageAll($"{lastServerMessage.Id}{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}DownloadProgram{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}"));
             Assert.IsNull(downloadDataTask.Result);
-
 
             downloadProgramTask = programDownloadCommand.RequestProgramAsync("example-program", program, new CancellationTokenSource(TimeSpan.FromMilliseconds(800)).Token);
 
@@ -243,7 +240,6 @@ namespace InDoOut_Networking_Tests
             Assert.IsFalse(downloadProgramTask.Result);
             Assert.IsNotNull(program);
 
-
             downloadDataTask = programDownloadCommand.RequestDataForProgramAsync("example-program", new CancellationTokenSource(TimeSpan.FromMilliseconds(800)).Token);
 
             await Task.Delay(TimeSpan.FromMilliseconds(200));
@@ -254,7 +250,6 @@ namespace InDoOut_Networking_Tests
             Assert.IsNotNull(lastServerMessage);
             Assert.IsTrue(await server.SendMessageAll($"{lastServerMessage.Id}{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}DownloadProgram{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}data{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}more data"));
             Assert.IsNull(downloadDataTask.Result);
-
 
             downloadProgramTask = programDownloadCommand.RequestProgramAsync("example-program", program, new CancellationTokenSource(TimeSpan.FromMilliseconds(800)).Token);
 
@@ -267,7 +262,6 @@ namespace InDoOut_Networking_Tests
             Assert.IsTrue(await server.SendMessageAll($"{lastServerMessage.Id}{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}DownloadProgram{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}data{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}more data"));
             Assert.IsFalse(downloadProgramTask.Result);
             Assert.IsNotNull(program);
-
 
             downloadProgramTask = programDownloadCommand.RequestProgramAsync("empty", program, new CancellationTokenSource(TimeSpan.FromMilliseconds(800)).Token);
 
@@ -282,7 +276,6 @@ namespace InDoOut_Networking_Tests
             Assert.IsTrue(await server.SendMessageAll($"{lastServerMessage.Id}{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}DownloadProgram{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}{programData}"));
             Assert.IsTrue(downloadProgramTask.Result);
             Assert.IsNotNull(program);
-
 
             Assert.IsTrue(await server.Stop());
         }

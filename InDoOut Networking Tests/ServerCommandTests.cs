@@ -122,7 +122,6 @@ namespace InDoOut_Networking_Tests
             Assert.IsNull(client.LastMessageReceived);
             Assert.AreEqual(0, programHolder.Programs.Count);
 
-
             Assert.IsTrue(await client.Send($"some ID{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}UploadProgram{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}This is the program contents"));
 
             await Task.Delay(TimeSpan.FromMilliseconds(500));
@@ -135,7 +134,6 @@ namespace InDoOut_Networking_Tests
 
             client.LastMessageReceived = null;
 
-
             Assert.IsTrue(await client.Send($"some ID{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}UploadProgram{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}"));
 
             await Task.Delay(TimeSpan.FromMilliseconds(500));
@@ -147,7 +145,6 @@ namespace InDoOut_Networking_Tests
             Assert.AreEqual(0, programHolder.Programs.Count);
 
             client.LastMessageReceived = null;
-
 
             var programData = File.ReadAllText("example-program.ido");
 
@@ -163,7 +160,6 @@ namespace InDoOut_Networking_Tests
             Assert.AreEqual(0, programHolder.Programs.Count);
 
             client.LastMessageReceived = null;
-
 
             programData = File.ReadAllText("empty.ido");
 

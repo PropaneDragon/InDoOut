@@ -169,7 +169,6 @@ namespace InDoOut_Core_Tests
             var inputA = endFunction.CreateInputPublic("A");
             var inputB = endFunction.CreateInputPublic("B");
 
-
             _ = outputA.Connect(inputA);
             _ = outputB.Connect(inputB);
 
