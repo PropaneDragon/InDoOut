@@ -1,0 +1,43 @@
+﻿<Window x:Class="InDoOut_UI_Common.Windows.ServerProgramUploadWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:InDoOut_UI_Common.Windows"
+        xmlns:common="clr-namespace:InDoOut_UI_Common.Controls.Common"
+        xmlns:background="clr-namespace:InDoOut_UI_Common.Controls.Background"
+        mc:Ignorable="d"
+        Title="Select a program" Height="300" Width="900" WindowState="Normal" MinWidth="450" MinHeight="500" WindowStartupLocation="CenterOwner" ShowActivated="True" Loaded="Window_Loaded">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/InDoOutUICommon;component/Style/CommonStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <Grid>
+            <background:BackgroundImage Opacity="0.01"/>
+            <DockPanel>
+                <Border DockPanel.Dock="Bottom" Padding="10">
+                    <DockPanel LastChildFill="False" x:Name="Dock_Buttons">
+                        <Button x:Name="Button_Cancel" DockPanel.Dock="Right" Content="Cancel" Margin="12,0,0,0" IsCancel="True" Click="Button_Cancel_Click" />
+                        <Button x:Name="Button_Upload" DockPanel.Dock="Right" Content="Upload" Margin="12,0,0,0" IsDefault="True" Click="Button_Upload_Click" />
+                    </DockPanel>
+                </Border>
+                <Grid Margin="24,60,24,0">
+                    <DockPanel>
+                        <DockPanel DockPanel.Dock="Top">
+                            <Button x:Name="Button_Select" DockPanel.Dock="Right" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Content="" VerticalAlignment="Center" HorizontalAlignment="Center" Click="Button_Select_Click" />
+                            <common:Header DockPanel.Dock="Left" Title="Select a program" Subtitle="Click the open button to the right to select a program to upload" />
+                        </DockPanel>
+                        <DockPanel>
+
+                        </DockPanel>
+                    </DockPanel>
+                </Grid>
+            </DockPanel>
+        </Grid>
+        <common:TitleBar x:Name="TitleBar_Main" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
+    </Grid>
+</Window>
