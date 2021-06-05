@@ -43,7 +43,7 @@ namespace InDoOut_UI_Common.Windows
                             return client;
                         }
                         else
-                        { 
+                        {
                             UserMessageSystemHolder.Instance.CurrentUserMessageSystem.ShowError("Failed to connect", $"A connection couldn't be established to \"{address}\".");
                         }
                     }

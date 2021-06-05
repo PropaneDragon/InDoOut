@@ -143,6 +143,7 @@ namespace InDoOut_Viewer.UI.Controls.Sidebar
                             if (hasDownloaded)
                             {
                                 program.AssociatedProgram = temporaryProgram;
+                                AssociatedTaskView.CurrentProgramDisplay.AssociatedProgram = program;
                             }
                             else
                             {

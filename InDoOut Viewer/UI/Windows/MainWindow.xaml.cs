@@ -35,7 +35,7 @@ namespace InDoOut_Viewer
             if (sidebar != null)
             {
                 sidebar.AssociatedTaskView = taskView;
-            } 
+            }
         }
 
         private void Window_Closed(object sender, EventArgs e)
