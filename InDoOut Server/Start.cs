@@ -10,12 +10,12 @@ using System;
 
 namespace InDoOut_Server
 {
-    class Start
+    public class Start
     {
         private static LogFileSaver _logFileSaver = null;
         private static ConsoleServerManager _serverManager = null;
 
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             ExtendedConsole.SetUp();
 
