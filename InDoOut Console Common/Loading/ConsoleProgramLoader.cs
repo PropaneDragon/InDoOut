@@ -13,36 +13,45 @@ using System.Linq;
 
 namespace InDoOut_Console_Common.Loading
 {
-    public class ConsoleProgramLoader
+    public class ConsoleProgramLoader : ConsoleLoader
     {
+        public string ProgramLocation { get; set; } = null;
+        public string[] Arguments { get; set; } = null;
+
+        public IProgram LoadedProgram { get; private set; } = null;
+
+        public override string Name => "loading program";
+
         public ConsoleProgramLoader()
         {
-
         }
 
-        public IProgram LoadProgram(string programLocation, params string[] arguments)
+        public ConsoleProgramLoader(string programLocation, params string[] arguments)
         {
-            ExtendedConsole.WriteLine();
-            ConsoleFormatter.DrawSubtitle("Loading program");
+            ProgramLocation = programLocation;
+            Arguments = arguments;
+        }
 
-            if (!string.IsNullOrEmpty(programLocation))
+        protected override bool BeginLoad()
+        {
+            if (!string.IsNullOrEmpty(ProgramLocation))
             {
-                ConsoleFormatter.DrawInfoMessageLine("Attempting to load program from ", ConsoleFormatter.PurplePastel, programLocation, ConsoleFormatter.Primary, "...");
-
                 try
                 {
-                    using var fileStream = new FileStream(programLocation, FileMode.Open, FileAccess.Read);
+                    using var fileStream = new FileStream(ProgramLocation, FileMode.Open, FileAccess.Read);
 
-                    var program = new Program(arguments);
+                    var program = new Program(Arguments);
                     var storage = new ProgramJsonStorer(new FunctionBuilder(), LoadedPlugins.Instance);
-                    var hasLoaded = LoadProgram(program, storage, fileStream);
+                    var hasLoaded = WriteMessageLine(() => LoadProgram(program, storage, fileStream), "Attempting to load program from ", ConsoleFormatter.AccentTertiary, ProgramLocation, ConsoleFormatter.Primary, "...");
 
                     if (hasLoaded)
                     {
-                        _ = StandardLocations.Instance.SetPathTo(Location.SaveFile, programLocation);
+                        _ = StandardLocations.Instance.SetPathTo(Location.SaveFile, ProgramLocation);
 
-                        return program;
+                        LoadedProgram = program;
                     }
+
+                    return hasLoaded;
                 }
                 catch (Exception ex)
                 {
@@ -54,7 +63,7 @@ namespace InDoOut_Console_Common.Loading
                 ConsoleFormatter.DrawErrorMessageLine("Couldn't load program as it was empty.");
             }
 
-            return null;
+            return false;
         }
 
         private bool LoadProgram(IProgram program, IProgramStorer storage, Stream stream)

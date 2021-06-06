@@ -1,4 +1,5 @@
 ﻿using InDoOut_Console_Common.ConsoleExtensions;
+using InDoOut_Console_Common.Loading;
 using InDoOut_Core.Functions;
 using InDoOut_Executable_Core.Networking.Commands;
 using InDoOut_Executable_Core.Programs;
@@ -10,8 +11,10 @@ using System.Linq;
 
 namespace InDoOut_Server.Loading
 {
-    public class ConsoleCommandLoader
+    public class ConsoleCommandLoader : ConsoleLoader
     {
+        public override string Name => "registering server commands";
+
         private readonly IProgramHolder _programHolder = null;
         private readonly IServer _server = null;
 
@@ -21,11 +24,8 @@ namespace InDoOut_Server.Loading
             _programHolder = programHolder;
         }
 
-        public bool Load()
+        protected override bool BeginLoad()
         {
-            ExtendedConsole.WriteLine();
-            ConsoleFormatter.DrawInfoMessageLine("Registering server commands...");
-
             var results = new List<bool>
             {
                 AddCommandListener(new RequestProgramsServerCommand(_server, _programHolder)),
@@ -54,19 +54,7 @@ namespace InDoOut_Server.Loading
             {
                 if (listener != null)
                 {
-                    ConsoleFormatter.DrawInfoMessage(ConsoleFormatter.AccentTertiary, "  > ", ConsoleFormatter.Primary, "Registering ", ConsoleFormatter.AccentTertiary, listener.CommandName, ConsoleFormatter.Primary, " command... ");
-
-                    var added = _server.AddCommandListener(listener);
-                    if (added)
-                    {
-                        ExtendedConsole.WriteLine(ConsoleFormatter.Positive, "Success.");
-                    }
-                    else
-                    {
-                        ExtendedConsole.WriteLine(ConsoleFormatter.Negative, "Failed!");
-                    }
-
-                    return added;
+                    return WriteMessageLine(() => _server.AddCommandListener(listener), "Registering ", ConsoleFormatter.AccentTertiary, listener.CommandName, ConsoleFormatter.Primary, " command... ");
                 }
                 else
                 {

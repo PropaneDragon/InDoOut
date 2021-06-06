@@ -34,7 +34,7 @@ namespace InDoOut_Server.ServerNetworking
             var pluginLoader = new ConsolePluginLoader();
 
             commandLoader.Load();
-            pluginLoader.LoadPlugins();
+            pluginLoader.Load();
 
             ConsoleFormatter.DrawInfoMessage("Starting console logger... ");
 

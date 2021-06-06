@@ -59,7 +59,7 @@ namespace InDoOut_Console
                 else
                 {
                     var pluginLoader = new ConsolePluginLoader();
-                    if (pluginLoader.LoadPlugins())
+                    if (pluginLoader.Load())
                     {
                         if (!string.IsNullOrEmpty(applicationArguments.ProgramToLoad))
                         {
@@ -73,13 +73,11 @@ namespace InDoOut_Console
 
                                 _logFileSaver.LogFileName = logFileName;
 
-                                var programLoader = new ConsoleProgramLoader();
-                                var program = programLoader.LoadProgram(applicationArguments.ProgramToLoad, applicationArguments.LaodedProgramArguments.ToArray());
-
-                                if (program != null)
+                                var programLoader = new ConsoleProgramLoader(applicationArguments.ProgramToLoad, applicationArguments.LaodedProgramArguments.ToArray());
+                                if (programLoader.Load() && programLoader.LoadedProgram != null)
                                 {
                                     var programDisplay = new ProgramRunDisplay();
-                                    _ = programDisplay.StartProgramDisplay(program);
+                                    _ = programDisplay.StartProgramDisplay(programLoader.LoadedProgram);
                                 }
                             }
                         }

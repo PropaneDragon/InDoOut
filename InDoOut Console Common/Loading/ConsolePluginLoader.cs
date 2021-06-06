@@ -5,34 +5,20 @@ using InDoOut_Plugins.Loaders;
 
 namespace InDoOut_Console_Common.Loading
 {
-    public class ConsolePluginLoader
+    public class ConsolePluginLoader : ConsoleLoader
     {
-        public bool LoadPlugins()
-        {
-            ExtendedConsole.WriteLine();
-            ConsoleFormatter.DrawSubtitle("Loading plugins");
+        public override string Name => "loading plugins";
 
+        protected override bool BeginLoad()
+        {
             var pluginLoader = new PluginDirectoryLoader(new FunctionPluginLoader(), StandardLocations.Instance);
             var loadedPlugins = pluginLoader.LoadPlugins().Result;
             var pluginsLoaded = true;
 
             foreach (var plugin in loadedPlugins)
             {
-                ConsoleFormatter.DrawInfoMessage("Loading plugin ", ConsoleFormatter.PurplePastel, $"{plugin?.Plugin?.SafeName ?? "Invalid plugin"}", ConsoleFormatter.Primary, "... ");
-
-                if (plugin.Initialise())
-                {
-                    ExtendedConsole.WriteLine(ConsoleFormatter.GreenPastel, "Plugin loaded.");
-                }
-                else
-                {
-                    ExtendedConsole.WriteLine(ConsoleFormatter.RedPastel, "Plugin failed to load.");
-
-                    pluginsLoaded = false;
-                }
+                pluginsLoaded = WriteMessageLine(() => plugin.Initialise(), "Loading plugin ", ConsoleFormatter.AccentTertiary, $"{plugin?.Plugin?.SafeName ?? "Invalid plugin"}", ConsoleFormatter.Primary, "... ") && pluginsLoaded;
             }
-
-            ExtendedConsole.WriteLine();
 
             LoadedPlugins.Instance.Plugins = loadedPlugins;
 
