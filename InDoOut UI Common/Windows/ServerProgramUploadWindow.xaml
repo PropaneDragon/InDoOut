@@ -7,7 +7,7 @@
         xmlns:common="clr-namespace:InDoOut_UI_Common.Controls.Common"
         xmlns:background="clr-namespace:InDoOut_UI_Common.Controls.Background"
         mc:Ignorable="d"
-        Title="Select a program" Height="300" Width="900" WindowState="Normal" MinWidth="450" MinHeight="500" WindowStartupLocation="CenterOwner" ShowActivated="True" Loaded="Window_Loaded">
+        Title="Select a program" Height="300" Width="900" WindowState="Normal" MinWidth="450" MinHeight="500" WindowStartupLocation="CenterOwner" ShowActivated="True">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

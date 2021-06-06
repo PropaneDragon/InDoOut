@@ -84,7 +84,22 @@ namespace InDoOut_Viewer.UI.Controls.Sidebar
 
         private void Button_Upload_Click(object sender, RoutedEventArgs e)
         {
+            if (sender is Button senderButton && AssociatedTaskView?.CurrentProgramDisplay?.AssociatedProgram is NetworkedProgram program)
+            {
+                senderButton.IsEnabled = false;
 
+                if (program.Connected)
+                {
+                    var programUploader = new ServerProgramUploadWindow(program.AssociatedClient, new FunctionBuilder());
+                    _ = programUploader.ShowDialog();
+                }
+                else
+                {
+                    UserMessageSystemHolder.Instance.CurrentUserMessageSystem.ShowError("Please connect to a server first", "A program can only be uploaded if connected to a server.");
+                }
+
+                senderButton.IsEnabled = false;
+            }
         }
 
         private void Button_ConnectToRemote_Click(object sender, RoutedEventArgs e)
