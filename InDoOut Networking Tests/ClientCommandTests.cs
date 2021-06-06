@@ -159,7 +159,7 @@ namespace InDoOut_Networking_Tests
 
             Assert.IsTrue(await server.SendMessageAll($"{lastServerMessage.Id}{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}UploadProgram{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}{NetworkCodes.COMMAND_SUCCESS_IDENTIFIER}{NetworkCodes.COMMAND_DATA_GENERIC_SPLITTER}A message"));
             Assert.IsNotNull(sendTask.Result);
-            Assert.IsTrue(sendTask.Result);
+            Assert.IsTrue(sendTask.Result.Success);
 
             var programContents = File.ReadAllText(programLocation);
 

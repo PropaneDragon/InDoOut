@@ -9,6 +9,18 @@ using System.Threading.Tasks;
 
 namespace InDoOut_Networking.Client.Commands
 {
+    public struct UploadProgramResponse
+    {
+        public bool Success { get; }
+        public string Message { get; }
+
+        public UploadProgramResponse(bool success, string message) : this()
+        {
+            Success = success;
+            Message = message;
+        }
+    }
+
     public class UploadProgramClientCommand : Command<IClient>
     {
         public ILoadedPlugins LoadedPlugins { get; set; } = null;
@@ -20,7 +32,7 @@ namespace InDoOut_Networking.Client.Commands
             FunctionBuilder = functionBuilder;
         }
 
-        public async Task<bool> SendProgramAsync(IProgram program, CancellationToken cancellationToken)
+        public async Task<UploadProgramResponse> SendProgramAsync(IProgram program, CancellationToken cancellationToken)
         {
             if (FunctionBuilder != null && LoadedPlugins != null && program != null && !string.IsNullOrEmpty(program.Name))
             {
@@ -47,7 +59,7 @@ namespace InDoOut_Networking.Client.Commands
                 }
                 catch
                 {
-                    return false;
+                    return new UploadProgramResponse(false, "The program couldn't be loaded to be sent");
                 }
 
                 if (!string.IsNullOrWhiteSpace(programData))
@@ -56,19 +68,21 @@ namespace InDoOut_Networking.Client.Commands
                 }
             }
 
-            return false;
+            return new UploadProgramResponse(false, "There was a problem getting the required data to send the program to the server.");
         }
 
-        public async Task<bool> SendProgramAsync(string programData, CancellationToken cancellationToken)
+        public async Task<UploadProgramResponse> SendProgramAsync(string programData, CancellationToken cancellationToken)
         {
             if (!string.IsNullOrWhiteSpace(programData))
             {
                 var response = await SendMessageAwaitResponse(cancellationToken, programData);
+                var success = response != null && response.Valid && response.SuccessMessage != null;
+                var message = success ? response.SuccessMessage : response.FailureMessage;
 
-                return response != null && response.Valid && response.SuccessMessage != null;
+                return new UploadProgramResponse(success, message);
             }
 
-            return false;
+            return new UploadProgramResponse(false, "The program contains no data and can't be sent.");
         }
     }
 }

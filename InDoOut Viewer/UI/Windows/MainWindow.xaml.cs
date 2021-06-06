@@ -1,5 +1,6 @@
 ﻿using InDoOut_Executable_Core.Messaging;
 using InDoOut_UI_Common.Messaging;
+using InDoOut_Viewer.Loading;
 using InDoOut_Viewer.Programs;
 using System;
 using System.Threading.Tasks;
@@ -19,7 +20,7 @@ namespace InDoOut_Viewer
             //ProgramOptionsHolder.Instance.ProgramOptions = new ProgramOptions();
         }
 
-        private async void Window_Loaded(object sender, RoutedEventArgs e)
+        private async Task FinishLoading()
         {
             await Task.CompletedTask;
 
@@ -35,6 +36,20 @@ namespace InDoOut_Viewer
             if (sidebar != null)
             {
                 sidebar.AssociatedTaskView = taskView;
+            }
+        }
+
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var loadingTask = new MainWindowLoadingTask();
+
+            if (await loadingTask.RunAsync())
+            {
+                await FinishLoading();
+            }
+            else
+            {
+                Close();
             }
         }
 

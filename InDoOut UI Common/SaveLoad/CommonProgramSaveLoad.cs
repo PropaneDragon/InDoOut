@@ -14,6 +14,8 @@ namespace InDoOut_UI_Common.SaveLoad
     {
         public IProgramStorer ProgramStorer { get; } = new ProgramJsonStorer(new FunctionBuilder(), LoadedPlugins.Instance);
 
+        public string LoadProgramPath(Window parent = null) => ProgramSaveLoad.Instance.LoadProgramPathDialogAsync(ProgramStorer, parent);
+
         public async Task<IProgram> LoadProgramDialogAsync(Window parent = null) => await ProgramSaveLoad.Instance.LoadProgramDialogAsync(ProgramHolder.Instance, ProgramStorer, parent);
 
         public async Task<IProgram> LoadProgramAsync(string filePath) => await ProgramSaveLoad.Instance.LoadProgramAsync(filePath, ProgramHolder.Instance, ProgramStorer);

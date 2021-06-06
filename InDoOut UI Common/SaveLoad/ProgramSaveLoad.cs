@@ -17,9 +17,9 @@ namespace InDoOut_UI_Common.SaveLoad
 {
     public class ProgramSaveLoad : Singleton<ProgramSaveLoad>
     {
-        public async Task<IProgram> LoadProgramDialogAsync(IProgramHolder programHolder, IProgramStorer programStorer, Window parent = null)
+        public string LoadProgramPathDialogAsync(IProgramStorer programStorer, Window parent = null)
         {
-            if (programHolder != null && programStorer != null)
+            if (programStorer != null)
             {
                 var openDialog = new OpenFileDialog()
                 {
@@ -33,7 +33,22 @@ namespace InDoOut_UI_Common.SaveLoad
 
                 if (openDialog.ShowDialog(parent) ?? false)
                 {
-                    return await LoadProgramAsync(openDialog.FileName, programHolder, programStorer);
+                    return openDialog.FileName;
+                }
+            }
+
+            return null;
+        }
+
+        public async Task<IProgram> LoadProgramDialogAsync(IProgramHolder programHolder, IProgramStorer programStorer, Window parent = null)
+        {
+            if (programHolder != null && programStorer != null)
+            {
+                var path = LoadProgramPathDialogAsync(programStorer, parent);
+
+                if (!string.IsNullOrEmpty(path))
+                {
+                    return await LoadProgramAsync(path, programHolder, programStorer);
                 }
             }
 

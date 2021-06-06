@@ -87,12 +87,12 @@ namespace InDoOut_Networking_Tests
 
             var result = await uploadProgramClient.SendProgramAsync((IProgram)null, new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token);
 
-            Assert.IsFalse(result);
+            Assert.IsFalse(result.Success);
             Assert.AreEqual(0, programHolder.Programs.Count);
 
             result = await uploadProgramClient.SendProgramAsync((string)null, new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token);
 
-            Assert.IsFalse(result);
+            Assert.IsFalse(result.Success);
             Assert.AreEqual(0, programHolder.Programs.Count);
 
             var program = new Program();
@@ -103,7 +103,7 @@ namespace InDoOut_Networking_Tests
 
             result = await uploadProgramClient.SendProgramAsync(program, new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token);
 
-            Assert.IsTrue(result);
+            Assert.IsTrue(result.Success);
             Assert.AreEqual(1, programHolder.Programs.Count);
             Assert.AreEqual("First program", programHolder.Programs[0].Name);
             Assert.AreEqual(2, programHolder.Programs[0].Metadata.Count);
@@ -118,7 +118,7 @@ namespace InDoOut_Networking_Tests
 
             result = await uploadProgramClient.SendProgramAsync(program, new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token);
 
-            Assert.IsTrue(result);
+            Assert.IsTrue(result.Success);
             Assert.AreEqual(2, programHolder.Programs.Count);
             Assert.AreEqual("First program", programHolder.Programs[0].Name);
             Assert.AreEqual(2, programHolder.Programs[0].Metadata.Count);
@@ -226,7 +226,7 @@ namespace InDoOut_Networking_Tests
                     baseProgram.Metadata[Guid.NewGuid().ToString()] = Guid.NewGuid().ToString();
                 }
 
-                Assert.IsTrue(await uploadProgramClient.SendProgramAsync(baseProgram, new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token));
+                Assert.IsTrue((await uploadProgramClient.SendProgramAsync(baseProgram, new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token)).Success);
 
                 Assert.AreEqual(count + 1, programHolder.Programs.Count);
 
