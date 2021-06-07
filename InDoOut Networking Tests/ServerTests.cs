@@ -307,18 +307,20 @@ namespace InDoOut_Networking_Tests
             {
                 var text = File.ReadAllText(testTextFile, Encoding.UTF8).Replace("\r\n", "\n");
 
+                clientA.LastRawMessageReceived = null;
+
                 Assert.IsFalse(string.IsNullOrEmpty(text));
                 Assert.IsTrue(await server.SendMessageAll(text));
 
                 var messageTask = Task.Run(async () =>
                 {
-                    while (text != clientA.LastRawMessageReceived)
+                    while (string.IsNullOrEmpty(clientA.LastRawMessageReceived))
                     {
                         await Task.Delay(TimeSpan.FromMilliseconds(10));
                     }
                 });
 
-                Assert.AreEqual(messageTask, await Task.WhenAny(messageTask, Task.Delay(TimeSpan.FromSeconds(10))));
+                Assert.AreEqual(messageTask, await Task.WhenAny(messageTask, Task.Delay(TimeSpan.FromSeconds(10))), "Took too long to respond");
 
                 var textSplit = text.Split('\n');
                 var messageSplit = clientA.LastRawMessageReceived.Split('\n');

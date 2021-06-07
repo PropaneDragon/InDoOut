@@ -30,8 +30,8 @@ namespace InDoOut_Networking.Entities
         public List<IEndFunction> EndFunctions => new List<IEndFunction>();
         public List<string> PassthroughValues => new List<string>();
 
-        public DateTime LastTriggerTime => DateTime.Now; //Todo - Synchronise with networked data.
-        public DateTime LastCompletionTime => DateTime.Now; //Todo - Synchronise with networked data.
+        public DateTime LastTriggerTime { get; set; } = DateTime.MinValue;
+        public DateTime LastCompletionTime { get; set; } = DateTime.MinValue;
 
         public Guid Id { get; set; } = Guid.NewGuid();
 

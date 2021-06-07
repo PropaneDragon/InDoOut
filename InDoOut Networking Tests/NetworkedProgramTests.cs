@@ -54,10 +54,10 @@ namespace InDoOut_Networking_Tests
             Assert.AreEqual(networkedProgram.Id, status.Id);
             Assert.AreEqual(networkedProgram.LastCompletionTime, status.LastCompletionTime);
             Assert.AreEqual(networkedProgram.LastTriggerTime, status.LastTriggerTime);
-            Assert.AreEqual(networkedProgram.Name, status.Name);
+            Assert.AreEqual(networkedProgram.Name, $"{status.Name} [Disconnected]");
 
             status.Running = false;
-            status.Stopping = true;
+            status.Finishing = true;
             status.Name = "The name has changed";
 
             Assert.IsTrue(networkedProgram.UpdateFromStatus(status));
@@ -69,7 +69,7 @@ namespace InDoOut_Networking_Tests
             Assert.AreEqual(networkedProgram.Id, status.Id);
             Assert.AreEqual(networkedProgram.LastCompletionTime, status.LastCompletionTime);
             Assert.AreEqual(networkedProgram.LastTriggerTime, status.LastTriggerTime);
-            Assert.AreEqual(networkedProgram.Name, status.Name);
+            Assert.AreEqual(networkedProgram.Name, $"{status.Name} [Disconnected]");
         }
 
         [TestMethod]

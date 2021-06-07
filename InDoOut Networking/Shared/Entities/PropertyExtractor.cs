@@ -20,6 +20,8 @@ namespace InDoOut_Networking.Shared.Entities
 
         public bool ExtractFrom(ReadType toExtractFrom)
         {
+            var extractedAll = true;
+
             if (toExtractFrom != null)
             {
                 foreach (var cachedProperty in _cachedProperties)
@@ -33,18 +35,22 @@ namespace InDoOut_Networking.Shared.Entities
                             var propertyValue = property.GetValue(toExtractFrom);
 
                             cachedProperty.SetValue(StorageObject, propertyValue);
-
-                            return true;
                         }
+                        else
+                        {
+                            extractedAll = false;
+                        } 
                     }
                 }
             }
 
-            return false;
+            return extractedAll;
         }
 
         public bool ApplyTo(ReadType toWriteTo)
         {
+            var appliedAll = true;
+
             if (toWriteTo != null)
             {
                 foreach (var cachedProperty in _cachedProperties)
@@ -61,15 +67,17 @@ namespace InDoOut_Networking.Shared.Entities
                             if (setMethod != null)
                             {
                                 _ = setMethod.Invoke(toWriteTo, new[] { propertyValue });
-
-                                return true;
                             }
+                            else
+                            {
+                                appliedAll = false;
+                            } 
                         }
                     }
                 }
             }
 
-            return false;
+            return appliedAll;
         }
 
         private void CacheExtractAttributes(StorageType storage)

@@ -13,11 +13,11 @@ namespace InDoOut_Networking.Shared.Entities
 
         [JsonProperty("lastTriggerTime")]
         [ExtractProperty("LastTriggerTime")]
-        public DateTime? LastTriggerTime { get; set; } = null;
+        public DateTime LastTriggerTime { get; set; } = DateTime.MinValue;
 
         [JsonProperty("lastCompletionTime")]
         [ExtractProperty("LastCompletionTime")]
-        public DateTime? LastCompletionTime { get; set; } = null;
+        public DateTime LastCompletionTime { get; set; } = DateTime.MinValue;
 
         [JsonProperty("state")]
         [ExtractProperty("State")]
