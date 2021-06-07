@@ -1,7 +1,4 @@
-﻿using InDoOut_Core.Entities.Functions;
-using InDoOut_Core.Entities.Programs;
-using InDoOut_Core_Tests;
-using InDoOut_Networking.Entities;
+﻿using InDoOut_Core_Tests;
 using InDoOut_Networking.Shared.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -13,75 +10,87 @@ namespace InDoOut_Networking_Tests
     public class NetworkedProgramTests
     {
         [TestMethod]
-        public void PopulateFromProgram()
-        {
-            var program = new Program();
-            var function1 = new TestFunction() { Id = Guid.NewGuid() };
-            var function2 = new TestFunction() { Id = Guid.NewGuid() };
-            var client = new TestClient();
-            var networkedProgram = new NetworkedProgram(client);
-
-            Assert.AreNotEqual(program, networkedProgram.AssociatedProgram);
-            Assert.AreNotEqual(program.Id, networkedProgram.Id);
-            Assert.AreEqual(0, networkedProgram.Functions.Count);
-
-            networkedProgram.AssociatedProgram = program;
-
-            Assert.AreEqual(program, networkedProgram.AssociatedProgram);
-            Assert.AreEqual(program.Id, networkedProgram.Id);
-            Assert.AreEqual(0, networkedProgram.Functions.Count);
-
-            _ = program.AddFunction(function1);
-
-            Assert.AreEqual(1, networkedProgram.Functions.Count);
-            Assert.AreEqual(function1.Id, networkedProgram.Functions[0].Id);
-
-            _ = program.AddFunction(function2);
-
-            Assert.AreEqual(2, networkedProgram.Functions.Count);
-            Assert.AreEqual(function1.Id, networkedProgram.Functions[0].Id);
-            Assert.AreEqual(function2.Id, networkedProgram.Functions[1].Id);
-        }
-
-        [TestMethod]
         public void UpdateFromStatus()
         {
             var client = new TestClient();
             var networkedProgram = new TestNetworkedProgram(client);
             var status = new ProgramStatus()
             {
+                Running = true,
                 Id = Guid.NewGuid(),
-                Name = networkedProgram.Name,
-                Running = true
+                Finishing = false,
+                LastCompletionTime = DateTime.Today.AddDays(1),
+                LastTriggerTime = DateTime.Today,
+                Name = "This is a test",
+                Stopping = false
             };
 
-            Assert.AreEqual(false, networkedProgram.Running);
-
-            Assert.IsFalse(networkedProgram.UpdateFromProgramStatusPublic(null));
-            Assert.IsFalse(networkedProgram.UpdateFromProgramStatusPublic(status));
             Assert.IsFalse(networkedProgram.Running);
+            Assert.IsFalse(networkedProgram.Finishing);
+            Assert.IsFalse(networkedProgram.Stopping);
 
-            status.Id = networkedProgram.Id;
+            Assert.AreNotEqual(networkedProgram.Id, status.Id);
+            Assert.AreNotEqual(networkedProgram.LastCompletionTime, status.LastCompletionTime);
+            Assert.AreNotEqual(networkedProgram.LastTriggerTime, status.LastTriggerTime);
+            Assert.AreNotEqual(networkedProgram.Name, status.Name);
 
-            Assert.IsTrue(networkedProgram.UpdateFromProgramStatusPublic(status));
+            Assert.IsFalse(networkedProgram.UpdateFromStatus(null));
+
+            Assert.IsFalse(networkedProgram.Running);
+            Assert.IsFalse(networkedProgram.Finishing);
+            Assert.IsFalse(networkedProgram.Stopping);
+
+            Assert.AreNotEqual(networkedProgram.Id, status.Id);
+            Assert.AreNotEqual(networkedProgram.LastCompletionTime, status.LastCompletionTime);
+            Assert.AreNotEqual(networkedProgram.LastTriggerTime, status.LastTriggerTime);
+            Assert.AreNotEqual(networkedProgram.Name, status.Name);
+
+            Assert.IsTrue(networkedProgram.UpdateFromStatus(status));
+
             Assert.IsTrue(networkedProgram.Running);
+            Assert.IsFalse(networkedProgram.Finishing);
+            Assert.IsFalse(networkedProgram.Stopping);
+
+            Assert.AreEqual(networkedProgram.Id, status.Id);
+            Assert.AreEqual(networkedProgram.LastCompletionTime, status.LastCompletionTime);
+            Assert.AreEqual(networkedProgram.LastTriggerTime, status.LastTriggerTime);
+            Assert.AreEqual(networkedProgram.Name, status.Name);
 
             status.Running = false;
+            status.Stopping = true;
+            status.Name = "The name has changed";
 
-            Assert.IsTrue(networkedProgram.UpdateFromProgramStatusPublic(status));
+            Assert.IsTrue(networkedProgram.UpdateFromStatus(status));
+
             Assert.IsFalse(networkedProgram.Running);
+            Assert.IsTrue(networkedProgram.Finishing);
+            Assert.IsFalse(networkedProgram.Stopping);
 
+            Assert.AreEqual(networkedProgram.Id, status.Id);
+            Assert.AreEqual(networkedProgram.LastCompletionTime, status.LastCompletionTime);
+            Assert.AreEqual(networkedProgram.LastTriggerTime, status.LastTriggerTime);
+            Assert.AreEqual(networkedProgram.Name, status.Name);
+        }
+
+        [TestMethod]
+        public void UpdateFromStatusWithFunction()
+        {
             var function1 = new TestFunction(() => Thread.Sleep(TimeSpan.FromSeconds(1)));
             var function2 = new TestFunction(() => Thread.Sleep(TimeSpan.FromSeconds(1)));
+            var client = new TestClient();
+            var networkedProgram = new TestNetworkedProgram(client);
+            var status = new ProgramStatus()
+            {
+                Running = true,
+                Id = Guid.NewGuid(),
+                Finishing = false,
+                LastCompletionTime = DateTime.Today.AddDays(1),
+                LastTriggerTime = DateTime.Today,
+                Name = "This is a test",
+                Stopping = false
+            };
 
-            var program = new Program();
-
-            Assert.IsTrue(program.AddFunction(function1));
-            Assert.IsTrue(program.AddFunction(function2));
-
-            networkedProgram.AssociatedProgram = program;
-
-            Assert.AreEqual(2, networkedProgram.NetworkedFunctions.Count);
+            /*Assert.AreEqual(2, networkedProgram.NetworkedFunctions.Count);
 
             var currentFunction = networkedProgram.NetworkedFunctions[0];
             Assert.AreEqual(function1.Id, currentFunction.Id);
@@ -193,7 +202,7 @@ namespace InDoOut_Networking_Tests
             Assert.IsFalse(currentFunction.Running);
             Assert.AreEqual(State.Completing, currentFunction.State);
             Assert.AreEqual(DateTime.Today, currentFunction.LastTriggerTime);
-            Assert.AreEqual(DateTime.Today, currentFunction.LastCompletionTime);
+            Assert.AreEqual(DateTime.Today, currentFunction.LastCompletionTime);*/ //Todo
         }
     }
 }

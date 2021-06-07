@@ -1,7 +1,5 @@
 ﻿using InDoOut_Core.Entities.Core;
 using InDoOut_Core.Entities.Functions;
-using InDoOut_Core.Entities.Programs;
-using InDoOut_Core.Logging;
 using InDoOut_Networking.Client;
 using InDoOut_Networking.Client.Commands;
 using InDoOut_Networking.Shared.Entities;
@@ -15,34 +13,31 @@ namespace InDoOut_Networking.Entities
 {
     public class NetworkedProgram : INetworkedProgram
     {
-        private readonly List<INetworkedFunction> _networkedFunctions = new List<INetworkedFunction>();
-        private IProgram _internalProgram = new Program();
+        private string _name = null;
 
         public bool Connected => AssociatedClient?.Connected ?? false;
         public bool Running { get; private set; } = false;
         public bool Stopping { get; private set; } = false;
         public bool Finishing { get; private set; } = false;
 
-        public string Name => AssociatedProgram?.Name != null ? $"{AssociatedProgram?.Name} [{(Connected ? "Connected" : "Disconnected")}]" : null;
-        public string ReturnCode => AssociatedProgram?.ReturnCode;
+        public string Name { get => _name != null ? $"{_name} [{(Connected ? "Connected" : "Disconnected")}]" : null; set => _name = value; }
+        public string ReturnCode { get; set; }
 
         public IClient AssociatedClient { get; protected set; } = null;
-        public IProgram AssociatedProgram { get => _internalProgram; set => PopulateFromProgram(value); }
 
-        public List<IFunction> Functions => AssociatedProgram?.Functions;
-        public List<IStartFunction> StartFunctions => AssociatedProgram?.StartFunctions;
-        public List<IEndFunction> EndFunctions => AssociatedProgram?.EndFunctions;
-        public List<INetworkedFunction> NetworkedFunctions => Functions.Select(function => GetNetworkedFunctionForFunction(function)).ToList();
-        public List<string> PassthroughValues => AssociatedProgram?.PassthroughValues;
+        public List<IFunction> Functions { get; } = new List<IFunction>();
+        public List<IStartFunction> StartFunctions => new List<IStartFunction>();
+        public List<IEndFunction> EndFunctions => new List<IEndFunction>();
+        public List<string> PassthroughValues => new List<string>();
 
         public DateTime LastTriggerTime => DateTime.Now; //Todo - Synchronise with networked data.
         public DateTime LastCompletionTime => DateTime.Now; //Todo - Synchronise with networked data.
 
-        public Guid Id { get => AssociatedProgram?.Id ?? Guid.Empty; set => AssociatedProgram.Id = value; }
+        public Guid Id { get; set; } = Guid.NewGuid();
 
-        public Dictionary<string, string> Metadata => AssociatedProgram?.Metadata;
+        public Dictionary<string, string> Metadata { get; } = new Dictionary<string, string>();
 
-        private NetworkedProgram(params string[] _)
+        private NetworkedProgram()
         {
         }
 
@@ -51,9 +46,33 @@ namespace InDoOut_Networking.Entities
             AssociatedClient = client;
         }
 
-        public NetworkedProgram(IClient client, IProgram program) : this(client)
+        public bool UpdateFromStatus(ProgramStatus status)
         {
-            AssociatedProgram = program;
+            if (status != null)
+            {
+                var propertyExtractor = new PropertyExtractor<ProgramStatus, NetworkedProgram>(status);
+                var convertedAll = true;
+
+                foreach (var functionStatus in status.Functions)
+                {
+                    var foundFunction = Functions.FirstOrDefault(function => function.Id == functionStatus.Id);
+                    if (foundFunction is INetworkedFunction networkedFunction)
+                    {
+                        convertedAll = networkedFunction.UpdateFromStatus(functionStatus) && convertedAll;
+                    }
+                    else
+                    {
+                        var functionToAdd = new NetworkedFunction();
+                        convertedAll = functionToAdd.UpdateFromStatus(functionStatus) && convertedAll;
+
+                        Functions.Add(functionToAdd);
+                    }
+                }
+
+                return propertyExtractor.ApplyTo(this) && convertedAll;
+            }
+
+            return false;
         }
 
         public async Task<bool> Reload(CancellationToken cancellationToken)
@@ -85,7 +104,7 @@ namespace InDoOut_Networking.Entities
 
                     if (status != null)
                     {
-                        return UpdateFromProgramStatus(status);
+                        return UpdateFromStatus(status);
                     }
                 }
                 catch { }
@@ -98,7 +117,7 @@ namespace InDoOut_Networking.Entities
 
         public void Stop() { } //Todo - Send data to network
 
-        public void SetName(string name) => AssociatedProgram?.SetName(name);
+        public void SetName(string name) => Name = name;
 
         public bool AddFunction(IFunction function) => false;
 
@@ -115,70 +134,5 @@ namespace InDoOut_Networking.Entities
         public bool HasCompletedSince(DateTime time) => false; //Todo
 
         public bool HasCompletedWithin(TimeSpan time) => false; //Todo
-
-        private void PopulateFromProgram(IProgram program)
-        {
-            _internalProgram = program;
-            _networkedFunctions.Clear();
-        }
-
-        public INetworkedFunction GetNetworkedFunctionForFunction(IFunction function)
-        {
-            if (function != null)
-            {
-                var foundNetworkedFunction = _networkedFunctions.FirstOrDefault(networkedFunction => networkedFunction.Id == function.Id);
-                if (foundNetworkedFunction != null)
-                {
-                    return foundNetworkedFunction;
-                }
-                else
-                {
-                    var networkedFunction = new NetworkedFunction(function);
-
-                    _networkedFunctions.Add(networkedFunction);
-
-                    return networkedFunction;
-                }
-            }
-
-            return null;
-        }
-
-        protected bool UpdateFromProgramStatus(ProgramStatus status)
-        {
-            var anythingUpdated = false;
-
-            if (status != null && status.Id == Id)
-            {
-                anythingUpdated = true;
-
-                Running = status.Running;
-
-                foreach (var function in NetworkedFunctions)
-                {
-                    if (function is INetworkedFunction networkedFunction)
-                    {
-                        if (networkedFunction.UpdateFromStatus(status))
-                        {
-                            anythingUpdated = true;
-                        }
-                        else
-                        {
-                            Log.Instance.Error("Failed to update function ", networkedFunction?.Id, " from given ProgramStatus. This possibly means we're out of sync.");
-                        }
-                    }
-                    else
-                    {
-                        Log.Instance.Error("The function ", function?.Id, " is not a NetworkedFunction and cannot be updated. This state shouldn't have happened and needs investigation.");
-                    }
-                }
-            }
-            else
-            {
-                Log.Instance.Error("The given status ", status?.Id, " doesn't match the ID of the program it has been run on (", Id, ") and can't be updated.");
-            }
-
-            return anythingUpdated;
-        }
     }
 }

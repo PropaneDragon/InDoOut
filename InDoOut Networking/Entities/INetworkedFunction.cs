@@ -5,6 +5,6 @@ namespace InDoOut_Networking.Entities
 {
     public interface INetworkedFunction : IFunction
     {
-        bool UpdateFromStatus(ProgramStatus status);
+        bool UpdateFromStatus(FunctionStatus status);
     }
 }

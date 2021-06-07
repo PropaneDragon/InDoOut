@@ -1,4 +1,5 @@
 ﻿using InDoOut_Core.Entities.Programs;
+using InDoOut_Networking.Entities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
@@ -10,28 +11,35 @@ namespace InDoOut_Networking.Shared.Entities
     public class ProgramStatus
     {
         [JsonProperty("running")]
+        [ExtractProperty("Running")]
         public bool Running { get; set; } = false;
 
         [JsonProperty("stopping")]
+        [ExtractProperty("Stopping")]
         public bool Stopping { get; set; } = false;
 
         [JsonProperty("finishing")]
+        [ExtractProperty("Finishing")]
         public bool Finishing { get; set; } = false;
 
         [JsonProperty("name")]
+        [ExtractProperty("Name")]
         public string Name { get; set; } = null;
 
         [JsonProperty("lastTriggerTime")]
+        [ExtractProperty("LastTriggerTime")]
         public DateTime? LastTriggerTime { get; set; } = null;
 
         [JsonProperty("lastCompletionTime")]
+        [ExtractProperty("LastCompletionTime")]
         public DateTime? LastCompletionTime { get; set; } = null;
 
         [JsonProperty("id")]
+        [ExtractProperty("Id")]
         public Guid Id { get; set; } = Guid.Empty;
 
         [JsonProperty("functionStatus")]
-        public FunctionStatus[] Functions { get; set; } = null;
+        public FunctionStatus[] Functions { get; set; } = new FunctionStatus[] { };
 
         public static ProgramStatus FromJson(string json)
         {
@@ -48,18 +56,10 @@ namespace InDoOut_Networking.Shared.Entities
         public static ProgramStatus FromProgram(IProgram program)
         {
             var functions = program.Functions.Select(function => FunctionStatus.FromFunction(function)).ToArray();
+            var status = new ProgramStatus() { Functions = functions };
+            var propertyExtractor = new PropertyExtractor<ProgramStatus, IProgram>(status);
 
-            return new ProgramStatus()
-            {
-                Id = program.Id,
-                Name = program.Name,
-                Running = program.Running,
-                Stopping = program.Stopping,
-                Finishing = program.Finishing,
-                LastCompletionTime = program.LastCompletionTime,
-                LastTriggerTime = program.LastTriggerTime,
-                Functions = functions
-            };
+            return propertyExtractor.ExtractFrom(program) ? status : null;
         }
 
         public string ToJson()

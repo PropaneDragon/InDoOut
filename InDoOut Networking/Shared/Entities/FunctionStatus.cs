@@ -8,15 +8,19 @@ namespace InDoOut_Networking.Shared.Entities
     public class FunctionStatus
     {
         [JsonProperty("id")]
+        [ExtractProperty("Id")]
         public Guid Id { get; set; } = Guid.Empty;
 
         [JsonProperty("lastTriggerTime")]
+        [ExtractProperty("LastTriggerTime")]
         public DateTime? LastTriggerTime { get; set; } = null;
 
         [JsonProperty("lastCompletionTime")]
+        [ExtractProperty("LastCompletionTime")]
         public DateTime? LastCompletionTime { get; set; } = null;
 
         [JsonProperty("state")]
+        [ExtractProperty("State")]
         public State State { get; set; } = State.Unknown;
 
         public static FunctionStatus FromJson(string json)
@@ -33,20 +37,10 @@ namespace InDoOut_Networking.Shared.Entities
 
         public static FunctionStatus FromFunction(IFunction function)
         {
-            if (function != null)
-            {
-                var status = new FunctionStatus()
-                {
-                    Id = function.Id,
-                    LastTriggerTime = function.LastTriggerTime,
-                    LastCompletionTime = function.LastCompletionTime,
-                    State = function.State
-                };
+            var status = new FunctionStatus();
+            var propertyExtractor = new PropertyExtractor<FunctionStatus, IFunction>(status);
 
-                return status;
-            }
-
-            return null;
+            return propertyExtractor.ExtractFrom(function) ? status : null;
         }
 
         public string ToJson()
