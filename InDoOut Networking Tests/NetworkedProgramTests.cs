@@ -95,12 +95,13 @@ namespace InDoOut_Networking_Tests
 
             var function1Status = new FunctionStatus() { Id = function1.Id, LastCompletionTime = DateTime.Today.AddDays(-1), LastTriggerTime = DateTime.Today.AddDays(-2), State = State.InError };
             var function2Status = new FunctionStatus() { Id = function2.Id, LastCompletionTime = DateTime.Today, LastTriggerTime = DateTime.Today, State = State.Processing };
+            var randomFunctionStatus = new FunctionStatus() { Id = Guid.NewGuid(), LastCompletionTime = DateTime.Today, LastTriggerTime = DateTime.Today.AddDays(-1), State = State.Unknown };
 
             status.Id = networkedProgram.Id;
             status.Name = networkedProgram.Name;
             status.Functions = new FunctionStatus[]
             {
-                new FunctionStatus() { Id = Guid.NewGuid(), LastCompletionTime = DateTime.Today, LastTriggerTime = DateTime.Today.AddDays(-1), State = State.Unknown },
+                randomFunctionStatus,
                 function2Status
             };
 
@@ -157,8 +158,7 @@ namespace InDoOut_Networking_Tests
 
             status.Functions = new FunctionStatus[]
             {
-                function1Status,
-                function2Status
+                function1Status
             };
 
             Assert.IsTrue(networkedProgram.UpdateFromStatus(status));
