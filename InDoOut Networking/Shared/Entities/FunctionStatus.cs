@@ -7,6 +7,10 @@ namespace InDoOut_Networking.Shared.Entities
     [JsonObject("functionStatus")]
     public class FunctionStatus
     {
+        [JsonProperty("name")]
+        [ExtractProperty("Name")]
+        public string Name { get; set; } = null;
+
         [JsonProperty("id")]
         [ExtractProperty("Id")]
         public Guid Id { get; set; } = Guid.Empty;
