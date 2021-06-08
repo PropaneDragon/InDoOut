@@ -4,6 +4,7 @@ using InDoOut_Core.Threading.Safety;
 using InDoOut_Networking.Shared.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace InDoOut_Networking.Entities
 {
@@ -35,8 +36,8 @@ namespace InDoOut_Networking.Entities
         public List<IOutput> Outputs { get; private set; } = new List<IOutput>();
         public List<IProperty> Properties { get; private set; } = new List<IProperty>();
         public List<IResult> Results { get; private set; } = new List<IResult>();
-        public List<IOutput> Connections { get; private set; } = new List<IOutput>();
-        public List<ITriggerable> RawConnections { get; private set; } = new List<ITriggerable>();
+        public List<IOutput> Connections  => Outputs;
+        public List<ITriggerable> RawConnections => Outputs.Cast<ITriggerable>().ToList();
 
         public Dictionary<string, string> Metadata { get; private set; } = new Dictionary<string, string>();
 
