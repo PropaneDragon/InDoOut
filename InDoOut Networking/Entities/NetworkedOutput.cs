@@ -3,11 +3,10 @@ using InDoOut_Core.Entities.Functions;
 using InDoOut_Networking.Shared.Entities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace InDoOut_Networking.Entities
 {
-    public class NetworkedInput : INetworkedInput
+    public class NetworkedOutput : INetworkedOutput
     {
         public bool Running { get; private set; } = false;
         public bool Finishing { get; private set; } = false;
@@ -21,23 +20,23 @@ namespace InDoOut_Networking.Entities
 
         public Dictionary<string, string> Metadata => new Dictionary<string, string>();
 
-        public List<IFunction> Connections => new List<IFunction>() { Parent };
-        public List<ITriggerable> RawConnections => Connections.Cast<ITriggerable>().ToList();
+        public List<IInput> Connections => new List<IInput>();
+        public List<ITriggerable> RawConnections => new List<ITriggerable>();
 
-        public IFunction Parent { get; private set; } = null;
+        public void Trigger(IFunction triggeredBy) { }
 
-        public void Trigger(IOutput triggeredBy) { }
-
-        public bool UpdateFromStatus(InputStatus status)
+        public bool UpdateFromStatus(OutputStatus status)
         {
             if (status != null)
             {
-                
+
             }
 
             return false;
         }
 
+        public bool Connect(IInput input) => false;
+        public bool Disconnect(IInput input) => false;
         public bool CanAcceptConnection(IEntity entity) => false;
         public bool CanBeTriggered(IEntity entity) => false;
         public bool HasBeenTriggeredSince(DateTime time) => false; //Todo

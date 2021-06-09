@@ -49,8 +49,13 @@ namespace InDoOut_Networking.Entities
         {
             if (status != null)
             {
+                var convertedAll = true;
                 var propertyExtractor = new PropertyExtractor<FunctionStatus, NetworkedFunction>(status);
-                return propertyExtractor.ApplyTo(this);
+
+                convertedAll = UpdateInputsFromStatus(status) && convertedAll;
+                convertedAll = UpdateOutputsFromStatus(status) && convertedAll;
+
+                return propertyExtractor.ApplyTo(this) && convertedAll;
             }
 
             return false;
@@ -63,5 +68,51 @@ namespace InDoOut_Networking.Entities
         public bool HasCompletedSince(DateTime time) => false; //Todo link up with synchronised times
         public bool HasCompletedWithin(TimeSpan time) => false; //Todo link up with synchronised times
         public void Trigger(IInput triggeredBy) { } //Todo synchronise with networked entity
+
+        private bool UpdateOutputsFromStatus(FunctionStatus status)
+        {
+            var convertedAll = true;
+
+            foreach (var outputStatus in status.Outputs)
+            {
+                var foundOutput = Outputs.FirstOrDefault(output => output.Id == outputStatus.Id);
+                if (foundOutput is INetworkedOutput networkedOutput)
+                {
+                    convertedAll = networkedOutput.UpdateFromStatus(outputStatus) && convertedAll;
+                }
+                else
+                {
+                    var outputToAdd = new NetworkedOutput();
+                    convertedAll = outputToAdd.UpdateFromStatus(outputStatus) && convertedAll;
+
+                    Outputs.Add(outputToAdd);
+                }
+            }
+
+            return convertedAll;
+        }
+
+        private bool UpdateInputsFromStatus(FunctionStatus status)
+        {
+            var convertedAll = true;
+
+            foreach (var inputStatus in status.Inputs)
+            {
+                var foundInput = Inputs.FirstOrDefault(input => input.Id == inputStatus.Id);
+                if (foundInput is INetworkedInput networkedInput)
+                {
+                    convertedAll = networkedInput.UpdateFromStatus(inputStatus) && convertedAll;
+                }
+                else
+                {
+                    var inputToAdd = new NetworkedInput();
+                    convertedAll = inputToAdd.UpdateFromStatus(inputStatus) && convertedAll;
+
+                    Inputs.Add(inputToAdd);
+                }
+            }
+
+            return convertedAll;
+        }
     }
 }

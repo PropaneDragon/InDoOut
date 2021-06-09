@@ -51,28 +51,35 @@ namespace InDoOut_Networking.Entities
             if (status != null)
             {
                 var propertyExtractor = new PropertyExtractor<ProgramStatus, NetworkedProgram>(status);
-                var convertedAll = true;
-
-                foreach (var functionStatus in status.Functions)
-                {
-                    var foundFunction = Functions.FirstOrDefault(function => function.Id == functionStatus.Id);
-                    if (foundFunction is INetworkedFunction networkedFunction)
-                    {
-                        convertedAll = networkedFunction.UpdateFromStatus(functionStatus) && convertedAll;
-                    }
-                    else
-                    {
-                        var functionToAdd = new NetworkedFunction();
-                        convertedAll = functionToAdd.UpdateFromStatus(functionStatus) && convertedAll;
-
-                        Functions.Add(functionToAdd);
-                    }
-                }
+                var convertedAll = UpdateFunctionsFromStatus(status);
 
                 return propertyExtractor.ApplyTo(this) && convertedAll;
             }
 
             return false;
+        }
+
+        private bool UpdateFunctionsFromStatus(ProgramStatus status)
+        {
+            var convertedAll = true;
+
+            foreach (var functionStatus in status.Functions)
+            {
+                var foundFunction = Functions.FirstOrDefault(function => function.Id == functionStatus.Id);
+                if (foundFunction is INetworkedFunction networkedFunction)
+                {
+                    convertedAll = networkedFunction.UpdateFromStatus(functionStatus) && convertedAll;
+                }
+                else
+                {
+                    var functionToAdd = new NetworkedFunction();
+                    convertedAll = functionToAdd.UpdateFromStatus(functionStatus) && convertedAll;
+
+                    Functions.Add(functionToAdd);
+                }
+            }
+
+            return convertedAll;
         }
 
         public async Task<bool> Reload(CancellationToken cancellationToken)

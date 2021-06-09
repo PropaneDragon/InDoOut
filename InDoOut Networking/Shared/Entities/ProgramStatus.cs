@@ -25,6 +25,10 @@ namespace InDoOut_Networking.Shared.Entities
         [ExtractProperty("Name")]
         public string Name { get; set; } = null;
 
+        [JsonProperty("id")]
+        [ExtractProperty("Id")]
+        public Guid Id { get; set; } = Guid.Empty;
+
         [JsonProperty("lastTriggerTime")]
         [ExtractProperty("LastTriggerTime")]
         public DateTime LastTriggerTime { get; set; } = DateTime.MinValue;
@@ -32,10 +36,6 @@ namespace InDoOut_Networking.Shared.Entities
         [JsonProperty("lastCompletionTime")]
         [ExtractProperty("LastCompletionTime")]
         public DateTime LastCompletionTime { get; set; } = DateTime.MinValue;
-
-        [JsonProperty("id")]
-        [ExtractProperty("Id")]
-        public Guid Id { get; set; } = Guid.Empty;
 
         [JsonProperty("functionStatus")]
         public FunctionStatus[] Functions { get; set; } = new FunctionStatus[] { };
