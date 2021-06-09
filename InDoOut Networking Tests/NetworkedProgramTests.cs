@@ -96,6 +96,9 @@ namespace InDoOut_Networking_Tests
             var function1Status = new FunctionStatus() { Id = function1.Id, LastCompletionTime = DateTime.Today.AddDays(-1), LastTriggerTime = DateTime.Today.AddDays(-2), State = State.InError };
             var function2Status = new FunctionStatus() { Id = function2.Id, LastCompletionTime = DateTime.Today, LastTriggerTime = DateTime.Today, State = State.Processing };
             var randomFunctionStatus = new FunctionStatus() { Id = Guid.NewGuid(), LastCompletionTime = DateTime.Today, LastTriggerTime = DateTime.Today.AddDays(-1), State = State.Unknown };
+            var input1Status = new InputStatus() { Finishing = false, Id = Guid.NewGuid(), LastCompletionTime = DateTime.MinValue, LastTriggerTime = DateTime.Today.AddDays(-10), Name = "Test input", Running = false };
+            var input2Status = new InputStatus() { Finishing = false, Id = Guid.NewGuid(), LastCompletionTime = DateTime.Today.AddHours(-2), LastTriggerTime = DateTime.Today.AddDays(-10), Name = "Another input", Running = true };
+            var output1Status = new OutputStatus() { Finishing = true, Id = Guid.NewGuid(), LastCompletionTime = DateTime.Today.AddMinutes(-10), LastTriggerTime = DateTime.Today.AddMonths(-1), Name = "Output", Running = true };
 
             status.Id = networkedProgram.Id;
             status.Name = networkedProgram.Name;
@@ -103,6 +106,21 @@ namespace InDoOut_Networking_Tests
             {
                 randomFunctionStatus,
                 function2Status
+            };
+
+            function1Status.Inputs = new InputStatus[]
+            {
+                input1Status
+            };
+
+            function2Status.Inputs = new InputStatus[]
+            {
+                input1Status,
+                input2Status
+            };
+            function2Status.Outputs = new OutputStatus[]
+            {
+                output1Status
             };
 
             Assert.IsTrue(networkedProgram.UpdateFromStatus(status));
@@ -115,6 +133,10 @@ namespace InDoOut_Networking_Tests
             Assert.AreEqual(State.Unknown, currentFunction.State);
             Assert.AreEqual(DateTime.Today.AddDays(-1), currentFunction.LastTriggerTime);
             Assert.AreEqual(DateTime.Today, currentFunction.LastCompletionTime);
+            Assert.AreEqual(0, currentFunction.Inputs.Count);
+            Assert.AreEqual(0, currentFunction.Outputs.Count);
+            Assert.AreEqual(0, currentFunction.Properties.Count);
+            Assert.AreEqual(0, currentFunction.Results.Count);
 
             currentFunction = networkedProgram.Functions[1];
             Assert.AreEqual(function2.Id, currentFunction.Id);
@@ -122,6 +144,10 @@ namespace InDoOut_Networking_Tests
             Assert.AreEqual(State.Processing, currentFunction.State);
             Assert.AreEqual(DateTime.Today, currentFunction.LastTriggerTime);
             Assert.AreEqual(DateTime.Today, currentFunction.LastCompletionTime);
+            Assert.AreEqual(2, currentFunction.Inputs.Count);
+            Assert.AreEqual(1, currentFunction.Outputs.Count);
+            Assert.AreEqual(0, currentFunction.Properties.Count);
+            Assert.AreEqual(0, currentFunction.Results.Count);
 
             status.Functions = new FunctionStatus[]
             {
@@ -139,6 +165,10 @@ namespace InDoOut_Networking_Tests
             Assert.AreEqual(State.Unknown, currentFunction.State);
             Assert.AreEqual(DateTime.Today.AddDays(-1), currentFunction.LastTriggerTime);
             Assert.AreEqual(DateTime.Today, currentFunction.LastCompletionTime);
+            Assert.AreEqual(0, currentFunction.Inputs.Count);
+            Assert.AreEqual(0, currentFunction.Outputs.Count);
+            Assert.AreEqual(0, currentFunction.Properties.Count);
+            Assert.AreEqual(0, currentFunction.Results.Count);
 
             currentFunction = networkedProgram.Functions[1];
             Assert.AreEqual(function2.Id, currentFunction.Id);
@@ -146,6 +176,10 @@ namespace InDoOut_Networking_Tests
             Assert.AreEqual(State.Processing, currentFunction.State);
             Assert.AreEqual(DateTime.Today, currentFunction.LastTriggerTime);
             Assert.AreEqual(DateTime.Today, currentFunction.LastCompletionTime);
+            Assert.AreEqual(2, currentFunction.Inputs.Count);
+            Assert.AreEqual(1, currentFunction.Outputs.Count);
+            Assert.AreEqual(0, currentFunction.Properties.Count);
+            Assert.AreEqual(0, currentFunction.Results.Count);
 
             currentFunction = networkedProgram.Functions[2];
             Assert.AreEqual(function1.Id, currentFunction.Id);
@@ -153,6 +187,10 @@ namespace InDoOut_Networking_Tests
             Assert.AreEqual(State.InError, currentFunction.State);
             Assert.AreEqual(DateTime.Today.AddDays(-2), currentFunction.LastTriggerTime);
             Assert.AreEqual(DateTime.Today.AddDays(-1), currentFunction.LastCompletionTime);
+            Assert.AreEqual(1, currentFunction.Inputs.Count);
+            Assert.AreEqual(0, currentFunction.Outputs.Count);
+            Assert.AreEqual(0, currentFunction.Properties.Count);
+            Assert.AreEqual(0, currentFunction.Results.Count);
 
             function1Status.State = State.Waiting;
 
@@ -205,6 +243,10 @@ namespace InDoOut_Networking_Tests
             Assert.AreEqual(State.Unknown, currentFunction.State);
             Assert.AreEqual(DateTime.Today.AddDays(-1), currentFunction.LastTriggerTime);
             Assert.AreEqual(DateTime.Today, currentFunction.LastCompletionTime);
+            Assert.AreEqual(0, currentFunction.Inputs.Count);
+            Assert.AreEqual(0, currentFunction.Outputs.Count);
+            Assert.AreEqual(0, currentFunction.Properties.Count);
+            Assert.AreEqual(0, currentFunction.Results.Count);
 
             currentFunction = networkedProgram.Functions[1];
             Assert.AreEqual(function2.Id, currentFunction.Id);
@@ -212,6 +254,10 @@ namespace InDoOut_Networking_Tests
             Assert.AreEqual(State.Completing, currentFunction.State);
             Assert.AreEqual(DateTime.Today, currentFunction.LastTriggerTime);
             Assert.AreEqual(DateTime.Today, currentFunction.LastCompletionTime);
+            Assert.AreEqual(2, currentFunction.Inputs.Count);
+            Assert.AreEqual(1, currentFunction.Outputs.Count);
+            Assert.AreEqual(0, currentFunction.Properties.Count);
+            Assert.AreEqual(0, currentFunction.Results.Count);
 
             currentFunction = networkedProgram.Functions[2];
             Assert.AreEqual(function1.Id, currentFunction.Id);
@@ -219,6 +265,10 @@ namespace InDoOut_Networking_Tests
             Assert.AreEqual(State.Processing, currentFunction.State);
             Assert.AreEqual(DateTime.Today.AddDays(-2), currentFunction.LastTriggerTime);
             Assert.AreEqual(DateTime.Today.AddDays(-1), currentFunction.LastCompletionTime);
+            Assert.AreEqual(1, currentFunction.Inputs.Count);
+            Assert.AreEqual(0, currentFunction.Outputs.Count);
+            Assert.AreEqual(0, currentFunction.Properties.Count);
+            Assert.AreEqual(0, currentFunction.Results.Count);
         }
     }
 }

@@ -29,7 +29,8 @@ namespace InDoOut_Networking.Entities
         {
             if (status != null)
             {
-
+                var propertyExtractor = new PropertyExtractor<OutputStatus, NetworkedOutput>(status);
+                return propertyExtractor.ApplyTo(this);
             }
 
             return false;
