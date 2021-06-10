@@ -3,6 +3,7 @@ using InDoOut_Core_Tests;
 using InDoOut_Networking.Shared.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace InDoOut_Networking_Tests

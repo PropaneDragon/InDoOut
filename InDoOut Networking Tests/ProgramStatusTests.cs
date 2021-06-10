@@ -27,6 +27,7 @@ namespace InDoOut_Networking_Tests
             Assert.AreEqual(program.Name, status.Name);
             Assert.AreEqual(program.LastCompletionTime, status.LastCompletionTime);
             Assert.AreEqual(program.LastTriggerTime, status.LastTriggerTime);
+            Assert.AreEqual(0, status.Metadata.Count);
             Assert.IsFalse(status.Stopping);
             Assert.IsFalse(status.Finishing);
             Assert.IsFalse(status.Running);
@@ -56,6 +57,7 @@ namespace InDoOut_Networking_Tests
             Assert.AreEqual(program.Name, status.Name);
             Assert.AreEqual(program.LastCompletionTime, status.LastCompletionTime);
             Assert.AreEqual(program.LastTriggerTime, status.LastTriggerTime);
+            Assert.AreEqual(0, status.Metadata.Count);
             Assert.IsFalse(status.Stopping);
             Assert.IsFalse(status.Finishing);
             Assert.IsTrue(status.Running);
@@ -73,6 +75,24 @@ namespace InDoOut_Networking_Tests
             Assert.AreEqual(currentProgramFunction.LastCompletionTime, currentStatusFunction.LastCompletionTime);
             Assert.AreEqual(currentProgramFunction.LastTriggerTime, currentStatusFunction.LastTriggerTime);
             Assert.AreEqual(currentProgramFunction.State, currentStatusFunction.State);
+
+            program.Metadata.Add("test key", "test string");
+
+            status = ProgramStatus.FromProgram(program);
+
+            Assert.AreEqual(1, status.Metadata.Count);
+            Assert.AreEqual("test string", status.Metadata["test key"]);
+
+            program.Metadata.Add("Another key", "Another string");
+
+            Assert.AreEqual(1, status.Metadata.Count);
+            Assert.AreEqual("test string", status.Metadata["test key"]);
+
+            status = ProgramStatus.FromProgram(program);
+
+            Assert.AreEqual(2, status.Metadata.Count);
+            Assert.AreEqual("test string", status.Metadata["test key"]);
+            Assert.AreEqual("Another string", status.Metadata["Another key"]);
         }
     }
 }

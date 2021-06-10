@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace InDoOut_Networking.Shared.Entities
@@ -37,6 +38,9 @@ namespace InDoOut_Networking.Shared.Entities
         [ExtractProperty("LastCompletionTime")]
         public DateTime LastCompletionTime { get; set; } = DateTime.MinValue;
 
+        [JsonProperty("metadata")]
+        public Dictionary<string, string> Metadata { get; set; } = new Dictionary<string, string>();
+
         [JsonProperty("functionStatus")]
         public FunctionStatus[] Functions { get; set; } = new FunctionStatus[] { };
 
@@ -55,7 +59,8 @@ namespace InDoOut_Networking.Shared.Entities
         public static ProgramStatus FromProgram(IProgram program)
         {
             var functions = program.Functions.Select(function => FunctionStatus.FromFunction(function)).ToArray();
-            var status = new ProgramStatus() { Functions = functions };
+            var metadata = program.Metadata;
+            var status = new ProgramStatus() { Functions = functions, Metadata = metadata };
             var propertyExtractor = new PropertyExtractor<ProgramStatus, IProgram>(status);
 
             return propertyExtractor.ExtractFrom(program) ? status : null;
