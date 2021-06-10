@@ -2,6 +2,8 @@
 using InDoOut_Core.Functions;
 using InDoOut_Executable_Core.Networking.Commands;
 using InDoOut_Json_Storage;
+using InDoOut_Networking.Entities;
+using InDoOut_Networking.Shared.Entities;
 using InDoOut_Plugins.Loaders;
 using System.IO;
 using System.Threading;
@@ -11,13 +13,8 @@ namespace InDoOut_Networking.Client.Commands
 {
     public class DownloadProgramClientCommand : Command<IClient>
     {
-        public ILoadedPlugins LoadedPlugins { get; set; } = null;
-        public IFunctionBuilder FunctionBuilder { get; set; } = null;
-
-        public DownloadProgramClientCommand(IClient client, ILoadedPlugins loadedPlugins, IFunctionBuilder functionBuilder) : base(client)
+        public DownloadProgramClientCommand(IClient client) : base(client)
         {
-            LoadedPlugins = loadedPlugins;
-            FunctionBuilder = functionBuilder;
         }
 
         public async Task<string> RequestDataForProgramAsync(string programName, CancellationToken cancellationToken)
@@ -27,26 +24,16 @@ namespace InDoOut_Networking.Client.Commands
             return (response?.Data?.Length ?? 0) == 1 ? response.Data[0] : null;
         }
 
-        public async Task<bool> RequestProgramAsync(string programName, IProgram programToLoadInto, CancellationToken cancellationToken)
+        public async Task<bool> RequestProgramAsync(string programName, INetworkedProgram programToLoadInto, CancellationToken cancellationToken)
         {
             var data = await RequestDataForProgramAsync(programName, cancellationToken);
-            if (!string.IsNullOrEmpty(data))
+            if (programToLoadInto != null && !string.IsNullOrEmpty(data))
             {
-                using var memoryStream = new MemoryStream();
-
-                try
+                var programStatus = ProgramStatus.FromJson(data);
+                if (programStatus != null)
                 {
-                    using var streamWriter = new StreamWriter(memoryStream, leaveOpen: true);
-                    streamWriter.Write(data);
-                    streamWriter.Flush();
+                    return programToLoadInto.UpdateFromStatus(programStatus);
                 }
-                catch { }
-
-                var functionBuilder = new FunctionBuilder();
-                var jsonStorer = new ProgramJsonStorer(FunctionBuilder, LoadedPlugins);
-                var failures = jsonStorer.Load(programToLoadInto, memoryStream);
-
-                return failures.Count == 0;
             }
 
             return false;

@@ -4,6 +4,7 @@ using InDoOut_Executable_Core.Networking;
 using InDoOut_Json_Storage;
 using InDoOut_Networking.Client;
 using InDoOut_Networking.Client.Commands;
+using InDoOut_Networking.Entities;
 using InDoOut_Networking.Shared;
 using InDoOut_Plugins.Loaders;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -182,9 +183,9 @@ namespace InDoOut_Networking_Tests
             var client = new Client();
             Assert.IsTrue(await client.Connect(IPAddress.Loopback, port));
 
-            var program = new Program();
+            var program = new NetworkedProgram(client);
 
-            var programDownloadCommand = new DownloadProgramClientCommand(client, LoadedPlugins.Instance, new FunctionBuilder());
+            var programDownloadCommand = new DownloadProgramClientCommand(client);
             var downloadDataTask = programDownloadCommand.RequestDataForProgramAsync("example-program", new CancellationTokenSource(TimeSpan.FromMilliseconds(800)).Token);
 
             await Task.Delay(TimeSpan.FromMilliseconds(200));

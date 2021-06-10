@@ -184,7 +184,7 @@ namespace InDoOut_Networking_Tests
             var client = new TestClient();
             var programHolder = new ProgramHolder();
 
-            Assert.IsTrue(server.AddCommandListener(new DownloadProgramServerCommand(server, programHolder, new LoadedPlugins(), new FunctionBuilder())));
+            Assert.IsTrue(server.AddCommandListener(new DownloadProgramServerCommand(server, programHolder)));
 
             Assert.IsTrue(await server.Start());
             Assert.IsTrue(await client.Connect(IPAddress.Loopback, port));

@@ -147,13 +147,11 @@ namespace InDoOut_Viewer.UI.Controls.Sidebar
 
                         if (!string.IsNullOrEmpty(selectedProgram))
                         {
-                            //Todo: Make DownloadProgramClientCommand not rely on plugins and just produce a NetworkedProgram that has core data.
-                            var programDownloader = new DownloadProgramClientCommand(program.AssociatedClient, LoadedPlugins.Instance, new FunctionBuilder());
+                            var programDownloader = new DownloadProgramClientCommand(program.AssociatedClient);
                             var progressWindow = new TaskProgressWindow("Downloading program") { Owner = Window.GetWindow(this) };
-                            var temporaryProgram = new Program();
 
                             progressWindow.TaskStarted();
-                            var hasDownloaded = await programDownloader.RequestProgramAsync(selectedProgram, temporaryProgram, new CancellationTokenSource(TimeSpan.FromSeconds(5)).Token);
+                            var hasDownloaded = await programDownloader.RequestProgramAsync(selectedProgram, program, new CancellationTokenSource(TimeSpan.FromSeconds(5)).Token);
                             progressWindow.TaskFinished();
 
                             if (hasDownloaded)

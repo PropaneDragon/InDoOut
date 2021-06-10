@@ -4,6 +4,7 @@ using InDoOut_Core.Functions;
 using InDoOut_Executable_Core.Programs;
 using InDoOut_Networking.Client;
 using InDoOut_Networking.Client.Commands;
+using InDoOut_Networking.Entities;
 using InDoOut_Networking.Server;
 using InDoOut_Networking.Server.Commands;
 using InDoOut_Networking.Shared;
@@ -135,13 +136,12 @@ namespace InDoOut_Networking_Tests
         [TestMethod]
         public async Task DownloadProgram()
         {
-            var loadedPlugins = new LoadedPlugins();
             var programHolder = new ProgramHolder();
             var port = PortFinder.Find();
             var server = new Server(port);
             var client = new Client();
-            var downloadProgramClient = new DownloadProgramClientCommand(client, loadedPlugins, new FunctionBuilder());
-            var downloadProgramServer = new DownloadProgramServerCommand(server, programHolder, loadedPlugins, new FunctionBuilder());
+            var downloadProgramClient = new DownloadProgramClientCommand(client);
+            var downloadProgramServer = new DownloadProgramServerCommand(server, programHolder);
 
             Assert.IsTrue(server.AddCommandListener(downloadProgramServer));
 
@@ -157,7 +157,7 @@ namespace InDoOut_Networking_Tests
 
             Assert.AreEqual(1, programHolder.Programs.Count);
 
-            var comparisonProgram = new Program();
+            var comparisonProgram = new NetworkedProgram(client);
 
             Assert.AreEqual(0, comparisonProgram.Metadata.Count);
             Assert.AreEqual("Untitled", comparisonProgram.Name);
@@ -202,8 +202,8 @@ namespace InDoOut_Networking_Tests
             var client = new Client();
             var uploadProgramClient = new UploadProgramClientCommand(client, loadedPlugins, new FunctionBuilder());
             var uploadProgramServer = new UploadProgramServerCommand(server, programHolder, loadedPlugins, new FunctionBuilder());
-            var downloadProgramClient = new DownloadProgramClientCommand(client, loadedPlugins, new FunctionBuilder());
-            var downloadProgramServer = new DownloadProgramServerCommand(server, programHolder, loadedPlugins, new FunctionBuilder());
+            var downloadProgramClient = new DownloadProgramClientCommand(client);
+            var downloadProgramServer = new DownloadProgramServerCommand(server, programHolder);
 
             Assert.IsTrue(server.AddCommandListener(uploadProgramServer));
             Assert.IsTrue(server.AddCommandListener(downloadProgramServer));
@@ -242,7 +242,7 @@ namespace InDoOut_Networking_Tests
                     Assert.AreEqual(metadata.Value, uploadedProgram.Metadata[metadata.Key]);
                 }
 
-                var downloadedProgram = new Program();
+                var downloadedProgram = new NetworkedProgram(client);
 
                 Assert.IsTrue(await downloadProgramClient.RequestProgramAsync(baseName, downloadedProgram, new CancellationTokenSource(TimeSpan.FromMilliseconds(500)).Token));
 
