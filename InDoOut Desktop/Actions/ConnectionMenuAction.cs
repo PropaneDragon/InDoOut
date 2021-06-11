@@ -1,10 +1,10 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using InDoOut_Desktop.UI.Interfaces;
+﻿using InDoOut_Desktop.UI.Interfaces;
 using InDoOut_Executable_Core.Messaging;
 using InDoOut_UI_Common.Actions;
 using InDoOut_UI_Common.InterfaceElements;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 
 namespace InDoOut_Desktop.Actions
 {

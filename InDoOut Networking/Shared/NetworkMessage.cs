@@ -43,7 +43,7 @@ namespace InDoOut_Executable_Core.Networking
                     var id = idSplit[0];
                     var remainingString = string.Join("", idSplit[1..]);
                     var nameDataSplit = remainingString.Split(NetworkCodes.COMMAND_NAME_DATA_SPLITTER);
-                    
+
                     if (nameDataSplit.Length > 0)
                     {
                         var name = nameDataSplit[0];

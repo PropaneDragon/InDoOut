@@ -14,7 +14,7 @@ namespace InDoOut_Executable_Core.Networking
         private readonly object _commandListenersLock = new object();
         private readonly List<ICommandListener> _commandListeners = new List<ICommandListener>();
         private readonly Dictionary<string, INetworkMessage> _responseQueue = new Dictionary<string, INetworkMessage>();
-        
+
         public ILog EntityLog { get; protected set; } = new NullLog();
 
         public abstract Task<bool> SendMessage(INetworkMessage command, CancellationToken cancellationToken);
@@ -83,7 +83,7 @@ namespace InDoOut_Executable_Core.Networking
 
                 if (command != null)
                 {
-                    return await command.CommandReceived(message, cancellationToken);                    
+                    return await command.CommandReceived(message, cancellationToken);
                 }
             }
 

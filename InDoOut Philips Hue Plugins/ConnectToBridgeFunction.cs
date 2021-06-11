@@ -38,7 +38,7 @@ namespace InDoOut_Philips_Hue_Plugins
         }
 
         protected override IOutput Started(IInput triggeredBy)
-        {            
+        {
             try
             {
                 if (!string.IsNullOrWhiteSpace(_bridgeIp.FullValue))

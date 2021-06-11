@@ -38,8 +38,8 @@ namespace InDoOut_Console_Common.ConsoleExtensions
         public static void DrawTitle(params object[] content) => DrawCustomHeader(Highlight, AccentPrimary, 1, 1, 1, 1, content);
         public static void DrawSubtitle(params object[] content) => DrawCustomHeader(Highlight, AccentSecondary, 1, 1, 0, 0, content);
 
-        public static void DrawInfoMessage(params object[] content) => DrawIconWithContent(Info, Color.Transparent,       "[ info  ]", content);
-        public static void DrawErrorMessage(params object[] content) => DrawIconWithContent(Error, Color.Transparent,     "[ error ]", content);
+        public static void DrawInfoMessage(params object[] content) => DrawIconWithContent(Info, Color.Transparent, "[ info  ]", content);
+        public static void DrawErrorMessage(params object[] content) => DrawIconWithContent(Error, Color.Transparent, "[ error ]", content);
         public static void DrawWarningMessage(params object[] content) => DrawIconWithContent(Warning, Color.Transparent, "[ warn  ]", content);
 
         public static void DrawInfoMessageLine(params object[] content)

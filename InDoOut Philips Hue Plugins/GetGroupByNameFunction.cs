@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using InDoOut_Core.Entities.Functions;
+﻿using InDoOut_Core.Entities.Functions;
+using System.Linq;
 
 namespace InDoOut_Philips_Hue_Plugins
 {

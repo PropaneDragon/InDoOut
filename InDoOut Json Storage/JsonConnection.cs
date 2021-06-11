@@ -120,7 +120,7 @@ namespace InDoOut_Json_Storage
 
                     if (rawInput is IInput input && outputable is IOutput output)
                     {
-                        jsonConnection = CreateFromFunction(function, output, input.Parent, input, ConnectionType.InputOutput);                        
+                        jsonConnection = CreateFromFunction(function, output, input.Parent, input, ConnectionType.InputOutput);
                     }
                     else if (rawInput is IProperty property && outputable is IResult result)
                     {
@@ -159,6 +159,6 @@ namespace InDoOut_Json_Storage
             }
 
             return null;
-        } 
+        }
     }
 }

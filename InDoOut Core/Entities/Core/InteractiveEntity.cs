@@ -71,8 +71,11 @@ namespace InDoOut_Core.Entities.Core
 
             _runner = Task.Run(() =>
             {
-                try { Process(triggeredBy); }
-                catch (Exception ex) 
+                try
+                {
+                    Process(triggeredBy);
+                }
+                catch (Exception ex)
                 {
                     Log.Instance.Error($"Caught an exception ({ex.Message}) during trigger for {this}");
                 }

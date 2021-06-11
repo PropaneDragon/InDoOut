@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -39,7 +38,7 @@ namespace InDoOut_Networking.Shared.Entities
                         else
                         {
                             extractedAll = false;
-                        } 
+                        }
                     }
                 }
             }
@@ -71,7 +70,7 @@ namespace InDoOut_Networking.Shared.Entities
                             else
                             {
                                 appliedAll = false;
-                            } 
+                            }
                         }
                     }
                 }

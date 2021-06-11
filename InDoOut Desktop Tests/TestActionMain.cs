@@ -1,5 +1,5 @@
-﻿using System.Windows;
-using InDoOut_UI_Common.Actions;
+﻿using InDoOut_UI_Common.Actions;
+using System.Windows;
 
 namespace InDoOut_Desktop_Tests
 {

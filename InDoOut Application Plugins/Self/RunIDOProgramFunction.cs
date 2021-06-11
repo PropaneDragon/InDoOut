@@ -163,7 +163,7 @@ namespace InDoOut_Application_Plugins.Self
 
             return path;
         }
-        
+
         private string FormatPath(string path)
         {
             if (!string.IsNullOrEmpty(path))

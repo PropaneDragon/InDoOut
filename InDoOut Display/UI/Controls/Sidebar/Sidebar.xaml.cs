@@ -67,7 +67,7 @@ namespace InDoOut_Display.UI.Controls.Sidebar
                 var nextViewMode = currentViewMode == ProgramViewMode.IO ? ProgramViewMode.Variables : ProgramViewMode.IO;
 
                 AssociatedTaskView.CurrentProgramDisplay.CurrentViewMode = nextViewMode;
-            }                    
+            }
         }
 
         private void Button_New_Click(object sender, RoutedEventArgs e)

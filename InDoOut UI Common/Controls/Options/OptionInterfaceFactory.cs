@@ -1,10 +1,10 @@
 ﻿using InDoOut_Core.Instancing;
 using InDoOut_Core.Options;
+using InDoOut_UI_Common.Controls.Options.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using InDoOut_UI_Common.Controls.Options.Types;
 
 namespace InDoOut_UI_Common.Controls.Options
 {

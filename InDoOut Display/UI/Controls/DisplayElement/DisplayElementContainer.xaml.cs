@@ -109,7 +109,7 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
         public bool CloseToEdge(IScreen screen, Point point, double distance = 5) => GetCloseEdge(screen, point, distance) != ResizeEdge.None;
 
         public ResizeEdge GetCloseEdge(IScreen screen, Point point, double distance = 5)
-        {            
+        {
             var size = Size;
             var localPoint = TranslatePoint(point, Border_Presenter);
             var inBounds = localPoint.X > -distance && localPoint.X < (size.Width + distance) && localPoint.Y > -distance && localPoint.Y < (size.Height + distance);
@@ -267,17 +267,17 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
             switch (edge)
             {
                 case ResizeEdge.Left:
-                    margin.Left = value;
-                    break;
+                margin.Left = value;
+                break;
                 case ResizeEdge.Top:
-                    margin.Top = value;
-                    break;
+                margin.Top = value;
+                break;
                 case ResizeEdge.Right:
-                    margin.Right = value;
-                    break;
+                margin.Right = value;
+                break;
                 case ResizeEdge.Bottom:
-                    margin.Bottom = value;
-                    break;
+                margin.Bottom = value;
+                break;
             }
         }
 

@@ -118,13 +118,13 @@ namespace InDoOut_Console_Common.ConsoleExtensions
 
                 foreach (var enumValue in enumValues)
                 {
-                    var @enum = (ConsoleTextStyle) enumValue;
-                    
+                    var @enum = (ConsoleTextStyle)enumValue;
+
                     if (style.HasFlag(@enum) && _textStyleValues.TryGetValue(@enum, out var formatValue))
                     {
                         Console.Write(EncaseInFormattingString(formatValue));
-                    } 
-                } 
+                    }
+                }
             }
         }
 
@@ -145,7 +145,7 @@ namespace InDoOut_Console_Common.ConsoleExtensions
                 else
                 {
                     Console.BackgroundColor = closestColour;
-                } 
+                }
             }
         }
 
@@ -166,14 +166,14 @@ namespace InDoOut_Console_Common.ConsoleExtensions
             {
                 Console.ForegroundColor = _originalForeground;
                 Console.BackgroundColor = _originalBackground;
-            } 
+            }
         }
 
         private static ConsoleColor GetClosestConsoleColour(Color colour)
         {
             if (colour != null && _colourAssociations.Count > 0)
             {
-                var orderedKeyValues = _colourAssociations.OrderBy(consoleColur => Math.Pow((colour.GetHue() - consoleColur.Value.GetHue()) / 360d, 2) + Math.Pow((colour.GetSaturation() - consoleColur.Value.GetSaturation()), 2) + Math.Pow((colour.GetBrightness() - consoleColur.Value.GetBrightness()), 2));
+                var orderedKeyValues = _colourAssociations.OrderBy(consoleColur => Math.Pow((colour.GetHue() - consoleColur.Value.GetHue()) / 360d, 2) + Math.Pow(colour.GetSaturation() - consoleColur.Value.GetSaturation(), 2) + Math.Pow(colour.GetBrightness() - consoleColur.Value.GetBrightness(), 2));
                 return orderedKeyValues.First().Key;
             }
 

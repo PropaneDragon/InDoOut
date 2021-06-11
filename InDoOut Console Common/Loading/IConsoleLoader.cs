@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace InDoOut_Console_Common.Loading
+﻿namespace InDoOut_Console_Common.Loading
 {
     public interface IConsoleLoader
     {

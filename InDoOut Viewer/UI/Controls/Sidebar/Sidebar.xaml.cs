@@ -1,9 +1,7 @@
-﻿using InDoOut_Core.Entities.Programs;
-using InDoOut_Core.Functions;
+﻿using InDoOut_Core.Functions;
 using InDoOut_Executable_Core.Messaging;
 using InDoOut_Networking.Client.Commands;
 using InDoOut_Networking.Entities;
-using InDoOut_Plugins.Loaders;
 using InDoOut_UI_Common.InterfaceElements;
 using InDoOut_UI_Common.Windows;
 using System;

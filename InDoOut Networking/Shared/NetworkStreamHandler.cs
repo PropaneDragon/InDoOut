@@ -45,7 +45,7 @@ namespace InDoOut_Executable_Core.Networking
                 while (!end)
                 {
                     var message = (await reader.ReadLineAsync()) + "\n";
-                    
+
                     if (string.IsNullOrEmpty(message) || message.Contains(NetworkCodes.MESSAGE_END_IDENTIFIER))
                     {
                         end = true;

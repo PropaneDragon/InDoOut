@@ -258,7 +258,7 @@ namespace InDoOut_UI_Common.Controls.Common
         }
 
         private void Text_Title_PreviewMouseMove(object sender, MouseEventArgs e)
-        {            
+        {
         }
 
         private void AttachedWindow_StateChanged(object sender, EventArgs e)

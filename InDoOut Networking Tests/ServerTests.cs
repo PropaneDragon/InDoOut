@@ -326,7 +326,7 @@ namespace InDoOut_Networking_Tests
                 var messageSplit = clientA.LastRawMessageReceived.Split('\n');
 
                 Assert.AreEqual(textSplit.Length, messageSplit.Length);
-                
+
                 for (var line = 0; line < textSplit.Length; ++line)
                 {
                     Assert.AreEqual(textSplit[line], messageSplit[line]);

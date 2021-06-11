@@ -33,7 +33,7 @@ namespace InDoOut_Application_Plugins_Tests
             var storer = new ProgramJsonStorer(new FunctionBuilder(), loadedPlugins);
 
             var pluginContainer = pluginLoader.LoadPlugin("InDoOut Core Plugins.dll");
-            
+
             Assert.IsTrue(pluginContainer.Initialise());
             Assert.IsTrue(pluginContainer.Valid);
 

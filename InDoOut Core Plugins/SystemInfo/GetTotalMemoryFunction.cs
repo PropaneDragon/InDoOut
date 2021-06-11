@@ -3,10 +3,11 @@ using System;
 
 namespace InDoOut_Core_Plugins.SystemInfo
 {
-    /*public */class GetTotalMemoryFunction : Function
+    /*public */
+    internal class GetTotalMemoryFunction : Function
     {
-        readonly IOutput _output;
-        readonly IResult _memoryBits;
+        private readonly IOutput _output;
+        private readonly IResult _memoryBits;
 
         public override string Description => "Gets total memory in the current machine.";
 

@@ -3,9 +3,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace InDoOut_Core_Tests
 {
-    class TopLevelClass { }
-    class InheritedClass : TopLevelClass { }
-    class CompletelyDifferentClass { }
+    internal class TopLevelClass { }
+
+    internal class InheritedClass : TopLevelClass { }
+
+    internal class CompletelyDifferentClass { }
 
     [TestClass]
     public class InstanceBuilderTests

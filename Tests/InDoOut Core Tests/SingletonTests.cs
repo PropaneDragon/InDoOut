@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace InDoOut_Core_Tests
 {
-    class TestSingleton : Singleton<TestSingleton>
+    internal class TestSingleton : Singleton<TestSingleton>
     {
         public int UniqueNumber { get; set; } = -1;
     }

@@ -1,9 +1,9 @@
 ﻿using InDoOut_Core.Options;
+using InDoOut_UI_Common.Controls.Options.Types;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using InDoOut_UI_Common.Controls.Options.Types;
 
 namespace InDoOut_UI_Common.Controls.Options
 {

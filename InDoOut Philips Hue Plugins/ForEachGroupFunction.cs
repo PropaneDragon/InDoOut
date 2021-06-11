@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using InDoOut_Core.Entities.Functions;
+using System.Collections.Generic;
 using System.Linq;
-using InDoOut_Core.Entities.Functions;
 
 namespace InDoOut_Philips_Hue_Plugins
 {

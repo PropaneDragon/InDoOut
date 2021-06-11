@@ -8,7 +8,7 @@ namespace InDoOut_Core_Plugins.Maths
 
         public override string Name => "Floor";
 
-        public override string[] Keywords => new[] { "Rounding", "Round down", "down", "lowest", "bottom"};
+        public override string[] Keywords => new[] { "Rounding", "Round down", "down", "lowest", "bottom" };
 
         protected override string Verb => "floor";
 

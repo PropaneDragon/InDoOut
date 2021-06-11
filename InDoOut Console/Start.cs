@@ -14,12 +14,12 @@ using System.Linq;
 
 namespace InDoOut_Console
 {
-    class Start
+    internal class Start
     {
         private static bool _keepOpen = true;
         private static LogFileSaver _logFileSaver = null;
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             ExtendedConsole.SetUp();
 

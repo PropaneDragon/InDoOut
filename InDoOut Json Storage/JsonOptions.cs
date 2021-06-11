@@ -13,7 +13,7 @@ namespace InDoOut_Json_Storage
     public class JsonOptions
     {
         [JsonProperty("options")]
-        List<JsonOption> Options { get; set; } = new List<JsonOption>();
+        private List<JsonOption> Options { get; set; } = new List<JsonOption>();
 
         /// <summary>
         /// Creates a JSON container for a list of options for storage.
@@ -31,7 +31,7 @@ namespace InDoOut_Json_Storage
                     if (option != null)
                     {
                         var jsonOption = JsonOption.CreateFromOption(option);
-                        
+
                         jsonOptions.Options.Add(jsonOption);
                     }
                 }
@@ -75,7 +75,7 @@ namespace InDoOut_Json_Storage
                     else
                     {
                         failures.Add(new FailureReport(1, "One of the provided options was invalid and couldn't be set", false));
-                    }                        
+                    }
                 }
             }
             else

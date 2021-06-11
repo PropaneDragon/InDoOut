@@ -6,7 +6,7 @@ namespace InDoOut_Desktop_Tests
 {
     internal class TestLoadingTask : LoadingTask
     {
-        Func<TestLoadingTask, Task<bool>> Action { get; set; } = null;
+        private Func<TestLoadingTask, Task<bool>> Action { get; set; } = null;
 
         public TestLoadingTask(string name, Func<TestLoadingTask, Task<bool>> action)
         {

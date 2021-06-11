@@ -19,7 +19,7 @@ namespace InDoOut_Philips_Hue_Plugins
         {
             get
             {
-                lock(_outputLock)
+                lock (_outputLock)
                 {
                     return _activatedOutput;
                 }
@@ -54,7 +54,7 @@ namespace InDoOut_Philips_Hue_Plugins
             _error = CreateOutput("Notification error", OutputType.Negative);
 
             _title = AddProperty(new Property<string>("Title", "The title of the notification.", true, ""));
-            _content = AddProperty(new Property<string>("Content", "The content of the notification.", true, ""));            
+            _content = AddProperty(new Property<string>("Content", "The content of the notification.", true, ""));
             _timeout = AddProperty(new Property<double>("Timeout", "The amount of time before the notification disappears. Set to 0 for default timeout.", true, 0));
         }
 
@@ -62,7 +62,7 @@ namespace InDoOut_Philips_Hue_Plugins
         {
             ActivatedOutput = null;
 
-               var toastTemplate = $@"
+            var toastTemplate = $@"
                 <toast>
                     <visual>
                     <binding template=""ToastText02"">

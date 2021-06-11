@@ -161,7 +161,7 @@ namespace InDoOut_Networking.Server
                 if (response?.Valid ?? false)
                 {
                     EntityLog.Info(address?.Address, ": Sending response - ", response.Name);
-                    
+
                     _ = await SendMessage(response, CancellationToken.None);
                 }
             }

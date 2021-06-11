@@ -17,7 +17,7 @@ namespace InDoOut_UI_Common.Actions.Dragging
             {
                 return endConnection is IUIInput;
             }
-            else if(_start is IUIResult)
+            else if (_start is IUIResult)
             {
                 return endConnection is IUIProperty;
             }

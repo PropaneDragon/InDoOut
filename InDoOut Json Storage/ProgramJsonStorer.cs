@@ -27,9 +27,9 @@ namespace InDoOut_Json_Storage
         /// </summary>
         public override string FileExtension => ".ido";
 
-        IFunctionBuilder FunctionBuilder { get; set; } = null;
+        private IFunctionBuilder FunctionBuilder { get; set; } = null;
 
-        ILoadedPlugins LoadedPlugins { get; set; } = null;
+        private ILoadedPlugins LoadedPlugins { get; set; } = null;
 
         /// <summary>
         /// Creates an instance of the JSON storer.

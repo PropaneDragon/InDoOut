@@ -1,5 +1,5 @@
-﻿using System;
-using InDoOut_Core.Entities.Core;
+﻿using InDoOut_Core.Entities.Core;
+using System;
 
 namespace InDoOut_Core_Tests
 {

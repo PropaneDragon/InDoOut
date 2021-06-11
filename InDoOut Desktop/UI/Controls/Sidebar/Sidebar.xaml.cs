@@ -47,7 +47,7 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
                 BeginAnimation(MarginProperty, sidebarAnimation);
                 Grid_CollapsibleContent.BeginAnimation(OpacityProperty, fadeOutAnimation);
 
-                sidebarAnimation.Completed += (sender, e) => Grid_CollapsibleContent.Visibility = Visibility.Hidden;                
+                sidebarAnimation.Completed += (sender, e) => Grid_CollapsibleContent.Visibility = Visibility.Hidden;
             }
 
             _collapsed = true;
@@ -61,7 +61,7 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
 
                 var easingFunction = new ExponentialEase() { EasingMode = EasingMode.EaseInOut };
                 var sidebarAnimation = new ThicknessAnimation(new Thickness(0, 0, 0, 0), _animationTime) { EasingFunction = easingFunction };
-                var opacityAnimation = new DoubleAnimation(1, _animationTime) { EasingFunction = easingFunction }; ;
+                var opacityAnimation = new DoubleAnimation(1, _animationTime) { EasingFunction = easingFunction };
 
                 BeginAnimation(MarginProperty, sidebarAnimation);
                 Grid_CollapsibleContent.BeginAnimation(OpacityProperty, opacityAnimation);

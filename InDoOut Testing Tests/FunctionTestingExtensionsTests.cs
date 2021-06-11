@@ -39,7 +39,7 @@ namespace InDoOut_Testing_Tests
             stopwatch.Restart();
 
             Assert.IsFalse(function.WaitForCompletion(TimeSpan.FromMilliseconds(60)));
-            
+
             waitTime = stopwatch.Elapsed;
 
             Assert.AreEqual(60, waitTime.TotalMilliseconds, 50, $"Total time: {waitTime.TotalMilliseconds}ms");

@@ -285,7 +285,7 @@ namespace InDoOut_Json_Storage_Tests
 
             Assert.AreEqual(expectedFileData, actualFileData);
         }
-        
+
         [TestCleanup]
         public void Cleanup()
         {

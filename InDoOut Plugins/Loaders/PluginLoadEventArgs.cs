@@ -34,7 +34,7 @@ namespace InDoOut_Plugins.Loaders
         /// </summary>
         /// <param name="loader">The loader that is currently loading the plugin.</param>
         /// <param name="assembly">The assembly that is currently being loaded.</param>
-        public PluginLoadEventArgs(IPluginLoader loader, Assembly assembly) : this (loader, assembly?.Location)
+        public PluginLoadEventArgs(IPluginLoader loader, Assembly assembly) : this(loader, assembly?.Location)
         {
         }
     }

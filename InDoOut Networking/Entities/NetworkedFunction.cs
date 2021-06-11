@@ -36,7 +36,7 @@ namespace InDoOut_Networking.Entities
         public List<IOutput> Outputs { get; private set; } = new List<IOutput>();
         public List<IProperty> Properties { get; private set; } = new List<IProperty>();
         public List<IResult> Results { get; private set; } = new List<IResult>();
-        public List<IOutput> Connections  => Outputs;
+        public List<IOutput> Connections => Outputs;
         public List<ITriggerable> RawConnections => Outputs.Cast<ITriggerable>().ToList();
 
         public Dictionary<string, string> Metadata { get; private set; } = new Dictionary<string, string>();

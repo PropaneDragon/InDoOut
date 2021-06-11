@@ -21,7 +21,8 @@ namespace InDoOut_Desktop.Loading
 
             Name = "Loading plugins...";
 
-            if (LoadedPlugins.Instance.Plugins.Count <= 0) {
+            if (LoadedPlugins.Instance.Plugins.Count <= 0)
+            {
                 var pluginLoader = new FunctionPluginLoader();
                 var pluginDirectoryLoader = new PluginDirectoryLoader(pluginLoader, StandardLocations.Instance);
 

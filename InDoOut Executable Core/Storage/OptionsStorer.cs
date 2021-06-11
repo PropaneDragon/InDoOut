@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using InDoOut_Core.Logging;
+﻿using InDoOut_Core.Logging;
 using InDoOut_Core.Options;
 using InDoOut_Core.Reporting;
+using System.Collections.Generic;
 
 namespace InDoOut_Executable_Core.Storage
 {

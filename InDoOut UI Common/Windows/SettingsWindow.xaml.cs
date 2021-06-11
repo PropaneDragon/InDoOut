@@ -1,17 +1,17 @@
 ﻿using InDoOut_Core.Options;
-using System.Collections.Generic;
-using System.Windows;
-using InDoOut_Plugins.Loaders;
-using InDoOut_UI_Common.Controls.Options;
 using InDoOut_Executable_Core.Options;
 using InDoOut_Executable_Core.Storage;
+using InDoOut_Plugins.Loaders;
+using InDoOut_UI_Common.Controls.Options;
 using InDoOut_UI_Common.SaveLoad;
+using System.Collections.Generic;
+using System.Windows;
 
 namespace InDoOut_UI_Common.Windows
 {
     public partial class SettingsWindow : Window
     {
-        IOptionsStorer OptionsStorer { get; set; } = null;
+        private IOptionsStorer OptionsStorer { get; set; } = null;
 
         public SettingsWindow()
         {

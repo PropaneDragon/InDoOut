@@ -3,7 +3,7 @@ using System;
 
 namespace InDoOut_Plugins_Tests
 {
-    class TestExceptionPlugin : Plugin
+    internal class TestExceptionPlugin : Plugin
     {
         public override string Name => throw new Exception();
 

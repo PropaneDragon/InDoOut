@@ -71,7 +71,7 @@ namespace InDoOut_Display.Actions
 
                 ScreenEdge.Top => Cursors.SizeNS,
                 ScreenEdge.Bottom => Cursors.SizeNS,
-                
+
                 ScreenEdge.TopLeft => Cursors.SizeNWSE,
                 ScreenEdge.BottomRight => Cursors.SizeNWSE,
 

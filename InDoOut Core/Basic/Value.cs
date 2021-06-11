@@ -12,7 +12,7 @@ namespace InDoOut_Core.Basic
     {
         private readonly object _rawValueLock = new object();
         private string _rawValue = "";
-        
+
         /// <summary>
         /// An event that gets fired when the value changes.
         /// <para/>

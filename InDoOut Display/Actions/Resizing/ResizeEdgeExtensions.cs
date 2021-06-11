@@ -15,7 +15,7 @@ namespace InDoOut_Display.Actions.Resizing
                 case ResizeEdge.BottomRight:
                 case ResizeEdge.TopLeft:
                 case ResizeEdge.TopRight:
-                    return true;
+                return true;
             }
 
             return false;
@@ -47,15 +47,15 @@ namespace InDoOut_Display.Actions.Resizing
                 case ResizeEdge.Left:
                 case ResizeEdge.Right:
                 case ResizeEdge.Top:
-                    return new List<ResizeEdge>() { resizeEdge };
+                return new List<ResizeEdge>() { resizeEdge };
                 case ResizeEdge.BottomLeft:
-                    return new List<ResizeEdge>() { ResizeEdge.Bottom, ResizeEdge.Left };
+                return new List<ResizeEdge>() { ResizeEdge.Bottom, ResizeEdge.Left };
                 case ResizeEdge.BottomRight:
-                    return new List<ResizeEdge>() { ResizeEdge.Bottom, ResizeEdge.Right };
+                return new List<ResizeEdge>() { ResizeEdge.Bottom, ResizeEdge.Right };
                 case ResizeEdge.TopLeft:
-                    return new List<ResizeEdge>() { ResizeEdge.Top, ResizeEdge.Left };
+                return new List<ResizeEdge>() { ResizeEdge.Top, ResizeEdge.Left };
                 case ResizeEdge.TopRight:
-                    return new List<ResizeEdge>() { ResizeEdge.Top, ResizeEdge.Right };
+                return new List<ResizeEdge>() { ResizeEdge.Top, ResizeEdge.Right };
             }
 
             return new List<ResizeEdge>();

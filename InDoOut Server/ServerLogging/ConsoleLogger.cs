@@ -74,17 +74,17 @@ namespace InDoOut_Server.ServerLogging
                 switch (log.Level)
                 {
                     case LogMessage.LogLevel.Error:
-                        ConsoleFormatter.DrawErrorMessage();
-                        break;
+                    ConsoleFormatter.DrawErrorMessage();
+                    break;
                     case LogMessage.LogLevel.Header:
-                        ConsoleFormatter.DrawSubtitle(log.Message);
-                        break;
+                    ConsoleFormatter.DrawSubtitle(log.Message);
+                    break;
                     case LogMessage.LogLevel.Info:
-                        ConsoleFormatter.DrawInfoMessage();
-                        break;
+                    ConsoleFormatter.DrawInfoMessage();
+                    break;
                     case LogMessage.LogLevel.Warning:
-                        ConsoleFormatter.DrawWarningMessage();
-                        break;
+                    ConsoleFormatter.DrawWarningMessage();
+                    break;
                 }
 
                 if (log.Level != LogMessage.LogLevel.Header)

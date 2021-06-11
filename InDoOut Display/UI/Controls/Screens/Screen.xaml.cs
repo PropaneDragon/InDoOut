@@ -175,7 +175,7 @@ namespace InDoOut_Display.UI.Controls.Screens
             if (element is IStaticMarginElementContainer container)
             {
                 return container;
-            } 
+            }
             if (element is IDisplayElement displayElement)
             {
                 return new DisplayElementContainer(displayElement) { DisplayMode = CurrentViewMode == ProgramViewMode.IO ? UIFunctionDisplayMode.IO : UIFunctionDisplayMode.Variables };
@@ -244,7 +244,7 @@ namespace InDoOut_Display.UI.Controls.Screens
             if (!IsKeyboardFocusWithin)
             {
                 _ = Keyboard.Focus(this);
-            } 
+            }
 
             if (e.LeftButton == MouseButtonState.Pressed)
             {

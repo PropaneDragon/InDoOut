@@ -5,8 +5,8 @@ namespace InDoOut_Core_Plugins.SystemInfo
 {
     public class GetProcessorCountFunction : Function
     {
-        readonly IOutput _output;
-        readonly IResult _processorCount;
+        private readonly IOutput _output;
+        private readonly IResult _processorCount;
 
         public override string Description => "Returns the number of logical processors present in the machine.";
 

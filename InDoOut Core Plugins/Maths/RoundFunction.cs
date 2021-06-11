@@ -11,7 +11,7 @@ namespace InDoOut_Core_Plugins.Maths
 
         public override string Name => "Round";
 
-        public override string[] Keywords => new[] { "Rounding", "Even", "Whole"};
+        public override string[] Keywords => new[] { "Rounding", "Even", "Whole" };
 
         protected override string Verb => "round";
 

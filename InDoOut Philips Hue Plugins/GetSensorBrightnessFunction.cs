@@ -1,6 +1,6 @@
-﻿using System;
+﻿using InDoOut_Core.Entities.Functions;
+using System;
 using System.Linq;
-using InDoOut_Core.Entities.Functions;
 
 namespace InDoOut_Philips_Hue_Plugins
 {
@@ -50,7 +50,7 @@ namespace InDoOut_Philips_Hue_Plugins
 
                     if (_lux.ValueFrom(lux))
                     {
-                        return (lightSensor?.State?.Dark ?? false) ? _dark: _light;
+                        return (lightSensor?.State?.Dark ?? false) ? _dark : _light;
                     }
                 }
             }

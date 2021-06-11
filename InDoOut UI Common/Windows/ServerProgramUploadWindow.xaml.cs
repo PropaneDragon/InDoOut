@@ -1,12 +1,9 @@
-﻿using InDoOut_Core.Entities.Programs;
-using InDoOut_Core.Functions;
+﻿using InDoOut_Core.Functions;
 using InDoOut_Executable_Core.Messaging;
-using InDoOut_Executable_Core.Programs;
 using InDoOut_Networking.Client;
 using InDoOut_Networking.Client.Commands;
 using InDoOut_Plugins.Loaders;
 using InDoOut_UI_Common.SaveLoad;
-using Microsoft.Win32;
 using System;
 using System.IO;
 using System.Threading;

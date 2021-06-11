@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using InDoOut_Core.Options;
+﻿using InDoOut_Core.Options;
+using System.Collections.Generic;
 
 namespace InDoOut_UI_Common.Controls.Options
 {

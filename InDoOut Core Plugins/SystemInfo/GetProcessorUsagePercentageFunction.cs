@@ -7,10 +7,10 @@ using System.Threading;
 
 namespace InDoOut_Core_Plugins.SystemInfo
 {
-    class GetProcessorUsagePercentageFunction : Function
+    internal class GetProcessorUsagePercentageFunction : Function
     {
-        readonly IOutput _output;
-        readonly IResult _cpuPercentage;
+        private readonly IOutput _output;
+        private readonly IResult _cpuPercentage;
 
         public override string Description => "Gets current processor usage as a percentage. This gives a very limited usage view in non-administrator mode.";
 

@@ -15,7 +15,7 @@ namespace InDoOut_Json_Storage_Tests
     {
         [TestMethod]
         public void LoadJsonProgram()
-        {            
+        {
             var jsonProgram = GenericJsonStorer.Load<JsonProgram>("ExpectedJsonProgramFormat.json");
 
             Assert.IsNotNull(jsonProgram);

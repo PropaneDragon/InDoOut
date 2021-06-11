@@ -18,7 +18,7 @@ namespace InDoOut_Networking.Client.Commands
         public async Task<ProgramStatus> GetProgramStatusAsync(Guid programGuid, CancellationToken cancellationToken)
         {
             var responseData = await SendMessageAwaitResponse(cancellationToken, programGuid.ToString());
-            
+
             return (responseData?.Data?.Length ?? 0) == 1 ? ProgramStatus.FromJson(responseData.Data[0]) : null;
         }
     }

@@ -191,7 +191,7 @@ namespace InDoOut_Core.Entities.Programs
 
             foreach (var function in Functions)
             {
-                 _ = TryGet.ExecuteOrFail(() => function?.PolitelyStop());
+                _ = TryGet.ExecuteOrFail(() => function?.PolitelyStop());
             }
         }
 
