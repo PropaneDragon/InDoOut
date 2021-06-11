@@ -20,7 +20,7 @@ namespace InDoOut_Networking.Entities
         public bool Stopping { get; private set; } = false;
         public bool Finishing { get; private set; } = false;
 
-        public string Name { get => _name != null ? $"{_name} [{(Connected ? "Connected" : "Disconnected")}]" : null; set => _name = value; }
+        public string Name { get => $"{_name ?? "Untitled"}"; set => _name = value; }
         public string ReturnCode { get; set; }
 
         public IClient AssociatedClient { get; protected set; } = null;
@@ -52,8 +52,26 @@ namespace InDoOut_Networking.Entities
             {
                 var propertyExtractor = new PropertyExtractor<ProgramStatus, NetworkedProgram>(status);
                 var convertedAll = UpdateFunctionsFromStatus(status);
+                convertedAll = UpdateMetadataFromStatus(status) && convertedAll;
 
                 return propertyExtractor.ApplyTo(this) && convertedAll;
+            }
+
+            return false;
+        }
+
+        private bool UpdateMetadataFromStatus(ProgramStatus status)
+        {
+            if (status != null)
+            {
+                Metadata.Clear();
+
+                foreach (var pair in status.Metadata)
+                {
+                    Metadata.Add(pair.Key, pair.Value);
+                }
+
+                return true;
             }
 
             return false;

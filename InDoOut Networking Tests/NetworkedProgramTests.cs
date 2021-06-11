@@ -35,6 +35,8 @@ namespace InDoOut_Networking_Tests
             Assert.AreNotEqual(networkedProgram.LastCompletionTime, status.LastCompletionTime);
             Assert.AreNotEqual(networkedProgram.LastTriggerTime, status.LastTriggerTime);
             Assert.AreNotEqual(networkedProgram.Name, status.Name);
+            Assert.AreEqual(0, status.Metadata.Count);
+            Assert.AreEqual(0, networkedProgram.Metadata.Count);
 
             Assert.IsFalse(networkedProgram.UpdateFromStatus(null));
 
@@ -46,6 +48,8 @@ namespace InDoOut_Networking_Tests
             Assert.AreNotEqual(networkedProgram.LastCompletionTime, status.LastCompletionTime);
             Assert.AreNotEqual(networkedProgram.LastTriggerTime, status.LastTriggerTime);
             Assert.AreNotEqual(networkedProgram.Name, status.Name);
+            Assert.AreEqual(0, status.Metadata.Count);
+            Assert.AreEqual(0, networkedProgram.Metadata.Count);
 
             Assert.IsTrue(networkedProgram.UpdateFromStatus(status));
 
@@ -56,7 +60,8 @@ namespace InDoOut_Networking_Tests
             Assert.AreEqual(networkedProgram.Id, status.Id);
             Assert.AreEqual(networkedProgram.LastCompletionTime, status.LastCompletionTime);
             Assert.AreEqual(networkedProgram.LastTriggerTime, status.LastTriggerTime);
-            Assert.AreEqual(networkedProgram.Name, $"{status.Name} [Disconnected]");
+            Assert.AreEqual(networkedProgram.Name, $"{status.Name}");
+            Assert.AreEqual(networkedProgram.Metadata.Count, status.Metadata.Count);
 
             status.Running = false;
             status.Finishing = true;
@@ -71,7 +76,39 @@ namespace InDoOut_Networking_Tests
             Assert.AreEqual(networkedProgram.Id, status.Id);
             Assert.AreEqual(networkedProgram.LastCompletionTime, status.LastCompletionTime);
             Assert.AreEqual(networkedProgram.LastTriggerTime, status.LastTriggerTime);
-            Assert.AreEqual(networkedProgram.Name, $"{status.Name} [Disconnected]");
+            Assert.AreEqual(networkedProgram.Name, $"{status.Name}");
+            Assert.AreEqual(networkedProgram.Metadata.Count, status.Metadata.Count);
+
+            status.Metadata = new Dictionary<string, string>()
+            {
+                { "this is a key", "This is an example value" },
+                { "this is another key", "value" }
+            };
+
+            Assert.IsTrue(networkedProgram.UpdateFromStatus(status));
+
+            Assert.IsFalse(networkedProgram.Running);
+            Assert.IsTrue(networkedProgram.Finishing);
+            Assert.IsFalse(networkedProgram.Stopping);
+
+            Assert.AreEqual(networkedProgram.Id, status.Id);
+            Assert.AreEqual(networkedProgram.LastCompletionTime, status.LastCompletionTime);
+            Assert.AreEqual(networkedProgram.LastTriggerTime, status.LastTriggerTime);
+            Assert.AreEqual(networkedProgram.Name, $"{status.Name}");
+            Assert.AreEqual(networkedProgram.Metadata.Count, status.Metadata.Count);
+            Assert.AreEqual(2, networkedProgram.Metadata.Count);
+            Assert.AreEqual("This is an example value", networkedProgram.Metadata["this is a key"]);
+            Assert.AreEqual("value", networkedProgram.Metadata["this is another key"]);
+
+            status.Metadata = new Dictionary<string, string>()
+            {
+                { "just the 1", "1" }
+            };
+
+            Assert.IsTrue(networkedProgram.UpdateFromStatus(status));
+
+            Assert.AreEqual(1, networkedProgram.Metadata.Count);
+            Assert.AreEqual("1", networkedProgram.Metadata["just the 1"]);
         }
 
         [TestMethod]

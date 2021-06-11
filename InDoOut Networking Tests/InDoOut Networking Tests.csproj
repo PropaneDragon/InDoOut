@@ -31,6 +31,9 @@
     <None Update="empty.ido">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="example-program-status.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="example-program.ido">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

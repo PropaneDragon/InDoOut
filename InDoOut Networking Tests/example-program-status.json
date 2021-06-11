@@ -1,0 +1,165 @@
+﻿{
+  "running": true,
+  "stopping": false,
+  "finishing": false,
+  "name": "Unnamed",
+  "id": "6fb4da20-156e-47b9-921f-0cc96ff21338",
+  "lastTriggerTime": "2021-06-11T08:56:16.4426204+01:00",
+  "lastCompletionTime": "0001-01-01T00:00:00",
+  "metadata": {},
+  "functionStatus": [
+    {
+      "name": "Wait",
+      "id": "b3a7e298-31e4-4d59-a280-a2c529a46001",
+      "lastTriggerTime": "2021-06-11T08:56:34.5184126+01:00",
+      "lastCompletionTime": "2021-06-11T08:56:35.5321447+01:00",
+      "state": 3,
+      "inputStatus": [
+        {
+          "running": false,
+          "finishing": true,
+          "name": "Start waiting",
+          "id": "590c6ae5-f7ad-4827-a368-6d46efab148b",
+          "lastTriggerTime": "2021-06-11T08:56:34.5183513+01:00",
+          "lastCompletionTime": "2021-06-11T08:56:34.5184321+01:00"
+        }
+      ],
+      "outputStatus": [
+        {
+          "running": false,
+          "finishing": true,
+          "name": "Wait complete",
+          "id": "8cf51071-4c9e-41ca-a803-551365e717c4",
+          "lastTriggerTime": "2021-06-11T08:56:35.5321215+01:00",
+          "lastCompletionTime": "2021-06-11T08:56:35.5322939+01:00"
+        }
+      ]
+    },
+    {
+      "name": "Program start",
+      "id": "9ffaab1c-3097-4185-aac2-989eca4edb60",
+      "lastTriggerTime": "2021-06-11T08:56:16.4432794+01:00",
+      "lastCompletionTime": "2021-06-11T08:56:16.4509177+01:00",
+      "state": 3,
+      "inputStatus": [],
+      "outputStatus": [
+        {
+          "running": false,
+          "finishing": true,
+          "name": "Program started",
+          "id": "efbedc4c-813f-4854-9b83-1243412fad28",
+          "lastTriggerTime": "2021-06-11T08:56:16.4507605+01:00",
+          "lastCompletionTime": "2021-06-11T08:56:16.4531165+01:00"
+        }
+      ]
+    },
+    {
+      "name": "Wait",
+      "id": "a2bfbe4b-0305-496e-90cc-f100ead89368",
+      "lastTriggerTime": "2021-06-11T08:56:35.5322918+01:00",
+      "lastCompletionTime": "2021-06-11T08:56:29.5038019+01:00",
+      "state": 4,
+      "inputStatus": [
+        {
+          "running": false,
+          "finishing": true,
+          "name": "Start waiting",
+          "id": "4cbc039c-5f8a-474e-9df0-1f577c8d3199",
+          "lastTriggerTime": "2021-06-11T08:56:35.5321966+01:00",
+          "lastCompletionTime": "2021-06-11T08:56:35.5323134+01:00"
+        }
+      ],
+      "outputStatus": [
+        {
+          "running": false,
+          "finishing": true,
+          "name": "Wait complete",
+          "id": "26c56332-a291-40fe-8900-2dee90da9273",
+          "lastTriggerTime": "2021-06-11T08:56:29.5037837+01:00",
+          "lastCompletionTime": "2021-06-11T08:56:29.5038325+01:00"
+        }
+      ]
+    },
+    {
+      "name": "Wait",
+      "id": "5816a542-ac3f-4fe8-b87f-0e6b94fbc4ad",
+      "lastTriggerTime": "2021-06-11T08:56:35.5323016+01:00",
+      "lastCompletionTime": "2021-06-11T08:56:31.5043554+01:00",
+      "state": 4,
+      "inputStatus": [
+        {
+          "running": false,
+          "finishing": true,
+          "name": "Start waiting",
+          "id": "d6f6e245-3705-4924-ba15-a70cc010ed42",
+          "lastTriggerTime": "2021-06-11T08:56:35.5322319+01:00",
+          "lastCompletionTime": "2021-06-11T08:56:35.5323217+01:00"
+        }
+      ],
+      "outputStatus": [
+        {
+          "running": false,
+          "finishing": true,
+          "name": "Wait complete",
+          "id": "4c43ca34-4089-4908-9241-a82d71ae8bac",
+          "lastTriggerTime": "2021-06-11T08:56:31.5043312+01:00",
+          "lastCompletionTime": "2021-06-11T08:56:31.5043732+01:00"
+        }
+      ]
+    },
+    {
+      "name": "Wait",
+      "id": "aaffbbf7-aa39-418d-84df-040668ec225d",
+      "lastTriggerTime": "2021-06-11T08:56:35.5322975+01:00",
+      "lastCompletionTime": "2021-06-11T08:56:32.5036577+01:00",
+      "state": 4,
+      "inputStatus": [
+        {
+          "running": false,
+          "finishing": true,
+          "name": "Start waiting",
+          "id": "bad3613d-4205-4d25-a76d-698f82dc27c8",
+          "lastTriggerTime": "2021-06-11T08:56:35.5322555+01:00",
+          "lastCompletionTime": "2021-06-11T08:56:35.532314+01:00"
+        }
+      ],
+      "outputStatus": [
+        {
+          "running": false,
+          "finishing": true,
+          "name": "Wait complete",
+          "id": "6e109eb2-0ab3-432e-ae8a-4214b7bff7fd",
+          "lastTriggerTime": "2021-06-11T08:56:32.5036236+01:00",
+          "lastCompletionTime": "2021-06-11T08:56:32.5036941+01:00"
+        }
+      ]
+    },
+    {
+      "name": "Wait",
+      "id": "a9a87c9a-4b6a-46ad-9b78-a8fe335c2c52",
+      "lastTriggerTime": "2021-06-11T08:56:32.5037305+01:00",
+      "lastCompletionTime": "2021-06-11T08:56:34.5183045+01:00",
+      "state": 3,
+      "inputStatus": [
+        {
+          "running": false,
+          "finishing": true,
+          "name": "Start waiting",
+          "id": "6c9e2157-172a-4a20-b7c2-d9fb4ab3523a",
+          "lastTriggerTime": "2021-06-11T08:56:32.503677+01:00",
+          "lastCompletionTime": "2021-06-11T08:56:32.5037495+01:00"
+        }
+      ],
+      "outputStatus": [
+        {
+          "running": false,
+          "finishing": true,
+          "name": "Wait complete",
+          "id": "dbb28ccf-6c55-4469-a186-1cff2c14dc67",
+          "lastTriggerTime": "2021-06-11T08:56:34.5182817+01:00",
+          "lastCompletionTime": "2021-06-11T08:56:34.5183765+01:00"
+        }
+      ]
+    }
+  ]
+}

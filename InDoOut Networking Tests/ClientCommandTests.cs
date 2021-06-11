@@ -200,7 +200,7 @@ namespace InDoOut_Networking_Tests
             Assert.AreEqual(1, lastServerMessage.Data.Length);
             Assert.AreEqual("example-program", lastServerMessage.Data[0]);
 
-            var programData = File.ReadAllText("example-program.ido");
+            var programData = File.ReadAllText("example-program-status.json");
 
             Assert.IsTrue(await server.SendMessageAll($"{lastServerMessage.Id}{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}DownloadProgram{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}{programData}"));
             Assert.IsNotNull(downloadDataTask.Result);
@@ -215,7 +215,7 @@ namespace InDoOut_Networking_Tests
 
             Assert.IsNotNull(lastServerMessage);
             Assert.IsTrue(await server.SendMessageAll($"{lastServerMessage.Id}{NetworkCodes.MESSAGE_ID_COMMAND_SPLITTER}DownloadProgram{NetworkCodes.COMMAND_NAME_DATA_SPLITTER}{programData}"));
-            Assert.IsFalse(downloadProgramTask.Result);
+            Assert.IsTrue(downloadProgramTask.Result);
             Assert.IsNotNull(program);
 
             downloadDataTask = programDownloadCommand.RequestDataForProgramAsync("example-program", new CancellationTokenSource(TimeSpan.FromMilliseconds(800)).Token);

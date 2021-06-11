@@ -59,7 +59,7 @@ namespace InDoOut_Networking.Shared.Entities
         public static ProgramStatus FromProgram(IProgram program)
         {
             var functions = program.Functions.Select(function => FunctionStatus.FromFunction(function)).ToArray();
-            var metadata = program.Metadata;
+            var metadata = new Dictionary<string, string>(program.Metadata);
             var status = new ProgramStatus() { Functions = functions, Metadata = metadata };
             var propertyExtractor = new PropertyExtractor<ProgramStatus, IProgram>(status);
 
