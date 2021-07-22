@@ -52,6 +52,7 @@ namespace InDoOut_Networking.Entities
                 var convertedAll = true;
                 var propertyExtractor = new PropertyExtractor<FunctionStatus, NetworkedFunction>(status);
 
+                convertedAll = UpdateMetadataFromStatus(status) && convertedAll;
                 convertedAll = UpdateInputsFromStatus(status) && convertedAll;
                 convertedAll = UpdateOutputsFromStatus(status) && convertedAll;
 
@@ -68,6 +69,23 @@ namespace InDoOut_Networking.Entities
         public bool HasCompletedSince(DateTime time) => false; //Todo link up with synchronised times
         public bool HasCompletedWithin(TimeSpan time) => false; //Todo link up with synchronised times
         public void Trigger(IInput triggeredBy) { } //Todo synchronise with networked entity
+
+        private bool UpdateMetadataFromStatus(FunctionStatus status)
+        {
+            if (status != null)
+            {
+                Metadata.Clear();
+
+                foreach (var pair in status.Metadata)
+                {
+                    Metadata.Add(pair.Key, pair.Value);
+                }
+
+                return true;
+            }
+
+            return false;
+        }
 
         private bool UpdateOutputsFromStatus(FunctionStatus status)
         {

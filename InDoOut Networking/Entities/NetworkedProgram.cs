@@ -108,7 +108,8 @@ namespace InDoOut_Networking.Entities
             {
                 try
                 {
-
+                    var downloadProgramCommand = new DownloadProgramClientCommand(AssociatedClient);
+                    return await downloadProgramCommand.RequestProgramAsync(Name, this, cancellationToken);
                 }
                 catch { }
             }
