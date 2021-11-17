@@ -261,8 +261,8 @@ namespace InDoOut_Networking_Tests
 
             var parsed = JObject.Parse(client.LastMessageReceived.Data[0]);
 
-            Assert.AreEqual(2, parsed["functions"].Children().Count());
-            Assert.AreEqual("Yes", parsed["functions"].Children().First()["metadata"]["this is meta"].Value<string>());
+            Assert.AreEqual(2, parsed["functionStatus"].Children().Count());
+            Assert.AreEqual("Yes", parsed["functionStatus"].Children().First()["metadata"]["this is meta"].Value<string>());
 
             client.LastMessageReceived = null;
 
@@ -277,7 +277,7 @@ namespace InDoOut_Networking_Tests
 
             parsed = JObject.Parse(client.LastMessageReceived.Data[0]);
 
-            Assert.AreEqual(1, parsed["functions"].Children().Count());
+            Assert.AreEqual(1, parsed["functionStatus"].Children().Count());
 
             client.LastMessageReceived = null;
 
@@ -292,7 +292,7 @@ namespace InDoOut_Networking_Tests
 
             parsed = JObject.Parse(client.LastMessageReceived.Data[0]);
 
-            Assert.AreEqual(0, parsed["functions"].Children().Count());
+            Assert.AreEqual(0, parsed["functionStatus"].Children().Count());
 
             client.LastMessageReceived = null;
 
