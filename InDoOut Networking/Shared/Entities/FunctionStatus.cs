@@ -9,6 +9,10 @@ namespace InDoOut_Networking.Shared.Entities
     [JsonObject("functionStatus")]
     public class FunctionStatus
     {
+        [JsonProperty("creationTime")]
+        [ExtractProperty("LastUpdateTime", true)]
+        public DateTime CreationTime { get; set; } = DateTime.Now;
+
         [JsonProperty("name")]
         [ExtractProperty("Name")]
         public string Name { get; set; } = null;

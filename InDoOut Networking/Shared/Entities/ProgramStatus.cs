@@ -11,6 +11,10 @@ namespace InDoOut_Networking.Shared.Entities
     [JsonObject("programStatus")]
     public class ProgramStatus
     {
+        [JsonProperty("creationTime")]
+        [ExtractProperty("LastUpdateTime", true)]
+        public DateTime CreationTime { get; set; } = DateTime.Now;
+
         [JsonProperty("running")]
         [ExtractProperty("Running")]
         public bool Running { get; set; } = false;

@@ -30,6 +30,7 @@ namespace InDoOut_Networking.Entities
 
         public Guid Id { get; set; } = Guid.NewGuid();
 
+        public DateTime LastUpdateTime { get; set; } = DateTime.MinValue;
         public DateTime LastTriggerTime { get; private set; } = DateTime.MinValue;
         public DateTime LastCompletionTime { get; private set; } = DateTime.MinValue;
 
@@ -66,9 +67,9 @@ namespace InDoOut_Networking.Entities
         public bool CanAcceptConnection(IEntity entity) => false;
         public bool CanBeTriggered(IEntity entity) => false;
         public bool HasBeenTriggeredSince(DateTime time) => LastTriggerTime.HasOccurredSince(time);
-        public bool HasBeenTriggeredWithin(TimeSpan time) => LastTriggerTime.HasOccurredWithin(time);
+        public bool HasBeenTriggeredWithin(TimeSpan time) => LastTriggerTime.HasOccurredWithin(time, LastUpdateTime);
         public bool HasCompletedSince(DateTime time) => LastCompletionTime.HasOccurredSince(time);
-        public bool HasCompletedWithin(TimeSpan time) => LastCompletionTime.HasOccurredWithin(time);
+        public bool HasCompletedWithin(TimeSpan time) => LastCompletionTime.HasOccurredWithin(time, LastUpdateTime);
         public void Trigger(IInput triggeredBy) { } //Todo synchronise with networked entity
 
         private bool UpdateMetadataFromStatus(FunctionStatus status)

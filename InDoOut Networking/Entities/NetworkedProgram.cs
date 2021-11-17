@@ -32,6 +32,7 @@ namespace InDoOut_Networking.Entities
         public List<IEndFunction> EndFunctions => new List<IEndFunction>();
         public List<string> PassthroughValues => new List<string>();
 
+        public DateTime LastUpdateTime { get; set; } = DateTime.MinValue;
         public DateTime LastTriggerTime { get; set; } = DateTime.MinValue;
         public DateTime LastCompletionTime { get; set; } = DateTime.MinValue;
 
@@ -117,9 +118,9 @@ namespace InDoOut_Networking.Entities
         public bool CanBeTriggered(IEntity entity) => false;
 
         public bool HasBeenTriggeredSince(DateTime time) => LastTriggerTime.HasOccurredSince(time);
-        public bool HasBeenTriggeredWithin(TimeSpan time) => LastTriggerTime.HasOccurredWithin(time);
+        public bool HasBeenTriggeredWithin(TimeSpan time) => LastTriggerTime.HasOccurredWithin(time, LastUpdateTime);
         public bool HasCompletedSince(DateTime time) => LastCompletionTime.HasOccurredSince(time);
-        public bool HasCompletedWithin(TimeSpan time) => LastCompletionTime.HasOccurredWithin(time);
+        public bool HasCompletedWithin(TimeSpan time) => LastCompletionTime.HasOccurredWithin(time, LastUpdateTime);
 
         private bool UpdateFunctionsFromStatus(ProgramStatus status)
         {

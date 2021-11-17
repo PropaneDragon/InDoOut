@@ -35,7 +35,7 @@ namespace InDoOut_Networking.Shared.Entities
 
                             cachedProperty.SetValue(StorageObject, propertyValue);
                         }
-                        else
+                        else if (!attribute.IgnoreMissingProperty)
                         {
                             extractedAll = false;
                         }
@@ -67,7 +67,7 @@ namespace InDoOut_Networking.Shared.Entities
                             {
                                 _ = setMethod.Invoke(toWriteTo, new[] { propertyValue });
                             }
-                            else
+                            else if (!attribute.IgnoreMissingProperty)
                             {
                                 appliedAll = false;
                             }
