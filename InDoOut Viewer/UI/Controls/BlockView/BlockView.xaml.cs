@@ -2,6 +2,7 @@
 using InDoOut_UI_Common.Actions;
 using InDoOut_UI_Common.Actions.Selecting;
 using InDoOut_UI_Common.InterfaceElements;
+using InDoOut_Viewer.Actions;
 using System;
 using System.Threading;
 using System.Timers;
@@ -27,7 +28,7 @@ namespace InDoOut_Viewer.UI.Controls.BlockView
             InitializeComponent();
 
             AssociatedProgram = ProgramHandler.NewProgram();
-            //ActionHandler = new ActionHandler(new BlockViewRestingAction(this));
+            ActionHandler = new ActionHandler(new BlockViewRestingAction(this));
             //SelectionManager = new SelectionManager(this);
         }
 

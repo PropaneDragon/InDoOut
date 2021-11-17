@@ -32,7 +32,7 @@ namespace InDoOut_UI_Common.Actions
 
                 elementsUnderMouse.Reverse();
 
-                if (elementsUnderMouse.Count > 0 && Display.GetFirstElementOfType<ISelectable>(elementsUnderMouse) is ISelectable selectable && selectable.CanSelect(Display) && !selectionManager.Contains(selectable))
+                if (elementsUnderMouse.Count > 0 && Display.GetFirstElementOfType<ISelectable>(elementsUnderMouse) is ISelectable selectable && selectable.CanSelect(Display) && selectionManager != null && !selectionManager.Contains(selectable))
                 {
                     _ = Keyboard.Modifiers.HasFlag(ModifierKeys.Control) ? Display.SelectionManager.Add(selectable, true) : Display.SelectionManager.Set(selectable, false);
                 }
@@ -53,7 +53,7 @@ namespace InDoOut_UI_Common.Actions
         {
             var elementsUnderMouse = Display.GetElementsUnderMouse();
             var selectionManager = Display.SelectionManager;
-            var elementsSelected = selectionManager.Selection;
+            var elementsSelected = selectionManager?.Selection;
 
             elementsUnderMouse.Reverse();
 
@@ -69,7 +69,7 @@ namespace InDoOut_UI_Common.Actions
 
                     return true;
                 }
-                else if (Display.GetFirstElementOfType<IDraggable>(elementsUnderMouse) != null && elementsSelected.Any(element => element is IDraggable draggable && draggable.CanDrag(Display)))
+                else if (Display.GetFirstElementOfType<IDraggable>(elementsUnderMouse) != null && elementsSelected != null && elementsSelected.Any(element => element is IDraggable draggable && draggable.CanDrag(Display)))
                 {
                     var draggables = elementsSelected.Where(element => element is IDraggable draggable && draggable.CanDrag(Display)).Cast<IDraggable>();
 
