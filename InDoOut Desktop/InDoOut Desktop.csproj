@@ -33,7 +33,6 @@
     <None Remove="SplashWindow.xaml" />
     <None Remove="Style\MainStyle.xaml" />
     <None Remove="UI\Controls\BlockView\BlockView.xaml" />
-    <None Remove="UI\Controls\BlockView\Overview.xaml" />
     <None Remove="UI\Controls\Sidebar\ItemList.xaml" />
     <None Remove="UI\Controls\Sidebar\Sidebar.xaml" />
     <None Remove="UI\Controls\Splash\SplashOverlay.xaml" />
