@@ -27,8 +27,8 @@ namespace InDoOut_Viewer.UI.Controls.BlockView
             InitializeComponent();
 
             AssociatedProgram = ProgramHandler.NewProgram();
-            /*SelectionManager = new SelectionManager(this);
-            ActionHandler = new ActionHandler(new BlockViewRestingAction(this));*/
+            //ActionHandler = new ActionHandler(new BlockViewRestingAction(this));
+            //SelectionManager = new SelectionManager(this);
         }
 
         private async void Timer_Elapsed(object sender, ElapsedEventArgs e)

@@ -1,6 +1,7 @@
 ﻿using InDoOut_Core.Entities.Core;
 using InDoOut_Core.Entities.Functions;
 using InDoOut_Core.Threading.Safety;
+using InDoOut_Core.Time;
 using InDoOut_Networking.Shared.Entities;
 using System;
 using System.Collections.Generic;
@@ -64,10 +65,10 @@ namespace InDoOut_Networking.Entities
 
         public bool CanAcceptConnection(IEntity entity) => false;
         public bool CanBeTriggered(IEntity entity) => false;
-        public bool HasBeenTriggeredSince(DateTime time) => false; //Todo link up with synchronised times
-        public bool HasBeenTriggeredWithin(TimeSpan time) => false; //Todo link up with synchronised times
-        public bool HasCompletedSince(DateTime time) => false; //Todo link up with synchronised times
-        public bool HasCompletedWithin(TimeSpan time) => false; //Todo link up with synchronised times
+        public bool HasBeenTriggeredSince(DateTime time) => LastTriggerTime.HasOccurredSince(time);
+        public bool HasBeenTriggeredWithin(TimeSpan time) => LastTriggerTime.HasOccurredWithin(time);
+        public bool HasCompletedSince(DateTime time) => LastCompletionTime.HasOccurredSince(time);
+        public bool HasCompletedWithin(TimeSpan time) => LastCompletionTime.HasOccurredWithin(time);
         public void Trigger(IInput triggeredBy) { } //Todo synchronise with networked entity
 
         private bool UpdateMetadataFromStatus(FunctionStatus status)
@@ -123,7 +124,7 @@ namespace InDoOut_Networking.Entities
                 }
                 else
                 {
-                    var inputToAdd = new NetworkedInput();
+                    var inputToAdd = new NetworkedInput(this);
                     convertedAll = inputToAdd.UpdateFromStatus(inputStatus) && convertedAll;
 
                     Inputs.Add(inputToAdd);

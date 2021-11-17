@@ -1,4 +1,5 @@
 ﻿using InDoOut_Core.Entities.Programs;
+using InDoOut_Json_Storage;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
@@ -44,6 +45,9 @@ namespace InDoOut_Networking.Shared.Entities
         [JsonProperty("functionStatus")]
         public FunctionStatus[] Functions { get; set; } = new FunctionStatus[] { };
 
+        [JsonProperty("connectionStatus")]
+        public ConnectionStatus[] Connections { get; set; } = new ConnectionStatus[] { };
+
         public static ProgramStatus FromJson(string json)
         {
             try
@@ -59,8 +63,9 @@ namespace InDoOut_Networking.Shared.Entities
         public static ProgramStatus FromProgram(IProgram program)
         {
             var functions = program.Functions.Select(function => FunctionStatus.FromFunction(function)).ToArray();
+            var connections = program.Functions.SelectMany(function => JsonConnection.CreateFromFunction(function).Select(jsonConnection => new ConnectionStatus(jsonConnection))).ToArray();
             var metadata = new Dictionary<string, string>(program.Metadata);
-            var status = new ProgramStatus() { Functions = functions, Metadata = metadata };
+            var status = new ProgramStatus() { Functions = functions, Connections = connections, Metadata = metadata };
             var propertyExtractor = new PropertyExtractor<ProgramStatus, IProgram>(status);
 
             return propertyExtractor.ExtractFrom(program) ? status : null;

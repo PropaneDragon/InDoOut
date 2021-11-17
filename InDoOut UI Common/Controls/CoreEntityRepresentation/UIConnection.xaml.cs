@@ -150,7 +150,7 @@ namespace InDoOut_UI_Common.Controls.CoreEntityRepresentation
         {
             if (_start is IUIOutput uiOutput)
             {
-                var running = (uiOutput?.AssociatedOutput?.Running ?? false) || (uiOutput?.AssociatedOutput?.HasBeenTriggeredWithin(TimeSpan.FromMilliseconds(200)) ?? false);
+                var running = (uiOutput?.AssociatedOutput?.Running ?? false) || (uiOutput?.AssociatedOutput?.HasBeenTriggeredWithin(TimeSpan.FromMilliseconds(400)) ?? false);
                 if (running != _lastRunningState)
                 {
                     _lastRunningState = running;

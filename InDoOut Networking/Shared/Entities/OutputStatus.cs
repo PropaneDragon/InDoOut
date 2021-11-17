@@ -1,6 +1,7 @@
 ﻿using InDoOut_Core.Entities.Functions;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 
 namespace InDoOut_Networking.Shared.Entities
 {
@@ -31,6 +32,9 @@ namespace InDoOut_Networking.Shared.Entities
         [ExtractProperty("LastCompletionTime")]
         public DateTime LastCompletionTime { get; set; } = DateTime.MinValue;
 
+        [JsonProperty("metadata")]
+        public Dictionary<string, string> Metadata { get; set; } = new Dictionary<string, string>();
+
         public static OutputStatus FromJson(string json)
         {
             try
@@ -45,7 +49,8 @@ namespace InDoOut_Networking.Shared.Entities
 
         public static OutputStatus FromOutput(IOutput output)
         {
-            var status = new OutputStatus();
+            var metadata = new Dictionary<string, string>(output.Metadata);
+            var status = new OutputStatus() { Metadata = metadata };
             var propertyExtractor = new PropertyExtractor<OutputStatus, IOutput>(status);
 
             return propertyExtractor.ExtractFrom(output) ? status : null;

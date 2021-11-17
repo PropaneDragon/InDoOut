@@ -1,4 +1,5 @@
 ﻿using InDoOut_Core.Logging;
+using InDoOut_Core.Time;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -108,7 +109,7 @@ namespace InDoOut_Core.Entities.Core
         /// </summary>
         /// <param name="time">The time to check.</param>
         /// <returns>Whether the entity has been triggered since the given time.</returns>
-        public bool HasBeenTriggeredSince(DateTime time) => LastTriggerTime >= time;
+        public bool HasBeenTriggeredSince(DateTime time) => LastTriggerTime.HasOccurredSince(time);
 
         /// <summary>
         /// Checks whether the entity has been triggered within the given <paramref name="time"/>. Passing a time
@@ -116,14 +117,14 @@ namespace InDoOut_Core.Entities.Core
         /// </summary>
         /// <param name="time">The time to check.</param>
         /// <returns>Whether the entity has been triggered within the given time.</returns>
-        public bool HasBeenTriggeredWithin(TimeSpan time) => LastTriggerTime >= DateTime.Now - time;
+        public bool HasBeenTriggeredWithin(TimeSpan time) => LastTriggerTime.HasOccurredWithin(time);
 
         /// <summary>
         /// Checks whether the entity has completed a run (successfully or unsuccessfully) since the given <paramref name="time"/>.
         /// </summary>
         /// <param name="time">The time to check.</param>
         /// <returns>Whether the entity has completed since the given time.</returns>
-        public bool HasCompletedSince(DateTime time) => LastTriggerTime >= time;
+        public bool HasCompletedSince(DateTime time) => LastCompletionTime.HasOccurredSince(time);
 
         /// <summary>
         /// Checks whether the entity has completed a run (successfully or unsuccessfully) within the given <paramref name="time"/>. Passing a time
@@ -131,7 +132,7 @@ namespace InDoOut_Core.Entities.Core
         /// </summary>
         /// <param name="time">The time to check.</param>
         /// <returns>Whether the entity has completed within the given time.</returns>
-        public bool HasCompletedWithin(TimeSpan time) => LastTriggerTime >= DateTime.Now - time;
+        public bool HasCompletedWithin(TimeSpan time) => LastCompletionTime.HasOccurredWithin(time);
 
         /// <summary>
         /// A string representation of this entity.

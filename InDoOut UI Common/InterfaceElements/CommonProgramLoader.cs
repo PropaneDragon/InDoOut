@@ -82,7 +82,7 @@ namespace InDoOut_UI_Common.InterfaceElements
                 {
                     foreach (var input in output.Connections)
                     {
-                        if (functionToUIFunctionMap.ContainsKey(function) && functionToUIFunctionMap.ContainsKey(input.Parent))
+                        if (functionToUIFunctionMap.ContainsKey(function) && input.Parent != null && functionToUIFunctionMap.ContainsKey(input.Parent))
                         {
                             var startUiFunction = functionToUIFunctionMap[function];
                             var endUiFunction = functionToUIFunctionMap[input.Parent];
