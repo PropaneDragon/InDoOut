@@ -1,5 +1,4 @@
-﻿using InDoOut_Desktop.UI.Interfaces;
-using InDoOut_UI_Common.InterfaceElements;
+﻿using InDoOut_UI_Common.InterfaceElements;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -7,22 +6,19 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
-namespace InDoOut_Desktop.UI.Controls.BlockView
+namespace InDoOut_UI_Common.Controls.Display
 {
-    /// <summary>
-    /// Interaction logic for Overview.xaml
-    /// </summary>
     public partial class Overview : UserControl
     {
         private readonly DispatcherTimer _updateTimer = new DispatcherTimer(DispatcherPriority.Render);
 
-        private IBlockView _blockView = null;
+        private ICommonBlockDisplay _display = null;
 
-        public Size TotalSize => _blockView?.TotalSize ?? new Size();
-        public Size ViewSize => _blockView?.ViewSize ?? new Size();
+        public Size TotalSize => _display?.TotalSize ?? new Size();
+        public Size ViewSize => _display?.ViewSize ?? new Size();
         public Vector ActualSizeToOverviewRatio => new Vector(ActualWidth / TotalSize.Width, ActualHeight / TotalSize.Height);
         public Vector OverviewToActualSizeRatio => new Vector(TotalSize.Width / ActualWidth, TotalSize.Height / ActualHeight);
-        public IBlockView AssociatedBlockView { get => _blockView; set => ChangeBlockView(value); }
+        public ICommonBlockDisplay Display { get => _display; set => ChangeBlockView(value); }
 
         public Overview()
         {
@@ -35,16 +31,16 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
             UpdatePositions();
         }
 
-        private void ChangeBlockView(IBlockView blockView)
+        private void ChangeBlockView(ICommonBlockDisplay blockView)
         {
-            if (_blockView != null)
+            if (_display != null)
             {
-                //Todo: Teardown old blockview
+                //Todo: Teardown old display
             }
 
-            _blockView = blockView;
+            _display = blockView;
 
-            if (_blockView != null)
+            if (_display != null)
             {
                 UpdatePositions();
             }
@@ -52,9 +48,9 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
 
         private void UpdatePositions()
         {
-            if (_blockView != null)
+            if (_display != null)
             {
-                var topLeftViewCoordinate = _blockView.TopLeftViewCoordinate;
+                var topLeftViewCoordinate = _display.TopLeftViewCoordinate;
                 var viewportRect = new Rect(topLeftViewCoordinate, ViewSize);
                 var ratioVector = ActualSizeToOverviewRatio;
                 var adjustedViewportSize = AdjustByRatio(viewportRect, ratioVector);
@@ -67,12 +63,12 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
 
                 Canvas_Layout.Children.Clear();
 
-                var functions = _blockView.UIFunctions;
+                var functions = _display.UIFunctions;
                 foreach (var function in functions)
                 {
                     if (function is FrameworkElement element)
                     {
-                        var position = _blockView.GetPosition(element);
+                        var position = _display.GetPosition(element);
                         var size = new Size(element.ActualWidth, element.ActualHeight);
                         var functionRect = new Rect(position, size);
                         var adjustedFunctionRect = AdjustByRatio(functionRect, ratioVector);
@@ -104,7 +100,7 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
 
         private void UserControl_PreviewMouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            if (AssociatedBlockView != null && AssociatedBlockView is IScrollable scrollable)
+            if (Display != null && Display is IScrollable scrollable)
             {
                 var clickedPosition = e.GetPosition(this);
                 var ratioClickedPosition = AdjustByRatio(clickedPosition, OverviewToActualSizeRatio);

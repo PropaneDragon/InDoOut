@@ -77,7 +77,7 @@ namespace InDoOut_Networking.Client.Commands
             {
                 var response = await SendMessageAwaitResponse(cancellationToken, programData);
                 var success = response != null && response.Valid && response.SuccessMessage != null;
-                var message = success ? response.SuccessMessage : response.FailureMessage;
+                var message = success ? response?.SuccessMessage : response?.FailureMessage;
 
                 return new UploadProgramResponse(success, message);
             }

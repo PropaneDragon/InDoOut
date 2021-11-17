@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InDoOut_Core.Logging;
+using System;
 using System.IO;
 using System.Net.Sockets;
 using System.Text;
@@ -60,7 +61,14 @@ namespace InDoOut_Executable_Core.Networking
                 beginningLocation = beginningLocation >= 0 ? beginningLocation + NetworkCodes.MESSAGE_END_IDENTIFIER.Length : 0;
                 endingLocation = endingLocation >= 0 ? endingLocation : fullMessage.Length;
 
-                return SanitiseMessage(fullMessage[beginningLocation..endingLocation]);
+                if (beginningLocation <= endingLocation)
+                {
+                    return SanitiseMessage(fullMessage[beginningLocation..endingLocation]);
+                }
+                else
+                {
+                    Log.Instance.Info("End of message was before start! M: ", fullMessage, ", B: ", beginningLocation, ", E: ", endingLocation);
+                } 
             }
 
             return null;

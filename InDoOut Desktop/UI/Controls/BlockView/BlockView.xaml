@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:InDoOut_Desktop.UI.Controls.BlockView"
              xmlns:entities="clr-namespace:InDoOut_UI_Common.Controls.CoreEntityRepresentation;assembly=InDoOutUICommon"
              xmlns:interfaceElements="clr-namespace:InDoOut_UI_Common.InterfaceElements;assembly=InDoOutUICommon"
+             xmlns:display="clr-namespace:InDoOut_UI_Common.Controls.Display;assembly=InDoOutUICommon"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Border BorderThickness="1" BorderBrush="#02000000">
@@ -17,7 +18,7 @@
                     </Canvas>
                 </Viewbox>
             </ScrollViewer>
-            <local:Overview x:Name="BlockView_Overview" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="200" Height="150" Margin="20" />
+            <display:Overview x:Name="BlockView_Overview" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="200" Height="150" Margin="20" />
         </Grid>
     </Border>
 </interfaceElements:CommonBlockDisplay>

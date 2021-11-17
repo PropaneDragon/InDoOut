@@ -24,7 +24,7 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
             SelectionManager = new SelectionManager(this);
             ActionHandler = new ActionHandler(new BlockViewRestingAction(this));
 
-            BlockView_Overview.AssociatedBlockView = this;
+            BlockView_Overview.Display = this;
         }
     }
 }
