@@ -45,6 +45,7 @@ namespace InDoOut_Console_Common.ConsoleExtensions
         private static string FormattingEndString => HighColourMode ? "m" : "";
 
         public static bool HighColourMode = true;
+        public static bool ResetColoursAfterWrite = true;
 
         public static void SetUp()
         {
@@ -158,14 +159,17 @@ namespace InDoOut_Console_Common.ConsoleExtensions
 
         private static void WriteLineFormattingReset()
         {
-            if (HighColourMode)
+            if (ResetColoursAfterWrite)
             {
-                Console.Write(EncaseInFormattingString("0"));
-            }
-            else
-            {
-                Console.ForegroundColor = _originalForeground;
-                Console.BackgroundColor = _originalBackground;
+                if (HighColourMode)
+                {
+                    Console.Write(EncaseInFormattingString("0"));
+                }
+                else
+                {
+                    Console.ForegroundColor = _originalForeground;
+                    Console.BackgroundColor = _originalBackground;
+                }
             }
         }
 

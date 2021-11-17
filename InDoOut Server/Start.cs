@@ -1,4 +1,5 @@
-﻿using InDoOut_Console_Common.ConsoleExtensions;
+﻿using InDoOut_Console_Common.Commands;
+using InDoOut_Console_Common.ConsoleExtensions;
 using InDoOut_Console_Common.Messaging;
 using InDoOut_Executable_Core.Arguments;
 using InDoOut_Executable_Core.Location;
@@ -6,7 +7,6 @@ using InDoOut_Executable_Core.Logging;
 using InDoOut_Executable_Core.Messaging;
 using InDoOut_Server.Arguments;
 using InDoOut_Server.ServerNetworking;
-using System;
 
 namespace InDoOut_Server
 {
@@ -45,7 +45,12 @@ namespace InDoOut_Server
                         ConsoleFormatter.DrawSubtitle("Server started");
                     }
 
-                    _ = Console.ReadKey();
+                    var commandHandler = new CommandHandler();
+                    commandHandler.AddCommand(new ExitCommand(commandHandler));
+
+                    _ = commandHandler.AwaitCommands();
+
+                    ConsoleFormatter.DrawSubtitle("Closing server");
                 }
             }
 

@@ -27,8 +27,8 @@ namespace InDoOut_Server.ServerNetworking
             var commandLoader = new ConsoleCommandLoader(_server, _programHolder);
             var pluginLoader = new ConsolePluginLoader();
 
-            commandLoader.Load();
-            pluginLoader.Load();
+            _ = commandLoader.Load();
+            _ = pluginLoader.Load();
 
             ConsoleFormatter.DrawInfoMessage("Starting console logger... ");
 
@@ -46,16 +46,6 @@ namespace InDoOut_Server.ServerNetworking
             HookServerEvents(_server);
 
             ConsoleFormatter.DrawInfoMessageLine(ConsoleFormatter.Positive, "Manager started");
-
-#if DEBUG
-
-            var program = _programHolder.NewProgram();
-            program.SetName("Test program 1");
-
-            program = _programHolder.NewProgram();
-            program.SetName("This is another program that is also a test!");
-
-#endif
         }
 
         public bool Start()
