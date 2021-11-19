@@ -1,5 +1,5 @@
-﻿using InDoOut_Core.Logging;
-using InDoOut_Core.Time;
+﻿using InDoOut_Core.Extensions.Time;
+using InDoOut_Core.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,5 +1,6 @@
 ﻿using InDoOut_Console_Common.ConsoleExtensions;
 using InDoOut_Console_Common.Loading;
+using InDoOut_Core.Extensions.String;
 using InDoOut_Core.Functions;
 using InDoOut_Executable_Core.Networking.Commands;
 using InDoOut_Executable_Core.Programs;
@@ -43,7 +44,7 @@ namespace InDoOut_Server.Loading
 
             if (unsuccessfulCommands > 0)
             {
-                ConsoleFormatter.DrawErrorMessageLine(ConsoleFormatter.AccentTertiary, unsuccessfulCommands, ConsoleFormatter.Negative, $" command{(unsuccessfulCommands != 1 ? "s" : "")} failed to register. Some functionality may not work!");
+                ConsoleFormatter.DrawErrorMessageLine(ConsoleFormatter.AccentTertiary, unsuccessfulCommands, ConsoleFormatter.Negative, $" {"command".Pluralise(unsuccessfulCommands)} failed to register. Some functionality may not work!");
             }
 
             return true;

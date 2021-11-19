@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace InDoOut_Core.Time
+namespace InDoOut_Core.Extensions.Time
 {
     /// <summary>
-    /// Utilities for handling time.
+    /// Extensions for handling time.
     /// </summary>
-    public static class TimeUtilities
+    public static class TimeExtensions
     {
         /// <summary>
         /// Checks whether the time has occurred since the given <paramref name="time"/>.

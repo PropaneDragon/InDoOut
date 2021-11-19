@@ -1,7 +1,7 @@
 ﻿using InDoOut_Core.Entities.Core;
 using InDoOut_Core.Entities.Functions;
+using InDoOut_Core.Extensions.Time;
 using InDoOut_Core.Threading.Safety;
-using InDoOut_Core.Time;
 using InDoOut_Networking.Shared.Entities;
 using System;
 using System.Collections.Generic;

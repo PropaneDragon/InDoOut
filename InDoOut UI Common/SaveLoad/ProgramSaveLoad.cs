@@ -1,4 +1,5 @@
 ﻿using InDoOut_Core.Entities.Programs;
+using InDoOut_Core.Extensions.String;
 using InDoOut_Core.Instancing;
 using InDoOut_Core.Reporting;
 using InDoOut_Executable_Core.Location;
@@ -117,7 +118,7 @@ namespace InDoOut_UI_Common.SaveLoad
                 var resultStrings = failureReports.Select(report => report.Summary);
                 var canContinue = criticalReports <= 0;
 
-                UserMessageSystemHolder.Instance.CurrentUserMessageSystem?.ShowWarning("Problems loading program", $"{totalReports} problem{(totalReports != 1 ? "s" : "")} occurred while trying to load. See below for details.", $"{string.Join("\n\n", resultStrings)}");
+                UserMessageSystemHolder.Instance.CurrentUserMessageSystem?.ShowWarning("Problems loading program", $"{totalReports} {"problem".Pluralise(totalReports)} occurred while trying to load. See below for details.", $"{string.Join("\n\n", resultStrings)}");
 
                 if (canContinue)
                 {
