@@ -1,5 +1,6 @@
 ﻿using InDoOut_Core.Logging;
 using InDoOut_Executable_Core.Networking.Commands;
+using InDoOut_Networking.Shared.Commands.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -83,7 +84,14 @@ namespace InDoOut_Executable_Core.Networking
 
                 if (command != null)
                 {
-                    return await command.CommandReceived(message, cancellationToken);
+                    try
+                    {
+                        return await command.CommandReceived(message, cancellationToken);
+                    }
+                    catch (CommandFailureException ex)
+                    {
+                        return message.CreateFailureResponse(ex.Message);
+                    }
                 }
             }
 

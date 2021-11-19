@@ -4,6 +4,7 @@ using InDoOut_Core.Entities.Functions;
 using InDoOut_Core.Time;
 using InDoOut_Networking.Client;
 using InDoOut_Networking.Client.Commands;
+using InDoOut_Networking.Shared.Commands;
 using InDoOut_Networking.Shared.Entities;
 using System;
 using System.Collections.Generic;
@@ -103,20 +104,33 @@ namespace InDoOut_Networking.Entities
             return false;
         }
 
+        public void Stop()
+        {
+            if (Connected)
+            {
+                var command = new SetProgramStateClientCommand(AssociatedClient);
+                var token = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+
+                _ = Task.Run(async () => await command.SetProgramState(Id, SetProgramStateShared.ProgramState.Stop, token.Token));
+            }
+        }
+
+        public void Trigger(IEntity triggeredBy)
+        {
+            if (Connected)
+            {
+                var command = new SetProgramStateClientCommand(AssociatedClient);
+                var token = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+
+                _ = Task.Run(async () => await command.SetProgramState(Id, SetProgramStateShared.ProgramState.Start, token.Token));
+            }
+        }
+
         public async Task<bool> Disconnect() => Connected && await AssociatedClient?.Disconnect();
-
-        public void Stop() { } //Todo - Send data to network
-
         public void SetName(string name) => Name = name;
-
         public bool AddFunction(IFunction function) => false;
-
         public bool RemoveFunction(IFunction function) => false;
-
-        public void Trigger(IEntity triggeredBy) { }
-
         public bool CanBeTriggered(IEntity entity) => false;
-
         public bool HasBeenTriggeredSince(DateTime time) => LastTriggerTime.HasOccurredSince(time);
         public bool HasBeenTriggeredWithin(TimeSpan time) => LastTriggerTime.HasOccurredWithin(time, LastUpdateTime);
         public bool HasCompletedSince(DateTime time) => LastCompletionTime.HasOccurredSince(time);

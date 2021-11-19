@@ -189,12 +189,32 @@ namespace InDoOut_Viewer.UI.Controls.Sidebar
 
         private void Button_RunProgram_Click(object sender, RoutedEventArgs e)
         {
+            if (sender is Button senderButton && AssociatedTaskView?.CurrentProgramDisplay?.AssociatedProgram is NetworkedProgram program)
+            {
+                senderButton.IsEnabled = false;
 
+                if (program.Connected)
+                {
+                    program.Trigger(null);
+                }
+
+                senderButton.IsEnabled = true;
+            }
         }
 
         private void Button_StopProgram_Click(object sender, RoutedEventArgs e)
         {
+            if (sender is Button senderButton && AssociatedTaskView?.CurrentProgramDisplay?.AssociatedProgram is NetworkedProgram program)
+            {
+                senderButton.IsEnabled = false;
 
+                if (program.Connected)
+                {
+                    program.Stop();
+                }
+
+                senderButton.IsEnabled = true;
+            }
         }
 
         private void Button_ProgramStopping_Click(object sender, RoutedEventArgs e)

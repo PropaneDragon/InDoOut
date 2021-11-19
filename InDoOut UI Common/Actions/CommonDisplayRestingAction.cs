@@ -99,7 +99,7 @@ namespace InDoOut_UI_Common.Actions
                 {
                     if (!Keyboard.Modifiers.HasFlag(ModifierKeys.Control))
                     {
-                        Display.SelectionManager.Clear();
+                        Display.SelectionManager?.Clear();
                     }
 
                     return true;
@@ -113,9 +113,9 @@ namespace InDoOut_UI_Common.Actions
         {
             if (Display != null)
             {
-                var elementsSelected = Display.SelectionManager.Selection;
+                var elementsSelected = Display.SelectionManager?.Selection;
 
-                if (key == Key.D && Keyboard.Modifiers.HasFlag(ModifierKeys.Control) && elementsSelected.All(element => element is ICopyable copyable && copyable.CanCopy(Display)))
+                if (key == Key.D && Keyboard.Modifiers.HasFlag(ModifierKeys.Control) && elementsSelected != null && elementsSelected.All(element => element is ICopyable copyable && copyable.CanCopy(Display)))
                 {
                     var copyables = elementsSelected.Cast<ICopyable>();
 
@@ -128,7 +128,7 @@ namespace InDoOut_UI_Common.Actions
                         }
                     }
                 }
-                else if (key == Key.Delete && !(Keyboard.FocusedElement is TextBox) && elementsSelected.All(element => element is IDeletable deletable && deletable.CanDelete(Display)))
+                else if (key == Key.Delete && !(Keyboard.FocusedElement is TextBox) && elementsSelected != null && elementsSelected.All(element => element is IDeletable deletable && deletable.CanDelete(Display)))
                 {
                     var deletables = elementsSelected.Cast<IDeletable>();
 

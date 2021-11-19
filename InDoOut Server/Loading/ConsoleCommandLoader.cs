@@ -31,7 +31,8 @@ namespace InDoOut_Server.Loading
                 AddCommandListener(new RequestProgramsServerCommand(_server, _programHolder)),
                 AddCommandListener(new UploadProgramServerCommand(_server, _programHolder, LoadedPlugins.Instance, new FunctionBuilder())),
                 AddCommandListener(new DownloadProgramServerCommand(_server, _programHolder)),
-                AddCommandListener(new GetProgramStatusServerCommand(_server, _programHolder))
+                AddCommandListener(new GetProgramStatusServerCommand(_server, _programHolder)),
+                AddCommandListener(new SetProgramStateServerCommand(_server, _programHolder))
             };
 
             var totalCommands = results.Count;
