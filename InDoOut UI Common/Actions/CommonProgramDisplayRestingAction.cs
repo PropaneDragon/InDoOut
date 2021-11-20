@@ -8,7 +8,7 @@ namespace InDoOut_UI_Common.Actions
     {
         public ICommonProgramDisplay ProgramDisplay => Display as ICommonProgramDisplay;
 
-        public CommonProgramDisplayRestingAction(ICommonProgramDisplay display) : base(display)
+        public CommonProgramDisplayRestingAction(ICommonProgramDisplay display, Feature features = Feature.All) : base(display, features)
         {
         }
 

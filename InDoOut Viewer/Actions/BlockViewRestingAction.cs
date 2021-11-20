@@ -13,7 +13,7 @@ namespace InDoOut_Viewer.Actions
         public BlockViewRestingAction(BlockView blockView)
         {
             _blockView = blockView;
-            _commonDisplayActions = new ActionHandler(new CommonProgramDisplayRestingAction(_blockView));
+            _commonDisplayActions = new ActionHandler(new CommonProgramDisplayRestingAction(_blockView, CommonDisplayRestingAction.Feature.Scrolling));
         }
 
         public override bool MouseRightUp(Point mousePosition) => _commonDisplayActions?.MouseRightUp(mousePosition) ?? false;
