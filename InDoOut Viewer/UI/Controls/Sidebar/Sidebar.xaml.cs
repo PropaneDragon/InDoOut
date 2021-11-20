@@ -4,6 +4,7 @@ using InDoOut_Executable_Core.Messaging;
 using InDoOut_Networking.Client.Commands;
 using InDoOut_Networking.Entities;
 using InDoOut_UI_Common.InterfaceElements;
+using InDoOut_UI_Common.SaveLoad;
 using InDoOut_UI_Common.Windows;
 using System;
 using System.Threading;
@@ -78,7 +79,14 @@ namespace InDoOut_Viewer.UI.Controls.Sidebar
 
         private void Button_Settings_Click(object sender, RoutedEventArgs e)
         {
+            Log.Instance.Header("Settings button clicked");
 
+            var settingsWindow = new SettingsWindow(CommonOptionsSaveLoad.Instance.OptionsStorer)
+            {
+                Owner = Window.GetWindow(this)
+            };
+
+            settingsWindow.Show();
         }
 
         private void Button_Upload_Click(object sender, RoutedEventArgs e)
@@ -223,14 +231,6 @@ namespace InDoOut_Viewer.UI.Controls.Sidebar
 
         }
 
-        private void Button_TaskViewer_Click(object sender, RoutedEventArgs e)
-        {
-            if (AssociatedTaskView != null)
-            {
-                AssociatedTaskView?.ShowTasks();
-            } 
-        }
-
         private void Button_SwitchMode_Click(object sender, RoutedEventArgs e)
         {
             Log.Instance.Header("Switch button clicked");
@@ -240,5 +240,7 @@ namespace InDoOut_Viewer.UI.Controls.Sidebar
                 AssociatedTaskView.CurrentProgramDisplay.CurrentViewMode = AssociatedTaskView.CurrentProgramDisplay.CurrentViewMode == ProgramViewMode.IO ? ProgramViewMode.Variables : ProgramViewMode.IO;
             }
         }
+
+        private void Button_TaskViewer_Click(object sender, RoutedEventArgs e) => AssociatedTaskView?.ShowTasks();
     }
 }
