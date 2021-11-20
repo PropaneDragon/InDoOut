@@ -29,7 +29,6 @@ namespace InDoOut_Viewer.UI.Controls.BlockView
 
             AssociatedProgram = ProgramHandler.NewProgram();
             ActionHandler = new ActionHandler(new BlockViewRestingAction(this));
-            //SelectionManager = new SelectionManager(this);
 
             BlockView_Overview.Display = this;
         }

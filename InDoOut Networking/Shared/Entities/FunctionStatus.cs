@@ -39,6 +39,12 @@ namespace InDoOut_Networking.Shared.Entities
         [JsonProperty("outputStatus")]
         public OutputStatus[] Outputs { get; set; } = new OutputStatus[] { };
 
+        [JsonProperty("propertyStatus")]
+        public PropertyStatus[] Properties { get; set; } = new PropertyStatus[] { };
+
+        [JsonProperty("resultStatus")]
+        public ResultStatus[] Results { get; set; } = new ResultStatus[] { };
+
         [JsonProperty("metadata")]
         public Dictionary<string, string> Metadata { get; set; } = new Dictionary<string, string>();
 
@@ -56,10 +62,12 @@ namespace InDoOut_Networking.Shared.Entities
 
         public static FunctionStatus FromFunction(IFunction function)
         {
-            var inputs = function.Inputs.Select(input => InputStatus.FromInput(input)).ToArray();
-            var outputs = function.Outputs.Select(output => OutputStatus.FromOutput(output)).ToArray();
+            var inputs = function.Inputs.Select(input => InputStatus.FromInput(input)).Where(result => result != null).ToArray();
+            var outputs = function.Outputs.Select(output => OutputStatus.FromOutput(output)).Where(result => result != null).ToArray();
+            var properties = function.Properties.Select(property => PropertyStatus.FromProperty(property)).Where(result => result != null).ToArray();
+            var results = function.Results.Select(result => ResultStatus.FromResult(result)).Where(result => result != null).ToArray();
             var metadata = new Dictionary<string, string>(function.Metadata);
-            var status = new FunctionStatus() { Inputs = inputs, Outputs = outputs, Metadata = metadata };
+            var status = new FunctionStatus() { Inputs = inputs, Outputs = outputs, Properties = properties, Results = results, Metadata = metadata };
             var propertyExtractor = new PropertyExtractor<FunctionStatus, IFunction>(status);
 
             return propertyExtractor.ExtractFrom(function) ? status : null;

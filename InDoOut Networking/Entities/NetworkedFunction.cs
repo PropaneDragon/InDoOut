@@ -57,6 +57,8 @@ namespace InDoOut_Networking.Entities
                 convertedAll = UpdateMetadataFromStatus(status) && convertedAll;
                 convertedAll = UpdateInputsFromStatus(status) && convertedAll;
                 convertedAll = UpdateOutputsFromStatus(status) && convertedAll;
+                convertedAll = UpdatePropertiesFromStatus(status) && convertedAll;
+                convertedAll = UpdateResultsFromStatus(status) && convertedAll;
 
                 return propertyExtractor.ApplyTo(this) && convertedAll;
             }
@@ -87,6 +89,52 @@ namespace InDoOut_Networking.Entities
             }
 
             return false;
+        }
+
+        private bool UpdateResultsFromStatus(FunctionStatus status)
+        {
+            var convertedAll = true;
+
+            foreach (var resultsStatus in status.Results)
+            {
+                var foundResult = Results.FirstOrDefault(result => result.Id == resultsStatus.Id);
+                if (foundResult is INetworkedResult networkedResult)
+                {
+                    convertedAll = networkedResult.UpdateFromStatus(resultsStatus) && convertedAll;
+                }
+                else
+                {
+                    var resultToAdd = new NetworkedResult();
+                    convertedAll = resultToAdd.UpdateFromStatus(resultsStatus) && convertedAll;
+
+                    Results.Add(resultToAdd);
+                }
+            }
+
+            return convertedAll;
+        }
+
+        private bool UpdatePropertiesFromStatus(FunctionStatus status)
+        {
+            var convertedAll = true;
+
+            foreach (var propertyStatus in status.Properties)
+            {
+                var foundProperty = Properties.FirstOrDefault(property => property.Id == propertyStatus.Id);
+                if (foundProperty is INetworkedProperty networkedProperty)
+                {
+                    convertedAll = networkedProperty.UpdateFromStatus(propertyStatus) && convertedAll;
+                }
+                else
+                {
+                    var propertyToAdd = new NetworkedProperty(this);
+                    convertedAll = propertyToAdd.UpdateFromStatus(propertyStatus) && convertedAll;
+
+                    Properties.Add(propertyToAdd);
+                }
+            }
+
+            return convertedAll;
         }
 
         private bool UpdateOutputsFromStatus(FunctionStatus status)
