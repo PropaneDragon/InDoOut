@@ -1,4 +1,5 @@
 ﻿using InDoOut_Core.Functions;
+using InDoOut_Core.Logging;
 using InDoOut_Executable_Core.Messaging;
 using InDoOut_Networking.Client.Commands;
 using InDoOut_Networking.Entities;
@@ -220,6 +221,24 @@ namespace InDoOut_Viewer.UI.Controls.Sidebar
         private void Button_ProgramStopping_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Button_TaskViewer_Click(object sender, RoutedEventArgs e)
+        {
+            if (AssociatedTaskView != null)
+            {
+                AssociatedTaskView?.ShowTasks();
+            } 
+        }
+
+        private void Button_SwitchMode_Click(object sender, RoutedEventArgs e)
+        {
+            Log.Instance.Header("Switch button clicked");
+
+            if (AssociatedTaskView?.CurrentProgramDisplay != null)
+            {
+                AssociatedTaskView.CurrentProgramDisplay.CurrentViewMode = AssociatedTaskView.CurrentProgramDisplay.CurrentViewMode == ProgramViewMode.IO ? ProgramViewMode.Variables : ProgramViewMode.IO;
+            }
         }
     }
 }
