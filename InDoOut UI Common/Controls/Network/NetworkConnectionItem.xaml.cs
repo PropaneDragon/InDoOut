@@ -12,6 +12,7 @@ namespace InDoOut_UI_Common.Controls.Network
 
         public int Port { get => _port; set => UpdatePort(value); }
         public string Address { get => _address; set => UpdateAddress(value); }
+        public string FriendlyName { get => Text_Name.Text; set => Text_Name.Text = value ?? "Unnamed"; }
 
         public event EventHandler<NetworkConnectionEventArgs> OnConnectButtonClicked;
         public event EventHandler OnRemoveButtonClicked;
@@ -22,8 +23,9 @@ namespace InDoOut_UI_Common.Controls.Network
             InitializeComponent();
         }
 
-        public NetworkConnectionItem(string address, int port) : this()
+        public NetworkConnectionItem(string name, string address, int port) : this()
         {
+            FriendlyName = name;
             Address = address;
             Port = port;
         }

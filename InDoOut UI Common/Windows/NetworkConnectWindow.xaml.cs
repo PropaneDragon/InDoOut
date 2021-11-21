@@ -77,11 +77,11 @@ namespace InDoOut_UI_Common.Windows
 
         public IClient GetClient() => ShowDialog() ?? false ? NetworkClient : null;
 
-        private void CreateConnectionItem(string address, int port)
+        private void CreateConnectionItem(string name, string address, int port)
         {
             if (!string.IsNullOrEmpty(address))
             {
-                var networkConnectionItem = new NetworkConnectionItem(address, port);
+                var networkConnectionItem = new NetworkConnectionItem(name, address, port);
 
                 AttachNetworkConnectionItemEvents(networkConnectionItem);
 
@@ -95,6 +95,7 @@ namespace InDoOut_UI_Common.Windows
             {
                 connectionItem.OnConnectButtonClicked += ConnectionItem_OnConnectButtonClicked;
                 connectionItem.OnRemoveButtonClicked += ConnectionItem_OnRemoveButtonClicked;
+                connectionItem.OnEditButtonClicked += ConnectionItem_OnEditButtonClicked;
             }
         }
 
@@ -112,7 +113,7 @@ namespace InDoOut_UI_Common.Windows
                 {
                     if (connection.Valid)
                     {
-                        CreateConnectionItem(connection.Address, connection.Port);
+                        CreateConnectionItem(connection.Name, connection.Address, connection.Port);
                     }
                 }
             }
@@ -126,7 +127,7 @@ namespace InDoOut_UI_Common.Windows
             {
                 if (child is NetworkConnectionItem connectionItem)
                 {
-                    connectionStorage.Connections.Add(new ConnectionItem() { Address = connectionItem.Address, Port = connectionItem.Port });
+                    connectionStorage.Connections.Add(new ConnectionItem() { Name = connectionItem.FriendlyName, Address = connectionItem.Address, Port = connectionItem.Port });
                 }
             }
 
@@ -159,6 +160,33 @@ namespace InDoOut_UI_Common.Windows
             }
         }
 
+        private async void ConnectionItem_OnEditButtonClicked(object sender, EventArgs e)
+        {
+            if (sender is NetworkConnectionItem connectionItem)
+            {
+                var newConnectionWindow = new NewNetworkConnectionWindow(connectionItem.FriendlyName, connectionItem.Address, connectionItem.Port)
+                {
+                    Owner = this,
+                };
+
+                if ((newConnectionWindow.ShowDialog() ?? false) && newConnectionWindow.Valid)
+                {
+                    var name = newConnectionWindow.FriendlyName;
+                    var address = newConnectionWindow.Address;
+                    var port = newConnectionWindow.Port;
+
+                    connectionItem.FriendlyName = name;
+                    connectionItem.Address = address;
+                    connectionItem.Port = port;
+                }
+
+                if (!await SaveOptions())
+                {
+                    UserMessageSystemHolder.Instance.CurrentUserMessageSystem.ShowWarning("Couldn't save", $"The connection info couldn't be saved and the updates made may not be available next time the program starts.");
+                }
+            }
+        }
+
         private void Button_Cancel_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
@@ -174,10 +202,11 @@ namespace InDoOut_UI_Common.Windows
 
             if ((newConnectionWindow.ShowDialog() ?? false) && newConnectionWindow.Valid)
             {
+                var name = newConnectionWindow.Name;
                 var address = newConnectionWindow.Address;
                 var port = newConnectionWindow.Port;
 
-                CreateConnectionItem(address, port);
+                CreateConnectionItem(name, address, port);
             }
 
             if (!await SaveOptions())

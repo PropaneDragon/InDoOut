@@ -55,6 +55,7 @@
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="Padding" Value="12,6" />
+        <Setter Property="MinWidth" Value="120" />
         <Setter Property="FontSize" Value="{StaticResource Size.Double.Font.Common}" />
         <Setter Property="Template" Value="{StaticResource Template.Button.Basic}" />
         <Style.Triggers>
@@ -124,6 +125,7 @@
         <Setter Property="Background" Value="{StaticResource Brush.Button.Transparent.Background}" />
         <Setter Property="Template" Value="{StaticResource Template.Button.Basic}" />
         <Setter Property="FontSize" Value="30" />
+        <Setter Property="MinWidth" Value="0" />
         <Style.Triggers>
             <Trigger Property="IsEnabled" Value="false">
                 <Setter Property="Foreground" Value="{StaticResource Brush.Button.Transparent.Foreground.Disabled}" />
@@ -218,6 +220,13 @@
     </Style>
 
     <Style TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource Style.Button.Animated}" />
-    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource Style.Button.Animated}" />
     <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource Style.Button.Animated}" />
+    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource Style.Button.Animated}">
+        <Style.Triggers>
+            <Trigger Property="IsDefault" Value="true">
+                <Setter Property="Foreground" Value="{StaticResource Brush.Button.Primary.Foreground}" />
+                <Setter Property="Background" Value="{StaticResource Brush.Button.Primary.Background}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 </ResourceDictionary>

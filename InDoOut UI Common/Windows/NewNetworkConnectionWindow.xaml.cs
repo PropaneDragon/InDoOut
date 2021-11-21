@@ -11,11 +11,19 @@ namespace InDoOut_UI_Common.Windows
 
         public bool Valid => Port >= 0 && !string.IsNullOrWhiteSpace(Address);
         public int Port { get => _port; private set => SetPort(value); }
+        public string FriendlyName { get; set; } = null;
         public string Address { get => _address; private set => SetAddress(value); }
 
         public NewNetworkConnectionWindow()
         {
             InitializeComponent();
+        }
+
+        public NewNetworkConnectionWindow(string name, string address, int port) : this()
+        {
+            TextBox_Name.Text = name;
+            TextBox_Address.Text = address;
+            TextBox_Port.Text = port.ToString();
         }
 
         private int GetPort(string port) => !string.IsNullOrEmpty(port) ? (int.TryParse(port, out var parsedPort) ? parsedPort : throw new InvalidOperationException("The port must be numeric.")) : throw new InvalidOperationException("The port must have a value.");
@@ -26,11 +34,13 @@ namespace InDoOut_UI_Common.Windows
 
         private void Button_Add_Click(object sender, RoutedEventArgs e)
         {
+            var name = TextBox_Name.Text;
             var address = TextBox_Address.Text;
             var port = TextBox_Port.Text;
 
             try
             {
+                FriendlyName = name;
                 Address = address;
                 Port = GetPort(port);
 

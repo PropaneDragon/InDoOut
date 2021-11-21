@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InDoOut_UI_Common.Controls.Network"
              mc:Ignorable="d" 
-             Foreground="{StaticResource Brush.Text.Main.Foreground}" Width="300">
+             Foreground="{StaticResource Brush.Text.Main.Foreground}" Width="300" MaxHeight="200">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -15,22 +15,31 @@
     </UserControl.Resources>
     <Border Background="{StaticResource Brush.TaskItem.Border}" Margin="10">
         <Grid Margin="1" Background="{StaticResource Brush.TaskItem.Background}">
-            <StackPanel>
-                <Grid RenderTransformOrigin="0.5,0.5">
-                    <DockPanel x:Name="Dock_HiddenContent" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="8">
-                        <Button x:Name="Button_Connect" DockPanel.Dock="Left" FontSize="24" Content="" ToolTip="Connect" Style="{StaticResource Style.Button.Transparent.Material.Animated}" VerticalAlignment="Stretch" HorizontalAlignment="Right" Padding="2" Click="Button_Connect_Click" />
-                        <Button x:Name="Button_Remove" DockPanel.Dock="Right" FontSize="24" Content="" ToolTip="Remove connection" Style="{StaticResource Style.Button.Transparent.Material.Animated}" VerticalAlignment="Stretch" HorizontalAlignment="Right" Padding="2" Click="Button_Remove_Click" />
-                        <Button x:Name="Button_Edit" DockPanel.Dock="Right" FontSize="24" Content="" ToolTip="Edit connection" Style="{StaticResource Style.Button.Transparent.Material.Animated}" VerticalAlignment="Stretch" HorizontalAlignment="Right" Padding="2" Click="Button_Edit_Click" />
-                    </DockPanel>
-                </Grid>
-                <Grid VerticalAlignment="Bottom">
-                    <Border Background="{StaticResource Brush.TaskItem.Border}" Padding="10">
-                        <StackPanel VerticalAlignment="Center">
-                            <TextBlock x:Name="Text_Address" Text="Address" TextAlignment="Center" FontSize="18" TextWrapping="WrapWithOverflow" TextTrimming="CharacterEllipsis" />
-                        </StackPanel>
+            <DockPanel>
+                <Grid DockPanel.Dock="Top">
+                    <Border Background="{StaticResource Brush.TaskItem.Border}">
+                        <Grid>
+                            <Border Background="{StaticResource Brush.TaskItem.Background}" Padding="10">
+                                <DockPanel x:Name="Dock_HiddenContent" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+                                    <Button x:Name="Button_Remove" DockPanel.Dock="Left" FontSize="24" Content="" ToolTip="Remove connection" Style="{StaticResource Style.Button.Transparent.Material.Animated}" VerticalAlignment="Stretch" HorizontalAlignment="Right" Padding="2" Click="Button_Remove_Click" />
+                                    <Button x:Name="Button_Edit" DockPanel.Dock="Right" FontSize="24" Content="" ToolTip="Edit connection" Style="{StaticResource Style.Button.Transparent.Material.Animated}" VerticalAlignment="Stretch" HorizontalAlignment="Right" Padding="2" Click="Button_Edit_Click" />
+                                </DockPanel>
+                            </Border>
+                            <TextBlock x:Name="Text_Name" Text="Name" TextAlignment="Center" FontSize="18" TextWrapping="WrapWithOverflow" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="44,0" />
+                        </Grid>
                     </Border>
                 </Grid>
-            </StackPanel>
+                <Grid DockPanel.Dock="Bottom">
+                    <Border Background="{StaticResource Brush.TaskItem.Border}" Padding="10">
+                        <DockPanel>
+                            <Button DockPanel.Dock="Right" x:Name="Button_Connect" FontSize="24" Content="" ToolTip="Connect" Style="{StaticResource Style.Button.Transparent.Material.Animated}" VerticalAlignment="Stretch" HorizontalAlignment="Right" Padding="2" Click="Button_Connect_Click" />
+                            <StackPanel DockPanel.Dock="Left" VerticalAlignment="Center">
+                                <TextBlock x:Name="Text_Address" Text="Address" TextAlignment="Center" FontSize="18" TextWrapping="WrapWithOverflow" TextTrimming="CharacterEllipsis" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="30,0,0,0" />
+                            </StackPanel>
+                        </DockPanel>
+                    </Border>
+                </Grid>
+            </DockPanel>
         </Grid>
     </Border>
 </UserControl>
