@@ -1,6 +1,5 @@
 ﻿using InDoOut_Executable_Core.Loading;
 using InDoOut_Executable_Core.Localisation;
-using InDoOut_UI_Common.Controls.Screens;
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -8,15 +7,17 @@ using System.Windows.Controls;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 
-namespace InDoOut_Display.UI.Controls.Splash
+namespace InDoOut_UI_Common.Controls.Screens
 {
-    public partial class SplashOverlay : UserControl, ISplashScreen
+    public partial class CommonSplashOverlay : UserControl, ISplashScreen
     {
         private bool _textUpdateNeeded = true;
         private ILoadingTask _taskToRun = null;
         private readonly DispatcherTimer _uiUpdateTimer = new DispatcherTimer(DispatcherPriority.Normal);
 
-        public SplashOverlay()
+        public string SubAppName { get; set; } = null;
+
+        public CommonSplashOverlay()
         {
             InitializeComponent();
 
@@ -35,6 +36,8 @@ namespace InDoOut_Display.UI.Controls.Splash
             var ran = false;
 
             Visibility = System.Windows.Visibility.Visible;
+
+            Text_SubAppName.Text = SubAppName ?? "";
 
             if (task != null)
             {

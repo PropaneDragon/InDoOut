@@ -35,6 +35,9 @@
     <Page Update="Controls\Display\Overview.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
+    <Page Update="Controls\Screens\CommonSplashOverlay.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
     <Page Update="Style\TitleBarStyle.xaml">
       <SubType>Designer</SubType>
     </Page>

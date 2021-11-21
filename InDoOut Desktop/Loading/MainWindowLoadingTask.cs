@@ -1,8 +1,12 @@
 ﻿using InDoOut_Core.Logging;
+using InDoOut_Desktop.Options;
 using InDoOut_Executable_Core.Loading;
 using InDoOut_Executable_Core.Location;
+using InDoOut_Executable_Core.Messaging;
+using InDoOut_Executable_Core.Options;
 using InDoOut_Function_Plugins.Loaders;
 using InDoOut_Plugins.Loaders;
+using InDoOut_UI_Common.Messaging;
 using InDoOut_UI_Common.SaveLoad;
 using System;
 using System.Threading.Tasks;
@@ -17,6 +21,9 @@ namespace InDoOut_Desktop.Loading
 
         protected override async Task<bool> RunTaskAsync()
         {
+            ProgramOptionsHolder.Instance.ProgramOptions = new ProgramOptions();
+            UserMessageSystemHolder.Instance.CurrentUserMessageSystem = new DesktopUserMessageSystem();
+
             Log.Instance.Header($"PLUGIN LOADING BEGINNING");
 
             Name = "Loading plugins...";

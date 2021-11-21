@@ -6,9 +6,7 @@ using InDoOut_Desktop.UI.Threading;
 using InDoOut_Executable_Core.Localisation;
 using InDoOut_Executable_Core.Location;
 using InDoOut_Executable_Core.Logging;
-using InDoOut_Executable_Core.Messaging;
 using InDoOut_Executable_Core.Options;
-using InDoOut_UI_Common.Messaging;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -27,9 +25,7 @@ namespace InDoOut_Desktop.UI.Windows
             InitializeComponent();
 
             Application.Current.DispatcherUnhandledException += Application_DispatcherUnhandledException;
-            ProgramOptionsHolder.Instance.ProgramOptions = new ProgramOptions();
             UIThread.Instance.SetCurrentThreadAsUIThread();
-            UserMessageSystemHolder.Instance.CurrentUserMessageSystem = new DesktopUserMessageSystem();
 
             _titleTimer.Interval = TimeSpan.FromMilliseconds(300);
             _titleTimer.Start();
@@ -76,6 +72,8 @@ namespace InDoOut_Desktop.UI.Windows
                 await FinishLoading();
                 return;
             }
+
+            Close();
         }
 
         private void Window_Closed(object sender, EventArgs e)

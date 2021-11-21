@@ -94,15 +94,12 @@ namespace InDoOut_Display.UI.Windows
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            if (Splash_Overlay is ISplashScreen splash)
-            {
-                _ = Activate();
+            _ = Activate();
 
-                if (await splash.RunTaskAsync(new MainWindowLoadingTask()))
-                {
-                    await FinishLoading();
-                    return;
-                }
+            if (await Splash_Overlay.RunTaskAsync(new MainWindowLoadingTask()))
+            {
+                await FinishLoading();
+                return;
             }
 
             Close();

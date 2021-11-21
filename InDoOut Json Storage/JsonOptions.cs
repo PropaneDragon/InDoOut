@@ -1,4 +1,5 @@
 ﻿using InDoOut_Core.Options;
+using InDoOut_Core.Options.Types;
 using InDoOut_Core.Reporting;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -58,24 +59,20 @@ namespace InDoOut_Json_Storage
             {
                 var allSuccessful = true;
 
-                foreach (var option in optionHolder.Options)
+                foreach (var option in Options)
                 {
-                    if (option != null)
+                    var foundOption = optionHolder.Options.FirstOrDefault(internalOption => internalOption.Name == option.Name);
+
+#pragma warning disable IDE0045 // Convert to conditional expression
+                    if (foundOption != null)
                     {
-                        var foundJsonOption = Options?.FirstOrDefault(jsonOption => jsonOption.Name == option.Name);
-                        if (foundJsonOption != null)
-                        {
-                            allSuccessful = foundJsonOption.Set(option) && allSuccessful;
-                        }
-                        else
-                        {
-                            failures.Add(new FailureReport(2, $"No JSON option was found for option: {option.Name}, so it was not set.", false));
-                        }
+                        allSuccessful = option.Set(foundOption) && allSuccessful;
                     }
                     else
                     {
-                        failures.Add(new FailureReport(1, "One of the provided options was invalid and couldn't be set", false));
+                        allSuccessful = optionHolder.AddUnregisteredOption(new HiddenStringOption(option.Name, defaultValue: option.Value)) && allSuccessful;
                     }
+#pragma warning restore IDE0045 // Convert to conditional expression
                 }
             }
             else

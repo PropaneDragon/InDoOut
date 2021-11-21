@@ -8,7 +8,7 @@
         xmlns:sidebar="clr-namespace:InDoOut_Desktop.UI.Controls.Sidebar"
         xmlns:taskManager="clr-namespace:InDoOut_UI_Common.Controls.TaskManager;assembly=InDoOutUICommon"
         xmlns:background="clr-namespace:InDoOut_UI_Common.Controls.Background;assembly=InDoOutUICommon"
-        xmlns:splash="clr-namespace:InDoOut_Desktop.UI.Controls.Splash"
+        xmlns:screens="clr-namespace:InDoOut_UI_Common.Controls.Screens;assembly=InDoOutUICommon"
         mc:Ignorable="d"
         Title="Untitled" Height="1080" Width="1920" MinWidth="700" MinHeight="550" Loaded="Window_Loaded" Closed="Window_Closed" WindowState="Maximized" WindowStartupLocation="CenterScreen" ShowActivated="True">
     <Grid>
@@ -18,6 +18,6 @@
         <taskManager:TaskView x:Name="TaskView_Main" />
         <common:TitleBar x:Name="TitleBar_Main" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
         <sidebar:Sidebar x:Name="Sidebar_Main" Width="500" HorizontalAlignment="Left" />
-        <splash:SplashOverlay x:Name="Splash_Overlay" Visibility="Collapsed" />
+        <screens:CommonSplashOverlay x:Name="Splash_Overlay" SubAppName="desktop" Visibility="Collapsed" />
     </Grid>
 </Window>

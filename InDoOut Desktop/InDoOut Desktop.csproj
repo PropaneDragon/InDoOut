@@ -35,7 +35,6 @@
     <None Remove="UI\Controls\BlockView\BlockView.xaml" />
     <None Remove="UI\Controls\Sidebar\ItemList.xaml" />
     <None Remove="UI\Controls\Sidebar\Sidebar.xaml" />
-    <None Remove="UI\Controls\Splash\SplashOverlay.xaml" />
   </ItemGroup>
 
   <ItemGroup>

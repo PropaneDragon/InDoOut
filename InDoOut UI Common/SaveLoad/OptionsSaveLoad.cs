@@ -89,7 +89,7 @@ namespace InDoOut_UI_Common.SaveLoad
             }
             else
             {
-                failureReports.Add(new FailureReport((int)SaveResult.InvalidFileName, $"Invalid storer, holder or path.", true));
+                failureReports.Add(new FailureReport((int)SaveResult.InvalidFileName, $"There was an internal error and the options couldn't be loaded properly.", true));
             }
 
             var criticalReports = failureReports.Where(report => report.Critical);
@@ -121,7 +121,7 @@ namespace InDoOut_UI_Common.SaveLoad
             }
             else
             {
-                failureReports.Add(new FailureReport((int)SaveResult.InvalidFileName, $"Invalid storer, holder or path.", true));
+                failureReports.Add(new FailureReport((int)SaveResult.InvalidFileName, $"There was an internal error and the options couldn't be saved properly.", true));
             }
 
             var criticalReports = failureReports.Where(report => report.Critical);

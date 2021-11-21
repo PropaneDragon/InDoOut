@@ -1,6 +1,4 @@
-﻿using InDoOut_Executable_Core.Messaging;
-using InDoOut_UI_Common.Messaging;
-using InDoOut_Viewer.Loading;
+﻿using InDoOut_Viewer.Loading;
 using InDoOut_Viewer.Programs;
 using System;
 using System.Threading.Tasks;
@@ -16,8 +14,6 @@ namespace InDoOut_Viewer
             InitializeComponent();
 
             Application.Current.DispatcherUnhandledException += Application_DispatcherUnhandledException;
-            UserMessageSystemHolder.Instance.CurrentUserMessageSystem = new DesktopUserMessageSystem();
-            //ProgramOptionsHolder.Instance.ProgramOptions = new ProgramOptions();
         }
 
         private async Task FinishLoading()
@@ -41,16 +37,15 @@ namespace InDoOut_Viewer
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            var loadingTask = new MainWindowLoadingTask();
+            _ = Activate();
 
-            if (await loadingTask.RunAsync())
+            if (await Splash_Overlay.RunTaskAsync(new MainWindowLoadingTask()))
             {
                 await FinishLoading();
+                return;
             }
-            else
-            {
-                Close();
-            }
+
+            Close();
         }
 
         private void Window_Closed(object sender, EventArgs e)

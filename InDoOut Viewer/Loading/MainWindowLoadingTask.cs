@@ -1,8 +1,13 @@
 ﻿using InDoOut_Core.Logging;
 using InDoOut_Executable_Core.Loading;
 using InDoOut_Executable_Core.Location;
+using InDoOut_Executable_Core.Messaging;
+using InDoOut_Executable_Core.Options;
 using InDoOut_Function_Plugins.Loaders;
 using InDoOut_Plugins.Loaders;
+using InDoOut_UI_Common.Messaging;
+using InDoOut_UI_Common.SaveLoad;
+using InDoOut_Viewer.Options;
 using System.Threading.Tasks;
 
 namespace InDoOut_Viewer.Loading
@@ -11,6 +16,9 @@ namespace InDoOut_Viewer.Loading
     {
         protected override async Task<bool> RunTaskAsync()
         {
+            ProgramOptionsHolder.Instance.ProgramOptions = new ProgramOptions();
+            UserMessageSystemHolder.Instance.CurrentUserMessageSystem = new DesktopUserMessageSystem();
+
             Log.Instance.Header($"PLUGIN LOADING BEGINNING");
 
             Name = "Loading plugins...";
@@ -35,6 +43,12 @@ namespace InDoOut_Viewer.Loading
                 Name = "Plugins loaded.";
 
                 Log.Instance.Header($"PLUGIN LOADING DONE");
+
+                Name = "Loading options.";
+
+                _ = await CommonOptionsSaveLoad.Instance.LoadAllOptionsAsync();
+
+                Name = "Options loaded.";
             }
 
             return true;

@@ -1,7 +1,12 @@
-﻿using InDoOut_Executable_Core.Messaging;
+﻿using InDoOut_Core.Options;
+using InDoOut_Core.Options.Types;
+using InDoOut_Executable_Core.Messaging;
+using InDoOut_Executable_Core.Options;
 using InDoOut_Networking.Client;
 using InDoOut_UI_Common.Controls.Network;
 using InDoOut_UI_Common.Events;
+using InDoOut_UI_Common.SaveLoad;
+using InDoOut_UI_Common.Storage.Options;
 using System;
 using System.Linq;
 using System.Net;
@@ -12,11 +17,18 @@ namespace InDoOut_UI_Common.Windows
 {
     public partial class NetworkConnectWindow : Window
     {
+        private static readonly HiddenJsonObjectOption _connectionItemsOption = new HiddenJsonObjectOption("NetworkConnectionItems");
+
         public IClient NetworkClient { get; private set; } = null;
+        public IOptionHolder OptionHolder { get; set; } = null;
+        public IOption<string> ConnectionItemsOption => _connectionItemsOption;
 
         public NetworkConnectWindow()
         {
+            OptionHolder = ProgramOptionsHolder.Instance.ProgramOptions?.OptionHolder;
+
             InitializeComponent();
+            LoadOptions();
         }
 
         public async Task<IClient> Connect(string address, int port)
@@ -86,6 +98,46 @@ namespace InDoOut_UI_Common.Windows
             }
         }
 
+        private void LoadOptions()
+        {
+            if (OptionHolder != null)
+            {
+                _ = OptionHolder.RegisterOption(_connectionItemsOption, true);
+            }
+
+            var connectionItems = _connectionItemsOption.ToObject<ConnectionOptionStorage>();
+            if (connectionItems != null)
+            {
+                foreach (var connection in connectionItems.Connections)
+                {
+                    if (connection.Valid)
+                    {
+                        CreateConnectionItem(connection.Address, connection.Port);
+                    }
+                }
+            }
+        }
+
+        private async Task<bool> SaveOptions()
+        {
+            var connectionStorage = new ConnectionOptionStorage();
+
+            foreach (var child in Wrap_Connections.Children)
+            {
+                if (child is NetworkConnectionItem connectionItem)
+                {
+                    connectionStorage.Connections.Add(new ConnectionItem() { Address = connectionItem.Address, Port = connectionItem.Port });
+                }
+            }
+
+            if (!_connectionItemsOption.FromObject(connectionStorage))
+            {
+                UserMessageSystemHolder.Instance.CurrentUserMessageSystem.ShowWarning("Couldn't save", $"The connection info couldn't be applied due to an internal error and won't be properly saved.");
+            }
+
+            return await CommonOptionsSaveLoad.Instance.SaveAllOptionsAsync();
+        }
+
         private async void ConnectionItem_OnConnectButtonClicked(object sender, NetworkConnectionEventArgs e)
         {
             NetworkClient = await Connect(e.Address, e.Port);
@@ -105,7 +157,7 @@ namespace InDoOut_UI_Common.Windows
             Close();
         }
 
-        private void Button_NewConnection_Click(object sender, RoutedEventArgs e)
+        private async void Button_NewConnection_Click(object sender, RoutedEventArgs e)
         {
             var newConnectionWindow = new NewNetworkConnectionWindow()
             {
@@ -118,6 +170,11 @@ namespace InDoOut_UI_Common.Windows
                 var port = newConnectionWindow.Port;
 
                 CreateConnectionItem(address, port);
+            }
+
+            if (!await SaveOptions())
+            {
+                UserMessageSystemHolder.Instance.CurrentUserMessageSystem.ShowWarning("Couldn't save", $"The connection info couldn't be saved and may not be available next time the program starts.");
             }
         }
     }
