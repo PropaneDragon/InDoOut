@@ -202,7 +202,7 @@ namespace InDoOut_UI_Common.Windows
 
             if ((newConnectionWindow.ShowDialog() ?? false) && newConnectionWindow.Valid)
             {
-                var name = newConnectionWindow.Name;
+                var name = newConnectionWindow.FriendlyName;
                 var address = newConnectionWindow.Address;
                 var port = newConnectionWindow.Port;
 
