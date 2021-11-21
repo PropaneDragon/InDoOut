@@ -176,20 +176,23 @@ namespace InDoOut_UI_Common.InterfaceElements
 
         protected void ChangeProgram(IProgram program)
         {
-            if (ClearCurrentProgram())
+            if (_currentProgram != null && program == _currentProgram)
             {
-                if (_currentProgram != null)
+                UpdateProgram(program);
+            }
+            else
+            {
+                if (ClearCurrentProgram())
                 {
-                    _ = CommonProgramLoader?.UnloadProgram(_currentProgram);
-                }
+                    if (_currentProgram != null)
+                    {
+                        _ = CommonProgramLoader?.UnloadProgram(_currentProgram);
+                    }
 
-                _currentProgram = program;
+                    _currentProgram = program;
 
-                ProgramChanged(program);
-
-                if (_currentProgram != null)
-                {
-                    _ = CommonProgramLoader?.DisplayProgram(_currentProgram);
+                    ProgramChanged(program);
+                    UpdateProgram(program);
                 }
             }
         }
@@ -222,6 +225,18 @@ namespace InDoOut_UI_Common.InterfaceElements
 
         protected abstract void ViewModeChanged(ProgramViewMode viewMode);
         protected abstract void ProgramChanged(IProgram program);
+        protected abstract bool ClearCurrentProgram();
+
+        private void UpdateProgram(IProgram program)
+        {
+            if (ClearCurrentProgram())
+            {
+                if (program != null)
+                {
+                    _ = CommonProgramLoader?.DisplayProgram(program);
+                }
+            }
+        }
 
         private List<T> FindCanvasChild<T>() where T : class => FindCanvasChild<T>(T => true);
         private List<T> FindCanvasChild<T>(Func<T, bool> matchFunction) where T : class
@@ -259,7 +274,5 @@ namespace InDoOut_UI_Common.InterfaceElements
 
             return HitTestResultBehavior.Continue;
         }
-
-        protected abstract bool ClearCurrentProgram();
     }
 }

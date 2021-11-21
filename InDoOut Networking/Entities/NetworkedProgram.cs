@@ -11,11 +11,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace InDoOut_Networking.Entities
 {
     public class NetworkedProgram : INetworkedProgram
     {
+        private readonly System.Timers.Timer _timer = new System.Timers.Timer() { AutoReset = false, Interval = TimeSpan.FromSeconds(1).TotalMilliseconds};
         private string _name = null;
 
         public bool Connected => AssociatedClient?.Connected ?? false;
@@ -36,6 +38,8 @@ namespace InDoOut_Networking.Entities
         public DateTime LastUpdateTime { get; set; } = DateTime.MinValue;
         public DateTime LastTriggerTime { get; set; } = DateTime.MinValue;
         public DateTime LastCompletionTime { get; set; } = DateTime.MinValue;
+        public TimeSpan FastUpdateInterval { get; set; } = TimeSpan.FromMilliseconds(200);
+        public TimeSpan SlowUpdateInterval { get; set; } = TimeSpan.FromSeconds(1);
 
         public Guid Id { get; set; } = Guid.NewGuid();
 
@@ -43,6 +47,8 @@ namespace InDoOut_Networking.Entities
 
         private NetworkedProgram()
         {
+            _timer.Elapsed += Timer_Elapsed;
+            _timer.Start();
         }
 
         public NetworkedProgram(IClient client) : this()
@@ -50,8 +56,13 @@ namespace InDoOut_Networking.Entities
             AssociatedClient = client;
         }
 
-        public bool UpdateFromStatus(ProgramStatus status)
+        public bool UpdateFromStatus(ProgramStatus status, bool clearAllFirst = false)
         {
+            if (clearAllFirst)
+            {
+                _ = Clear();
+            }
+
             if (status != null)
             {
                 var propertyExtractor = new PropertyExtractor<ProgramStatus, NetworkedProgram>(status);
@@ -95,7 +106,7 @@ namespace InDoOut_Networking.Entities
 
                     if (status != null)
                     {
-                        return UpdateFromStatus(status);
+                        return UpdateFromStatus(status, false);
                     }
                 }
                 catch { }
@@ -135,6 +146,17 @@ namespace InDoOut_Networking.Entities
         public bool HasBeenTriggeredWithin(TimeSpan time) => LastTriggerTime.HasOccurredWithin(time, LastUpdateTime);
         public bool HasCompletedSince(DateTime time) => LastCompletionTime.HasOccurredSince(time);
         public bool HasCompletedWithin(TimeSpan time) => LastCompletionTime.HasOccurredWithin(time, LastUpdateTime);
+
+        private bool Clear()
+        {
+            Functions.Clear();
+            StartFunctions.Clear();
+            EndFunctions.Clear();
+            Metadata.Clear();
+            PassthroughValues.Clear();
+
+            return true;
+        }
 
         private bool UpdateFunctionsFromStatus(ProgramStatus status)
         {
@@ -261,6 +283,17 @@ namespace InDoOut_Networking.Entities
                     storedInputable.Metadata[metadata.Key] = metadata.Value;
                 }
             }
+        }
+
+        private async void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            _timer.Stop();
+
+            using var cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(2));
+            _ = await Synchronise(cancellationTokenSource.Token);
+
+            _timer.Interval = (Running ? FastUpdateInterval : SlowUpdateInterval).TotalMilliseconds;
+            _timer.Start();
         }
     }
 }

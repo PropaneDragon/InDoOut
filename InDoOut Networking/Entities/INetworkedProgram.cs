@@ -12,10 +12,12 @@ namespace InDoOut_Networking.Entities
         bool Connected { get; }
 
         DateTime LastUpdateTime { get; }
+        TimeSpan FastUpdateInterval { get; set; }
+        TimeSpan SlowUpdateInterval { get; set; }
 
         IClient AssociatedClient { get; }
 
-        bool UpdateFromStatus(ProgramStatus status);
+        bool UpdateFromStatus(ProgramStatus status, bool clearAllFirst = false);
 
         Task<bool> Reload(CancellationToken cancellationToken);
         Task<bool> Synchronise(CancellationToken cancellationToken);

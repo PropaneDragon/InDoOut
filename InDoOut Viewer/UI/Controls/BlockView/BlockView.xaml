@@ -8,7 +8,7 @@
              xmlns:interfaceElements="clr-namespace:InDoOut_UI_Common.InterfaceElements;assembly=InDoOutUICommon"
              xmlns:display="clr-namespace:InDoOut_UI_Common.Controls.Display;assembly=InDoOutUICommon"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Loaded="CommonBlockDisplay_Loaded" Unloaded="CommonBlockDisplay_Unloaded">
+             d:DesignHeight="450" d:DesignWidth="800">
     <Border BorderThickness="1" BorderBrush="#02000000">
         <Grid>
             <ScrollViewer x:Name="Scroll_Content" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">

@@ -27,7 +27,7 @@ namespace InDoOut_Networking.Client.Commands
                 var programStatus = ProgramStatus.FromJson(data);
                 if (programStatus != null)
                 {
-                    return programToLoadInto.UpdateFromStatus(programStatus);
+                    return programToLoadInto.UpdateFromStatus(programStatus, true);
                 }
             }
 
