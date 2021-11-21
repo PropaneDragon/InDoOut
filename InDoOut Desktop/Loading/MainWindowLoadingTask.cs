@@ -45,17 +45,15 @@ namespace InDoOut_Desktop.Loading
 
                 LoadedPlugins.Instance.Plugins = pluginContainers;
 
-                Name = "Plugins loaded.";
-
                 Log.Instance.Header($"PLUGIN LOADING DONE");
 
-                await Task.Delay(TimeSpan.FromMilliseconds(500));
-
-                Name = "Loading options.";
+                Name = "Loading options...";
 
                 _ = await CommonOptionsSaveLoad.Instance.LoadAllOptionsAsync();
 
-                Name = "Options loaded.";
+                Name = "Welcome.";
+
+                await Task.Delay(TimeSpan.FromSeconds(1));
 
                 return true;
             }

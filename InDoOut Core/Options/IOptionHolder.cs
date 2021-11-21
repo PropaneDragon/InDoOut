@@ -30,6 +30,13 @@ namespace InDoOut_Core.Options
         bool DeregisterOption(IOption option);
 
         /// <summary>
+        /// Updates an option from a stored value without permanently registering it.
+        /// </summary>
+        /// <param name="option">The option to update</param>
+        /// <returns>Whether the option was successfully updated. If no value is present to set it will return false.</returns>
+        bool UpdateOption(IOption option);
+
+        /// <summary>
         /// Adds an option that isn't registered, but will set the value of a registered 
         /// option with the same name when added.
         /// <para/>

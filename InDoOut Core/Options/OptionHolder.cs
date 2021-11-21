@@ -34,13 +34,7 @@ namespace InDoOut_Core.Options
 
                 if (setFromUnregisteredOptions)
                 {
-                    var foundUnregisteredOption = _unregisteredOptions.FirstOrDefault(unregisteredOption => unregisteredOption.Name == option.Name);
-                    if (foundUnregisteredOption != null)
-                    {
-                        Log.Instance.Info("Applying option value from unregistered option: ", option, " to ", foundUnregisteredOption);
-
-                        option.RawValue = foundUnregisteredOption.RawValue;
-                    }
+                    _ = UpdateOption(option);
                 }
 
                 Log.Instance.Info("Registered option: ", option);
@@ -65,6 +59,26 @@ namespace InDoOut_Core.Options
                 _ = Options.Remove(option);
 
                 Log.Instance.Info("Deregistered option: ", option);
+
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Updates an option from a stored value without permanently registering it.
+        /// </summary>
+        /// <param name="option">The option to update</param>
+        /// <returns>Whether the option was successfully updated. If no value is present to set it will return false.</returns>
+        public bool UpdateOption(IOption option)
+        {
+            var foundUnregisteredOption = _unregisteredOptions.FirstOrDefault(unregisteredOption => unregisteredOption.Name == option.Name);
+            if (foundUnregisteredOption != null)
+            {
+                Log.Instance.Info("Applying option value from unregistered option: ", option, " to ", foundUnregisteredOption);
+
+                option.RawValue = foundUnregisteredOption.RawValue;
 
                 return true;
             }

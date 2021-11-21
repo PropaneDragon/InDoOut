@@ -8,6 +8,7 @@ using InDoOut_Plugins.Loaders;
 using InDoOut_UI_Common.Messaging;
 using InDoOut_UI_Common.SaveLoad;
 using InDoOut_Viewer.Options;
+using System;
 using System.Threading.Tasks;
 
 namespace InDoOut_Viewer.Loading
@@ -40,15 +41,15 @@ namespace InDoOut_Viewer.Loading
 
                 LoadedPlugins.Instance.Plugins = pluginContainers;
 
-                Name = "Plugins loaded.";
-
                 Log.Instance.Header($"PLUGIN LOADING DONE");
 
-                Name = "Loading options.";
+                Name = "Loading options...";
 
                 _ = await CommonOptionsSaveLoad.Instance.LoadAllOptionsAsync();
 
-                Name = "Options loaded.";
+                Name = "Welcome.";
+
+                await Task.Delay(TimeSpan.FromSeconds(1));
             }
 
             return true;

@@ -102,7 +102,7 @@ namespace InDoOut_UI_Common.Windows
         {
             if (OptionHolder != null)
             {
-                _ = OptionHolder.RegisterOption(_connectionItemsOption, true);
+                _ = OptionHolder.RegisterOption(_connectionItemsOption);
             }
 
             var connectionItems = _connectionItemsOption.ToObject<ConnectionOptionStorage>();
@@ -149,7 +149,15 @@ namespace InDoOut_UI_Common.Windows
             }
         }
 
-        private void ConnectionItem_OnRemoveButtonClicked(object sender, EventArgs e) => throw new NotImplementedException();
+        private async void ConnectionItem_OnRemoveButtonClicked(object sender, EventArgs e)
+        {
+            Wrap_Connections.Children.Remove(sender as UIElement);
+
+            if (!await SaveOptions())
+            {
+                UserMessageSystemHolder.Instance.CurrentUserMessageSystem.ShowWarning("Couldn't save", $"The connection info couldn't be saved and changes may not be reflected the next time the program starts.");
+            }
+        }
 
         private void Button_Cancel_Click(object sender, RoutedEventArgs e)
         {

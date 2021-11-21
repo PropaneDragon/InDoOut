@@ -22,7 +22,7 @@ namespace InDoOut_Json_Storage
         {
             try
             {
-                using var fileStream = new FileStream(path, FileMode.CreateNew);
+                using var fileStream = new FileStream(path, FileMode.Create);
 
                 return Save(jsonType, fileStream);
             }

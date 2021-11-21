@@ -25,15 +25,15 @@ namespace InDoOut_Display.Loading
                 allPluginsLoaded = await LoadPlugins(new ElementPluginLoader()) && allPluginsLoaded;
                 allPluginsLoaded = await LoadPlugins(new FunctionPluginLoader()) && allPluginsLoaded;
 
-                Name = "Plugins loaded.";
-
                 Log.Instance.Header($"PLUGIN LOADING DONE");
 
-                Name = "Loading options.";
+                Name = "Loading options...";
 
                 _ = await CommonOptionsSaveLoad.Instance.LoadAllOptionsAsync();
 
-                Name = "Options loaded.";
+                Name = "Welcome.";
+
+                await Task.Delay(TimeSpan.FromSeconds(1));
 
                 return allPluginsLoaded;
             }
