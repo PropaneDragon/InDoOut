@@ -19,6 +19,7 @@ namespace InDoOut_Networking.Entities
     {
         private readonly object _functionLock = new object();
         private readonly object _metadataLock = new object();
+        private readonly object _updateLock = new object();
 
         private readonly List<IFunction> _functions = new List<IFunction>();
         private readonly Dictionary<string, string> _metadata = new Dictionary<string, string>();
@@ -67,7 +68,7 @@ namespace InDoOut_Networking.Entities
         {
             var convertedAll = true;
 
-            if (!Updating)
+            lock (_updateLock)
             {
                 Updating = true;
 
