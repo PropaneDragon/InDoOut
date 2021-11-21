@@ -17,20 +17,27 @@ namespace InDoOut_Networking.Entities
 {
     public class NetworkedProgram : INetworkedProgram
     {
+        private readonly object _functionLock = new object();
+        private readonly object _metadataLock = new object();
+
+        private readonly List<IFunction> _functions = new List<IFunction>();
+        private readonly Dictionary<string, string> _metadata = new Dictionary<string, string>();
         private readonly System.Timers.Timer _timer = new System.Timers.Timer() { AutoReset = false, Interval = TimeSpan.FromSeconds(1).TotalMilliseconds};
+
         private string _name = null;
 
         public bool Connected => AssociatedClient?.Connected ?? false;
         public bool Running { get; private set; } = false;
         public bool Stopping { get; private set; } = false;
         public bool Finishing { get; private set; } = false;
+        public bool Updating { get; private set; } = false;
 
         public string Name { get => $"{_name ?? "Untitled"}"; set => _name = value; }
         public string ReturnCode { get; set; }
 
         public IClient AssociatedClient { get; protected set; } = null;
 
-        public List<IFunction> Functions { get; } = new List<IFunction>();
+        public List<IFunction> Functions { get { lock (_functionLock) { return _functions; } } }
         public List<IStartFunction> StartFunctions => new List<IStartFunction>();
         public List<IEndFunction> EndFunctions => new List<IEndFunction>();
         public List<string> PassthroughValues => new List<string>();
@@ -43,7 +50,7 @@ namespace InDoOut_Networking.Entities
 
         public Guid Id { get; set; } = Guid.NewGuid();
 
-        public Dictionary<string, string> Metadata { get; } = new Dictionary<string, string>();
+        public Dictionary<string, string> Metadata { get { lock (_metadataLock) { return _metadata; } } }
 
         private NetworkedProgram()
         {
@@ -58,22 +65,35 @@ namespace InDoOut_Networking.Entities
 
         public bool UpdateFromStatus(ProgramStatus status, bool clearAllFirst = false)
         {
-            if (clearAllFirst)
+            var convertedAll = true;
+
+            if (!Updating)
             {
-                _ = Clear();
+                Updating = true;
+
+                if (clearAllFirst)
+                {
+                    _ = Clear();
+                }
+
+                if (status != null)
+                {
+                    var propertyExtractor = new PropertyExtractor<ProgramStatus, NetworkedProgram>(status);
+                    convertedAll = UpdateFunctionsFromStatus(status) && convertedAll;
+                    convertedAll = UpdateConnectionsFromStatus(status) && convertedAll;
+                    convertedAll = UpdateMetadataFromStatus(status) && convertedAll;
+
+                    return propertyExtractor.ApplyTo(this) && convertedAll;
+                }
+                else
+                {
+                    convertedAll = false;
+                }
+
+                Updating = false;
             }
 
-            if (status != null)
-            {
-                var propertyExtractor = new PropertyExtractor<ProgramStatus, NetworkedProgram>(status);
-                var convertedAll = UpdateFunctionsFromStatus(status);
-                convertedAll = UpdateConnectionsFromStatus(status) && convertedAll;
-                convertedAll = UpdateMetadataFromStatus(status) && convertedAll;
-
-                return propertyExtractor.ApplyTo(this) && convertedAll;
-            }
-
-            return false;
+            return convertedAll;
         }
 
         public async Task<bool> Reload(CancellationToken cancellationToken)
@@ -149,10 +169,18 @@ namespace InDoOut_Networking.Entities
 
         private bool Clear()
         {
-            Functions.Clear();
-            StartFunctions.Clear();
-            EndFunctions.Clear();
-            Metadata.Clear();
+            lock (_functionLock)
+            {
+                Functions.Clear();
+                StartFunctions.Clear();
+                EndFunctions.Clear();
+            }
+
+            lock (_metadataLock)
+            {
+                Metadata.Clear();
+            }
+
             PassthroughValues.Clear();
 
             return true;

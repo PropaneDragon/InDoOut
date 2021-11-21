@@ -45,7 +45,9 @@ namespace InDoOut_UI_Common.InterfaceElements
                     }
                 }
 
-                foreach (var function in program.Functions)
+                var functions = program.Functions.ToList();
+
+                foreach (var function in functions)
                 {
                     var uiFunction = _display?.FunctionCreator?.Create(function);
                     if (uiFunction != null)

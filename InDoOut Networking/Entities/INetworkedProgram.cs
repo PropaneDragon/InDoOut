@@ -10,6 +10,7 @@ namespace InDoOut_Networking.Entities
     public interface INetworkedProgram : IProgram
     {
         bool Connected { get; }
+        bool Updating { get; }
 
         DateTime LastUpdateTime { get; }
         TimeSpan FastUpdateInterval { get; set; }
