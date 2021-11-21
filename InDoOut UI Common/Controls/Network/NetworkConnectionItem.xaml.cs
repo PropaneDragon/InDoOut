@@ -2,6 +2,7 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Animation;
 
 namespace InDoOut_UI_Common.Controls.Network
 {
@@ -21,6 +22,8 @@ namespace InDoOut_UI_Common.Controls.Network
         public NetworkConnectionItem()
         {
             InitializeComponent();
+
+            Border_HiddenContent.Opacity = 0d;
         }
 
         public NetworkConnectionItem(string name, string address, int port) : this()
@@ -42,6 +45,20 @@ namespace InDoOut_UI_Common.Controls.Network
             _port = port;
 
             UpdateVisibleAddress();
+        }
+
+        private void UserControl_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            var fadeInAnimation = new DoubleAnimation(1, TimeSpan.FromMilliseconds(300)) { EasingFunction = new CircleEase() { EasingMode = EasingMode.EaseInOut } };
+
+            Border_HiddenContent.BeginAnimation(OpacityProperty, fadeInAnimation);
+        }
+
+        private void UserControl_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            var fadeOutAnimation = new DoubleAnimation(0, TimeSpan.FromMilliseconds(300)) { EasingFunction = new CircleEase() { EasingMode = EasingMode.EaseInOut } };
+
+            Border_HiddenContent.BeginAnimation(OpacityProperty, fadeOutAnimation);
         }
 
         private void UpdateVisibleAddress() => Text_Address.Text = $"{_address ?? "unknown"}:{_port}";

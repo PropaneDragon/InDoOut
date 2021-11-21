@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InDoOut_UI_Common.Controls.Network"
              mc:Ignorable="d" 
-             Foreground="{StaticResource Brush.Text.Main.Foreground}" Width="300" MaxHeight="200">
+             Foreground="{StaticResource Brush.Text.Main.Foreground}" Width="300" MaxHeight="200" MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -17,9 +17,9 @@
         <Grid Margin="1" Background="{StaticResource Brush.TaskItem.Background}">
             <DockPanel>
                 <Grid DockPanel.Dock="Top">
-                    <Border Background="{StaticResource Brush.TaskItem.Border}">
+                    <Border Background="{StaticResource Brush.TaskItem.Background}">
                         <Grid>
-                            <Border Background="{StaticResource Brush.TaskItem.Background}" Padding="10">
+                            <Border Name="Border_HiddenContent" Background="{StaticResource Brush.TaskItem.Background}" Padding="10">
                                 <DockPanel x:Name="Dock_HiddenContent" VerticalAlignment="Top" HorizontalAlignment="Stretch">
                                     <Button x:Name="Button_Remove" DockPanel.Dock="Left" FontSize="24" Content="" ToolTip="Remove connection" Style="{StaticResource Style.Button.Transparent.Material.Animated}" VerticalAlignment="Stretch" HorizontalAlignment="Right" Padding="2" Click="Button_Remove_Click" />
                                     <Button x:Name="Button_Edit" DockPanel.Dock="Right" FontSize="24" Content="" ToolTip="Edit connection" Style="{StaticResource Style.Button.Transparent.Material.Animated}" VerticalAlignment="Stretch" HorizontalAlignment="Right" Padding="2" Click="Button_Edit_Click" />
