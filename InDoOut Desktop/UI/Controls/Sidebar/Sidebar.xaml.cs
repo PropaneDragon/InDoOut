@@ -65,6 +65,8 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
 
                 BeginAnimation(MarginProperty, sidebarAnimation);
                 Grid_CollapsibleContent.BeginAnimation(OpacityProperty, opacityAnimation);
+
+                _ = SearchBar_Main.Focus();
             }
 
             _ = Focus();

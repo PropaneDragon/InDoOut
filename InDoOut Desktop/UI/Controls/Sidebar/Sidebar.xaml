@@ -41,7 +41,7 @@
                         <RowDefinition />
                     </Grid.RowDefinitions>
                     <Border Grid.Row="0" Background="{StaticResource Brush.Sidebar.Search.Background}" BorderThickness="0">
-                        <search:SearchBar SearchRequested="SearchBar_SearchRequested" />
+                        <search:SearchBar x:Name="SearchBar_Main" SearchRequested="SearchBar_SearchRequested" />
                     </Border>
                     <Border Grid.Row="1">
                         <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch">

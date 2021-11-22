@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InDoOut_UI_Common.Controls.Search"
              mc:Ignorable="d" 
-             d:DesignHeight="50" d:DesignWidth="400" Foreground="{StaticResource Brush.Text.Main.Foreground}">
+             d:DesignHeight="50" d:DesignWidth="400" Foreground="{StaticResource Brush.Text.Main.Foreground}" GotFocus="UserControl_GotFocus" Focusable="True">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -16,7 +16,10 @@
     <Border>
         <DockPanel>
             <Button DockPanel.Dock="Right" Content="" FontSize="{StaticResource Size.Double.Font.Title.Primary}" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="4" Margin="0,0,8,0" Style="{StaticResource Style.Button.Transparent.Material.Animated}" Click="Button_Click" />
-            <TextBox x:Name="TextBox_Query" FontSize="{StaticResource Size.Double.Font.Title.Primary}" DockPanel.Dock="Left" Background="{x:Null}" BorderBrush="{x:Null}" Text="Search here" Foreground="{StaticResource Brush.Text.Main.Foreground}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" CaretBrush="White" IsUndoEnabled="True" MaxLines="1" GotFocus="TextBox_Query_GotFocus" LostFocus="TextBox_Query_LostFocus" KeyUp="TextBox_Query_KeyUp"/>
+            <Grid  DockPanel.Dock="Left">
+                <TextBlock x:Name="Text_Slogan" FontSize="{StaticResource Size.Double.Font.Title.Primary}" Text="Search here" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Opacity="0.5" />
+                <TextBox x:Name="TextBox_Query" FontSize="{StaticResource Size.Double.Font.Title.Primary}" Background="Transparent" BorderBrush="Transparent" Foreground="{StaticResource Brush.Text.Main.Foreground}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" CaretBrush="White" IsUndoEnabled="True" MaxLines="1" GotFocus="TextBox_Query_GotFocus" LostFocus="TextBox_Query_LostFocus" KeyUp="TextBox_Query_KeyUp" KeyDown="TextBox_Query_KeyDown"/>
+            </Grid>
         </DockPanel>
     </Border>
 </UserControl>

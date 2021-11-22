@@ -114,5 +114,20 @@ namespace InDoOut_Desktop.UI.Windows
 
             Title = $"{programName} - {Branding.Instance.AppNameShort}";
         }
+
+        private void Window_PreviewKeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Tab)
+            {
+                if (Sidebar_Main.Collapsed)
+                {
+                    Sidebar_Main.Expand();
+                }
+                else
+                {
+                    Sidebar_Main.Collapse();
+                }
+            }
+        }
     }
 }
