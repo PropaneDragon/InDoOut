@@ -14,6 +14,7 @@ namespace InDoOut_Desktop.Options
         //public CheckableOption StartWithComputerAll { get; } = new CheckableOption("Start with computer (All users)", "Starts IDO when the computer starts. This sets the program to start for all users, so regardless of what user logs on the program will start.", true);
         public CheckableOption StartWithComputerCurrent { get; } = new CheckableOption("Start with computer (current user)", "Starts IDO when the computer starts. This sets the program to start for only you. Other users of this machine are unaffected.", false);
         public CheckableOption StartInBackground { get; } = new CheckableOption("Start in the background", "Starts IDO minimised.", false);
+        public CheckableOption DynamicSearch { get; } = new CheckableOption("Dynamic search", "Searches as you type in the search bar.", true);
         public CheckableOption AllowLogging { get; } = new CheckableOption("Logging", "Allows IDO to log all events to a file for debugging.", true);
         public HiddenListOption StartupPrograms { get; } = new HiddenListOption(TaskView.TASK_STARTUP_PROGRAM_OPTION_NAME);
 
