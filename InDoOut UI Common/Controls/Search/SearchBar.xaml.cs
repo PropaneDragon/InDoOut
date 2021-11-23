@@ -1,22 +1,29 @@
 ﻿using System;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace InDoOut_UI_Common.Controls.Search
 {
     public partial class SearchBar : UserControl, ISearch
     {
+        private static readonly TimeSpan AUTO_SEARCH_INTERVAL = TimeSpan.FromMilliseconds(300);
+
         private readonly string _slogan = "Search";
+        private readonly DispatcherTimer _searchTimer = new(DispatcherPriority.Normal);
 
         public event EventHandler<SearchArgs> SearchRequested;
 
-        public bool DynamicallySearch { get; set; } = false;
+        public bool DynamicallySearch { get; set; } = true;
 
         public SearchBar()
         {
             InitializeComponent();
 
             _slogan = Text_Slogan.Text;
+            _searchTimer.Interval = AUTO_SEARCH_INTERVAL;
+
+            _searchTimer.Tick += SearchTimer_Tick;
         }
 
         private void PerformSearch() => PerformSearch(TextBox_Query.Text);
@@ -31,14 +38,19 @@ namespace InDoOut_UI_Common.Controls.Search
 
         private void UpdateSloganText() => Text_Slogan.Text = string.IsNullOrEmpty(TextBox_Query.Text) ? _slogan : "";
 
-        private void TextBox_Query_KeyUp(object sender, KeyEventArgs e)
+        private void SearchTimer_Tick(object sender, EventArgs e)
         {
-            UpdateSloganText();
+            _searchTimer.Stop();
 
             if (DynamicallySearch)
             {
                 PerformSearch();
             }
+        }
+
+        private void TextBox_Query_KeyUp(object sender, KeyEventArgs e)
+        {
+            UpdateSloganText();
 
             if (e.Key == Key.Enter)
             {
@@ -48,6 +60,11 @@ namespace InDoOut_UI_Common.Controls.Search
             else if (e.Key == Key.Escape)
             {
                 Keyboard.ClearFocus();
+            }
+            else if (DynamicallySearch)
+            {
+                _searchTimer.Stop();
+                _searchTimer.Start();
             }
         }
 
