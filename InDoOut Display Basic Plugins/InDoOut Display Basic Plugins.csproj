@@ -1,7 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0-windows</TargetFramework>
+    <TargetFramework>net6.0-windows</TargetFramework>
     <RootNamespace>InDoOut_Display_Basic_Plugins</RootNamespace>
     <UseWPF>true</UseWPF>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="xcopy /Y /F &quot;$(TargetDir)\*&quot;  &quot;$(SolutionDir)\InDoOut Display\$(OutDir)\Plugins\&quot;" />
+    <Exec Command="xcopy /Y /F &quot;$(TargetPath)&quot; &quot;$(SolutionDir)\$(OutDir)\DisplayPlugins\*&quot;" />
   </Target>
 
   <ItemGroup>

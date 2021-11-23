@@ -14,16 +14,16 @@ namespace InDoOut_Core.Entities.Functions
     /// </summary>
     public abstract class Function : InteractiveEntity<IOutput, IInput>, IFunction
     {
-        private readonly object _stateLock = new object();
-        private readonly object _inputsLock = new object();
-        private readonly object _propertiesLock = new object();
-        private readonly object _resultsLock = new object();
+        private readonly object _stateLock = new();
+        private readonly object _inputsLock = new();
+        private readonly object _propertiesLock = new();
+        private readonly object _resultsLock = new();
 
         private State _state = State.Unknown;
-        private List<IInput> _inputs = new List<IInput>();
-        private List<IProperty> _properties = new List<IProperty>();
-        private List<IResult> _results = new List<IResult>();
-        private readonly Dictionary<IProperty, IResult> _mirroredResults = new Dictionary<IProperty, IResult>();
+        private List<IInput> _inputs = new();
+        private List<IProperty> _properties = new();
+        private List<IResult> _results = new();
+        private readonly Dictionary<IProperty, IResult> _mirroredResults = new();
 
         /// <summary>
         /// Stop has been requested on the task, and it should be terminated as soon

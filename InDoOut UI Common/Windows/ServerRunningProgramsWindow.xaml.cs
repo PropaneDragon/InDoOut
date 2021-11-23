@@ -12,7 +12,7 @@ namespace InDoOut_UI_Common.Windows
 {
     public partial class ServerRunningProgramsWindow : Window
     {
-        private readonly DispatcherTimer _loadTimer = new DispatcherTimer(DispatcherPriority.Normal) { Interval = TimeSpan.FromMilliseconds(100) };
+        private readonly DispatcherTimer _loadTimer = new(DispatcherPriority.Normal) { Interval = TimeSpan.FromMilliseconds(100) };
 
         public IClient Client { get; set; } = null;
 

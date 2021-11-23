@@ -11,6 +11,6 @@ namespace InDoOut_Executable_Core.Localisation
 
         public string WebsiteShort => "idoapp.net";
         public string Website => "https://idoapp.net";
-        public Uri WebsiteUri => new Uri(Website);
+        public Uri WebsiteUri => new(Website);
     }
 }

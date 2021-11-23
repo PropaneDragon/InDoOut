@@ -10,9 +10,9 @@ namespace InDoOut_Networking.Client
 {
     public class Client : AbstractInteractiveNetworkEntity, IClient
     {
-        private static readonly SemaphoreSlim _writingSemaphore = new SemaphoreSlim(1, 1);
+        private static readonly SemaphoreSlim _writingSemaphore = new(1, 1);
 
-        private readonly NetworkStreamHandler _streamHandler = new NetworkStreamHandler();
+        private readonly NetworkStreamHandler _streamHandler = new();
         private readonly TimeSpan _timeout = TimeSpan.FromSeconds(5);
 
         private TcpClient _client = null;

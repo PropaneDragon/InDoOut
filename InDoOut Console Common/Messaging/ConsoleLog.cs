@@ -5,7 +5,7 @@ namespace InDoOut_Console_Common.Messaging
 {
     public class ConsoleLog : ILog
     {
-        private readonly Log _internalLog = new Log();
+        private readonly Log _internalLog = new();
 
         public bool Enabled { get => _internalLog.Enabled; set => _internalLog.Enabled = value; }
 

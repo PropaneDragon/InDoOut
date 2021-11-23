@@ -5,7 +5,7 @@ namespace InDoOut_UI_Common.Actions.Dragging
     public abstract class DragAction : Action
     {
         private bool _dragging = false;
-        private Point _lastMousePosition = new Point();
+        private Point _lastMousePosition = new();
 
         protected Point MouseDelta { get; private set; } = new Point();
 

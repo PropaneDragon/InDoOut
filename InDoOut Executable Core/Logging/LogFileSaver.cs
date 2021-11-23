@@ -12,7 +12,7 @@ namespace InDoOut_Executable_Core.Logging
         private static readonly int COMPLETE_REFRESH_AFTER_COUNTER = 60;
 
         private readonly IStandardLocations _locations = null;
-        private readonly Timer _timer = new Timer(TimeSpan.FromSeconds(1).TotalMilliseconds) { Enabled = false };
+        private readonly Timer _timer = new(TimeSpan.FromSeconds(1).TotalMilliseconds) { Enabled = false };
         private int _completeResetTime = 0;
         private DateTime _lastLogTime = DateTime.MinValue;
 

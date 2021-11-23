@@ -20,7 +20,7 @@ namespace InDoOut_Application_Plugins.Self
         private readonly IProperty<string> _programPath;
         private readonly IProperty<bool> _reloadEachTime;
         private readonly IResult _result;
-        private readonly List<IProperty<string>> _inputValues = new List<IProperty<string>>();
+        private readonly List<IProperty<string>> _inputValues = new();
 
         private IProgram _currentProgram = null;
 

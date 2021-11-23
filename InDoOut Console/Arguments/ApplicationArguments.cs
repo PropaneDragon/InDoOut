@@ -7,8 +7,8 @@ namespace InDoOut_Console.Arguments
 {
     public class ApplicationArguments
     {
-        private readonly List<string> _loadedProgramArguments = new List<string>();
-        private readonly ConsoleHelpArgument _helpArgument = new ConsoleHelpArgument(false);
+        private readonly List<string> _loadedProgramArguments = new();
+        private readonly ConsoleHelpArgument _helpArgument = new(false);
 
         public bool ShouldShowHelp => _helpArgument?.ShouldShowHelp ?? false;
         public bool LegacyConsoleMode { get; private set; } = false;

@@ -10,7 +10,7 @@ namespace InDoOut_Core_Plugins.Text
 
         private readonly IOutput _output = null;
         private readonly IResult _result = null;
-        private readonly List<IProperty<string>> _properties = new List<IProperty<string>>();
+        private readonly List<IProperty<string>> _properties = new();
 
         public override string Description => "Combines two or more text elements together.";
 

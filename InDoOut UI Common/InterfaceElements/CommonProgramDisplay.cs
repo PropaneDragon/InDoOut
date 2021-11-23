@@ -30,7 +30,7 @@ namespace InDoOut_UI_Common.InterfaceElements
         public List<IUIFunction> UIFunctions => FindCanvasChild<IUIFunction>();
         public List<IUIConnection> UIConnections => FindCanvasChild<IUIConnection>();
         public List<FrameworkElement> Elements => FindCanvasChild<FrameworkElement>();
-        public Size TotalSize => new Size(ElementCanvas.ActualWidth, ElementCanvas.ActualHeight);
+        public Size TotalSize => new(ElementCanvas.ActualWidth, ElementCanvas.ActualHeight);
 
         public abstract ISelectionManager<ISelectable> SelectionManager { get; protected set; }
         public abstract IActionHandler ActionHandler { get; protected set; }

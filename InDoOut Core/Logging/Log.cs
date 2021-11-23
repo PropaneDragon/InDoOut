@@ -9,8 +9,8 @@ namespace InDoOut_Core.Logging
     /// </summary>
     public class Log : Singleton<Log>, ILog
     {
-        private readonly object _logLock = new object();
-        private readonly List<LogMessage> _logs = new List<LogMessage>();
+        private readonly object _logLock = new();
+        private readonly List<LogMessage> _logs = new();
 
         /// <summary>
         /// Gets or sets whether logging is active or not.

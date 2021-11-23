@@ -13,7 +13,7 @@ namespace InDoOut_UI_Common.Windows
 {
     public partial class ServerProgramSelectionWindow : Window
     {
-        private readonly DispatcherTimer _loadTimer = new DispatcherTimer(DispatcherPriority.Normal) { Interval = TimeSpan.FromMilliseconds(100) };
+        private readonly DispatcherTimer _loadTimer = new(DispatcherPriority.Normal) { Interval = TimeSpan.FromMilliseconds(100) };
 
         private bool _populatingPrograms = false;
 

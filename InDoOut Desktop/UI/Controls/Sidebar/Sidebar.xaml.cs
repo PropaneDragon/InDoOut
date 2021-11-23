@@ -16,7 +16,7 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
     public partial class Sidebar : UserControl
     {
         private readonly TimeSpan _animationTime = TimeSpan.FromMilliseconds(500);
-        private readonly DispatcherTimer _updateTimer = new DispatcherTimer(DispatcherPriority.Normal);
+        private readonly DispatcherTimer _updateTimer = new(DispatcherPriority.Normal);
 
         private bool _collapsed = false;
         private ITaskView _taskView = null;

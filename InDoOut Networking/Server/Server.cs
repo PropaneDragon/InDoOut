@@ -13,14 +13,14 @@ namespace InDoOut_Networking.Server
 {
     public class Server : AbstractInteractiveNetworkEntity, IServer
     {
-        private static readonly SemaphoreSlim _writingSemaphore = new SemaphoreSlim(1, 1);
+        private static readonly SemaphoreSlim _writingSemaphore = new(1, 1);
 
-        private readonly object _clientsLock = new object();
-        private readonly object _streamHandlersLock = new object();
+        private readonly object _clientsLock = new();
+        private readonly object _streamHandlersLock = new();
 
         private readonly TcpListener _listener = null;
-        private readonly List<TcpClient> _clients = new List<TcpClient>();
-        private readonly Dictionary<TcpClient, NetworkStreamHandler> _streamHandlers = new Dictionary<TcpClient, NetworkStreamHandler>();
+        private readonly List<TcpClient> _clients = new();
+        private readonly Dictionary<TcpClient, NetworkStreamHandler> _streamHandlers = new();
 
         public bool Started => _listener?.Server?.IsBound ?? false;
         public int Port => (_listener?.LocalEndpoint as IPEndPoint)?.Port ?? 0;

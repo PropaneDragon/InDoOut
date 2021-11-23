@@ -1,14 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <RootNamespace>InDoOut_BlinkStick_Plugins</RootNamespace>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors></WarningsAsErrors>
+    <PackageId>$(AssemblyName)</PackageId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <NoWarn>1701;1702;NU1701</NoWarn>
+    <DefineConstants>$(DefineConstants)TRACE</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>$(DefineConstants)TRACE</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,7 +27,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="xcopy  /Y &quot;%25USERPROFILE%25\.nuget\packages\blinkstickdotnet\2.0.16\lib\net40\*.dll&quot;  &quot;$(TargetPath)&quot;&#xD;&#xA;xcopy  /Y &quot;%25USERPROFILE%25\.nuget\packages\hidsharp\1.5.0\lib\net35\*.dll&quot;  &quot;$(TargetPath)&quot;&#xD;&#xA;xcopy  /Y &quot;%25USERPROFILE%25\.nuget\packages\libusbdotnet\2.2.8\lib\*.dll&quot;  &quot;$(TargetPath)&quot;&#xD;&#xA;xcopy  /Y /F &quot;$(TargetPath)&quot;  &quot;$(SolutionDir)\InDoOut Desktop\$(OutDir)\Plugins\*&quot;&#xD;&#xA;xcopy  /Y /F &quot;$(TargetPath)&quot;  &quot;$(SolutionDir)\InDoOut Console\$(OutDir)\Plugins\*&quot;&#xD;&#xA;xcopy  /Y /F &quot;$(TargetPath)&quot;  &quot;$(SolutionDir)\InDoOut Display\$(OutDir)\Plugins\*&quot;&#xD;&#xA;xcopy  /Y /F &quot;$(TargetPath)&quot;  &quot;$(SolutionDir)\InDoOut Server\$(OutDir)\Plugins\*&quot;" />
+    <Exec Command="xcopy /Y &quot;%25USERPROFILE%25\.nuget\packages\blinkstickdotnet\2.0.16\lib\net40\*.dll&quot; &quot;$(TargetPath)&quot;&#xD;&#xA;xcopy /Y &quot;%25USERPROFILE%25\.nuget\packages\hidsharp\1.5.0\lib\net35\*.dll&quot; &quot;$(TargetPath)&quot;&#xD;&#xA;xcopy /Y &quot;%25USERPROFILE%25\.nuget\packages\libusbdotnet\2.2.8\lib\*.dll&quot; &quot;$(TargetPath)&quot;&#xD;&#xA;xcopy /Y /F &quot;$(TargetPath)&quot; &quot;$(SolutionDir)\$(OutDir)\Plugins\*&quot;" />
   </Target>
 
 </Project>

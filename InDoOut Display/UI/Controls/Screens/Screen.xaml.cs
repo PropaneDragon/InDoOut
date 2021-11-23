@@ -23,11 +23,11 @@ namespace InDoOut_Display.UI.Controls.Screens
     {
         private ProgramViewMode _currentViewMode = ProgramViewMode.IO;
 
-        public Size TotalSize => new Size(Width, Height);
+        public Size TotalSize => new(Width, Height);
         public Size ViewSize => TotalSize;
-        public Point TopLeftViewCoordinate => new Point(0, 0);
-        public Point BottomRightViewCoordinate => new Point(TotalSize.Width, TotalSize.Height);
-        public Point CentreViewCoordinate => new Point(BottomRightViewCoordinate.X / 2d, BottomRightViewCoordinate.Y / 2d);
+        public Point TopLeftViewCoordinate => new(0, 0);
+        public Point BottomRightViewCoordinate => new(TotalSize.Width, TotalSize.Height);
+        public Point CentreViewCoordinate => new(BottomRightViewCoordinate.X / 2d, BottomRightViewCoordinate.Y / 2d);
         public ProgramViewMode CurrentViewMode { get => _currentViewMode; set => ChangeMode(value); }
         public IProgram AssociatedProgram { get; set; } = null;
         public IScreenConnections AssociatedScreenConnections { get; set; } = null;
@@ -87,7 +87,7 @@ namespace InDoOut_Display.UI.Controls.Screens
              * set as percentages as part of their movement/resize methods. */
         }
 
-        public Point GetPosition(FrameworkElement element) => new Point();
+        public Point GetPosition(FrameworkElement element) => new();
 
         public Point GetMousePosition() => Mouse.GetPosition(this);
 

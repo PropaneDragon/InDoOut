@@ -40,7 +40,7 @@ namespace InDoOut_Conversion_Plugins.Storage
         public double ZiB => ConvertBetween(Bytes, SizeType.Byte, SizeType.ZiB);
         public double YiB => ConvertBetween(Bytes, SizeType.Byte, SizeType.YiB);
 
-        public static StorageSize FromBytes(double bytes) => new StorageSize(bytes);
+        public static StorageSize FromBytes(double bytes) => new(bytes);
         public static StorageSize FromKiB(double size) => FromSize(SizeType.KiB, size);
         public static StorageSize FromMiB(double size) => FromSize(SizeType.MiB, size);
         public static StorageSize FromGiB(double size) => FromSize(SizeType.GiB, size);
@@ -49,7 +49,7 @@ namespace InDoOut_Conversion_Plugins.Storage
         public static StorageSize FromEiB(double size) => FromSize(SizeType.EiB, size);
         public static StorageSize FromZiB(double size) => FromSize(SizeType.ZiB, size);
         public static StorageSize FromYiB(double size) => FromSize(SizeType.YiB, size);
-        public static StorageSize FromSize(SizeType size, double amount) => new StorageSize(ConvertBetween(amount, size, SizeType.Byte));
+        public static StorageSize FromSize(SizeType size, double amount) => new(ConvertBetween(amount, size, SizeType.Byte));
 
         /// <summary>
         /// Converts a file size from one type to another

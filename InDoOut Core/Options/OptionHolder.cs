@@ -9,7 +9,7 @@ namespace InDoOut_Core.Options
     /// </summary>
     public class OptionHolder : IOptionHolder
     {
-        private readonly List<IOption> _unregisteredOptions = new List<IOption>();
+        private readonly List<IOption> _unregisteredOptions = new();
 
         /// <summary>
         /// All options currently registered with the holder.

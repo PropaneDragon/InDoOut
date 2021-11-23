@@ -23,7 +23,7 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
 
         public Thickness MarginPercentages { get => GetMarginPercentages(); set => SetMarginPercentages(value); }
 
-        public Size Size => new Size(Border_Presenter.ActualWidth, Border_Presenter.ActualHeight);
+        public Size Size => new(Border_Presenter.ActualWidth, Border_Presenter.ActualHeight);
 
         public virtual bool AutoScale { get; set; } = false;
         public virtual double Scale { get; set; } = 1d;
@@ -66,6 +66,6 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
             Row_Height_Below.Height = new GridLength(thickness.Bottom, GridUnitType.Star);
         }
 
-        private Thickness GetMarginPercentages() => new Thickness(Column_Width_Left.Width.Value, Row_Height_Above.Height.Value, Column_Width_Right.Width.Value, Row_Height_Below.Height.Value);
+        private Thickness GetMarginPercentages() => new(Column_Width_Left.Width.Value, Row_Height_Above.Height.Value, Column_Width_Right.Width.Value, Row_Height_Below.Height.Value);
     }
 }

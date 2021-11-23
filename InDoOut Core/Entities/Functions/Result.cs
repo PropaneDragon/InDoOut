@@ -13,11 +13,11 @@ namespace InDoOut_Core.Entities.Functions
     /// </summary>
     public class Result : InteractiveEntity<IProperty, IFunction>, IResult
     {
-        private readonly object _variableNameLock = new object();
+        private readonly object _variableNameLock = new();
 
         private string _variableName = Guid.NewGuid().ToString();
 
-        private readonly Value _value = new Value();
+        private readonly Value _value = new();
 
         /// <summary>
         /// An event that gets fired when the value changes.

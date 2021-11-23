@@ -14,14 +14,14 @@ namespace InDoOut_Core.Entities.Core
     /// <typeparam name="ConnectsFromType">The <see cref="IEntity"/> that this entity can accept connections from.</typeparam>
     public abstract class InteractiveEntity<ConnectsToType, ConnectsFromType> : Entity, IConnectable<ConnectsToType>, ITriggerable<ConnectsFromType> where ConnectsToType : class, ITriggerable where ConnectsFromType : class, IEntity
     {
-        private readonly object _connectionsLock = new object();
-        private readonly object _lastTriggerTimeLock = new object();
-        private readonly object _lastCompletionTimeLock = new object();
+        private readonly object _connectionsLock = new();
+        private readonly object _lastTriggerTimeLock = new();
+        private readonly object _lastCompletionTimeLock = new();
 
         private Task _runner = null;
         private DateTime _lastTriggerTime = DateTime.MinValue;
         private DateTime _lastCompletionTime = DateTime.MinValue;
-        private readonly List<ConnectsToType> _connections = new List<ConnectsToType>();
+        private readonly List<ConnectsToType> _connections = new();
 
         /// <summary>
         /// The current running state of this entity.

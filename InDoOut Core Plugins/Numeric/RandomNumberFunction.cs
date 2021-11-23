@@ -10,7 +10,7 @@ namespace InDoOut_Core_Plugins.Numeric
         private readonly IProperty<int> _propertyMaximum = null;
         private readonly IResult _resultNumber = null;
 
-        private readonly Random _random = new Random();
+        private readonly Random _random = new();
 
         public override string Description => "Generates a random number from a minimum and maximum value.";
 

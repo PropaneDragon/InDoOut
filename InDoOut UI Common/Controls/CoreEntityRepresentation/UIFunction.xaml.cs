@@ -16,7 +16,7 @@ namespace InDoOut_UI_Common.Controls.CoreEntityRepresentation
 {
     public partial class UIFunction : UserControl, IUIFunction
     {
-        private readonly List<IUIConnection> _cachedVisualConnections = new List<IUIConnection>();
+        private readonly List<IUIConnection> _cachedVisualConnections = new();
 
         private DispatcherTimer _updateTimer = null;
         private DoubleAnimation _fadeAnimation = null;

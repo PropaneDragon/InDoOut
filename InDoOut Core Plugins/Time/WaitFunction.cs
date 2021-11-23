@@ -9,11 +9,11 @@ namespace InDoOut_Core_Plugins.Time
     {
         private readonly IOutput _output;
 
-        private readonly Property<int> _milliseconds = new Property<int>("Milliseconds", "The total number of milliseconds to wait for.", true, 0);
-        private readonly Property<int> _seconds = new Property<int>("Seconds", "The total number of seconds to wait for.", true, 1);
-        private readonly Property<int> _minutes = new Property<int>("Minutes", "The total number of minutes to wait for.", true, 0);
-        private readonly Property<int> _hours = new Property<int>("Hours", "The total number of hours to wait for.", true, 0);
-        private readonly Property<int> _days = new Property<int>("Days", "The total number of days to wait for.", true, 0);
+        private readonly Property<int> _milliseconds = new("Milliseconds", "The total number of milliseconds to wait for.", true, 0);
+        private readonly Property<int> _seconds = new("Seconds", "The total number of seconds to wait for.", true, 1);
+        private readonly Property<int> _minutes = new("Minutes", "The total number of minutes to wait for.", true, 0);
+        private readonly Property<int> _hours = new("Hours", "The total number of hours to wait for.", true, 0);
+        private readonly Property<int> _days = new("Days", "The total number of days to wait for.", true, 0);
 
         public override string Description => "Waits for a given time then continues.";
 

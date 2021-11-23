@@ -11,7 +11,7 @@ namespace InDoOut_Networking.Entities
 {
     public class NetworkedResult : INetworkedResult
     {
-        private readonly Value _value = new Value();
+        private readonly Value _value = new();
 
         public bool Running { get; private set; } = false;
         public bool Finishing { get; private set; } = false;

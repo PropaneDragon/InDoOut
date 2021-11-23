@@ -10,7 +10,7 @@ namespace InDoOut_Plugins.Loaders
     /// </summary>
     public class LoadedPlugins : Singleton<LoadedPlugins>, ILoadedPlugins
     {
-        private List<IPluginContainer> _plugins = new List<IPluginContainer>();
+        private List<IPluginContainer> _plugins = new();
 
         /// <summary>
         /// An event that fires when plugins have changed, either by loading or unloading.

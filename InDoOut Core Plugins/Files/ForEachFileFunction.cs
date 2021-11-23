@@ -10,7 +10,7 @@ namespace InDoOut_Core_Plugins.Files
         private readonly IProperty<string> _propertyDirectoryPath = null;
         private readonly IResult _resultFilePath = null;
 
-        private List<string> _files = new List<string>();
+        private List<string> _files = new();
 
         public override string Description => "Loops through all files within a specific directory.";
 

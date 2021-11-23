@@ -1,5 +1,6 @@
 ﻿using InDoOut_Core.Entities.Functions;
 using System.Net;
+using System.Net.Http;
 
 namespace InDoOut_Data_Plugins.Web
 {
@@ -33,8 +34,8 @@ namespace InDoOut_Data_Plugins.Web
 
         protected override IOutput Started(IInput triggeredBy)
         {
-            using var client = new WebClient();
-            return _text.ValueFrom(client.DownloadString(_url.FullValue)) ? _downloaded : _error;
+            using var client = new HttpClient();
+            return _text.ValueFrom(client.GetAsync(_url.FullValue).Result.Content.ReadAsStringAsync().Result) ? _downloaded : _error;
         }
     }
 }

@@ -4,9 +4,9 @@ namespace InDoOut_UI_Common.Actions.Selecting
 {
     public abstract class AbstractSelectionManager<SelectableType> : ISelectionManager<SelectableType> where SelectableType : ISelectable
     {
-        private readonly List<SelectableType> _selection = new List<SelectableType>();
+        private readonly List<SelectableType> _selection = new();
 
-        public List<SelectableType> Selection => new List<SelectableType>(_selection);
+        public List<SelectableType> Selection => new(_selection);
 
         public AbstractSelectionManager()
         {

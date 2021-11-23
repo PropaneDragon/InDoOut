@@ -6,7 +6,7 @@ namespace InDoOut_Executable_Core.Arguments
 {
     public class ArgumentHandler : Singleton<ArgumentHandler>, IArgumentHandler
     {
-        private readonly List<IArgument> _arguments = new List<IArgument>();
+        private readonly List<IArgument> _arguments = new();
         private IArgument _lastArgument = null;
 
         public char[] ArgumentKeyPrefixes { get; set; } = new[] { '-', '/' };

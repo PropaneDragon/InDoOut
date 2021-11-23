@@ -8,8 +8,8 @@ namespace InDoOut_Executable_Core.History
 {
     public class History : Singleton<History>
     {
-        private readonly List<HistoryProperty> _undoStack = new List<HistoryProperty>();
-        private readonly List<HistoryProperty> _redoStack = new List<HistoryProperty>();
+        private readonly List<HistoryProperty> _undoStack = new();
+        private readonly List<HistoryProperty> _redoStack = new();
 
         public bool CanUndo => _undoStack.Count > 0;
         public bool CanRedo => _redoStack.Count > 0;

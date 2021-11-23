@@ -17,8 +17,8 @@ namespace InDoOut_Desktop.UI.Windows
 {
     public partial class MainWindow : Window
     {
-        private readonly DispatcherTimer _titleTimer = new DispatcherTimer(DispatcherPriority.Background);
-        private readonly LogFileSaver _logSaver = new LogFileSaver(StandardLocations.Instance);
+        private readonly DispatcherTimer _titleTimer = new(DispatcherPriority.Background);
+        private readonly LogFileSaver _logSaver = new(StandardLocations.Instance);
 
         public MainWindow()
         {

@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net5.0-windows</TargetFramework>
+    <TargetFramework>net6.0-windows</TargetFramework>
     <RootNamespace>InDoOut_Display</RootNamespace>
     <UseWPF>true</UseWPF>
     <ApplicationManifest>app.manifest</ApplicationManifest>
@@ -45,5 +45,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy /Y /F &quot;$(SolutionDir)\bin\$(Configuration)\net6.0\Plugins\*&quot; &quot;$(OutDir)\Plugins\*&quot;&#xD;&#xA;xcopy /Y /F &quot;$(SolutionDir)\bin\$(Configuration)\net6.0-windows\DisplayPlugins\*&quot; &quot;$(OutDir)\Plugins\*&quot;" />
+  </Target>
 
 </Project>

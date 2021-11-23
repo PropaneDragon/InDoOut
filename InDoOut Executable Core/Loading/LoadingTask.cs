@@ -6,10 +6,10 @@ namespace InDoOut_Executable_Core.Loading
 {
     public abstract class LoadingTask : ILoadingTask
     {
-        private readonly object _nameLock = new object();
+        private readonly object _nameLock = new();
 
         private string _name = null;
-        private readonly List<ILoadingTask> _childTasks = new List<ILoadingTask>();
+        private readonly List<ILoadingTask> _childTasks = new();
 
         public event EventHandler<LoadingTaskEventArgs> NameChanged;
 

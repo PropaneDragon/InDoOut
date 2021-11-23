@@ -8,7 +8,7 @@ namespace InDoOut_BlinkStick_Plugins
 {
     public class SetLightColourFunction : Function
     {
-        private readonly ColourPropertiesHelper _colourPropertiesHelper = new ColourPropertiesHelper();
+        private readonly ColourPropertiesHelper _colourPropertiesHelper = new();
         private readonly IOutput _lightChanged, _error;
         private readonly IProperty<string> _lightId, _leds;
 

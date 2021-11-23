@@ -11,10 +11,10 @@ namespace InDoOut_Executable_Core.Networking
 {
     public abstract class AbstractInteractiveNetworkEntity : IInteractiveNetworkEntity
     {
-        private readonly object _responseQueueLock = new object();
-        private readonly object _commandListenersLock = new object();
-        private readonly List<ICommandListener> _commandListeners = new List<ICommandListener>();
-        private readonly Dictionary<string, INetworkMessage> _responseQueue = new Dictionary<string, INetworkMessage>();
+        private readonly object _responseQueueLock = new();
+        private readonly object _commandListenersLock = new();
+        private readonly List<ICommandListener> _commandListeners = new();
+        private readonly Dictionary<string, INetworkMessage> _responseQueue = new();
 
         public ILog EntityLog { get; protected set; } = new NullLog();
 

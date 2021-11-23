@@ -7,9 +7,9 @@ namespace InDoOut_Executable_Core.Location
 {
     public class StandardLocations : Singleton<StandardLocations>, IStandardLocations
     {
-        private readonly Dictionary<Location, string> _paths = new Dictionary<Location, string>();
+        private readonly Dictionary<Location, string> _paths = new();
 
-        private readonly List<Location> _editablePaths = new List<Location>()
+        private readonly List<Location> _editablePaths = new()
         {
             Location.SaveFile,
             Location.PluginsDirectory,

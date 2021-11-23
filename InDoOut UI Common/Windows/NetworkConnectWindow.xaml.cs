@@ -17,7 +17,7 @@ namespace InDoOut_UI_Common.Windows
 {
     public partial class NetworkConnectWindow : Window
     {
-        private static readonly HiddenJsonObjectOption _connectionItemsOption = new HiddenJsonObjectOption("NetworkConnectionItems");
+        private static readonly HiddenJsonObjectOption _connectionItemsOption = new("NetworkConnectionItems");
 
         public IClient NetworkClient { get; private set; } = null;
         public IOptionHolder OptionHolder { get; set; } = null;

@@ -13,7 +13,7 @@ namespace InDoOut_UI_Common.Controls.Screens
     {
         private bool _textUpdateNeeded = true;
         private ILoadingTask _taskToRun = null;
-        private readonly DispatcherTimer _uiUpdateTimer = new DispatcherTimer(DispatcherPriority.Normal);
+        private readonly DispatcherTimer _uiUpdateTimer = new(DispatcherPriority.Normal);
 
         public string SubAppName { get; set; } = null;
 

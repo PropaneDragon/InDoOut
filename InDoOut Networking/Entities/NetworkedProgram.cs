@@ -17,13 +17,13 @@ namespace InDoOut_Networking.Entities
 {
     public class NetworkedProgram : INetworkedProgram
     {
-        private readonly object _functionLock = new object();
-        private readonly object _metadataLock = new object();
-        private readonly object _updateLock = new object();
+        private readonly object _functionLock = new();
+        private readonly object _metadataLock = new();
+        private readonly object _updateLock = new();
 
-        private readonly List<IFunction> _functions = new List<IFunction>();
-        private readonly Dictionary<string, string> _metadata = new Dictionary<string, string>();
-        private readonly System.Timers.Timer _timer = new System.Timers.Timer() { AutoReset = false, Interval = TimeSpan.FromSeconds(1).TotalMilliseconds};
+        private readonly List<IFunction> _functions = new();
+        private readonly Dictionary<string, string> _metadata = new();
+        private readonly System.Timers.Timer _timer = new() { AutoReset = false, Interval = TimeSpan.FromSeconds(1).TotalMilliseconds};
 
         private string _name = null;
 
@@ -39,9 +39,9 @@ namespace InDoOut_Networking.Entities
         public IClient AssociatedClient { get; protected set; } = null;
 
         public List<IFunction> Functions { get { lock (_functionLock) { return _functions; } } }
-        public List<IStartFunction> StartFunctions => new List<IStartFunction>();
-        public List<IEndFunction> EndFunctions => new List<IEndFunction>();
-        public List<string> PassthroughValues => new List<string>();
+        public List<IStartFunction> StartFunctions => new();
+        public List<IEndFunction> EndFunctions => new();
+        public List<string> PassthroughValues => new();
 
         public DateTime LastUpdateTime { get; set; } = DateTime.MinValue;
         public DateTime LastTriggerTime { get; set; } = DateTime.MinValue;

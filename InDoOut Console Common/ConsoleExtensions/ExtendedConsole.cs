@@ -7,8 +7,8 @@ namespace InDoOut_Console_Common.ConsoleExtensions
 {
     public static class ExtendedConsole
     {
-        private static readonly object _writingLock = new object();
-        private static readonly object _writingLineLock = new object();
+        private static readonly object _writingLock = new();
+        private static readonly object _writingLineLock = new();
 
         [Flags]
         public enum ConsoleTextStyle
@@ -27,8 +27,8 @@ namespace InDoOut_Console_Common.ConsoleExtensions
             Background
         }
 
-        private static readonly Dictionary<ConsoleColor, Color> _colourAssociations = new Dictionary<ConsoleColor, Color>();
-        private static readonly Dictionary<ConsoleTextStyle, string> _textStyleValues = new Dictionary<ConsoleTextStyle, string>()
+        private static readonly Dictionary<ConsoleColor, Color> _colourAssociations = new();
+        private static readonly Dictionary<ConsoleTextStyle, string> _textStyleValues = new()
         {
             { ConsoleTextStyle.Bold, "1" },
             { ConsoleTextStyle.Faint, "2" },
@@ -57,10 +57,7 @@ namespace InDoOut_Console_Common.ConsoleExtensions
                 var colourName = Enum.GetNames(typeof(ConsoleColor))[colourValue];
                 var createdColour = Color.FromName(colourName);
 
-                if (createdColour != null)
-                {
-                    _colourAssociations.Add((ConsoleColor)colourValue, createdColour);
-                }
+                _colourAssociations.Add((ConsoleColor)colourValue, createdColour);
             }
         }
 
@@ -89,7 +86,7 @@ namespace InDoOut_Console_Common.ConsoleExtensions
                         {
                             WriteColourTag(consoleColour, _lastObject is ConsoleColourArea area ? area : ConsoleColourArea.Foreground);
                         }
-                        else if (!(item is ConsoleColourArea))
+                        else if (item is not ConsoleColourArea)
                         {
                             Console.Write(item);
                         }
@@ -175,7 +172,7 @@ namespace InDoOut_Console_Common.ConsoleExtensions
 
         private static ConsoleColor GetClosestConsoleColour(Color colour)
         {
-            if (colour != null && _colourAssociations.Count > 0)
+            if (_colourAssociations.Count > 0)
             {
                 var orderedKeyValues = _colourAssociations.OrderBy(consoleColur => Math.Pow((colour.GetHue() - consoleColur.Value.GetHue()) / 360d, 2) + Math.Pow(colour.GetSaturation() - consoleColur.Value.GetSaturation(), 2) + Math.Pow(colour.GetBrightness() - consoleColur.Value.GetBrightness(), 2));
                 return orderedKeyValues.First().Key;
@@ -185,8 +182,8 @@ namespace InDoOut_Console_Common.ConsoleExtensions
         }
 
         private static string EncaseInFormattingString(string @string) => $"{FormattingStartString}{@string}{FormattingEndString}";
-        private static string GetHighColourForegroundString(Color colour) => colour != null ? EncaseInFormattingString($"38;2;{colour.R};{colour.G};{colour.B}") : "";
-        private static string GetHighColourBackgroundString(Color colour) => colour != null ? EncaseInFormattingString($"48;2;{colour.R};{colour.G};{colour.B}") : "";
+        private static string GetHighColourForegroundString(Color colour) => EncaseInFormattingString($"38;2;{colour.R};{colour.G};{colour.B}");
+        private static string GetHighColourBackgroundString(Color colour) => EncaseInFormattingString($"48;2;{colour.R};{colour.G};{colour.B}");
         private static Color GetColourForConsoleColour(ConsoleColor colour) => _colourAssociations.TryGetValue(colour, out var associatedColour) ? associatedColour : Color.FromArgb(255, 255, 255);
     }
 }

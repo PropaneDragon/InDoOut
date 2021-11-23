@@ -10,14 +10,14 @@ namespace InDoOut_UI_Common.Controls.Display
 {
     public partial class Overview : UserControl
     {
-        private readonly DispatcherTimer _updateTimer = new DispatcherTimer(DispatcherPriority.Render);
+        private readonly DispatcherTimer _updateTimer = new(DispatcherPriority.Render);
 
         private ICommonBlockDisplay _display = null;
 
         public Size TotalSize => _display?.TotalSize ?? new Size();
         public Size ViewSize => _display?.ViewSize ?? new Size();
-        public Vector ActualSizeToOverviewRatio => new Vector(ActualWidth / TotalSize.Width, ActualHeight / TotalSize.Height);
-        public Vector OverviewToActualSizeRatio => new Vector(TotalSize.Width / ActualWidth, TotalSize.Height / ActualHeight);
+        public Vector ActualSizeToOverviewRatio => new(ActualWidth / TotalSize.Width, ActualHeight / TotalSize.Height);
+        public Vector OverviewToActualSizeRatio => new(TotalSize.Width / ActualWidth, TotalSize.Height / ActualHeight);
         public ICommonBlockDisplay Display { get => _display; set => ChangeBlockView(value); }
 
         public Overview()
@@ -90,11 +90,11 @@ namespace InDoOut_UI_Common.Controls.Display
             }
         }
 
-        private Point AdjustByRatio(Point point, Vector ratio) => new Point(point.X * ratio.X, point.Y * ratio.Y);
+        private Point AdjustByRatio(Point point, Vector ratio) => new(point.X * ratio.X, point.Y * ratio.Y);
 
-        private Size AdjustByRatio(Size size, Vector ratio) => new Size(size.Width * ratio.X, size.Height * ratio.Y);
+        private Size AdjustByRatio(Size size, Vector ratio) => new(size.Width * ratio.X, size.Height * ratio.Y);
 
-        private Rect AdjustByRatio(Rect rect, Vector ratio) => new Rect(AdjustByRatio(rect.Location, ratio), AdjustByRatio(rect.Size, ratio));
+        private Rect AdjustByRatio(Rect rect, Vector ratio) => new(AdjustByRatio(rect.Location, ratio), AdjustByRatio(rect.Size, ratio));
 
         private void UpdateTimer_Tick(object sender, EventArgs e) => UpdatePositions();
 

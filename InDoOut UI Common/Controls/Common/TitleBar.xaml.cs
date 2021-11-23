@@ -142,7 +142,7 @@ namespace InDoOut_UI_Common.Controls.Common
 
         private void UpdateButtonStates() => Button_Restore.IsEnabled = WindowCanResize;
 
-        private Thickness AddThickness(Thickness first, Thickness second) => new Thickness(first.Left + second.Left, first.Top + second.Top, first.Right + second.Right, first.Bottom + second.Bottom);
+        private Thickness AddThickness(Thickness first, Thickness second) => new(first.Left + second.Left, first.Top + second.Top, first.Right + second.Right, first.Bottom + second.Bottom);
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {

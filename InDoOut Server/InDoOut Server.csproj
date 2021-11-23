@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <RootNamespace>InDoOut_Server</RootNamespace>
   </PropertyGroup>
 
@@ -10,5 +10,9 @@
     <ProjectReference Include="..\InDoOut Console Common\InDoOut Console Common.csproj" />
     <ProjectReference Include="..\InDoOut Networking\InDoOut Networking.csproj" />
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy /Y /F &quot;$(SolutionDir)\bin\$(Configuration)\net6.0\Plugins\*&quot; &quot;$(OutDir)\Plugins\*&quot;" />
+  </Target>
 
 </Project>

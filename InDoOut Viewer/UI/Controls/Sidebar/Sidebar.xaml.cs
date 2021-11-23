@@ -17,7 +17,7 @@ namespace InDoOut_Viewer.UI.Controls.Sidebar
 {
     public partial class Sidebar : UserControl
     {
-        private readonly DispatcherTimer _updateTimer = new DispatcherTimer(DispatcherPriority.Normal);
+        private readonly DispatcherTimer _updateTimer = new(DispatcherPriority.Normal);
 
         public ITaskView AssociatedTaskView { get; set; } = null;
 

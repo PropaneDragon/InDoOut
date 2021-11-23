@@ -1,14 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <RootNamespace>InDoOut_Data_Plugins</RootNamespace>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors></WarningsAsErrors>
   </PropertyGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="xcopy  /Y /F &quot;$(TargetPath)&quot;  &quot;$(SolutionDir)\InDoOut Desktop\$(OutDir)\Plugins\*&quot;&#xD;&#xA;xcopy  /Y /F &quot;$(TargetPath)&quot;  &quot;$(SolutionDir)\InDoOut Console\$(OutDir)\Plugins\*&quot;&#xD;&#xA;xcopy  /Y /F &quot;$(TargetPath)&quot;  &quot;$(SolutionDir)\InDoOut Display\$(OutDir)\Plugins\*&quot;&#xD;&#xA;xcopy  /Y /F &quot;$(TargetPath)&quot;  &quot;$(SolutionDir)\InDoOut Server\$(OutDir)\Plugins\*&quot;" />
+    <Exec Command="xcopy /Y /F &quot;$(TargetPath)&quot; &quot;$(SolutionDir)\$(OutDir)\Plugins\*&quot;" />
   </Target>
 
   <ItemGroup>

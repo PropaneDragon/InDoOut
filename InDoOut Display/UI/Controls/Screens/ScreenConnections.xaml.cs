@@ -17,13 +17,13 @@ namespace InDoOut_Display.UI.Controls.Screens
     {
         public IScreen CurrentScreen => ScreenItem_Overview;
 
-        public override Size ViewSize => new Size(Scroll_Content.ActualWidth, Scroll_Content.ActualHeight);
+        public override Size ViewSize => new(Scroll_Content.ActualWidth, Scroll_Content.ActualHeight);
 
-        public override Point TopLeftViewCoordinate => new Point(Scroll_Content.HorizontalOffset, Scroll_Content.VerticalOffset);
+        public override Point TopLeftViewCoordinate => new(Scroll_Content.HorizontalOffset, Scroll_Content.VerticalOffset);
 
-        public override Point BottomRightViewCoordinate => new Point(TopLeftViewCoordinate.X + ViewSize.Width, TopLeftViewCoordinate.Y + ViewSize.Height);
+        public override Point BottomRightViewCoordinate => new(TopLeftViewCoordinate.X + ViewSize.Width, TopLeftViewCoordinate.Y + ViewSize.Height);
 
-        public override Point CentreViewCoordinate => new Point(TopLeftViewCoordinate.X + (ViewSize.Width / 2d), TopLeftViewCoordinate.Y + (ViewSize.Height / 2d));
+        public override Point CentreViewCoordinate => new(TopLeftViewCoordinate.X + (ViewSize.Width / 2d), TopLeftViewCoordinate.Y + (ViewSize.Height / 2d));
 
         public override ISelectionManager<ISelectable> SelectionManager { get; protected set; }
 

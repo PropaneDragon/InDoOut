@@ -7,7 +7,7 @@ namespace InDoOut_Display_Basic_Plugins.Shapes
 {
     public class EllipseElementFunction : ElementFunction
     {
-        private readonly ColourPropertiesHelper _colourPropertiesHelper = new ColourPropertiesHelper();
+        private readonly ColourPropertiesHelper _colourPropertiesHelper = new();
 
         public Color Colour => _colourPropertiesHelper.Colour;
 

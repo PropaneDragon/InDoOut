@@ -9,7 +9,7 @@ namespace InDoOut_UI_Common.Controls.Options
 {
     public partial class OptionsDisplay : UserControl, IOptionsDisplay
     {
-        private readonly Dictionary<ILinkedInterfaceOption, IOption> _optionAssociations = new Dictionary<ILinkedInterfaceOption, IOption>();
+        private readonly Dictionary<ILinkedInterfaceOption, IOption> _optionAssociations = new();
 
         public string Title { get => Text_Title.Text; set => Text_Title.Text = value; }
 

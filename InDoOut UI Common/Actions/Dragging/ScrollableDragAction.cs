@@ -5,7 +5,7 @@ namespace InDoOut_UI_Common.Actions.Dragging
 {
     public class ScrollableDragAction : DragAction
     {
-        private Point _initialScrollPosition = new Point();
+        private Point _initialScrollPosition = new();
 
         public IScrollable Scrollable { get; set; } = null;
 

@@ -8,10 +8,10 @@ namespace InDoOut_Core_Plugins.Time
         private readonly IInput _timeUtc;
         private readonly IOutput _output;
 
-        private readonly Result _hour = new Result("Hour", "The current hour.");
-        private readonly Result _minute = new Result("Minute", "The current minute.");
-        private readonly Result _second = new Result("Second", "The current second.");
-        private readonly Result _millisecond = new Result("Millisecond", "The current millisecond.");
+        private readonly Result _hour = new("Hour", "The current hour.");
+        private readonly Result _minute = new("Minute", "The current minute.");
+        private readonly Result _second = new("Second", "The current second.");
+        private readonly Result _millisecond = new("Millisecond", "The current millisecond.");
 
         public override string Description => "Gets the current time.";
 

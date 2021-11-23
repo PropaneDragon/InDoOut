@@ -10,7 +10,7 @@ namespace InDoOut_UI_Common.Controls.Options
 {
     public class OptionInterfaceFactory : Singleton<OptionInterfaceFactory>, IOptionInterfaceFactory
     {
-        private readonly Dictionary<Type, Type> _optionToInterfaceAssociations = new Dictionary<Type, Type>();
+        private readonly Dictionary<Type, Type> _optionToInterfaceAssociations = new();
 
         public OptionInterfaceFactory()
         {

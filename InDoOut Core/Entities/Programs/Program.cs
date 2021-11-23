@@ -14,8 +14,8 @@ namespace InDoOut_Core.Entities.Programs
     /// </summary>
     public class Program : Entity, IProgram
     {
-        private readonly object _lastTriggerTimeLock = new object();
-        private readonly object _lastCompletionTimeLock = new object();
+        private readonly object _lastTriggerTimeLock = new();
+        private readonly object _lastCompletionTimeLock = new();
 
         private readonly DateTime _lastCompletionTime = DateTime.MinValue;
 

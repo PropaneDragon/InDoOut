@@ -16,14 +16,14 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
 {
     public partial class DisplayElementContainer : UserControl, IDisplayElementContainer
     {
-        private static readonly Thickness THICKNESS_STATIC = new Thickness(0);
-        private static readonly Thickness THICKNESS_SELECTED = new Thickness(2);
+        private static readonly Thickness THICKNESS_STATIC = new(0);
+        private static readonly Thickness THICKNESS_SELECTED = new(2);
 
-        private readonly List<IUIConnection> _cachedVisualConnections = new List<IUIConnection>();
+        private readonly List<IUIConnection> _cachedVisualConnections = new();
 
         private bool _selected = false;
         private bool _resizing = false;
-        private Thickness _originalMargins = new Thickness();
+        private Thickness _originalMargins = new();
         private UIFunctionDisplayMode _displayMode = UIFunctionDisplayMode.IO;
 
         public bool AutoScale { get; set; } = false;
@@ -31,7 +31,7 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
         public IDisplayElement AssociatedDisplayElement { get => ContentPresenter_Element.Content as IDisplayElement; set => SetDisplayElement(value); }
         public UIFunctionDisplayMode DisplayMode { get => _displayMode; set => ChangeDisplayMode(value); }
         public Thickness MarginPercentages { get => GetMarginPercentages(); set => SetMarginPercentages(value); }
-        public Size Size => new Size(Border_Presenter.ActualWidth, Border_Presenter.ActualHeight);
+        public Size Size => new(Border_Presenter.ActualWidth, Border_Presenter.ActualHeight);
 
         public List<IUIInput> Inputs => FindInCollection<IUIInput>(Stack_Inputs?.Children);
         public List<IUIOutput> Outputs => FindInCollection<IUIOutput>(Stack_Outputs?.Children);
@@ -394,8 +394,8 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
 
         private bool PointWithin(double point, double min, double max) => point > min && point < max;
 
-        private Thickness GetMarginPercentages() => new Thickness(Column_Width_Left.Width.Value, Row_Height_Above.Height.Value, Column_Width_Right.Width.Value, Row_Height_Below.Height.Value);
+        private Thickness GetMarginPercentages() => new(Column_Width_Left.Width.Value, Row_Height_Above.Height.Value, Column_Width_Right.Width.Value, Row_Height_Below.Height.Value);
 
-        private Thickness NegateThickness(Thickness thickness) => new Thickness(0 - thickness.Left, 0 - thickness.Top, 0 - thickness.Right, 0 - thickness.Bottom);
+        private Thickness NegateThickness(Thickness thickness) => new(0 - thickness.Left, 0 - thickness.Top, 0 - thickness.Right, 0 - thickness.Bottom);
     }
 }

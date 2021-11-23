@@ -13,7 +13,7 @@ namespace InDoOut_Core.Entities.Functions
     /// </summary>
     public class Property<T> : InteractiveEntity<IFunction, IResult>, IProperty<T>
     {
-        private readonly Value _value = new Value();
+        private readonly Value _value = new();
 
         /// <summary>
         /// An event that gets fired when the value changes.

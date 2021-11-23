@@ -23,7 +23,7 @@ namespace InDoOut_Networking.Entities
 
         public Dictionary<string, string> Metadata { get; private set; } = new Dictionary<string, string>();
 
-        public List<IFunction> Connections => new List<IFunction>() { Parent };
+        public List<IFunction> Connections => new() { Parent };
         public List<ITriggerable> RawConnections => Connections.Cast<ITriggerable>().ToList();
 
         public IFunction Parent { get; private set; } = null;

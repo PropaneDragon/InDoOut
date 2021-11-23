@@ -30,8 +30,8 @@ namespace InDoOut_Executable_Core.Networking.Commands
         protected async Task<INetworkMessage> SendMessageAwaitResponse(CancellationToken cancellationToken, params string[] data) => BaseNetworkEntity != null ? await BaseNetworkEntity.SendMessageAwaitResponse(CreateMessage(data), cancellationToken) : null;
         protected async Task<INetworkMessage> SendMessageAwaitResponseWithContext(CancellationToken cancellationToken, object context, params string[] data) => BaseNetworkEntity != null ? await BaseNetworkEntity.SendMessageAwaitResponse(CreateMessageWithContext(context, data), cancellationToken) : null;
 
-        protected NetworkMessage CreateMessage(params string[] data) => new NetworkMessage(CommandName, data);
-        protected NetworkMessage CreateMessageWithContext(object context, params string[] data) => new NetworkMessage(CommandName, context, data);
+        protected NetworkMessage CreateMessage(params string[] data) => new(CommandName, data);
+        protected NetworkMessage CreateMessageWithContext(object context, params string[] data) => new(CommandName, context, data);
 
         private string InferCommandNameUsingReflection()
         {

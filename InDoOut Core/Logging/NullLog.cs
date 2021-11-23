@@ -15,7 +15,7 @@ namespace InDoOut_Core.Logging
         /// <summary>
         /// See <see cref="ILog.Logs"/>
         /// </summary>
-        public List<LogMessage> Logs => new List<LogMessage>();
+        public List<LogMessage> Logs => new();
 
         /// <summary>
         /// See <see cref="ILog.MaxLogMessages"/>

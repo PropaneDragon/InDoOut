@@ -5,7 +5,7 @@ namespace InDoOut_Server.Arguments
 {
     public class ApplicationArguments
     {
-        private readonly ConsoleHelpArgument _helpArgument = new ConsoleHelpArgument(false);
+        private readonly ConsoleHelpArgument _helpArgument = new(false);
 
         public bool ShouldShowHelp => _helpArgument?.ShouldShowHelp ?? false;
         public bool LegacyConsoleMode { get; private set; } = false;

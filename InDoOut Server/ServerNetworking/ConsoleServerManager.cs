@@ -12,9 +12,9 @@ namespace InDoOut_Server.ServerNetworking
 {
     public class ConsoleServerManager
     {
-        private readonly ProgramHolder _programHolder = new ProgramHolder();
+        private readonly ProgramHolder _programHolder = new();
         private readonly Server _server = null;
-        private readonly ConsoleLog _log = new ConsoleLog();
+        private readonly ConsoleLog _log = new();
         private readonly ConsoleLogger _logger = null;
 
         public ConsoleServerManager(int port = 0)

@@ -14,12 +14,12 @@ namespace InDoOut_UI_Common.InterfaceElements
 
         protected abstract ScrollViewer ScrollViewer { get; }
 
-        public override Size ViewSize => new Size(ScrollViewer.ActualWidth, ScrollViewer.ActualHeight);
-        public override Point TopLeftViewCoordinate => new Point(ScrollViewer.HorizontalOffset, ScrollViewer.VerticalOffset);
-        public override Point BottomRightViewCoordinate => new Point(TopLeftViewCoordinate.X + ViewSize.Width, TopLeftViewCoordinate.Y + ViewSize.Height);
-        public override Point CentreViewCoordinate => new Point(TopLeftViewCoordinate.X + (ViewSize.Width / 2d), TopLeftViewCoordinate.Y + (ViewSize.Height / 2d));
+        public override Size ViewSize => new(ScrollViewer.ActualWidth, ScrollViewer.ActualHeight);
+        public override Point TopLeftViewCoordinate => new(ScrollViewer.HorizontalOffset, ScrollViewer.VerticalOffset);
+        public override Point BottomRightViewCoordinate => new(TopLeftViewCoordinate.X + ViewSize.Width, TopLeftViewCoordinate.Y + ViewSize.Height);
+        public override Point CentreViewCoordinate => new(TopLeftViewCoordinate.X + (ViewSize.Width / 2d), TopLeftViewCoordinate.Y + (ViewSize.Height / 2d));
 
-        public Point Offset { get => new Point(ScrollViewer.HorizontalOffset, ScrollViewer.VerticalOffset); set => SetViewOffset(value); }
+        public Point Offset { get => new(ScrollViewer.HorizontalOffset, ScrollViewer.VerticalOffset); set => SetViewOffset(value); }
 
         public CommonBlockDisplay() : base()
         {

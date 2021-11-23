@@ -12,7 +12,7 @@ namespace InDoOut_Networking.Entities
 {
     public class NetworkedProperty : INetworkedProperty
     {
-        private readonly Value _value = new Value();
+        private readonly Value _value = new();
 
         public bool Required { get; private set; }
         public bool Running { get; private set; } = false;
@@ -35,7 +35,7 @@ namespace InDoOut_Networking.Entities
 
         public Dictionary<string, string> Metadata { get; private set; } = new Dictionary<string, string>();
 
-        public List<IFunction> Connections => new List<IFunction>() { Parent };
+        public List<IFunction> Connections => new() { Parent };
         public List<ITriggerable> RawConnections => Connections.Cast<ITriggerable>().ToList();
 
         public event EventHandler<ValueChangedEvent> OnValueChanged;
