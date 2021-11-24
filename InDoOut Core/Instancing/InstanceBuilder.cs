@@ -14,7 +14,7 @@ namespace InDoOut_Core.Instancing
         /// </summary>
         /// <param name="type">The type to build.</param>
         /// <returns>The requested type <paramref name="type"/> as type <typeparamref name="T"/>, or null if it has failed.</returns>
-        public T BuildInstance(Type type) => BuildInstance(type, new{ });
+        public T BuildInstance(Type type) => BuildInstance(type, new { });
 
         /// <summary>
         /// Builds an instance of the given type with additional parameters. The type has to be inherited from <typeparamref name="T"/>.
