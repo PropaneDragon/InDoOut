@@ -97,21 +97,21 @@ namespace InDoOut_UI_Common.Windows
             switch (button)
             {
                 case MessageBoxButton.OK:
-                Button_Ok.Visibility = Visibility.Visible;
-                break;
+                    Button_Ok.Visibility = Visibility.Visible;
+                    break;
                 case MessageBoxButton.OKCancel:
-                Button_Cancel.Visibility = Visibility.Visible;
-                Button_Ok.Visibility = Visibility.Visible;
-                break;
+                    Button_Cancel.Visibility = Visibility.Visible;
+                    Button_Ok.Visibility = Visibility.Visible;
+                    break;
                 case MessageBoxButton.YesNo:
-                Button_Yes.Visibility = Visibility.Visible;
-                Button_No.Visibility = Visibility.Visible;
-                break;
+                    Button_Yes.Visibility = Visibility.Visible;
+                    Button_No.Visibility = Visibility.Visible;
+                    break;
                 case MessageBoxButton.YesNoCancel:
-                Button_Yes.Visibility = Visibility.Visible;
-                Button_No.Visibility = Visibility.Visible;
-                Button_Cancel.Visibility = Visibility.Visible;
-                break;
+                    Button_Yes.Visibility = Visibility.Visible;
+                    Button_No.Visibility = Visibility.Visible;
+                    Button_Cancel.Visibility = Visibility.Visible;
+                    break;
             }
         }
 
@@ -125,20 +125,20 @@ namespace InDoOut_UI_Common.Windows
             switch (image)
             {
                 case MessageBoxImage.Error:
-                Icon_Critical.Visibility = Visibility.Visible;
-                break;
+                    Icon_Critical.Visibility = Visibility.Visible;
+                    break;
                 case MessageBoxImage.Question:
-                Icon_Question.Visibility = Visibility.Visible;
-                break;
+                    Icon_Question.Visibility = Visibility.Visible;
+                    break;
                 case MessageBoxImage.Information:
-                Icon_Info.Visibility = Visibility.Visible;
-                break;
+                    Icon_Info.Visibility = Visibility.Visible;
+                    break;
                 case MessageBoxImage.Warning:
-                Icon_Warning.Visibility = Visibility.Visible;
-                break;
+                    Icon_Warning.Visibility = Visibility.Visible;
+                    break;
                 default:
-                Icon_Info.Visibility = Visibility.Visible;
-                break;
+                    Icon_Info.Visibility = Visibility.Visible;
+                    break;
             }
         }
 

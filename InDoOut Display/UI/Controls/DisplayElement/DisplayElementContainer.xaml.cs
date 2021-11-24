@@ -267,17 +267,17 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
             switch (edge)
             {
                 case ResizeEdge.Left:
-                margin.Left = value;
-                break;
+                    margin.Left = value;
+                    break;
                 case ResizeEdge.Top:
-                margin.Top = value;
-                break;
+                    margin.Top = value;
+                    break;
                 case ResizeEdge.Right:
-                margin.Right = value;
-                break;
+                    margin.Right = value;
+                    break;
                 case ResizeEdge.Bottom:
-                margin.Bottom = value;
-                break;
+                    margin.Bottom = value;
+                    break;
             }
         }
 

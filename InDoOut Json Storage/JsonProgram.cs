@@ -280,14 +280,14 @@ namespace InDoOut_Json_Storage
                     switch (connectionType)
                     {
                         case JsonConnection.ConnectionType.InputOutput:
-                        failures.AddRange(LinkInputOutput(connection, startFunction, endFunction, outputName, inputName));
-                        break;
+                            failures.AddRange(LinkInputOutput(connection, startFunction, endFunction, outputName, inputName));
+                            break;
                         case JsonConnection.ConnectionType.PropertyResult:
-                        failures.AddRange(LinkPropertyResult(connection, startFunction, endFunction, outputName, inputName));
-                        break;
+                            failures.AddRange(LinkPropertyResult(connection, startFunction, endFunction, outputName, inputName));
+                            break;
                         default:
-                        failures.Add(new FailureReport((int)FailureIds.UnknownConnectionType, $"Couldn't create a connection, as the connection type \"{connectionType}\" is unknown to the linker."));
-                        break;
+                            failures.Add(new FailureReport((int)FailureIds.UnknownConnectionType, $"Couldn't create a connection, as the connection type \"{connectionType}\" is unknown to the linker."));
+                            break;
                     }
                 }
                 else
