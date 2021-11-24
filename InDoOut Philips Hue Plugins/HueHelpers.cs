@@ -110,7 +110,7 @@ namespace InDoOut_Philips_Hue_Plugins
                     var endSection = sensor.UniqueId?.IndexOf('-') ?? -1;
                     if (endSection != -1)
                     {
-                        var trimmedId = sensor.UniqueId.Substring(0, endSection);
+                        var trimmedId = sensor.UniqueId[..endSection];
                         if (!string.IsNullOrEmpty(trimmedId))
                         {
                             return allSensors.Where(sensor => sensor?.UniqueId?.Contains(trimmedId) ?? false).ToList();

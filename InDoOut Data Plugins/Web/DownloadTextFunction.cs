@@ -1,5 +1,4 @@
 ﻿using InDoOut_Core.Entities.Functions;
-using System.Net;
 using System.Net.Http;
 
 namespace InDoOut_Data_Plugins.Web

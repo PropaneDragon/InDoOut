@@ -68,7 +68,7 @@ namespace InDoOut_Executable_Core.Networking
                 else
                 {
                     Log.Instance.Info("End of message was before start! M: ", fullMessage, ", B: ", beginningLocation, ", E: ", endingLocation);
-                } 
+                }
             }
 
             return null;

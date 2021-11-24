@@ -30,7 +30,7 @@ namespace InDoOut_Networking.Entities
 
         public Dictionary<string, string> Metadata { get; private set; } = new Dictionary<string, string>();
 
-        public List<IProperty> Connections { get; private set; } =  new List<IProperty>();
+        public List<IProperty> Connections { get; private set; } = new List<IProperty>();
         public List<ITriggerable> RawConnections => Connections.Cast<ITriggerable>().ToList();
 
         public event EventHandler<ValueChangedEvent> OnValueChanged;

@@ -23,7 +23,7 @@ namespace InDoOut_Networking.Entities
 
         private readonly List<IFunction> _functions = new();
         private readonly Dictionary<string, string> _metadata = new();
-        private readonly System.Timers.Timer _timer = new() { AutoReset = false, Interval = TimeSpan.FromSeconds(1).TotalMilliseconds};
+        private readonly System.Timers.Timer _timer = new() { AutoReset = false, Interval = TimeSpan.FromSeconds(1).TotalMilliseconds };
 
         private string _name = null;
 
