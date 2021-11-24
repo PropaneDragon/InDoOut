@@ -35,8 +35,8 @@ namespace InDoOut_Core_Plugins.Text
 
             if (_splitPosition.FullValue <= textToSplit.Length && _splitPosition.FullValue > 0)
             {
-                _ = _splitLeft.ValueFrom(textToSplit.Substring(0, _splitPosition.FullValue));
-                _ = _splitRight.ValueFrom(textToSplit.Substring(_splitPosition.FullValue));
+                _ = _splitLeft.ValueFrom(textToSplit[.._splitPosition.FullValue]);
+                _ = _splitRight.ValueFrom(textToSplit[_splitPosition.FullValue..]);
             }
             else
             {

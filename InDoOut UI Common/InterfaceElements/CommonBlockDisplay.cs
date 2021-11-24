@@ -105,9 +105,7 @@ namespace InDoOut_UI_Common.InterfaceElements
             {
                 _ = ActionHandler?.MouseLeftMove(e.GetPosition(sender as ScrollViewer));
             }
-#pragma warning disable IDE0045 // Convert to conditional expression
             else if (e.RightButton == MouseButtonState.Pressed)
-#pragma warning restore IDE0045 // Convert to conditional expression
             {
                 _ = ActionHandler?.MouseRightMove(e.GetPosition(sender as ScrollViewer));
             }

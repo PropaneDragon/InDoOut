@@ -22,8 +22,8 @@ namespace InDoOut_Networking.Entities
         public string SafeDescription => TryGet.ValueOrDefault(() => SafeDescription);
         public string SafeGroup => TryGet.ValueOrDefault(() => SafeGroup);
 
-        public string[] Keywords { get; private set; } = new string[] { };
-        public string[] SafeKeywords { get; private set; } = new string[] { };
+        public string[] Keywords { get; private set; } = Array.Empty<string>();
+        public string[] SafeKeywords { get; private set; } = Array.Empty<string>();
 
         public State State { get; private set; } = State.Unknown;
         public IOutput TriggerOnFailure => null;

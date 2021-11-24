@@ -34,16 +34,16 @@ namespace InDoOut_Networking.Shared.Entities
         public State State { get; set; } = State.Unknown;
 
         [JsonProperty("inputStatus")]
-        public InputStatus[] Inputs { get; set; } = new InputStatus[] { };
+        public InputStatus[] Inputs { get; set; } = Array.Empty<InputStatus>();
 
         [JsonProperty("outputStatus")]
-        public OutputStatus[] Outputs { get; set; } = new OutputStatus[] { };
+        public OutputStatus[] Outputs { get; set; } = Array.Empty<OutputStatus>();
 
         [JsonProperty("propertyStatus")]
-        public PropertyStatus[] Properties { get; set; } = new PropertyStatus[] { };
+        public PropertyStatus[] Properties { get; set; } = Array.Empty<PropertyStatus>();
 
         [JsonProperty("resultStatus")]
-        public ResultStatus[] Results { get; set; } = new ResultStatus[] { };
+        public ResultStatus[] Results { get; set; } = Array.Empty<ResultStatus>();
 
         [JsonProperty("metadata")]
         public Dictionary<string, string> Metadata { get; set; } = new Dictionary<string, string>();

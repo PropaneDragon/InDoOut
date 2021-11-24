@@ -47,10 +47,10 @@ namespace InDoOut_Networking.Shared.Entities
         public Dictionary<string, string> Metadata { get; set; } = new Dictionary<string, string>();
 
         [JsonProperty("functionStatus")]
-        public FunctionStatus[] Functions { get; set; } = new FunctionStatus[] { };
+        public FunctionStatus[] Functions { get; set; } = Array.Empty<FunctionStatus>();
 
         [JsonProperty("connectionStatus")]
-        public ConnectionStatus[] Connections { get; set; } = new ConnectionStatus[] { };
+        public ConnectionStatus[] Connections { get; set; } = Array.Empty<ConnectionStatus>();
 
         public static ProgramStatus FromJson(string json)
         {

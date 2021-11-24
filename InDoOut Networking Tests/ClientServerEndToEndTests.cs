@@ -297,7 +297,7 @@ namespace InDoOut_Networking_Tests
             Assert.IsNotNull(programStatus);
             Assert.AreEqual(program1.Id, programStatus.Id);
             Assert.AreEqual("Test program", programStatus.Name);
-            Assert.AreEqual(2, programStatus.Functions.Count());
+            Assert.AreEqual(2, programStatus.Functions.Length);
             Assert.IsFalse(programStatus.Running);
 
             functionToRun1.Trigger(null);
@@ -308,7 +308,7 @@ namespace InDoOut_Networking_Tests
             Assert.IsNotNull(programStatus);
             Assert.AreEqual(program1.Id, programStatus.Id);
             Assert.AreEqual("Test program", programStatus.Name);
-            Assert.AreEqual(2, programStatus.Functions.Count());
+            Assert.AreEqual(2, programStatus.Functions.Length);
             Assert.AreEqual(functionToRun1.Id, programStatus.Functions[0].Id);
             Assert.AreEqual(State.Processing, programStatus.Functions[0].State);
             Assert.AreEqual(functionToRun1.LastTriggerTime, programStatus.Functions[0].LastTriggerTime);
@@ -327,7 +327,7 @@ namespace InDoOut_Networking_Tests
             Assert.IsNotNull(programStatus);
             Assert.AreEqual(program1.Id, programStatus.Id);
             Assert.AreEqual("Test program", programStatus.Name);
-            Assert.AreEqual(2, programStatus.Functions.Count());
+            Assert.AreEqual(2, programStatus.Functions.Length);
             Assert.AreEqual(functionToRun1.Id, programStatus.Functions[0].Id);
             Assert.AreEqual(State.Processing, programStatus.Functions[0].State);
             Assert.AreEqual(functionToRun1.LastTriggerTime, programStatus.Functions[0].LastTriggerTime);
@@ -343,7 +343,7 @@ namespace InDoOut_Networking_Tests
             Assert.IsNotNull(programStatus);
             Assert.AreEqual(program2.Id, programStatus.Id);
             Assert.AreEqual("The other test program", programStatus.Name);
-            Assert.AreEqual(1, programStatus.Functions.Count());
+            Assert.AreEqual(1, programStatus.Functions.Length);
             Assert.AreEqual(functionToRun3.Id, programStatus.Functions[0].Id);
             Assert.AreEqual(State.Waiting, programStatus.Functions[0].State);
             Assert.AreEqual(functionToRun3.LastTriggerTime, programStatus.Functions[0].LastTriggerTime);

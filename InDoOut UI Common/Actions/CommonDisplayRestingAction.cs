@@ -55,7 +55,7 @@ namespace InDoOut_UI_Common.Actions
 
                 if (elementsUnderMouse.Count > 0)
                 {
-                    if (Display.GetFirstElementOfType<TextBox>(elementsUnderMouse) is TextBox)
+                    if (Display.GetFirstElementOfType<TextBox>(elementsUnderMouse) is not null)
                     {
                         return false;
                     }
@@ -75,7 +75,7 @@ namespace InDoOut_UI_Common.Actions
 
             if (elementsUnderMouse.Count > 0)
             {
-                if (Display.GetFirstElementOfType<TextBox>(elementsUnderMouse) is TextBox)
+                if (Display.GetFirstElementOfType<TextBox>(elementsUnderMouse) is not null)
                 {
                     return false;
                 }
@@ -144,7 +144,7 @@ namespace InDoOut_UI_Common.Actions
                         }
                     }
                 }
-                else if (Features.HasFlag(Feature.Deletion) && key == Key.Delete && !(Keyboard.FocusedElement is TextBox) && elementsSelected != null && elementsSelected.All(element => element is IDeletable deletable && deletable.CanDelete(Display)))
+                else if (Features.HasFlag(Feature.Deletion) && key == Key.Delete && Keyboard.FocusedElement is not TextBox && elementsSelected != null && elementsSelected.All(element => element is IDeletable deletable && deletable.CanDelete(Display)))
                 {
                     var deletables = elementsSelected.Cast<IDeletable>();
 

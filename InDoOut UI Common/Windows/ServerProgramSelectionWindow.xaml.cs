@@ -56,7 +56,7 @@ namespace InDoOut_UI_Common.Windows
                     var availableProgramGuids = await requestProgramsCommand.RequestAvailableProgramsAsync(cancellationToken.Token);
                     if (availableProgramGuids != null)
                     {
-                        if (availableProgramGuids.Count() > 0)
+                        if (availableProgramGuids.Count > 0)
                         {
                             var tasks = availableProgramGuids.Select(async programGuid => await programStatusCommand.GetProgramStatusAsync(programGuid, new CancellationTokenSource(TimeSpan.FromSeconds(5)).Token));
                             var programStatuses = await Task.WhenAll(tasks);

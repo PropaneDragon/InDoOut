@@ -10,7 +10,7 @@ namespace InDoOut_Server.ServerLogging
     public class ConsoleLogger
     {
         private CancellationTokenSource _cancellationToken = null;
-        private Task _listenerTask = null;
+        private Task _listenerTask;
 
         public ILog Log { get; set; } = null;
 

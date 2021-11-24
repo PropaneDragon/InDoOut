@@ -199,10 +199,10 @@ namespace InDoOut_Json_Storage_Tests
             var function3 = program.Functions[2] as TestImportableFunctionB;
             var function4 = program.Functions[3] as TestImportableFunctionA;
 
-            Assert.IsTrue(function1 is TestImportableFunctionA);
-            Assert.IsTrue(function2 is TestImportableFunctionB);
-            Assert.IsTrue(function3 is TestImportableFunctionB);
-            Assert.IsTrue(function4 is TestImportableFunctionA);
+            Assert.IsTrue(function1 is not null);
+            Assert.IsTrue(function2 is not null);
+            Assert.IsTrue(function3 is not null);
+            Assert.IsTrue(function4 is not null);
 
             Assert.AreEqual(2, function1.AOutput1.Connections.Count);
             Assert.AreEqual(function2.BInput1, function1.AOutput1.Connections[0]);

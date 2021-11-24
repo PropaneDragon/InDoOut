@@ -38,7 +38,7 @@ namespace InDoOut_Core.Logging
         /// <summary>
         /// The log message. This contains the main part of the log that the user should see.
         /// </summary>
-        public object[] Message { get; protected set; } = new object[] { };
+        public object[] Message { get; protected set; } = Array.Empty<object>();
 
         /// <summary>
         /// The assembly that activated this message. This can be used for filtering and tracing.

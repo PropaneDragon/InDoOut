@@ -176,6 +176,7 @@ namespace InDoOut_Display.UI.Controls.Screens
             {
                 return container;
             }
+
             if (element is IDisplayElement displayElement)
             {
                 return new DisplayElementContainer(displayElement) { DisplayMode = CurrentViewMode == ProgramViewMode.IO ? UIFunctionDisplayMode.IO : UIFunctionDisplayMode.Variables };

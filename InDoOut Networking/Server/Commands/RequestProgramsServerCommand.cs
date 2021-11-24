@@ -27,7 +27,7 @@ namespace InDoOut_Networking.Server.Commands
                 var programs = ProgramHolder?.Programs?.Select(program => program?.Id.ToString() ?? "").ToArray();
                 if (programs != null)
                 {
-                    NetworkEntity?.EntityLog?.Info(CommandName, ": Found ", programs?.Count(), " programs.");
+                    NetworkEntity?.EntityLog?.Info(CommandName, ": Found ", programs?.Length, " programs.");
 
                     return message.CreateResponseMessage(programs);
                 }

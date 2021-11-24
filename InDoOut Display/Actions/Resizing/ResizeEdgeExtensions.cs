@@ -9,16 +9,12 @@ namespace InDoOut_Display.Actions.Resizing
 
         public static bool IsCorner(this ResizeEdge resizeEdge)
         {
-            switch (resizeEdge)
+            return resizeEdge switch
             {
-                case ResizeEdge.BottomLeft:
-                case ResizeEdge.BottomRight:
-                case ResizeEdge.TopLeft:
-                case ResizeEdge.TopRight:
-                return true;
-            }
+                ResizeEdge.BottomLeft or ResizeEdge.BottomRight or ResizeEdge.TopLeft or ResizeEdge.TopRight => true,
 
-            return false;
+                _ => false,
+            };
         }
 
         public static ResizeEdge OppositeEdge(this ResizeEdge resizeEdge)
@@ -41,24 +37,16 @@ namespace InDoOut_Display.Actions.Resizing
 
         public static List<ResizeEdge> IndividualEdges(this ResizeEdge resizeEdge)
         {
-            switch (resizeEdge)
+            return resizeEdge switch
             {
-                case ResizeEdge.Bottom:
-                case ResizeEdge.Left:
-                case ResizeEdge.Right:
-                case ResizeEdge.Top:
-                return new List<ResizeEdge>() { resizeEdge };
-                case ResizeEdge.BottomLeft:
-                return new List<ResizeEdge>() { ResizeEdge.Bottom, ResizeEdge.Left };
-                case ResizeEdge.BottomRight:
-                return new List<ResizeEdge>() { ResizeEdge.Bottom, ResizeEdge.Right };
-                case ResizeEdge.TopLeft:
-                return new List<ResizeEdge>() { ResizeEdge.Top, ResizeEdge.Left };
-                case ResizeEdge.TopRight:
-                return new List<ResizeEdge>() { ResizeEdge.Top, ResizeEdge.Right };
-            }
+                ResizeEdge.Bottom or ResizeEdge.Left or ResizeEdge.Right or ResizeEdge.Top => new List<ResizeEdge>() { resizeEdge },
+                ResizeEdge.BottomLeft => new List<ResizeEdge>() { ResizeEdge.Bottom, ResizeEdge.Left },
+                ResizeEdge.BottomRight => new List<ResizeEdge>() { ResizeEdge.Bottom, ResizeEdge.Right },
+                ResizeEdge.TopLeft => new List<ResizeEdge>() { ResizeEdge.Top, ResizeEdge.Left },
+                ResizeEdge.TopRight => new List<ResizeEdge>() { ResizeEdge.Top, ResizeEdge.Right },
 
-            return new List<ResizeEdge>();
+                _ => new List<ResizeEdge>(),
+            };
         }
     }
 }

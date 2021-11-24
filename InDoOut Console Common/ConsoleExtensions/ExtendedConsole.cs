@@ -44,8 +44,8 @@ namespace InDoOut_Console_Common.ConsoleExtensions
         private static string FormattingStartString => HighColourMode ? "\x1b[" : "";
         private static string FormattingEndString => HighColourMode ? "m" : "";
 
-        public static bool HighColourMode = true;
-        public static bool ResetColoursAfterWrite = true;
+        public static bool HighColourMode { get; set; } = true;
+        public static bool ResetColoursAfterWrite { get; set; } = true;
 
         public static void SetUp()
         {

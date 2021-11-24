@@ -93,7 +93,7 @@ namespace InDoOut_UI_Common.SaveLoad
             }
 
             var criticalReports = failureReports.Where(report => report.Critical);
-            if (criticalReports.Count() > 0)
+            if (criticalReports.Any())
             {
                 var resultStrings = criticalReports.Select(report => report.Summary);
 
@@ -125,7 +125,7 @@ namespace InDoOut_UI_Common.SaveLoad
             }
 
             var criticalReports = failureReports.Where(report => report.Critical);
-            if (criticalReports.Count() > 0)
+            if (criticalReports.Any())
             {
                 var resultStrings = criticalReports.Select(report => report.Summary);
 
