@@ -7,6 +7,7 @@ using InDoOut_Executable_Core.Messaging;
 using InDoOut_Executable_Core.Programs;
 using InDoOut_Executable_Core.Storage;
 using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -77,11 +78,8 @@ namespace InDoOut_UI_Common.SaveLoad
 
                             if (!failureReports.Any(FailureReport => FailureReport.Critical))
                             {
-                                program.Metadata[ProgramStorer.PROGRAM_METADATA_LAST_LOADED_FROM] = filePath;
-                                program.SetName(Path.GetFileNameWithoutExtension(filePath));
+                                SetProgramLocationMetadata(filePath, program);
                             }
-
-                            _ = StandardLocations.Instance.SetPathTo(Location.SaveFile, filePath);
                         }
                         catch (SecurityException)
                         {
@@ -149,7 +147,7 @@ namespace InDoOut_UI_Common.SaveLoad
                 var saveDialog = new SaveFileDialog()
                 {
                     CheckFileExists = false,
-                    CheckPathExists = true,
+                    CheckPathExists = false,
                     ValidateNames = true,
                     DefaultExt = programStorer.FileExtension,
                     Filter = $"{programStorer.FileReadableName} (*{programStorer.FileExtension})|*{programStorer.FileExtension}",
@@ -185,6 +183,8 @@ namespace InDoOut_UI_Common.SaveLoad
                         var fileMode = File.Exists(filePath) ? FileMode.Truncate : FileMode.CreateNew;
                         using var stream = new FileStream(filePath, fileMode, FileAccess.Write);
 
+                        SetProgramLocationMetadata(filePath, program);
+
                         failureReports.AddRange(await Task.Run(() => programStorer.Save(program, stream)));
                     }
                     catch (SecurityException)
@@ -194,6 +194,10 @@ namespace InDoOut_UI_Common.SaveLoad
                     catch (IOException)
                     {
                         failureReports.Add(new FailureReport((int)LoadResult.InvalidLocation, "The program couldn't be saved due to invalid file permissions.", true));
+                    }
+                    catch (UnauthorizedAccessException)
+                    {
+                        failureReports.Add(new FailureReport((int)LoadResult.InvalidLocation, "You don't have authorisation to save at this location.", true));
                     }
                     catch
                     {
@@ -214,14 +218,21 @@ namespace InDoOut_UI_Common.SaveLoad
             {
                 var resultStrings = failureReports.Select(report => report.Summary);
 
-                UserMessageSystemHolder.Instance.CurrentUserMessageSystem?.ShowWarning("", $"The program couldn't be loaded due to the following errors:\n\n{string.Join("\n- ", resultStrings)}");
-            }
-            else if (program != null)
-            {
-                _ = StandardLocations.Instance.SetPathTo(Location.SaveFile, filePath);
+                UserMessageSystemHolder.Instance.CurrentUserMessageSystem?.ShowWarning("", $"The program couldn't be saved due to the following errors:\n\n{string.Join("\n- ", resultStrings)}");
             }
 
             return failureReports.Count == 0;
+        }
+
+        private void SetProgramLocationMetadata(string filePath, IProgram program)
+        {
+            if (program != null)
+            {
+                program.Metadata[ProgramStorer.PROGRAM_METADATA_LAST_LOADED_FROM] = filePath;
+                program.SetName(Path.GetFileNameWithoutExtension(filePath));
+            }
+
+            _ = StandardLocations.Instance.SetPathTo(Location.SaveFile, filePath);
         }
     }
 }
