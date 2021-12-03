@@ -99,6 +99,7 @@ namespace InDoOut_UI_Common.InterfaceElements
             e.Handled = false;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0045:Convert to conditional expression", Justification = "It looks awful")]
         private void ScrollViewer_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
