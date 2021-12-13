@@ -12,14 +12,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
 
 namespace InDoOut_Desktop.UI.Controls.Sidebar
 {
     public partial class ItemList : UserControl, IFunctionList
     {
         private List<IFunction> _functions = null;
+        private Point _startPoint = new();
 
         public IFunctionDisplay FunctionView { get; set; } = null;
         public List<IFunction> Functions { get => _functions; set => SetFunctions(value); }
@@ -91,7 +94,7 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
             }
         }
 
-        private async void List_Items_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private async void List_Items_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (List_Items.SelectedItem is IFunction selectedItem && FunctionView != null)
             {
@@ -112,6 +115,26 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
                 {
                     Log.Instance.Error("Couldn't build a function for ", functionType, " to place on the interface");
                     UserMessageSystemHolder.Instance.CurrentUserMessageSystem?.ShowError("Unable to create function", "The selected function couldn't be created and can't be placed in the current program.");
+                }
+            }
+        }
+
+        private void List_Items_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e) => _startPoint = e.GetPosition(null);
+
+        private void List_Items_PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            if (sender is ListView listView && e.LeftButton == MouseButtonState.Pressed)
+            {
+                var position = e.GetPosition(null);
+                var distance = _startPoint - position;
+
+                if (Math.Abs(distance.X) > SystemParameters.MinimumHorizontalDragDistance || Math.Abs(distance.Y) > SystemParameters.MinimumVerticalDragDistance)
+                {
+                    if (List_Items.SelectedItem is IFunction selectedItem)
+                    {
+                        var data = new DataObject("Function", selectedItem);
+                        _ = DragDrop.DoDragDrop(listView, data, DragDropEffects.Copy);
+                    }
                 }
             }
         }
