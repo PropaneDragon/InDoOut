@@ -70,6 +70,7 @@ namespace InDoOut_Core.Entities.Core
                 _lastTriggerTime = DateTime.Now;
             }
 
+            _runner?.Dispose();
             _runner = Task.Run(() =>
             {
                 try

@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="xcopy /Y /F &quot;$(PkgQ42_HueApi)\lib\netstandard2.0\*.dll&quot; &quot;$(TargetDir)&quot;&#xD;&#xA;xcopy /Y /F &quot;$(TargetPath)&quot; &quot;$(SolutionDir)\$(OutDir)\Plugins\*&quot;" />
+    <Exec Command="xcopy /Y /F &quot;$(PkgQ42_HueApi)\lib\netstandard2.0\*.dll&quot; &quot;$(TargetDir)&quot;&#xD;&#xA;xcopy /Y /F &quot;$(OutDir)\*&quot; &quot;$(SolutionDir)\$(OutDir)\Plugins\*&quot;" />
   </Target>
 
   <ItemGroup>

@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="xcopy /Y /F &quot;$(TargetPath)&quot; &quot;$(SolutionDir)\$(OutDir)\Plugins\*&quot;" />
+    <Exec Command="xcopy /Y /F &quot;$(OutDir)\*&quot; &quot;$(SolutionDir)\$(OutDir)\Plugins\*&quot;" />
   </Target>
 
 </Project>
