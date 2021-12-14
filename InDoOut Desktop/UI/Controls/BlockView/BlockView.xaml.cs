@@ -5,11 +5,14 @@ using InDoOut_Desktop.Actions;
 using InDoOut_Desktop.Actions.Selecting;
 using InDoOut_Desktop.UI.Interfaces;
 using InDoOut_Executable_Core.Messaging;
+using InDoOut_Executable_Core.Programs;
 using InDoOut_UI_Common.Actions;
 using InDoOut_UI_Common.Actions.Selecting;
 using InDoOut_UI_Common.InterfaceElements;
+using InDoOut_UI_Common.SaveLoad;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace InDoOut_Desktop.UI.Controls.BlockView
@@ -57,6 +60,18 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
                     {
                         Log.Instance.Error("Couldn't build a function for ", functionType, " to place on the interface");
                         UserMessageSystemHolder.Instance.CurrentUserMessageSystem?.ShowError("Unable to create function", "The selected function couldn't be created and can't be placed in the current program.");
+                    }
+                }
+            }
+            else if (formats.Contains("FileNameW"))
+            {
+                if (e.Data.GetData("FileNameW") is string[] fileName)
+                {
+                    var program = await CommonProgramSaveLoad.Instance.LoadProgramAsync(fileName.FirstOrDefault());
+                    if (program != null)
+                    {
+                        _ = ProgramHolder.Instance.RemoveProgram(AssociatedProgram);
+                        AssociatedProgram = program;
                     }
                 }
             }
