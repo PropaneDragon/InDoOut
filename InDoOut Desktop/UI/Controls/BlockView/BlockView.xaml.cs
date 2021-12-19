@@ -36,9 +36,11 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
             BlockView_Overview.Display = this;
         }
 
-        private async void Scroll_Content_Drop(object sender, System.Windows.DragEventArgs e)
+        private async void Scroll_Content_Drop(object sender, DragEventArgs e)
         {
+            var position = e.GetPosition(Canvas_Content);
             var formats = e.Data.GetFormats().ToList();
+
             if (formats.Contains("Function"))
             {
                 if (e.Data.GetData("Function") is IFunction dataFunction)
@@ -49,6 +51,9 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
 
                     if (function != null)
                     {
+                        function.Metadata["x"] = position.X.ToString();
+                        function.Metadata["y"] = position.Y.ToString();
+
                         var uiFunction = FunctionCreator?.Create(function);
                         if (uiFunction == null)
                         {
