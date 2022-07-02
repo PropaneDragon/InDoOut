@@ -14,7 +14,7 @@
         <animation:BrushAnimation Duration="0:0:0.2" Storyboard.TargetProperty="Background">
             <animation:BrushAnimation.To>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#c111" Offset="0.6"/>
+                    <GradientStop Color="#d111" Offset="0.6"/>
                     <GradientStop Color="#0111" Offset="1"/>
                 </LinearGradientBrush>
             </animation:BrushAnimation.To>

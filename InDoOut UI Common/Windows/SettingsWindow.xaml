@@ -7,7 +7,7 @@
         xmlns:common="clr-namespace:InDoOut_UI_Common.Controls.Common"
         xmlns:background="clr-namespace:InDoOut_UI_Common.Controls.Background"
         mc:Ignorable="d"
-        Title="Settings" Height="1080" Width="450" WindowState="Normal" Background="#111" MinWidth="450" MinHeight="500" WindowStartupLocation="CenterOwner" ShowActivated="True">
+        Title="Settings" Height="1080" Width="450" WindowState="Normal" Background="#111" MinWidth="450" MinHeight="500" WindowStartupLocation="CenterOwner" ShowActivated="True" Loaded="Window_Loaded">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -25,7 +25,7 @@
                         <Button x:Name="Button_Cancel" DockPanel.Dock="Right" Content="Cancel" Margin="12,0,0,0" Click="Button_Cancel_Click" IsCancel="True" />
                     </DockPanel>
                 </Border>
-                <ScrollViewer DockPanel.Dock="Top" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                <ScrollViewer DockPanel.Dock="Top" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" PanningMode="VerticalOnly">
                     <Grid Margin="0,80,0,0">
                         <StackPanel x:Name="Stack_Options" />
                     </Grid>

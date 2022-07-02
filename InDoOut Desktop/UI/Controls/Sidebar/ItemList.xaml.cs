@@ -119,10 +119,17 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
             }
         }
 
-        private void List_Items_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e) => _startPoint = e.GetPosition(null);
+        private void List_Items_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            e.Handled = false;
+
+            _startPoint = e.GetPosition(null);
+        } 
 
         private void List_Items_PreviewMouseMove(object sender, MouseEventArgs e)
         {
+            e.Handled = false;
+
             if (sender is ListView listView && e.LeftButton == MouseButtonState.Pressed)
             {
                 var position = e.GetPosition(null);

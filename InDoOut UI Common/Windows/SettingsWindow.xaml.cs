@@ -3,6 +3,7 @@ using InDoOut_Executable_Core.Options;
 using InDoOut_Executable_Core.Storage;
 using InDoOut_Plugins.Loaders;
 using InDoOut_UI_Common.Controls.Options;
+using InDoOut_UI_Common.Extensions.Window;
 using InDoOut_UI_Common.SaveLoad;
 using System.Collections.Generic;
 using System.Windows;
@@ -19,6 +20,8 @@ namespace InDoOut_UI_Common.Windows
 
             AddProgramOptions();
             AddPluginOptions();
+
+            this.ResizeToOwner();
         }
 
         public SettingsWindow(IOptionsStorer optionsStorer) : this()
@@ -64,6 +67,15 @@ namespace InDoOut_UI_Common.Windows
             }
         }
 
+        private void Resize()
+        {
+            if (Owner != null)
+            {
+                Height = Owner.Height - 100;
+                Top = Owner.Top + 50;
+            }
+        }
+
         private async void Button_Apply_Click(object sender, RoutedEventArgs e)
         {
             Button_Apply.IsEnabled = false;
@@ -82,5 +94,7 @@ namespace InDoOut_UI_Common.Windows
         }
 
         private void Button_Cancel_Click(object sender, RoutedEventArgs e) => Close();
+
+        private void Window_Loaded(object sender, RoutedEventArgs e) => this.ResizeToOwner();
     }
 }
