@@ -19,6 +19,10 @@ namespace InDoOut_UI_Common.Actions
         public virtual bool MouseWheel(int delta) => false;
         public virtual bool KeyDown(Key key) => false;
         public virtual bool KeyUp(Key key) => false;
+        public virtual bool DragEnter(Point mousePosition, IDataObject data) => false;
+        public virtual bool DragOver(Point mousePosition, IDataObject data) => false;
+        public virtual bool DragLeave(Point mousePosition, IDataObject data) => false;
+        public virtual bool Drop(Point mousePosition, IDataObject data) => false;
 
         protected void Finish(IAction nextAction) => ActionComplete?.Invoke(this, new ActionCompleteEventArgs(this, nextAction));
 

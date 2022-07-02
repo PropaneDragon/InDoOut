@@ -90,5 +90,13 @@ namespace InDoOut_Desktop.Actions
         public override bool KeyUp(Key key) => _commonDisplayActions?.KeyUp(key) ?? false;
 
         public override bool KeyDown(Key key) => _commonDisplayActions?.KeyDown(key) ?? false;
+
+        public override bool DragEnter(Point mousePosition, IDataObject data) => _commonDisplayActions?.DragEnter(mousePosition, data) ?? false;
+
+        public override bool DragOver(Point mousePosition, IDataObject data) => _commonDisplayActions?.DragOver(mousePosition, data) ?? false;
+
+        public override bool DragLeave(Point mousePosition, IDataObject data) => _commonDisplayActions?.DragLeave(mousePosition, data) ?? false;
+
+        public override bool Drop(Point mousePosition, IDataObject data) => _commonDisplayActions?.Drop(mousePosition, data) ?? false;
     }
 }

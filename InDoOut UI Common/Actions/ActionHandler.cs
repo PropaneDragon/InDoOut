@@ -30,6 +30,10 @@ namespace InDoOut_UI_Common.Actions
         public bool MouseWheel(int delta) => CurrentAction?.MouseWheel(delta) ?? false;
         public bool KeyDown(Key key) => CurrentAction?.KeyDown(key) ?? false;
         public bool KeyUp(Key key) => CurrentAction?.KeyUp(key) ?? false;
+        public bool DragEnter(Point mousePosition, IDataObject data) => CurrentAction?.DragEnter(mousePosition, data) ?? false;
+        public bool DragOver(Point mousePosition, IDataObject data) => CurrentAction?.DragOver(mousePosition, data) ?? false;
+        public bool DragLeave(Point mousePosition, IDataObject data) => CurrentAction?.DragLeave(mousePosition, data) ?? false;
+        public bool Drop(Point mousePosition, IDataObject data) => CurrentAction?.Drop(mousePosition, data) ?? false;
 
         private void SetAction(IAction action)
         {

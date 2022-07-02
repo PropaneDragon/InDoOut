@@ -19,5 +19,9 @@ namespace InDoOut_UI_Common.Actions
         bool MouseWheel(int delta);
         bool KeyDown(Key key);
         bool KeyUp(Key key);
+        bool DragEnter(Point mousePosition, IDataObject data);
+        bool DragOver(Point mousePosition, IDataObject data);
+        bool DragLeave(Point mousePosition, IDataObject data);
+        bool Drop(Point mousePosition, IDataObject data);
     }
 }

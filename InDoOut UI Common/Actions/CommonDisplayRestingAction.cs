@@ -1,8 +1,14 @@
-﻿using InDoOut_UI_Common.Actions.Copying;
+﻿using InDoOut_Core.Entities.Functions;
+using InDoOut_Core.Instancing;
+using InDoOut_Core.Logging;
+using InDoOut_Executable_Core.Messaging;
+using InDoOut_Executable_Core.Programs;
+using InDoOut_UI_Common.Actions.Copying;
 using InDoOut_UI_Common.Actions.Deleting;
 using InDoOut_UI_Common.Actions.Dragging;
 using InDoOut_UI_Common.Actions.Selecting;
 using InDoOut_UI_Common.InterfaceElements;
+using InDoOut_UI_Common.SaveLoad;
 using System;
 using System.Linq;
 using System.Windows;
@@ -70,22 +76,24 @@ namespace InDoOut_UI_Common.Actions
             var elementsUnderMouse = Display.GetElementsUnderMouse();
             var selectionManager = Display.SelectionManager;
             var elementsSelected = selectionManager?.Selection;
+            var shiftDown = Keyboard.Modifiers.HasFlag(ModifierKeys.Shift);
+            var controlDown = Keyboard.Modifiers.HasFlag(ModifierKeys.Control);
 
             elementsUnderMouse.Reverse();
 
             if (elementsUnderMouse.Count > 0)
             {
-                if (Display.GetFirstElementOfType<TextBox>(elementsUnderMouse) is not null)
+                if (!shiftDown && !controlDown && Display.GetFirstElementOfType<TextBox>(elementsUnderMouse) is not null)
                 {
                     return false;
                 }
-                else if (Features.HasFlag(Feature.WireDragging) && Display.GetFirstElementOfType<IUIConnectionStart>(elementsUnderMouse) is IUIConnectionStart start)
+                else if (!shiftDown && !controlDown && Features.HasFlag(Feature.WireDragging) && Display.GetFirstElementOfType<IUIConnectionStart>(elementsUnderMouse) is IUIConnectionStart start)
                 {
                     Finish(new CommonWireDragAction(start, Display));
 
                     return true;
                 }
-                else if (Features.HasFlag(Feature.Dragging) && Display.GetFirstElementOfType<IDraggable>(elementsUnderMouse) != null && elementsSelected != null && elementsSelected.Any(element => element is IDraggable draggable && draggable.CanDrag(Display)))
+                else if (!controlDown && Features.HasFlag(Feature.Dragging) && Display.GetFirstElementOfType<IDraggable>(elementsUnderMouse) != null && elementsSelected != null && elementsSelected.Any(element => element is IDraggable draggable && draggable.CanDrag(Display)))
                 {
                     var draggables = elementsSelected.Where(element => element is IDraggable draggable && draggable.CanDrag(Display)).Cast<IDraggable>();
 
@@ -159,5 +167,13 @@ namespace InDoOut_UI_Common.Actions
         }
 
         public override bool MouseWheel(int delta) => base.MouseWheel(delta);
+
+        public override bool DragEnter(Point mousePosition, IDataObject data) => base.DragEnter(mousePosition, data);
+
+        public override bool DragOver(Point mousePosition, IDataObject data) => base.DragOver(mousePosition, data);
+
+        public override bool DragLeave(Point mousePosition, IDataObject data) => base.DragLeave(mousePosition, data);
+
+        public override bool Drop(Point mousePosition, IDataObject data) => base.Drop(mousePosition, data);
     }
 }
