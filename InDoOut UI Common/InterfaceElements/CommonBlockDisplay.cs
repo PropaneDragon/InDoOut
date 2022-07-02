@@ -30,8 +30,11 @@ namespace InDoOut_UI_Common.InterfaceElements
 
         public void MoveToCentre()
         {
-            ScrollViewer.ScrollToHorizontalOffset((ElementCanvas.ActualWidth / 2d) - (ElementCanvas.ActualWidth / 2d));
-            ScrollViewer.ScrollToVerticalOffset((ElementCanvas.ActualHeight / 2d) - (ElementCanvas.ActualHeight / 2d));
+            if (IsLoaded && ScrollViewer.ActualWidth > 0 && ElementCanvas.ActualWidth > 0)
+            {
+                ScrollViewer.ScrollToHorizontalOffset((ElementCanvas.ActualWidth / 2d) - (ScrollViewer.ActualWidth / 2d));
+                ScrollViewer.ScrollToVerticalOffset((ElementCanvas.ActualHeight / 2d) - (ScrollViewer.ActualHeight / 2d));
+            }
         }
 
         protected override bool ClearCurrentProgram()
@@ -53,6 +56,7 @@ namespace InDoOut_UI_Common.InterfaceElements
         {
             if (ScrollViewer != null)
             {
+                ScrollViewer.Loaded += ScrollViewer_Loaded;
                 ScrollViewer.PreviewMouseLeftButtonDown += ScrollViewer_MouseLeftButtonDown;
                 ScrollViewer.PreviewMouseLeftButtonUp += ScrollViewer_MouseLeftButtonUp;
                 ScrollViewer.PreviewMouseRightButtonDown += ScrollViewer_PreviewMouseRightButtonDown;
@@ -62,6 +66,18 @@ namespace InDoOut_UI_Common.InterfaceElements
                 ScrollViewer.PreviewMouseWheel += ScrollViewer_PreviewMouseWheel;
                 ScrollViewer.PreviewKeyDown += ScrollViewer_PreviewKeyDown;
                 ScrollViewer.PreviewKeyUp += ScrollViewer_PreviewKeyUp;
+                ScrollViewer.PreviewDragOver += ScrollViewer_PreviewDragOver;
+                ScrollViewer.PreviewDragEnter += ScrollViewer_PreviewDragEnter;
+                ScrollViewer.PreviewDragLeave += ScrollViewer_PreviewDragLeave;
+                ScrollViewer.Drop += ScrollViewer_Drop;
+            }
+        }
+
+        private void AttachCanvasEvents()
+        {
+            if (ElementCanvas != null)
+            {
+                ElementCanvas.Loaded += ElementCanvas_Loaded;
             }
         }
 
@@ -82,8 +98,13 @@ namespace InDoOut_UI_Common.InterfaceElements
         private void CommonBlockDisplay_Loaded(object sender, RoutedEventArgs e)
         {
             AttachScrollViewerEvents();
+            AttachCanvasEvents();
             MoveToCentre();
         }
+
+        private void ElementCanvas_Loaded(object sender, RoutedEventArgs e) => MoveToCentre();
+
+        private void ScrollViewer_Loaded(object sender, RoutedEventArgs e) => MoveToCentre();
 
         private void ScrollViewer_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -156,6 +177,34 @@ namespace InDoOut_UI_Common.InterfaceElements
         private void ScrollViewer_PreviewKeyUp(object sender, KeyEventArgs e)
         {
             _ = ActionHandler?.KeyUp(e.Key);
+
+            e.Handled = false;
+        }
+
+        private void ScrollViewer_PreviewDragEnter(object sender, DragEventArgs e)
+        {
+            _ = ActionHandler?.DragEnter(e.GetPosition(ElementCanvas), e.Data);
+
+            e.Handled = false;
+        }
+
+        private void ScrollViewer_PreviewDragOver(object sender, DragEventArgs e)
+        {
+            _ = ActionHandler?.DragOver(e.GetPosition(ElementCanvas), e.Data);
+
+            e.Handled = false;
+        }
+
+        private void ScrollViewer_PreviewDragLeave(object sender, DragEventArgs e)
+        {
+            _ = ActionHandler?.DragLeave(e.GetPosition(ElementCanvas), e.Data);
+
+            e.Handled = false;
+        }
+
+        private void ScrollViewer_Drop(object sender, DragEventArgs e)
+        {
+            _ = ActionHandler?.Drop(e.GetPosition(ElementCanvas), e.Data);
 
             e.Handled = false;
         }
