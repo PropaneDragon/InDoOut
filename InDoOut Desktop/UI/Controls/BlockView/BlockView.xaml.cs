@@ -12,8 +12,8 @@ using InDoOut_UI_Common.InterfaceElements;
 using InDoOut_UI_Common.SaveLoad;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace InDoOut_Desktop.UI.Controls.BlockView
 {
@@ -49,6 +49,13 @@ namespace InDoOut_Desktop.UI.Controls.BlockView
 
                     if (function != null)
                     {
+                        var relativeMousePosition = e.GetPosition(ElementCanvas);
+                        if (relativeMousePosition.X >= 0 && relativeMousePosition.Y >= 0)
+                        {
+                            function.Metadata["x"] = relativeMousePosition.X.ToString();
+                            function.Metadata["y"] = relativeMousePosition.Y.ToString();
+                        }
+
                         var uiFunction = FunctionCreator?.Create(function);
                         if (uiFunction == null)
                         {
