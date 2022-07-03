@@ -15,6 +15,8 @@ namespace InDoOut_UI_Common.InterfaceElements
         Point GetMousePosition();
         Point GetPosition(FrameworkElement element);
 
+        Size GetSize(FrameworkElement element);
+
         List<FrameworkElement> GetElementsUnderMouse();
         List<FrameworkElement> GetElementsAtPoint(Point point);
 

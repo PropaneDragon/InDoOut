@@ -206,9 +206,12 @@ namespace InDoOut_UI_Common.Controls.CoreEntityRepresentation
 
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
-            _valueUpdateTimer.Stop();
-            _valueUpdateTimer.Tick -= UpdateTimer_Tick;
-            _valueUpdateTimer = null;
+            if (_valueUpdateTimer != null)
+            {
+                _valueUpdateTimer.Stop();
+                _valueUpdateTimer.Tick -= UpdateTimer_Tick;
+                _valueUpdateTimer = null;
+            }
         }
     }
 }

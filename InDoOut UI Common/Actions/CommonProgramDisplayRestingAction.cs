@@ -2,19 +2,31 @@
 using InDoOut_Core.Instancing;
 using InDoOut_Core.Logging;
 using InDoOut_Executable_Core.Messaging;
+using InDoOut_Executable_Core.Programs;
 using InDoOut_UI_Common.InterfaceElements;
+using InDoOut_UI_Common.SaveLoad;
+using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace InDoOut_UI_Common.Actions
 {
     public class CommonProgramDisplayRestingAction : CommonDisplayRestingAction
     {
+        private readonly DispatcherTimer _draggedElementDeleter = new(DispatcherPriority.Normal);
+
+        private bool _stillDragging = false;
+        private IUIFunction _ghostFunction = null;
+        private Point _lastGhostFunctionPosition = new();
+
         public ICommonProgramDisplay ProgramDisplay => Display as ICommonProgramDisplay;
 
         public CommonProgramDisplayRestingAction(ICommonProgramDisplay display, Feature features = Feature.All) : base(display, features)
         {
+            _draggedElementDeleter.Tick += DraggedElementDeleter_Tick;
         }
 
         public override bool MouseLeftDown(Point mousePosition) => base.MouseLeftDown(mousePosition);
@@ -27,7 +39,91 @@ namespace InDoOut_UI_Common.Actions
 
         public override bool KeyUp(Key key) => base.KeyUp(key);
 
+        public override bool DragEnter(Point mousePosition, IDataObject data)
+        {
+            _stillDragging = true;
+
+            if (_ghostFunction != null)
+            {
+                return DragOver(mousePosition, data);
+            }
+            else
+            {
+                var formats = data.GetFormats().ToList();
+                if (formats.Contains("Function"))
+                {
+                    _ghostFunction = CreateFunctionFromDropData(mousePosition, data);
+                    _lastGhostFunctionPosition = mousePosition;
+
+                    if (_ghostFunction != null && _ghostFunction is FrameworkElement newFrameworkElementFunction)
+                    {
+                        newFrameworkElementFunction.Opacity = 0.5;
+                    }
+
+                    return _ghostFunction != null;
+                }
+            }
+
+            return false;
+        }
+
+        public override bool DragOver(Point mousePosition, IDataObject data)
+        {
+            _stillDragging = true;
+            _draggedElementDeleter.Stop();
+
+            if (_ghostFunction != null && _ghostFunction is FrameworkElement frameworkElementFunction)
+            {
+                _lastGhostFunctionPosition = OffsetPositionByFunctionTitle(mousePosition, _ghostFunction);
+
+                ProgramDisplay?.SetPosition(frameworkElementFunction, _lastGhostFunctionPosition);
+
+                return true;
+            }
+
+            return false;
+        }
+
+        public override bool DragLeave(Point mousePosition, IDataObject data)
+        {
+            _stillDragging = false;
+
+            _draggedElementDeleter.Interval = TimeSpan.FromMilliseconds(2);
+            _draggedElementDeleter.Start();
+
+            return false;
+        }
+
         public override bool Drop(Point mousePosition, IDataObject data)
+        {
+            var formats = data.GetFormats().ToList();
+            if (formats.Contains("Function"))
+            {
+                var finalPosition = _lastGhostFunctionPosition.X > 0 && _lastGhostFunctionPosition.Y > 0 ? _lastGhostFunctionPosition : mousePosition;
+
+                _ = CreateFunctionFromDropData(finalPosition, data);
+            }
+            
+            if (formats.Contains("FileNameW"))
+            {
+                if (data.GetData("FileNameW") is string[] fileName)
+                {
+                    var program = Task.Run(async () => await CommonProgramSaveLoad.Instance.LoadProgramAsync(fileName.FirstOrDefault())).Result;
+                    if (program != null)
+                    {
+                        ProgramDisplay.AssociatedProgram = program;
+                    }
+                }
+            }
+
+            _stillDragging = false;
+
+            DeleteGhostFunction();
+
+            return false;
+        }
+
+        private IUIFunction CreateFunctionFromDropData(Point iniitialPosition, IDataObject data)
         {
             var formats = data.GetFormats().ToList();
             if (formats.Contains("Function") && data.GetData("Function") is IFunction dataFunction)
@@ -38,22 +134,20 @@ namespace InDoOut_UI_Common.Actions
 
                 if (function != null)
                 {
-                    if (mousePosition.X >= 0 && mousePosition.Y >= 0)
+                    if (iniitialPosition.X >= 0 && iniitialPosition.Y >= 0)
                     {
-                        function.Metadata["x"] = mousePosition.X.ToString();
-                        function.Metadata["y"] = mousePosition.Y.ToString();
+                        function.Metadata["x"] = iniitialPosition.X.ToString();
+                        function.Metadata["y"] = iniitialPosition.Y.ToString();
                     }
 
                     var uiFunction = ProgramDisplay?.FunctionCreator?.Create(function);
-                    if (uiFunction != null)
-                    {
-                        return true;
-                    }
-                    else
+                    if (uiFunction == null)
                     {
                         Log.Instance.Error("UI Function for ", function, " couldn't be created on the interface");
                         UserMessageSystemHolder.Instance.CurrentUserMessageSystem?.ShowError("Unable to create function", "The selected function doesn't appear to be able to be placed in the current program.");
                     }
+
+                    return uiFunction;
                 }
                 else
                 {
@@ -61,20 +155,40 @@ namespace InDoOut_UI_Common.Actions
                     UserMessageSystemHolder.Instance.CurrentUserMessageSystem?.ShowError("Unable to create function", "The selected function couldn't be created and can't be placed in the current program.");
                 }
             }
-            /*else if (formats.Contains("FileNameW"))
-            {
-                if (e.Data.GetData("FileNameW") is string[] fileName)
-                {
-                    var program = await CommonProgramSaveLoad.Instance.LoadProgramDialogAsync(fileName.FirstOrDefault());
-                    if (program != null)
-                    {
-                        _ = ProgramHolder.Instance.RemoveProgram(AssociatedProgram);
-                        AssociatedProgram = program;
-                    }
-                }
-            }*/
 
-            return false;
+            return null;
+        }
+
+        private Point OffsetPositionByFunctionTitle(Point originalPosition, IUIFunction function)
+        {
+            var offsetPosition = originalPosition;
+
+            if (_ghostFunction != null && _ghostFunction is FrameworkElement frameworkElementFunction)
+            {
+                offsetPosition.Offset(-frameworkElementFunction.ActualWidth / 2d, -_ghostFunction.GetTitleOffset().Y);
+            }
+
+            return offsetPosition;
+        }
+
+        private void DeleteGhostFunction()
+        {
+            if (_ghostFunction != null && _ghostFunction is FrameworkElement oldFrameworkElementFunction)
+            {
+                ProgramDisplay?.Remove(oldFrameworkElementFunction);
+
+                _ghostFunction = null;
+            }
+        }
+
+        private void DraggedElementDeleter_Tick(object sender, EventArgs e)
+        {
+            if (!_stillDragging)
+            {
+                DeleteGhostFunction();
+            }
+
+            _draggedElementDeleter.Stop();
         }
     }
 }

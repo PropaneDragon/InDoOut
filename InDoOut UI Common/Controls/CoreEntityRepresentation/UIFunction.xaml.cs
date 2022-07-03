@@ -135,6 +135,8 @@ namespace InDoOut_UI_Common.Controls.CoreEntityRepresentation
 
         public void DragEnded(ICommonDisplay display) => _cachedVisualConnections.Clear();
 
+        public Point GetTitleOffset() => Text_FunctionName.TranslatePoint(new Point(), this);
+
         private void SetFunction(IFunction function)
         {
             if (_function != null)

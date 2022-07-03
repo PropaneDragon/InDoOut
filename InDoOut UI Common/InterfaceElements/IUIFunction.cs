@@ -4,6 +4,7 @@ using InDoOut_UI_Common.Actions.Deleting;
 using InDoOut_UI_Common.Actions.Dragging;
 using InDoOut_UI_Common.Actions.Selecting;
 using System.Collections.Generic;
+using System.Windows;
 
 namespace InDoOut_UI_Common.InterfaceElements
 {
@@ -22,5 +23,7 @@ namespace InDoOut_UI_Common.InterfaceElements
         List<IUIOutput> Outputs { get; }
         List<IUIProperty> Properties { get; }
         List<IUIResult> Results { get; }
+
+        Point GetTitleOffset();
     }
 }

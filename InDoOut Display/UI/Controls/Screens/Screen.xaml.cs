@@ -91,6 +91,8 @@ namespace InDoOut_Display.UI.Controls.Screens
 
         public Point GetMousePosition() => Mouse.GetPosition(this);
 
+        public Size GetSize(FrameworkElement element) => new();
+
         public FrameworkElement GetElementUnderMouse() => GetElementAtPoint(GetMousePosition());
 
         public FrameworkElement GetElementAtPoint(Point point) => GetElementsAtPoint(point).FirstOrDefault();
