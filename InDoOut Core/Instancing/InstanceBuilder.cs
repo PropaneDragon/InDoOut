@@ -1,5 +1,6 @@
 ﻿using InDoOut_Core.Threading.Safety;
 using System;
+using System.Reflection;
 
 namespace InDoOut_Core.Instancing
 {
@@ -28,7 +29,7 @@ namespace InDoOut_Core.Instancing
             {
                 try
                 {
-                    var constructor = type.GetConstructor(Type.EmptyTypes);
+                    var constructor = type.GetConstructor(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance, Type.EmptyTypes);
                     if (constructor != null && !constructor.IsAbstract)
                     {
                         var instance = TryGet.ValueOrDefault(() => constructor.Invoke(parameters), null);

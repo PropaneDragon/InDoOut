@@ -8,6 +8,11 @@ namespace InDoOut_Core.Logging
     public interface ILog
     {
         /// <summary>
+        /// The human readable name of the logger
+        /// </summary>
+        string Name { get; }
+
+        /// <summary>
         /// If the logger is enabled.
         /// </summary>
         bool Enabled { get; set; }

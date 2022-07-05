@@ -46,7 +46,7 @@ namespace InDoOut_Console_Common.Commands
                         var foundCommand = foundCommands.First();
                         if (foundCommand != null)
                         {
-                            _ = foundCommand.Trigger(parameters);
+                            _ = foundCommand.Trigger(parameters.Split(""));
                         }
                     }
                     else if (foundCommands.Count() > 1)

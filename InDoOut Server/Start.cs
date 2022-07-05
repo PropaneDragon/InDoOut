@@ -1,6 +1,7 @@
 ﻿using InDoOut_Console_Common.Commands;
 using InDoOut_Console_Common.ConsoleExtensions;
 using InDoOut_Console_Common.Messaging;
+using InDoOut_Core.Logging;
 using InDoOut_Executable_Core.Arguments;
 using InDoOut_Executable_Core.Location;
 using InDoOut_Executable_Core.Logging;
@@ -12,6 +13,7 @@ namespace InDoOut_Server
 {
     public class Start
     {
+        private static Log _serverLog = null, _eventLog = null;
         private static LogFileSaver _logFileSaver = null;
         private static ConsoleServerManager _serverManager = null;
 
@@ -39,7 +41,7 @@ namespace InDoOut_Server
                 {
                     ConsoleFormatter.DrawSubtitle("Starting server");
 
-                    _serverManager = new ConsoleServerManager(arguments.ChosenPort);
+                    _serverManager = new ConsoleServerManager(_serverLog, _eventLog, arguments.ChosenPort);
                     if (_serverManager.Start())
                     {
                         ConsoleFormatter.DrawSubtitle("Server started");
@@ -47,6 +49,7 @@ namespace InDoOut_Server
 
                     var commandHandler = new CommandHandler();
                     commandHandler.AddCommand(new ExitCommand(commandHandler));
+                    commandHandler.AddCommand(new LogCommand(_serverLog, _eventLog, Log.Instance));
 
                     _ = commandHandler.AwaitCommands();
 
@@ -60,6 +63,9 @@ namespace InDoOut_Server
         private static void SetUp()
         {
             UserMessageSystemHolder.Instance.CurrentUserMessageSystem = new ConsoleUserMessageSystem();
+
+            _serverLog = new("Server log");
+            _eventLog = new("Events");
 
             _logFileSaver = new LogFileSaver(StandardLocations.Instance);
             _logFileSaver.BeginAutoSave();

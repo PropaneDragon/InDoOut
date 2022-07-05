@@ -23,6 +23,11 @@ namespace InDoOut_Core.Logging
         public int MaxLogMessages { get => 0; set { } }
 
         /// <summary>
+        /// See <see cref="ILog.Name"/>
+        /// </summary>
+        public string Name => "";
+
+        /// <summary>
         /// See <see cref="ILog.Error(object[])"/>
         /// </summary>
         /// <param name="message"></param>

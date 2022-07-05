@@ -9,7 +9,7 @@
             _commandHandler = handler;
         }
 
-        public override bool Trigger(string parameters)
+        public override bool Trigger(string[] parameters)
         {
             if (_commandHandler != null)
             {

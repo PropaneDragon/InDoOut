@@ -23,6 +23,11 @@ namespace InDoOut_Core.Logging
         public int MaxLogMessages { get; set; } = 10000;
 
         /// <summary>
+        /// The name of the log
+        /// </summary>
+        public string Name { get; set; } = "Core";
+
+        /// <summary>
         /// All current logs that have been sent so far, up to <see cref="MaxLogMessages"/>.
         /// </summary>
         public List<LogMessage> Logs
@@ -34,6 +39,23 @@ namespace InDoOut_Core.Logging
                     return new List<LogMessage>(_logs);
                 }
             }
+        }
+
+        /// <summary>
+        /// Creates a core logger. 
+        /// </summary>
+        protected Log() : this("Core")
+        {
+
+        }
+
+        /// <summary>
+        /// Creates a log with a name
+        /// </summary>
+        /// <param name="name">The name of the log to be created</param>
+        public Log(string name)
+        {
+            Name = name;
         }
 
         /// <summary>

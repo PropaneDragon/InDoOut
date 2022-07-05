@@ -11,7 +11,7 @@ namespace InDoOut_Core_Tests
         [TestMethod]
         public void AddToLog()
         {
-            var log = new Log();
+            var log = new Log("Test");
 
             Assert.AreEqual(0, log.Logs.Count);
 

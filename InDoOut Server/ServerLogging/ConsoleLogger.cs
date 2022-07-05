@@ -28,31 +28,38 @@ namespace InDoOut_Server.ServerLogging
             _listenerTask = Task.Run(() =>
             {
                 var lastLogTime = DateTime.Now;
-                var firstLog = false;
 
                 while (!_cancellationToken.IsCancellationRequested && Log != null)
                 {
-                    var newLogs = Log.Logs.Where(log => log.Time > lastLogTime);
+                    DisplayLogsSince(lastLogTime);
 
-                    foreach (var newLog in newLogs)
-                    {
-                        if (newLog.Time.DayOfYear != lastLogTime.DayOfYear || !firstLog)
-                        {
-                            LogDate(newLog.Time);
-
-                            firstLog = true;
-                        }
-
-                        lastLogTime = newLog.Time;
-
-                        DisplayLog(newLog);
-                    }
+                    lastLogTime = DateTime.Now;
 
                     Thread.Sleep(TimeSpan.FromMilliseconds(500));
                 }
             });
 
             return true;
+        }
+
+        public void DisplayRecentLogs(int limit = 20)
+        {
+            var recentLogs = Log.Logs.TakeLast(limit);
+
+            foreach (var log in recentLogs)
+            {
+                DisplayLog(log);
+            }
+        }
+
+        public void DisplayLogsSince(DateTime time)
+        {
+            var newLogs = Log.Logs.Where(log => log.Time > time);
+
+            foreach (var log in newLogs)
+            {
+                DisplayLog(log);
+            }
         }
 
         public bool StopListening()

@@ -2,7 +2,6 @@
 using InDoOut_Core.Instancing;
 using InDoOut_Core.Logging;
 using InDoOut_Executable_Core.Messaging;
-using InDoOut_Executable_Core.Programs;
 using InDoOut_UI_Common.InterfaceElements;
 using InDoOut_UI_Common.SaveLoad;
 using System;
@@ -52,13 +51,8 @@ namespace InDoOut_UI_Common.Actions
                 var formats = data.GetFormats().ToList();
                 if (formats.Contains("Function"))
                 {
-                    _ghostFunction = CreateFunctionFromDropData(mousePosition, data);
+                    _ghostFunction = CreateGhostFunctionFromDropData(mousePosition, data);
                     _lastGhostFunctionPosition = mousePosition;
-
-                    if (_ghostFunction != null && _ghostFunction is FrameworkElement newFrameworkElementFunction)
-                    {
-                        newFrameworkElementFunction.Opacity = 0.5;
-                    }
 
                     return _ghostFunction != null;
                 }
@@ -123,6 +117,17 @@ namespace InDoOut_UI_Common.Actions
             return false;
         }
 
+        private IUIFunction CreateGhostFunctionFromDropData(Point initialPosition, IDataObject data)
+        {
+            var function = CreateFunctionFromDropData(initialPosition, data);
+            if (function != null && function is FrameworkElement newFrameworkElementFunction)
+            {
+                newFrameworkElementFunction.Opacity = 0.5;
+            }
+
+            return function;
+        }
+
         private IUIFunction CreateFunctionFromDropData(Point iniitialPosition, IDataObject data)
         {
             var formats = data.GetFormats().ToList();
@@ -163,9 +168,9 @@ namespace InDoOut_UI_Common.Actions
         {
             var offsetPosition = originalPosition;
 
-            if (_ghostFunction != null && _ghostFunction is FrameworkElement frameworkElementFunction)
+            if (function != null && function is FrameworkElement frameworkElementFunction)
             {
-                offsetPosition.Offset(-frameworkElementFunction.ActualWidth / 2d, -_ghostFunction.GetTitleOffset().Y);
+                offsetPosition.Offset(-frameworkElementFunction.ActualWidth / 2d, -function.GetTitleOffset().Y);
             }
 
             return offsetPosition;

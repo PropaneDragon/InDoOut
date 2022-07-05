@@ -1,11 +1,10 @@
 ﻿using InDoOut_Console_Common.ConsoleExtensions;
 using InDoOut_Console_Common.Loading;
-using InDoOut_Console_Common.Messaging;
+using InDoOut_Core.Logging;
 using InDoOut_Executable_Core.Programs;
 using InDoOut_Networking.Server;
 using InDoOut_Networking.Server.Events;
 using InDoOut_Server.Loading;
-using InDoOut_Server.ServerLogging;
 using System.Net;
 
 namespace InDoOut_Server.ServerNetworking
@@ -14,32 +13,23 @@ namespace InDoOut_Server.ServerNetworking
     {
         private readonly ProgramHolder _programHolder = new();
         private readonly Server _server = null;
-        private readonly ConsoleLog _log = new();
-        private readonly ConsoleLogger _logger = null;
+        private readonly ILog _serverLog = null;
+        private readonly ILog _eventLog = null;
 
-        public ConsoleServerManager(int port = 0)
+        public ConsoleServerManager(ILog serverLog, ILog eventLog, int port = 0)
         {
             ConsoleFormatter.DrawInfoMessageLine("Starting up the manager...");
 
-            _server = new Server(_log, port);
-            _logger = new ConsoleLogger(_log);
+            _serverLog = serverLog;
+            _eventLog = eventLog;
+
+            _server = new Server(_serverLog, port);
 
             var commandLoader = new ConsoleCommandLoader(_server, _programHolder);
             var pluginLoader = new ConsolePluginLoader();
 
             _ = commandLoader.Load();
             _ = pluginLoader.Load();
-
-            ConsoleFormatter.DrawInfoMessage("Starting console logger... ");
-
-            if (_logger.StartListening())
-            {
-                ExtendedConsole.WriteLine(ConsoleFormatter.Positive, "Success.");
-            }
-            else
-            {
-                ExtendedConsole.WriteLine(ConsoleFormatter.Negative, "Failed!");
-            }
 
             ExtendedConsole.WriteLine();
 
@@ -124,7 +114,7 @@ namespace InDoOut_Server.ServerNetworking
         private void Server_OnServerStarted(object sender, ServerConnectionEventArgs e) => ConsoleFormatter.DrawInfoMessageLine(ConsoleFormatter.Positive, "Server started.", ConsoleFormatter.Primary, " IP: ", ConsoleFormatter.AccentTertiary, (sender as IServer)?.IPAddress?.ToString() ?? "unknown", ConsoleFormatter.Primary, ", Port: ", ConsoleFormatter.AccentTertiary, (sender as IServer)?.Port.ToString() ?? "Unknown");
         private void Server_OnClientMessageSent(object sender, ClientMessageEventArgs e) { }
         private void Server_OnClientMessageReceived(object sender, ClientMessageEventArgs e) { }
-        private void Server_OnClientDisconnected(object sender, ClientConnectionEventArgs e) => ConsoleFormatter.DrawInfoMessageLine("Client at IP ", ConsoleFormatter.AccentTertiary, (e?.Client?.Client?.RemoteEndPoint as IPEndPoint)?.Address?.ToString() ?? "unknown", ConsoleFormatter.Negative, " disconnected.");
-        private void Server_OnClientConnected(object sender, ClientConnectionEventArgs e) => ConsoleFormatter.DrawInfoMessageLine("Client at IP ", ConsoleFormatter.AccentTertiary, (e?.Client?.Client?.RemoteEndPoint as IPEndPoint)?.Address?.ToString() ?? "unknown", ConsoleFormatter.Positive, " connected.");
+        private void Server_OnClientDisconnected(object sender, ClientConnectionEventArgs e) => _eventLog?.Info("Client at IP ", ConsoleFormatter.AccentTertiary, (e?.Client?.Client?.RemoteEndPoint as IPEndPoint)?.Address?.ToString() ?? "unknown", ConsoleFormatter.Negative, " disconnected.");
+        private void Server_OnClientConnected(object sender, ClientConnectionEventArgs e) => _eventLog?.Info("Client at IP ", ConsoleFormatter.AccentTertiary, (e?.Client?.Client?.RemoteEndPoint as IPEndPoint)?.Address?.ToString() ?? "unknown", ConsoleFormatter.Positive, " connected.");
     }
 }

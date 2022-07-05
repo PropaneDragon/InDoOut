@@ -3,6 +3,6 @@
     public interface ICommand
     {
         bool Matches(string command);
-        bool Trigger(string parameters);
+        bool Trigger(string[] parameters);
     }
 }
