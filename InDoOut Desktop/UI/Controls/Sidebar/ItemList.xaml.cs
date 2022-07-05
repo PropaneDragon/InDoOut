@@ -9,6 +9,7 @@ using InDoOut_Function_Plugins.Containers;
 using InDoOut_Plugins.Loaders;
 using InDoOut_UI_Common.InterfaceElements;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -58,14 +59,15 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
                 _functions = functions;
             }
 
-            List_Items.ItemsSource = functions;
+            var listCollectionView = new ListCollectionView(functions)
+            {
+                CustomSort = Comparer<IFunction>.Create((a, b) => a.SafeGroup.CompareTo(b.SafeGroup) + a.SafeName.CompareTo(b.SafeName))
+            };
 
-            var collectionView = CollectionViewSource.GetDefaultView(List_Items.ItemsSource);
-            collectionView.SortDescriptions.Clear();
-            collectionView.SortDescriptions.Add(new System.ComponentModel.SortDescription("SafeGroup", System.ComponentModel.ListSortDirection.Ascending));
-            collectionView.SortDescriptions.Add(new System.ComponentModel.SortDescription("SafeName", System.ComponentModel.ListSortDirection.Ascending));
-            collectionView.GroupDescriptions.Clear();
-            collectionView.GroupDescriptions.Add(new PropertyGroupDescription("SafeGroup"));
+            listCollectionView.GroupDescriptions.Clear();
+            listCollectionView.GroupDescriptions.Add(new PropertyGroupDescription("SafeGroup"));
+
+            List_Items.ItemsSource = listCollectionView;
         }
 
         private async void Instance_PluginsChanged(object sender, EventArgs e)
