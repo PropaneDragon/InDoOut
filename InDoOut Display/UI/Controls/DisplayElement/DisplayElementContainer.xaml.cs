@@ -184,6 +184,8 @@ namespace InDoOut_Display.UI.Controls.DisplayElement
             }
         }
 
+        public Point GetTitleOffset() => new();
+
         private void ChangeDisplayMode(UIFunctionDisplayMode mode)
         {
             _displayMode = mode;
