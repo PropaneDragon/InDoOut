@@ -7,7 +7,7 @@ namespace InDoOut_UI_Common.Controls.Search
 {
     public partial class SearchBar : UserControl, ISearch
     {
-        private static readonly TimeSpan AUTO_SEARCH_INTERVAL = TimeSpan.FromMilliseconds(300);
+        private static readonly TimeSpan AUTO_SEARCH_INTERVAL = TimeSpan.FromMilliseconds(500);
 
         private readonly string _slogan = "Search";
         private readonly DispatcherTimer _searchTimer = new(DispatcherPriority.Normal);
@@ -22,7 +22,6 @@ namespace InDoOut_UI_Common.Controls.Search
 
             _slogan = Text_Slogan.Text;
             _searchTimer.Interval = AUTO_SEARCH_INTERVAL;
-
             _searchTimer.Tick += SearchTimer_Tick;
         }
 
@@ -55,7 +54,6 @@ namespace InDoOut_UI_Common.Controls.Search
             if (e.Key == Key.Enter)
             {
                 PerformSearch();
-                Keyboard.ClearFocus();
             }
             else if (e.Key == Key.Escape)
             {

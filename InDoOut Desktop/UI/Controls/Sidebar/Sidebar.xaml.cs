@@ -16,6 +16,7 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
     public partial class Sidebar : UserControl
     {
         private readonly TimeSpan _animationTime = TimeSpan.FromMilliseconds(500);
+        private readonly TimeSpan _sidebarUpdateTick = TimeSpan.FromMilliseconds(500);
         private readonly DispatcherTimer _updateTimer = new(DispatcherPriority.Normal);
 
         private bool _collapsed = false;
@@ -30,7 +31,7 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
         {
             InitializeComponent();
 
-            _updateTimer.Interval = TimeSpan.FromMilliseconds(500);
+            _updateTimer.Interval = _sidebarUpdateTick;
             _updateTimer.Start();
             _updateTimer.Tick += UpdateTimer_Tick;
         }
