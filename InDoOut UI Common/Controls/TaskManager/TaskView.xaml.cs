@@ -22,6 +22,7 @@ namespace InDoOut_UI_Common.Controls.TaskManager
 
         public IProgramDisplayCreator ProgramDisplayCreator { get; set; } = new NullProgramDisplayCreator();
         public ICommonProgramDisplay CurrentProgramDisplay { get => _programDisplay; set => ProgramDisplayChanged(value); }
+        public ICommonProgramDisplay LastProgramDisplay { get; private set; } = null;
 
         public event EventHandler<CurrentProgramDisplayEventArgs> OnProgramDisplayChanged;
 
@@ -98,7 +99,20 @@ namespace InDoOut_UI_Common.Controls.TaskManager
             Grid_Tasks.Visibility = Visibility.Visible;
             Grid_Tasks.BeginAnimation(OpacityProperty, fadeInAnimation);
 
+            LastProgramDisplay = CurrentProgramDisplay;
             CurrentProgramDisplay = null;
+        }
+
+        public void ToggleTasks()
+        {
+            if (CurrentProgramDisplay == null && LastProgramDisplay != null)
+            {
+                BringToFront(LastProgramDisplay);
+            }
+            else
+            {
+                ShowTasks();
+            }
         }
 
         public void BringToFront(ITaskItem taskItem)
@@ -152,6 +166,11 @@ namespace InDoOut_UI_Common.Controls.TaskManager
                         if (program != null)
                         {
                             program.Stop();
+                        }
+
+                        if (task?.ProgramDisplay != null && task.ProgramDisplay == LastProgramDisplay)
+                        {
+                            LastProgramDisplay = CurrentProgramDisplay;
                         }
 
                         Wrap_Tasks.Children.Remove(child);

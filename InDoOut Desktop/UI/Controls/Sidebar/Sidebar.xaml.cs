@@ -204,7 +204,7 @@ namespace InDoOut_Desktop.UI.Controls.Sidebar
         {
             Log.Instance.Header("Task viewer button clicked");
 
-            TaskView?.ShowTasks();
+            TaskView?.ToggleTasks();
             Collapse();
         }
 

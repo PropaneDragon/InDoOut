@@ -13,6 +13,7 @@ namespace InDoOut_UI_Common.InterfaceElements
         void CreateNewTask(bool bringToFront = false);
         void CreateNewTask(IProgram program, bool bringToFront = false);
         void ShowTasks();
+        void ToggleTasks();
         void BringToFront(ITaskItem taskItem);
         void BringToFront(ICommonProgramDisplay programDisplay);
 
