@@ -8,6 +8,10 @@ namespace InDoOut_UI_Common.InterfaceElements
 {
     public abstract class CommonBlockDisplay : CommonProgramDisplay, ICommonBlockDisplay
     {
+        private bool _loadedOnce = false;
+        private bool _offsetCached = false;
+        private Point _cachedOffset = new();
+
         protected override IProgramHandler ProgramHandler { get; set; } = null;
 
         protected override FrameworkElement HitTestElement => ElementCanvas;
@@ -57,6 +61,7 @@ namespace InDoOut_UI_Common.InterfaceElements
             if (ScrollViewer != null)
             {
                 ScrollViewer.Loaded += ScrollViewer_Loaded;
+                ScrollViewer.Unloaded += ScrollViewer_Unloaded;
                 ScrollViewer.PreviewMouseLeftButtonDown += ScrollViewer_MouseLeftButtonDown;
                 ScrollViewer.PreviewMouseLeftButtonUp += ScrollViewer_MouseLeftButtonUp;
                 ScrollViewer.PreviewMouseRightButtonDown += ScrollViewer_PreviewMouseRightButtonDown;
@@ -97,14 +102,42 @@ namespace InDoOut_UI_Common.InterfaceElements
 
         private void CommonBlockDisplay_Loaded(object sender, RoutedEventArgs e)
         {
-            AttachScrollViewerEvents();
-            AttachCanvasEvents();
-            MoveToCentre();
+            if (!_loadedOnce)
+            {
+                _loadedOnce = true;
+
+                AttachCanvasEvents();
+                AttachScrollViewerEvents();
+                MoveToCentre();
+            }
         }
 
-        private void ElementCanvas_Loaded(object sender, RoutedEventArgs e) => MoveToCentre();
+        private void ElementCanvas_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (!_loadedOnce)
+            {
+                MoveToCentre();
+            }
+        }
 
-        private void ScrollViewer_Loaded(object sender, RoutedEventArgs e) => MoveToCentre();
+        private void ScrollViewer_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (!_loadedOnce)
+            {
+                MoveToCentre();
+            }
+            else if (_offsetCached)
+            {
+                Offset = _cachedOffset;
+                _offsetCached = false;
+            }
+        }
+
+        private void ScrollViewer_Unloaded(object sender, RoutedEventArgs e)
+        {
+            _cachedOffset = Offset;
+            _offsetCached = true;
+        }
 
         private void ScrollViewer_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
