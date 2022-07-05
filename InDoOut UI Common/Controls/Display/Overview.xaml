@@ -13,7 +13,7 @@
 
                 </Canvas>
                 <Canvas x:Name="Canvas_View">
-                    <Rectangle x:Name="Rectangle_Viewport" SnapsToDevicePixels="True" Width="100" Height="100" Stroke="#99FFFFFF" />
+                    <Rectangle x:Name="Rectangle_Viewport" SnapsToDevicePixels="True" Width="100" Height="100" RadiusX="2" RadiusY="2" Stroke="{DynamicResource Brush.ElementItem.Border}" />
                 </Canvas>
             </Grid>
         </Border>

@@ -78,7 +78,9 @@ namespace InDoOut_UI_Common.Controls.Display
                             Width = adjustedFunctionRect.Width,
                             Height = adjustedFunctionRect.Height,
                             Stroke = new SolidColorBrush(Color.FromArgb(100, 255, 255, 255)),
-                            StrokeThickness = 1
+                            StrokeThickness = 1,
+                            RadiusX = 2,
+                            RadiusY = 2
                         };
 
                         _ = Canvas_Layout.Children.Add(viewRectangle);
