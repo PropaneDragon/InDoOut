@@ -18,7 +18,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BlinkStickDotNet" Version="2.0.16" />
+    <PackageReference Include="BlinkStickDotNet" Version="2.0.16">
+      <GeneratePathProperty>True</GeneratePathProperty>
+    </PackageReference>
+    <PackageReference Include="HidSharp" Version="1.5.0">
+      <GeneratePathProperty>True</GeneratePathProperty>
+    </PackageReference>
+    <PackageReference Include="LibUsbDotNet" Version="2.2.8">
+      <GeneratePathProperty>True</GeneratePathProperty>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
@@ -27,7 +35,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="xcopy /Y &quot;%25USERPROFILE%25\.nuget\packages\blinkstickdotnet\2.0.16\lib\net40\*.dll&quot; &quot;$(TargetPath)&quot;&#xD;&#xA;xcopy /Y &quot;%25USERPROFILE%25\.nuget\packages\hidsharp\1.5.0\lib\net35\*.dll&quot; &quot;$(TargetPath)&quot;&#xD;&#xA;xcopy /Y &quot;%25USERPROFILE%25\.nuget\packages\libusbdotnet\2.2.8\lib\*.dll&quot; &quot;$(TargetPath)&quot;&#xD;&#xA;xcopy /Y /F &quot;$(OutDir)\*&quot; &quot;$(SolutionDir)\$(OutDir)\Plugins\*&quot;" />
+    <Exec Command="echo Copying from $(PkgBlinkStickDotNet)&#xD;&#xA;xcopy /Y &quot;$(PkgBlinkStickDotNet)\lib\net40\*.dll&quot; &quot;$(OutDir)&quot;&#xD;&#xA;echo Copying from $(PkgHidSharp)&#xD;&#xA;xcopy /Y &quot;$(PkgHidSharp)\lib\net35\*.dll&quot; &quot;$(OutDir)&quot;&#xD;&#xA;echo Copying from $(PkgLibUsbDotNet)&#xD;&#xA;xcopy /Y &quot;$(PkgLibUsbDotNet)\lib\*.dll&quot; &quot;$(OutDir)&quot;&#xD;&#xA;xcopy /Y /F &quot;$(OutDir)\*&quot; &quot;$(SolutionDir)\$(OutDir)\Plugins\*&quot;" />
   </Target>
 
 </Project>
