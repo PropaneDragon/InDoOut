@@ -53,6 +53,6 @@ namespace InDoOut_Viewer
 
         }
 
-        private void Application_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e) => throw new NotImplementedException();
+        private void Application_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e) { }
     }
 }
