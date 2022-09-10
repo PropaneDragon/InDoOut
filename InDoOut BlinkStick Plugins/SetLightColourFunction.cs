@@ -40,39 +40,44 @@ namespace InDoOut_BlinkStick_Plugins
         protected override IOutput Started(IInput triggeredBy)
         {
             using var stick = BlinkStick.FindBySerial(_lightId.FullValue);
-            if (stick != null && stick.OpenDevice() && stick.GetColors(out var colourData))
+            if (stick != null && stick.OpenDevice())
             {
-                var convertedColour = _colourPropertiesHelper.Colour;
-                var splitLeds = _leds.FullValue.Split(',');
-                var convertedLedIds = splitLeds.Select(ledStringId => int.TryParse(ledStringId, out var ledId) ? ledId : -2);
-                var setAll = convertedLedIds.All(ledId => ledId == -2);
-                var ledCount = stick.GetLedCount();
-                var frameDataCount = 3 * ledCount;
+                stick.SetMode(2);
 
-                if (colourData.Length < frameDataCount)
+                if (stick.GetColors(out var colourData))
                 {
-                    colourData = new byte[frameDataCount];
+                    var convertedColour = _colourPropertiesHelper.Colour;
+                    var splitLeds = _leds.FullValue.Split(',');
+                    var convertedLedIds = splitLeds.Select(ledStringId => int.TryParse(ledStringId, out var ledId) ? ledId : -2);
+                    var setAll = convertedLedIds.All(ledId => ledId == -2);
+                    var ledCount = stick.GetLedCount();
+                    var frameDataCount = 3 * ledCount;
 
-                    for (var index = 0; index < frameDataCount; ++index)
+                    if (colourData.Length < frameDataCount)
                     {
-                        colourData[index] = 0;
-                    }
-                }
+                        colourData = new byte[frameDataCount];
 
-                for (var ledIndex = 0; ledIndex < ledCount; ++ledIndex)
-                {
-                    var currentFrameOffset = ledIndex * 3;
-                    if (convertedLedIds.Contains(ledIndex) || setAll)
+                        for (var index = 0; index < frameDataCount; ++index)
+                        {
+                            colourData[index] = 0;
+                        }
+                    }
+
+                    for (var ledIndex = 0; ledIndex < ledCount; ++ledIndex)
                     {
-                        colourData[currentFrameOffset] = convertedColour.G;
-                        colourData[currentFrameOffset + 1] = convertedColour.R;
-                        colourData[currentFrameOffset + 2] = convertedColour.B;
+                        var currentFrameOffset = ledIndex * 3;
+                        if (convertedLedIds.Contains(ledIndex) || setAll)
+                        {
+                            colourData[currentFrameOffset] = convertedColour.G;
+                            colourData[currentFrameOffset + 1] = convertedColour.R;
+                            colourData[currentFrameOffset + 2] = convertedColour.B;
+                        }
                     }
+
+                    stick.SetColors(0, colourData);
+
+                    return _lightChanged;
                 }
-
-                stick.SetColors(0, colourData);
-
-                return _lightChanged;
             }
 
             return _error;
