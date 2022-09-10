@@ -3,6 +3,7 @@ using InDoOut_Core.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace InDoOut_Core.Entities.Core
@@ -19,6 +20,7 @@ namespace InDoOut_Core.Entities.Core
         private readonly object _lastCompletionTimeLock = new();
 
         private Task _runner = null;
+        private CancellationTokenSource _cancellationTokenSource = null;
         private DateTime _lastTriggerTime = DateTime.MinValue;
         private DateTime _lastCompletionTime = DateTime.MinValue;
         private readonly List<ConnectsToType> _connections = new();
@@ -70,7 +72,10 @@ namespace InDoOut_Core.Entities.Core
                 _lastTriggerTime = DateTime.Now;
             }
 
-            _runner?.Dispose();
+            _cancellationTokenSource?.Cancel();
+            _cancellationTokenSource?.Dispose();
+            _cancellationTokenSource = new CancellationTokenSource();
+
             _runner = Task.Run(() =>
             {
                 try
@@ -88,7 +93,7 @@ namespace InDoOut_Core.Entities.Core
                 }
 
                 Log.Instance.Info($"Completed {this}");
-            });
+            }, _cancellationTokenSource.Token);
         }
 
         /// <summary>
